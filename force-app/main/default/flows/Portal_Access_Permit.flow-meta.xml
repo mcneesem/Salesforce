@@ -384,7 +384,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Post_Permit_Screen</targetReference>
+                <targetReference>Set_Output_isSuccess</targetReference>
             </connector>
             <label>Is Permit Success</label>
         </rules>
@@ -560,7 +560,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Flow_FaultMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Permit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -584,7 +584,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Allowed_Permission_Set_Names</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Permit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Allowed Permission Set Names&lt;/span&gt;.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Error: Missing Allowed Permission Set Names.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -608,7 +608,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Permission</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Permit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Error: Missing permission.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -632,7 +632,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Record_Id</name>
-            <fieldText>&lt;p&gt;Flow: Portal Access - Permit&lt;/p&gt;&lt;p&gt;Error: Missing recordId.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Error: Missing recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -656,7 +656,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_User</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Permit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;User ({!recordId})&lt;/span&gt;.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Error: Missing User ({!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -680,7 +680,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Permit_User</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Permit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Failed Permit Action&lt;/p&gt;&lt;p&gt;{!permitErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Permit: Error: Failed Permit Action&lt;/p&gt;&lt;p&gt;{!permitErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -729,57 +729,6 @@
             <fieldText>Custom Permissions</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Post_Permit_Screen</name>
-        <label>(Post) Permit Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Set_Output_isSuccess</targetReference>
-        </connector>
-        <fields>
-            <name>Post_Permit_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;(Post) Permit&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>Custom_Permissions_Post</name>
-            <choiceReferences>Portal_Site_Access</choiceReferences>
-            <choiceReferences>Portal_Use_File_Actions</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>permitAssignedPermissionSets</elementReference>
-            </defaultValue>
-            <fieldText>Custom Permissions</fieldText>
-            <fieldType>MultiSelectCheckboxes</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
             <isRequired>false</isRequired>
             <styleProperties>
                 <verticalAlignment>

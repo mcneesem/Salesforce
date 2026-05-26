@@ -82,13 +82,6 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>headerDocumentId</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>015O100000G6IIpIAN</stringValue>
-        </value>
-    </constants>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -194,6 +187,11 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
+        <name>headerDocumentId</name>
+        <dataType>String</dataType>
+        <expression>{!$Setup.Portal_Access_Settings__c.HeaderDocumentId__c}</expression>
+    </formulas>
+    <formulas>
         <name>headerUrl</name>
         <dataType>String</dataType>
         <expression>&quot;https://&quot; &amp; {!myDomain} &amp; &quot;.my.salesforce.com/servlet/servlet.ImageServer?id=&quot; &amp; {!headerDocumentId} &amp; &quot;&amp;oid=&quot; &amp; {!$Organization.Id}</expression>
@@ -268,7 +266,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Flow_FaultMessage</name>
-            <fieldText>&lt;p&gt;Flow: Portal Access - Notify&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Notify: Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -292,7 +290,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Permission</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Notify&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Notify: Error: Missing permission.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -316,7 +314,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Portal_User</name>
-            <fieldText>&lt;p&gt;Flow: Portal Access - Notify&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Error: Missing Portal User ({!recordId}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Notify: Error: Missing Portal User ({!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -340,7 +338,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Record_Id</name>
-            <fieldText>&lt;p&gt;Flow: Portal Access - Notify&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Error: Missing recordId.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Notify: Error: Missing recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>

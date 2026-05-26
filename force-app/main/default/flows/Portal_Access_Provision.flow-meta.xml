@@ -207,7 +207,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Post_Provision_Screen</targetReference>
+            <targetReference>Set_Output_portalUserId</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -360,7 +360,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Provision_Screen</targetReference>
+                <targetReference>Check_Contact_Certinia</targetReference>
             </connector>
             <label>Already Provisioned</label>
         </rules>
@@ -495,7 +495,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Post_Provision_Screen</targetReference>
+            <targetReference>Contact_Provision_Screen</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Contact_Certinia</targetReference>
@@ -503,6 +503,33 @@
         <inputReference>recordContact</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Contact_Provision_Screen</name>
+        <label>(Contact) Provision Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Set_Output_portalUserId</targetReference>
+        </connector>
+        <fields>
+            <name>Contact_Provision_Display_Text</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Provision&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;- Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact (Id={!recordContact.Id})&lt;/p&gt;&lt;p&gt;- Portal Alias: {!recordContact.Portal_Alias__c}&lt;/p&gt;&lt;p&gt;- Salesforce User: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.pse__Salesforce_User__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Error_Screen_Flow_FaultMessage</name>
         <label>Error Screen: Flow FaultMessage</label>
@@ -513,7 +540,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Flow_FaultMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -537,7 +564,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Account_Contact_Relationship</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Error: Missing Account Contact Relationship ({!recordId}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing Account Contact Relationship ({!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -561,7 +588,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Contact</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing Contact {!Get_Account_Contact_Relationship.ContactId}.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing Contact {!Get_Account_Contact_Relationship.ContactId}.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -585,7 +612,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Permission</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing permission.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -609,7 +636,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Portal_User</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing Portal User (&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!portalUserId})&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing Portal User ({!portalUserId})&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -633,7 +660,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Portal_User_Id</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing Portal User Id&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!portalUserErrorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing Portal User Id&lt;/p&gt;&lt;p&gt;{!portalUserErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -657,34 +684,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Record_Id</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Provision&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing recordId.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Post_Provision_Screen</name>
-        <label>(Post) Provision Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Set_Output_portalUserId</targetReference>
-        </connector>
-        <fields>
-            <name>Post_Provision_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;(Post) Provision&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;- Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact (Id={!recordContact.Id})&lt;/p&gt;&lt;p&gt;- Portal Alias: {!recordContact.Portal_Alias__c}&lt;/p&gt;&lt;p&gt;- Salesforce User: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.pse__Salesforce_User__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Provision: Error: Missing recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -707,7 +707,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Check_Contact_Certinia</targetReference>
+            <targetReference>Set_Output_portalUserId</targetReference>
         </connector>
         <fields>
             <name>Provision_Display_Text</name>

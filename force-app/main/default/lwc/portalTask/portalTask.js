@@ -5,7 +5,9 @@ import Toast from "lightning/toast";
 import { deleteRecord , updateRecord } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
+import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
 import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
+import PORTAL_TASK_STATUS_FIELD from "@salesforce/schema/Portal_Task__c.Status__c";
 import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
 import PORTAL_TASK_VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
 import PORTAL_TASK_VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer__c";
@@ -52,6 +54,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get updateRecordInput() {
         const fields = {};
         fields[PORTAL_TASK_ID_FIELD.fieldApiName] = this.recordId;
+        if ( !this.hasProjectTask ) {
+            fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
+        }
         if ( this.showValueInput ) {
             if ( this.showInputDate ) {
                 fields[PORTAL_TASK_VALUE_DATE_FIELD.fieldApiName] = this.recordValue;
@@ -83,6 +88,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     toggleVisibleBody( event ) {
         this.stopPropagation( event );
         this.isVisibleBody = !this.isVisibleBody;
+        this.modified();
     }
     handleClickAccordion( event ) {
         if ( !this.isVisibleBody ) {
@@ -99,10 +105,16 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( this.record?.fields?.Portal_Guidance__c?.value );
     }
     get isCompleted() {
-        return ( this.record?.fields?.Status__c?.value === "Completed" );
+        return ( this.status === "Completed" );
     }
-    get isCompletedProject() {
-        return this.isCompleted;
+    get status() {
+        return ( this.record?.fields?.Status__c?.value );
+    }
+    get isEditable() {
+        return ( this.record?.fields?.Is_Editable__c?.value );
+    }
+    get hasProjectTask() {
+        return ( this.record?.fields?.Has_Project_Task__c?.value );
     }
 
     @api variant;
@@ -192,7 +204,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isInputDisabled() {
-        return ( this.isLoading || this.isCompletedProject );
+        return ( this.isLoading || !this.isEditable );
     }
 
     get saveButtonVariant() {
@@ -200,7 +212,10 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isSaveDisabled() {
-        return ( this.isLoading || ( this.inputValue == this.recordValue ) );
+        return (
+            this.isLoading
+            || ( this.showValueInput && ( this.inputValue == this.recordValue ) )
+        );
     }
 
     @api saveVariant; // auto, icon, text...
@@ -249,8 +264,18 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( viewErrorPanel === true );
     }
 
-    handleLogInfo( log , message ) {
-        // suppress logging failures...
+    async handleLogInfo( log , message ) {
+        try {
+            await logInfo(
+                {
+                    className: 'PortalTask' ,
+                    methodName: log ,
+                    info: message ,
+                }
+            );
+        } catch ( error ) {
+            // suppress logging failures...
+        }
     }
 
     //
@@ -296,6 +321,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         if ( event?.detail?.files?.length ) {
             this.showToastSuccess( "Success" , "File Uploaded" );
             this.modified();
+            if ( !this.hasProjectTask && this.isAutoSaveEnabled ) {
+                this.handleSave(); // auto-complete orphaned Portal Tasks...
+            }
         }
     }
 
