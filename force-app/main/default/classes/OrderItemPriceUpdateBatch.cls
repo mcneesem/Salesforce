@@ -40,7 +40,6 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
 
     private static final String SUCCESS = '-Success';
     private static final String FAIL = '-Fail';
-    private static final String PERCENT = 'Percentage';
     private static final String AMOUNT = 'Amount';
     private static final String PER_UNIT = 'PerUnit';
     private static final String FLAT_FEE = 'FlatFee';
@@ -324,16 +323,13 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 increaseType = op.Per_Unit_Price_Increase_Type__c;
                 increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
             }
-            Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
-            //update price field
-            if ( increaseType != null ) {
-                Decimal currPrice = ( ( (Decimal)record.get( 'SBQQ__Price__c' ) != null ) ? (Decimal)record.get( 'SBQQ__Price__c' ) : 0 );
-                record.put(
-                    'SBQQ__Price__c' ,
-                    (increaseType == PERCENT) ? ( currPrice * increaseFactor ) : ( currPrice + increaseValue )
-                );
-                record.put( 'Is_Price_Updated__c' , true );
-            }
+            OrderItemPriceUpdateBatch.priceCalculationHelper(
+                increaseValue ,
+                increaseType ,
+                record ,
+                new List<String>{ 'SBQQ__Price__c' }
+            );
+            record.put( 'Is_Price_Updated__c' , true );
         }
     }
 
@@ -358,21 +354,43 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 {
                     continue;
                 }
-                //check increase type for percent/amount
-                String increaseType = op.Per_Unit_Price_Increase_Type__c;
-                //use 0 if increaseVaue is null
-                Decimal increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
-                Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
-                //update all price fields
-                for ( String field : subsPriceFields ) {
-                    Decimal price = ( ( (Decimal)sub.get( field ) != null ) ? (Decimal)sub.get( field ) : 0 );
-                    sub.put(
-                        field ,
-                        ( ( increaseType == PERCENT ) ? ( price * increaseFactor ) : ( price + increaseValue ) )
-                    );
-                }
-                //mark record as processed
+                OrderItemPriceUpdateBatch.priceCalculationHelper(
+                    op.Per_Unit_Price_Increase_Value__c ,
+                    op.Per_Unit_Price_Increase_Type__c ,
+                    sub ,
+                    subsPriceFields
+                );
                 sub.put( 'Is_Price_Updated__c' , true );
+            }
+        }
+    }
+
+    //method to help with price calculation
+    private static void priceCalculationHelper(
+        Decimal increaseValue ,
+        String increaseType ,
+        sObject record ,
+        List<String> fields
+        )
+    {
+        if ( ( increaseValue != null )
+            && String.isNotBlank( increaseType )
+            && ( record != null )
+            && ( fields != null )
+            && ( !fields.isEmpty() )
+            )
+        {
+            Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
+            for ( String field : fields ) {
+                Decimal price = 0;
+                if ( record.get( field ) != null ) {
+                    price = (Decimal)record.get( field );
+                    Decimal value = ( price + increaseValue );
+                    if ( increaseType == 'Percentage' ) {
+                        value = ( price * increaseFactor ).setScale( 2 , System.RoundingMode.HALF_UP );
+                    }
+                    record.put( field , value );
+                }
             }
         }
     }
@@ -403,35 +421,35 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
             && String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c )
             )
         {
-            String monthlyType = op.Monthly_Minimum_Price_Increase_Type__c;
-            //if increase value is null assign 0
-            Decimal monthlyIncrease = ( ( op.Monthly_Minimum_Price_Increase_Value__c != null ) ? op.Monthly_Minimum_Price_Increase_Value__c : 0 );
-            Decimal monthlyFactor = ( 1 + ( monthlyIncrease / 100 ) );
-            //check current price
-            Decimal currPrice = ( ( op.NSP_Consumption_Rate_Flat_Price__c != null ) ? op.NSP_Consumption_Rate_Flat_Price__c : 0 );
-            //update current price
-            op.NSP_Consumption_Rate_Flat_Price__c = ( monthlyType == PERCENT ) ? ( currPrice * monthlyFactor ) : ( currPrice + monthlyIncrease );
+            Decimal value = 0;
+            if ( op.Monthly_Minimum_Price_Increase_Value__c != null ) {
+                value = op.Monthly_Minimum_Price_Increase_Value__c;
+            }
+            OrderItemPriceUpdateBatch.priceCalculationHelper(
+                value ,
+                op.Monthly_Minimum_Price_Increase_Type__c ,
+                op ,
+                new List<String>{ 'NSP_Consumption_Rate_Flat_Price__c' }
+            );
         }
     }
 
     //update OrderItem Per unit prices
     private static void populatePerUnitPrices( OrderItem op ) {
         if ( ( op != null )
-            && String.isNotBlank(op.Per_Unit_Price_Increase_Type__c )
+            && String.isNotBlank( op.Per_Unit_Price_Increase_Type__c )
             )
         {
-            String increaseType = op.Per_Unit_Price_Increase_Type__c;
-            Decimal increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
-            Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
-            //update all price fields
-            for ( String priceField : opPriceFields ) {
-                //get current price
-                Decimal price = ( ( (Decimal)op.get( priceField ) != null ) ? (Decimal)op.get( priceField ) : 0 );
-                op.put(
-                    priceField ,
-                    ( ( increaseType == PERCENT ) ? ( price * increaseFactor ) : ( price + increaseValue ) )
-                );
+            Decimal value = 0;
+            if ( op.Per_Unit_Price_Increase_Value__c != null ) {
+                value = op.Per_Unit_Price_Increase_Value__c;
             }
+            OrderItemPriceUpdateBatch.priceCalculationHelper(
+                value ,
+                op.Per_Unit_Price_Increase_Type__c ,
+                op ,
+                opPriceFields
+            );
         }
     }
 
