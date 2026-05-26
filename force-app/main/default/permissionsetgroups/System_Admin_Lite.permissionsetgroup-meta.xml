@@ -34,6 +34,8 @@
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_FLSA_PermissionSet</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
+    <permissionSets>NSP_Separation_Agreement_Create_View</permissionSets>
+    <permissionSets>NSP_Separation_Agreement_Permission_Set</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
     <permissionSets>Onboarding_Profile_Edit</permissionSets>
