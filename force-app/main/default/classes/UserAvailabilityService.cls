@@ -401,9 +401,9 @@ public with sharing class UserAvailabilityService {
             'Schedule_Seller_HRScale_MidMarket' => 120 ,
             'Schedule_Seller_HR360_Enterprise' => 90 ,
             'Schedule_Seller_HRCore_Enterprise' => 90 ,
-            'Schedule_Seller_Performance_Management_Time_Attendance' => 60 ,
             'Schedule_Seller_Applicant_Tracking' => 30 ,
-            'Schedule_Seller_Organizational_Planning' => 30
+            'Schedule_Seller_Organizational_Planning' => 30 ,
+            'Schedule_Seller_Multiple_Products' => 60
         };
         //
         Integer stepMinutes = 60;

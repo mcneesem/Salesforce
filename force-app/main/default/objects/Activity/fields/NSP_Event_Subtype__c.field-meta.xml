@@ -116,11 +116,6 @@
                 <label>Performance Management</label>
             </value>
             <value>
-                <fullName>Performance Management / Time &amp; Attendance</fullName>
-                <default>false</default>
-                <label>Performance Management / Time &amp; Attendance</label>
-            </value>
-            <value>
                 <fullName>Applicant Tracking</fullName>
                 <default>false</default>
                 <label>Applicant Tracking</label>
@@ -129,6 +124,11 @@
                 <fullName>Organizational Planning</fullName>
                 <default>false</default>
                 <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Multiple Products</fullName>
+                <default>false</default>
+                <label>Multiple Products</label>
             </value>
             <value>
                 <fullName>Email</fullName>
@@ -322,15 +322,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Demo</controllingFieldValue>
-            <valueName>Performance Management / Time &amp; Attendance</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Demo</controllingFieldValue>
             <valueName>Applicant Tracking</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Demo</controllingFieldValue>
             <valueName>Organizational Planning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Multiple Products</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

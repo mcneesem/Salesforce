@@ -90,9 +90,9 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         const extended = [
             { label: 'Time and Attendance' , value: 'Schedule_Seller_Time_Attendance' } ,
             { label: 'Performance Management' , value: 'Schedule_Seller_Performance_Management' } ,
-            { label: 'Performance Management / Time & Attendance' , value: 'Schedule_Seller_Performance_Management_Time_Attendance' } ,
             { label: 'Applicant Tracking' , value: 'Schedule_Seller_Applicant_Tracking' } ,
-            { label: 'Organizational Planning' , value: 'Schedule_Seller_Organizational_Planning' }
+            { label: 'Organizational Planning' , value: 'Schedule_Seller_Organizational_Planning' } ,
+            { label: 'Multiple Products' , value: 'Schedule_Seller_Multiple_Products' } ,
         ];
         // Pick base list by segment
         let base = baseBySeg.Default;
