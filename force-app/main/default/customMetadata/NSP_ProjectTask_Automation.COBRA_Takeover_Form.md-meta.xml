@@ -3,6 +3,10 @@
     <label>COBRA_Takeover_Form</label>
     <protected>false</protected>
     <values>
+        <field>Milestone_Owner_Type__c</field>
+        <value xsi:type="xsd:string">ProjectManager</value>
+    </values>
+    <values>
         <field>NSP_Category__c</field>
         <value xsi:type="xsd:string">COBRA</value>
     </values>
