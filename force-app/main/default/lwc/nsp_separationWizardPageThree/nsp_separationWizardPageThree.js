@@ -257,6 +257,7 @@ export default class nsp_separationWizardPageThree extends LightningElement {
                 this.subClientNumber = null;
                 this.employeeStatus = null;
                 this.terminationDate = null;
+                this.Work_State__c =null;
             }
         }
         if(event.currentTarget.name == 'NSP_Sub_Client__c'){
@@ -285,22 +286,35 @@ export default class nsp_separationWizardPageThree extends LightningElement {
         }
     }
 
-    async handleWorkState(subclientContact){
-        if(subclientContact?.Id){
+    async handleWorkState( subclientContact ) {
+        if ( subclientContact?.Id ) {
             this.subClientContactId = subclientContact.Id;
             try {
-                const result = await getWorkState({
-                    subClientContactId: subclientContact.Id,
-                    contactId: this.WSEE
-                });
-                this.subClientContactAddress = result?.Id;
-            } catch(error){
+                const result = await getWorkState(
+                    {
+                        subClientContactId: subclientContact.Id ,
+                        contactId: this.WSEE
+                    }
+                );
+                if ( result?.Id ) {
+                    this.subClientContactAddress = result.Id;
+                } else {
+                    this.subClientContactAddress = null;
+                }
+                if ( result?.NSP_State__c ) {
+                    this.Work_State__c = result.NSP_State__c;
+                } else {
+                    this.Work_State__c = null;
+                }
+            } catch ( error ) {
                 this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error!!',
-                        message: error.body?.message || error.message,
-                        variant: 'error'
-                    })
+                    new ShowToastEvent(
+                        {
+                            title: 'Error!!' ,
+                            message: error.body?.message || error.message ,
+                            variant: 'error'
+                        }
+                    )
                 );
             }
         }
@@ -408,6 +422,7 @@ export default class nsp_separationWizardPageThree extends LightningElement {
             this.contactName ='';
             this.WSEE = null;
             this.NSP_Sub_Client__c = null;
+            this.Work_State__c = null;
             this.subClientOptions = [];
             this.subClientContactMap = new Map();
         }
