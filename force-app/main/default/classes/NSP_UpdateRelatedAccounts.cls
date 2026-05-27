@@ -1,8 +1,39 @@
 // intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
 // ~ Sales Engineers updating Opportunity records do not neccessariy have access to the associated Account record...
 public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
-    // test w/ NSP_UpdateRelatedAccountsTest (94%)
+    // test w/ NSP_UpdateRelatedAccountsTest (93%)
     // test w/ NSP_OpportunityTriggerHelperTest (64%)
+
+    //
+    // Invocable
+    //
+
+    @InvocableMethod(label='Update Related Accounts' description='Centralize updates from Flow for Account.NSP_Last_Updated__c (action=updateRelatedAccounts) and Account.NSP_Sales_Service_Account_Status__c (action=updateAccountStatus).')
+    public static void invoke( List<FlowInput> inputs ) {
+        String mode = 'updateRelatedAccounts';
+        Set<String> accountIds = new Set<String>();
+        if ( ( inputs != null ) && !inputs.isEmpty() ) {
+            for ( FlowInput input : inputs ) {
+                if ( ( input.action == 'updateRelatedAccounts' )
+                    || ( input.action == 'updateAccountStatus' )
+                    )
+                {
+                    mode = input.action;
+                }
+                if ( String.isNotBlank( input.accountId ) ) {
+                    accountIds.add( input.accountId );
+                }
+            }
+        }
+        NSP_UpdateRelatedAccounts.enqueueJob( accountIds , mode );
+    }
+
+    public class FlowInput {
+        @InvocableVariable(label='Account Id' required=true)
+        public String accountId;
+        @InvocableVariable(label='Action' defaultValue='updateRelatedAccounts')
+        public String action;
+    }
 
     //
     // Queueable
