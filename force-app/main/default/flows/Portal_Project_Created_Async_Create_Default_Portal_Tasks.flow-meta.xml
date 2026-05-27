@@ -3,111 +3,47 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <description>Set default values for Business Inception Date</description>
-        <name>Assign_Task_Business_Inception_Date</name>
-        <label>Assign Task : Business Inception Date</label>
+        <name>Assign_Default_Tasks_Collection</name>
+        <label>Assign : Default Tasks Collection</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portaltask_BusInceptionDate.Name</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>defaultTaskNames</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>Business Inception Date</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>r_portaltask_BusInceptionDate.Portal_Project__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portaltask_BusInceptionDate.Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Company Setup</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portaltask_BusInceptionDate.Action__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Date</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Assign_Task_Regular_Rate_Of_Pay</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Task_Collection</name>
-        <label>Assign : Task Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>rc_portaltasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
-            <value>
-                <elementReference>r_portaltask_BusInceptionDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>rc_portaltasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>r_portaltask_regrateofpay</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Default_Portal_Task</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Set default values for Regular Rate Of Pay</description>
-        <name>Assign_Task_Regular_Rate_Of_Pay</name>
-        <label>Assign Task : Regular Rate Of Pay</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portaltask_regrateofpay.Name</assignToReference>
-            <operator>Assign</operator>
             <value>
                 <stringValue>Regular Rate Of Pay</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>r_portaltask_regrateofpay.Portal_Project__c</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>defaultTaskNames</assignToReference>
+            <operator>Add</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <stringValue>Additional Documentation</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>r_portaltask_regrateofpay.Type__c</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>defaultTaskNames</assignToReference>
+            <operator>Add</operator>
             <value>
-                <stringValue>Employee Setup</stringValue>
+                <stringValue>Employee Payroll Documentation</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Assign_Task_Collection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Create_Default_Portal_Task</name>
-        <label>Set Fault Element : Create_Default_Portal_Task</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>defaultTaskNames</assignToReference>
+            <operator>Add</operator>
             <value>
-                <stringValue>Create_Default_Portal_Task</stringValue>
+                <stringValue>IRS Assignment Letter</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
         </connector>
     </assignments>
     <description>New Client Portal: Create Default Portal Tasks</description>
@@ -133,17 +69,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <description>Create Business Inception Date</description>
-        <name>Create_Default_Portal_Task</name>
-        <label>Create Default Portal Task</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Create_Default_Portal_Task</targetReference>
-        </faultConnector>
-        <inputReference>rc_portaltasks</inputReference>
-    </recordCreates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -166,7 +91,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Assign_Task_Business_Inception_Date</targetReference>
+                <targetReference>Assign_Default_Tasks_Collection</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -174,62 +99,37 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <description>Fault Handler</description>
-        <name>Insperity_Fault_Handler_Subflow</name>
-        <label>Insperity Fault Handler Subflow</label>
+        <name>Portal_Project_Subflow_Create_Default_Portal_Tasks</name>
+        <label>Portal Project - Subflow - Create Default Portal Tasks</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <flowName>Portal_Project_Subflow_Create_Default_Portal_Tasks</flowName>
         <inputAssignments>
-            <name>faultElement</name>
+            <name>defaultTaskNames</name>
             <value>
-                <elementReference>FaultElement</elementReference>
+                <elementReference>defaultTaskNames</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultFlow</name>
+            <name>portalProjectId</name>
             <value>
-                <stringValue>Portal_Project_Created_Async_Create_Default_Portal_Tasks</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <description>Collection of default tasks</description>
+        <name>defaultTaskNames</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Business Inception Date Portal Task</description>
-        <name>r_portaltask_BusInceptionDate</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>Regular Rate of Pay</description>
-        <name>r_portaltask_regrateofpay</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <name>rc_portaltasks</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
     </variables>
 </Flow>
