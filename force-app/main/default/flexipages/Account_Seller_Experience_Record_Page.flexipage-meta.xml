@@ -227,6 +227,9 @@
                             <value>Account.Manage_Order</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>CustomButton.Account.Send_For_Signature</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.DNB_Connect_Data_Refresh</value>
                         </valueListItems>
                         <valueListItems>
