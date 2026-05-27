@@ -130,7 +130,7 @@ public with sharing class NSP_ErrorLogHandler {
     // SUMMARIZE DATABASE RESULTS
     //
 
-    private static List<String> summarizeDatabaseErrors( List<Database.Error> errors , Id recordId ) {
+    public static List<String> summarizeDatabaseErrors( List<Database.Error> errors , Id recordId ) {
         List<String> messages = new List<String>();
         if ( ( errors != null ) && !errors.isEmpty() ) {
             for ( Database.Error error : errors ) {
