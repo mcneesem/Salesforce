@@ -79,8 +79,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Create_Content_Document_Links</name>
-        <label>Set Fault Element For Create Content Document Links</label>
+        <name>Set_Fault_Element_Create_Content_Document_Links</name>
+        <label>Set Fault Element: Create_Content_Document_Links</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -95,8 +95,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Create_Portal_Resources</name>
-        <label>Set Fault Element For Create Portal Resources</label>
+        <name>Set_Fault_Element_Create_Portal_Resources</name>
+        <label>Set Fault Element: Create_Portal_Resources</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -112,8 +112,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Get_Content_Document</name>
-        <label>Set Fault Element For Get Content Document</label>
+        <name>Set_Fault_Element_Get_Content_Document</name>
+        <label>Set Fault Element: Get_Content_Document</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -129,8 +129,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Get_Content_Documents</name>
-        <label>Set Fault Element For Get Content Documents</label>
+        <name>Set_Fault_Element_Get_Content_Documents</name>
+        <label>Set Fault Element: Get_Content_Documents</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -146,32 +146,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Get_Documents_Links</name>
-        <label>Set Fault Element For Get Documents Links</label>
+        <name>Set_Fault_Element_Get_Content_Folder_Members</name>
+        <label>Set Fault Element: Get_Content_Folder_Members</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Documents_Links</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_For_Get_Portal_Library</name>
-        <label>Set Fault Element For Get Portal Library</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Portal_Library</stringValue>
+                <stringValue>Get_Content_Folder_Members</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -239,6 +222,122 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Content_Documents</name>
+        <label>Check Content Documents</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Content_Documents</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Content_Documents</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Content_Documents</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Portal_Resource_Collection</targetReference>
+            </connector>
+            <label>Has Content Documents</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Content_Folder_Members</name>
+        <label>Check Content Folder Members</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Content_Folder_Members</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Content_Folder_Members</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Content_Folder_Members</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Library_Folder_Content_Document_Ids</targetReference>
+            </connector>
+            <label>Has Content Folder Members</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Library_Folder_Content_Document_Ids</name>
+        <label>Check Library Folder Content Document Ids</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Library_Folder_Content_Document_Ids</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Library_Folder_Content_Document_Ids</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Library_Folder_Content_Document_Ids</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Content_Documents</targetReference>
+            </connector>
+            <label>Has Library Folder Content Document Ids</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Portal_Resource_Collection</name>
+        <label>Check Portal Resource Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Portal_Resource_Collection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Portal_Resource_Collection</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Portal_Resource_Collection</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Static_Resource_HR360_Employee_Administration_Guide</targetReference>
+            </connector>
+            <label>Has Portal Resource Collection</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_Content_Document</name>
         <label>Validate Content Document</label>
         <locationX>0</locationX>
@@ -264,115 +363,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Validate_Content_Document_Ids</name>
-        <label>Validate Content Document Ids</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Content_Document_Ids</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Content_Document_Ids</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Content_Document_Ids</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Content_Documents</targetReference>
-            </connector>
-            <label>Valid Content Document Ids</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Content_Documents</name>
-        <label>Validate Content Documents</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Content_Documents</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Content_Documents</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Content_Documents</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Portal_Resource_Collection</targetReference>
-            </connector>
-            <label>Valid Content Documents</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Document_Links</name>
-        <label>Validate Document Links</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Document_Links</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Documents_Links</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Documents_Links</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Content_Document_Ids</targetReference>
-            </connector>
-            <label>Valid Document Links</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Portal_Library</name>
-        <label>Validate Portal Library</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Portal_Library</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Portal_Library</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Documents_Links</targetReference>
-            </connector>
-            <label>Valid Portal Library</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Validate_Portal_Project</name>
         <label>Validate Portal Project</label>
         <locationX>0</locationX>
@@ -389,38 +379,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Portal_Library</targetReference>
+                <targetReference>Get_Content_Folder_Members</targetReference>
             </connector>
             <label>Valid Portal Project</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Portal_Resource_Collection</name>
-        <label>Validate Portal Resource Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Portal_Resource_Collection</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Portal_Resource_Collection</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Portal_Resource_Collection</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Static_Resource_HR360_Employee_Administration_Guide</targetReference>
-            </connector>
-            <label>Valid Portal Resource Collection</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -465,7 +426,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Create_Content_Document_Links</targetReference>
+            <targetReference>Set_Fault_Element_Create_Content_Document_Links</targetReference>
         </faultConnector>
         <inputReference>contentDocumentLinks</inputReference>
     </recordCreates>
@@ -478,7 +439,7 @@
             <targetReference>Iterate_Over_Portal_Resources</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Create_Portal_Resources</targetReference>
+            <targetReference>Set_Fault_Element_Create_Portal_Resources</targetReference>
         </faultConnector>
         <inputReference>Portal_Resource_Collection</inputReference>
     </recordCreates>
@@ -492,7 +453,7 @@
             <targetReference>Validate_Content_Document</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Content_Document</targetReference>
+            <targetReference>Set_Fault_Element_Get_Content_Document</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -506,7 +467,7 @@
             <field>Id</field>
             <operator>In</operator>
             <value>
-                <elementReference>Content_Document_Ids</elementReference>
+                <elementReference>Library_Folder_Content_Document_Ids</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -521,17 +482,17 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validate_Content_Documents</targetReference>
+            <targetReference>Check_Content_Documents</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Content_Documents</targetReference>
+            <targetReference>Set_Fault_Element_Get_Content_Documents</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>In</operator>
             <value>
-                <elementReference>Content_Document_Ids</elementReference>
+                <elementReference>Library_Folder_Content_Document_Ids</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -541,54 +502,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Documents_Links</name>
-        <label>Get Document Links</label>
+        <name>Get_Content_Folder_Members</name>
+        <label>Get Content Folder Members</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validate_Document_Links</targetReference>
+            <targetReference>Check_Content_Folder_Members</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Documents_Links</targetReference>
+            <targetReference>Set_Fault_Element_Get_Content_Folder_Members</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>LinkedEntityId</field>
+            <field>ParentContentFolderId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Portal_Library.Id</elementReference>
+                <elementReference>$Setup.Portal_Resource_Settings__c.StaticResourcesFolderId__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>ContentDocumentLink</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>ContentDocumentId</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Portal_Library</name>
-        <label>Get Portal Library</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Validate_Portal_Library</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Portal_Library</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Portal Library</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>ContentWorkspace</object>
-        <queriedFields>Id</queriedFields>
+        <object>ContentFolderMember</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -625,12 +559,12 @@
         </inputAssignments>
     </subflows>
     <transforms>
-        <name>Content_Document_Ids</name>
-        <label>Content Document Ids</label>
+        <name>Library_Folder_Content_Document_Ids</name>
+        <label>Library Folder Content Document Ids</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Validate_Content_Document_Ids</targetReference>
+            <targetReference>Check_Library_Folder_Content_Document_Ids</targetReference>
         </connector>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
@@ -640,7 +574,7 @@
             <transformValueActions>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>Get_Documents_Links[$EachItem].ContentDocumentId</elementReference>
+                    <elementReference>Get_Content_Folder_Members[$EachItem].ChildRecordId</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -651,7 +585,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Validate_Portal_Resource_Collection</targetReference>
+            <targetReference>Check_Portal_Resource_Collection</targetReference>
         </connector>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
