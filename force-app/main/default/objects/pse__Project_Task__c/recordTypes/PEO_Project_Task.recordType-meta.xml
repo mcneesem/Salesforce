@@ -310,6 +310,68 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Portal_Task_Action__c</picklist>
+        <values>
+            <fullName>Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DateTime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Docusign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>File</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Select Forms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Text</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upload Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View Handbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View Information</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Portal_Task_Type__c</picklist>
+        <values>
+            <fullName>Company Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Transition Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Setup</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Responsible_Party__c</picklist>
         <values>
             <fullName>RET Compliance</fullName>
