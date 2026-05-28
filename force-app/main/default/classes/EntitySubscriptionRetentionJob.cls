@@ -1,4 +1,4 @@
-Public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ EntitySubscriptionRetentionJobTest (80%)
 
     //
