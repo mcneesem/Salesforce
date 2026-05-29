@@ -142,7 +142,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Credit_Default__c.PS_Phone_Number__c</field>
+        <field>Credit_Default__c.Payroll_Specialist_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
