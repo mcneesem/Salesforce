@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Package__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Service Package</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HRScale</fullName>
+                <default>true</default>
+                <label>HRScale</label>
+            </value>
+            <value>
+                <fullName>WO - Full Bundle</fullName>
+                <default>false</default>
+                <label>WO - Full Bundle</label>
+            </value>
+            <value>
+                <fullName>WO - Bundle Plus</fullName>
+                <default>false</default>
+                <label>WO - Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WS - Bundle Plus</fullName>
+                <default>false</default>
+                <label>WS - Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WO - AS Agency</fullName>
+                <default>false</default>
+                <label>WO - AS Agency</label>
+            </value>
+            <value>
+                <fullName>WS - Asset Plus Corp</fullName>
+                <default>false</default>
+                <label>WS - Asset Plus Corp</label>
+            </value>
+            <value>
+                <fullName>WS - Asset Plus Prop</fullName>
+                <default>false</default>
+                <label>WS - Asset Plus Prop</label>
+            </value>
+            <value>
+                <fullName>WO - WD Bundle Plus</fullName>
+                <default>false</default>
+                <label>WO - WD Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WS - WD Bundle Plus</fullName>
+                <default>false</default>
+                <label>WS - WD Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WO - WD Full Bundle</fullName>
+                <default>false</default>
+                <label>WO - WD Full Bundle</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

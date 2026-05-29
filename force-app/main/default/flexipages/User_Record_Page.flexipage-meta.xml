@@ -277,6 +277,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>renewalsGenerateOpportunities</componentName>
+                <identifier>c_renewalsGenerateOpportunities</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
