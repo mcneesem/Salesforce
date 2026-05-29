@@ -57,6 +57,16 @@
                 <default>false</default>
                 <label>Closed - Moved</label>
             </value>
+            <value>
+                <fullName>Pending - Insperity</fullName>
+                <default>false</default>
+                <label>Pending - Insperity</label>
+            </value>
+            <value>
+                <fullName>Pending - Client</fullName>
+                <default>false</default>
+                <label>Pending - Client</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
