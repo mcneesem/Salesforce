@@ -1,196 +1,161 @@
 global with sharing class CLMDocumentRequest {
-    
-    global CLMDocumentRequest(string documentId,string documentPath, SpringCMService svc, string apiURL)
-    {
-        pid = documentId;
-        ppath = documentPath;
-        scmsvc = svc;
-        aURL = apiURL;
+    // test w/ SpringCMTests (78%)
 
-        System.debug(apiURL);
+    global CLMDocumentRequest( String documentId , String documentPath , SpringCMService svc , String apiURL ) {
+        this.pid = documentId;
+        this.ppath = documentPath;
+        this.scmsvc = svc;
+        this.aURL = apiURL;
     }
 
-    global CLMDocumentRequest(CLMDocument document, SpringCMService svc)
-    {   
+    global CLMDocumentRequest( CLMDocument document , SpringCMService svc ) {
         this.pdocument = document;
-        this.pid = svc.getIDfromHref(document.Href);
-        scmsvc = svc;
-        //aURL = apiURL;
-
+        this.pid = svc.getIDfromHref( document.Href );
+        this.scmsvc = svc;
     }
 
-        private string pid;
-        private string ppath;
-        private SpringCMService scmsvc;
-        private string pdc;
-        private string pav;
-        private string aURL;
-        private CLMDocument pdocument;
-        private Boolean pexpandParentFolder;
-        private Boolean pexpandDocuments;
-        private Boolean pexpandFolders;
-        private Boolean pexpandPath;
-        private Boolean pexpandEosParentInfo;
-        private Boolean pexpandEosInfo;
-        private Boolean pexpandShareLinks;
-        private Boolean pexpandAttributeGroups;
-        private Boolean pexpandSecurity;
-        private Boolean pexpandVersions;
-        private Boolean pexpandLock;
-        private Boolean pexpandDocumentProcessTrackingActivities;
-        private Boolean pexpandHistoryItems;
+    private String pid;
+    private String ppath;
+    private SpringCMService scmsvc;
+    private String pdc;
+    private String pav;
+    private String aURL;
+    private CLMDocument pdocument;
+    private Boolean pexpandParentFolder;
+    private Boolean pexpandDocuments;
+    private Boolean pexpandFolders;
+    private Boolean pexpandPath;
+    private Boolean pexpandEosParentInfo;
+    private Boolean pexpandEosInfo;
+    private Boolean pexpandShareLinks;
+    private Boolean pexpandAttributeGroups;
+    private Boolean pexpandSecurity;
+    private Boolean pexpandVersions;
+    private Boolean pexpandLock;
+    private Boolean pexpandDocumentProcessTrackingActivities;
+    private Boolean pexpandHistoryItems;
 
-        global Boolean getExpandParentFolder() {    
-            return pexpandParentFolder;
-        } 
-
-        global void setExpandParentFolder(Boolean value) { 
-            if (pexpandParentFolder != value) {
-                pdocument = null; 
-            } 
-            pexpandParentFolder = value; 
-        } 
-
-         global Boolean getExpandPath() { return pexpandPath;}
-
-         global void setExpandPath(Boolean value) {
-            if (pexpandPath != value) {
-                pdocument = null; 
-            } 
-
-            pexpandPath = value; 
-        } 
-
-
-         global Boolean getExpandEosParentInfo() { return pexpandEosParentInfo;}
-         global void setExpandEosParentInfo(Boolean value) { if (pexpandEosParentInfo != value) { pdocument = null; } pexpandEosParentInfo = value; }
-
-         global Boolean getExpandShareLinks() {return pexpandShareLinks;}
-         global void setExpandShareLinks(Boolean value) { if (pexpandShareLinks != value) { pdocument = null; } pexpandShareLinks = value; } 
-        
-         global Boolean getExpandAttributeGroups() {return pexpandAttributeGroups;}
-         global void setExpandAttributeGroups(Boolean value) { if (pexpandAttributeGroups != value) { pdocument = null; } pexpandAttributeGroups = value; }
-        
-         global Boolean getExpandHistoryItems() {return pexpandHistoryItems;} 
-         global void setExpandHistoryItems(Boolean value){ if (pexpandHistoryItems != value) { pdocument = null; } pexpandHistoryItems = value; } 
-
-         global Boolean getExpandVersions() {return pexpandVersions;} 
-         global void setExpandVersions(Boolean value){ if (pexpandVersions != value) { pdocument = null; } pexpandVersions = value; } 
-         global Boolean getExpandLock() {return pexpandLock;} 
-         global void setExpandLock(Boolean value){ if (pexpandLock != value) { pdocument = null; } pexpandLock = value; } 
-         global Boolean getExpandDocumentProcessTrackingActivities() {return pexpandDocumentProcessTrackingActivities;}
-         global void setExpandDocumentProcessTrackingActivities(Boolean value){ if (pexpandDocumentProcessTrackingActivities != value) { pdocument = null; } pexpandDocumentProcessTrackingActivities = value; } 
-
-
-         global CLMDocument getDocument()  {
-            
-                 if (pdocument == null)
-                 {
-                     this.Result();
-                 }
- 
-                 return pdocument;
-             
-         }
-
-         private CLMDocument Result()
-         {
-             if (pdocument != null)
-             {
-                 return pdocument;
-             }
-             if (!string.isEmpty(ppath))
-             {
-                
-                string js = scmsvc.requestor.Get( aURL+'/documents?path=' + EncodingUtil.urlEncode(ppath,'UTF-8') +'&' +ExpandDocument(), new Map<string, string>());
-                System.debug(js);
-                 pdocument= (CLMDocument)JSON.deserialize(js, CLMDocument.class);
-                     
-                 
-             }
-             if (pid != null)
-             {
- 
-                System.debug(aURL);
-                string jsi =  scmsvc.requestor.Get(aURL+'/documents/' + pid + '?' +ExpandDocument(), new Map<string, string>());
-                pdocument= (CLMDocument)JSON.deserialize(jsi, CLMDocument.class);
-             }
- 
-             return pdocument;
-         }
-
-         global Blob downloadDocument(String acceptType/*, String zoom, Integer page*/){
-            /*if (String.isBlank(CLMDocument.DownloadDocumentHref))
-                throw new SpringCMException('Document is not valid, missing DownloadDocumentHref, please perform find on folder or document to proceed');
-            if (String.isNotBlank(acceptType) && 'application/pdf|text/plain|image/png'.indexOf(acceptType) < 0)
-                throw new SpringCMException('Valid Document Types are: application/pdf|text/plain|image/png');
-            if (String.isNotBlank(acceptType) && acceptType.equals('image/png') && page != null && (CLMDocument.PageCount < page || page == 0))
-                throw new SpringCMException('Page requested outside of document page range');
-            if (String.isNotBlank(acceptType) && acceptType.equals('image/png') && String.isNotBlank(zoom) && 'thumbnail|50|75|100|125|150|200'.indexOf(zoom) < 0)
-                throw new SpringCMException('Valid zoom options are: thumbnail|50|75|100|125|150|200');*/
-
-            Map<String, String> headers = new Map<String, String>{'Accept' => acceptType};
-
-            System.debug('downloadDocument called for document:' + this.Result().DownloadDocumentHref);
-            String endpoint = this.Result().DownloadDocumentHref /*+
-                    (String.isBlank(zoom) ? '' : '?zoom=' + zoom) +
-                    (page == null ? '' :
-                        (String.isBlank(zoom) ? '?' : '&') +
-                    'page=' + page)*/;
-            Blob responseBody = scmsvc.requestor.GetBlob(endpoint, headers, 0);
-            if (responseBody == null) return null;
-            //System.debug(responseBody);
-            return responseBody;
-         }
-
-
-         private String ExpandDocument()
-         {
- 
-             List<String> expandString = new List<string>(); 
- 
-             if (pexpandParentFolder == true)
-             {
-                 expandString.Add('ParentFolder');
-             }
-             if (pexpandHistoryItems == true)
-             {
-                 expandString.Add('HistoryItems');
-             }
-             if (pexpandLock == true)
-             {
-                 expandString.Add('Lock');
-             }
-             if (pexpandPath == true)
-             {
-                 expandString.Add('Path');
-             }
-             if (pexpandEosParentInfo == true)
-             {
-                 expandString.Add('EosParentInfo');
-             }
-             if (pexpandDocumentProcessTrackingActivities == true)
-             {
-                 expandString.Add('DocumentProcessTrackingActivities');
-             }
-             if (pexpandShareLinks == true)
-             {
-                 expandString.Add('ShareLinks');
-             }
-             if (pexpandAttributeGroups == true)
-             {
-                 expandString.Add('AttributeGroups');
-             }
-             if (pexpandVersions == true)
-             {
-                 expandString.Add('Versions');
-             }
- 
-             if (expandString.size() == 0) { return ''; }
- 
- 
-             return 'expand='+ string.join(expandString,',');
-         }
-
-        
+    global Boolean getExpandParentFolder() {
+        return this.pexpandParentFolder;
     }
+
+    global void setExpandParentFolder( Boolean value ) {
+        if ( this.pexpandParentFolder != value ) {
+            this.pdocument = null;
+        }
+        this.pexpandParentFolder = value;
+    }
+
+    global Boolean getExpandPath() {
+        return this.pexpandPath;
+    }
+
+    global void setExpandPath( Boolean value ) {
+        if ( this.pexpandPath != value ) {
+            this.pdocument = null;
+        }
+        this.pexpandPath = value;
+    }
+
+    global Boolean getExpandEosParentInfo() { return pexpandEosParentInfo;}
+    global void setExpandEosParentInfo(Boolean value) { if (pexpandEosParentInfo != value) { this.pdocument = null; } pexpandEosParentInfo = value; }
+
+    global Boolean getExpandShareLinks() {return pexpandShareLinks;}
+    global void setExpandShareLinks(Boolean value) { if (pexpandShareLinks != value) { this.pdocument = null; } pexpandShareLinks = value; }
+
+    global Boolean getExpandAttributeGroups() {return pexpandAttributeGroups;}
+    global void setExpandAttributeGroups(Boolean value) { if (pexpandAttributeGroups != value) { this.pdocument = null; } pexpandAttributeGroups = value; }
+
+    global Boolean getExpandHistoryItems() {return pexpandHistoryItems;}
+    global void setExpandHistoryItems(Boolean value){ if (pexpandHistoryItems != value) { this.pdocument = null; } pexpandHistoryItems = value; }
+
+    global Boolean getExpandVersions() {return pexpandVersions;}
+    global void setExpandVersions(Boolean value){ if (pexpandVersions != value) { this.pdocument = null; } pexpandVersions = value; }
+
+    global Boolean getExpandLock() {return pexpandLock;}
+    global void setExpandLock(Boolean value){ if (pexpandLock != value) { this.pdocument = null; } pexpandLock = value; }
+
+    global Boolean getExpandDocumentProcessTrackingActivities() {return pexpandDocumentProcessTrackingActivities;}
+    global void setExpandDocumentProcessTrackingActivities(Boolean value){ if (pexpandDocumentProcessTrackingActivities != value) { pdocument = null; } pexpandDocumentProcessTrackingActivities = value; }
+
+    global CLMDocument getDocument() {
+        if ( this.pdocument == null ) {
+            this.result();
+        }
+        return this.pdocument;
+    }
+
+    private CLMDocument result() {
+        try {
+            if ( this.pdocument == null ) {
+                if ( !String.isEmpty( this.ppath ) ) {
+                    String js = this.scmsvc.requestor.Get(
+                        this.aURL + '/documents?path=' + EncodingUtil.urlEncode( this.ppath , 'UTF-8' ) + '&' + this.expandDocument() ,
+                        new Map<String,String>()
+                    );
+                    if ( String.isNotBlank( js ) ) {
+                        this.pdocument= (CLMDocument)JSON.deserialize( js , CLMDocument.class );
+                    }
+                }
+                if ( this.pid != null ) {
+                    String jsi =  this.scmsvc.requestor.Get(
+                        this.aURL + '/documents/' + this.pid + '?' + this.expandDocument() ,
+                        new Map<String,String>()
+                    );
+                    if ( String.isNotBlank( jsi ) ) {
+                        this.pdocument = (CLMDocument)JSON.deserialize( jsi , CLMDocument.class );
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
+        return this.pdocument;
+    }
+
+    global Blob downloadDocument( String acceptType ) {
+        return this.scmsvc.requestor.GetBlob(
+            this.result().DownloadDocumentHref ,
+            new Map<String,String>{ 'Accept' => acceptType } ,
+            0
+        );
+    }
+
+    private String expandDocument() {
+        List<String> expandString = new List<String>();
+        if ( this.pexpandParentFolder == true ) {
+            expandString.add( 'ParentFolder' );
+        }
+        if ( this.pexpandHistoryItems == true ) {
+            expandString.add( 'HistoryItems' );
+        }
+        if ( this.pexpandLock == true ) {
+            expandString.add( 'Lock' );
+        }
+        if ( this.pexpandPath == true ) {
+            expandString.add( 'Path' );
+        }
+        if ( this.pexpandEosParentInfo == true ) {
+            expandString.add( 'EosParentInfo' );
+        }
+        if ( this.pexpandDocumentProcessTrackingActivities == true ) {
+            expandString.add( 'DocumentProcessTrackingActivities' );
+        }
+        if ( this.pexpandShareLinks == true ) {
+            expandString.add( 'ShareLinks' );
+        }
+        if ( this.pexpandAttributeGroups == true ) {
+            expandString.add( 'AttributeGroups' );
+        }
+        if ( this.pexpandVersions == true ) {
+            expandString.add( 'Versions' );
+        }
+        String response = '';
+        if ( expandString.size() > 0 ) {
+            response = 'expand=' + String.join( expandString , ',' );
+        }
+        return response;
+    }
+
+}
+//
