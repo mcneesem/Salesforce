@@ -21,9 +21,9 @@
                 <label>Submitted For Approval</label>
             </value>
             <value>
-                <fullName>Resubmitted for Approval</fullName>
+                <fullName>Resubmitted For Approval</fullName>
                 <default>false</default>
-                <label>Resubmitted for Approval</label>
+                <label>Resubmitted For Approval</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>
