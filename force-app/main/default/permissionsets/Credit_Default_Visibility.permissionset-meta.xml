@@ -61,7 +61,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Credit_Default__c.Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -107,6 +107,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Credit_Default__c.Financial_Decision_Maker__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Credit_Default__c.List_Of_Actions_To_Contact_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -137,6 +142,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Credit_Default__c.PS_Phone_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Payroll_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Credit_Default__c.Provide_Background_About_Default__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -148,6 +163,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Credit_Default__c.Sales_Reps__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

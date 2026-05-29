@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Are_There_Any_Related_Clients__c</fullName>
+    <inlineHelpText>If Yes, click Save to display the Related Accounts list view.</inlineHelpText>
     <label>Are There Any Related Clients?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
