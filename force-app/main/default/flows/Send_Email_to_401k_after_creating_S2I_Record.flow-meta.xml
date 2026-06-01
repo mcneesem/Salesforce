@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_401k</name>
         <label>Send Email to 401k</label>
-        <locationX>308</locationX>
-        <locationY>431</locationY>
+        <locationX>440</locationX>
+        <locationY>384</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_to_record_email_sent</name>
         <label>Assign varFaultElement - Create_Email_Message_to_record_email_sent</label>
-        <locationX>572</locationX>
-        <locationY>647</locationY>
+        <locationX>704</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -61,16 +61,12 @@
                 <stringValue>Create_Email_Message_to_record_email_sent</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_401k</name>
         <label>Assign varFaultElement - Send_Email_to_401k</label>
-        <locationX>836</locationX>
-        <locationY>539</locationY>
+        <locationX>968</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -86,8 +82,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>352</locationX>
+        <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Send_Email_to_401k</targetReference>
         </defaultConnector>
@@ -136,8 +132,8 @@
     <recordCreates>
         <name>Create_Email_Message_to_record_email_sent</name>
         <label>Create Email Message to record email sent.</label>
-        <locationX>308</locationX>
-        <locationY>539</locationY>
+        <locationX>440</locationX>
+        <locationY>492</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Email_Message_to_record_email_sent</targetReference>
         </faultConnector>
@@ -189,19 +185,22 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </connector>
         <object>NSP_Sales_to_Implementation__c</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>836</locationX>
-        <locationY>647</locationY>
+        <locationX>968</locationX>
+        <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
