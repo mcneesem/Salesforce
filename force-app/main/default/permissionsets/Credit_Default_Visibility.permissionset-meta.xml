@@ -2,11 +2,6 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Credit_Default_Checklist_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Credit_Default_Pay_Period_Sub_Client__c.Sub_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
