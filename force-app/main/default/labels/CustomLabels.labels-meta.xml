@@ -70,6 +70,7 @@
         <shortDescription>Are you registered with the CSLB</shortDescription>
         <value>Are you registered with the CSLB (California Contractors State License Board)?</value>
     </labels>
+    <labels>
         <fullName>AvalaraSandboxAccountId</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -83,7 +84,6 @@
         <shortDescription>AvalaraSandboxLicenseKey</shortDescription>
         <value>0FE211624F764D08</value>
     </labels>
-    <labels>
     <labels>
         <fullName>BPS_Integra_Asset_Feilds</fullName>
         <categories>Stores all the fields which BPS users can edit on Integra Asset if Create Asset Perm Set is not assigned.</categories>
