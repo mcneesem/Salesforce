@@ -1,5 +1,5 @@
-public class PEO_RenewalOpportunityBatch implements  Database.Stateful,Database.Batchable<SObject> {
-    // test w/ PEO_RenewalOpportunityBatchTest (89%)
+public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Database.Batchable<SObject> {
+    // test w/ GenerateRenewalOpportunitiesJobTest (89%)
     
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth;
