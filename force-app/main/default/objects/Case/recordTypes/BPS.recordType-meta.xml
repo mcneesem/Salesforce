@@ -2530,7 +2530,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Broker Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CO Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Delay</fullName>
             <default>false</default>
         </values>
         <values>

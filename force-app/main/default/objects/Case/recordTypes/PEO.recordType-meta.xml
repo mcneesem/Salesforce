@@ -2670,6 +2670,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Broker Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Communication Issue</fullName>
             <default>false</default>
         </values>
