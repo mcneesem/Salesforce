@@ -1,5 +1,5 @@
 @IsTest
-public class PEO_RenewalOpportunityBatchTest {
+public class GenerateRenewalOpportunitiesJobTest {
 
     @testSetup
     static void setupData() {
