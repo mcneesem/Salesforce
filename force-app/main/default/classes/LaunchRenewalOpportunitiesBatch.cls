@@ -1,5 +1,5 @@
 public class LaunchRenewalOpportunitiesBatch {
-    // test w/ LaunchRenewalOpportunitiesBatchTest (100%)
+// test w/ LaunchRenewalOpportunitiesBatchTest(100%)
 
     public class MonthYearData {
         @InvocableVariable(label='Month Value' required=true)
@@ -33,7 +33,7 @@ public class LaunchRenewalOpportunitiesBatch {
 
         Integer yearNumber = Integer.valueOf(input.yearValue);
 
-        PEO_RenewalOpportunityBatch batchJob = new PEO_RenewalOpportunityBatch(monthNumber, yearNumber);
+        GenerateRenewalOpportunitiesJob batchJob = new GenerateRenewalOpportunitiesJob(monthNumber, yearNumber);
 
         Database.executeBatch(batchJob, 50);
 
