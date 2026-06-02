@@ -4,8 +4,8 @@
         <description>Send an Email to NBI IMPL Res for Assignment</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_Assignment</name>
         <label>Send Email to NBI IMPL Res for Assignment</label>
-        <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -18,7 +18,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -46,8 +46,8 @@
         <description>Send Email to NBI IMPL Res for QC Completion</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</name>
         <label>Send Email to NBI IMPL Res for QC Completion</label>
-        <locationX>182</locationX>
-        <locationY>1712</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -60,7 +60,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -88,8 +88,8 @@
         <description>Send Email to NBI res and Sales consultant for S2I completion</description>
         <name>Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</name>
         <label>Send Email to NBI res and Sales consultant for S2I completion</label>
-        <locationX>50</locationX>
-        <locationY>2534</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -108,7 +108,7 @@
         <inputParameters>
             <name>emailAddressesArray</name>
             <value>
-                <elementReference>EmailAddressCollectionOfNBIResAndSalesConsultanat</elementReference>
+                <elementReference>toAddresses</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -130,8 +130,8 @@
         <description>Send an Email to QC Rep when assigned on S2I rec</description>
         <name>Send_Email_to_QC_Rep_Assignment_Mail</name>
         <label>Send Email to QC Rep Assignment Mail</label>
-        <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -144,7 +144,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>RETRecord.NSP_QC_Rep__r.Email</elementReference>
+                <elementReference>Record.NSP_QC_Rep__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -168,13 +168,13 @@
         <nameSegment>emailSimple</nameSegment>
         <offset>0</offset>
     </actionCalls>
-    <apiVersion>55.0</apiVersion>
+    <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0</label>
-        <locationX>446</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -190,8 +190,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0</label>
-        <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -207,8 +207,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0</label>
-        <locationX>446</locationX>
-        <locationY>1928</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -224,8 +224,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0_0</label>
-        <locationX>578</locationX>
-        <locationY>2750</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -241,8 +241,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0_0</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0_0_0</label>
-        <locationX>314</locationX>
-        <locationY>2858</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -258,8 +258,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Email_Message_rec_for_S2I_completion</name>
         <label>Assign varFaultElement - Get_Email_Message_rec_for_S2I_completion</label>
-        <locationX>1370</locationX>
-        <locationY>2318</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -275,8 +275,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Email_Message_Record_for_QC_completion</name>
         <label>Assign varFaultElement - Get_Email_Message_Record_for_QC_completion</label>
-        <locationX>1634</locationX>
-        <locationY>1604</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -292,8 +292,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_Assignment</name>
         <label>Assign varFaultElement - Send_Email_to_NBI_IMPL_Res_for_Assignment</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -308,8 +308,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</name>
         <label>Assign varFaultElement - Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</label>
-        <locationX>710</locationX>
-        <locationY>1820</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -325,8 +325,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_comple</name>
         <label>Assign varFaultElement - Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</label>
-        <locationX>842</locationX>
-        <locationY>2642</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -342,8 +342,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_QC_Rep_Assignment_Mail</name>
         <label>Assign varFaultElement - Send_Email_to_QC_Rep_Assignment_Mail</label>
-        <locationX>710</locationX>
-        <locationY>1106</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -360,39 +360,32 @@
         <description>Email Address Assignmen To Collection</description>
         <name>EmailAddressAssignmenToCollection</name>
         <label>EmailAddressAssignmenToCollection</label>
-        <locationX>50</locationX>
-        <locationY>2426</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>EmailAddressCollectionOfNBIResAndSalesConsultanat</assignToReference>
+            <assignToReference>toAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>EmailAddressCollectionOfNBIResAndSalesConsultanat</assignToReference>
+            <assignToReference>toAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>RETRecord.NSP_Sales_Consultant__r.Email</elementReference>
+                <elementReference>Record.NSP_Sales_Consultant__r.Email</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>emailContatant</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>abhishek.1rn17ec003@gmail.com</stringValue>
-        </value>
-    </constants>
     <decisions>
         <description>Check if &quot;NBI IMPL Res&quot; is updated on S2I rec</description>
         <name>Check_if_NBI_IMPL_Res_is_updated</name>
         <label>Check if &quot;NBI IMPL Res&quot; is updated</label>
-        <locationX>578</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
         </defaultConnector>
@@ -401,14 +394,14 @@
             <name>isNbiImplResUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>PriorRETRecord.NSP_Implementation_NBI_Resource__c</elementReference>
@@ -423,8 +416,8 @@
     <decisions>
         <name>Check_if_NBI_IMPL_Res_is_updated_along_with_QC_Signoff_Date</name>
         <label>Check if NBI IMPL Res is updated along with QC Signoff Date</label>
-        <locationX>578</locationX>
-        <locationY>1604</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </defaultConnector>
@@ -433,14 +426,14 @@
             <name>isQcSignoffDateUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RETRecord.NSP_QC_Signoff_Date__c</leftValueReference>
+                <leftValueReference>Record.NSP_QC_Signoff_Date__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -463,8 +456,8 @@
         <description>Check if QC Rep Field Is updated on S2I record</description>
         <name>Check_If_QC_Rep_Field_Is_updated</name>
         <label>Check If QC Rep Field Is updated</label>
-        <locationX>578</locationX>
-        <locationY>890</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </defaultConnector>
@@ -473,14 +466,14 @@
             <name>isQcRepUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RETRecord.NSP_QC_Rep__c</leftValueReference>
+                <leftValueReference>Record.NSP_QC_Rep__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RETRecord.NSP_QC_Rep__c</leftValueReference>
+                <leftValueReference>Record.NSP_QC_Rep__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>PriorRETRecord.NSP_QC_Rep__c</elementReference>
@@ -496,28 +489,28 @@
         <description>checks if &quot;Sign off&quot; Date is populated along with &quot;NBI Res&quot; and &quot;Sales Consultant&quot;</description>
         <name>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</name>
         <label>Check if Sign off Date is populated along with NBI Res and Sales Consultant</label>
-        <locationX>578</locationX>
-        <locationY>2318</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>SignOff date is not populated</defaultConnectorLabel>
         <rules>
             <name>isSignOffDatepoulated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Sales_Consultant__c</leftValueReference>
+                <leftValueReference>Record.NSP_Sales_Consultant__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RETRecord.NSP_Signoff_Date__c</leftValueReference>
+                <leftValueReference>Record.NSP_Signoff_Date__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -540,8 +533,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Check_if_NBI_IMPL_Res_is_updated</targetReference>
         </defaultConnector>
@@ -562,14 +555,9 @@
     <environments>Default</environments>
     <formulas>
         <description>Url of S2I rec, triggering the flow</description>
-        <name>salesToImplementationRecUrl</name>
+        <name>recordUrl</name>
         <dataType>String</dataType>
-        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260})) + &quot;/lightning/r/NSP_Sales_to_Implementation__c/&quot; + {!RETRecord.Id} + &quot;/view&quot;</expression>
-    </formulas>
-    <formulas>
-        <name>TestCheck</name>
-        <dataType>Boolean</dataType>
-        <expression>4&gt;2</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!Record.Id}</expression>
     </formulas>
     <interviewLabel>Go ahead and create products for those that we can productize {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET-Sales-to-Implementation -Subflow - Email Alerts</label>
@@ -596,8 +584,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
         </connector>
@@ -607,7 +595,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>RETRecord.LastModifiedBy.Email</elementReference>
+                <elementReference>Record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -619,13 +607,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>RETRecord.LastModifiedDate</elementReference>
+                <elementReference>Record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -643,7 +631,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -653,8 +641,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>182</locationX>
-        <locationY>1106</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </connector>
@@ -664,7 +652,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>RETRecord.LastModifiedBy.Email</elementReference>
+                <elementReference>Record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -676,13 +664,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>RETRecord.LastModifiedDate</elementReference>
+                <elementReference>Record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -700,7 +688,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>RETRecord.NSP_QC_Rep__r.Email</elementReference>
+                <elementReference>Record.NSP_QC_Rep__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -710,8 +698,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>182</locationX>
-        <locationY>1820</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </connector>
@@ -721,7 +709,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>RETRecord.LastModifiedBy.Email</elementReference>
+                <elementReference>Record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -733,13 +721,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>RETRecord.LastModifiedDate</elementReference>
+                <elementReference>Record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -757,7 +745,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -767,8 +755,8 @@
         <description>Create Email Message Record for Email traceability for NBI Res</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for NBI Res</label>
-        <locationX>50</locationX>
-        <locationY>2642</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -778,7 +766,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>RETRecord.LastModifiedBy.Email</elementReference>
+                <elementReference>Record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -790,13 +778,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>RETRecord.LastModifiedDate</elementReference>
+                <elementReference>Record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -814,7 +802,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>RETRecord.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -824,15 +812,15 @@
         <description>Create Email Message Record for Email traceability for Sales Consultant</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for Sales Consultant</label>
-        <locationX>50</locationX>
-        <locationY>2750</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0_0</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>RETRecord.LastModifiedBy.Email</elementReference>
+                <elementReference>Record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -844,13 +832,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>RETRecord.LastModifiedDate</elementReference>
+                <elementReference>Record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -868,7 +856,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>RETRecord.NSP_Sales_Consultant__r.Email</elementReference>
+                <elementReference>Record.NSP_Sales_Consultant__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -878,8 +866,8 @@
         <description>Get Email Message rec for S2I completion , Created when first time condition met</description>
         <name>Get_Email_Message_rec_for_S2I_completion</name>
         <label>Get Email Message rec for S2I completion</label>
-        <locationX>578</locationX>
-        <locationY>2210</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</targetReference>
@@ -892,7 +880,7 @@
             <field>RelatedToId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -910,8 +898,8 @@
         <description>Get Email Message Record for QC completion</description>
         <name>Get_Email_Message_Record_for_QC_completion</name>
         <label>Get Email Message Record for QC completion</label>
-        <locationX>578</locationX>
-        <locationY>1496</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_NBI_IMPL_Res_is_updated_along_with_QC_Signoff_Date</targetReference>
@@ -924,7 +912,7 @@
             <field>RelatedToId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RETRecord.Id</elementReference>
+                <elementReference>Record.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -939,7 +927,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
@@ -949,8 +937,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>710</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -975,33 +963,45 @@
         <description>Body of the email template of NBI IMPL Res Assignment</description>
         <name>EmailbodyforNBIIMPLAssignment</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned S2I record.&amp;nbsp;Please review the Installation tab of the following record &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!salesToImplementationRecUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned S2I record.&amp;nbsp;Please review the Installation tab of the following record &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <description>Email Body for QC Completion Mail</description>
         <name>EmailBodyforQCCompletionMail</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;A S2I installation quality control has been completed.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!salesToImplementationRecUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;A S2I installation quality control has been completed.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <description>Body of Email for QC Rep Assignment</description>
         <name>EmailbodyforQCRepAssignment</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;A S2I Installation has been assigned for quality review&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!salesToImplementationRecUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;A S2I Installation has been assigned for quality review&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <description>Email Body for S2I completion</description>
         <name>EmailBodyForS2ICompletion</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;A S2I Installation has been completed by the NBI Team.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!salesToImplementationRecUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;A S2I Installation has been completed by the NBI Team.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
-        <description>Stores Email address of NBI Resource and Sales Consultant</description>
-        <name>EmailAddressCollectionOfNBIResAndSalesConsultanat</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <name>isChangedNBIResource</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isChangedQCRep</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>PriorRETRecord</name>
@@ -1012,12 +1012,20 @@
         <objectType>NSP_Sales_to_Implementation__c</objectType>
     </variables>
     <variables>
-        <name>RETRecord</name>
+        <name>Record</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Sales_to_Implementation__c</objectType>
+    </variables>
+    <variables>
+        <description>Stores Email address of NBI Resource and Sales Consultant</description>
+        <name>toAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>varFaultElement</name>
