@@ -61,6 +61,10 @@
                 <stringValue>Create_Email_Message_to_record_email_sent</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_401k</name>
