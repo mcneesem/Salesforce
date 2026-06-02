@@ -143,28 +143,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Bypass</name>
-        <label>Check Bypass</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Owner_User_vs_Queue</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Bypass</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.NSP_Service_Case__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Has Bypass</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_Group_Email</name>
         <label>Check Group Email</label>
         <locationX>0</locationX>
@@ -543,7 +521,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Check_Bypass</targetReference>
+                <targetReference>Check_Owner_User_vs_Queue</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>

@@ -5,7 +5,7 @@
                 <lightning-layout multiple-rows>
                     <lightning-layout-item size="12">
                         <lightning-formatted-date-time
-                            value={record.fields.StartDateTime__c.value}
+                            value={startDateTime}
                             month="2-digit"
                             day="2-digit"
                             year="numeric"
@@ -16,22 +16,22 @@
                     <lightning-layout-item size="12">
                         <lightning-layout>
                             <lightning-layout-item size="7">
-                                {record.fields.Name.value}
+                                {name}
                             </lightning-layout-item>
                             <lightning-layout-item size="5">
                                 <div class="slds-text-align_right">
                                     <lightning-formatted-date-time
-                                        value={record.fields.StartDateTime__c.value}
+                                        value={startDateTime}
                                         hour="2-digit"
                                         minute="2-digit"
-                                        time-zone={record.fields.TimeZoneSidKey__c.value}
+                                        time-zone={timeZoneSidKey}
                                         >
                                     </lightning-formatted-date-time>&nbsp;-&nbsp;
                                     <lightning-formatted-date-time
-                                        value={record.fields.EndDateTime__c.value}
+                                        value={endDateTime}
                                         hour="2-digit"
                                         minute="2-digit"
-                                        time-zone={record.fields.TimeZoneSidKey__c.value}
+                                        time-zone={timeZoneSidKey}
                                         time-zone-name="short"
                                         >
                                     </lightning-formatted-date-time>

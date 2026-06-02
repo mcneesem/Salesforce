@@ -53,6 +53,16 @@
                 <identifier>RecordNSP_Date_Requested_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Employee_Status__c</fieldItem>
+                <identifier>RecordEmployee_Status__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-u7l7vua2pnt</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -230,15 +240,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_WSEE_SubClient_Parent_Client_if_None__c</fieldItem>
-                <identifier>RecordNSP_WSEE_SubClient_Parent_Client_if_None_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
+                <identifier>RecordNSP_Sub_Client_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -247,12 +250,12 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
-                <identifier>RecordNSP_Sub_Client_cField3</identifier>
+                <fieldItem>Record.Sub_Client_Number__c</fieldItem>
+                <identifier>RecordSub_Client_Number_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>EQUAL</operator>
+                        <operator>NE</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
@@ -369,8 +372,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_WorkState__c</fieldItem>
-                <identifier>RecordNSP_WorkState_cField2</identifier>
+                <fieldItem>Record.Work_State__c</fieldItem>
+                <identifier>RecordWork_State_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -386,8 +389,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Employee_Status__c</fieldItem>
-                <identifier>RecordNSP_Employee_Status_cField3</identifier>
+                <fieldItem>Record.Employee_Status__c</fieldItem>
+                <identifier>RecordEmployee_Status_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -2052,12 +2055,12 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_WSEE_SubClient_Parent_Client_if_None__c</fieldItem>
-                <identifier>RecordNSP_WSEE_SubClient_Parent_Client_if_None_cField</identifier>
+                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
+                <identifier>RecordNSP_Sub_Client_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
@@ -2067,14 +2070,14 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
-                <identifier>RecordNSP_Sub_Client_cField</identifier>
+                <fieldItem>Record.Sub_Client_Number__c</fieldItem>
+                <identifier>RecordSub_Client_Number_cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>EQUAL</operator>
+                        <operator>NE</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
@@ -2189,10 +2192,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_WorkState__c</fieldItem>
-                <identifier>RecordNSP_WorkState_cField</identifier>
+                <fieldItem>Record.Work_State__c</fieldItem>
+                <identifier>RecordWork_State_cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -2206,10 +2209,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Employee_Status__c</fieldItem>
-                <identifier>RecordNSP_Employee_Status_cField2</identifier>
+                <fieldItem>Record.Employee_Status__c</fieldItem>
+                <identifier>RecordEmployee_Status_cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>

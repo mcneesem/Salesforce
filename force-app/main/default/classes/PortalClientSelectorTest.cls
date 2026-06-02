@@ -22,5 +22,13 @@ private class PortalClientSelectorTest {
         Test.stopTest();
     }
 
+    @isTest
+    private static void testLogInfo() {
+        Test.startTest();
+        PortalClientSelector.logInfo( 'class' , 'method' , 'info' );
+        PortalClientSelector.testHandleException( null , 'test' );
+        Test.stopTest();
+    }
+
 }
 //

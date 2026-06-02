@@ -51,6 +51,11 @@
         <label>HRScale</label>
     </customValue>
     <customValue>
+        <fullName>I-9 Assist &amp; E-Verify</fullName>
+        <default>false</default>
+        <label>I-9 Assist &amp; E-Verify</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Services (Health &amp; Wellness)</fullName>
         <default>false</default>
         <label>Insurance Services (Health &amp; Wellness)</label>
@@ -104,11 +109,6 @@
         <fullName>Time and Attendance</fullName>
         <default>false</default>
         <label>Time and Attendance</label>
-    </customValue>
-    <customValue>
-        <fullName>I-9 Assist &amp; E-Verify</fullName>
-        <default>false</default>
-        <label>I-9 Assist &amp; E-Verify</label>
     </customValue>
     <customValue>
         <fullName>Bookkeeping Services</fullName>

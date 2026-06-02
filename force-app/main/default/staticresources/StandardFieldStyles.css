@@ -1,101 +1,101 @@
 c-nsp_implementation-profile lightning-input-field .slds-form-element__label{
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
     color: #0000FF;
 }
 c-nsp_accrual-profile-record-form lightning-input-field .slds-form-element__label{
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
     color: #0000FF;
 }
 
 c-nsp_implementation-profile lightning-input .slds-form-element__label{
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
     color: #0000FF;
 }
 
 c-nsp_accrual-profile-record-form lightning-input .slds-form-element__label{
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
     color: #0000FF;
 }
 
 c-nsp_implementation-profile .answered lightning-formatted-text{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form .answered lightning-formatted-text{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile lightning-formatted-text.answered{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form lightning-formatted-text.answered{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form lightning-combobox .slds-form-element__label{
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
     color: #0000FF;
 }
 
 c-nsp_accrual-profile-record-form  lightning-combobox.answered{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 c-nsp_accrual-profile-record-form lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 } 
 c-nsp_implementation-profile .question{
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 c-nsp_accrual-profile-record-form .question{
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile .question .slds-form-element__label{
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 c-nsp_accrual-profile-record-form .question .slds-form-element__label{
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile .answered .slds-form-element__label{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form .answered .slds-form-element__label{
     color: #000000;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile .slds-checkbox .slds-checkbox__label .slds-form-element__label{
-    font-size: 12px;
+    font-size: var(--slds-g-font-scale-neg-1, 12px);
 }
 
 c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
     display: block;
-    padding: 4px;
-    margin-bottom: 4px;
+    padding: var(--slds-g-spacing-1, 4px);
+    margin-bottom: var(--slds-g-spacing-1, 4px);
 }
 
 c-nsp_implementation-profile lightning-formatted-text.redAnswered{
     color: red;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile .redAnswered lightning-formatted-text .slds-form-element__label{
@@ -121,8 +121,8 @@ c-nsp_implementation-profile .level-1{
 }
 
 c-nsp_implementation-profile .level-2{
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: var(--slds-g-spacing-7, 40px);
+    margin-right: var(--slds-g-spacing-7, 40px);
     display: block;
 }
 
@@ -133,26 +133,26 @@ c-nsp_implementation-profile .level-3{
 }
 
 c-nsp_implementation-profile .level-4{
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-left: var(--slds-g-spacing-12, 80px);
+    margin-right: var(--slds-g-spacing-12, 80px);
     display: block;
 }
 
 c-nsp_implementation-profile .nsp_form-element{
-    padding: 0 var(--lwc-spacingXxSmall,0.25rem);
+    padding: 0 var(--slds-g-spacing-1, var(--lwc-spacingXxSmall, 0.25rem));
 }
 
 .nsp-highlight label.slds-form-element__label{
     background-color: yellow;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 .nsp-highlight label.slds-checkbox__label{
     background-color: yellow;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 lightning-formatted-text.nsp-highlight{
     background-color: yellow;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }

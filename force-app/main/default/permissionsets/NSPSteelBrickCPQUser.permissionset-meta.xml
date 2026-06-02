@@ -2591,6 +2591,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Pricing_Table__c.Year_Lower_Bound__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Pricing_Table__c.Year_Upper_Bound__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Support_Entitlement__c.NSP_Account_Id__c</field>
         <readable>true</readable>
@@ -5622,6 +5632,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.Years__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductRule__c.SBQQ__Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7058,6 +7073,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Validate_Promotion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Years__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

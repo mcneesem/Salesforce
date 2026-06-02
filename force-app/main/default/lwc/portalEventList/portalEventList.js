@@ -20,7 +20,13 @@ export default class PortalEventList extends LightningElement {
     })
     listInfo({ error, data }) {
         if ( data ) {
-            this.records = data.records;
+            this.records = data.records?.filter(
+                ( record ) => {
+                    // only show scheduled events...
+                    // ~ ignore events that are missing a start time...
+                    return ( record?.fields?.StartDateTime__c?.value );
+                }
+            );
             this.error = undefined;
         } else if ( error ) {
             this.error = error;

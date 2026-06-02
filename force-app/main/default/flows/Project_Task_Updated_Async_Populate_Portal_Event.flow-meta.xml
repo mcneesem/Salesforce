@@ -43,7 +43,7 @@
             </value>
         </filters>
         <filters>
-            <field>Template_Name__c</field>
+            <field>Template_Name_Formula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>FSO - Implementation</stringValue>
@@ -129,6 +129,12 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
+        <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Update</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>recordProjectTask</name>
             <value>

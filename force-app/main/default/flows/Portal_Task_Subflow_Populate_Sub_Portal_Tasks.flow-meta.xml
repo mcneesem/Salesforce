@@ -182,9 +182,10 @@
             <label>Update  Existing Sub Portal Task Records</label>
         </rules>
     </decisions>
+    <description>DEPRECATED</description>
     <environments>Default</environments>
-    <interviewLabel>Portal Task - Subflow - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task - Subflow - Populate Sub Portal Tasks</label>
+    <interviewLabel>DEPRECATED - Portal Task - Subflow - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Portal Task - Subflow - Populate Sub Portal Tasks</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

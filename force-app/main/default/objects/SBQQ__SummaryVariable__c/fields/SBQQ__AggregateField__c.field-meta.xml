@@ -167,6 +167,11 @@
                 <default>false</default>
                 <label>NSP_Active_W2_Employees__c</label>
             </value>
+            <value>
+                <fullName>NSP_ActionType__c</fullName>
+                <default>false</default>
+                <label>NSP_ActionType__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

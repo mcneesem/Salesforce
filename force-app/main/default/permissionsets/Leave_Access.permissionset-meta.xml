@@ -107,6 +107,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Leave__c.Closed_Indicator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Leave__c.Date_Of_Birth__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -168,6 +173,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Leave__c.Leave_Schedule__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leave__c.Leave_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leave__c.Medical_Contributions_Paid_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Pre-Transition Setup</fullName>
+        <default>false</default>
+        <label>Pre-Transition Setup</label>
+    </customValue>
+    <customValue>
+        <fullName>Company Setup</fullName>
+        <default>false</default>
+        <label>Company Setup</label>
+    </customValue>
+    <customValue>
+        <fullName>Employee Setup</fullName>
+        <default>false</default>
+        <label>Employee Setup</label>
+    </customValue>
+    <customValue>
+        <fullName>System Setup</fullName>
+        <default>false</default>
+        <label>System Setup</label>
+    </customValue>
+    <customValue>
+        <fullName>First Steps</fullName>
+        <default>false</default>
+        <label>First Steps</label>
+    </customValue>
+    <customValue>
+        <fullName>Discovery</fullName>
+        <default>false</default>
+        <label>Discovery</label>
+    </customValue>
+    <customValue>
+        <fullName>Configuration</fullName>
+        <default>false</default>
+        <label>Configuration</label>
+    </customValue>
+    <customValue>
+        <fullName>Training</fullName>
+        <default>false</default>
+        <label>Training</label>
+    </customValue>
+    <customValue>
+        <fullName>Go Live</fullName>
+        <default>false</default>
+        <label>Go Live</label>
+    </customValue>
+    <description>Contains all Portal Task Types.</description>
+    <masterLabel>Portal Task Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
