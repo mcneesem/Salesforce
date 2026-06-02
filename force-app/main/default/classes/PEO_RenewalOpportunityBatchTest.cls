@@ -84,7 +84,7 @@ public class PEO_RenewalOpportunityBatchTest {
     @IsTest
     static void testRenewalOpportunityBatch() {
         Test.startTest();
-            Database.executeBatch(new PEO_RenewalOpportunityBatch(12, 2026));
+            Database.executeBatch(new GenerateRenewalOpportunitiesJob(12, 2026));
         Test.stopTest();
 
         Integer cnt = [
