@@ -3,139 +3,20 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Create_Collection</name>
-        <label>Assign : Create Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>rc_portal_pay_periods_create</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>r_portal_pay_period_to_create</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Validate_Update</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>store the pay period to update in record variable</description>
-        <name>Assign_Portal_Pay_Period_to_Update</name>
-        <label>Assign Portal Pay Period to Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_Extract_IP_Pay_Period_Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.First_Pay_Period_Start__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_first_day_of_1st_pay_period__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.First_Pay_Period_End__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_last_day_of_1st_pay_period__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.First_Pay_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_1st_pay_date__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.Pay_Frequency__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Frequency__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_update.Implementation_Pay_Period__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Extract_IP_Pay_Period_Record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Update_Collection</name>
-        <label>Assign : Update Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>rc_portal_pay_periords_update</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>r_portal_pay_period_to_update</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Validate_Update</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>store the pay period to create in create record variable</description>
         <name>Create_Portal_Pay_Period_Record</name>
         <label>Create Portal Pay Period Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.First_Pay_Period_Start__c</assignToReference>
+            <assignToReference>r_portal_pay_period_to_create</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_first_day_of_1st_pay_period__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.First_Pay_Period_End__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_last_day_of_1st_pay_period__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.First_Pay_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Insperity_1st_pay_date__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.Pay_Frequency__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Frequency__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.Implementation_Pay_Period__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordImplementationPayPeriod.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_pay_period_to_create.Portal_Project__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Portal_Project.Id</elementReference>
+                <elementReference>Default_Map_Pay_Period</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Valid_Portal_Pay_Period_Record</targetReference>
+            <targetReference>Validate_Create</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -155,15 +36,49 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_All_Portal_Pay_Periods</name>
-        <label>Set Fault Element : Get_All_Portal_Pay_Periods</label>
+        <name>Set_Fault_Element_Get_All_IP_Pay_Periods</name>
+        <label>Set Fault Element : Get_All_IP_Pay_Periods</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_All_Portal_Pay_Periods</stringValue>
+                <stringValue>Get_All_IP_Pay_Periods</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_IP_Record</name>
+        <label>Set Fault Element : Get_IP_Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_IP_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Portal_Pay_Period</name>
+        <label>Set Fault Element : Get_Portal_Pay_Period</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Portal_Pay_Period</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -189,6 +104,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Sync_All_Portal_Pay_Periods</name>
+        <label>Set Fault Element : Sync_All_Portal_Pay_Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sync_All_Portal_Pay_Periods</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Update_Pay_Period</name>
         <label>Set Fault Element : Update_Pay_Period</label>
         <locationX>0</locationX>
@@ -205,113 +137,105 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <collectionProcessors>
-        <description>Filter Pay Period records based on current IP Pay Period</description>
-        <name>Filter_Portal_Pay_Period_For_IP_Pay_Period</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Filter Portal Pay Period : For IP Pay Period</label>
+    <assignments>
+        <description>store the pay period to update in record variable</description>
+        <name>Update_Portal_Pay_Period_Record</name>
+        <label>Update Portal Pay Period Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNextValueToReference>currentItem_Filter_Portal_Pay_Period_For_IP_Pay_Period</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>rc_all_portal_pay_periords</collectionReference>
-        <conditionLogic>and</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_Filter_Portal_Pay_Period_For_IP_Pay_Period.Implementation_Pay_Period__c</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
-                <elementReference>recordImplementationPayPeriod.Id</elementReference>
-            </rightValue>
-        </conditions>
+        <assignmentItems>
+            <assignToReference>r_portal_pay_period_to_update</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Default_Map_Pay_Period</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_portal_pay_period_to_update.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Portal_Pay_Period.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Sort_Portal_Pay_Period_For_IP_Pay_Period</targetReference>
+            <targetReference>Validate_Update</targetReference>
         </connector>
-    </collectionProcessors>
-    <collectionProcessors>
-        <description>Adding sort to get single pay period record for triggering IP Pay Period</description>
-        <name>Sort_Portal_Pay_Period_For_IP_Pay_Period</name>
-        <elementSubtype>SortCollectionProcessor</elementSubtype>
-        <label>Sort Portal Pay Period : For IP Pay Period</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
-        <collectionReference>Filter_Portal_Pay_Period_For_IP_Pay_Period</collectionReference>
-        <connector>
-            <targetReference>Portal_Pay_Period_Found</targetReference>
-        </connector>
-        <limit>1</limit>
-        <sortOptions>
-            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
-            <sortField>CreatedDate</sortField>
-            <sortOrder>Desc</sortOrder>
-        </sortOptions>
-    </collectionProcessors>
+    </assignments>
     <decisions>
         <description>Validate if collection is not empty</description>
-        <name>Portal_Pay_Period_Empty_Collection</name>
-        <label>Portal Pay Period : Empty Collection ?</label>
+        <name>IP_Pay_Period_Empty_Collection</name>
+        <label>IP Pay Period : Empty Collection ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Portal_Pay_Period_Record</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_Pay_Period_Exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_all_portal_pay_periords</leftValueReference>
+                <leftValueReference>rc_all_ip_payperiods</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>rc_all_portal_pay_periords</leftValueReference>
+                <leftValueReference>rc_all_ip_payperiods</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Filter_Portal_Pay_Period_For_IP_Pay_Period</targetReference>
+                <targetReference>Default_Map_Pay_Period_Collection</targetReference>
             </connector>
             <label>No : Pay Period Exists</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Validate
-If Pay Period is exists then Update Pay Period else Create new one</description>
-        <name>Portal_Pay_Period_Found</name>
-        <label>Portal Pay Period Found?</label>
+        <name>Portal_Pay_Period_Exists</name>
+        <label>Portal Pay Period Exists?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Create_Portal_Pay_Period_Record</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No : Create Portal Pay Period</defaultConnectorLabel>
         <rules>
-            <name>Yes_Extract_Record</name>
+            <name>Yes_Update_Portal_Pay_Period</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Filter_Portal_Pay_Period_For_IP_Pay_Period</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Filter_Portal_Pay_Period_For_IP_Pay_Period</leftValueReference>
-                <operator>IsEmpty</operator>
+                <leftValueReference>Get_Portal_Pay_Period</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Loop_Extract_IP_Pay_Period_Record</targetReference>
+                <targetReference>Update_Portal_Pay_Period_Record</targetReference>
             </connector>
-            <label>Yes : Extract Record</label>
+            <label>Yes : Update Portal Pay Period</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_IP_Record</name>
+        <label>Valid IP Record?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_IP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_IP_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_All_IP_Pay_Periods</targetReference>
+            </connector>
+            <label>Yes : Valid IP</label>
         </rules>
     </decisions>
     <decisions>
@@ -320,27 +244,39 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <label>Valid Portal Pay Period Record?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Validate_Update</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Update_Pay_Period</name>
-            <conditionLogic>or</conditionLogic>
+            <name>No_Add_Pay_Period</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>r_portal_pay_period_to_update</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>Default_Map_Pay_Period_Collection</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Default_Map_Pay_Period_Collection</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Update_Collection</targetReference>
+                <targetReference>Sync_All_Portal_Pay_Periods</targetReference>
             </connector>
-            <label>Yes : Update Pay Period</label>
+            <label>No : Add Pay Period</label>
         </rules>
+    </decisions>
+    <decisions>
+        <description>Validate if create record variable is not empty</description>
+        <name>Validate_Create</name>
+        <label>Validate Create</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>No_Add_Pay_Period</name>
+            <name>Proceed_to_Create</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>r_portal_pay_period_to_create</leftValueReference>
@@ -350,15 +286,83 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Create_Collection</targetReference>
+                <targetReference>Create_Pay_Period</targetReference>
             </connector>
-            <label>No : Add Pay Period</label>
+            <label>Proceed to Create</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Validate if Portal Project is exist</description>
-        <name>Valid_Portal_Project</name>
-        <label>Valid Portal Project ?</label>
+        <description>Validate Input</description>
+        <name>Validate_Input</name>
+        <label>Validate Input</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Input</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>projectId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Project</targetReference>
+            </connector>
+            <label>Valid : Input</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validate Operation type</description>
+        <name>Validate_Operation_Type</name>
+        <label>Validate Operation Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sync</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sync</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_IP_Record</targetReference>
+            </connector>
+            <label>Sync</label>
+        </rules>
+        <rules>
+            <name>Create_or_Update</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Create</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Update</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Pay_Period</targetReference>
+            </connector>
+            <label>Create or Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validate portal project</description>
+        <name>Validate_Portal_Project</name>
+        <label>Validate Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -373,108 +377,24 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_All_Portal_Pay_Periods</targetReference>
+                <targetReference>Validate_Operation_Type</targetReference>
             </connector>
             <label>Yes : Valid Portal Project</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Validate if create collection is not empty</description>
-        <name>Validate_Create</name>
-        <label>Validate Create</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Proceed_to_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>rc_portal_pay_periods_create</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portal_pay_periods_create</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_Pay_Period</targetReference>
-            </connector>
-            <label>Proceed to Create</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Validate IP Record</description>
-        <name>Validate_IP_Record</name>
-        <label>Validate IP Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_IP_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordImplementationPayPeriod</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordImplementationPayPeriod.NSP_Implementation_Profile__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordImplementationPayPeriod.NSP_Implementation_Profile__r.Account__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordImplementationPayPeriod.NSP_Implementation_Profile__r.NSP_Project__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Portal_Project</targetReference>
-            </connector>
-            <label>Valid IP Record</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Validate if update collection is not empty</description>
+        <description>Validate if update record variable is not empty</description>
         <name>Validate_Update</name>
         <label>Validate Update</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Validate_Create</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Proceed_to_Update</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_portal_pay_periords_update</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portal_pay_periords_update</leftValueReference>
-                <operator>IsEmpty</operator>
+                <leftValueReference>r_portal_pay_period_to_update</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -485,25 +405,10 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Pay Period Mapping</description>
+    <description>New Client Portal: Pay Period Mapping - Sync</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Pay Period - Subflow - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Pay Period - Subflow - Populate Portal Pay Period</label>
-    <loops>
-        <description>Loop runs only once as there will be only one record</description>
-        <name>Loop_Extract_IP_Pay_Period_Record</name>
-        <label>Loop : Extract IP Pay Period Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>Filter_Portal_Pay_Period_For_IP_Pay_Period</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Portal_Pay_Period_to_Update</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Valid_Portal_Pay_Period_Record</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -524,6 +429,7 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
+        <description>Create Single pay period record.</description>
         <name>Create_Pay_Period</name>
         <label>Create Pay Period</label>
         <locationX>0</locationX>
@@ -531,20 +437,87 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Pay_Period</targetReference>
         </faultConnector>
-        <inputReference>rc_portal_pay_periods_create</inputReference>
+        <inputReference>r_portal_pay_period_to_create</inputReference>
     </recordCreates>
-    <recordLookups>
-        <description>Retrieve Portal Pay Period for Portal Project</description>
-        <name>Get_All_Portal_Pay_Periods</name>
-        <label>Get All Portal Pay Periods</label>
+    <recordCreates>
+        <description>Sync all portal pay periods using collection</description>
+        <name>Sync_All_Portal_Pay_Periods</name>
+        <label>Sync All Portal Pay Periods</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Sync_All_Portal_Pay_Periods</targetReference>
+        </faultConnector>
+        <inputReference>Default_Map_Pay_Period_Collection</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <description>Retrieve all pay periods</description>
+        <name>Get_All_IP_Pay_Periods</name>
+        <label>Get All IP Pay Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Portal_Pay_Period_Empty_Collection</targetReference>
+            <targetReference>IP_Pay_Period_Empty_Collection</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_All_Portal_Pay_Periods</targetReference>
+            <targetReference>Set_Fault_Element_Get_All_IP_Pay_Periods</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Implementation_Profile__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_IP_Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>Implementation_Pay_Period__c</object>
+        <outputReference>rc_all_ip_payperiods</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Frequency__c</queriedFields>
+        <queriedFields>Insperity_1st_pay_date__c</queriedFields>
+        <queriedFields>Insperity_first_day_of_1st_pay_period__c</queriedFields>
+        <queriedFields>Insperity_last_day_of_1st_pay_period__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Get IP record associated to triggering project</description>
+        <name>Get_IP_Record</name>
+        <label>Get IP Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valid_IP_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_IP_Record</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Implementation_Profile__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Project__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Retrieve Portal Pay Period for Portal Project and triggering IP Pay Period record</description>
+        <name>Get_Portal_Pay_Period</name>
+        <label>Get Portal Pay Period</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Default_Map_Pay_Period</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Portal_Pay_Period</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -554,8 +527,15 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
                 <elementReference>Get_Portal_Project.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Implementation_Pay_Period__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordImplementationPayPeriod.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Portal_Pay_Period__c</object>
-        <outputReference>rc_all_portal_pay_periords</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Portal_Client__c</queriedFields>
         <queriedFields>Pay_Frequency__c</queriedFields>
@@ -563,6 +543,7 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <queriedFields>First_Pay_Period_Start__c</queriedFields>
         <queriedFields>First_Pay_Period_End__c</queriedFields>
         <queriedFields>Implementation_Pay_Period__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Get Portal Project for Triggering IP Project</description>
@@ -572,7 +553,7 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valid_Portal_Project</targetReference>
+            <targetReference>Validate_Portal_Project</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Project</targetReference>
@@ -582,7 +563,7 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
             <field>Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordImplementationPayPeriod.NSP_Implementation_Profile__r.NSP_Project__c</elementReference>
+                <elementReference>projectId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -592,27 +573,26 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <description>Update single pay period record</description>
         <name>Update_Pay_Period</name>
         <label>Update Pay Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Validate_Create</targetReference>
-        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Pay_Period</targetReference>
         </faultConnector>
-        <inputReference>rc_portal_pay_periords_update</inputReference>
+        <inputReference>r_portal_pay_period_to_update</inputReference>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Validate_IP_Record</targetReference>
+            <targetReference>Validate_Input</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
+        <description>Insperity Fault Handler</description>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -637,19 +617,142 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>currentItem_Filter_Portal_Pay_Period_For_IP_Pay_Period</name>
+    <transforms>
+        <name>Default_Map_Pay_Period</name>
+        <label>Default Map : Pay Period</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Portal_Pay_Period_Exists</targetReference>
+        </connector>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
         <objectType>Portal_Pay_Period__c</objectType>
-    </variables>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Implementation_Pay_Period__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordImplementationPayPeriod.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Pay_Frequency__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordImplementationPayPeriod.Frequency__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordImplementationPayPeriod.Insperity_1st_pay_date__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Period_Start__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordImplementationPayPeriod.Insperity_first_day_of_1st_pay_period__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Period_End__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordImplementationPayPeriod.Insperity_last_day_of_1st_pay_period__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Project.Id</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <transforms>
+        <description>Map all pay periods to portal periods to Sync all once</description>
+        <name>Default_Map_Pay_Period_Collection</name>
+        <label>Default Map : Pay Period Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Valid_Portal_Pay_Period_Record</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <objectType>Portal_Pay_Period__c</objectType>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Implementation_Pay_Period__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>rc_all_ip_payperiods[$EachItem].Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Period_Start__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>rc_all_ip_payperiods[$EachItem].Insperity_first_day_of_1st_pay_period__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Period_End__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>rc_all_ip_payperiods[$EachItem].Insperity_last_day_of_1st_pay_period__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Pay_Frequency__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>rc_all_ip_payperiods[$EachItem].Frequency__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Project.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>First_Pay_Date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>rc_all_ip_payperiods[$EachItem].Insperity_1st_pay_date__c</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>operationType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>projectId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -670,31 +773,13 @@ If Pay Period is exists then Update Pay Period else Create new one</description>
         <objectType>Portal_Pay_Period__c</objectType>
     </variables>
     <variables>
-        <description>Pay Periods for an portal project</description>
-        <name>rc_all_portal_pay_periords</name>
+        <description>All IP Pay Periods</description>
+        <name>rc_all_ip_payperiods</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Portal_Pay_Period__c</objectType>
-    </variables>
-    <variables>
-        <description>collection of pay periods to create</description>
-        <name>rc_portal_pay_periods_create</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Pay_Period__c</objectType>
-    </variables>
-    <variables>
-        <description>collection for update pay periods</description>
-        <name>rc_portal_pay_periords_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Pay_Period__c</objectType>
+        <objectType>Implementation_Pay_Period__c</objectType>
     </variables>
     <variables>
         <name>recordImplementationPayPeriod</name>

@@ -88,14 +88,14 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Transition To Service</stringValue>
+                <stringValue>Transition to Service</stringValue>
             </value>
         </filters>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Premier Training</stringValue>
+                <stringValue>Premier training</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
@@ -119,6 +119,12 @@
             <name>operationType</name>
             <value>
                 <stringValue>Create</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

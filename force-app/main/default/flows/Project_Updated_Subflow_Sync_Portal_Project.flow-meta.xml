@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>IP_Information_Synced_Successfully</name>
+        <label>IP Information Synced Successfully ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_IP_Information_Synced_Successfully</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Sync_IP_Information_to_Portal_Project</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_all_IP_Contact_to_Portal_Team_Members</targetReference>
+            </connector>
+            <label>Yes : IP Information Synced Successfully</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Portal_Client_Synced_Successfully</name>
+        <label>Portal Client Synced Successfully ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Portal_Client_Synced_Successfully</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Portal_Client_and_Portal_Project</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_all_Project_Tasks</targetReference>
+            </connector>
+            <label>Yes : Portal Client Synced Successfully</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Portal_Team_Members_Synced_Successfully</name>
+        <label>Portal Team Members Synced Successfully ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Portal_Team_Members_Synced_Successfully</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Sync_all_IP_Contact_to_Portal_Team_Members</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_all_IP_Pay_Periods_to_Portal</targetReference>
+            </connector>
+            <label>Yes : Portal Team Members Synced Successfully</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Project_Meetings_Synced_Successfully</name>
+        <label>Project Meetings Synced Successfully ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Project_Meetings_Synced_Successfully</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Sync_all_Project_Meetings</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_IP_Information_to_Portal_Project</targetReference>
+            </connector>
+            <label>Yes : Project Meetings Synced Successfully</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Project_Tasks_Synced_Successfully</name>
+        <label>Project Tasks Synced Successfully ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Project_Tasks_Synced_Successfully</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Sync_all_Project_Tasks</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_all_Project_Meetings</targetReference>
+            </connector>
+            <label>Yes : Project Tasks Synced Successfully</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_Input</name>
+        <label>Valid Input ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Input</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>projectId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Portal_Client_and_Portal_Project</targetReference>
+            </connector>
+            <label>Yes : Valid Input</label>
+        </rules>
+    </decisions>
+    <description>Project Visible to Client Updated Sync all Project details to Portal</description>
+    <environments>Default</environments>
+    <interviewLabel>Project_Updated_Async_Sync_Portal_Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Updated - Subflow - Sync Portal Project</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Valid_Input</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <description>When Visible to Client = true and no portal record then create portal client and portal project</description>
+        <name>Create_Portal_Client_and_Portal_Project</name>
+        <label>Create Portal Client and Portal Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Portal_Client_Synced_Successfully</targetReference>
+        </connector>
+        <flowName>Project_Subflow_Create_Portal_Project</flowName>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync all IP Contact to Portal Team Members</description>
+        <name>Sync_all_IP_Contact_to_Portal_Team_Members</name>
+        <label>Sync all IP Contact to Portal Team Members</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Portal_Team_Members_Synced_Successfully</targetReference>
+        </connector>
+        <flowName>Implementation_Profile_Subflow_Handle_Portal_Team_Members</flowName>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync all IP Pay Periods to Portal</description>
+        <name>Sync_all_IP_Pay_Periods_to_Portal</name>
+        <label>Sync all IP Pay Periods to Portal</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Implementation_Pay_Period_Subflow_Populate_Portal_Pay_Period</flowName>
+        <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Sync</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync all Project meetings to Portal</description>
+        <name>Sync_all_Project_Meetings</name>
+        <label>Sync all Project Meetings</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Project_Meetings_Synced_Successfully</targetReference>
+        </connector>
+        <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
+        <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Sync</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync all project template tasks and IP automation tasks.</description>
+        <name>Sync_all_Project_Tasks</name>
+        <label>Sync all Project Tasks</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Project_Tasks_Synced_Successfully</targetReference>
+        </connector>
+        <flowName>Project_Task_Subflow_Populate_Portal_Task</flowName>
+        <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Sync</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync IP Information to Portal Project</description>
+        <name>Sync_IP_Information_to_Portal_Project</name>
+        <label>Sync IP Information to Portal Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IP_Information_Synced_Successfully</targetReference>
+        </connector>
+        <flowName>Implementation_Profile_Updated_Subflow_Update_Portal_Project</flowName>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>projectId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

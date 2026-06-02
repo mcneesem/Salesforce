@@ -116,6 +116,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>$Record.pse__Project__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordProjectTask</name>
             <value>
                 <elementReference>$Record</elementReference>

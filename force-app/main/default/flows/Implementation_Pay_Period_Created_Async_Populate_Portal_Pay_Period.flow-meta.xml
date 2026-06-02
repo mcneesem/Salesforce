@@ -98,6 +98,18 @@
         <locationY>0</locationY>
         <flowName>Implementation_Pay_Period_Subflow_Populate_Portal_Pay_Period</flowName>
         <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Create</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>$Record.NSP_Implementation_Profile__r.NSP_Project__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordImplementationPayPeriod</name>
             <value>
                 <elementReference>$Record</elementReference>
