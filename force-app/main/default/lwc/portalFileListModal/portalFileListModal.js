@@ -1,9 +1,11 @@
 import { api , wire } from "lwc";
 import LightningModal from "lightning/modal";
 import isCommunityContext from "@salesforce/apex/PortalClientSelector.isCommunityContext";
+import useFileActions from "@salesforce/customPermission/Portal_Use_File_Actions";
 
 export default class PortalFileListModal extends LightningModal {
     @api links; // is-a ContentDocumentLink[]
+    @api disabled; // is-a Boolean
 
     isCommunity = false;
     @wire( isCommunityContext )
@@ -141,14 +143,24 @@ export default class PortalFileListModal extends LightningModal {
         return response;
     }
 
+    get canUseFileActions() {
+        return ( useFileActions === true );
+    }
+
     // PMCC ~ each action may be gated by Custom Permission or other criteria...
     _actions;
     get actions() {
         if ( !this._actions ) {
             let local = [];
-            local.push( { label: 'Preview' , name: 'previewExternal' } );
-            local.push( { label: 'Download' , name: 'download' } );
-            local.push( { label: 'Delete' , name: 'deleteExternal' } );
+            if ( this.canUseFileActions ) {
+                local.push( { label: 'Preview' , name: 'previewExternal' } );
+                local.push( { label: 'Download' , name: 'download' } );
+                if ( !this.disabled ) {
+                    local.push( { label: 'Delete' , name: 'deleteExternal' } );
+                }
+            } else {
+                local.push( { label: 'No actions available' , name: 'none' , disabled: true } );
+            }
             this._actions = local;
         }
         return this._actions;

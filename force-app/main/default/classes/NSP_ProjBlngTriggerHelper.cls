@@ -13,7 +13,7 @@ public with sharing class NSP_ProjBlngTriggerHelper {
     // @param projectOldMap Map of Old project.
     // @return void
     //
-    public  void onProjectDateUpdates(List<pse__Proj__c> newList,Map<Id, pse__Proj__c> projectOldMap){ 
+    public void onProjectDateUpdates( List<pse__Proj__c> newList , Map<Id,pse__Proj__c> projectOldMap ) {
         List<Process_Billing_Event__e> billingEvents= new List<Process_Billing_Event__e>();
         for(pse__Proj__c newProj : newList){
             pse__Proj__c oldProj = projectOldMap != null ? projectOldMap.get(newProj.Id):null;
@@ -26,7 +26,6 @@ public with sharing class NSP_ProjBlngTriggerHelper {
                     event.NSP_Project_SF_Id__c=newProj.Id;
                     event.NSP_Project_Go_Live_Date__c=newProj.Go_Live_Date__c;
                     billingEvents.add(event);
-                    
                     orderEvent.NSP_Action__c=PROJECT_UPDATE_ORDER;
                     orderEvent.NSP_Project_SF_Id__c=newProj.Id;
                     orderEvent.NSP_Project_Go_Live_Date__c=newProj.Go_Live_Date__c;
@@ -77,7 +76,6 @@ public with sharing class NSP_ProjBlngTriggerHelper {
             }
 
         }
-       
         if(billingEvents.size()>0){
             // Call method to publish events
             List<Database.SaveResult> results = EventBus.publish(billingEvents);
@@ -85,6 +83,12 @@ public with sharing class NSP_ProjBlngTriggerHelper {
                 NSP_ProjBlngTriggerHelper.class.getName() ,
                 'onProjectDateUpdates' ,
                 results
+            );
+            // Log successes to Finance_Logs__c
+            FinanceLogHandler.logPlatformEvents(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'onProjectDateUpdates' ,
+                billingEvents
             );
         }
     }
@@ -155,7 +159,14 @@ public with sharing class NSP_ProjBlngTriggerHelper {
             }
             if(!ordersToUpdateMap.values().isEmpty()){
                 List<Database.SaveResult> results = Database.update(ordersToUpdateMap.values(),false);
+                // Log errors to NSP_Error_Log__c
                 NSP_ErrorLogHandler.logResults(
+                    NSP_ProjBlngTriggerHelper.class.getName() ,
+                    'updateOrderONProjectUpdates:Orders' ,
+                    results
+                );
+                // Log successes to Finance_Logs__c
+                FinanceLogHandler.logResults(
                     NSP_ProjBlngTriggerHelper.class.getName() ,
                     'updateOrderONProjectUpdates:Orders' ,
                     results
@@ -163,15 +174,21 @@ public with sharing class NSP_ProjBlngTriggerHelper {
             }
             if(!ordersItemsToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update(ordersItemsToUpdate,false);
+                // Log errors to NSP_Error_Log__c
                 NSP_ErrorLogHandler.logResults(
                     NSP_ProjBlngTriggerHelper.class.getName() ,
                     'updateOrderONProjectUpdates:OrderItems' ,
                     results
-                ); 
+                );
+                // Log successes to Finance_Logs__c
+                FinanceLogHandler.logResults(
+                    NSP_ProjBlngTriggerHelper.class.getName() ,
+                    'updateOrderONProjectUpdates:OrderItems' ,
+                    results
+                );
             }
         }
     }
-
     //
     // MethodName: updateBackOutOnOrder
     // Description: This Method updates the Back Out on Order

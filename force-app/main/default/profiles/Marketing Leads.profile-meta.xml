@@ -13740,14 +13740,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Account-Account Layout</layout>
+        <layout>Account-Seller Experience</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Account Layout</layout>
+        <layout>Account-Seller Experience</layout>
         <recordType>Account.NSP_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Account Layout 0422</layout>
+        <layout>Account-Seller Experience</layout>
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -13840,7 +13840,11 @@
         <layout>ConsumptionSchedule-Consumption Schedule Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Sales_Contact Layout</layout>
+        <layout>Contact-Seller Experience</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-Seller Experience</layout>
+        <recordType>Contact.Resource</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContentVersion-Content Version</layout>
@@ -14075,15 +14079,19 @@
         <layout>NSP_Zip_To_City_Mapping__c-Zip To City Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Locked Opportunity 0322</layout>
+        <layout>Opportunity-Seller Experience</layout>
         <recordType>Opportunity.Opportunity_Locked</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Sales Administrator 0322</layout>
+        <layout>Opportunity-Seller Experience</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Sales Administrator 0322</layout>
+        <layout>Opportunity-Seller Experience</layout>
         <recordType>Opportunity.Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Seller Experience</layout>
+        <recordType>Opportunity.Outgoing</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityContactRole-Opportunity Contact Role Layout</layout>
@@ -14823,6 +14831,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EnableNotifications</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

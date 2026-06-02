@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Profile to PS Migration</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_Discover_SKO_Meeting</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_Employee_Orientation_Meeting</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Take_Final_OMR_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Update_Final_Employee_Orientation_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Update_Final_OMR_Meeting_Information</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Support Flow Access</label>
+</PermissionSet>

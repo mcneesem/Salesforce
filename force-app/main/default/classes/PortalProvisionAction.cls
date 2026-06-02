@@ -1,22 +1,22 @@
-// intentionally `without sharing` to see all AccountContactRelations, Contacts, and User for successful provisioning...
+// intentionally `without sharing` to see all AccountContactRelations, Contacts, and Users for successful provisioning...
 public without sharing class PortalProvisionAction {
-    // test w/ PortalProvisionActionTest (80%)
+    // test w/ PortalProvisionActionTest (88%)
 
-    private static Boolean isDryRun = true;
     private static String UNKNOWN_PROVISIONING_ERROR = 'Unknown Provisioning Error';
 
     //
     //
     //
 
-    @InvocableMethod(label='Provision Portal User' description='Create Portal User from Account Contact Relationship for a Contact with a Portal Alias.')
+    @InvocableMethod(label='Provision Portal User' description='Create Portal User from Account Contact Relationship for Contact with Portal Alias.')
     public static List<FlowOutput> provision( List<FlowInput> inputs ) {
         List<FlowOutput> results = new List<FlowOutput>();
         if ( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( FlowInput input : inputs ) {
                 String response = PortalProvisionAction.provision( input.recordId );
                 FlowOutput result = new FlowOutput();
-                if ( ( response InstanceOf Id )
+                if ( String.isNotBlank( response )
+                    && ( response InstanceOf Id )
                     && ( Id.valueOf( response ).getSObjectType() == User.getSObjectType() )
                     )
                 {
@@ -146,6 +146,7 @@ public without sharing class PortalProvisionAction {
                     Account.Owner.UserRoleId ,
                     Portal_Alias__c ,
                     NSP_Preferred_First_Name__c ,
+                    pse__Salesforce_User__c ,
                     LastName ,
                     (
                         SELECT Id
@@ -282,7 +283,6 @@ public without sharing class PortalProvisionAction {
             portalUser.LocaleSidKey = 'en_US';
             portalUser.TimeZoneSidKey = 'America/Chicago';
         }
-        System.debug( ' ~ PortalProvisionAction.buildPortalUser ~ portalUser=' + portalUser );
         return portalUser;
     }
 
@@ -295,10 +295,11 @@ public without sharing class PortalProvisionAction {
         try {
             Savepoint sp = Database.setSavepoint();
             if ( portalUser != null ) {
-                Database.insert( portalUser );
+                insert portalUser; // logging this database result to NSP_Error_Log__c would throw MIXED_DML_OPERATION...
                 response = portalUser.Id;
                 PortalProvisionAction.grantPortalSiteAccess( portalUser );
                 PortalProvisionAction.setPortalPassword( portalUser );
+                PortalProvisionAction.linkCertiniaContact( portalUser.ContactId , portalUser.Id );
             }
             if ( PortalProvisionAction.isDryRun ) {
                 System.debug( ' ~ PortalProvisionAction.createPortalUser ~ ROLLBACK ~ ' + sp );
@@ -311,6 +312,7 @@ public without sharing class PortalProvisionAction {
                 + 'Message: ' + e.getMessage() + '\n' + '\n'
                 + 'Stack Trace: ' + e.getStackTraceString()
                 ;
+            // logging this exception to NSP_Error_Log__c would throw MIXED_DML_OPERATION...
         }
         return response;
     }
@@ -318,20 +320,68 @@ public without sharing class PortalProvisionAction {
     // Assign Permission Set: Portal Site Access
     private static void grantPortalSiteAccess( User portalUser ) {
         if ( portalUser != null ) {
-            Database.insert(
-                new PermissionSetAssignment(
-                    PermissionSetId=PortalProvisionAction.portalSiteAccessId ,
-                    AssigneeId=portalUser.Id
-                )
-            );
+            insert new PermissionSetAssignment(
+                PermissionSetId=PortalProvisionAction.portalSiteAccessId ,
+                AssigneeId=portalUser.Id
+            ); // logging this database result to NSP_Error_Log__c would throw MIXED_DML_OPERATION...
         }
     }
 
-    // Set Debug Password
+    // Set Default Password
     // ~ place holder logic until we have the notify step in place...
     private static void setPortalPassword( User portalUser ) {
         if ( portalUser != null ) {
-            System.setPassword( portalUser.Id , 'Insperity1!!' ); // default debugging password...
+            System.setPassword( portalUser.Id , 'Insperity1!!' ); // default portal password...
+        }
+    }
+
+    // Link Certinia Contact
+    // ~ call in future to prevent MIXED_DML_OPERATION...
+    private static void linkCertiniaContact( Id portalContactId , Id portalUserId ) {
+        if ( !System.isFuture() // prevent AsyncExceptions...
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
+            )
+        {
+            PortalProvisionAction.linkCertiniaContactFuture( portalContactId , portalUserId );
+        }
+    }
+
+    // Link Certinia Contact
+    // ~ populate Contact.pse__Salesforce_User__c...
+    @future
+    private static void linkCertiniaContactFuture( Id portalContactId , Id portalUserId ) {
+        try {
+            if ( ( portalContactId != null )
+                && ( portalContactId.getSObjectType() == Contact.getSObjectType() )
+                && ( portalUserId != null )
+                && ( portalUserId.getSObjectType() == User.getSObjectType() )
+                )
+            {
+                Contact record = PortalProvisionAction.selectContact( portalContactId );
+                if ( ( record != null ) && ( record.pse__Salesforce_User__c != portalUserId ) ) {
+                    Savepoint sp = Database.setSavepoint();
+                    Contact portalContact = new Contact(
+                        Id=portalContactId ,
+                        pse__Salesforce_User__c=portalUserId
+                    );
+                    List<Database.SaveResult> results = Database.update( new List<Contact>{ portalContact } , false );
+                    NSP_ErrorLogHandler.logResults(
+                        PortalProvisionAction.class.getName() ,
+                        'linkCertiniaContact:update' ,
+                        results
+                    );
+                    if ( PortalProvisionAction.isDryRun ) {
+                        System.debug( ' ~ PortalProvisionAction.linkCertiniaContact ~ ROLLBACK ~ ' + sp );
+                        Database.rollback( sp );
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                PortalProvisionAction.class.getName() ,
+                'linkCertiniaContact' ,
+                e
+            );
         }
     }
 
@@ -339,18 +389,45 @@ public without sharing class PortalProvisionAction {
     // Helper Properties
     //
 
+    //
+    //
+    //
+
+    private static Portal_Access_Settings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = Portal_Access_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isDryRun {
+        private get {
+            if ( isDryRun == null ) {
+                Boolean local = false;
+                if ( PortalProvisionAction.settings != null ) {
+                    local = PortalProvisionAction.settings.IsDryRun__c;
+                }
+                isDryRun = local;
+            }
+            return isDryRun;
+        }
+        private set;
+    }
+
     private static Id communityProfileId {
         private get {
             if ( communityProfileId == null ) {
                 Id local = null;
-                List<Profile> communityProfiles = [
-                    SELECT Id
-                    FROM Profile
-                    WHERE ( Name = 'Customer Community Plus User' )
-                    LIMIT 1
-                ];
-                if ( ( communityProfiles != null ) && !communityProfiles.isEmpty() ) {
-                    local = communityProfiles[0].Id;
+                if ( ( PortalProvisionAction.settings != null )
+                    && String.isNotBlank( PortalProvisionAction.settings.CommunityProfileId__c )
+                    && ( PortalProvisionAction.settings.CommunityProfileId__c InstanceOf Id )
+                    && ( Id.valueOf( PortalProvisionAction.settings.CommunityProfileId__c ).getSObjectType() == Profile.getSObjectType() )
+                    )
+                {
+                    local = PortalProvisionAction.settings.CommunityProfileId__c;
                 }
                 communityProfileId = local;
             }
@@ -359,18 +436,37 @@ public without sharing class PortalProvisionAction {
         private set;
     }
 
+    private static String membershipPermissionSetName {
+        private get {
+            if ( membershipPermissionSetName == null ) {
+                String local = null;
+                if ( ( PortalProvisionAction.settings != null )
+                    && String.isNotBlank( PortalProvisionAction.settings.MembershipPermissionSetName__c )
+                    )
+                {
+                    local = PortalProvisionAction.settings.MembershipPermissionSetName__c;
+                }
+                membershipPermissionSetName = local;
+            }
+            return membershipPermissionSetName;
+        }
+        private set;
+    }
+
     private static Id portalSiteAccessId {
         private get {
             if ( portalSiteAccessId == null ) {
                 Id local = null;
-                List<PermissionSet> parents = [
-                    SELECT Id
-                    FROM PermissionSet
-                    WHERE ( Name = 'Portal_Site_Access' )
-                    LIMIT 1
-                ];
-                if ( ( parents != null ) && !parents.isEmpty() ) {
-                    local = parents[0].Id;
+                if ( String.isNotBlank( PortalProvisionAction.membershipPermissionSetName ) ) {
+                    List<PermissionSet> parents = [
+                        SELECT Id
+                        FROM PermissionSet
+                        WHERE ( Name = :PortalProvisionAction.membershipPermissionSetName )
+                        LIMIT 1
+                    ];
+                    if ( ( parents != null ) && !parents.isEmpty() ) {
+                        local = parents[0].Id;
+                    }
                 }
                 portalSiteAccessId = local;
             }

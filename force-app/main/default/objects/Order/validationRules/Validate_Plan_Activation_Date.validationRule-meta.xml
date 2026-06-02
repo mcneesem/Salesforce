@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Plan_Activation_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Validate_Plan_Activation_Date ) ,
+  NOT( ISBLANK( Plan_Activation__c ) ) ,
+  ISBLANK( PRIORVALUE( Plan_Activation__c ) ) ,
+  OR(
+    ( DAY( Plan_Activation__c ) != 1 ) ,
+    ( TEXT( Status ) != &quot;Reviewed&quot; )
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Plan_Activation__c</errorDisplayField>
+    <errorMessage>Plan Activation date must be the first day of the month and can only be set when Order status is &quot;Reviewed&quot;</errorMessage>
+</ValidationRule>

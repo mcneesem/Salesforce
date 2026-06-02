@@ -87,6 +87,16 @@
                 <default>false</default>
                 <label>Get_Seasonal_Price_Table__c</label>
             </value>
+            <value>
+                <fullName>NSP_Active_W2_Employees__c</fullName>
+                <default>false</default>
+                <label>NSP_Active_W2_Employees__c</label>
+            </value>
+            <value>
+                <fullName>Years__c</fullName>
+                <default>false</default>
+                <label>Years__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -44,7 +44,7 @@
             </value>
         </filters>
         <filters>
-            <field>Template_Name__c</field>
+            <field>Template_Name_Formula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>FSO - Implementation</stringValue>
@@ -68,7 +68,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Cell Phone Reimbursements</stringValue>
+                <stringValue>Set up Cell Phone reimbursements</stringValue>
             </value>
         </filters>
         <filters>
@@ -82,7 +82,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>COBRA Takeover Form(s) received and submitted to COBRA team</stringValue>
+                <stringValue>COBRA Takeover Form(s) received and submitted to COBRA Team</stringValue>
             </value>
         </filters>
         <filters>
@@ -109,6 +109,12 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Task</flowName>
+        <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Create</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>recordProjectTask</name>
             <value>

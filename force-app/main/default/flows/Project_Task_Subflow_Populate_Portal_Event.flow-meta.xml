@@ -3,10 +3,33 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Portal_Event_Id_Mapping</name>
-        <label>Portal Event Id Mapping</label>
+        <name>Assign_Portal_Event_Record_To_Create</name>
+        <label>Assign : Portal Event Record ( To Create )</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recordPortalEvent</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Map_Project_Task_to_Portal_Event</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Proceed_to_Create</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Portal_Event_Record_To_Update</name>
+        <label>Assign : Portal Event Record ( To Update )</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recordPortalEvent</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Map_Project_Task_to_Portal_Event</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>recordPortalEvent.Id</assignToReference>
             <operator>Assign</operator>
@@ -15,51 +38,24 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Portal_Event_Mapping</targetReference>
+            <targetReference>Proceed_to_Update</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Portal_Event_Mapping</name>
-        <label>Portal Event Mapping</label>
+        <name>Set_Fault_Element_Create_Portal_Event</name>
+        <label>Set Fault Element : Create_Portal_Event</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>recordPortalEvent.Portal_Project__c</assignToReference>
+            <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Portal_Project.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalEvent.Project_Task__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalEvent.EndDateTime__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalEvent.StartDateTime__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.pse__Start_Date_Time__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalEvent.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalEventName</elementReference>
+                <stringValue>Create_Portal_Event</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Validate_Before_Upsert</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -96,15 +92,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Upsert</name>
-        <label>Set Fault Element For Upsert</label>
+        <name>Set_Fault_Element_Update_Portal_Event</name>
+        <label>Set Fault Element : Update_Portal_Event</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Upsert_Portal_Event</stringValue>
+                <stringValue>Update_Portal_Event</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -117,9 +113,6 @@
         <label>Check Portal Event Exist</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Portal_Event_Mapping</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>New Portal Event</defaultConnectorLabel>
         <rules>
             <name>Portal_Event_Exist</name>
@@ -132,19 +125,56 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Portal_Event_Id_Mapping</targetReference>
+                <targetReference>Assign_Portal_Event_Record_To_Update</targetReference>
             </connector>
             <label>Portal Event Exist</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Validate_Before_Upsert</name>
-        <label>Validate Before Upsert</label>
+        <name>Operation_Type</name>
+        <label>Operation Type ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Valid_Upsert</name>
+            <name>Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Create</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Portal_Event_Record_To_Create</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+        <rules>
+            <name>Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Update</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Events</targetReference>
+            </connector>
+            <label>Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Proceed_to_Create</name>
+        <label>Proceed to Create?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Create_Portal_Event</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>recordPortalEvent</leftValueReference>
@@ -154,9 +184,31 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Upsert_Portal_Event</targetReference>
+                <targetReference>Create_Portal_Event</targetReference>
             </connector>
-            <label>Valid Upsert</label>
+            <label>Yes : Create Portal Event</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Proceed_to_Update</name>
+        <label>Proceed to Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Portal_Event</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordPortalEvent</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Portal_Event</targetReference>
+            </connector>
+            <label>Yes : Update Portal Event</label>
         </rules>
     </decisions>
     <decisions>
@@ -198,7 +250,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Portal_Events</targetReference>
+                <targetReference>Map_Project_Task_to_Portal_Event</targetReference>
             </connector>
             <label>Valid Portal Project</label>
         </rules>
@@ -270,13 +322,22 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <name>Upsert_Portal_Event</name>
-        <label>Upsert Portal Event</label>
+        <name>Create_Portal_Event</name>
+        <label>Create Portal Event</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <doesUpsert>true</doesUpsert>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Upsert</targetReference>
+            <targetReference>Set_Fault_Element_Create_Portal_Event</targetReference>
+        </faultConnector>
+        <inputReference>recordPortalEvent</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Update_Portal_Event</name>
+        <label>Update Portal Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Portal_Event</targetReference>
         </faultConnector>
         <inputReference>recordPortalEvent</inputReference>
     </recordCreates>
@@ -301,10 +362,10 @@
             </value>
         </filters>
         <filters>
-            <field>Name</field>
+            <field>Project_Task__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>portalEventName</elementReference>
+                <elementReference>recordProjectTask.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -370,6 +431,57 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Map_Project_Task_to_Portal_Event</name>
+        <label>Map : Project Task to Portal Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Operation_Type</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <objectType>Portal_Event__c</objectType>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Project.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalEventName</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>StartDateTime__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.pse__Start_Date_Time__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>EndDateTime__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Project_Task__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Id</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
@@ -379,6 +491,14 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <description>Defines the Create or Update Operation</description>
+        <name>operationType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recordPortalEvent</name>

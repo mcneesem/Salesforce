@@ -45,6 +45,14 @@
                 <field>NSP_WX_Scholarship_Price__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Year_Lower_Bound__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Year_Upper_Bound__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IsPricingActive__c</field>
             </layoutItems>

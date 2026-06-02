@@ -3,8 +3,8 @@
 }
 
 .combobox-text-medium {
-    font-size: var(--slds-g-font-scale-3);
-    line-height: var(--slds-g-font-lineheight-1);
+    font-size: var(--slds-g-font-scale-3, 1.125rem);
+    line-height: var(--slds-g-font-lineheight-1, 1);
 }
 
 .list-style-type-none {

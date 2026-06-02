@@ -124,6 +124,12 @@
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Task</flowName>
         <inputAssignments>
+            <name>operationType</name>
+            <value>
+                <stringValue>Update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordProjectTask</name>
             <value>
                 <elementReference>$Record</elementReference>

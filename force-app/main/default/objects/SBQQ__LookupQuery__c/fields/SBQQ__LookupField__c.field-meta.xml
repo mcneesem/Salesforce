@@ -82,6 +82,16 @@
                 <default>false</default>
                 <label>Seasonal_Pricing__c</label>
             </value>
+            <value>
+                <fullName>Year_Lower_Bound__c</fullName>
+                <default>false</default>
+                <label>Year_Lower_Bound__c</label>
+            </value>
+            <value>
+                <fullName>Year_Upper_Bound__c</fullName>
+                <default>false</default>
+                <label>Year_Upper_Bound__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

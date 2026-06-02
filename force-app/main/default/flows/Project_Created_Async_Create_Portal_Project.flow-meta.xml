@@ -2,6 +2,28 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Account_Valid</name>
+        <label>Account Valid?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Project_Subflow_Create_Portal_Project</targetReference>
+            </connector>
+            <label>Yes : Valid Account</label>
+        </rules>
+    </decisions>
     <description>New Client Portal: Portal Project Creation</description>
     <environments>Default</environments>
     <interviewLabel>Project - Created - Async - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
@@ -30,10 +52,10 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>pse__Account__c</field>
-            <operator>IsNull</operator>
+            <field>TemplateName__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>FSO - Implementation</stringValue>
             </value>
         </filters>
         <filters>
@@ -43,18 +65,11 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>TemplateName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>FSO - Implementation</stringValue>
-            </value>
-        </filters>
         <object>pse__Proj__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Project_Subflow_Create_Portal_Project</targetReference>
+                <targetReference>Account_Valid</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>

@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="Insperity thanks you for your business!"  relatedToType="blng__Invoice__c">
+<messaging:htmlEmailBody >
+<br/>
+<p>Please find attached a copy of your monthly invoice for Insperity Contractor Management. Per the terms of your agreement, the invoice will be processed via ACH direct debit on the 7th business day of the month to the bank account on file. Please do not process for remittance.</p>
+<p>Please ensure Insperity Business Services, LP is set up with your bank as authorized to debit via ACH transactions.</p>
+<p><b>Approved Debit ID for Insperity Business Services, LP: 2300345628</b></p>
+<p>If you have any questions regarding your billing, please contact us at <a href = "mailto: orders@insperity.com">orders@insperity.com</a>.</p>
+<br/>
+<c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

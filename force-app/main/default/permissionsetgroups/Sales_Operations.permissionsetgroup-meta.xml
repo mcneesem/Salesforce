@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Sales Operations profile users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Operations</label>
+    <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
+    <permissionSets>Sales_Operations_Apex_Access</permissionSets>
+    <permissionSets>Sales_Operations_Assigned_Apps</permissionSets>
+    <permissionSets>Sales_Operations_Field_Permissions</permissionSets>
+    <permissionSets>Sales_Operations_Flow_Access</permissionSets>
+    <permissionSets>Sales_Operations_Object_Permissions</permissionSets>
+    <permissionSets>Sales_Operations_Record_Type_Assignments</permissionSets>
+    <permissionSets>Sales_Operations_System_Permissions</permissionSets>
+    <permissionSets>Sales_Operations_Visualforce_Page_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

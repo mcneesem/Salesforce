@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>TimeStar T&amp;A Hardware Support</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Bypass_Approvals__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_Days_Before_Expiry__c</field>
+        <value xsi:type="xsd:double">30.0</value>
+    </values>
+    <values>
+        <field>NSP_Default_Opportunity_Owner__c</field>
+        <value xsi:type="xsd:string">beth.trumpy@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Default_Quote_Owner__c</field>
+        <value xsi:type="xsd:string">beth.trumpy@insperity.com</value>
+    </values>
+    <values>
+        <field>NSP_Linked_ProductType__c</field>
+        <value xsi:type="xsd:string">Time and Attendance;Time and Attendance Hardware</value>
+    </values>
+    <values>
+        <field>NSP_Renewal_Signature_Required__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

@@ -283,6 +283,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Plan_Activation__c</fieldItem>
+                <identifier>RecordPlan_Activation__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ce6245b2-7ee0-46cc-9b50-32a33d74fda5</name>
         <type>Facet</type>
     </flexiPageRegions>

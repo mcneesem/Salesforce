@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Link_Parent_Task</name>
+        <label>Link Parent Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Parent_Portal_Task__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_Task.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Parent_Task</name>
+        <label>Set Fault Element : Get_Parent_Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Parent_Task</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Parent_Task_Exisit</name>
+        <label>Parent Task Exisit?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Parent_Task_Exisit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parent_Task</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Link_Parent_Task</targetReference>
+            </connector>
+            <label>Yes : Parent Task Exisit</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_Parent_Task_Name</name>
+        <label>Valid Parent Task Name?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>f_parenttask</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Portal_Project__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Parent_Task</targetReference>
+            </connector>
+            <label>Yes : Valid</label>
+        </rules>
+    </decisions>
+    <description>Link child task to parent task</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Evaluate Parent Task from Child task name</description>
+        <name>f_parenttask</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  {!$Record.Name} ,
+  &quot;Employee Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;Cell Phone reimbursements&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;Garnishments&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;COBRA Takeover&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;LOA Information&quot; , &quot;Employee Payroll Documentation&quot; ,
+  &quot;Insperity Client Authorization&quot; , &quot;Client Sponsored Plans&quot; ,
+  &quot;Cafeteria Plan Documentation&quot; , &quot;Client Sponsored Plans&quot; ,
+  &quot;&quot;
+)</expression>
+    </formulas>
+    <interviewLabel>Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Portal Task Before Create Populate Parent Portal Task</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Parent_Task</name>
+        <label>Get Parent Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Parent_Task_Exisit</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Parent_Task</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>f_parenttask</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Portal_Project__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Portal_Task__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Valid_Parent_Task_Name</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employee Deductions</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Outside Record Keeper (Retirement Plan) Deductions</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cell Phone reimbursements</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Garnishments</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>COBRA Takeover</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>LOA Information</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Insperity Client Authorization</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cafeteria Plan Documentation</stringValue>
+            </value>
+        </filters>
+        <object>Portal_Task__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

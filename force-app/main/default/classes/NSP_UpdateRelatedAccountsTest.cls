@@ -1,5 +1,5 @@
 @isTest
-private class NSP_UpdateRelatedAccountsTest {     
+private class NSP_UpdateRelatedAccountsTest {
     private static final string ACCOUNT_NAME = 'Test Account';
 
     @testSetup
@@ -34,7 +34,7 @@ private class NSP_UpdateRelatedAccountsTest {
         //
         set<String> accIdSet = new set<String>();
         Account acc = [
-            SELECT Id , NSP_Last_Updated__c 
+            SELECT Id , NSP_Last_Updated__c
             FROM Account
             WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
@@ -44,7 +44,7 @@ private class NSP_UpdateRelatedAccountsTest {
         Test.stopTest();
         Date assertDate = date.today();
         Account assertAcc = [
-            SELECT Id , NSP_Last_Updated__c 
+            SELECT Id , NSP_Last_Updated__c
             FROM Account
             WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
@@ -59,7 +59,7 @@ private class NSP_UpdateRelatedAccountsTest {
     private static void updateRelatedAccountsTestNew() {
         set<String> accIdSet = new set<String>();
         Account acc = [
-            SELECT Id , NSP_Last_Updated__c 
+            SELECT Id , NSP_Last_Updated__c
             FROM Account
             WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
@@ -69,7 +69,7 @@ private class NSP_UpdateRelatedAccountsTest {
         Test.stopTest();
         Date assertDate = date.today();
         Account assertAcc = [
-            SELECT Id , NSP_Last_Updated__c 
+            SELECT Id , NSP_Last_Updated__c
             FROM Account
             WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
@@ -78,6 +78,22 @@ private class NSP_UpdateRelatedAccountsTest {
         // for additional code coverage...
         NSP_UpdateRelatedAccounts.updateAccountStatus( accIdSet );
         NSP_UpdateRelatedAccounts.testHandleException( null , 'methodName' );
+    }
+
+    @isTest
+    private static void updateRelatedAccountsInvocable() {
+        Test.startTest();
+        List<Account> sharedAccounts = [
+            SELECT Id
+            FROM Account
+            WHERE ( Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME )
+        ];
+        NSP_UpdateRelatedAccounts.FlowInput input = new NSP_UpdateRelatedAccounts.FlowInput();
+        input.accountId = ( sharedAccounts?.isEmpty() ? sharedAccounts[0].Id : null );
+        List<NSP_UpdateRelatedAccounts.FlowInput> inputs = new List<NSP_UpdateRelatedAccounts.FlowInput>();
+        inputs.add( input );
+        NSP_UpdateRelatedAccounts.invoke( inputs );
+        Test.stopTest();
     }
 
 }

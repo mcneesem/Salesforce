@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>File</fullName>
+        <default>false</default>
+        <label>File</label>
+    </customValue>
+    <customValue>
+        <fullName>Docusign</fullName>
+        <default>false</default>
+        <label>Docusign</label>
+    </customValue>
+    <customValue>
+        <fullName>Select Forms</fullName>
+        <default>false</default>
+        <label>Select Forms</label>
+    </customValue>
+    <customValue>
+        <fullName>Upload Information</fullName>
+        <default>false</default>
+        <label>Upload Information</label>
+    </customValue>
+    <customValue>
+        <fullName>View Handbook</fullName>
+        <default>false</default>
+        <label>View Handbook</label>
+    </customValue>
+    <customValue>
+        <fullName>View Information</fullName>
+        <default>false</default>
+        <label>View Information</label>
+    </customValue>
+    <customValue>
+        <fullName>Date</fullName>
+        <default>false</default>
+        <label>Date</label>
+    </customValue>
+    <customValue>
+        <fullName>DateTime</fullName>
+        <default>false</default>
+        <label>Date/Time</label>
+    </customValue>
+    <customValue>
+        <fullName>Integer</fullName>
+        <default>false</default>
+        <label>Integer</label>
+    </customValue>
+    <customValue>
+        <fullName>Text</fullName>
+        <default>false</default>
+        <label>Text</label>
+    </customValue>
+    <description>Contains all Portal Task Actions.</description>
+    <masterLabel>Portal Task Action</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
