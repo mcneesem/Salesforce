@@ -95,7 +95,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Premier training</stringValue>
+                <stringValue>Premier Training</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>

@@ -289,6 +289,10 @@
                 <stringValue>Get_Portal_Task</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Sync_Portal_Task_Records</name>
@@ -391,13 +395,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Update</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordProjectTask</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

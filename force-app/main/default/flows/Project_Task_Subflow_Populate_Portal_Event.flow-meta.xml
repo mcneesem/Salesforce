@@ -273,6 +273,36 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Verify the meetings exists</description>
+        <name>Meeting_Record_Exists</name>
+        <label>Meeting Record Exists ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_1_of_Meeting_Record_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_projectmeetingtasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_projectmeetingtasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Each_Project_Meeting_Task</targetReference>
+            </connector>
+            <label>Outcome 1 of Meeting Record Exists ?</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Operation1</name>
         <label>Operation ?</label>
         <locationX>0</locationX>
@@ -478,7 +508,7 @@
   &quot;Time &amp; Attendance Training&quot; , &quot;Time &amp; Attendance Training&quot; ,
   &quot;Enrollment Administrator Training&quot; , &quot;Enrollment Administrator Training&quot; ,
   &quot;Transition to Service&quot; , &quot;Client Transition To Service&quot; ,
-  &quot;Premier training&quot; , &quot;Insperity Premier/Payroll Training&quot; ,
+  &quot;Premier Training&quot; , &quot;Insperity Premier/Payroll Training&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
@@ -603,7 +633,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Iterate_Each_Project_Meeting_Task</targetReference>
+            <targetReference>Meeting_Record_Exists</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Project_Meetings_Tasks</targetReference>

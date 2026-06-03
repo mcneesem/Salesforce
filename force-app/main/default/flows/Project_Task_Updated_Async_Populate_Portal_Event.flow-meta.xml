@@ -88,7 +88,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Transition To Service</stringValue>
+                <stringValue>Transition to Service</stringValue>
             </value>
         </filters>
         <filters>
