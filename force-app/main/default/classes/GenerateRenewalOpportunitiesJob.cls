@@ -1,5 +1,5 @@
 public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,Database.Stateful,Database.Batchable<SObject> {
-    // test w/ GenerateRenewalOpportunitiesJobTest (89%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (85%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth;
