@@ -1,36 +1,66 @@
-public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Database.Batchable<SObject> {
+public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,Database.Stateful,Database.Batchable<SObject> {
     // test w/ GenerateRenewalOpportunitiesJobTest (89%)
-    
+
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth;
     private Integer runYear;
-    
+
     // Derived eligibility: one year prior selected month
     private Date eligibleStart;
     private Date eligibleEnd;
-    
+
     Map<String, NSP_Sales_Office_Mapping__c> salesOfficeToManagerMap = new Map<String, NSP_Sales_Office_Mapping__c>();
     Map<Id,Id> clientIdWithOpportunityIdMap = new Map<Id,Id>();
     Map<String,NSP_Sub_Client__c> finalOpprtunitySet = new Map<String,NSP_Sub_Client__c>();
     private Map<String, Decimal> fullTimeWSEEMap = new Map<String, Decimal>();
     private Map<String, Decimal> partTimeWSEEMap = new Map<String, Decimal>();
     private Map<String, Decimal> seasonalTimeWSEEMap = new Map<String, Decimal>();
-    
+
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+    public GenerateRenewalOpportunitiesJob() {
+    }
+
+    //
+    // Callable
+    //
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+    public Id run(){
+        Id response = null;
+        if ( GenerateRenewalOpportunitiesJob.isEnabled ) {
+            response = Database.executeBatch(
+                new GenerateRenewalOpportunitiesJob() ,
+                GenerateRenewalOpportunitiesJob.batchSize
+            );
+        }
+        return response;
+    }
+
     public GenerateRenewalOpportunitiesJob( Integer monthNum, Integer yearNum ) {
-        
+
         if ( monthNum != null && yearNum != null ){
-            
+
             this.runMonth = monthNum;
             this.runYear  = yearNum;
-            
+
             // Example: user selects Dec 2026 => eligible window is Dec 2025
             Integer eligibleYear = yearNum - 1;
             this.eligibleStart = Date.newInstance( eligibleYear, monthNum, 1 );
             this.eligibleEnd   = this.eligibleStart.addMonths(1).addDays(-1);
         }
-        
+
     }
-    
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         return Database.getQueryLocator([
             SELECT Id,
@@ -42,7 +72,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             NSP_Renewal_Date__c,
             NSP_Benefit_Package_Name__c,
             NSP_Asset__c,
-            NSP_Asset__r.NSP_Sales_Office__c, 
+            NSP_Asset__r.NSP_Sales_Office__c,
             NSP_Asset__r.NSP_Service_Package__c,
             NSP_Account__c,
             NSP_Margin__c,
@@ -57,10 +87,10 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             AND NSP_Renewal_Date__c <= :this.eligibleEnd
             AND NSP_Renewal_Date__c != null
             Order by NSP_Client__c,NSP_Sub_Client__c ASC
-        ]); 
+        ]);
     }
     public void execute( Database.BatchableContext bc, List<NSP_Sub_Client__c> records ) {
-        if ( records != null 
+        if ( records != null
             && !records.isEmpty()
             && GenerateRenewalOpportunitiesJob.isEnabled
             && String.isNotBlank( GenerateRenewalOpportunitiesJob.RenewalRecordTypeId )
@@ -70,37 +100,37 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             this.buildWSEEMaps(records);
             this.processOpportunities(records);
         }
-        
+
     }
     public void finish(Database.BatchableContext bc) {}
-    
+
     private void buildEntries( NSP_Sub_Client__c subClient ){
-        if ( subClient != null  
-            && String.isNotBlank( subClient.NSP_Client__c ) 
+        if ( subClient != null
+            && String.isNotBlank( subClient.NSP_Client__c )
             && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c)
            )
         {
             String key = subClient.NSP_Client__c+subClient.NSP_Benefit_Package_Name__c;
-            if (  String.isNotBlank( subClient.NSP_Sub_Client__c ) 
-                && this.finalOpprtunitySet != null 
+            if (  String.isNotBlank( subClient.NSP_Sub_Client__c )
+                && this.finalOpprtunitySet != null
                 && !this.finalOpprtunitySet.isEmpty()
                 && this.finalOpprtunitySet.containsKey( key )
                )
             {
                 NSP_Sub_Client__c mapValue = this.finalOpprtunitySet.get( key );
-                if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c 
-                    && mapValue != null 
+                if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c
+                    && mapValue != null
                     && mapValue.NSP_Sub_Client__c != mapValue.NSP_Client__c )
                 {
                     this.finalOpprtunitySet.put( key,subClient );
                 }
-                
+
             }else{
                 this.finalOpprtunitySet.put( key,subClient );
-            }    
-        }      
+            }
+        }
     }
-    
+
     private void processOpportunities(List<NSP_Sub_Client__c> records){
         List<Opportunity> parentOpportunities = new List<Opportunity>();
         List<Opportunity> childOpportunities = new List<Opportunity>();
@@ -115,9 +145,9 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
                     } else {
                         this.buildOpportunity( subClient, childOpportunities );
                     }
-                    
+
                 }
-            } 
+            }
         }
         this.performDMLToParentOpportunities( parentOpportunities );
         this.mapChildToParentOpportunities( childOpportunities );
@@ -125,8 +155,8 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
     }
     private Boolean checkEligibility(NSP_Sub_Client__c subClient){
         Boolean flag = false;
-        if ( subClient != null 
-            && String.isNotBlank( subClient.NSP_Sub_Client__c ) 
+        if ( subClient != null
+            && String.isNotBlank( subClient.NSP_Sub_Client__c )
             && String.isNotBlank( subClient.NSP_Client__c )
             && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
            )
@@ -134,26 +164,26 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             String key = subClient.NSP_Client__c + subClient.NSP_Benefit_Package_Name__c;
             if ( this.finalOpprtunitySet.containsKey( key ) ){
                 NSP_Sub_Client__c scRec = this.finalOpprtunitySet.get( key );
-                if( scRec != null 
-                   && scRec.NSP_Client__c == subClient.NSP_Client__c 
-                   && scRec.NSP_Sub_Client__c == subClient.NSP_Sub_Client__c                    
+                if( scRec != null
+                   && scRec.NSP_Client__c == subClient.NSP_Client__c
+                   && scRec.NSP_Sub_Client__c == subClient.NSP_Sub_Client__c
                   )
                 {
-                    flag = true;   
+                    flag = true;
                 }
             }
-            
+
         }
         return flag;
     }
-    
+
     private void buildOpportunity( NSP_Sub_Client__c subClient, List<Opportunity> opportunities ){
         Opportunity opp = new Opportunity();
         if ( subClient != null ){
             opp.AccountId = subClient.NSP_Account__c;
             opp.RecordTypeId = GenerateRenewalOpportunitiesJob.RenewalRecordTypeId;
             opp.Name = this.buildOpportunityName( subClient );
-            opp.OwnerId = this.getOpportunityOwner( subClient ); 
+            opp.OwnerId = this.getOpportunityOwner( subClient );
             opp.NSP_PrimaryProduct__c = this.getPrimaryProduct(  subClient );
             opp.NSP_Client_For_Life__c = 'WO/WS';
             opp.CloseDate = subclient.NSP_Renewal_Date__c;
@@ -179,7 +209,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             opportunities.add( opp );
         }
     }
-    
+
     private void performDML( List<Opportunity> records ) {
         if ( ( records != null )
             && !records.isEmpty()
@@ -201,28 +231,28 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             }
         }
     }
-    
+
     private List<Opportunity> mapChildToParentOpportunities( List<Opportunity> childOpportunities ){
-        if ( childOpportunities != null 
+        if ( childOpportunities != null
             && (!childOpportunities.isEmpty())
-            && this.clientIdWithOpportunityIdMap != null 
+            && this.clientIdWithOpportunityIdMap != null
             && !this.clientIdWithOpportunityIdMap.isEmpty()
            )
         {
             for( Opportunity opp: childOpportunities ){
-                if ( opp != null 
-                    && String.isNotBlank( Opp.AccountId ) 
-                    && this.clientIdWithOpportunityIdMap.containsKey( Opp.AccountId ) 
+                if ( opp != null
+                    && String.isNotBlank( Opp.AccountId )
+                    && this.clientIdWithOpportunityIdMap.containsKey( Opp.AccountId )
                     && this.clientIdWithOpportunityIdMap.get( Opp.AccountId ) != null
                    )
                 {
-                    opp.NSP_Parent_Opportunity__c = this.clientIdWithOpportunityIdMap.get( Opp.AccountId ); 
+                    opp.NSP_Parent_Opportunity__c = this.clientIdWithOpportunityIdMap.get( Opp.AccountId );
                 }
-            }  
+            }
         }
         return childOpportunities;
     }
-    
+
     private Map<Id,Id> performDMLToParentOpportunities( List<Opportunity> parentOpportunities ) {
         if ( ( parentOpportunities != null )
             && !parentOpportunities.isEmpty()
@@ -231,11 +261,11 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             try {
                 Insert parentOpportunities;
                 for( Opportunity opp : parentOpportunities ){
-                    if ( opp != null 
+                    if ( opp != null
                         && opp.AccountId != null
                        )
                     {
-                        this.clientIdWithOpportunityIdMap.put( opp.AccountId, opp.Id );  
+                        this.clientIdWithOpportunityIdMap.put( opp.AccountId, opp.Id );
                     }
                 }
             } catch( Exception e ) {
@@ -248,15 +278,15 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         return clientIdWithOpportunityIdMap;
     }
-    
+
     private String getPrimaryProduct( NSP_Sub_Client__c subClient ){
         String primaryProduct = null;
-        if ( subClient != null 
-            && subClient.NSP_Asset__r != null 
+        if ( subClient != null
+            && subClient.NSP_Asset__r != null
             && String.isNotBlank( subClient.NSP_Asset__r.NSP_Service_Package__c )
             && GenerateRenewalOpportunitiesJob.primaryProductMap != null
-            && !GenerateRenewalOpportunitiesJob.primaryProductMap.isEmpty() 
-            && GenerateRenewalOpportunitiesJob.primaryProductMap.containsKey( subClient.NSP_Asset__r.NSP_Service_Package__c ) 
+            && !GenerateRenewalOpportunitiesJob.primaryProductMap.isEmpty()
+            && GenerateRenewalOpportunitiesJob.primaryProductMap.containsKey( subClient.NSP_Asset__r.NSP_Service_Package__c )
             && GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c ) != null
            )
         {
@@ -264,13 +294,13 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         return primaryProduct;
     }
-    
+
     private Id getOpportunityOwner( NSP_Sub_Client__c subClient ){
         Id owner = userInfo.getUserId();
-        if ( subClient != null 
-            && subClient.NSP_Asset__r != null 
+        if ( subClient != null
+            && subClient.NSP_Asset__r != null
             && String.isNotBlank( subClient.NSP_Asset__r.NSP_Sales_Office__c )
-            && this.salesOfficeToManagerMap != null 
+            && this.salesOfficeToManagerMap != null
             && !this.salesOfficeToManagerMap.isEmpty()
             && this.salesOfficeToManagerMap.containsKey( subClient.NSP_Asset__r.NSP_Sales_Office__c )
            )
@@ -282,32 +312,32 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         return owner;
     }
-    
+
     private String buildOpportunityName(  NSP_Sub_Client__c subClient ){
         String name = null;
-        if ( subClient != null 
-            && subClient.NSP_Account__r != null 
+        if ( subClient != null
+            && subClient.NSP_Account__r != null
             && String.isNotBlank( subClient.NSP_Account__r.Name )
            )
-        { 
+        {
             name = subClient.NSP_Account__r.Name +' - '+System.Now();
         }
         return name;
     }
-    
+
     // Sales office -> Renewal Manager mapping
     private void buildSalesOfficeToRenewalManagerMap( List<NSP_Sub_Client__c> subClients ){
         List<String> salesOfficeKeys = new List<String>();
         if ( subClients != null && !subClients.isEmpty() ){
             for ( NSP_Sub_Client__c record : subClients ) {
                 if ( record != null && record.NSP_Asset__r != null && String.isNotBlank( record.NSP_Asset__r.NSP_Sales_Office__c ) ){
-                    salesOfficeKeys.add( record.NSP_Asset__r.NSP_Sales_Office__c ); 
+                    salesOfficeKeys.add( record.NSP_Asset__r.NSP_Sales_Office__c );
                 }
             }
         }
         this.salesOfficeToManagerMap = buildSalesOfficeMap(salesOfficeKeys);
     }
-    
+
     private Map<String, NSP_Sales_Office_Mapping__c> buildSalesOfficeMap(List<String> salesOfficeKeys) {
         Map<String, NSP_Sales_Office_Mapping__c> salesOfficeToOwnerId = new Map<String, NSP_Sales_Office_Mapping__c>();
         if ( salesOfficeKeys != null && !salesOfficeKeys.isEmpty() ) {
@@ -323,12 +353,12 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         return salesOfficeToOwnerId;
     }
-    
+
     //
     // attributes controlled by Custom Settings...
     // ~ intentionally static to allow Custom Settings to modify the attributes a running job...
     //
-    
+
     private static Renewal_Opportunity_Settings__c settings {
         private get {
             if ( settings == null ) {
@@ -338,7 +368,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         private set;
     }
-    
+
     private static Integer batchSize {
         private get {
             if ( batchSize == null ) {
@@ -363,7 +393,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         private set;
     }
-    
+
     private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
@@ -377,7 +407,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         private set;
     }
-    
+
     private static String RenewalRecordTypeId {
         private get {
             if ( RenewalRecordTypeId == null ) {
@@ -391,7 +421,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         private set;
     }
-    
+
     // Selection of all active Service_Package_Mappping__mdt records...
     private static List<Service_Package_Mapping__mdt> activeServicePackageMappings {
         private get {
@@ -402,17 +432,17 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
                     MasterLabel ,
                     Active__c ,
                     Primary_Product__c ,
-                    Service_Package__c 
-                    FROM Service_Package_Mapping__mdt 
-                    WHERE Active__c = true 
+                    Service_Package__c
+                    FROM Service_Package_Mapping__mdt
+                    WHERE Active__c = true
                 ];
             }
             return activeServicePackageMappings;
         }
         private set;
     }
-    
-    // Map from Service pakage to Primary product 
+
+    // Map from Service pakage to Primary product
     private static Map<String, String > primaryProductMap {
         private get {
             if ( primaryProductMap == null ) {
@@ -436,7 +466,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         }
         private set;
     }
-    
+
     private void buildWSEEMaps(List<NSP_Sub_Client__c> records){
         for (NSP_Sub_Client__c rec : records){
             if (rec != null && rec.NSP_Account_Status__c == 'Active' && String.isNotBlank(rec.NSP_Client__c)){
@@ -448,18 +478,18 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
                 Decimal ft = getDecimalValue(rec.NSP_Actual_Full_Time_EE_Count__c);
                 Decimal pt = getDecimalValue(rec.NSP_Actual_Part_Time_EE_Count__c );
                 Decimal seasonal = getDecimalValue(rec.NSP_Actual_Seasonal_Time_EE_Count__c);
-                
+
                 fullTimeWSEEMap.put(rec.NSP_Client__c, fullTimeWSEEMap.get(rec.NSP_Client__c) + ft);
                 partTimeWSEEMap.put(rec.NSP_Client__c, partTimeWSEEMap.get(rec.NSP_Client__c) + pt);
                 seasonalTimeWSEEMap.put(rec.NSP_Client__c, seasonalTimeWSEEMap.get(rec.NSP_Client__c) + seasonal);
             }
         }
     }
-    
+
     private Decimal getDecimalValue(Decimal value) {
         return value == null ? 0 : value;
     }
-    
+
     private Decimal getMapValue(Map<String, Decimal> valueMap, String key) {
         if (valueMap.containsKey(key)) {
             return valueMap.get(key);
@@ -467,12 +497,12 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
             return 0;
         }
     }
-    
+
     private String fetchRenewalName(NSP_Sub_Client__c subClient){
         List<String> renewalNameParts = new List<String>();
         String renewalName = '';
         if (String.isNotBlank(subClient.NSP_Client__c) && subClient.NSP_Client__c != null) {
-            renewalNameParts.add(subClient.NSP_Client__c); 
+            renewalNameParts.add(subClient.NSP_Client__c);
         }
         if (subClient.NSP_Renewal_Date__c != null){
             renewalNameParts.add(String.valueOf(subClient.NSP_Renewal_Date__c.addYears(1).year()));
@@ -483,7 +513,7 @@ public class GenerateRenewalOpportunitiesJob implements  Database.Stateful,Datab
         renewalName = String.join(renewalNameParts, ' : ');
         return renewalName;
     }
-    
+
     private String getRenewalTeam(NSP_Sub_Client__c subClient) {
         if (subClient.NSP_Asset__r != null && subClient.NSP_Asset__r.NSP_Sales_Office__c != null && salesOfficeToManagerMap.containsKey(subClient.NSP_Asset__r.NSP_Sales_Office__c)) {
             return salesOfficeToManagerMap.get(subClient.NSP_Asset__r.NSP_Sales_Office__c).Renewal_Team__c;

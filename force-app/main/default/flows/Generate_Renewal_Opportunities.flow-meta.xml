@@ -5,7 +5,7 @@
         <label>Launch Renewals Batch</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>LaunchRenewalOpportunitiesBatch</actionName>
+        <actionName>GenerateRenewalOpportunitiesAction</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Batch_Queued</targetReference>
@@ -15,15 +15,17 @@
             <name>monthValue</name>
             <value>
                 <elementReference>Select_Month</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
             <name>yearValue</name>
             <value>
                 <elementReference>Select_Year</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
-        <nameSegment>LaunchRenewalOpportunitiesBatch</nameSegment>
+        <nameSegment>GenerateRenewalOpportunitiesAction</nameSegment>
         <offset>0</offset>
     </actionCalls>
     <apiVersion>66.0</apiVersion>
@@ -263,5 +265,5 @@
             <targetReference>Month_Year_Capture</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
