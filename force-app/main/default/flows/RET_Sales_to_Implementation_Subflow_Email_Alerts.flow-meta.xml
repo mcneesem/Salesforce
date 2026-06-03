@@ -18,7 +18,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -60,7 +60,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -144,7 +144,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Record.NSP_QC_Rep__r.Email</elementReference>
+                <elementReference>record.NSP_QC_Rep__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -366,14 +366,14 @@
             <assignToReference>toAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>toAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Record.NSP_Sales_Consultant__r.Email</elementReference>
+                <elementReference>record.NSP_Sales_Consultant__r.Email</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -394,17 +394,10 @@
             <name>isNbiImplResUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>isChangedNBIResource</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>PriorRETRecord.NSP_Implementation_NBI_Resource__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -426,22 +419,22 @@
             <name>isQcSignoffDateUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>record.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Record.NSP_QC_Signoff_Date__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>record.NSP_QC_Signoff_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Email_Message_Record_for_QC_completion</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -466,17 +459,10 @@
             <name>isQcRepUpdated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Record.NSP_QC_Rep__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>isChangedQCRep</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Record.NSP_QC_Rep__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>PriorRETRecord.NSP_QC_Rep__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -496,21 +482,21 @@
             <name>isSignOffDatepoulated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Record.NSP_Implementation_NBI_Resource__c</leftValueReference>
+                <leftValueReference>record.NSP_Implementation_NBI_Resource__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Record.NSP_Sales_Consultant__c</leftValueReference>
+                <leftValueReference>record.NSP_Sales_Consultant__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Record.NSP_Signoff_Date__c</leftValueReference>
+                <leftValueReference>record.NSP_Signoff_Date__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -557,7 +543,7 @@
         <description>Url of S2I rec, triggering the flow</description>
         <name>recordUrl</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!Record.Id}</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!record.Id}</expression>
     </formulas>
     <interviewLabel>Go ahead and create products for those that we can productize {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET-Sales-to-Implementation -Subflow - Email Alerts</label>
@@ -595,7 +581,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>Record.LastModifiedBy.Email</elementReference>
+                <elementReference>record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -607,13 +593,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>Record.LastModifiedDate</elementReference>
+                <elementReference>record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -631,7 +617,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -652,7 +638,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>Record.LastModifiedBy.Email</elementReference>
+                <elementReference>record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -664,13 +650,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>Record.LastModifiedDate</elementReference>
+                <elementReference>record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -688,7 +674,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>Record.NSP_QC_Rep__r.Email</elementReference>
+                <elementReference>record.NSP_QC_Rep__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -709,7 +695,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>Record.LastModifiedBy.Email</elementReference>
+                <elementReference>record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -721,13 +707,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>Record.LastModifiedDate</elementReference>
+                <elementReference>record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -745,7 +731,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -766,7 +752,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>Record.LastModifiedBy.Email</elementReference>
+                <elementReference>record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -778,13 +764,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>Record.LastModifiedDate</elementReference>
+                <elementReference>record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -802,7 +788,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>Record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
+                <elementReference>record.NSP_Implementation_NBI_Resource__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -820,7 +806,7 @@
         <inputAssignments>
             <field>FromAddress</field>
             <value>
-                <elementReference>Record.LastModifiedBy.Email</elementReference>
+                <elementReference>record.LastModifiedBy.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -832,13 +818,13 @@
         <inputAssignments>
             <field>MessageDate</field>
             <value>
-                <elementReference>Record.LastModifiedDate</elementReference>
+                <elementReference>record.LastModifiedDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>RelatedToId</field>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -856,7 +842,7 @@
         <inputAssignments>
             <field>ToAddress</field>
             <value>
-                <elementReference>Record.NSP_Sales_Consultant__r.Email</elementReference>
+                <elementReference>record.NSP_Sales_Consultant__r.Email</elementReference>
             </value>
         </inputAssignments>
         <object>EmailMessage</object>
@@ -880,7 +866,7 @@
             <field>RelatedToId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -912,7 +898,7 @@
             <field>RelatedToId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Record.Id</elementReference>
+                <elementReference>record.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -1012,7 +998,7 @@
         <objectType>NSP_Sales_to_Implementation__c</objectType>
     </variables>
     <variables>
-        <name>Record</name>
+        <name>record</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

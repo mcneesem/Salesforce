@@ -27,9 +27,6 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>RET_Sales_to_Implementation_Subflow_Email_Alerts</targetReference>
-        </connector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>NSP_Implementation_NBI_Resource__c</field>
@@ -47,6 +44,12 @@
         </filters>
         <object>NSP_Sales_to_Implementation__c</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>RET_Sales_to_Implementation_Subflow_Email_Alerts</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
@@ -57,7 +60,7 @@
         <locationY>0</locationY>
         <flowName>RET_Sales_to_Implementation_Subflow_Email_Alerts</flowName>
         <inputAssignments>
-            <name>RETRecord</name>
+            <name>record</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
