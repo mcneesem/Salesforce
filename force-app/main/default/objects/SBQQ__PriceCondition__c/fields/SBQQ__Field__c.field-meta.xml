@@ -388,6 +388,11 @@
                 <default>false</default>
                 <label>Has_Employee_Navigator__c</label>
             </value>
+            <value>
+                <fullName>NSP_Opportunity_Primary_Product__c</fullName>
+                <default>false</default>
+                <label>NSP_Opportunity_Primary_Product__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
