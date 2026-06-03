@@ -117,7 +117,7 @@
             <assignToReference>tc_projectmeetings</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Transition To Service</stringValue>
+                <stringValue>Transition to Service</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>

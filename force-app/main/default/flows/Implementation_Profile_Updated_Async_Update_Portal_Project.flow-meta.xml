@@ -102,11 +102,4 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>
