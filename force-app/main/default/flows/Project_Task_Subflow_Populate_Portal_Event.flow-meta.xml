@@ -501,7 +501,7 @@
         <name>portalEventName</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!recordProjectTask.Name},
+  {!recordProjectTask.Name} ,
   &quot;Client Transition Meeting - PM&quot; , &quot;Client Transition Meeting&quot; ,
   &quot;New Client - EE OT Meeting&quot; , &quot;Employee Orientation&quot; ,
   &quot;Configuration Call&quot; , &quot;Configuration Call&quot; ,
