@@ -717,23 +717,25 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:Workday_URL_Settings__c' );
         }
     }
+
     public static void doAvaTaxSettings() {
-    try {
-        Map<String, AVA_SFCLOUD__AvaTax__c> allSettings = AVA_SFCLOUD__AvaTax__c.getAll();
-        AVA_SFCLOUD__AvaTax__c avaTaxSettings;
-        if (allSettings != null && allSettings.containsKey('AvaTax Config')) {
-            avaTaxSettings = allSettings.get('AvaTax Config');
-            avaTaxSettings.AVA_SFCLOUD__Account_ID__c = '1100126607';
-            avaTaxSettings.AVA_SFCLOUD__License_Key__c = '0FE211624F764D08'; 
-            avaTaxSettings.AVA_SFCLOUD__Sandbox__c = true;
+        try {
+            Map<String,AVA_SFCLOUD__AvaTax__c> allSettings = AVA_SFCLOUD__AvaTax__c.getAll();
+            AVA_SFCLOUD__AvaTax__c avaTaxSettings;
+            if ( ( allSettings != null ) && allSettings.containsKey( 'AvaTax Config' ) ) {
+                avaTaxSettings = allSettings.get( 'AvaTax Config' );
+                avaTaxSettings.AVA_SFCLOUD__Account_ID__c = '1100126607';
+                avaTaxSettings.AVA_SFCLOUD__License_Key__c = '0FE211624F764D08';
+                avaTaxSettings.AVA_SFCLOUD__Sandbox__c = true;
+            }
+            if ( avaTaxSettings != null ) {
+                upsert avaTaxSettings;
+            }
+        } catch ( Exception e ) {
+            NSP_PrepSandbox.handleException( e , 'doAvaTaxSettings' );
         }
-        if(avaTaxSettings != null){
-        upsert avaTaxSettings;
-        }
-    } catch(Exception e) {
-        NSP_PrepSandbox.handleException(e, 'doAvaTaxSettings');
-      }
-   }
+    }
+
     public static void doE2CAddresses(String sandboxName) {
         try {
             Map<String, Integer> orgMap = new Map<String, Integer>{'merge' => 1, 'test' => 2, 'stage' => 3};
