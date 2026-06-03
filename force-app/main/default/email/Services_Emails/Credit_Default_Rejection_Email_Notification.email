@@ -1,0 +1,7 @@
+<p>
+<a href="{!Credit_Default__c.Link}">
+    Credit Default Checklist
+</a> 
+for {!Credit_Default__c.Account_Name__c} has been returned to you because of incorrect and/or missing data. 
+Please review, correct, and resubmit for approval.
+</p>
