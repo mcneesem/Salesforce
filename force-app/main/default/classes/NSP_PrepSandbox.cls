@@ -723,8 +723,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         AVA_SFCLOUD__AvaTax__c avaTaxSettings;
         if (allSettings != null && allSettings.containsKey('AvaTax Config')) {
             avaTaxSettings = allSettings.get('AvaTax Config');
-            avaTaxSettings.AVA_SFCLOUD__Account_ID__c = String.isNotBlank(System.Label.AvalaraSandboxAccountId) ? System.Label.AvalaraSandboxAccountId : avaTaxSettings.AVA_SFCLOUD__Account_ID__c;
-            avaTaxSettings.AVA_SFCLOUD__License_Key__c = String.isNotBlank(System.Label.AvalaraSandboxLicenseKey) ? System.Label.AvalaraSandboxLicenseKey : avaTaxSettings.AVA_SFCLOUD__License_Key__c;
+            avaTaxSettings.AVA_SFCLOUD__Account_ID__c = '1100126607';
+            avaTaxSettings.AVA_SFCLOUD__License_Key__c = '0FE211624F764D08'; 
             avaTaxSettings.AVA_SFCLOUD__Sandbox__c = true;
         }
         if(avaTaxSettings != null){
