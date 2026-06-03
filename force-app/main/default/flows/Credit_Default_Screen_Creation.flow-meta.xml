@@ -3,6 +3,22 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_Existing_Checklist_Id</name>
+        <label>Assign Existing Checklist Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varChecklistId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Existing_Checklist.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Navigate_To_Credit_Default_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Create_Credit_Default_Checklist_Record</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
@@ -152,7 +168,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Navigate_To_Credit_Default_Record</targetReference>
+            <targetReference>Assign_Existing_Checklist_Id</targetReference>
         </connector>
         <fields>
             <name>Existing_Checklist_In_Progress</name>
