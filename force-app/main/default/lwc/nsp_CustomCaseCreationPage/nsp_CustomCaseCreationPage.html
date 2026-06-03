@@ -1,7 +1,7 @@
 <!--
-  @description       : 
+  @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
-  @group             : 
+  @group             :
   @last modified on  : 12-09-2021
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
@@ -10,7 +10,7 @@
         <template if:false={isMultipleContactsSelected}>
         <div class="slds-m-top_medium slds-p-around_medium">
             <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}
-                onload={handleLoad} object-api-name="Case" record-type-id={selectedRecTypeId} 
+                onload={handleLoad} object-api-name="Case" record-type-id={selectedRecTypeId}
                 density="compact" data-id="case-record-form">
                 <template if:true={showTypeField}>
                     <lightning-layout class="typebox" multiple-rows>
@@ -67,7 +67,7 @@
                                                 </lightning-combobox>
                                                 <!-- Added By Sruthi start -->
                                                 <template if:false={isBPSUser}>
-                                                    <lightning-button variant="brand" label="View All" 
+                                                    <lightning-button variant="brand" label="View All"
                                                         class="slds-m-top_small" onclick={handleCategoryViewAll}>
                                                     </lightning-button>
                                                 </template>
@@ -77,7 +77,7 @@
                                         <!-- Added By Sruthi start -->
                                         <template if:true={showAllCategory}>
                                             <div class="slds-p-around_medium slds-form_horizontal">
-                                                <lightning-combobox data-fname="category" 
+                                                <lightning-combobox data-fname="category"
                                                     name="Category"
                                                     label="Category"
                                                     placeholder="Select a Category"
@@ -86,7 +86,7 @@
                                                     options={categoryOptions} required>
                                                 </lightning-combobox>
                                                 <template if:false={isBPSUser}>
-                                                    <lightning-button variant="brand" label="View Filtered" 
+                                                    <lightning-button variant="brand" label="View Filtered"
                                                         class="slds-m-top_small" onclick={handleCategoryFilteredView}>
                                                     </lightning-button>
                                                 </template>
@@ -120,7 +120,7 @@
                                                     options={subCategoryOptions} onchange={handleChange} required>
                                                 </lightning-combobox>
                                                 <template if:true={showAllSubCategoryButton}>
-                                                    <lightning-button variant="brand" label="View All" 
+                                                    <lightning-button variant="brand" label="View All"
                                                         class="slds-m-top_small" onclick={handleSubCategoryViewAll}>
                                                     </lightning-button>
                                                 </template>
@@ -133,7 +133,7 @@
                                                     options={subCategoryOptions} onchange={handleChange1} required>
                                                 </lightning-combobox>
                                                 <template if:true={showFilterSubCategoryButton}>
-                                                    <lightning-button variant="brand" label="View Filtered" 
+                                                    <lightning-button variant="brand" label="View Filtered"
                                                         class="slds-m-top_small" onclick={handleSubCategoryFiltered}>
                                                     </lightning-button>
                                                 </template>
@@ -196,12 +196,12 @@
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                             <div class="custom-box">Account, Contact,Asset </div>
                         </lightning-layout-item>
-                    </lightning-layout>       
+                    </lightning-layout>
                     <div class="slds-m-top_medium slds-p-around_medium">
-                        <lightning-layout multiple-rows="true"> 
+                        <lightning-layout multiple-rows="true">
                             <lightning-layout-item size="6" class="slds-p-around_small">
                                 <c-nsp_case-custom-look-up
-                                data-id = 'accountLookup' 
+                                data-id = 'accountLookup'
                                 s-object-api-name="Account"
                                 label="Account Name"
                                 icon-name = "standard:account"
@@ -214,12 +214,12 @@
                                 <template if:true={isMultipleACRs}>
                                   <strong class="redFont">{label.multipleAccountsAssociatedWithContact}</strong>
                                 </template>
-                              </lightning-layout-item> 
+                              </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small"
                                 lwc:if = {isCQAChildCase}>
                                     <c-nsp_case-custom-look-up
                                     s-object-api-name="User"
-                                    label="Case Owner"  
+                                    label="Case Owner"
                                     icon-name = "standard:user"
                                     default-record-id = {selectedOwnerId}
                                     onlookupupdate={handlelookupRecord}
@@ -239,7 +239,7 @@
                                 onlookupupdate={handlelookupRecord}
                                 placeholder="Search Contacts...">
                                 </c-nsp_case-custom-look-up>
-                              </lightning-layout-item> 
+                              </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small">
                                 <lightning-input-field title = "Subject" field-name='Subject' required> </lightning-input-field>
                               </lightning-layout-item>
@@ -253,13 +253,13 @@
                                 parent-id ={accountID}
                                 onlookupupdate={handlelookupRecord}
                                 placeholder="Search Assets...">
-                                </c-nsp_case-custom-look-up>                                
+                                </c-nsp_case-custom-look-up>
                               </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small"
                               if:true = {isPEORecordType}>
                                 <c-nsp_case-custom-look-up
                                 s-object-api-name="User"
-                                label="Case Owner"  
+                                label="Case Owner"
                                 icon-name = "standard:user"
                                 default-record-id = {selectedOwnerId}
                                 onlookupupdate={handlelookupRecord}
@@ -274,7 +274,7 @@
                               </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small">
                                 <lightning-input-field field-name='Description'> </lightning-input-field>
-                              </lightning-layout-item>       
+                              </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small"
                               if:true = {isPEORecordType}>
                                 <lightning-input-field field-name='Reason'> </lightning-input-field>
@@ -320,7 +320,7 @@
                                     </lightning-layout-item>
                                 </template>
                             </template>
-                            
+
                         <lightning-layout-item flexibility="auto" if:true={getDisplayConfidentialCheckBox} size="6" class="slds-p-around_small">
                             <lightning-input-field field-name="NSP_Confidential__c" value={confidential} >
                             </lightning-input-field>
@@ -328,7 +328,7 @@
                         <lightning-layout-item flexibility="auto" if:true={showPrivateCheckbox} size="6" class="slds-p-around_small">
                             <lightning-input-field field-name="NSP_Private__c">
                             </lightning-input-field>
-                        </lightning-layout-item>                                            
+                        </lightning-layout-item>
                         </lightning-layout>
                     </div>
                     <template lwc:if={isCQAChildCase}>
@@ -585,7 +585,7 @@
                     <template lwc:if={isSubCompPermissionEnabled}>
                         <c-case-notes
                             onselected={handleNotes}
-                            oncanceled={handleCancelNotes} 
+                            oncanceled={handleCancelNotes}
                             showfields
                             >
                         </c-case-notes>
@@ -617,7 +617,7 @@
                                         </div>
                                     </div>
                                 </lightning-record-edit-form>
-                            </lightning-card>  
+                            </lightning-card>
                         </div>
                     </template>
                     <!--Attachment Code by Sruthi - Start-->
@@ -648,8 +648,8 @@
                 </div>
                     <!--Attachment Code by Sruthi - Start-->
                     <template if:true={showError}>
-                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
-                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                        <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                            <span class="slds-icon_container slds-icon-text-error slds-m-right_x-small" title="Description of icon when needed">
                                 <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error" variant="inverse"></lightning-icon>
                               </span>
                               <h2>{errorMessageToDisplay}</h2>
@@ -670,10 +670,10 @@
                         </lightning-button>
                         <lightning-button class="slds-m-top_small" disabled={disableButton} onclick={handleSaveAndAdd}
                         type="submit" variant="brand" label="Save And Add Contacts">
-                    </lightning-button>                        
+                    </lightning-button>
                     </div>
 
-                    
+
                 </template>
 
             </lightning-record-edit-form>

@@ -19,9 +19,9 @@
       position : relative;
       }
       .buttonholder{
-       	margin-top: 15px;
+        margin-top: 15px;
         position : absolute;
-       	z-index: 1000;
+        z-index: 1000;
        }
    </style>
    <script>
@@ -62,7 +62,7 @@
          <div class="slds-notify_container slds-is-relative">
             <div class="slds-notify slds-notify_toast slds-theme_error" style="display: inline-grid" role="status">
                <span class="slds-assistive-text">error</span>
-               <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+               <span class="slds-icon_container slds-icon-text-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
                </span>
                <div style="slds-notify__content;  {!IF(doNotAllow == true && isTriggerCalculation == true, 'display:block', 'display:none')}">
                   <h2 class="slds-text-heading_small ">{!$Label.ReadyForApprovalError}</h2>
@@ -165,7 +165,7 @@
               <div style="slds-notify__content; slds-p-top_medium; {!IF(isTerminationDateBlank == true , 'display:block', 'display:none')}" >
                   <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.NSP_Termination_Date_Error}</h2>
               </div>
-			  <div style="slds-notify__content; slds-p-top_medium; {!IF(isSeasonalCalculationPending == true , 'display:block', 'display:none')}" >
+              <div style="slds-notify__content; slds-p-top_medium; {!IF(isSeasonalCalculationPending == true , 'display:block', 'display:none')}" >
                   <h2 class="slds-text-heading_small slds-p-top_x-small">{!$Label.Seasonal_Pricing_Error}</h2>
               </div>
             </div>
