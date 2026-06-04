@@ -537,7 +537,6 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Portal_Pay_Period__c</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Portal_Client__c</queriedFields>
         <queriedFields>Pay_Frequency__c</queriedFields>
         <queriedFields>First_Pay_Date__c</queriedFields>
         <queriedFields>First_Pay_Period_Start__c</queriedFields>
