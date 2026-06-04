@@ -1,5 +1,5 @@
 public with sharing class NSP_UserTriggerHelper {
-    // test w/ NSP_UserTriggerHelper_Test (82%)
+    // test w/ NSP_UserTriggerHelper_Test (81%)
 
     public static boolean syncAccountQueueExecuted = false;
 
@@ -207,21 +207,23 @@ public with sharing class NSP_UserTriggerHelper {
     // @return void
     //
     //
-    public void afterInsertUser(List < User > newList) {
-
+    public void afterInsertUser( List<User> newList ) {
         List<string> serviceProfiles = System.Label.NSP_ServiceProfiles.split(',');
         Set<Id> serviceProfileUserIdSet = new Set<Id>();
-        Map<Id,Id> mapContactIdUserId = new Map<Id,Id>();
         List<User> lstUserToAssignFSLPermissions = new List<User>();
         Map<Id, User> userIdUserMap  = new Map<Id, User>();
-
-        for(User usr : newList){
+        Set<Id> portalUserIds = new Set<Id>();
+        for ( User usr : newList ) {
             if(serviceProfiles.contains(usr.NSP_User_Profile_Name__c) && usr.IsActive){
                 serviceProfileUserIdSet.add(usr.id);
             }
 
-            if(usr.isActive && usr.ContactId !=null && usr.IsPortalEnabled){
-                mapContactIdUserId.put(usr.ContactId,usr.Id);
+            if ( usr.IsActive
+                && usr.IsPortalEnabled
+                && ( usr.ContactId != null )
+                )
+            {
+                portalUserIds.add( usr.Id );
             }
 
             if(String.isNotBlank(usr.NSP_Salesforce_Field_service__c)){
@@ -242,7 +244,7 @@ public with sharing class NSP_UserTriggerHelper {
         if(!serviceProfileUserIdSet.isEmpty()){
             addtoServiceProfilePublicGroup(serviceProfileUserIdSet);
         }
-        NSP_portalUserSharing.enqueueJob( mapContactIdUserId );
+        PortalClientSharing.enqueueJob( portalUserIds );
         if ( !lstUserToAssignFSLPermissions.isEmpty() ) {
             //send it to queueable method to assign permissionset
             this.processUserPermissions( lstUserToAssignFSLPermissions , null );
@@ -255,17 +257,17 @@ public with sharing class NSP_UserTriggerHelper {
     // @param oldMap List of the User record before update.
     // @return void
     //
-    public void afterUpdateUser(Map < Id, User > newMap, Map < Id, User > oldMap) {
+    public void afterUpdateUser( Map<Id,User> newMap , Map<Id,User> oldMap ) {
         List<User> lstUserToAssignFSLPermissions = new List<User>();
         List<string> serviceProfiles = System.Label.NSP_ServiceProfiles.split(',');
         Set<Id> serviceProfileUserIdSet = new Set<Id>();
         Set<Id> nonserviceProfileUserIdSet = new Set<Id>();
         Set<Id> psaUserIdSet  = new Set<Id>();
-        Map<Id,Id> mapContactIdUserId = new Map<Id,Id>();
         Map<Id, User> userIdUserMap  = new Map<Id, User>();
         Set<Id> userToremovePsSet  = new Set<Id>();
+        Set<Id> portalUserIds = new Set<Id>();
 
-        for(User usr : newMap.values()){
+        for ( User usr : newMap.values() ) {
 
             if(String.isNotBlank(usr.NSP_User_Profile_Name__c) && usr.NSP_User_Profile_Name__c != oldMap.get(usr.Id).NSP_User_Profile_Name__c && usr.IsActive){
                 if(serviceProfiles.contains(usr.NSP_User_Profile_Name__c) && !serviceProfiles.contains(oldMap.get(usr.Id).NSP_User_Profile_Name__c)){
@@ -292,8 +294,12 @@ public with sharing class NSP_UserTriggerHelper {
                 }
             }
 
-            if(usr.isActive && usr.ContactId !=null && usr.IsPortalEnabled && usr.NSP_User_Profile_Name__c==NSP_ServiceConstants.communityUserProfilePlus){
-            mapContactIdUserId.put(usr.ContactId,usr.Id);
+            if ( usr.isActive
+                && usr.IsPortalEnabled
+                && ( usr.ContactId != null )
+                )
+            {
+                portalUserIds.add( usr.Id );
             }
         }
 
@@ -318,7 +324,7 @@ public with sharing class NSP_UserTriggerHelper {
         if(!userIdUserMap.isEmpty()){
            assignPSAPermission(userIdUserMap);
         }
-        NSP_portalUserSharing.enqueueJob( mapContactIdUserId );
+        PortalClientSharing.enqueueJob( portalUserIds );
         this.syncToAccount( newMap.values() , oldMap );
     }
 

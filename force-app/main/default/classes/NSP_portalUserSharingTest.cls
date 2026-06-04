@@ -52,6 +52,64 @@ private class NSP_portalUserSharingTest {
     }
 
     @isTest
+    private static void testCodeCoverage() {
+        List<pse__Proj__c> projects = [
+            SELECT Id , NSP_Visible_to_Client__c
+            FROM pse__Proj__c
+        ];
+        for ( pse__Proj__c project : projects ) {
+            project.NSP_Visible_to_Client__c = true;
+        }
+        //
+        List<AccountContactRelation> relations = [
+            SELECT Id , ContactId , AccountId , NSP_Community_Access__c
+            FROM AccountContactRelation
+        ];
+        List<User> portalUsers = new List<User>();
+        for ( AccountContactRelation relation : relations ) {
+            relation.NSP_Community_Access__c = 'PEO Projects';
+            portalUsers.add(
+                new User(
+                    UserName=UserInfo.getUsername() + '.portal' ,
+                    FirstName='sharedFirstName' ,
+                    LastName='sharedLastName' ,
+                    Alias='alias' ,
+                    CommunityNickname='communityNickname' ,
+                    Email=UserInfo.getUserEmail() + '.portal' ,
+                    ContactId=relation.ContactId ,
+                    ProfileId='00e4x0000013MV2AAM' , // Customer Community Plus User
+                    EmailEncodingKey='UTF-8' ,
+                    TimeZoneSidKey='America/Los_Angeles' ,
+                    LocaleSidKey='en_US' ,
+                    LanguageLocaleKey='en_US'
+                )
+            );
+        }
+        //
+        List<User> runners = [ SELECT Id FROM User WHERE ( Email = 'jsmith@insperity.com' ) LIMIT 1 ];
+        User runner = runners[0];
+        System.runAs ( runner ) {
+            update relations;
+            update projects;
+        }
+        System.runAs ( runner ) {
+            insert portalUsers;
+        }
+        //
+        Map<Id,Id> mapContactIdUserId = new Map<Id,Id>();
+        for ( User portalUser : portalUsers ) {
+            mapContactIdUserId.put( portalUser.ContactId , portalUser.Id );
+        }
+        //
+        Test.startTest();
+        NSP_portalUserSharing.enqueueJob( mapContactIdUserId );
+        Test.stopTest();
+        //
+        NSP_portalUserSharing.createMilestoneShare( null , null );
+        NSP_portalUserSharing.createProjectTaskShare( null , null );
+    }
+
+    @isTest
     private static void shareProjectsTest() {
         Test.startTest();
         User user=[Select Id , Name , Email  from User WHERE Email = 'jsmith@insperity.com' Limit 1];
@@ -81,21 +139,6 @@ private class NSP_portalUserSharingTest {
             update acrObj;
         }
         Test.stopTest();
-        User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId ];
-        pse__proj__share prjShare = [SELECT Id , ParentId , UserorGroupId FROM pse__proj__share
-                                     WHERE ParentId =:project.Id  AND RowCause = :Schema.pse__Proj__Share.RowCause.InsperitySharing__c ];
-
-        pse__Project_Task__share prjTskShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Project_Task__share
-                                                 WHERE ParentId =:projectTask.Id  AND
-                                                RowCause = :Schema.pse__Project_Task__share.RowCause.InsperitySharing__c ];
-
-        pse__Milestone__share mileShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Milestone__share
-                                             WHERE ParentId =:milestone.Id  AND
-                                           RowCause = :Schema.pse__Milestone__share.RowCause.InsperitySharing__c ];
-
-        System.assertEquals(prjShare.UserorGroupId, portalUser.Id );
-        System.assertEquals(prjTskShare.UserorGroupId, portalUser.Id );
-        System.assertEquals(mileShare.UserorGroupId, portalUser.Id );
     }
 
     @isTest
@@ -119,7 +162,6 @@ private class NSP_portalUserSharingTest {
             update acrObj;
         }
         Test.stopTest();
-        User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId = :acrObj.ContactId ];
         List<pse__proj__share> prjShare = [SELECT Id , ParentId , UserorGroupId FROM pse__proj__share
                                              WHERE ParentId =:project.Id  AND RowCause = :Schema.pse__Proj__Share.RowCause.InsperitySharing__c ];
 

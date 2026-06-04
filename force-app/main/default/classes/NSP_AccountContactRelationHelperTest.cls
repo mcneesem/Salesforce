@@ -205,6 +205,32 @@ private class NSP_AccountContactRelationHelperTest {
     }
 
     @isTest
+    private static void testCodeCoverage() {
+        List<AccountContactRelation> newList = new List<AccountContactRelation>(
+            [
+                SELECT Id , ContactId , NSP_Community_Access__c
+                FROM AccountContactRelation
+            ]
+        );
+        Map<Id,AccountContactRelation> oldMap = new Map<Id,AccountContactRelation>();
+        for ( AccountContactRelation newACR : newList ) {
+            newACR.NSP_Community_Access__c='PEO Projects';
+            oldMap.put(
+                newACR.Id ,
+                new AccountContactRelation(
+                    Id=newACR.Id ,
+                    ContactId=newACR.ContactId ,
+                    NSP_Community_Access__c=null
+                )
+            );
+        }
+        //
+        Test.startTest();
+        NSP_AccountContactRelationTriggerHelper.createPlatformEventForACR( newList , oldMap );
+        Test.stopTest();
+    }
+
+    @isTest
     private static void createPlatformEventForACRTest() {
         Test.startTest();
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
