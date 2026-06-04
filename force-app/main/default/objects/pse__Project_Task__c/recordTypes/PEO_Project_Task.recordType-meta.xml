@@ -965,6 +965,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending - Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending - Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scheduled</fullName>
             <default>false</default>
         </values>

@@ -104,17 +104,38 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get hasGuidance() {
         return ( this.record?.fields?.Portal_Guidance__c?.value );
     }
-    get isCompleted() {
-        return ( this.status === "Completed" );
-    }
-    get status() {
-        return ( this.record?.fields?.Status__c?.value );
-    }
     get isEditable() {
         return ( this.record?.fields?.Is_Editable__c?.value );
     }
     get hasProjectTask() {
         return ( this.record?.fields?.Has_Project_Task__c?.value );
+    }
+
+    // status icon...
+    get status() {
+        return ( this.record?.fields?.Status__c?.value );
+    }
+    get statusIconName() {
+        let result = "utility:clock";
+        if ( this.status === "Completed" ) {
+            result = "utility:check";
+        } else if ( this.status === "Pending - Insperity" ) {
+            result = "utility:pause_alt";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "utility:preview";
+        }
+        return result;
+    }
+    get statusIconVariant() {
+        let result;
+        if ( this.status === "Completed" ) {
+            result = "success";
+        } else if ( this.status === "Pending - Insperity" ) {
+            result = "warning";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "warning";
+        }
+        return result;
     }
 
     @api variant;
