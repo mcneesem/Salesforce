@@ -11,6 +11,7 @@
     <relationshipLabel>Filtered Price Conditions</relationshipLabel>
     <relationshipName>FilteredPriceConditions</relationshipName>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
