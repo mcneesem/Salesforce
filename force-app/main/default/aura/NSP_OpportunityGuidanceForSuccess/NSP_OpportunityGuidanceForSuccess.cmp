@@ -1,4 +1,4 @@
-<aura:component controller="NSP_GuidanceForSuccessController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+<aura:component controller="NSP_GuidanceForSuccessController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId">
     <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
     <aura:attribute name="opportunityRecord" type="Opportunity" />
     <aura:attribute name="guidanceMessage" type="String" />
