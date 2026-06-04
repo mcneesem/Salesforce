@@ -21,7 +21,7 @@
                                     <rightValue>Client Default</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Credit_Default_Creation_Screen_Flow}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Credit_Default_Screen_Creation}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>

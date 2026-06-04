@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Credit_Default_Screen_Creation</name>
+    </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Credit_Default_Screen_Creation</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Credit Default Screen Creation</label>
+</PermissionSet>
