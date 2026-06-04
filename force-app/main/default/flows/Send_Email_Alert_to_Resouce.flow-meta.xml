@@ -4,6 +4,16 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>Fault paths added. Outbound Email bypass added. Send an Email Alert to assigned NBI IMPL Resource  or QC Rep on S2I for assignment or completion</description>
     <environments>Default</environments>
+    <formulas>
+        <name>IsChangedNBIResourceFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Record.NSP_Implementation_NBI_Resource__c}!= {!$Record__Prior.NSP_Implementation_NBI_Resource__c}</expression>
+    </formulas>
+    <formulas>
+        <name>IsChangedQCRepFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Record.NSP_QC_Rep__c} != {!$Record__Prior.NSP_QC_Rep__c}</expression>
+    </formulas>
     <interviewLabel>Send Email Alert to Resouce {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Email Alert to Resource on S2I Records</label>
     <processMetadataValues>
@@ -75,7 +85,16 @@
         <locationY>0</locationY>
         <flowName>RET_Sales_to_Implementation_Subflow_Email_Alerts</flowName>
         <inputAssignments>
-            <name>PriorRETRecord</name>
+            <name>isChangedNBIResource</name>
+            <value>
+                <elementReference>IsChangedNBIResourceFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isChangedQCRep</name>
+            <value>
+                <elementReference>IsChangedQCRepFormula</elementReference>
+            </value>
         </inputAssignments>
         <inputAssignments>
             <name>record</name>
@@ -83,6 +102,5 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>

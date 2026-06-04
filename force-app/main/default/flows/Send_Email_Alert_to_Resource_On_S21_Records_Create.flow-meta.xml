@@ -60,11 +60,22 @@
         <locationY>0</locationY>
         <flowName>RET_Sales_to_Implementation_Subflow_Email_Alerts</flowName>
         <inputAssignments>
+            <name>isChangedNBIResource</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isChangedQCRep</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>record</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>
