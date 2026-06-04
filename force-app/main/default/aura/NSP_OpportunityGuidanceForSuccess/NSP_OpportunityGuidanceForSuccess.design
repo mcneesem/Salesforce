@@ -2,5 +2,4 @@
     <sfdc:objects>
         <sfdc:object>Opportunity</sfdc:object>
     </sfdc:objects>
-    <design:attribute name="title" label="Display Title" description="Display/Hide Title" datasource="true,false" default="true" />
 </design:component>
