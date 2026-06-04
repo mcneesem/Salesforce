@@ -161,6 +161,7 @@
     <nameField>
         <displayFormat>{0}</displayFormat>
         <label>Condition #</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Price Conditions</pluralLabel>
