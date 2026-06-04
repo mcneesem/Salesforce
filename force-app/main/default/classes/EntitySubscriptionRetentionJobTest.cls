@@ -16,6 +16,7 @@ private class EntitySubscriptionRetentionJobTest {
         settings.IsEnabled__c = true;
         settings.BatchSize__c = 200;
         settings.SoqlDaysLimitCases__c = 0;
+        settings.SoqlDaysLimitContentDocuments__c = 180;
         upsert settings;
 
         Case insCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
