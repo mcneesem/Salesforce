@@ -7,6 +7,7 @@
     <inlineHelpText>API Name of the Custom Object that stores the lookup data.</inlineHelpText>
     <label>Lookup Object</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
