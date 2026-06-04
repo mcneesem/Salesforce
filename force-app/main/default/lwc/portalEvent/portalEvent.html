@@ -20,21 +20,26 @@
                             </lightning-layout-item>
                             <lightning-layout-item size="5">
                                 <div class="slds-text-align_right">
-                                    <lightning-formatted-date-time
-                                        value={startDateTime}
-                                        hour="2-digit"
-                                        minute="2-digit"
-                                        time-zone={timeZoneSidKey}
-                                        >
-                                    </lightning-formatted-date-time>&nbsp;-&nbsp;
-                                    <lightning-formatted-date-time
-                                        value={endDateTime}
-                                        hour="2-digit"
-                                        minute="2-digit"
-                                        time-zone={timeZoneSidKey}
-                                        time-zone-name="short"
-                                        >
-                                    </lightning-formatted-date-time>
+                                    <template lwc:if={startDateTime}>
+                                        <lightning-formatted-date-time
+                                            value={startDateTime}
+                                            hour="2-digit"
+                                            minute="2-digit"
+                                            time-zone={timeZoneSidKey}
+                                            >
+                                        </lightning-formatted-date-time>
+                                        <template lwc:if={endDateTime}>
+                                            &nbsp;-&nbsp;
+                                            <lightning-formatted-date-time
+                                                value={endDateTime}
+                                                hour="2-digit"
+                                                minute="2-digit"
+                                                time-zone={timeZoneSidKey}
+                                                time-zone-name="short"
+                                                >
+                                            </lightning-formatted-date-time>
+                                        </template>
+                                    </template>
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
