@@ -521,7 +521,7 @@ public with sharing class UserAvailabilityService {
         // Load overlapping events once for all eligible users (only if inputs are valid)
         // Expand query window backwards by 30 minutes to catch events whose buffer extends into requested slot
         Event queryWindow = new Event(
-            StartDateTime=startDateTime.addMinutes(-30) ,
+            StartDateTime=startDateTime.addMinutes( -30 ) ,
             EndDateTime=endDateTime
         );
         List<Event> overlapping = UserAvailabilityService.getEventsForUser(
