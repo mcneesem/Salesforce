@@ -3,7 +3,6 @@
     <fullName>SBQQ__Rule__c</fullName>
     <deprecated>false</deprecated>
     <description>Price rule running this action.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Price rule running this action.</inlineHelpText>
     <label>Rule</label>
     <referenceTo>SBQQ__PriceRule__c</referenceTo>
@@ -11,6 +10,7 @@
     <relationshipName>PriceActions</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>
