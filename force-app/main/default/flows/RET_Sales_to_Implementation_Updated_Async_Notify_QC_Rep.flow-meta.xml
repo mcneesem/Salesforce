@@ -27,7 +27,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_QC_Rep__c</field>
             <operator>IsNull</operator>
