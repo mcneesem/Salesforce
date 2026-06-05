@@ -175,7 +175,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Contact</targetReference>
+            <targetReference>Account_Subflow_Create_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -297,6 +297,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varErrorMessageToUser_New_Contact_Id_is_missing</name>
+        <label>Assign varErrorMessageToUser - New Contact Id is missing</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessageToUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New Contact Id is missing.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Something_Went_Wrong_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varErrorMessageToUser_No_ACR_created_when_Contact_was_created</name>
         <label>Assign varErrorMessageToUser - No ACR created when Contact was created</label>
         <locationX>0</locationX>
@@ -361,23 +378,6 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Something_Went_Wrong_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Create_Contact</name>
-        <label>Assign varFaultElement - Create_Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -627,6 +627,31 @@
                 <targetReference>Which_action_should_be_taken</targetReference>
             </connector>
             <label>Yes - varAccountId and varAction are populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_varContact_has_an_Id</name>
+        <label>Verify varContact has an Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_varErrorMessageToUser_New_Contact_Id_is_missing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>varContact Id is missing</defaultConnectorLabel>
+        <rules>
+            <name>varContact_has_an_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varContact.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_newly_created_AccountContactRelation_record</targetReference>
+            </connector>
+            <label>varContact has an Id</label>
         </rules>
     </decisions>
     <decisions>
@@ -880,19 +905,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Contact</name>
-        <label>Create Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_newly_created_AccountContactRelation_record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Create_Contact</targetReference>
-        </faultConnector>
-        <inputReference>varContact</inputReference>
-    </recordCreates>
     <recordCreates>
         <name>Create_New_AccountContactRelation</name>
         <label>Create New AccountContactRelation</label>
@@ -1754,6 +1766,26 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Account_Subflow_Create_Contact</name>
+        <label>Account - Subflow - Create Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Verify_varContact_has_an_Id</targetReference>
+        </connector>
+        <flowName>Account_Subflow_Create_Contact</flowName>
+        <inputAssignments>
+            <name>varContact</name>
+            <value>
+                <elementReference>varContact</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>varContact.Id</assignToReference>
+            <name>varCreatedContactId</name>
+        </outputAssignments>
+    </subflows>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
