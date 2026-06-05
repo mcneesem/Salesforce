@@ -54,7 +54,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get updateRecordInput() {
         const fields = {};
         fields[PORTAL_TASK_ID_FIELD.fieldApiName] = this.recordId;
-        if ( !this.hasProjectTask ) {
+        if ( this.hasProjectTask ) {
+            fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending - Insperity"; // force-pending state for regular Portal Tasks...
+        } else {
             fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
         }
         if ( this.showValueInput ) {
@@ -342,8 +344,15 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         if ( event?.detail?.files?.length ) {
             this.showToastSuccess( "Success" , "File Uploaded" );
             this.modified();
-            if ( !this.hasProjectTask && this.isAutoSaveEnabled ) {
-                this.handleSave(); // auto-complete orphaned Portal Tasks...
+            let requiresSave = false;
+            if ( this.isAutoSaveEnabled ) {
+                requiresSave = !this.hasProjectTask; // always save orphaned Portal Tasks...
+                if ( this.hasProjectTask && ( this.status !== "Pending - Insperity" ) ) {
+                    requiresSave = true; // conditionally save regular Portal Tasks...
+                }
+            }
+            if ( requiresSave ) {
+                this.handleSave();
             }
         }
     }
