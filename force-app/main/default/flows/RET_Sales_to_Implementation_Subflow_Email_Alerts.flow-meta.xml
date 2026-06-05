@@ -453,13 +453,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>record.NSP_Sales_Consultant__r.Email</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</targetReference>
             </connector>
@@ -539,6 +532,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>record.NSP_Implementation_NBI_Resource__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_Sales_Consultant__r.Email</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
