@@ -136,8 +136,8 @@
     </decisions>
     <description>Project Visible to Client Updated Sync all Project details to Portal</description>
     <environments>Default</environments>
-    <interviewLabel>Project_Updated_Async_Sync_Portal_Project {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project - Updated - Subflow - Sync Portal Project</label>
+    <interviewLabel>Project - Subflow - Sync Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Subflow - Sync Portal Project</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -274,7 +274,7 @@
         <connector>
             <targetReference>IP_Information_Synced_Successfully</targetReference>
         </connector>
-        <flowName>Implementation_Profile_Updated_Subflow_Update_Portal_Project</flowName>
+        <flowName>Implementation_Profile_Subflow_Update_Portal_Project</flowName>
         <inputAssignments>
             <name>projectId</name>
             <value>

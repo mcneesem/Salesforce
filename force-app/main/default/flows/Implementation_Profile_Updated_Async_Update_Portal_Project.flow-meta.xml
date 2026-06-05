@@ -82,7 +82,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Implementation_Profile_Updated_Subflow_Update_Portal_Project</targetReference>
+                <targetReference>Implementation_Profile_Subflow_Update_Portal_Project</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -90,11 +90,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Implementation_Profile_Updated_Subflow_Update_Portal_Project</name>
-        <label>Implementation Profile - Updated - Subflow - Update Portal Project</label>
+        <name>Implementation_Profile_Subflow_Update_Portal_Project</name>
+        <label>Implementation Profile - Subflow - Update Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Implementation_Profile_Updated_Subflow_Update_Portal_Project</flowName>
+        <flowName>Implementation_Profile_Subflow_Update_Portal_Project</flowName>
         <inputAssignments>
             <name>projectId</name>
             <value>

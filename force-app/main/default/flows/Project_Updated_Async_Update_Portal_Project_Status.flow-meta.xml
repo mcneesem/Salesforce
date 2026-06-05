@@ -238,7 +238,7 @@
         <label>Portal Project Full Sync</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Project_Updated_Subflow_Sync_Portal_Project</flowName>
+        <flowName>Project_Subflow_Sync_Portal_Project</flowName>
         <inputAssignments>
             <name>projectId</name>
             <value>
