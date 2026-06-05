@@ -1286,10 +1286,16 @@
                 <fieldItem>Record.NSP_Parent_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Parent_Opportunity_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Insurance Services</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
