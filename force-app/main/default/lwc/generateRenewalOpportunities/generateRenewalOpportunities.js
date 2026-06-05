@@ -1,6 +1,6 @@
 import { LightningElement } from 'lwc';
 
-export default class RenewalsGenerateOpportunities extends LightningElement {
+export default class GenerateRenewalOpportunities extends LightningElement {
     showFlow = false;
         handleClick() {
         this.showFlow = true;

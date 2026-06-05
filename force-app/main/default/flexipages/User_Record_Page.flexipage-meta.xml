@@ -277,8 +277,15 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>renewalsGenerateOpportunities</componentName>
-                <identifier>c_renewalsGenerateOpportunities</identifier>
+                <componentName>generateRenewalOpportunities</componentName>
+                <identifier>c_generateRenewalOpportunities</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Batch_Renewal_Opportunity_Creation}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
