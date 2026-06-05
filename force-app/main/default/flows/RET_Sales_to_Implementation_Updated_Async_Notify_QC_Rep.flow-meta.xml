@@ -46,7 +46,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>RET_Sales_to_Implementation_Subflow_Email_Alerts</targetReference>
+                <targetReference>RET_Sales_to_Implementation_Subflow_Email_Notifications</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -54,11 +54,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>RET_Sales_to_Implementation_Subflow_Email_Alerts</name>
-        <label>RET-Sales-to-Implementation -Subflow - Email Alerts</label>
+        <name>RET_Sales_to_Implementation_Subflow_Email_Notifications</name>
+        <label>RET_Sales_to_Implementation_Subflow_Email_Notifications</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>RET_Sales_to_Implementation_Subflow_Email_Alerts</flowName>
+        <flowName>RET_Sales_to_Implementation_Subflow_Email_Notifications</flowName>
         <inputAssignments>
             <name>isChangedQCRep</name>
             <value>
