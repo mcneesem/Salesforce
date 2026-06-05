@@ -117,14 +117,23 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get status() {
         return ( this.record?.fields?.Status__c?.value );
     }
+    get statusIconTitle() {
+        let result = this.status;
+        if ( this.status === "Pending - Insperity" ) {
+            result = "Pending Review by Insperity";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "Action Required - Resubmit";
+        }
+        return result;
+    }
     get statusIconName() {
         let result = "utility:clock";
         if ( this.status === "Completed" ) {
-            result = "utility:check";
+            result = "utility:success";
         } else if ( this.status === "Pending - Insperity" ) {
-            result = "utility:pause_alt";
+            result = "utility:submit_for_approval";
         } else if ( this.status === "Pending - Client" ) {
-            result = "utility:preview";
+            result = "utility:warning";
         }
         return result;
     }
@@ -135,7 +144,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         } else if ( this.status === "Pending - Insperity" ) {
             result = "warning";
         } else if ( this.status === "Pending - Client" ) {
-            result = "warning";
+            result = "error";
         }
         return result;
     }
