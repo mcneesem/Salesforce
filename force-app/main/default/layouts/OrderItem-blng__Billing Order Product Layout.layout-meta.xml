@@ -129,6 +129,10 @@
                 <field>NSP_Additional_Product_Description__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Prevent_Product_Description_Update__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_QL_ActionType__c</field>
             </layoutItems>
