@@ -345,21 +345,11 @@
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>STP</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>SEQ</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Booking</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
