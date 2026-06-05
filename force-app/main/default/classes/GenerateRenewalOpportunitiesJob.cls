@@ -141,9 +141,9 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
             for ( NSP_Sub_Client__c subClient : records ){
                 if ( this.checkEligibility( subClient )){
                     if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ){
-                        this.buildOpportunity( subClient, parentOpportunities);
+                        parentOpportunities = this.buildOpportunity( subClient , parentOpportunities );
                     } else {
-                        this.buildOpportunity( subClient, childOpportunities );
+                        childOpportunities = this.buildOpportunity( subClient , childOpportunities );
                     }
 
                 }
@@ -177,7 +177,7 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         return flag;
     }
 
-    private void buildOpportunity( NSP_Sub_Client__c subClient, List<Opportunity> opportunities ){
+    private List<Opportunity> buildOpportunity( NSP_Sub_Client__c subClient, List<Opportunity> opportunities ){
         Opportunity opp = new Opportunity();
         if ( subClient != null ){
             opp.AccountId = subClient.NSP_Account__c;
@@ -201,13 +201,14 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
             opp.Renewal_Status__c = 'Not Started';
             opp.Renewal_Name__c = this.fetchRenewalName(subClient);
             opp.Renewal_Team__c = this.getRenewalTeam(subClient);
-            opp.Full_Time_WSEEs__c = getMapValue(fullTimeWSEEMap, subClient.NSP_Client__c);
-            opp.Part_Time_WSEEs__c = getMapValue(partTimeWSEEMap, subClient.NSP_Client__c);
-            opp.Seasonal_Time_WSEEs__c = getMapValue(seasonalTimeWSEEMap, subClient.NSP_Client__c);
+            opp.Full_Time_WSEEs__c = this.getMapValue(this.fullTimeWSEEMap, subClient.NSP_Client__c);
+            opp.Part_Time_WSEEs__c = this.getMapValue(this.partTimeWSEEMap, subClient.NSP_Client__c);
+            opp.Seasonal_Time_WSEEs__c = this.getMapValue(this.seasonalTimeWSEEMap, subClient.NSP_Client__c);
         }
         if( opp != null ){
             opportunities.add( opp );
         }
+        return opportunities;
     }
 
     private void performDML( List<Opportunity> records ) {
@@ -276,7 +277,7 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
                 );
             }
         }
-        return clientIdWithOpportunityIdMap;
+        return this.clientIdWithOpportunityIdMap;
     }
 
     private String getPrimaryProduct( NSP_Sub_Client__c subClient ){
@@ -320,7 +321,12 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
             && String.isNotBlank( subClient.NSP_Account__r.Name )
            )
         {
-            name = subClient.NSP_Account__r.Name +' - '+System.Now();
+            String accountName = subClient.NSP_Account__r.Name;
+            Integer accountNameLength = accountName.length();
+            if ( accountNameLength > 97 ){
+                accountName =  accountName.left(94) + '...';
+            }
+            name = accountName +' - '+DateTime.now().format();
         }
         return name;
     }
@@ -468,22 +474,30 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     }
 
     private void buildWSEEMaps(List<NSP_Sub_Client__c> records){
-        for (NSP_Sub_Client__c rec : records){
-            if (rec != null && rec.NSP_Account_Status__c == 'Active' && String.isNotBlank(rec.NSP_Client__c)){
-                if (!fullTimeWSEEMap.containsKey(rec.NSP_Client__c)){
-                    fullTimeWSEEMap.put(rec.NSP_Client__c, 0);
-                    partTimeWSEEMap.put(rec.NSP_Client__c, 0);
-                    seasonalTimeWSEEMap.put(rec.NSP_Client__c, 0);
-                }
-                Decimal ft = getDecimalValue(rec.NSP_Actual_Full_Time_EE_Count__c);
-                Decimal pt = getDecimalValue(rec.NSP_Actual_Part_Time_EE_Count__c );
-                Decimal seasonal = getDecimalValue(rec.NSP_Actual_Seasonal_Time_EE_Count__c);
+        if ( records != null
+            && !records.isEmpty() ){
+            for (NSP_Sub_Client__c rec : records){
+                if ( rec != null
+                    && rec.NSP_Account_Status__c == 'Active'
+                    && String.isNotBlank(rec.NSP_Client__c)
+                   )
+                {
+                    if ( !fullTimeWSEEMap.containsKey(rec.NSP_Client__c)){
+                        fullTimeWSEEMap.put(rec.NSP_Client__c, 0);
+                        partTimeWSEEMap.put(rec.NSP_Client__c, 0);
+                        seasonalTimeWSEEMap.put(rec.NSP_Client__c, 0);
+                    }
+                    Decimal ft = getDecimalValue(rec.NSP_Actual_Full_Time_EE_Count__c);
+                    Decimal pt = getDecimalValue(rec.NSP_Actual_Part_Time_EE_Count__c );
+                    Decimal seasonal = getDecimalValue(rec.NSP_Actual_Seasonal_Time_EE_Count__c);
 
-                fullTimeWSEEMap.put(rec.NSP_Client__c, fullTimeWSEEMap.get(rec.NSP_Client__c) + ft);
-                partTimeWSEEMap.put(rec.NSP_Client__c, partTimeWSEEMap.get(rec.NSP_Client__c) + pt);
-                seasonalTimeWSEEMap.put(rec.NSP_Client__c, seasonalTimeWSEEMap.get(rec.NSP_Client__c) + seasonal);
+                    fullTimeWSEEMap.put(rec.NSP_Client__c, fullTimeWSEEMap.get(rec.NSP_Client__c) + ft);
+                    partTimeWSEEMap.put(rec.NSP_Client__c, partTimeWSEEMap.get(rec.NSP_Client__c) + pt);
+                    seasonalTimeWSEEMap.put(rec.NSP_Client__c, seasonalTimeWSEEMap.get(rec.NSP_Client__c) + seasonal);
+                }
             }
         }
+
     }
 
     private Decimal getDecimalValue(Decimal value) {
@@ -491,33 +505,47 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     }
 
     private Decimal getMapValue(Map<String, Decimal> valueMap, String key) {
-        if (valueMap.containsKey(key)) {
-            return valueMap.get(key);
-        } else {
-            return 0;
+        Decimal value = 0;
+        if ( String.isNotBlank(key)
+            && valueMap != null
+            && valueMap.containsKey(key)
+           )
+        {
+            value = valueMap.get(key);
         }
+        return value;
     }
 
     private String fetchRenewalName(NSP_Sub_Client__c subClient){
         List<String> renewalNameParts = new List<String>();
         String renewalName = '';
-        if (String.isNotBlank(subClient.NSP_Client__c) && subClient.NSP_Client__c != null) {
-            renewalNameParts.add(subClient.NSP_Client__c);
-        }
-        if (subClient.NSP_Renewal_Date__c != null){
-            renewalNameParts.add(String.valueOf(subClient.NSP_Renewal_Date__c.addYears(1).year()));
-        }
-        if (subClient.NSP_Account__r != null && String.isNotBlank(subClient.NSP_Account__r.Name)){
-            renewalNameParts.add(subClient.NSP_Account__r.Name);
+        if ( subClient != null ){
+            if ( String.isNotBlank(subClient.NSP_Client__c) && subClient.NSP_Client__c != null) {
+                renewalNameParts.add(subClient.NSP_Client__c);
+            }
+            if ( subClient.NSP_Renewal_Date__c != null){
+                renewalNameParts.add(String.valueOf(subClient.NSP_Renewal_Date__c.addYears(1).year()));
+            }
+            if ( subClient.NSP_Account__r != null && String.isNotBlank(subClient.NSP_Account__r.Name)){
+                renewalNameParts.add(subClient.NSP_Account__r.Name);
+            }
         }
         renewalName = String.join(renewalNameParts, ' : ');
         return renewalName;
     }
 
     private String getRenewalTeam(NSP_Sub_Client__c subClient) {
-        if (subClient.NSP_Asset__r != null && subClient.NSP_Asset__r.NSP_Sales_Office__c != null && salesOfficeToManagerMap.containsKey(subClient.NSP_Asset__r.NSP_Sales_Office__c)) {
-            return salesOfficeToManagerMap.get(subClient.NSP_Asset__r.NSP_Sales_Office__c).Renewal_Team__c;
+        String renewalTeam = '';
+        if ( subClient != null
+            && subClient.NSP_Asset__r != null
+            && subClient.NSP_Asset__r.NSP_Sales_Office__c != null
+            && salesOfficeToManagerMap != null
+            && salesOfficeToManagerMap.containsKey(subClient.NSP_Asset__r.NSP_Sales_Office__c)
+            && salesOfficeToManagerMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c ) != null
+           )
+        {
+            renewalTeam = salesOfficeToManagerMap.get(subClient.NSP_Asset__r.NSP_Sales_Office__c).Renewal_Team__c;
         }
-        return null;
+        return renewalTeam;
     }
 }
