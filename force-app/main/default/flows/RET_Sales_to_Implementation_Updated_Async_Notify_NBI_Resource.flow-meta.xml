@@ -3,18 +3,8 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <formulas>
-        <name>IsChangedNBIResourceFormula</name>
-        <dataType>Boolean</dataType>
-        <expression>{!$Record.NSP_Implementation_NBI_Resource__c}!= {!$Record__Prior.NSP_Implementation_NBI_Resource__c}</expression>
-    </formulas>
-    <formulas>
-        <name>IsChangedQCRepFormula</name>
-        <dataType>Boolean</dataType>
-        <expression>{!$Record.NSP_QC_Rep__c} != {!$Record__Prior.NSP_QC_Rep__c}</expression>
-    </formulas>
-    <interviewLabel>RET_Sales_to_Impl {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>RET-Sales-to-Implementation-Updated-Async-Notify-NBI-Resource</label>
+    <interviewLabel>RET-Sales-to-Implementation - Updated - Async - Notify NBI Resource {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RET-Sales-to-Implementation - Updated - Async - Notify NBI Resource</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -37,7 +27,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( ( 1 AND 2 ) OR ( 3 AND 4 ) )</filterLogic>
+        <filterLogic>1 AND 2</filterLogic>
         <filters>
             <field>NSP_Implementation_NBI_Resource__c</field>
             <operator>IsNull</operator>
@@ -47,20 +37,6 @@
         </filters>
         <filters>
             <field>NSP_Implementation_NBI_Resource__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_QC_Rep__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_QC_Rep__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -86,13 +62,7 @@
         <inputAssignments>
             <name>isChangedNBIResource</name>
             <value>
-                <elementReference>IsChangedNBIResourceFormula</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>isChangedQCRep</name>
-            <value>
-                <elementReference>IsChangedQCRepFormula</elementReference>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>

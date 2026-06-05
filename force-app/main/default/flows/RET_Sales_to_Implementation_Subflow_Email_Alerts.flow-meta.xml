@@ -580,8 +580,8 @@
         <dataType>String</dataType>
         <expression>{!$User.Server_URL__c}&amp;{!record.Id}</expression>
     </formulas>
-    <interviewLabel>Go ahead and create products for those that we can productize {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>RET-Sales-to-Implementation -Subflow - Email Alerts</label>
+    <interviewLabel>RET-Sales-to-Implementation - Subflow - Email Notifications {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RET-Sales-to-Implementation - Subflow - Email Notifications</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -970,7 +970,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Send_Email_Alert_to_Resouce</stringValue>
+                <stringValue>RET_Sales_to_Implementation_Subflow_Email_Notifications</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
