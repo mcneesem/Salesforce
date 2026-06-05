@@ -88,7 +88,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Transition To Service</stringValue>
+                <stringValue>Transition to Service</stringValue>
             </value>
         </filters>
         <filters>
@@ -133,6 +133,12 @@
             <name>operationType</name>
             <value>
                 <stringValue>Update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

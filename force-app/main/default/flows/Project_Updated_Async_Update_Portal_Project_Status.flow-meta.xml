@@ -36,14 +36,14 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Validate if Portal Project is Valid</description>
-        <name>Valid_Portal_Project</name>
-        <label>Valid Portal Project</label>
+        <description>Validate if Portal Project is exists</description>
+        <name>Portal_Project_Exists</name>
+        <label>Portal Project Exists?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Valid_Portal_Project</name>
+            <name>Yes_Update_Portal_Project_Status</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Portal_Project</leftValueReference>
@@ -55,10 +55,32 @@
             <connector>
                 <targetReference>Update_Portal_Project_Status</targetReference>
             </connector>
-            <label>Yes : Valid Portal Project</label>
+            <label>Yes : Update Portal Project Status</label>
+        </rules>
+        <rules>
+            <name>No_Sync_Portal_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Portal_Project</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Visible_to_Client__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Portal_Project_Full_Sync</targetReference>
+            </connector>
+            <label>No : Sync Portal Project</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Show/Hide Portal Project</description>
+    <description>New Client Portal: Show/Hide Portal Project and Full Sync Project &amp; IP details to Portal</description>
     <environments>Default</environments>
     <formulas>
         <description>Hide or Show Portal Project</description>
@@ -99,7 +121,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valid_Portal_Project</targetReference>
+            <targetReference>Portal_Project_Exists</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Project</targetReference>
@@ -207,6 +229,20 @@
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Sync Project details, tasks and IP details to Portal</description>
+        <name>Portal_Project_Full_Sync</name>
+        <label>Portal Project Full Sync</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Project_Subflow_Sync_Portal_Project</flowName>
+        <inputAssignments>
+            <name>projectId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
