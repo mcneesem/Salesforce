@@ -63,8 +63,15 @@
             <name>Yes_Proceed_to_delete</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Portal_Event</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>rc_portalevents</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_portalevents</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -129,15 +136,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Delete_Portal_Event</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Portal_Event.Id</elementReference>
-            </value>
-        </filters>
-        <object>Portal_Event__c</object>
+        <inputReference>rc_portalevents</inputReference>
     </recordDeletes>
     <recordLookups>
         <description>Retrieve portal event</description>
@@ -167,11 +166,10 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Portal_Event__c</object>
+        <outputReference>rc_portalevents</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Retrieve the Portal Project</description>
@@ -313,5 +311,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>collection of portal events</description>
+        <name>rc_portalevents</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Event__c</objectType>
     </variables>
 </Flow>
