@@ -82,7 +82,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
             [
                 SELECT Id
                 FROM EntitySubscription
-                WHERE ParentId IN :parentIds
+                WHERE ( ParentId IN :parentIds )
                 ORDER BY CreatedDate ASC
             ]
         );
