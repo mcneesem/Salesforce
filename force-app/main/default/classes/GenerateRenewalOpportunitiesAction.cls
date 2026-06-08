@@ -9,11 +9,10 @@ public class GenerateRenewalOpportunitiesAction {
         public string yearValue;
     }
 
-    @InvocableMethod(label = 'Launch Renewals Batch')
-    public static void launchRenewalBatch(List<MonthYearData> monthYearValue) {
+    @InvocableMethod(label = 'Generate Renewal Opportunities' description = 'Launch Renewals Batch and pass Month and Year values selected in Flow')
+    public static void launchRenewalBatch(List<MonthYearData> inputs) {
 
-        if ( monthYearValue != null && !monthYearValue.isEmpty() ){
-            MonthYearData input = monthYearValue[0];
+        if (inputs != null && !inputs.isEmpty()) {
 
             Map<String, Integer> monthMap = new Map<String, Integer>{
                 'Jan' => 1,
@@ -30,11 +29,17 @@ public class GenerateRenewalOpportunitiesAction {
                 'Dec' => 12
             };
 
-            Integer monthNumber = monthMap.get(input.monthValue);
-            Integer yearNumber = Integer.valueOf(input.yearValue);
+            for (MonthYearData input : inputs) {
+                if (input != null) {
+                    Integer monthNumber = monthMap.get(input.monthValue);
+                    Integer yearNumber = Integer.valueOf(input.yearValue);
 
-            GenerateRenewalOpportunitiesJob batchJob = new GenerateRenewalOpportunitiesJob(monthNumber, yearNumber);
-            Database.executeBatch(batchJob, 50);
+                    GenerateRenewalOpportunitiesJob batchJob =
+                        new GenerateRenewalOpportunitiesJob(monthNumber, yearNumber);
+
+                    Database.executeBatch(batchJob, 50);
+                }
+            }
         }
 
     }
