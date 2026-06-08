@@ -50,7 +50,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
                 SELECT Parent.Asset__c
                 FROM Purchased_Product__History
                 WHERE (
-                    ( CreatedDate = LAST_N_DAYS:1  )
+                    ( CreatedDate >= :RecalculateRetailPriceBatch.cutoffDate )
                     AND (
                         ( //price is updated
                             ( Field = 'Component_Price__c' OR Field = 'created' )
@@ -347,6 +347,40 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
                 monitorEmailAddresses = local;
             }
             return monitorEmailAddresses;
+        }
+        private set;
+    }
+
+    private static DateTime cutoffDate {
+        private get {
+            if ( cutoffDate == null ) {
+                DateTime local = System.now();
+                if ( RecalculateRetailPriceBatch.soqlDaysLimit != null ) {
+                    local = local.addDays( -1 * RecalculateRetailPriceBatch.soqlDaysLimit );
+                }
+                cutoffDate = local;
+            }
+            return cutoffDate;
+        }
+        private set;
+    }
+
+    private static Integer soqlDaysLimit {
+        private get {
+            if ( soqlDaysLimit == null ) {
+                Integer local = 1;
+                if ( ( RecalculateRetailPriceBatch.settings != null )
+                    && ( RecalculateRetailPriceBatch.settings.SoqlDaysLimit__c != null )
+                )
+                {
+                    local = RecalculateRetailPriceBatch.settings.SoqlDaysLimit__c.intValue();
+                }
+                if ( local < 0 ) {
+                    local = 1;
+                }
+                soqlDaysLimit = local;
+            }
+            return soqlDaysLimit;
         }
         private set;
     }
