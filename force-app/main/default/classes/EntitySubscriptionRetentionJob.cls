@@ -63,7 +63,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
             [
                 SELECT Id
                 FROM ContentDocument
-                WHERE ( CreatedDate <= :EntitySubscriptionRetentionJob.contentDocumentCreatedDateTime )
+                WHERE ( CreatedDate <= :EntitySubscriptionRetentionJob.contentDocumentCreatedDateTime ) LIMIT 50000000
             ]
         );
         parentIds.addAll( documentsMap.keySet() );
@@ -74,7 +74,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
                 WHERE (
                     ( IsClosed = true )
                     AND ( ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime )
-                )
+                ) LIMIT 50000000
             ]
         );
         parentIds.addAll( casesMap.keySet() );
@@ -83,7 +83,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
                 SELECT Id
                 FROM EntitySubscription
                 WHERE ParentId IN :parentIds
-                ORDER BY CreatedDate ASC
+                ORDER BY CreatedDate ASC LIMIT 50000000
             ]
         );
     }
