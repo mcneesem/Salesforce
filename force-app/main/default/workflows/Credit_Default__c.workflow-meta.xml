@@ -64,8 +64,8 @@
     <fieldUpdates>
         <fullName>Set_Status_to_Resubmitted_for_Approval</fullName>
         <field>Status__c</field>
-        <literalValue>Resubmitted for Approval</literalValue>
-        <name>Set Status to Resubmitted for Approval</name>
+        <literalValue>Resubmitted For Approval</literalValue>
+        <name>Set Status to Resubmitted For Approval</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
