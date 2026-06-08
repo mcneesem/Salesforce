@@ -1,7 +1,7 @@
-@IsTest
+@isTest
 public class GenerateRenewalOpportunitiesActionTest {
 
-    @IsTest
+    @isTest
     static void testLaunchRenewalBatch() {
 
         GenerateRenewalOpportunitiesAction.MonthYearData input =
