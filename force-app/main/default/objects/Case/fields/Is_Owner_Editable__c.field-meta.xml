@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Owner_Editable__c</fullName>
-    <formula>AND(
-    NOT(
-        AND(
-            NSP_Category__c = &quot;Credit Services&quot;,
-            NSP_SubCategory__c = &quot;Client Default&quot;,
-            TEXT(Credit_Default_Status__c) &lt;&gt; &quot;Approved&quot;
-        )
-    ),
-OR(
+    <formula>OR(
   /* Handle Unsupported Categories */
   AND(
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
     ( NSP_Category__c != &quot;Contractor Management&quot; ) ,
-    ( NSP_Category__c != &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_Category__c != &quot;Credit Services&quot; ) ,
+    ( NSP_Category__c != &quot;HR COE Escalation&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Services&quot; ) ,
-    ( NSP_Category__c != &quot;HR COE Escalation&quot; )
+    ( NSP_Category__c != &quot;Payroll Shared Services&quot; )
   ) ,
   /* Category: Compensation Services */
   AND(
@@ -34,6 +27,16 @@ OR(
   AND(
     ( NSP_Category__c = &quot;Contractor Management&quot; ) ,
     NOT( ISBLANK( NSP_Detail__c ) )
+  ) ,
+  /* Category: Credit Services */
+  AND(
+    ( NSP_Category__c = &quot;Credit Services&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Client Default&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Credit Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Client Default&quot; ) ,
+    ( TEXT( Credit_Default_Status__c ) = &quot;Approved&quot; )
   ) ,
   /* Category: HR COE Escalation */
   AND(
@@ -76,7 +79,6 @@ OR(
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
     NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   )
-)
 )</formula>
     <label>Is Owner Editable</label>
     <trackHistory>false</trackHistory>
