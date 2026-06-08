@@ -32,16 +32,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Set_Status_to_Pending_Approval</fullName>
-        <field>Status__c</field>
-        <literalValue>Pending Approval</literalValue>
-        <name>Set Status to Pending Approval</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Set_Status_to_Recalled</fullName>
         <field>Status__c</field>
         <literalValue>Recalled</literalValue>
