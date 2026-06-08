@@ -375,7 +375,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
                 {
                     local = RecalculateRetailPriceBatch.settings.SoqlDaysLimit__c.intValue();
                 }
-                if ( local < 0 ) {
+                if ( local < 1 ) {
                     local = 1;
                 }
                 soqlDaysLimit = local;
