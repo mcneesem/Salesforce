@@ -114,6 +114,7 @@
     &apos;141&apos; , &apos;Duration Capital&apos; ,
     &apos;142&apos; , &apos;Western Partners&apos; ,
     &apos;143&apos; , &apos;PPD Investments&apos; ,
+    &apos;145&apos; , &apos;Township Capital&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
