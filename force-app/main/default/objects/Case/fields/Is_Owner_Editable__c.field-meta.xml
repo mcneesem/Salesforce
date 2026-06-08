@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Owner_Editable__c</fullName>
-    <formula>OR(
+    <formula>AND(
+    NOT(
+        AND(
+            NSP_Category__c = &quot;Credit Services&quot;,
+            NSP_SubCategory__c = &quot;Client Default&quot;,
+            TEXT(Credit_Default_Status__c) &lt;&gt; &quot;Approved&quot;
+        )
+    ),
+OR(
   /* Handle Unsupported Categories */
   AND(
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
@@ -68,6 +76,7 @@
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
     NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   )
+)
 )</formula>
     <label>Is Owner Editable</label>
     <trackHistory>false</trackHistory>

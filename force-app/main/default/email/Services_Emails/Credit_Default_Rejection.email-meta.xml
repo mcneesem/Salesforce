@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Credit Default Rejection</name>
+    <style>none</style>
+    <subject>Credit Default Checklist Rejected for {!Credit_Default__c.Account_Name__c}</subject>
+    <textOnly>{!Credit_Default__c.Id} for {!Credit_Default__c.Account_Name__c} has been returned to you because of incorrect and/or missing data. Please review, correct and resubmit for approval.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
