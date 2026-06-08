@@ -580,8 +580,8 @@
         <dataType>String</dataType>
         <expression>{!$User.Server_URL__c}&amp;{!record.Id}</expression>
     </formulas>
-    <interviewLabel>RET_Sales_to_Implementation_Subflow_Email_Notifications {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>RET_Sales_to_Implementation_Subflow_Email_Notifications</label>
+    <interviewLabel>RET-Sales-to-Implementation - Subflow - Email Notifications {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RET-Sales-to-Implementation - Subflow - Email Notifications</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
