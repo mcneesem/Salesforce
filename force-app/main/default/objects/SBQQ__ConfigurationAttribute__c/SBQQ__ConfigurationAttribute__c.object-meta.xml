@@ -128,12 +128,19 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Configuration_Attribute_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Configuration_Attribute_Record_Page</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -160,9 +167,11 @@
     <nameField>
         <encryptionScheme>None</encryptionScheme>
         <label>Attribute Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Configuration Attributes</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
         <customTabListAdditionalFields>SBQQ__Product__c</customTabListAdditionalFields>
