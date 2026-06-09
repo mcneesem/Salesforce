@@ -7,8 +7,8 @@ import { NavigationMixin } from 'lightning/navigation';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 
 export default class ScheduleSeller extends NavigationMixin(LightningElement) {
-    @api skill;
-    @api timeZone;
+    _skill;
+    _timeZone;
     @api startDateTime;
     @api endDateTime;
 
@@ -19,6 +19,16 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
     // Store raw matrix from Apex directly (M rows × N columns)
     matrix = [];
+
+    @api get skill() { return this._skill; }
+    set skill(v) { this._skill = v; this.loadMatrix(); }
+
+    @api get timeZone() { return this._timeZone; }
+    set timeZone(v) { this._timeZone = v; this.loadMatrix(); }
+
+    connectedCallback() {
+        this.loadMatrix();
+    }
 
     // Computed property to help with template rendering
     // Returns a copy of tableData with explicit count values for template
@@ -158,20 +168,17 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     }
 
     // Matrix data for the M time slots × N business days
-    @wire(
-        getAggregateCountsMatrix ,
-        { skill: '$skill',timeZone: '$timeZone'}
-    )
-    wiredMatrix( { data , error } ) {
-        if ( data ) {
-            // Assign Apex matrix directly; no re-mapping
-            this.matrix = ( Array.isArray( data ) ? data : [] );
-            this.error = undefined;
-        } else if ( error ) {
-            this.error = error;
-            this.matrix = [];
-        }
+   async loadMatrix() {
+    if (!this._skill || !this._timeZone) return;
+    try {
+        const data = await getAggregateCountsMatrix({ skill: this._skill, timeZone: this._timeZone });
+        this.matrix = Array.isArray(data) ? data : [];
+        this.error = undefined;
+    } catch (e) {
+        this.error = e;
+        this.matrix = [];
     }
+}
 
     // Admin flag
     @wire(isScheduleSellerAdmin)
