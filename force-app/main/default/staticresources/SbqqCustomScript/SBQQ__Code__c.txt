@@ -691,8 +691,6 @@ export function processQuotelines(quote, lines){
     parentQuantityMap.set('ITSWOSU','ITSUserLicenseWO');
     parentQuantityMap.set('ITSTimeSimplicitySU','ITSTimeSimplicity');
     let productQuantityMap = new Map();
-    let supplementalProducts = ['HCMFileFeeds','HCMProfSvcs','HCMTngSvcs','HCMTax','NXGHardwareSU'];
-    let supplementalProductsBPS = ['ITSProfSvcs','ITSTraining','IPMProfSvcs','IPMTngEmployee','IPMTngManager','IPMTngNewAdmin','IPMTngRefresher','IOPRTCustomizeAddHrs','IOPRTProfSvcs','IOPRTTngClosedAdmin','IOPRTTngClosedVisPlan','ITSHardwareConfigSU'];
     let wxScholarshipChecked =  quote.record["NSP_WX_Scholarship__c"];
     let quoteType = quote.record["SBQQ__Type__c"];
     let quoteTransType = quote.record["NSP_TransactionType__c"];
@@ -719,8 +717,6 @@ export function processQuotelines(quote, lines){
         quote.record["NSP_Has_BPS_WO__c"] = false;
         quote.record["NSP_Has_Timestar_Hardware__c"] = false;
         quote.record["NSP_Has_iSolvedHardware__c"] = false;
-        quote.record["NSP_Supplement__c"] = false;
-        quote.record["NSP_SupplementBPS__c"] = false;
         quote.record["NSP_Has_Professional_Services__c"] = false;
         quote.record["NSP_Has_Recruiting_Bundle__c"] = false;
         quote.record["NSP_Has_TimeAndAttendance__c"] = false;
@@ -845,14 +841,6 @@ quote.record["NSP_Has_WOSS_OTF__c"] = true;
                 if(qlitemplate=='WX' && wxScholarshipChecked){
                     quoteTemplates.add('IWXScholarship');
                 }
-            }
-            if(supplementalProducts.includes(productcode) && quoteType =='Supplemental')
-            {
-                quote.record["NSP_Supplement__c"] = true;
-            }
-            if(supplementalProductsBPS.includes(productcode) && quoteType =='Supplemental')
-            {
-                quote.record["NSP_SupplementBPS__c"] = true;
             }
 
             line.record["NSP_Secoundry_Scholarship_Minimum_Fee__c"] = null;
