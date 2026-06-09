@@ -1,3 +1,4 @@
+//DEPRECATED
 @isTest
 private class UserAvailabilityFlowTest {
 

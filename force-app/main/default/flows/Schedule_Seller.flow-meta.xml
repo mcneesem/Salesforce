@@ -1,41 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_Users</name>
-        <label>Get Users</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <actionName>UserAvailabilityFlow</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Records_Null_Check</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Fault_Element_Assignment_Get_Users</targetReference>
-        </faultConnector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>endDateTime</name>
-            <value>
-                <elementReference>Seller.endDateTime</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>skill</name>
-            <value>
-                <elementReference>Seller.skill</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>startDateTime</name>
-            <value>
-                <elementReference>Seller.startDateTime</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>UserAvailabilityFlow</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -149,7 +113,7 @@
             <assignToReference>record.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>012Oy000008uixpIAA</stringValue>
+                <elementReference>$Setup.Schedule_Seller_Settings__c.EventRecordTypeId__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -186,23 +150,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Fault_Element_Assignment_Get_Users</name>
-        <label>Fault Element Assignment Get Users</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Users</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -338,7 +285,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Users</targetReference>
+            <targetReference>Get_Records_Null_Check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -365,6 +312,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Available_Users_Check</name>
+        <label>Available Users Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Records_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Available_Users_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Seller.availableUserIds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Seller.availableUserIds</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Available_User_Ids</targetReference>
+            </connector>
+            <label>Available Users Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Get_Records_Null_Check</name>
         <label>Get Records Null Check</label>
         <locationX>0</locationX>
@@ -377,14 +356,14 @@
             <name>Not_null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Users</leftValueReference>
+                <leftValueReference>Available_User_Ids</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Users</leftValueReference>
+                <leftValueReference>Available_User_Ids</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -547,7 +526,7 @@
             <field>Id</field>
             <operator>In</operator>
             <value>
-                <elementReference>Get_Users</elementReference>
+                <elementReference>Available_User_Ids</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -564,7 +543,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Availability_Matrix_Null_Check</targetReference>
+            <targetReference>Available_Users_Check</targetReference>
         </connector>
         <fields>
             <name>Seller</name>
@@ -880,6 +859,27 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Available_User_Ids</name>
+        <label>Available User Ids</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Availability_Matrix_Null_Check</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Seller.availableUserIds[$EachItem]</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>chooseDemoOwner</name>
         <dataType>String</dataType>

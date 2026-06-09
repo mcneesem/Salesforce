@@ -89,7 +89,7 @@ private class UserAvailabilityServiceTest {
     private static void testGetAvailableUsersForWindow_validWindow() {
         List<User> users = getTestUsers();
         System.assertEquals(2, users.size(), 'Expect two test users');
-
+    
         // 9:00 - 10:00 window
         Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(9, 0, 0, 0));
         Datetime endDT = startDT.addHours(1);
@@ -118,12 +118,12 @@ private class UserAvailabilityServiceTest {
         System.assertEquals(0, available.size(), 'Invalid window or no skilled users should return empty list');
     }
 
+
     @isTest
     private static void testGetAggregateCountsMatrix_withTwoUsers() {
         Test.startTest();
-        List<List<Integer>> matrix = UserAvailabilityService.getAggregateCountsMatrix('Schedule_Seller_HR360', 'America/Chicago');
+        List<List<List<Id>>> matrix = UserAvailabilityService.getAggregateUserIdsMatrix('Schedule_Seller_HR360', 'America/Chicago');
         Test.stopTest();
-
         System.assertNotEquals(null, matrix, 'Aggregate matrix should not be null');
         System.assert(matrix.size() >= 0, 'Aggregate matrix should have 0 or more rows');
     }
@@ -203,23 +203,6 @@ private class UserAvailabilityServiceTest {
             // Therefore, no strict assertion on presence of today beyond the absence of filtering errors.
         }
         Test.stopTest();
-    }
-
-    @isTest
-    private static void testGetEventsForUser_privateHelpers_viaPublicPaths() {
-        // Indirectly exercise helper by calling public methods that use it with a tight window
-        List<User> users = getTestUsers();
-        System.assertEquals(2, users.size(), 'Expect two test users');
-
-        // Small window that overlaps at least one event
-        Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(8, 30, 0, 0));
-        Datetime endDT = startDT.addMinutes(45);
-
-        Test.startTest();
-        List<Id> available = UserAvailabilityService.getAvailableUsersForWindow(startDT, endDT, 'Schedule_Seller');
-        Test.stopTest();
-
-        System.assertNotEquals(null, available, 'Should execute without error using private helper');
     }
 
 }

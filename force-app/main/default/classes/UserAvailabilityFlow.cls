@@ -1,3 +1,4 @@
+//DEPRECATED
 public with sharing class UserAvailabilityFlow {
     // test w/ UserAvailabilityFlowTest (91%)
 
