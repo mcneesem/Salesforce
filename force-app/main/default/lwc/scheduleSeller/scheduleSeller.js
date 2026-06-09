@@ -168,18 +168,18 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     }
 
     // Matrix data for the M time slots × N business days
-   async loadMatrix() {
-    if (!this._skill || !this._timeZone) return;
-    try {
-        const data = await getAggregateCountsMatrix({ skill: this._skill, timeZone: this._timeZone });
-        this.matrix = Array.isArray(data) ? data : [];
-        this.error = undefined;
-    } catch (e) {
-        this.error = e;
-        this.matrix = [];
+    async loadMatrix() {
+        if (this._skill && this._timeZone) {
+            try {
+                const data = await getAggregateCountsMatrix({ skill: this._skill, timeZone: this._timeZone });
+                this.matrix = Array.isArray(data) ? data : [];
+                this.error = undefined;
+            } catch (e) {
+                this.error = e;
+                this.matrix = [];
+            }
+        }
     }
-}
-
     // Admin flag
     @wire(isScheduleSellerAdmin)
     wiredIsAdmin({ data, error }) {
