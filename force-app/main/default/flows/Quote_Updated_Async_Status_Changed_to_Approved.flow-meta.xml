@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Alert_for_IWX_Greater_than_20_Approval</name>
         <label>Email Alert for IWX Greater than 20 Approval</label>
-        <locationX>671</locationX>
-        <locationY>1740</locationY>
+        <locationX>352</locationX>
+        <locationY>1632</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_IWX_20_Approval</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -23,8 +23,8 @@
     <actionCalls>
         <name>Email_Alert_for_Quote_Approval</name>
         <label>Email Alert for Quote Approval</label>
-        <locationX>957</locationX>
-        <locationY>984</locationY>
+        <locationX>638</locationX>
+        <locationY>876</locationY>
         <actionName>SBQQ__Quote__c.NSP_Email_Alert_for_Quote_Approval</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -48,8 +48,8 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_for_IWX_Greater_than_20_Approval</name>
         <label>Assign varFaultElement - Email Alert for IWX Greater than 20 Approval</label>
-        <locationX>935</locationX>
-        <locationY>1848</locationY>
+        <locationX>616</locationX>
+        <locationY>1740</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -65,8 +65,8 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_for_Quote_Approval</name>
         <label>Assign varFaultElement - Email Alert for Quote Approval</label>
-        <locationX>1221</locationX>
-        <locationY>1092</locationY>
+        <locationX>902</locationX>
+        <locationY>984</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -79,32 +79,10 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_check</name>
-        <label>Bypass check</label>
-        <locationX>495</locationX>
-        <locationY>276</locationY>
-        <defaultConnector>
-            <targetReference>Owned_by_Group_or_User</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Bypass_via_Trigger_Switch_Autolaunched_Flows_is_True</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Yes - Bypass via Trigger Switch - Autolaunched Flows is True</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_if_Group_has_email_address</name>
         <label>Check if Group has email address</label>
-        <locationX>473</locationX>
-        <locationY>492</locationY>
+        <locationX>154</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Group missing email</defaultConnectorLabel>
         <rules>
             <name>Group_Owner_has_Email</name>
@@ -132,8 +110,8 @@
     <decisions>
         <name>Check_Owner_for_Active_and_Email</name>
         <label>Check Owner for Active and Email</label>
-        <locationX>913</locationX>
-        <locationY>492</locationY>
+        <locationX>594</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Owner invalid for emails</defaultConnectorLabel>
         <rules>
             <name>Owner_can_receive_emails</name>
@@ -168,8 +146,8 @@
     <decisions>
         <name>Is_IWX_Discount_greater_than_20</name>
         <label>Is IWX Discount greater than 20</label>
-        <locationX>869</locationX>
-        <locationY>1524</locationY>
+        <locationX>550</locationX>
+        <locationY>1416</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Yes_IWX_Discount_is_greater_than_20</name>
@@ -205,8 +183,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check_for_IWX</name>
         <label>Outbound Email custom setting check for IWX</label>
-        <locationX>539</locationX>
-        <locationY>1632</locationY>
+        <locationX>220</locationX>
+        <locationY>1524</locationY>
         <defaultConnector>
             <targetReference>Email_Alert_for_IWX_Greater_than_20_Approval</targetReference>
         </defaultConnector>
@@ -228,8 +206,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check_for_Quote_Approval</name>
         <label>Outbound Email custom setting check for Quote Approval</label>
-        <locationX>869</locationX>
-        <locationY>876</locationY>
+        <locationX>550</locationX>
+        <locationY>768</locationY>
         <defaultConnector>
             <targetReference>Email_Alert_for_Quote_Approval</targetReference>
         </defaultConnector>
@@ -253,8 +231,8 @@
     <decisions>
         <name>Owned_by_Group_or_User</name>
         <label>Owned by Group or User?</label>
-        <locationX>869</locationX>
-        <locationY>384</locationY>
+        <locationX>550</locationX>
+        <locationY>276</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Owned_by_Group</name>
@@ -332,7 +310,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Bypass_check</targetReference>
+                <targetReference>Owned_by_Group_or_User</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -342,8 +320,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1221</locationX>
-        <locationY>1200</locationY>
+        <locationX>902</locationX>
+        <locationY>1092</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
