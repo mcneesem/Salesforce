@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Creates Credit Default Record for Category as Credit Services and Sub Category as Client Default</description>
+    <flowDefinition>Credit_Default_Screen_Creation</flowDefinition>
+    <label>New Credit Default</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>
