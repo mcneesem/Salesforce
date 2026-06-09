@@ -796,7 +796,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>Checklist_Existing_Checklist_Check_Before_Creation</value>
+                    <value>Opportunity_Screen_Verify_Checklist_Permissions</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview</identifier>
