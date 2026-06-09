@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>Sub_Product_Config__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exclude_from_Net_Total__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
