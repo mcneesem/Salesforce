@@ -20,11 +20,23 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     // Store raw matrix from Apex directly (M rows × N columns)
     matrix = [];
 
-    @api get skill() { return this._skill; }
-    set skill(v) { this._skill = v; this.loadMatrix(); }
+    @api
+    get skill() {
+        return this._skill;
+    }
+    set skill(v) {
+        this._skill = v;
+        this.loadMatrix();
+    }
 
-    @api get timeZone() { return this._timeZone; }
-    set timeZone(v) { this._timeZone = v; this.loadMatrix(); }
+    @api
+    get timeZone() {
+        return this._timeZone;
+    }
+    set timeZone(v) {
+        this._timeZone = v;
+        this.loadMatrix();
+    }
 
     connectedCallback() {
         this.loadMatrix();
@@ -169,10 +181,15 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
     // Matrix data for the M time slots × N business days
     async loadMatrix() {
-        if (this._skill && this._timeZone) {
+        if ( this._skill && this._timeZone ) {
             try {
-                const data = await getAggregateCountsMatrix({ skill: this._skill, timeZone: this._timeZone });
-                this.matrix = Array.isArray(data) ? data : [];
+                const data = await getAggregateCountsMatrix(
+                    {
+                        skill: this._skill,
+                        timeZone: this._timeZone
+                    }
+                );
+                this.matrix = ( Array.isArray(data) ? data : [] );
                 this.error = undefined;
             } catch (e) {
                 this.error = e;
@@ -180,6 +197,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
             }
         }
     }
+
     // Admin flag
     @wire(isScheduleSellerAdmin)
     wiredIsAdmin({ data, error }) {
