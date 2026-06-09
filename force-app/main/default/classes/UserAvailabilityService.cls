@@ -235,7 +235,7 @@ public with sharing class UserAvailabilityService {
 
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled
-    public static List<List<Integer>> getAggregateCountsMatrix( String skill, String timeZone ) {
+    public static List<List<Integer>> getAggregateCountsMatrix( String skill , String timeZone ) {
         // Build business day/time windows
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill, timeZone );
         // Build windows directly from events-only matrix
