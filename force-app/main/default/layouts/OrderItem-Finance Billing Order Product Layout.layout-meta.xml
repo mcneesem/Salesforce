@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Matching_Product_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Description_Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

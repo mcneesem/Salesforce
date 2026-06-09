@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Description_Key__c</fullName>
+    <externalId>false</externalId>
+    <formula>Product2.ProductCode
++ IF(
+  Seasonal_Pricing__c = &quot;Seasonal Consumption Schedule&quot; ,
+  &quot;_Seasonal&quot; ,
+  &quot;&quot;
+)
++ IF(
+  AND(
+    NSP_Scholarship_Price__c ,
+    ( TODAY() &lt;= NSP_Scholarship_End_Date__c )
+  ) ,
+  &quot;_Scholarship&quot; ,
+  &quot;&quot;
+)</formula>
+    <label>Product Description Key</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
