@@ -3,7 +3,6 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>contact_center@insperity.com.invalid</email>
     <name>Contact Center W-2</name>
-    <queueRoutingConfig>Vonage_Call_Center</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
