@@ -369,10 +369,11 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.CSP_DOCS_FSO )
             && ( newRec != null )
             && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
-            && ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c != null )
+            && ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES )
+            && ( newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null )
             && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES )
+                || ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c != existingRec.Spnsrd_pln_when_Insperity_hndles_payroll__c )
                 )
             )
         {
