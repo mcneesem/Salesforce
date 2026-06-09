@@ -216,6 +216,7 @@
         <fields>ContactName</fields>
         <fields>Role</fields>
         <fields>ContactTitle</fields>
+        <fields>NSP_isReferral__c</fields>
         <fields>IsPrimary</fields>
         <fields>ContactPhone</fields>
         <fields>ContactEmail</fields>
