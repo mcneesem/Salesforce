@@ -19,8 +19,8 @@
         </connector>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Credit Default - Update - Async - Assign Case To Credit Services {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Credit Default - Update - Async - Assign Case To Credit Services</label>
+    <interviewLabel>Credit Default - Updated - Async - Assign Case To Credit Services {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Credit Default - Updated - Async - Assign Case To Credit Services</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -122,7 +122,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Credit_Default_Update_Async_Assign_Case_To_Credit_Services</stringValue>
+                <stringValue>Credit_Default_Updated_Async_Assign_Case_To_Credit_Services</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
