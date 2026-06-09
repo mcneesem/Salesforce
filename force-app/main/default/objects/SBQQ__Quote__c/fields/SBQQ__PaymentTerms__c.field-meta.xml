@@ -14,7 +14,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Due on receipt</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Due on receipt</label>
             </value>
             <value>
@@ -24,7 +24,7 @@
             </value>
             <value>
                 <fullName>Net 30</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Net 30</label>
             </value>
             <value>
