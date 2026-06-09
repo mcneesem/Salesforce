@@ -14,32 +14,4 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Share_SEQ_Checklists_with_BPS_Admins</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Share SEQ Checklists with BPS Admins</label>
-        <sharedTo>
-            <role>BPS_Administrator</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>Checklist_Type__c</field>
-            <operation>equals</operation>
-            <value>Sales Engineer Questionnaire</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Share_SEQ_Checklists_with_Sales_Engineer_Managers</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Share SEQ Checklists with Sales Engineer Managers</label>
-        <sharedTo>
-            <role>Sales_Engineer_Manager</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>Checklist_Type__c</field>
-            <operation>equals</operation>
-            <value>Sales Engineer Questionnaire</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
 </SharingRules>
