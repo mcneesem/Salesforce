@@ -6,9 +6,10 @@
   AND(
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
     ( NSP_Category__c != &quot;Contractor Management&quot; ) ,
-    ( NSP_Category__c != &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_Category__c != &quot;Credit Services&quot; ) ,
+    ( NSP_Category__c != &quot;HR COE Escalation&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Services&quot; ) ,
-    ( NSP_Category__c != &quot;HR COE Escalation&quot; )
+    ( NSP_Category__c != &quot;Payroll Shared Services&quot; )
   ) ,
   /* Category: Compensation Services */
   AND(
@@ -26,6 +27,16 @@
   AND(
     ( NSP_Category__c = &quot;Contractor Management&quot; ) ,
     NOT( ISBLANK( NSP_Detail__c ) )
+  ) ,
+  /* Category: Credit Services */
+  AND(
+    ( NSP_Category__c = &quot;Credit Services&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Client Default&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Credit Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Client Default&quot; ) ,
+    ( TEXT( Credit_Default_Status__c ) = &quot;Approved&quot; )
   ) ,
   /* Category: HR COE Escalation */
   AND(
