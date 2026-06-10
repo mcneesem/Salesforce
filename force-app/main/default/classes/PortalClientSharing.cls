@@ -1,6 +1,6 @@
 // intentionally `without sharing` to see all Accounts, AccountContactRelations, Contacts, Portal Clientes, and Users for successful sharing calculations...
 public without sharing class PortalClientSharing implements Queueable {
-    // test w/ PortalClientSharing (85%)
+    // test w/ PortalClientSharingTest (85%)
 
     //
     // Queueable
