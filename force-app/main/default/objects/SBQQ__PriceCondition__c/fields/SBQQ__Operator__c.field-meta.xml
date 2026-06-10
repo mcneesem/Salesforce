@@ -7,6 +7,7 @@
     <inlineHelpText>Select the operator to apply when comparing the Field with the Value.</inlineHelpText>
     <label>Operator</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

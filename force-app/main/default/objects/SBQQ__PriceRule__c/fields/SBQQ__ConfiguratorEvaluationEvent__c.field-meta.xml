@@ -7,6 +7,7 @@
     <inlineHelpText>When None or Save is selected, the Configurator scoped price rules will fire on save.  When Edit is selected, the Configurator scoped price rules will fire on edit and save.</inlineHelpText>
     <label>Configurator Evaluation Event</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
