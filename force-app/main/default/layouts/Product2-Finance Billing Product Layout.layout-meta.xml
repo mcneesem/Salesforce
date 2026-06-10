@@ -778,6 +778,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Exclude_from_Net_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Upfront_Fee_Payment_Percentage__c</field>
             </layoutItems>
         </layoutColumns>
