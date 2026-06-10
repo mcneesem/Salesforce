@@ -100,7 +100,7 @@
                 <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>401K Core</stringValue>
+                    <stringValue>401k Escalations</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -108,6 +108,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HRScale Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>401K Core</stringValue>
                 </rightValue>
             </conditions>
             <connector>
