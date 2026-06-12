@@ -8,15 +8,15 @@
             <stringValue>AccountContactRelationToInsertOpportunityContactRole</stringValue>
         </value>
     </constants>
-    <description>flipped subflow input back to $record from $recordId</description>
+    <description>DEPRECATED - flipped subflow input back to $record from $recordId</description>
     <environments>Default</environments>
     <formulas>
         <name>IsNew</name>
         <dataType>Boolean</dataType>
         <expression>ISNEW()</expression>
     </formulas>
-    <interviewLabel>ACR updated to Primary is False while Active {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>ACR updated to Primary is False while Active</label>
+    <interviewLabel>DEPRECATED - ACR updated to Primary is False while Active {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - ACR updated to Primary is False while Active</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -65,7 +65,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>ACR_Subflow_Create_or_Update_related_OCRs_on_Open_Optys</name>
         <label>ACR Subflow - Create or Update related OCRs on Open Optys</label>

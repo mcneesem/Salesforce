@@ -383,10 +383,10 @@
             <label>No Open Optys</label>
         </rules>
     </decisions>
-    <description>Updated with varFaultElement and removed triggeringFlow. Flipped &quot;recordId&quot; variable back to &quot;record&quot;</description>
+    <description>DEPRECATED - Updated with varFaultElement and removed triggeringFlow. Flipped &quot;recordId&quot; variable back to &quot;record&quot;</description>
     <environments>Default</environments>
-    <interviewLabel>ACR Subflow - Create or Update related OCRs on Open Optys {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>ACR Subflow - Create or Update related OCRs on Open Optys</label>
+    <interviewLabel>DEPRECATED - ACR Subflow - Create or Update related OCRs on Open Optys {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - ACR Subflow - Create or Update related OCRs on Open Optys</label>
     <loops>
         <name>ForEachOppId</name>
         <label>ForEachOppId</label>
