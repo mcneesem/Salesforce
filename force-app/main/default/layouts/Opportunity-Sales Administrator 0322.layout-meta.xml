@@ -786,6 +786,12 @@
         <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Note_Type__c</fields>
+        <fields>Note__c</fields>
+        <relatedList>NSP_Note__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
