@@ -135,8 +135,8 @@
     </decisions>
     <description>Account Action : Create Portal Client</description>
     <environments>Default</environments>
-    <interviewLabel>Account - Action - Create Portal Client {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account - Action - Create Portal Client</label>
+    <interviewLabel>DEPRECATED - Account - Action - Create Portal Client {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Account - Action - Create Portal Client</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

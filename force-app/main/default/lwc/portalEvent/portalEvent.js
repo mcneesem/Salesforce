@@ -15,6 +15,14 @@ export default class PortalEvent extends LightningElement {
         return ( this.record?.fields?.EndDateTime__c?.value );
     }
 
+    get rank() {
+        return ( this.record?.fields?.Rank__c?.value );
+    }
+
+    get status() {
+        return ( this.record?.fields?.Status__c?.value );
+    }
+
     get timeZoneSidKey() {
         return ( this.record?.fields?.TimeZoneSidKey__c?.value );
     }

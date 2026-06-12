@@ -1,6 +1,8 @@
 import { LightningElement , wire , api } from "lwc";
+import { NavigationMixin } from "lightning/navigation";
 import { getRecord , getRecords } from "lightning/uiRecordApi";
 import getPortalClients from "@salesforce/apex/PortalClientSelector.getPortalClients";
+import isCommunityContext from "@salesforce/apex/PortalClientSelector.isCommunityContext";
 import portalStaticResources from '@salesforce/resourceUrl/Portal';
 import PORTAL_CLIENT_ID_FIELD from "@salesforce/schema/Portal_Client__c.Id";
 import PORTAL_CLIENT_NAME_FIELD from "@salesforce/schema/Portal_Client__c.Name";
@@ -8,7 +10,7 @@ import PORTAL_CLIENT_CLIENT_NUMBER_FIELD from "@salesforce/schema/Portal_Client_
 import USER_ID_FIELD from '@salesforce/user/Id';
 import USER_NAME_FIELD from '@salesforce/schema/User.Name';
 
-export default class PortalNavigation extends LightningElement {
+export default class PortalNavigation extends NavigationMixin(LightningElement) {
     @api showVerticalNavigation;
 
     logoInsperity = portalStaticResources + '/svg/Insperity_Logo_Notag_WHITE.svg';
@@ -25,6 +27,49 @@ export default class PortalNavigation extends LightningElement {
             this.userName = undefined;
         }
     }
+
+    isCommunity = false;
+    @wire( isCommunityContext )
+    wiredIsCommunityContext( { error , data } ) {
+        if ( !error && data && ( typeof data === 'boolean' ) ) {
+            this.isCommunity = data;
+        }
+    }
+
+    get logoutPageReference() {
+        let pageReference;
+        if ( this.isCommunity ) {
+            // external logout url...
+            pageReference = {
+                type: 'comm__loginPage' ,
+                attributes: {
+                    actionName: 'logout' ,
+                } ,
+            };
+        } else {
+            // internal logout url...
+            pageReference = {
+                type: 'standard__webPage' ,
+                attributes: {
+                    url: "/secur/logout.jsp" ,
+                } ,
+            };
+        }
+        return pageReference;
+    }
+
+    handleUserMenuSelect( event ) {
+        const value = event?.detail?.value;
+        if ( ( value == "logout" ) && this.logoutPageReference ) {
+            this[NavigationMixin.Navigate](
+                this.logoutPageReference
+            );
+        }
+    }
+
+    //
+    //
+    //
 
     error;
     parameterObject;

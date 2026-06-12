@@ -86,6 +86,16 @@
                 <identifier>RecordProject_Task_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Rank__c</fieldItem>
+                <identifier>RecordRank_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-562f0425-894c-4326-bf87-dd9348e2f07a</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -118,6 +128,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.TimeZoneSidKey__c</fieldItem>
                 <identifier>RecordTimeZoneSidKey__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f833fff7-b00d-4bd0-a680-708084cbc80d</name>

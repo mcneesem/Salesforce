@@ -4,6 +4,8 @@ import ID_FIELD from "@salesforce/schema/Portal_Event__c.Id";
 import NAME_FIELD from "@salesforce/schema/Portal_Event__c.Name";
 import STARTDATETIME_FIELD from "@salesforce/schema/Portal_Event__c.StartDateTime__c";
 import ENDDATETIME_FIELD from "@salesforce/schema/Portal_Event__c.EndDateTime__c";
+import RANK_FIELD from "@salesforce/schema/Portal_Event__c.Rank__c";
+import STATUS_FIELD from "@salesforce/schema/Portal_Event__c.Status__c";
 import TIMEZONESIDKEY_FIELD from "@salesforce/schema/Portal_Event__c.TimeZoneSidKey__c";
 
 export default class PortalEventPreview extends LightningElement {
@@ -18,6 +20,8 @@ export default class PortalEventPreview extends LightningElement {
             NAME_FIELD ,
             STARTDATETIME_FIELD ,
             ENDDATETIME_FIELD ,
+            RANK_FIELD ,
+            STATUS_FIELD ,
             TIMEZONESIDKEY_FIELD ,
         ] ,
     })
