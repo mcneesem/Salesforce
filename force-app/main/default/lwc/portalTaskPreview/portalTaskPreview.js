@@ -17,7 +17,7 @@ import VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer
 import VALUE_TEXT_FIELD from "@salesforce/schema/Portal_Task__c.Value_Text__c";
 
 export default class PortalTaskPreview extends LightningElement {
-    @api recordId;
+    @api recordId; // is-a Portal_Task__c.Id
 
     error;
     record;

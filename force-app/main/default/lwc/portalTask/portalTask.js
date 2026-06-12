@@ -157,7 +157,47 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( this.variant === "child" );
     }
     get titleSize() {
-        return ( this.isChild ? "7" : "5" );
+        let value = "5";
+        if ( this.isChild ) {
+            value = "7";
+        }
+        if ( this.isCompact ) {
+            value = "12";
+        }
+        return value;
+    }
+    get titleClass() {
+        return ( this.isCompact ? "slds-m-bottom_medium" : "" );
+    }
+    get showDueDate() {
+        return ( this.isParent && this.isComfy );
+    }
+    get dueDateSize() {
+        return ( this.isCompact ? "0" : "2" );
+    }
+    get actionSize() {
+        return ( this.isCompact ? "8" : "3" );
+    }
+    get fileCountSize() {
+        return ( this.isCompact ? "2" : "1" );
+    }
+    get statusSize() {
+        return ( this.isCompact ? "2" : "1" );
+    }
+
+    //
+    //
+    //
+
+    @api density;
+    get isComfy() {
+        return ( !this.isCompact );
+    }
+    get isCompact() {
+        return ( this.density === "compact" );
+    }
+    get isMultipleRows() {
+        return ( this.isCompact );
     }
 
     //
@@ -212,7 +252,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             this.recordValue = this.inputValue;
             this.isSaving = true;
             try {
-                await updateRecord( this.updateRecordInput )
+                await updateRecord( this.updateRecordInput );
                 let successMessage = "Record Saved";
                 if ( this.name ) {
                     successMessage = "Record Saved (" + this.name + ")";
@@ -338,7 +378,11 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isLoading() {
-        return ( !this.links || this.isDeleting || this.isSaving );
+        return (
+            !this.links
+            || this.isDeleting
+            || this.isSaving
+        );
     }
 
     get totalRelatedFiles() {
@@ -351,7 +395,11 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
 
     handleUploadFinished( event ) {
         if ( event?.detail?.files?.length ) {
-            this.showToastSuccess( "Success" , "File Uploaded" );
+            let messageSuccess = "File Uploaded";
+            if ( event?.detail?.files?.length > 1 ) {
+                messageSuccess = "Files Uploaded";
+            }
+            this.showToastSuccess( "Success" , messageSuccess );
             this.modified();
             let requiresSave = false;
             if ( this.isAutoSaveEnabled ) {
