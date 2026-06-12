@@ -158,16 +158,6 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Account.Create_Portal_Client</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.View_Portal_Preview}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
