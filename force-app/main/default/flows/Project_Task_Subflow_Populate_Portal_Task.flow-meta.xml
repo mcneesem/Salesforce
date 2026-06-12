@@ -582,7 +582,7 @@
   {!portalTaskName} ,
   &quot;Employee Data Collection&quot; , &quot;File&quot; ,
   &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Text&quot; ,
-  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Upload Information&quot; ,
+  &quot;Current / Prior Payroll Report Samples&quot; , &quot;File&quot; ,
   &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;File&quot; ,
   &quot;YTD Gross Wages Report&quot; , &quot;File&quot; ,
   &quot;Time Off Policies / Handbook&quot; , &quot;File&quot; ,
@@ -621,7 +621,7 @@
   &quot;Employee Deduction Authorization Form - ORK&quot; , &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; ,
   &quot;Set up Cell Phone reimbursements&quot; , &quot;Cell Phone reimbursements&quot; ,
   &quot;Employee Garnishments Provided&quot; , &quot;Garnishments&quot; ,
-  &quot;COBRA Takeover Form(s) received and submitted to COBRA team&quot; , &quot;COBRA Takeover&quot; ,
+  &quot;COBRA Takeover Form(s) received and submitted to COBRA Team&quot; , &quot;COBRA Takeover&quot; ,
   &quot;Employees Currently on LOA&quot; , &quot;LOA Information&quot; ,
   &quot;CSP Client Authorization/Cafeteria Plan documentation collected&quot; , &quot;Client Sponsored Plans&quot; ,
   {!recordProjectTask.Name}
@@ -630,9 +630,12 @@
     <formulas>
         <name>portalTaskStatus</name>
         <dataType>String</dataType>
-        <expression>IF(
-  {!recordProjectTask.Is_Completed__c} ,
-  &quot;Completed&quot; ,
+        <expression>CASE(
+  {!recordProjectTask.pse__Status__c} ,
+  &quot;Complete&quot; , &quot;Completed&quot; ,
+  &quot;Pending - Insperity&quot; , &quot;Pending - Insperity&quot; ,
+  &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
+ &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
