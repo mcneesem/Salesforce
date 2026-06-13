@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Has_All_Required_Long_Text_Fields</name>
+        <label>Has All Required Long Text Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Has_All_Required_Long_Text_Fields__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HasAllRequiredLongTextFields</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <formulas>
+        <name>HasAllRequiredLongTextFields</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+    NOT(ISBLANK({!$Record.Clients_Response__c})),
+    NOT(ISBLANK({!$Record.List_Of_Actions_To_Contact_Client__c})),
+    NOT(ISBLANK({!$Record.Other_Client_Info_Credit_Should_Know__c})),
+    NOT(ISBLANK({!$Record.Provide_Background_About_Default__c}))
+)</expression>
+    </formulas>
+    <interviewLabel>Credit Default - Before Save - Update Has Provide Background Checkbox {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Credit Default - Before Save - Update Has Provide Background Checkbox</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Has_All_Required_Long_Text_Fields</targetReference>
+        </connector>
+        <object>Credit_Default__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

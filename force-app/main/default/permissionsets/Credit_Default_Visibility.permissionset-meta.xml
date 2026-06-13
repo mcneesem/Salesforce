@@ -97,6 +97,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Credit_Default__c.Credit_Default_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Credit_Default_Pay_Period_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Credit_Default_Related_Account_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Credit_Default_Sub_Client_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Credit_Default__c.DBA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -113,6 +133,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Credit_Default__c.Financial_Decision_Maker__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Default__c.Has_All_Required_Long_Text_Fields__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
