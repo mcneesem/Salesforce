@@ -167,7 +167,6 @@ public class NSP_ImpAutomationsController {
                 WHERE ( Id = :ipRecordId )
             ]
         );
-		System.debug('ipRecordMap:::'+ipRecordMap);
         return ipRecordMap;
     }
 
