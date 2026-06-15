@@ -11,6 +11,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Renewal_Created__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.AIMS_Spec_Prov_1__c</field>
         <readable>true</readable>
@@ -222,6 +227,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Mid_Year_Change_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Multi_Year_Addendum_Signed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -382,6 +392,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Renewal_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Renewal_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -441,5 +456,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Renewals Visibility</label>
+    <label>Renewal Visibility</label>
 </PermissionSet>
