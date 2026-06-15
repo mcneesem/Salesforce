@@ -984,7 +984,7 @@
         <description>Body of the email template of NBI IMPL Res Assignment</description>
         <name>EmailbodyforNBIIMPLAssignment</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned S2I record.&amp;nbsp;Please review the Installation tab of the following record &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to an S2I record.&amp;nbsp;Please review the Installation tab of the following record &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!recordUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <description>Email Body for QC Completion Mail</description>
