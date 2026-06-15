@@ -6,6 +6,7 @@ import { deleteRecord , updateRecord } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
 import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
+import createPortalLinks from "@salesforce/apex/PortalClientSharing.createPortalLinks";
 import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
 import PORTAL_TASK_STATUS_FIELD from "@salesforce/schema/Portal_Task__c.Status__c";
 import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
@@ -382,6 +383,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             !this.links
             || this.isDeleting
             || this.isSaving
+            || this.isSharing
         );
     }
 
@@ -411,6 +413,31 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             if ( requiresSave ) {
                 this.handleSave();
             }
+            if ( this.hasProjectTask ) {
+                // share files uploaded to the Portal_Task__c back to the internal Project_Task__c...
+                const contentDocumentIds = event?.detail?.files.map(
+                    file => file.documentId
+                );
+                this.handleShares( contentDocumentIds );
+            }
+        }
+    }
+
+    isSharing;
+    async handleShares( contentDocumentIds ) {
+        if ( contentDocumentIds?.length ) {
+            this.isSharing = true;
+            try {
+                await createPortalLinks(
+                    {
+                        recordId: this.recordId ,
+                        contentDocumentIds: contentDocumentIds ,
+                    }
+                );
+            } catch ( error ) {
+                this.handleLogInfo( 'handleShares' , JSON.stringify( error ) );
+            }
+            this.isSharing = false;
         }
     }
 

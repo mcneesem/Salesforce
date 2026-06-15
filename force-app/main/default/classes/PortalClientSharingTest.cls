@@ -206,5 +206,43 @@ private class PortalClientSharingTest {
         Test.stopTest();
     }
 
+    @isTest
+    private static void testCreatePortalLinks() {
+        List<Portal_Task__c> records = new List<Portal_Task__c>(
+            [
+                SELECT Id
+                FROM Portal_Task__c
+                ORDER BY CreatedDate DESC
+                LIMIT 1
+            ]
+        );
+        //
+        String recordId = records[0].Id;
+        //
+        ContentVersion sharedContentVersion = new ContentVersion(
+            Title='sharedContentVersion' ,
+            PathOnClient='sharedContentVersion' ,
+            VersionData=Blob.valueOf( 'sharedContentVersion' ) ,
+            FirstPublishLocationId=recordId
+        );
+        insert sharedContentVersion;
+        //
+        List<ContentVersion> sharedContentVersions = [
+            SELECT Id , ContentDocumentId
+            FROM ContentVersion
+            WHERE ( Id = :sharedContentVersion.Id )
+            LIMIT 1
+        ];
+        //
+        List<String> contentDocumentIds = new List<String>();
+        for ( ContentVersion content : sharedContentVersions ) {
+            contentDocumentIds.add( content.ContentDocumentId );
+        }
+        //
+        Test.startTest();
+        PortalClientSharing.createPortalLinks( recordId , contentDocumentIds );
+        Test.stopTest();
+    }
+
 }
 //

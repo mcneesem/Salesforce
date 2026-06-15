@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Use_Portal_Task_Files</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to use the &quot;Portal Task Files&quot; Screen Flow.</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Portal_Task_Files</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Use Portal Task Files</label>
+</PermissionSet>
