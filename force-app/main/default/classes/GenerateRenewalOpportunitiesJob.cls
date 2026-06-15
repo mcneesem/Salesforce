@@ -102,6 +102,7 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         {
             this.buildSalesOfficeToRenewalManagerMap( records );
             this.buildWSEEMaps(records);
+            this.processEntries(records);
             this.processOpportunities(records);
         }
 
@@ -112,9 +113,6 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         List<Opportunity> parentOpportunities = new List<Opportunity>();
         List<Opportunity> childOpportunities = new List<Opportunity>();
         if ( records != null && !records.isEmpty() ){
-            for ( NSP_Sub_Client__c record : records ){
-                this.buildEntries( record );
-            }
             for ( NSP_Sub_Client__c subClient : records ){
                 if ( this.checkEligibility( subClient )){
                     Opportunity opportunity = this.buildOpportunity( subClient );
