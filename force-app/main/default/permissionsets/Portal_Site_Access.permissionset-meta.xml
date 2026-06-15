@@ -4,6 +4,10 @@
         <apexClass>PortalClientSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>PortalClientSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants the Permissions require to access Portal-related records, tabs, and components within the external Portal Pages.</description>
     <fieldPermissions>
         <editable>false</editable>
