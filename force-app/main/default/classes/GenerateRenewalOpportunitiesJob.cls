@@ -97,7 +97,6 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         if ( records != null
             && !records.isEmpty()
             && GenerateRenewalOpportunitiesJob.isEnabled
-            && String.isNotBlank( GenerateRenewalOpportunitiesJob.RenewalRecordTypeId )
            )
         {
             this.buildSalesOfficeToRenewalManagerMap( records );
@@ -116,12 +115,10 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
             for ( NSP_Sub_Client__c subClient : records ){
                 if ( this.checkEligibility( subClient )){
                     Opportunity opportunity = this.buildOpportunity( subClient );
-                    if ( opportunity != null ) {
-                        if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ){
-                            parentOpportunities.add( opportunity );
-                        } else {
-                            childOpportunities.add( opportunity );
-                        }
+                    if ( opportunity != null && subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ) {
+                        parentOpportunities.add( opportunity );
+                    } else if ( opportunity != null ) {
+                        childOpportunities.add( opportunity );
                     }
                 }
             }
