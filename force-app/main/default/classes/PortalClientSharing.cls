@@ -673,24 +673,24 @@ public without sharing class PortalClientSharing implements Queueable {
     private static List<ContentDocumentLink> buildPortalLinks( Portal_Task__c record , List<String> contentDocumentIds ) {
         List<ContentDocumentLink> links = new List<ContentDocumentLink>();
         if ( ( record != null )
+            && String.isNotBlank( record.Project_Task__c )
             && ( contentDocumentIds != null )
             && !contentDocumentIds.isEmpty()
             )
         {
-            if ( ( record != null )
-                && String.isNotBlank( record.Project_Task__c )
-                )
-            {
-                for ( String documentId : contentDocumentIds ) {
-                    if ( String.isNotBlank( documentId ) ) {
-                        ContentDocumentLink link = new ContentDocumentLink(
-                            ContentDocumentId=documentId ,
-                            LinkedEntityId=record.Project_Task__c ,
-                            ShareType='V' ,
-                            Visibility='AllUsers'
-                        );
-                        links.add( link );
-                    }
+            for ( String documentId : contentDocumentIds ) {
+                if ( String.isNotBlank( documentId )
+                    && ( documentId InstanceOf Id )
+                    && ( Id.valueOf( documentId ).getSObjectType() == ContentDocument.getSObjectType() )
+                    )
+                {
+                    ContentDocumentLink link = new ContentDocumentLink(
+                        ContentDocumentId=documentId ,
+                        LinkedEntityId=record.Project_Task__c ,
+                        ShareType='V' ,
+                        Visibility='AllUsers'
+                    );
+                    links.add( link );
                 }
             }
         }
