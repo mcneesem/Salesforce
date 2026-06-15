@@ -154,8 +154,8 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                 if(this.reReqObj.NSP_RequestingMultipleEmployees__c != null && this.reReqObj.NSP_RequestingMultipleEmployees__c.value !=null){
                     subject = this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' ? 'Insperity Prepared Separation Agreement requested for multiple WSEEs' :subject ;
                 }
-                if(this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' && this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value != null){
-                    subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
+                if(this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' && this.subclientData?.fields?.NSP_Sub_Client__r?.value?.fields?.NSP_Sub_Client__c?.value != null){
+                    subject = subject + ' (' + this.subclientData?.fields?.NSP_Sub_Client__r?.value?.fields?.NSP_Sub_Client__c?.value + ')' ;
                 }
                 if(this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
                     subject = this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value != null ?
