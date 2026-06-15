@@ -1,7 +1,7 @@
 @isTest
-public class GenerateRenewalOpportunitiesJobTest {
+private class GenerateRenewalOpportunitiesJobTest {
     @testSetup
-    static void setupData() {
+    private static void setupData() {
 
         Account accObj = NSP_TestHelper.createAccount(true);
         accObj.NSP_Client_AIMS__c = '1234500';
@@ -81,7 +81,7 @@ public class GenerateRenewalOpportunitiesJobTest {
     }
 
     @isTest
-    static void testRenewalOpportunityBatch() {
+    private static void testRenewalOpportunityBatch() {
         Test.startTest();
         Database.executeBatch(new GenerateRenewalOpportunitiesJob(12, 2026));
         Test.stopTest();
