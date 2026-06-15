@@ -56,7 +56,7 @@ public class NSP_ImpAutomationsController {
                     NSP_Back_up_Client_Cell_Phone__c, NSP_Back_up_Client_Contact_Method__c, NSP_Back_up_Client_Email__c, NSP_Back_up_Client_Office_Phone__c,
                     NSP_Back_up_PC_Client_Name__c, NSP_Biweekly_Pay_Period__c, NSP_Business_Meeting_States__c, NSP_Chart_of_Accounts_GL_codes__c,
                     NSP_CheckOnceYouDiscussEPAY_with_client__c, NSP_CheckToSendPayrollSpecialist_Summary__c, NSP_CheckToSendTheClient_Summary_email__c,
-                    NSP_Check_to_create_the_RRP_Case__c, NSP_ClientInterestedHavingAutoApproval__c, NSP_Client_s_holiday_calendar__c, NSP_Commission_Frequency__c,
+                    NSP_ClientInterestedHavingAutoApproval__c, NSP_Client_s_holiday_calendar__c, NSP_Commission_Frequency__c,
                     NSP_Commission_Type__c, NSP_DCFSA_Ongoing_CSP_Cafeteria_document__c, NSP_DCFSA_Provide_details__c, NSP_Daily_Rate_approval_status__c,
                     NSP_Dental_Ongoing_CSP_cafeteria_Doc__c, NSP_Dental_Pretax_Delayed_Start__c, NSP_Dental_Pretax_Provide_Details__c, NSP_Did_you_verify_Calendar_in_AIMS__c,
                     NSP_Different_contact_for_subaccounts__c, NSP_Discretionary_Bonus_Input_Frequency__c, NSP_Discretionary_Bonus__c, NSP_Discussed_E_Verify_with_the_client__c,
@@ -167,6 +167,7 @@ public class NSP_ImpAutomationsController {
                 WHERE ( Id = :ipRecordId )
             ]
         );
+		System.debug('ipRecordMap:::'+ipRecordMap);
         return ipRecordMap;
     }
 
