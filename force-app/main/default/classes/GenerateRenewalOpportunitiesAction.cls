@@ -3,44 +3,40 @@ public class GenerateRenewalOpportunitiesAction {
 
     public class MonthYearData {
         @InvocableVariable(label='Month Value' required=true)
-        public string monthValue;
+        public String monthValue;
 
         @InvocableVariable(label='Year Value' required=true)
-        public string yearValue;
+        public Integer yearValue;
     }
 
+    private static Map<String, Integer> monthMap = new Map<String, Integer>{
+        'Jan' => 1,
+        'Feb' => 2,
+        'Mar' => 3,
+        'Apr' => 4,
+        'May' => 5,
+        'Jun' => 6,
+        'Jul' => 7,
+        'Aug' => 8,
+        'Sep' => 9,
+        'Oct' => 10,
+        'Nov' => 11,
+        'Dec' => 12
+    };
+
     @InvocableMethod(label = 'Generate Renewal Opportunities' description = 'Launch Renewals Batch and pass Month and Year values selected in Flow')
-    public static void launchRenewalBatch(List<MonthYearData> inputs) {
+    public static void invoke(List<MonthYearData> inputs) {
 
-        if (inputs != null && !inputs.isEmpty()) {
-
-            Map<String, Integer> monthMap = new Map<String, Integer>{
-                'Jan' => 1,
-                'Feb' => 2,
-                'Mar' => 3,
-                'Apr' => 4,
-                'May' => 5,
-                'Jun' => 6,
-                'Jul' => 7,
-                'Aug' => 8,
-                'Sep' => 9,
-                'Oct' => 10,
-                'Nov' => 11,
-                'Dec' => 12
-            };
+        if (inputs != null && !inputs.isEmpty() ) {
 
             for (MonthYearData input : inputs) {
-                if (input != null) {
+                if (input != null && String.isNotBlank( input.monthValue ) && monthMap.containsKey( input.monthValue ) ) {
                     Integer monthNumber = monthMap.get(input.monthValue);
-                    Integer yearNumber = Integer.valueOf(input.yearValue);
+                    Integer yearNumber = input.yearValue;
 
-                    GenerateRenewalOpportunitiesJob batchJob =
-                        new GenerateRenewalOpportunitiesJob(monthNumber, yearNumber);
-
-                    Database.executeBatch(batchJob, 50);
+                    GenerateRenewalOpportunitiesJob.executeBatch( monthNumber , yearNumber );
                 }
             }
         }
-
     }
 }

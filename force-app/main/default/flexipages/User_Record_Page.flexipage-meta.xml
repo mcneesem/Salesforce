@@ -281,7 +281,7 @@
                 <identifier>c_generateRenewalOpportunities</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Batch_Renewal_Opportunity_Creation}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Generate_Renewal_Opportunities}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
