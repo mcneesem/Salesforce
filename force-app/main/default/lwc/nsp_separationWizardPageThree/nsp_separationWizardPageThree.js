@@ -431,8 +431,8 @@ export default class nsp_separationWizardPageThree extends LightningElement {
     handleSubmit( event ) {
         event.preventDefault();
         const fields = { ...event.detail.fields };
-        if ( fields?.NSP_Sub_Client__c == null ){
-             fields.NSP_Sub_Client__c = this.NSP_Sub_Client__c;
+        if ( fields?.NSP_Sub_Client__c == null ) {
+            fields.NSP_Sub_Client__c = this.NSP_Sub_Client__c;
         }
         this.template.querySelector('lightning-record-edit-form').submit(fields);
         // only populated to appease sonar...
