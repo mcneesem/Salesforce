@@ -283,8 +283,8 @@ private class NSP_InvoiceLineTriggerTest {
         }
         insert invoiceLines;
 
-        // TEST: Call getUsageSummaryToRateMap method
-        Map<Id, SBQQ__OrderItemConsumptionRate__c> resultMap = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(invoiceLines);
+        // TEST: Call getUsageSummaryToRateMap method - FIXED return type to List
+        Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> resultMap = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(invoiceLines);
 
         Test.stopTest();
 
@@ -295,22 +295,36 @@ private class NSP_InvoiceLineTriggerTest {
         if(!invoiceLines.isEmpty()) {
             System.assert(resultMap.size() > 0, 'Result map should contain entries for usage summaries with consumption rates');
 
-            // Verify only PerUnit rates are included
+            // Verify both PerUnit and FlatFee rates are included
             for(Id usageSummaryId : resultMap.keySet()) {
-                SBQQ__OrderItemConsumptionRate__c rate = resultMap.get(usageSummaryId);
-                System.assertNotEquals(null, rate, 'Rate should not be null for Usage Summary: ' + usageSummaryId);
-                System.assertEquals('PerUnit', rate.SBQQ__PricingMethod__c, 'Pricing method should be PerUnit');
-                System.assertEquals(15.00, rate.SBQQ__Price__c, 'Rate price should match expected value');
+                List<SBQQ__OrderItemConsumptionRate__c> rates = resultMap.get(usageSummaryId);
+                System.assertNotEquals(null, rates, 'Rate list should not be null for Usage Summary: ' + usageSummaryId);
+                System.assertEquals(2, rates.size(), 'Should have 2 rates (PerUnit and FlatFee) per usage summary');
+
+                // Verify we have both pricing methods
+                Boolean hasPerUnit = false;
+                Boolean hasFlatFee = false;
+                for(SBQQ__OrderItemConsumptionRate__c rate : rates) {
+                    if(rate.SBQQ__PricingMethod__c == 'PerUnit') {
+                        hasPerUnit = true;
+                        System.assertEquals(15.00, rate.SBQQ__Price__c, 'PerUnit rate price should match');
+                    } else if(rate.SBQQ__PricingMethod__c == 'FlatFee') {
+                        hasFlatFee = true;
+                        System.assertEquals(100.00, rate.SBQQ__Price__c, 'FlatFee rate price should match');
+                    }
+                }
+                System.assert(hasPerUnit, 'Should have PerUnit rate');
+                System.assert(hasFlatFee, 'Should have FlatFee rate');
             }
         }
 
         // Test edge case: empty invoice lines list
-        Map<Id, SBQQ__OrderItemConsumptionRate__c> emptyResult = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(new List<blng__InvoiceLine__c>());
+        Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> emptyResult = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(new List<blng__InvoiceLine__c>());
         System.assertNotEquals(null, emptyResult, 'Empty result map should not be null');
         System.assertEquals(0, emptyResult.size(), 'Empty invoice lines should return empty map');
 
         // Test edge case: null invoice lines list
-        Map<Id, SBQQ__OrderItemConsumptionRate__c> nullResult = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(null);
+        Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> nullResult = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap(null);
         System.assertNotEquals(null, nullResult, 'Null input should return empty map, not null');
     }
 

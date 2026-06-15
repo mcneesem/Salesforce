@@ -3,6 +3,10 @@
     <label>IWXBundle</label>
     <protected>false</protected>
     <values>
+        <field>Add_Flat_Fee_From_OP_Consumption_Rate__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Add_Unit_Price_From_OP_Consumption_Rate__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>

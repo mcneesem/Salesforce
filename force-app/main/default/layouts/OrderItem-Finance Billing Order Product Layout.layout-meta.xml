@@ -38,10 +38,6 @@
                 <behavior>Edit</behavior>
                 <field>Matching_Product_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Product_Description_Key__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -135,6 +131,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Prevent_Product_Description_Update__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Description_Key__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

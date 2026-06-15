@@ -10,22 +10,22 @@ public class NSP_InvoiceLineTriggerHelper {
     // Params: Map<Id, blng__InvoiceLine__c> invLineNewMap,Map<Id, blng__InvoiceLine__c> invLineOldMap
     //
     public static void afterUpdateDirector( Map<Id,blng__InvoiceLine__c> invLineNewMap , Map<Id,blng__InvoiceLine__c> invLineOldMap ) {
-        List<Id> elgibleLineForRevRec= new List<Id>();
-        List<Id> elgibleLinesForRecreateRevRec= new List<Id>();
-        for(blng__InvoiceLine__c invLine:invLineNewMap.values()){
-            blng__InvoiceLine__c oldLine =invLineOldMap.get(invLine.Id);
-            if(invLine.blng__InvoiceLineStatus__c!=oldLine.blng__InvoiceLineStatus__c && invLine.blng__InvoiceLineStatus__c=='Posted'){
-                elgibleLineForRevRec.add(invLine.Id);
-            }
-            if(invLine.NSP_Go_Live_Date__c!=oldLine.NSP_Go_Live_Date__c){
-                elgibleLinesForRecreateRevRec.add(invLine.Id);
-            }
+    List<Id> elgibleLineForRevRec= new List<Id>();
+    List<Id> elgibleLinesForRecreateRevRec= new List<Id>();
+    for(blng__InvoiceLine__c invLine:invLineNewMap.values()){
+        blng__InvoiceLine__c oldLine =invLineOldMap.get(invLine.Id);
+        if(invLine.blng__InvoiceLineStatus__c!=oldLine.blng__InvoiceLineStatus__c && invLine.blng__InvoiceLineStatus__c=='Posted'){
+            elgibleLineForRevRec.add(invLine.Id);
         }
-        prepareForRevRecGeneration(elgibleLineForRevRec);
-        if(elgibleLinesForRecreateRevRec.size()>0){
-            NSP_RevRecService.recreateInvoiceRevSchedules(elgibleLinesForRecreateRevRec);
+        if(invLine.NSP_Go_Live_Date__c!=oldLine.NSP_Go_Live_Date__c){
+            elgibleLinesForRecreateRevRec.add(invLine.Id);
         }
     }
+    prepareForRevRecGeneration(elgibleLineForRevRec);
+    if(elgibleLinesForRecreateRevRec.size()>0){
+        NSP_RevRecService.recreateInvoiceRevSchedules(elgibleLinesForRecreateRevRec);
+     }
+}
 
     //
     // MethodName: beforeUpdateDirector
@@ -33,18 +33,18 @@ public class NSP_InvoiceLineTriggerHelper {
     // Params: Map<Id, blng__InvoiceLine__c> invLineNewMap,Map<Id, blng__InvoiceLine__c> invLineOldMap
     //
     public static void beforeUpdateDirector( Map<Id,blng__InvoiceLine__c> invLineNewMap , Map<Id,blng__InvoiceLine__c> invLineOldMap ) {
-        List<Id> projectIds= new List<Id>();
-        for(blng__InvoiceLine__c invLine:invLineNewMap.values()){
-            blng__InvoiceLine__c oldLine =invLineOldMap.get(invLine.Id);
-            if(invLine.NSP_Project__c!=oldLine.NSP_Project__c && oldLine.NSP_Project__c!=null){
-                projectIds.add(invLine.NSP_Project__c);
-            }
-        }
-        if(projectIds.size()>0){
-            //When Project lookup changes on Invoice Line, updat Go Live Date to it;s corresponding project's go live date
-            updateProjectGoLiveDate(projectIds,invLineNewMap.values());
+    List<Id> projectIds= new List<Id>();
+    for(blng__InvoiceLine__c invLine:invLineNewMap.values()){
+        blng__InvoiceLine__c oldLine =invLineOldMap.get(invLine.Id);
+        if(invLine.NSP_Project__c!=oldLine.NSP_Project__c && oldLine.NSP_Project__c!=null){
+            projectIds.add(invLine.NSP_Project__c);
         }
     }
+    if(projectIds.size()>0){
+        //When Project lookup changes on Invoice Line, updat Go Live Date to it;s corresponding project's go live date
+        updateProjectGoLiveDate(projectIds,invLineNewMap.values());
+    }
+}
 
     public static void beforeInsertDirector( List<blng__InvoiceLine__c> newList ) {
         updateAddProductDescription( newList );
@@ -71,7 +71,7 @@ public class NSP_InvoiceLineTriggerHelper {
                 blng__OrderProduct__r.Order.NSP_Project_Go_Live_Date__c ,
                 blng__OrderProduct__r.blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c ,
                 NSP_Go_Live_Date__c
-            FROM blng__InvoiceLine__c
+                                         FROM blng__InvoiceLine__c
             WHERE (
                 ( Id IN :elgibleLineForRevRec )
                 AND (
@@ -84,8 +84,8 @@ public class NSP_InvoiceLineTriggerHelper {
         ];
         if ( !invLines.isEmpty() ) {
             NSP_RevRecService.generateRevenue( invLines );
-        }
     }
+}
 
     //
     // MethodName: selectInvoiceLineOrderItems
@@ -188,13 +188,13 @@ public class NSP_InvoiceLineTriggerHelper {
     // Description : This method is used to Create a Map of OrderProduct Ids and their Per Unit Consumption Rate records
     // Params: List<blng__InvoiceLine__c> records
     //
-    public static Map<Id,SBQQ__OrderItemConsumptionRate__c> getUsageSummaryToRateMap( List<blng__InvoiceLine__c> invoiceLines ) {
+    public static Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> getUsageSummaryToRateMap( List<blng__InvoiceLine__c> invoiceLines ) {
         // 1. Gather all unique Usage Summary IDs from the invoice lines list
         Set<Id> usageSummaryIds = NSP_InvoiceLineTriggerHelper.buildUsageSummaryIds( invoiceLines );
         // 2. Query Usage Summaries to map OrderItemConsumptionSchedule IDs to UsageSummary IDs
         Map<Id,Id> scheduleToSummaryMap = NSP_InvoiceLineTriggerHelper.buildScheduleToSummaryMap( usageSummaryIds );
         // 3. Query standard OrderItemConsumptionRate records matching our schedules
-        Map<Id,SBQQ__OrderItemConsumptionRate__c> resultMap = new Map<Id,SBQQ__OrderItemConsumptionRate__c>();
+        Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> resultMap = new Map<Id, List<SBQQ__OrderItemConsumptionRate__c>>();
         if ( ( scheduleToSummaryMap != null ) && !scheduleToSummaryMap.isEmpty() ) {
             List<SBQQ__OrderItemConsumptionRate__c> rates = [
                 SELECT
@@ -204,10 +204,9 @@ public class NSP_InvoiceLineTriggerHelper {
                 FROM SBQQ__OrderItemConsumptionRate__c
                 WHERE (
                     ( SBQQ__OrderItemConsumptionSchedule__c IN :scheduleToSummaryMap.keySet() )
-                    AND ( SBQQ__PricingMethod__c = 'PerUnit' )
                 )
             ];
-            // 4. Map the retrieved rates back to their corresponding Usage Summary ID
+        // 4. Map the retrieved rates back to their corresponding Usage Summary ID
             if ( rates != null ) {
                 for ( SBQQ__OrderItemConsumptionRate__c rate : rates ) {
                     resultMap = NSP_InvoiceLineTriggerHelper.addRateToUsageSummaryMap(
@@ -221,10 +220,10 @@ public class NSP_InvoiceLineTriggerHelper {
         return resultMap;
     }
 
-    private static Map<Id,SBQQ__OrderItemConsumptionRate__c> addRateToUsageSummaryMap(
+    private static Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> addRateToUsageSummaryMap(
         SBQQ__OrderItemConsumptionRate__c rate ,
         Map<Id,Id> scheduleToSummaryMap ,
-        Map<Id,SBQQ__OrderItemConsumptionRate__c> resultMap
+        Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> resultMap
         )
     {
         if ( ( rate !=null )
@@ -232,13 +231,14 @@ public class NSP_InvoiceLineTriggerHelper {
             && scheduleToSummaryMap.containsKey( rate.SBQQ__OrderItemConsumptionSchedule__c )
             )
         {
-            Id summaryId = scheduleToSummaryMap.get( rate.SBQQ__OrderItemConsumptionSchedule__c );
+            Id summaryId = scheduleToSummaryMap.get(rate.SBQQ__OrderItemConsumptionSchedule__c);
             if ( ( summaryId != null )
                 && !resultMap.containsKey( summaryId )
                 )
             {
-                resultMap.put( summaryId , rate );
+                resultMap.put( summaryId, new List<SBQQ__OrderItemConsumptionRate__c>() );
             }
+            resultMap.get( summaryId ).add( rate );
         }
         return resultMap;
     }
@@ -264,7 +264,7 @@ public class NSP_InvoiceLineTriggerHelper {
                         SELECT
                             Id ,
                             blng__OrderItemConsumptionSchedule__c
-                        FROM blng__UsageSummary__c
+                                                   FROM blng__UsageSummary__c
                         WHERE (
                             ( Id IN :usageSummaryIds )
                             AND ( blng__OrderItemConsumptionSchedule__c != null )
@@ -290,7 +290,7 @@ public class NSP_InvoiceLineTriggerHelper {
         Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
         Map<Id,OrderItem> orderItemMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineOrderItems( invLineNew );
         Map<Id,blng__UsageSummary__c> usageSummaryMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineUsageSummaries( invLineNew );
-        Map<Id, SBQQ__OrderItemConsumptionRate__c> usageSummaryToRateMap = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap( invLineNew );
+        Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap = NSP_InvoiceLineTriggerHelper.getUsageSummaryToRateMap( invLineNew );
         for ( blng__InvoiceLine__c newInvoiceLine : invLineNew ) {
             OrderItem item = NSP_InvoiceLineTriggerHelper.getInvoiceLineOrderItem(
                 newInvoiceLine.blng__OrderProduct__c ,
@@ -300,7 +300,7 @@ public class NSP_InvoiceLineTriggerHelper {
                 newInvoiceLine.blng__UsageSummary__c ,
                 usageSummaryMap
             );
-            if ( ( item != null )
+                if ( ( item != null )
                 && item.Prevent_Product_Description_Update__c
                 )
             {
@@ -327,9 +327,7 @@ public class NSP_InvoiceLineTriggerHelper {
                     List<String> args = new String[]{'0','number','###,###,##0.00'};
                     String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
                     //monthly minimum should be removed if it's 0 or null
-                    String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
-                                        '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
-                                        null;
+                    String mm_Text = NSP_InvoiceLineTriggerHelper.buildFlatFeePrice( newInvoiceLine, usageSummary, descriptionSetting, usageSummaryToRateMap, args );
                     prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
                     prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)
                                     :prodDescStr.contains(', {Upper Tier_Flat Price} Monthly Minimum') ? prodDescStr.replace(', {Upper Tier_Flat Price} Monthly Minimum','')
@@ -358,7 +356,7 @@ public class NSP_InvoiceLineTriggerHelper {
         blng__InvoiceLine__c newInvoiceLine ,
         blng__UsageSummary__c usageSummary ,
         NSP_AdditionalProductDescription_Setting__mdt descriptionSetting ,
-        Map<Id,SBQQ__OrderItemConsumptionRate__c> usageSummaryToRateMap
+        Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap
         )
     {
         String prodDescType = '';
@@ -392,20 +390,57 @@ public class NSP_InvoiceLineTriggerHelper {
     }
 
     private static Decimal setUnitPriceFromConsumptionRateCard(
-        Map<Id,SBQQ__OrderItemConsumptionRate__c> usageSummaryToRateMap ,
+        Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap ,
         blng__InvoiceLine__c newInvoiceLine ,
         Decimal perunitPrice
         )
     {
-        if ( ( usageSummaryToRateMap != null ) && ( newInvoiceLine != null ) ) {
-            SBQQ__OrderItemConsumptionRate__c cRate = usageSummaryToRateMap.get( newInvoiceLine.blng__UsageSummary__c );
-            if ( cRate != null ) {
-                perunitPrice = cRate.SBQQ__Price__c;
+        List<SBQQ__OrderItemConsumptionRate__c> cRates = usageSummaryToRateMap.get( newInvoiceLine.blng__UsageSummary__c );
+        for( SBQQ__OrderItemConsumptionRate__c rate: cRates ){
+            if( rate != null && rate.SBQQ__PricingMethod__c == 'PerUnit' ){
+                perunitPrice = rate.SBQQ__Price__c;
             }
         }
         return perunitPrice;
     }
 
+        private static String buildFlatFeePrice( blng__InvoiceLine__c newInvoiceLine ,
+                                              blng__UsageSummary__c usageSummary ,
+                                              NSP_AdditionalProductDescription_Setting__mdt descriptionSetting ,
+                                              Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap,
+                                              List<String> args ){
+
+    	String prodDescType = '';
+        if(descriptionSetting != null){
+            prodDescType = descriptionSetting.Type__c;
+        }
+        Decimal flatFeePrice = null;
+        if(newInvoiceLine != null){
+            flatFeePrice = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
+                            newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c : null;
+            if ( ( usageSummary != null )
+                && ( usageSummary.blng__UnitPrice__c != null )
+                && ( prodDescType == 'Dynamic' )
+                && ( newInvoiceLine.blng__UsageSummary__c != null )
+                && ( usageSummaryToRateMap != null )
+                && ( usageSummaryToRateMap.containsKey(newInvoiceLine.blng__UsageSummary__c) )
+                && ( descriptionSetting.Add_Flat_Fee_From_OP_Consumption_Rate__c == true )
+            ){
+                 flatFeePrice = NSP_InvoiceLineTriggerHelper.setFlatFeePriceFromConsumptionRateCard(usageSummaryToRateMap, newInvoiceLine, flatFeePrice);
+            }
+        }
+        return flatFeePrice != null ? '$'+String.format(flatFeePrice.setScale(2).format(), args) : null;
+    }
+
+    private static Decimal setFlatFeePriceFromConsumptionRateCard(Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap, blng__InvoiceLine__c newInvoiceLine, Decimal flatFeePrice){
+        List<SBQQ__OrderItemConsumptionRate__c> cRates = usageSummaryToRateMap.get(newInvoiceLine.blng__UsageSummary__c);
+        for(SBQQ__OrderItemConsumptionRate__c rate: cRates){
+            if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee'){
+                flatFeePrice = rate.SBQQ__Price__c;
+            }
+        }
+        return flatFeePrice;
+    }
     //
     // MethodName : updateAddProductDescriptionOnOrderItem
     // Description : This method is used to update additional Product Description Field on  orderitem after Insert. STY-03868
@@ -459,21 +494,21 @@ public class NSP_InvoiceLineTriggerHelper {
         }
     }
 
-    public static void populateBillingFinancePeriod(List<blng__InvoiceLine__c> invLineNew){
-        Map<String,blng__FinancePeriod__c> financePeriodsMap=getFinancePeriods();
-        for(blng__InvoiceLine__c invLine:invLineNew){
-            String key=invLine.blng__BillingFinanceBook__c+'_'+invLine.blng__LegalEntity__c+'_'+invLine.NSP_Invoice_Date_End_Of_Month__c;
-            invLine.blng__BillingFinancePeriod__c=financePeriodsMap.get(key)?.Id;
-        }
+public static void populateBillingFinancePeriod(List<blng__InvoiceLine__c> invLineNew){
+    Map<String,blng__FinancePeriod__c> financePeriodsMap=getFinancePeriods();
+    for(blng__InvoiceLine__c invLine:invLineNew){
+        String key=invLine.blng__BillingFinanceBook__c+'_'+invLine.blng__LegalEntity__c+'_'+invLine.NSP_Invoice_Date_End_Of_Month__c;
+        invLine.blng__BillingFinancePeriod__c=financePeriodsMap.get(key)?.Id;
     }
-    private static Map<String,blng__FinancePeriod__c> getFinancePeriods(){
-        Map<String,blng__FinancePeriod__c> financePeriodsMap= new Map<String,blng__FinancePeriod__c>();
-        for(blng__FinancePeriod__c finPeriod:[SELECT Id,blng__FinanceBook__c,blng__LegalEntity__c,blng__PeriodEndDate__c FROM blng__FinancePeriod__c WHERE blng__FinanceBook__r.Name=:NSP_CPQConstants.FINBOOK AND blng__FinanceBook__r.blng__PeriodType__c=:NSP_CPQConstants.ACCOUNTING]){
-            String key=finPeriod.blng__FinanceBook__c+'_'+finPeriod.blng__LegalEntity__c+'_'+finPeriod.blng__PeriodEndDate__c;
-            financePeriodsMap.put(key,finPeriod);
-        }
-        return financePeriodsMap;
+}
+private static Map<String,blng__FinancePeriod__c> getFinancePeriods(){
+    Map<String,blng__FinancePeriod__c> financePeriodsMap= new Map<String,blng__FinancePeriod__c>();
+    for(blng__FinancePeriod__c finPeriod:[SELECT Id,blng__FinanceBook__c,blng__LegalEntity__c,blng__PeriodEndDate__c FROM blng__FinancePeriod__c WHERE blng__FinanceBook__r.Name=:NSP_CPQConstants.FINBOOK AND blng__FinanceBook__r.blng__PeriodType__c=:NSP_CPQConstants.ACCOUNTING]){
+        String key=finPeriod.blng__FinanceBook__c+'_'+finPeriod.blng__LegalEntity__c+'_'+finPeriod.blng__PeriodEndDate__c;
+        financePeriodsMap.put(key,finPeriod);
     }
+    return financePeriodsMap;
+}
 
     //
     // MethodName: updateProjectGoLiveDate
@@ -481,12 +516,12 @@ public class NSP_InvoiceLineTriggerHelper {
     // Params: List<blng__InvoiceLine__c> newInvLines, List<Id>projectIds
     //
     private static void updateProjectGoLiveDate( List<Id>projectIds , List<blng__InvoiceLine__c>newInvLines ) {
-        Map<Id,Date> projectGoLiveDateMap= new Map<Id,Date>();
-        for(pse__Proj__c proj:[SELECT Id,Go_Live_Date__c FROM pse__Proj__c WHERE Id IN:projectIds]){
-            projectGoLiveDateMap.put(proj.Id,proj.Go_Live_Date__c);
-        }
-        for(blng__InvoiceLine__c invLine:newInvLines){
-            invLine.NSP_Go_Live_Date__c=projectGoLiveDateMap.get(invLine.NSP_Project__c);
+    Map<Id,Date> projectGoLiveDateMap= new Map<Id,Date>();
+    for(pse__Proj__c proj:[SELECT Id,Go_Live_Date__c FROM pse__Proj__c WHERE Id IN:projectIds]){
+        projectGoLiveDateMap.put(proj.Id,proj.Go_Live_Date__c);
+    }
+    for(blng__InvoiceLine__c invLine:newInvLines){
+       invLine.NSP_Go_Live_Date__c=projectGoLiveDateMap.get(invLine.NSP_Project__c);
         }
     }
 
