@@ -624,6 +624,80 @@ public without sharing class PortalClientSharing implements Queueable {
     }
 
     //
+    // ContentDocumentLinks
+    //
+
+    @AuraEnabled
+    public static void createPortalLinks( String recordId , List<String> contentDocumentIds ) {
+        try {
+            List<ContentDocumentLink> insertLinks = PortalClientSharing.buildPortalLinks(
+                PortalClientSharing.selectPortalTask( recordId ) ,
+                contentDocumentIds
+            );
+            if ( ( insertLinks != null ) && !insertLinks.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( insertLinks , false );
+                NSP_ErrorLogHandler.logResults(
+                    PortalClientSharing.class.getName() ,
+                    'createPortalLinks:insert' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                PortalClientSharing.class.getName() ,
+                'createPortalLinks' ,
+                e
+            );
+        }
+    }
+
+    private static Portal_Task__c selectPortalTask( String recordId ) {
+        List<Portal_Task__c> records = null;
+        if ( String.isNotBlank( recordId ) ) {
+            records = [
+                SELECT Id , Project_Task__c
+                FROM Portal_Task__c
+                WHERE (
+                    ( Id = :recordId )
+                    AND ( Project_Task__c != null )
+                )
+            ];
+        }
+        Portal_Task__c record = null;
+        if ( ( records != null ) && !records.isEmpty() ) {
+            record = records[0];
+        }
+        return record;
+    }
+
+    private static List<ContentDocumentLink> buildPortalLinks( Portal_Task__c record , List<String> contentDocumentIds ) {
+        List<ContentDocumentLink> links = new List<ContentDocumentLink>();
+        if ( ( record != null )
+            && ( contentDocumentIds != null )
+            && !contentDocumentIds.isEmpty()
+            )
+        {
+            if ( ( record != null )
+                && String.isNotBlank( record.Project_Task__c )
+                )
+            {
+                for ( String documentId : contentDocumentIds ) {
+                    if ( String.isNotBlank( documentId ) ) {
+                        ContentDocumentLink link = new ContentDocumentLink(
+                            ContentDocumentId=documentId ,
+                            LinkedEntityId=record.Project_Task__c ,
+                            ShareType='V' ,
+                            Visibility='AllUsers'
+                        );
+                        links.add( link );
+                    }
+                }
+            }
+        }
+        return links;
+    }
+
+    //
     // Custom Settings
     //
 
