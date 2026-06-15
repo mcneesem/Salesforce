@@ -376,23 +376,29 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
                 }
             }
         }
-        this.salesOfficeMap = this.buildSalesOfficeMap(salesOfficeKeys);
+        this.buildSalesOfficeMap(salesOfficeKeys);
     }
 
-    private Map<String, NSP_Sales_Office_Mapping__c> buildSalesOfficeMap(List<String> salesOfficeKeys) {
-        Map<String, NSP_Sales_Office_Mapping__c> salesOfficeToOwnerId = new Map<String, NSP_Sales_Office_Mapping__c>();
-        if ( salesOfficeKeys != null && !salesOfficeKeys.isEmpty() ) {
-            for ( NSP_Sales_Office_Mapping__c som : [
-                SELECT Id, NSP_Sales_Office__c, Renewal_Manager__c, Renewal_Team__c
-                FROM NSP_Sales_Office_Mapping__c
-                WHERE NSP_Sales_Office__c IN :salesOfficeKeys
-            ]){
-                if ( som != null && som.NSP_Sales_Office__c != null ) {
-                    salesOfficeToOwnerId.put( som.NSP_Sales_Office__c, som);
+    private void buildSalesOfficeMap( List<String> salesOfficeKeys ) {
+        Map<String,NSP_Sales_Office_Mapping__c> local = new Map<String,NSP_Sales_Office_Mapping__c>();
+        if ( ( salesOfficeKeys != null ) && !salesOfficeKeys.isEmpty() ) {
+            for ( NSP_Sales_Office_Mapping__c record : [
+                        SELECT
+                            Id ,
+                            NSP_Sales_Office__c ,
+                            Renewal_Manager__c ,
+                            Renewal_Team__c
+                        FROM NSP_Sales_Office_Mapping__c
+                        WHERE ( NSP_Sales_Office__c IN :salesOfficeKeys )
+                    ]
+                )
+            {
+                if ( ( record != null ) && ( record.NSP_Sales_Office__c != null ) ) {
+                    local.put( record.NSP_Sales_Office__c , record );
                 }
             }
         }
-        return salesOfficeToOwnerId;
+        this.salesOfficeMap = local;
     }
 
     //
