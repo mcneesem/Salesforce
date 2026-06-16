@@ -441,7 +441,6 @@ public class NSP_InvoiceLineTriggerHelper {
         if(newInvoiceLine != null && newInvoiceLine.blng__UsageSummary__c != null && usageSummaryToRateMap != null && usageSummaryToRateMap.containsKey(newInvoiceLine.blng__UsageSummary__c)){
             cRates = usageSummaryToRateMap.get(newInvoiceLine.blng__UsageSummary__c);
         }
-        List<SBQQ__OrderItemConsumptionRate__c> cRates = usageSummaryToRateMap.get(newInvoiceLine.blng__UsageSummary__c);
         if(( cRates != null ) && !cRates.isEmpty() ){
             for(SBQQ__OrderItemConsumptionRate__c rate: cRates){
                 if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee'){
