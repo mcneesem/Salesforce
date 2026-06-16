@@ -226,8 +226,12 @@ public class NSP_InvoiceLineTriggerHelper {
         Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> resultMap
         )
     {
+        if ( resultMap != null ) {
+            resultMap = new Map<Id,List<SBQQ__OrderItemConsumptionRate__c>>();
+        }
         if ( ( rate !=null )
             && ( rate.SBQQ__OrderItemConsumptionSchedule__c != null )
+            && scheduleToSummaryMap != null
             && scheduleToSummaryMap.containsKey( rate.SBQQ__OrderItemConsumptionSchedule__c )
             )
         {
@@ -410,7 +414,7 @@ public class NSP_InvoiceLineTriggerHelper {
                                               Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap,
                                               List<String> args ){
 
-    	String prodDescType = '';
+        String prodDescType = '';
         if(descriptionSetting != null){
             prodDescType = descriptionSetting.Type__c;
         }
@@ -433,10 +437,16 @@ public class NSP_InvoiceLineTriggerHelper {
     }
 
     private static Decimal setFlatFeePriceFromConsumptionRateCard(Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> usageSummaryToRateMap, blng__InvoiceLine__c newInvoiceLine, Decimal flatFeePrice){
+        List<SBQQ__OrderItemConsumptionRate__c> cRates = new List<SBQQ__OrderItemConsumptionRate__c>();
+        if(newInvoiceLine != null && newInvoiceLine.blng__UsageSummary__c != null && usageSummaryToRateMap != null && usageSummaryToRateMap.containsKey(newInvoiceLine.blng__UsageSummary__c)){
+            cRates = usageSummaryToRateMap.get(newInvoiceLine.blng__UsageSummary__c);
+        }
         List<SBQQ__OrderItemConsumptionRate__c> cRates = usageSummaryToRateMap.get(newInvoiceLine.blng__UsageSummary__c);
-        for(SBQQ__OrderItemConsumptionRate__c rate: cRates){
-            if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee'){
-                flatFeePrice = rate.SBQQ__Price__c;
+        if(( cRates != null ) && !cRates.isEmpty() ){
+            for(SBQQ__OrderItemConsumptionRate__c rate: cRates){
+                if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee'){
+                    flatFeePrice = rate.SBQQ__Price__c;
+                }
             }
         }
         return flatFeePrice;
