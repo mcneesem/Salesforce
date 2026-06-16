@@ -357,8 +357,7 @@ public with sharing class NSP_TaskTriggerHelper {
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
             NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
             NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY ,
-            NSP_TaskTriggerHelper.HRCORE_TRANSITION 
-            
+            NSP_TaskTriggerHelper.HRCORE_TRANSITION
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for ( Group ogroup : [
@@ -402,7 +401,7 @@ public with sharing class NSP_TaskTriggerHelper {
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
                 NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
                 NSP_TaskTriggerHelper.PI_HR360_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
-                NSP_TaskTriggerHelper.PI_HRSCALE_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,    
+                NSP_TaskTriggerHelper.PI_HRSCALE_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
                 'Insurance Services (Health & Wellness)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Property & Casualty)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES
