@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that Find_Related_Contact_Screen_Flow has access to all Contact records...
 public without sharing class FindContactVoiceFlow {
-    // test w/ FindContactVoiceFlowTest (95%)
+    // test w/ FindContactVoiceFlowTest (88%)
 
     @InvocableMethod(label='Get Contacts by Phone')
     public static List<List<Contact>> getContactsByPhone( List<String> phoneNumbers ) {
@@ -12,6 +12,20 @@ public without sharing class FindContactVoiceFlow {
                 )
             {
                 String input = String.valueOf( phoneNumbers[0] ).trim();
+                if ( ( FindContactVoiceFlow.countryCodes != null )
+                    && !FindContactVoiceFlow.countryCodes.isEmpty()
+                    )
+                {
+                    for ( String countryCode : FindContactVoiceFlow.countryCodes ) {
+                        if ( String.isNotBlank( input )
+                            && input.startsWith( countryCode )
+                            )
+                        {
+                            input = input.removeStart( countryCode );
+                            break;
+                        }
+                    }
+                }
                 if ( input.length() > 1 ) {
                     Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
                     List<List<Contact>> searchResults = [
@@ -103,6 +117,26 @@ public without sharing class FindContactVoiceFlow {
                 limitCreatedDate = local;
             }
             return limitCreatedDate;
+        }
+        private set;
+    }
+
+    private static List<String> countryCodes  {
+        private get {
+            if ( countryCodes == null ) {
+                List<String> local = new List<String>();
+                if ( FindContactVoiceFlow.settings != null ) {
+                    String rawCountryCodes = FindContactVoiceFlow.settings.CountryCodes__c;
+                    if ( String.isNotBlank( rawCountryCodes ) ) {
+                        List<String> splitCountryCodes = rawCountryCodes.split( ',' );
+                        if ( ( splitCountryCodes != null ) && ( splitCountryCodes.size() > 0 ) ) {
+                            local = splitCountryCodes;
+                        }
+                    }
+                }
+                countryCodes = local;
+            }
+            return countryCodes;
         }
         private set;
     }
