@@ -1,4 +1,4 @@
-public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,Database.Stateful,Database.Batchable<SObject> {
+public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ GenerateRenewalOpportunitiesJobTest (87%)
 
     // Inputs from Flow/Invocable (selected month & year)
@@ -19,12 +19,14 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     //
     // argument-free constructor is required to be "runnable"...
     //
+
     public GenerateRenewalOpportunitiesJob() {
     }
 
     //
     // Callable
     //
+
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -36,11 +38,16 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     //
     // IJobRunnable
     //
+
     public Id run() {
         return GenerateRenewalOpportunitiesJob.executeBatch( null , null );
     }
 
-    public static Id executeBatch( Integer monthNum, Integer yearNum ) {
+    //
+    // Batchable
+    //
+
+    public static Id executeBatch( Integer monthNum , Integer yearNum ) {
         Id response = null;
         if ( GenerateRenewalOpportunitiesJob.isEnabled ) {
             response = Database.executeBatch(
@@ -51,47 +58,49 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         return response;
     }
 
-    public GenerateRenewalOpportunitiesJob( Integer monthNum, Integer yearNum ) {
-
-        if ( monthNum != null && yearNum != null ){
-
+    public GenerateRenewalOpportunitiesJob( Integer monthNum , Integer yearNum ) {
+        if ( ( monthNum != null ) && ( yearNum != null ) ) {
             this.runMonth = monthNum;
             this.runYear  = yearNum;
-
             // Example: user selects Dec 2026 => eligible window is Dec 2025
-            Integer eligibleYear = yearNum - 1;
-            this.eligibleStart = Date.newInstance( eligibleYear, monthNum, 1 );
-            this.eligibleEnd   = this.eligibleStart.addMonths(1).addDays(-1);
+            Integer eligibleYear = ( yearNum - 1 );
+            this.eligibleStart = Date.newInstance( eligibleYear , monthNum , 1 );
+            this.eligibleEnd = this.eligibleStart.addMonths( 1 ).addDays( -1 );
         }
-
     }
+
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        return Database.getQueryLocator([
-            SELECT Id,
-            Name,
-            NSP_Account__r.Name,
-            NSP_Account_Status__c,
-            NSP_Client__c,
-            NSP_Sub_Client__c,
-            NSP_Renewal_Date__c,
-            NSP_Benefit_Package_Name__c,
-            NSP_Asset__c,
-            NSP_Asset__r.NSP_Sales_Office__c,
-            NSP_Asset__r.NSP_Service_Package__c,
-            NSP_Account__c,
-            NSP_Margin__c,
-            NSP_Reserve__c,
-            NSP_Actual_Full_Time_EE_Count__c,
-            NSP_Actual_Part_Time_EE_Count__c,
-            NSP_Actual_Seasonal_Time_EE_Count__c,
-            NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c
-            FROM NSP_Sub_Client__c
-            WHERE NSP_Account_Status__c = 'Active'
-            AND NSP_Renewal_Date__c >= :this.eligibleStart
-            AND NSP_Renewal_Date__c <= :this.eligibleEnd
-            AND NSP_Renewal_Date__c != null
-            ORDER BY NSP_Client__c,NSP_Sub_Client__c ASC
-        ]);
+        return Database.getQueryLocator(
+            [
+                SELECT
+                    Id ,
+                    Name ,
+                    NSP_Account__r.Name ,
+                    NSP_Account_Status__c ,
+                    NSP_Client__c ,
+                    NSP_Sub_Client__c ,
+                    NSP_Renewal_Date__c ,
+                    NSP_Benefit_Package_Name__c ,
+                    NSP_Asset__c ,
+                    NSP_Asset__r.NSP_Sales_Office__c ,
+                    NSP_Asset__r.NSP_Service_Package__c ,
+                    NSP_Account__c ,
+                    NSP_Margin__c ,
+                    NSP_Reserve__c ,
+                    NSP_Actual_Full_Time_EE_Count__c ,
+                    NSP_Actual_Part_Time_EE_Count__c ,
+                    NSP_Actual_Seasonal_Time_EE_Count__c ,
+                    NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c
+                FROM NSP_Sub_Client__c
+                WHERE (
+                    ( NSP_Account_Status__c = 'Active' )
+                    AND ( NSP_Renewal_Date__c >= :this.eligibleStart )
+                    AND ( NSP_Renewal_Date__c <= :this.eligibleEnd )
+                    AND ( NSP_Renewal_Date__c != null )
+                )
+                ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
+            ]
+        );
     }
 
     public void execute( Database.BatchableContext bc, List<NSP_Sub_Client__c> records ) {
@@ -115,13 +124,18 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         }
     }
 
-    public void finish(Database.BatchableContext bc) {}
+    public void finish( Database.BatchableContext bc ) {
+    }
 
-    private void processOpportunities(List<NSP_Sub_Client__c> records){
+    //
+    //
+    //
+
+    private void processOpportunities( List<NSP_Sub_Client__c> records ) {
         List<Opportunity> parentOpportunities = new List<Opportunity>();
         List<Opportunity> childOpportunities = new List<Opportunity>();
-        if ( records != null && !records.isEmpty() ){
-            for ( NSP_Sub_Client__c subClient : records ){
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( NSP_Sub_Client__c subClient : records ) {
                 Opportunity opportunity = this.buildOpportunity( subClient );
                 if ( opportunity != null ) {
                     if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ) {
@@ -132,14 +146,19 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
                 }
             }
         }
-        this.performDml( parentOpportunities, true );
-        childOpportunities = this.mapChildToParentOpportunities( childOpportunities );
-        this.performDml( childOpportunities, false );
+        this.performDml( parentOpportunities , true );
+        this.performDml(
+            this.mapChildToParentOpportunities( childOpportunities ) ,
+            false
+        );
     }
 
     private Opportunity buildOpportunity( NSP_Sub_Client__c subClient ) {
         Opportunity opp = null;
-        if ( this.checkEligibility( subClient ) ) {
+        if ( ( subClient != null )
+            && this.checkEligibility( subClient )
+            )
+        {
             opp = new Opportunity();
             opp.AccountId = subClient.NSP_Account__c;
             opp.RecordTypeId = GenerateRenewalOpportunitiesJob.renewalRecordTypeId;
@@ -185,18 +204,20 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         return opp;
     }
 
-    private void processEntries( List<NSP_Sub_Client__c> subClients ){
-        if ( subClients != null && !subClients.isEmpty() ){
-            for( NSP_Sub_Client__c subClient : subClients ){
+    private void processEntries( List<NSP_Sub_Client__c> subClients ) {
+        if ( ( subClients != null ) && !subClients.isEmpty() ) {
+            for ( NSP_Sub_Client__c subClient : subClients ) {
                 this.buildEntries( subClient );
             }
         }
     }
 
-    private void buildEntries( NSP_Sub_Client__c subClient ){
-
+    private void buildEntries( NSP_Sub_Client__c subClient ) {
         String key = this.buildKey( subClient );
-        if ( String.isNotBlank( key ) && subClient != null ){
+        if ( String.isNotBlank( key )
+            && ( subClient != null )
+            )
+        {
             if ( String.isNotBlank( subClient.NSP_Sub_Client__c )
                 && this.entryOpportunityMap != null
                 && !this.entryOpportunityMap.isEmpty()
@@ -204,32 +225,32 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
                )
             {
                 NSP_Sub_Client__c mapValue = this.entryOpportunityMap.get( key );
-                if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c
-                    && mapValue != null
-                    && mapValue.NSP_Sub_Client__c != mapValue.NSP_Client__c
-                   )
+                if ( ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c )
+                    && ( mapValue != null )
+                    && ( mapValue.NSP_Sub_Client__c != mapValue.NSP_Client__c )
+                    )
                 {
-                    this.entryOpportunityMap.put( key,subClient );
+                    this.entryOpportunityMap.put( key , subClient );
                 }
-            }else{
-                this.entryOpportunityMap.put( key,subClient );
+            } else {
+                this.entryOpportunityMap.put( key , subClient );
             }
         }
     }
 
-    private Boolean checkEligibility(NSP_Sub_Client__c subClient){
+    private Boolean checkEligibility( NSP_Sub_Client__c subClient ) {
         Boolean flag = false;
         String key = this.buildKey( subClient );
-        if ( subClient != null
+        if ( ( subClient != null )
             && String.isNotBlank( subClient.NSP_Sub_Client__c )
             && String.isNotBlank( key )
             && this.entryOpportunityMap.containsKey( key )
-           )
+            )
         {
             NSP_Sub_Client__c scRec = this.entryOpportunityMap.get( key );
-            if ( scRec != null
-                && scRec.NSP_Client__c == subClient.NSP_Client__c
-                && scRec.NSP_Sub_Client__c == subClient.NSP_Sub_Client__c
+            if ( ( scRec != null )
+                && ( scRec.NSP_Client__c == subClient.NSP_Client__c )
+                && ( scRec.NSP_Sub_Client__c == subClient.NSP_Sub_Client__c )
                )
             {
                 flag = true;
@@ -250,21 +271,21 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         return key;
     }
 
-    private List<Opportunity> mapChildToParentOpportunities( List<Opportunity> childOpportunities ){
-        if ( childOpportunities != null
+    private List<Opportunity> mapChildToParentOpportunities( List<Opportunity> childOpportunities ) {
+        if ( ( childOpportunities != null )
             && !childOpportunities.isEmpty()
-            && this.accountParentOpportunityMap != null
+            && ( this.accountParentOpportunityMap != null )
             && !this.accountParentOpportunityMap.isEmpty()
-           )
+            )
         {
-            for( Opportunity opp: childOpportunities ){
-                if ( opp != null
-                    && String.isNotBlank( opp.AccountId )
-                    && this.accountParentOpportunityMap.containsKey( opp.AccountId )
-                    && this.accountParentOpportunityMap.get( opp.AccountId ) != null
+            for( Opportunity record : childOpportunities ) {
+                if ( ( record != null )
+                    && String.isNotBlank( record.AccountId )
+                    && this.accountParentOpportunityMap.containsKey( record.AccountId )
+                    && ( this.accountParentOpportunityMap.get( record.AccountId ) != null )
                    )
                 {
-                    opp.NSP_Parent_Opportunity__c = this.accountParentOpportunityMap.get( opp.AccountId );
+                    record.NSP_Parent_Opportunity__c = this.accountParentOpportunityMap.get( record.AccountId );
                 }
             }
         }
@@ -295,15 +316,15 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         }
     }
 
-    private String getPrimaryProduct( NSP_Sub_Client__c subClient ){
+    private String getPrimaryProduct( NSP_Sub_Client__c subClient ) {
         String primaryProduct = null;
-        if ( subClient != null
-            && subClient.NSP_Asset__r != null
+        if ( ( subClient != null )
+            && ( subClient.NSP_Asset__r != null )
             && String.isNotBlank( subClient.NSP_Asset__r.NSP_Service_Package__c )
-            && GenerateRenewalOpportunitiesJob.primaryProductMap != null
+            && ( GenerateRenewalOpportunitiesJob.primaryProductMap != null )
             && !GenerateRenewalOpportunitiesJob.primaryProductMap.isEmpty()
             && GenerateRenewalOpportunitiesJob.primaryProductMap.containsKey( subClient.NSP_Asset__r.NSP_Service_Package__c )
-            && GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c ) != null
+            && ( GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c ) != null )
            )
         {
             primaryProduct = GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c );
@@ -311,18 +332,21 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         return primaryProduct;
     }
 
-    private Id getOpportunityOwner( NSP_Sub_Client__c subClient ){
+    private Id getOpportunityOwner( NSP_Sub_Client__c subClient ) {
         Id owner = userInfo.getUserId();
-        if ( subClient != null
-            && subClient.NSP_Asset__r != null
+        if ( ( subClient != null )
+            && ( subClient.NSP_Asset__r != null )
             && String.isNotBlank( subClient.NSP_Asset__r.NSP_Sales_Office__c )
-            && this.salesOfficeMap != null
+            && ( this.salesOfficeMap != null )
             && !this.salesOfficeMap.isEmpty()
             && this.salesOfficeMap.containsKey( subClient.NSP_Asset__r.NSP_Sales_Office__c )
            )
         {
             NSP_Sales_Office_Mapping__c som = this.salesOfficeMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c );
-            if ( som != null && String.isNotBlank( som.Renewal_Manager__c ) ){
+            if ( ( som != null )
+                && String.isNotBlank( som.Renewal_Manager__c )
+                )
+            {
                 owner = som.Renewal_Manager__c;
             }
         }
@@ -354,14 +378,18 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     // Sales office -> Renewal Manager mapping
     private void buildSalesOfficeToRenewalManagerMap( List<NSP_Sub_Client__c> subClients ){
         List<String> salesOfficeKeys = new List<String>();
-        if ( subClients != null && !subClients.isEmpty() ){
+        if ( ( subClients != null ) && !subClients.isEmpty() ){
             for ( NSP_Sub_Client__c record : subClients ) {
-                if ( record != null && record.NSP_Asset__r != null && String.isNotBlank( record.NSP_Asset__r.NSP_Sales_Office__c ) ){
+                if ( ( record != null )
+                    && ( record.NSP_Asset__r != null )
+                    && String.isNotBlank( record.NSP_Asset__r.NSP_Sales_Office__c )
+                    )
+                {
                     salesOfficeKeys.add( record.NSP_Asset__r.NSP_Sales_Office__c );
                 }
             }
         }
-        this.buildSalesOfficeMap(salesOfficeKeys);
+        this.buildSalesOfficeMap( salesOfficeKeys );
     }
 
     private void buildSalesOfficeMap( List<String> salesOfficeKeys ) {
@@ -463,17 +491,20 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         private get {
             if ( activeServicePackageMappings == null ) {
                 List<Service_Package_Mapping__mdt> local = new List<Service_Package_Mapping__mdt>();
-                List<Service_Package_Mapping__mdt>  activeServicePackages = [
+                List<Service_Package_Mapping__mdt> activeServicePackages = [
                     SELECT
-                    DeveloperName ,
-                    MasterLabel ,
-                    Active__c ,
-                    Primary_Product__c ,
-                    Service_Package__c
+                        DeveloperName ,
+                        MasterLabel ,
+                        Active__c ,
+                        Primary_Product__c ,
+                        Service_Package__c
                     FROM Service_Package_Mapping__mdt
-                    WHERE Active__c = true
+                    WHERE ( Active__c = true )
                 ];
-                if ( activeServicePackages != null && !activeServicePackages.isEmpty() ){
+                if ( ( activeServicePackages != null )
+                    && !activeServicePackages.isEmpty()
+                    )
+                {
                     local = activeServicePackages;
                 }
                 activeServicePackageMappings = local;
@@ -484,20 +515,20 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
     }
 
     // Map from Service pakage to Primary product
-    private static Map<String, String > primaryProductMap {
+    private static Map<String,String> primaryProductMap {
         private get {
             if ( primaryProductMap == null ) {
-                Map<String, String > local = new Map<String, String >();
+                Map<String,String> local = new Map<String,String>();
                 if ( ( GenerateRenewalOpportunitiesJob.activeServicePackageMappings != null )
                     && !GenerateRenewalOpportunitiesJob.activeServicePackageMappings.isEmpty()
-                   )
+                    )
                 {
                     for ( Service_Package_Mapping__mdt record : GenerateRenewalOpportunitiesJob.activeServicePackageMappings ) {
                         if ( String.isNotBlank( record.Primary_Product__c )
                             && String.isNotBlank( record.Service_Package__c )
-                           )
+                            )
                         {
-                            local.put( record.Service_Package__c, record.Primary_Product__c );
+                            local.put( record.Service_Package__c , record.Primary_Product__c );
                         }
                     }
                 }
@@ -508,79 +539,95 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         private set;
     }
 
-    private void buildWSEEMaps(List<NSP_Sub_Client__c> records){
-        if ( records != null
-            && !records.isEmpty() ){
-            for (NSP_Sub_Client__c rec : records){
-                if ( rec != null
-                    && rec.NSP_Account_Status__c == 'Active'
-                    && String.isNotBlank(rec.NSP_Client__c)
-                   )
+    private void buildWSEEMaps( List<NSP_Sub_Client__c> records ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( NSP_Sub_Client__c rec : records ) {
+                if ( ( rec != null )
+                    && ( rec.NSP_Account_Status__c == 'Active' )
+                    && String.isNotBlank( rec.NSP_Client__c )
+                    )
                 {
-                    if ( !this.fullTimeWSEEMap.containsKey(rec.NSP_Client__c)){
-                        this.fullTimeWSEEMap.put(rec.NSP_Client__c, 0);
-                        this.partTimeWSEEMap.put(rec.NSP_Client__c, 0);
-                        this.seasonalTimeWSEEMap.put(rec.NSP_Client__c, 0);
+                    if ( !this.fullTimeWSEEMap.containsKey( rec.NSP_Client__c ) ) {
+                        this.fullTimeWSEEMap.put( rec.NSP_Client__c , 0 );
+                        this.partTimeWSEEMap.put( rec.NSP_Client__c , 0 );
+                        this.seasonalTimeWSEEMap.put( rec.NSP_Client__c , 0 );
                     }
-                    Decimal ft = this.getDecimalValue(rec.NSP_Actual_Full_Time_EE_Count__c);
-                    Decimal pt = this.getDecimalValue(rec.NSP_Actual_Part_Time_EE_Count__c );
-                    Decimal seasonal = this.getDecimalValue(rec.NSP_Actual_Seasonal_Time_EE_Count__c);
-
-                    this.fullTimeWSEEMap.put(rec.NSP_Client__c, this.fullTimeWSEEMap.get(rec.NSP_Client__c) + ft);
-                    this.partTimeWSEEMap.put(rec.NSP_Client__c, this.partTimeWSEEMap.get(rec.NSP_Client__c) + pt);
-                    this.seasonalTimeWSEEMap.put(rec.NSP_Client__c, this.seasonalTimeWSEEMap.get(rec.NSP_Client__c) + seasonal);
+                    Decimal fulltime = this.getDecimalValue( rec.NSP_Actual_Full_Time_EE_Count__c );
+                    Decimal parttime = this.getDecimalValue( rec.NSP_Actual_Part_Time_EE_Count__c );
+                    Decimal seasonal = this.getDecimalValue( rec.NSP_Actual_Seasonal_Time_EE_Count__c );
+                    this.fullTimeWSEEMap.put(
+                        rec.NSP_Client__c ,
+                        ( this.fullTimeWSEEMap.get(rec.NSP_Client__c) + fulltime )
+                    );
+                    this.partTimeWSEEMap.put(
+                        rec.NSP_Client__c ,
+                        ( this.partTimeWSEEMap.get(rec.NSP_Client__c) + parttime )
+                    );
+                    this.seasonalTimeWSEEMap.put(
+                        rec.NSP_Client__c ,
+                        ( this.seasonalTimeWSEEMap.get(rec.NSP_Client__c) + seasonal )
+                    );
                 }
             }
         }
-
     }
 
-    private Decimal getDecimalValue(Decimal value) {
-        return value == null ? 0 : value;
+    private Decimal getDecimalValue( Decimal value ) {
+        return ( ( value == null ) ? 0 : value );
     }
 
-    private Decimal getMapValue(Map<String, Decimal> valueMap, String key) {
+    private Decimal getMapValue( Map<String,Decimal> valueMap , String key ) {
         Decimal value = 0;
-        if ( String.isNotBlank(key)
-            && valueMap != null
-            && valueMap.containsKey(key)
-           )
+        if ( String.isNotBlank( key )
+            && ( valueMap != null )
+            && valueMap.containsKey( key )
+            )
         {
-            value = valueMap.get(key);
+            value = valueMap.get( key );
         }
         return value;
     }
 
-    private String fetchRenewalName(NSP_Sub_Client__c subClient){
+    private String fetchRenewalName( NSP_Sub_Client__c subClient ) {
         List<String> renewalNameParts = new List<String>();
         String renewalName = '';
-        if ( subClient != null ){
-            if ( String.isNotBlank(subClient.NSP_Client__c) && subClient.NSP_Client__c != null) {
-                renewalNameParts.add(subClient.NSP_Client__c);
+        if ( subClient != null ) {
+            if ( String.isNotBlank( subClient.NSP_Client__c )
+                && ( subClient.NSP_Client__c != null )
+                )
+            {
+                renewalNameParts.add( subClient.NSP_Client__c );
             }
-            if ( subClient.NSP_Renewal_Date__c != null){
-                renewalNameParts.add(String.valueOf(subClient.NSP_Renewal_Date__c.addYears(1).year()));
+            if ( subClient.NSP_Renewal_Date__c != null ) {
+                renewalNameParts.add(
+                    String.valueOf( subClient.NSP_Renewal_Date__c.addYears( 1 ).year() )
+                );
             }
-            if ( subClient.NSP_Account__r != null && String.isNotBlank(subClient.NSP_Account__r.Name)){
-                renewalNameParts.add(subClient.NSP_Account__r.Name);
+            if ( ( subClient.NSP_Account__r != null )
+                && String.isNotBlank( subClient.NSP_Account__r.Name )
+                )
+            {
+                renewalNameParts.add( subClient.NSP_Account__r.Name );
             }
         }
-        renewalName = String.join(renewalNameParts, ' : ');
+        renewalName = String.join( renewalNameParts , ' : ' );
         return renewalName;
     }
 
-    private String getRenewalTeam(NSP_Sub_Client__c subClient) {
+    private String getRenewalTeam( NSP_Sub_Client__c subClient ) {
         String renewalTeam = '';
-        if ( subClient != null
-            && subClient.NSP_Asset__r != null
-            && subClient.NSP_Asset__r.NSP_Sales_Office__c != null
-            && this.salesOfficeMap != null
-            && this.salesOfficeMap.containsKey(subClient.NSP_Asset__r.NSP_Sales_Office__c)
-            && this.salesOfficeMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c ) != null
-           )
+        if ( ( subClient != null )
+            && ( subClient.NSP_Asset__r != null )
+            && ( subClient.NSP_Asset__r.NSP_Sales_Office__c != null )
+            && ( this.salesOfficeMap != null )
+            && this.salesOfficeMap.containsKey( subClient.NSP_Asset__r.NSP_Sales_Office__c )
+            && ( this.salesOfficeMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c ) != null )
+            )
         {
-            renewalTeam = this.salesOfficeMap.get(subClient.NSP_Asset__r.NSP_Sales_Office__c).Renewal_Team__c;
+            renewalTeam = this.salesOfficeMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c ).Renewal_Team__c;
         }
         return renewalTeam;
     }
+
 }
+//
