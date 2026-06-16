@@ -426,14 +426,14 @@
         <name>f_assetHandbookURL</name>
         <dataType>String</dataType>
         <expression>IF(
-  OR(
-    ISBLANK({!recordPortalProject.Portal_Client__c}),
-    ISBLANK({!recordPortalProject.Portal_Client__r.Account__c}),
-    ISBLANK({!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__c}),
-    ISBLANK({!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__r.NSP_Handbook_URL__c})
-  ),
-  &quot;&quot;,
-  {!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__r.NSP_Handbook_URL__c}
+  AND(
+    NOT( ISBLANK( {!recordPortalProject.Portal_Client__c} ) ) ,
+    NOT( ISBLANK( {!recordPortalProject.Portal_Client__r.Account__c} ) ) ,
+    NOT( ISBLANK( {!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__c} ) ) ,
+    NOT( ISBLANK( {!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__r.NSP_Handbook_URL__c} ) )
+  ) ,
+  {!recordPortalProject.Portal_Client__r.Account__r.WO_Asset__r.NSP_Handbook_URL__c} ,
+  &quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Portal Project - Subflow - Create Portal Resources {!$Flow.CurrentDateTime}</interviewLabel>
