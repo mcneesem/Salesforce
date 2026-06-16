@@ -11,6 +11,9 @@ public with sharing class NSP_TaskTriggerHelper {
     private static final String EMPLOYMENT_SCREENING = 'NSP_Employment_Screening';
     private static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
     private static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
+    private static final String HRCORE_TRANSITION = 'HRCore_Transition';
+    private static final String PI_HR360_TO_HRCORE_TRANSITION = 'HR360 to HRCore Transition';
+    private static final String PI_HRSCALE_TO_HRCORE_TRANSITION = 'HRScale to HRCore Transition';
 
     //
     // Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
@@ -353,7 +356,9 @@ public with sharing class NSP_TaskTriggerHelper {
             NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
             NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
-            NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY
+            NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY ,
+            NSP_TaskTriggerHelper.HRCORE_TRANSITION 
+            
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for ( Group ogroup : [
@@ -396,6 +401,8 @@ public with sharing class NSP_TaskTriggerHelper {
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
                 NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
+                NSP_TaskTriggerHelper.PI_HR360_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
+                NSP_TaskTriggerHelper.PI_HRSCALE_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,    
                 'Insurance Services (Health & Wellness)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Property & Casualty)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES

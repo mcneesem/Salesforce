@@ -3368,11 +3368,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HR360 to HRCore Transition</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HRCore Onboarding Amendment</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale to HRCore Transition</fullName>
             <default>false</default>
         </values>
         <values>
