@@ -5,7 +5,7 @@
     <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
-        <locationX>930</locationX>
+        <locationX>1326</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
@@ -15,13 +15,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Account_Record</targetReference>
+            <targetReference>Check_Account_Last_Updated</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Get_Account_Info</name>
         <label>Assign Fault Element</label>
-        <locationX>1458</locationX>
+        <locationX>1766</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -38,7 +38,7 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Lead_Info</name>
         <label>Assign Fault Element</label>
-        <locationX>2514</locationX>
+        <locationX>2822</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -55,7 +55,7 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Opportunity_Info</name>
         <label>Assign Fault Element</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -72,8 +72,8 @@
     <assignments>
         <name>Assign_Fault_Element_Update_Account_Record</name>
         <label>Assign Fault Element</label>
-        <locationX>1194</locationX>
-        <locationY>863</locationY>
+        <locationX>1326</locationX>
+        <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -89,7 +89,7 @@
     <assignments>
         <name>Assign_Fault_Element_Update_Lead_Record</name>
         <label>Assign Fault Element</label>
-        <locationX>1986</locationX>
+        <locationX>2294</locationX>
         <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -106,8 +106,8 @@
     <assignments>
         <name>Assign_Fault_Element_Update_Opportunity_Record</name>
         <label>Assign Fault Element</label>
-        <locationX>402</locationX>
-        <locationY>971</locationY>
+        <locationX>534</locationX>
+        <locationY>1079</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -123,8 +123,8 @@
     <assignments>
         <name>Assign_Fault_Element_Update_Task_Record_if_Status_not_Cancelled</name>
         <label>Assign Fault Element</label>
-        <locationX>1810</locationX>
-        <locationY>1553</locationY>
+        <locationX>1964</locationX>
+        <locationY>1745</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -139,7 +139,7 @@
     <assignments>
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
-        <locationX>1986</locationX>
+        <locationX>2294</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
@@ -183,9 +183,34 @@
         </value>
     </constants>
     <decisions>
+        <name>Check_Account_Last_Updated</name>
+        <label>Check Account Last Updated</label>
+        <locationX>1326</locationX>
+        <locationY>755</locationY>
+        <defaultConnector>
+            <targetReference>Check_Task_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Required_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Info.NSP_Last_Updated__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Record</targetReference>
+            </connector>
+            <label>Update Required (Account)</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_AutoLaunchedFlows_Bypass</name>
         <label>Check AutoLaunchedFlows Bypass</label>
-        <locationX>556</locationX>
+        <locationX>611</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>What_type_of_record_is_in_WhatId_or_WhoId</targetReference>
@@ -205,13 +230,45 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Customer_Signer</name>
+        <label>Check Customer Signer</label>
+        <locationX>182</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Customer_Signer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_Customer_Signer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_Customer_Signer__r.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Task_Record_Type</targetReference>
+            </connector>
+            <label>Invalid Customer Signer</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
         <name>Check_HCM_Rules</name>
         <label>Check HCM Rules</label>
         <locationX>50</locationX>
         <locationY>755</locationY>
         <defaultConnector>
-            <targetReference>Update_Opportunity_Record</targetReference>
+            <targetReference>Check_Customer_Signer</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -241,8 +298,8 @@
         <description>Prevent DmlExceptions for Orientation Meeting Request Tasks</description>
         <name>Check_Task_Record_Type</name>
         <label>Check Task Record Type</label>
-        <locationX>1414</locationX>
-        <locationY>1337</locationY>
+        <locationX>1568</locationX>
+        <locationY>1529</locationY>
         <defaultConnector>
             <targetReference>Update_Task_Record_if_Status_not_Cancelled</targetReference>
         </defaultConnector>
@@ -263,7 +320,7 @@
     <decisions>
         <name>Is_Task_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Task Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
-        <locationX>1986</locationX>
+        <locationX>2294</locationX>
         <locationY>755</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
@@ -299,7 +356,7 @@
     <decisions>
         <name>What_type_of_record_is_in_WhatId_or_WhoId</name>
         <label>What type of record is in WhatId or WhoId?</label>
-        <locationX>1414</locationX>
+        <locationX>1568</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
@@ -374,7 +431,7 @@
     <recordLookups>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>930</locationX>
+        <locationX>1326</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -398,7 +455,7 @@
     <recordLookups>
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
-        <locationX>1986</locationX>
+        <locationX>2294</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -446,8 +503,8 @@
     <recordUpdates>
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
-        <locationX>930</locationX>
-        <locationY>755</locationY>
+        <locationX>1062</locationX>
+        <locationY>863</locationY>
         <connector>
             <targetReference>Check_Task_Record_Type</targetReference>
         </connector>
@@ -473,7 +530,7 @@
     <recordUpdates>
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
-        <locationX>1722</locationX>
+        <locationX>2030</locationX>
         <locationY>863</locationY>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Update_Lead_Record</targetReference>
@@ -497,8 +554,8 @@
     <recordUpdates>
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
-        <locationX>138</locationX>
-        <locationY>863</locationY>
+        <locationX>270</locationX>
+        <locationY>971</locationY>
         <connector>
             <targetReference>Check_Task_Record_Type</targetReference>
         </connector>
@@ -524,8 +581,8 @@
     <recordUpdates>
         <name>Update_Task_Record_if_Status_not_Cancelled</name>
         <label>Update Task Record if Status not Cancelled</label>
-        <locationX>1546</locationX>
-        <locationY>1445</locationY>
+        <locationX>1700</locationX>
+        <locationY>1637</locationY>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Update_Task_Record_if_Status_not_Cancelled</targetReference>
         </faultConnector>
@@ -552,7 +609,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>430</locationX>
+        <locationX>485</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_AutoLaunchedFlows_Bypass</targetReference>
@@ -594,8 +651,8 @@
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>1810</locationX>
-        <locationY>1661</locationY>
+        <locationX>1964</locationX>
+        <locationY>1853</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
