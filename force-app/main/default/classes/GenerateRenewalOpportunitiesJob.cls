@@ -135,7 +135,7 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
             }
         }
         this.performDml( parentOpportunities, true );
-        this.mapChildToParentOpportunities( childOpportunities );
+        childOpportunities = this.mapChildToParentOpportunities( childOpportunities );
         this.performDml( childOpportunities, false );
     }
 
