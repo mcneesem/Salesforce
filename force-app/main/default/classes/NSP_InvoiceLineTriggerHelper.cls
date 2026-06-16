@@ -226,7 +226,7 @@ public class NSP_InvoiceLineTriggerHelper {
         Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> resultMap
         )
     {
-        if ( resultMap != null ) {
+        if ( resultMap == null ) {
             resultMap = new Map<Id,List<SBQQ__OrderItemConsumptionRate__c>>();
         }
         if ( ( rate !=null )
