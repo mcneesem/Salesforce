@@ -1,8 +1,8 @@
 @isTest
 private class GenerateRenewalOpportunitiesJobTest {
+
     @testSetup
     private static void setupData() {
-
         Account accObj = NSP_TestHelper.createAccount(true);
         accObj.NSP_Client_AIMS__c = '1234500';
         accObj.NSP_AIMS_Client__c = '1234500';
@@ -77,7 +77,6 @@ private class GenerateRenewalOpportunitiesJobTest {
             .getRecordTypeId()
         );
         upsert cs;
-
     }
 
     @isTest
@@ -85,14 +84,14 @@ private class GenerateRenewalOpportunitiesJobTest {
         Test.startTest();
         Database.executeBatch(new GenerateRenewalOpportunitiesJob(12, 2026));
         Test.stopTest();
-
         Integer cnt = [
             SELECT COUNT()
             FROM Opportunity
         ];
-
         System.assertEquals(
             2, cnt
         );
     }
+
 }
+//
