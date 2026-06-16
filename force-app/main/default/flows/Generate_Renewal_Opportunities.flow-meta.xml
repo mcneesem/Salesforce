@@ -267,5 +267,5 @@
             <targetReference>Month_Year_Capture</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
