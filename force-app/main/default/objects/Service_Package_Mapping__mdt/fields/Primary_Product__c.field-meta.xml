@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Product__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Primary Product</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WX</fullName>
+                <default>true</default>
+                <label>HRCore Solution</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>HR360 Solution</label>
+            </value>
+            <value>
+                <fullName>WA</fullName>
+                <default>false</default>
+                <label>HRCore - Select Edition</label>
+            </value>
+            <value>
+                <fullName>WS</fullName>
+                <default>false</default>
+                <label>HR360 - Select Edition</label>
+            </value>
+            <value>
+                <fullName>HRScale</fullName>
+                <default>false</default>
+                <label>HRScale</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
