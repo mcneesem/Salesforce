@@ -11,11 +11,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Sub_Client__c.Renewal_Created__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.AIMS_Spec_Prov_1__c</field>
         <readable>true</readable>
