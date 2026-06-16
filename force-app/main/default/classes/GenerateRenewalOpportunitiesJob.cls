@@ -122,14 +122,12 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
         List<Opportunity> childOpportunities = new List<Opportunity>();
         if ( records != null && !records.isEmpty() ){
             for ( NSP_Sub_Client__c subClient : records ){
-                if ( this.checkEligibility( subClient )){
-                    Opportunity opportunity = this.buildOpportunity( subClient );
-                    if ( opportunity != null ) {
-                        if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ) {
-                            parentOpportunities.add( opportunity );
-                        } else {
-                            childOpportunities.add( opportunity );
-                        }
+                Opportunity opportunity = this.buildOpportunity( subClient );
+                if ( opportunity != null ) {
+                    if ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c ) {
+                        parentOpportunities.add( opportunity );
+                    } else {
+                        childOpportunities.add( opportunity );
                     }
                 }
             }
@@ -141,7 +139,7 @@ public class GenerateRenewalOpportunitiesJob implements  Callable,IJobRunnable,D
 
     private Opportunity buildOpportunity( NSP_Sub_Client__c subClient ) {
         Opportunity opp = null;
-        if ( subClient != null ) {
+        if ( this.checkEligibility( subClient ) ) {
             opp = new Opportunity();
             opp.AccountId = subClient.NSP_Account__c;
             opp.RecordTypeId = GenerateRenewalOpportunitiesJob.renewalRecordTypeId;
