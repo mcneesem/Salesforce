@@ -47,21 +47,50 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
         this.action = mode;
     }
 
+    private static Map<String,Set<String>> recordIdsEnqueuedMap {
+        private get {
+            if ( recordIdsEnqueuedMap == null ) {
+                Map<String,Set<String>> local = new Map<String,Set<String>>();
+                local.put( 'updateRelatedAccounts' , new Set<String>() );
+                local.put( 'updateAccountStatus' , new Set<String>() );
+                recordIdsEnqueuedMap = local;
+            }
+            return recordIdsEnqueuedMap;
+        }
+        private set;
+    }
+
     private static void enqueueJob( Set<String> accountIds , String mode ) {
         if ( NSP_UpdateRelatedAccounts.isEnabledQueueable
-            && ( accountIds != null )
-            && !accountIds.isEmpty()
             && !System.isQueueable() // prevent AsyncExceptions...
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) // prevent LimitExceptions...
+            && ( accountIds != null )
+            && !accountIds.isEmpty()
+            && String.isNotBlank( mode )
+            && ( NSP_UpdateRelatedAccounts.recordIdsEnqueuedMap != null )
+            && NSP_UpdateRelatedAccounts.recordIdsEnqueuedMap.containsKey( mode )
+            && ( NSP_UpdateRelatedAccounts.recordIdsEnqueuedMap.get( mode ) != null )
             )
         {
-            System.enqueueJob(
-                new NSP_UpdateRelatedAccounts(
-                    accountIds ,
-                    mode
-                ) ,
-                NSP_UpdateRelatedAccounts.delayMinutes
-            );
+            // exclude any Account.Id values that were previously enqueued within the same Apex Transaction...
+            accountIds.removeAll( NSP_UpdateRelatedAccounts.recordIdsEnqueuedMap.get( mode ) );
+            if ( !accountIds.isEmpty() ) {
+                // track all enqueued Account.Id values to prevent re-enqueue within the same Apex Transaction...
+                NSP_UpdateRelatedAccounts.recordIdsEnqueuedMap.get( mode ).addAll( accountIds );
+                // randomize delay to further defend against the double-DML found within our Opportunity/Account record-triggered logic...
+                Integer delay = Math.mod(
+                    System.now().millisecond() ,
+                    NSP_UpdateRelatedAccounts.delayMinutes
+                );
+                // maintain single location where the operations of class is enqueued within our code base...
+                System.enqueueJob(
+                    new NSP_UpdateRelatedAccounts(
+                        accountIds ,
+                        mode
+                    ) ,
+                    delay
+                );
+            }
         }
     }
 
@@ -94,20 +123,6 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
         private set;
     }
 
-    private static Boolean isEnabledFuture {
-        private get {
-            if ( isEnabledFuture == null ) {
-                Boolean local = false;
-                if ( NSP_UpdateRelatedAccounts.settings != null ) {
-                    local = NSP_UpdateRelatedAccounts.settings.IsEnabledFuture__c;
-                }
-                isEnabledFuture = local;
-            }
-            return isEnabledFuture;
-        }
-        private set;
-    }
-
     private static Boolean isEnabledQueueable {
         private get {
             if ( isEnabledQueueable == null ) {
@@ -132,9 +147,9 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                 {
                     local = NSP_UpdateRelatedAccounts.settings.DelayMinutes__c.intValue();
                 }
-                // step size must non-negative...
-                if ( local < 0 ) {
-                    local = 0;
+                // step size must be positive...
+                if ( local < 1 ) {
+                    local = 1;
                 }
                 // step size must be less than or equal to 100...
                 if ( local > 10 ) {
@@ -157,24 +172,13 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
     public static void updateRelatedAccounts( Set<String> accountIdSet ) {
         if ( NSP_UpdateRelatedAccounts.isEnabledQueueable ) {
             NSP_UpdateRelatedAccounts.enqueueJob( accountIdSet , 'updateRelatedAccounts' );
-        } else if ( NSP_UpdateRelatedAccounts.isEnabledFuture
-            && !System.isFuture() // prevent AsyncExceptions...
-            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
-            )
-        {
-            NSP_UpdateRelatedAccounts.updateRelatedAccountsFuture( accountIdSet );
         }
-    }
-
-    @future
-    private static void updateRelatedAccountsFuture( Set<String> accountIdSet ) {
-        NSP_UpdateRelatedAccounts.updateRelatedAccountsInternal( accountIdSet );
     }
 
     private static void updateRelatedAccountsInternal( Set<String> accountIdSet ) {
         try {
-            List<Account> accountTobeUpdatedList = new List<Account>();
-            for ( Account accountObj : [
+            List<Account> records = new List<Account>();
+            for ( Account record : [
                         SELECT Id , NSP_Last_Updated__c
                         FROM Account
                         WHERE (
@@ -184,13 +188,13 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                     ]
                 )
             {
-                accountObj.NSP_Last_Updated__c = Date.today(); // DEPRECATED
-                accountTobeUpdatedList.add( accountObj );
+                record.NSP_Last_Updated__c = Date.today(); // DEPRECATED
+                records.add( record );
             }
-            if ( !accountTobeUpdatedList.isEmpty() ) {
-                update accountTobeUpdatedList;
+            if ( !records.isEmpty() ) {
+                update records;
             }
-        } catch( Exception e ) {
+        } catch ( Exception e ) {
             NSP_UpdateRelatedAccounts.handleException( e , 'updateRelatedAccountsInternal' );
         }
     }
@@ -199,32 +203,29 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
     public static void updateAccountStatus( Set<String> accountIdSet ) {
         if ( NSP_UpdateRelatedAccounts.isEnabledQueueable ) {
             NSP_UpdateRelatedAccounts.enqueueJob( accountIdSet , 'updateAccountStatus' );
-        } else if ( NSP_UpdateRelatedAccounts.isEnabledFuture
-            && !System.isFuture() // prevent AsyncExceptions...
-            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
-            )
-        {
-            NSP_UpdateRelatedAccounts.updateAccountStatusFuture( accountIdSet );
         }
-    }
-
-    @future
-    private static void updateAccountStatusFuture( Set<String> accountIdSet ) {
-        NSP_UpdateRelatedAccounts.updateAccountStatusInternal( accountIdSet );
     }
 
     private static void updateAccountStatusInternal( Set<String> accountIdSet ) {
         try {
-            List<Account> accountTobeUpdatedList = new List<Account>();
-            for ( Account accountObj : [
+            List<Account> records = new List<Account>();
+            for ( Account record : [
                         SELECT
                             Id ,
                             NSP_Sales_Service_Account_Status__c ,
-                            ( SELECT Id , RecordType.Name FROM Assets ) ,
+                            (
+                                SELECT Id , RecordType.Name
+                                FROM Assets
+                            ) ,
                             (
                                 SELECT Id , StageName
                                 FROM Opportunities
-                                WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+                                WHERE (
+                                    StageName NOT IN (
+                                        'Closed Won' ,
+                                        'Closed Lost'
+                                    )
+                                )
                             )
                         FROM Account
                         WHERE (
@@ -234,17 +235,17 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                     ]
                 )
             {
-                List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( accountObj.Assets );
+                List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( record.Assets );
                 if ( ( filteredAssets != null )
                     && ( filteredAssets.isEmpty() )
                     )
                 {
-                    accountObj.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
-                    accountTobeUpdatedList.add( accountObj );
+                    record.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                    records.add( record );
                 }
             }
-            if ( !accountTobeUpdatedList.isEmpty() ) {
-                update accountTobeUpdatedList;
+            if ( !records.isEmpty() ) {
+                update records;
             }
         } catch ( Exception e ) {
             NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatusInternal' );
