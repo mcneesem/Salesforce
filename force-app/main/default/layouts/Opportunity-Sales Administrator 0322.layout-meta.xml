@@ -741,7 +741,6 @@
         <fields>MemberName</fields>
         <fields>TeamMemberRole</fields>
         <fields>OppAccessLevel</fields>
-        <fields>TeamMemberRole</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
