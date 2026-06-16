@@ -225,6 +225,76 @@
                     <stringValue>00GPb00000VFSBqMAP</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXlxMAF</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXnZMAV</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpSJSMA3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXpBMAV</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpS9bMAF</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXqnMAF</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXvdMAF</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GOy00000IpXxFMAV</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GPb00000VFSBqMAP</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GPb00000VFSBrMAP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Update_Case_Owner</targetReference>
             </connector>
