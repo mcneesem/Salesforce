@@ -11,22 +11,11 @@ public without sharing class FindContactVoiceFlow {
                 && String.isNotBlank( phoneNumbers[0] )
                 )
             {
-                String input = String.valueOf( phoneNumbers[0] ).trim();
-                if ( ( FindContactVoiceFlow.countryCodes != null )
-                    && !FindContactVoiceFlow.countryCodes.isEmpty()
+                String input = FindContactVoiceFlow.filterInput( phoneNumbers[0].trim() );
+                if ( String.isNotBlank( input )
+                    && ( input.length() > 1 )
                     )
                 {
-                    for ( String countryCode : FindContactVoiceFlow.countryCodes ) {
-                        if ( String.isNotBlank( input )
-                            && input.startsWith( countryCode )
-                            )
-                        {
-                            input = input.removeStart( countryCode );
-                            break;
-                        }
-                    }
-                }
-                if ( input.length() > 1 ) {
                     Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
                     List<List<Contact>> searchResults = [
                         FIND :input
@@ -63,6 +52,23 @@ public without sharing class FindContactVoiceFlow {
             );
         }
         return result;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static String filterInput( String value ) {
+        if ( String.isNotBlank( value )
+            && ( FindContactVoiceFlow.countryCodes != null )
+            && !FindContactVoiceFlow.countryCodes.isEmpty()
+            )
+        {
+            for ( String countryCode : FindContactVoiceFlow.countryCodes ) {
+                if ( value.startsWith( countryCode ) ) {
+                    value = value.removeStart( countryCode );
+                    break;
+                }
+            }
+        }
+        return value;
     }
 
     //
