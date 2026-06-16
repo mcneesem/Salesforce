@@ -46,7 +46,7 @@
             <field>Contact_Center_Queue__c</field>
             <operator>NotEqualTo</operator>
             <value>
-                <stringValue>401K Core</stringValue>
+                <stringValue>401k Escalations</stringValue>
             </value>
         </filters>
         <filters>
@@ -54,6 +54,20 @@
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue>Escalations</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contact_Center_Queue__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>HRScale Escalations</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contact_Center_Queue__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>401K Core</stringValue>
             </value>
         </filters>
         <object>VoiceCall</object>
