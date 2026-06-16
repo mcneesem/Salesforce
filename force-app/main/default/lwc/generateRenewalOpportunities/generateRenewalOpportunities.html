@@ -3,16 +3,18 @@
         <div slot="actions">
             <lightning-button
                 label="Start"
-                onclick={handleClick} >
+                onclick={handleClick}
+                >
             </lightning-button>
         </div>
     </lightning-card>
     <template if:true={showFlow}>
-            <div class="slds-p-around_x-small">
-                <lightning-flow
-                    flow-api-name="Generate_Renewal_Opportunities"
-                    onstatuschange={handleFlowStatusChange}>
-                </lightning-flow>
-            </div>
-        </template>
+        <div class="slds-p-around_x-small">
+            <lightning-flow
+                flow-api-name="Generate_Renewal_Opportunities"
+                onstatuschange={handleFlowStatusChange}
+                >
+            </lightning-flow>
+        </div>
+    </template>
 </template>
