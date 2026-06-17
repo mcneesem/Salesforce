@@ -819,7 +819,7 @@
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
