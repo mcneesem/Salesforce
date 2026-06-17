@@ -7,8 +7,8 @@ import { NavigationMixin } from 'lightning/navigation';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 
 export default class ScheduleSeller extends NavigationMixin(LightningElement) {
-    @api skill;
-    @api timeZone;
+    _skill;
+    _timeZone;
     @api startDateTime;
     @api endDateTime;
     @api availableUserIds = [];
@@ -19,6 +19,28 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
     // Store raw matrix from Apex directly (M rows × N columns)
     matrix = [];
+
+    @api
+    get skill() {
+        return this._skill;
+    }
+    set skill(v) {
+        this._skill = v;
+        this.loadMatrix();
+    }
+
+    @api
+    get timeZone() {
+        return this._timeZone;
+    }
+    set timeZone(v) {
+        this._timeZone = v;
+        this.loadMatrix();
+    }
+
+    connectedCallback() {
+        this.loadMatrix();
+    }
 
     // Computed property to help with template rendering
     // Returns a copy of tableData with explicit count values for template
