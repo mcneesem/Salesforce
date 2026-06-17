@@ -281,42 +281,6 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Check_Condition_0_0_0</name>
-        <label>Check Condition</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>RET_QC_CRM_Task_Creation</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>record.NSP_Reject__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>record.NSP_By_Consultant__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Task_records</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_Task_Record</targetReference>
-            </connector>
-            <label>RET QC CRM Task Creation</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_Condition_Amendment_Ready</name>
         <label>Check Condition: Amendment Ready</label>
         <locationX>0</locationX>
@@ -333,6 +297,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_Consultant__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -374,6 +345,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_By_Consultant__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Amendment_Checklist_Processed</targetReference>
             </connector>
@@ -406,20 +384,24 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_Analyst_QC_d_By__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Check_Email_Type</targetReference>
+                <targetReference>Quality_Control_Assignment_Alert_0</targetReference>
             </connector>
             <label>Analyst QC By Changed</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Email_Type</name>
-        <label>Check Email Type</label>
+        <name>Check_Condition_Task_Creation</name>
+        <label>Check Condition: Task Creation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Quality_Control_Assignment_Alert_0</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Amendment_Ready</name>
@@ -431,25 +413,24 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Quality_Control_Assignment_Alert_0</targetReference>
-            </connector>
-            <label>Amendment Ready</label>
-        </rules>
-        <rules>
-            <name>QC_Assignment</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>isChangedAmendmentReady</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>record.NSP_By_Consultant__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Task_records</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Quality_Control_Assignment_Alert_0</targetReference>
+                <targetReference>Create_Task_Record</targetReference>
             </connector>
-            <label>QC Assignment</label>
+            <label>RET QC CRM Task Creation</label>
         </rules>
     </decisions>
     <decisions>
@@ -807,7 +788,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Condition_0_0_0</targetReference>
+            <targetReference>Check_Condition_Task_Creation</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Task_records</targetReference>
@@ -838,7 +819,7 @@
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
@@ -854,7 +835,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>NSP_Amendment_Checklist_Processing</stringValue>
+                <stringValue>RET_Amendment_Checklist_Subflow_Email_Notifications</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
