@@ -2698,7 +2698,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>Screen flow that follows a flow that checks user permissions then allows users to populate the correct/corresponding checklist type according to Opportunity Product.</description>
+    <description>DEPRECATED - Screen flow that follows a flow that checks user permissions then allows users to populate the correct/corresponding checklist type according to Opportunity Product.</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -3233,8 +3233,8 @@
   &apos;&apos;
 )</expression>
     </formulas>
-    <interviewLabel>Checklist - Create Checklist Subflow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Checklist - Create Checklist Subflow</label>
+    <interviewLabel>DEPRECATED - Checklist - Create Checklist Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Checklist - Create Checklist Subflow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

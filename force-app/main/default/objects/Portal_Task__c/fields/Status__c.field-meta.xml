@@ -16,6 +16,16 @@
                 <label>Pending</label>
             </value>
             <value>
+                <fullName>Pending - Insperity</fullName>
+                <default>false</default>
+                <label>Pending - Insperity</label>
+            </value>
+            <value>
+                <fullName>Pending - Client</fullName>
+                <default>false</default>
+                <label>Pending - Client</label>
+            </value>
+            <value>
                 <fullName>Completed</fullName>
                 <default>false</default>
                 <label>Completed</label>

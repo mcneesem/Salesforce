@@ -173,25 +173,14 @@
                         </lightning-layout-item>
                     </template>
                     <lightning-layout-item size="1">
-                        <template lwc:if={isCompleted}>
-                            <lightning-icon
-                                icon-name="utility:check"
-                                size="xx-small"
-                                variant="success"
-                                title={status}
-                                alternative-text="Indicates Completed"
-                                >
-                            </lightning-icon>
-                        </template>
-                        <template lwc:else>
-                            <lightning-icon
-                                icon-name="utility:clock"
-                                size="xx-small"
-                                title={status}
-                                alternative-text="Indicates Pending"
-                                >
-                            </lightning-icon>
-                        </template>
+                        <lightning-icon
+                            icon-name={statusIconName}
+                            variant={statusIconVariant}
+                            size="xx-small"
+                            title={statusIconTitle}
+                            alternative-text={statusIconTitle}
+                            >
+                        </lightning-icon>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

@@ -18,6 +18,7 @@
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
+    <permissionSets>Checklist_Edit</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>

@@ -11,6 +11,7 @@
     <relationshipLabel>Price Rules</relationshipLabel>
     <relationshipName>PriceRules</relationshipName>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

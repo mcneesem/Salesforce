@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_Checklist_To_Opportunity_Team_Members</name>
+    </customPermissions>
+    <description>Allow users bypass the flow Checklist_Before_Update_Restrict_Checklist_To_Opportunity_Team_Members</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Restrict Checklist To Opportunity Team Members</label>
+</PermissionSet>

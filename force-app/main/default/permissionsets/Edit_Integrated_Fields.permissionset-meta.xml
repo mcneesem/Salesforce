@@ -11,6 +11,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.Employee_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountContactRelation.HRScale_Client_Roles__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -42,6 +47,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Client_Original_Hired_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employee_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -152,6 +162,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Sub_Client_Contact__c.Benefits_Original_Hire_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client_Contact__c.Employee_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

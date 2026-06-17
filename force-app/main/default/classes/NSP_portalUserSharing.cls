@@ -1,8 +1,11 @@
-public class NSP_portalUserSharing implements Queueable {
-    // test w/ NSP_portalUserSharingTest (100%)
+public with sharing class NSP_portalUserSharing implements Queueable {
+    // test w/ NSP_portalUserSharingTest (79%)
+
+    // DEPRECATED ~ See Apex: PortalProvisionAction, PortalClientSharing
 
     private Map<Id,Id> mapContactIdUserId;
 
+    // DEPRECATED
     public static void enqueueJob( Map<Id,Id> mapContactIdUserId ) {
         if ( ( mapContactIdUserId != null )
             && !mapContactIdUserId.isEmpty()
@@ -21,7 +24,8 @@ public class NSP_portalUserSharing implements Queueable {
         this.mapContactIdUserId = mapContactIdUserId;
     }
 
-    public void execute( QueueableContext context ) { // DEPRECATED
+    // DEPRECATED
+    public void execute( QueueableContext context ) {
         Map<Id,Set<Id>> mapAccountIdSetContactId = new Map<Id,Set<Id>>();
         List<pse__Proj__Share> projectShareList = new List<pse__Proj__Share>();
         List<pse__Project_Task__Share> projectTaskShareList = new List<pse__Project_Task__Share>();
@@ -159,6 +163,7 @@ public class NSP_portalUserSharing implements Queueable {
         return projectTaskShareList;
     }
 
+    @testVisible
     private static pse__Project_Task__Share createProjectTaskShare( Id projectTaskId , Id userId ) {
         pse__Project_Task__Share prjTskShare = new pse__Project_Task__Share();
         prjTskShare.RowCause = Schema.pse__Project_Task__Share.RowCause.InsperitySharing__c;
@@ -207,6 +212,7 @@ public class NSP_portalUserSharing implements Queueable {
         return projectMilestoneShareList;
     }
 
+    @testVisible
     private static pse__Milestone__Share createMilestoneShare( Id milestone , Id userId ) {
         pse__Milestone__Share mileShare = new pse__Milestone__Share();
         mileShare.RowCause = Schema.pse__Milestone__Share.RowCause.InsperitySharing__c;

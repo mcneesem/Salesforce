@@ -73,7 +73,13 @@ export default class PortalClientImportantDates extends LightningElement {
     }
 
     get benefitsWaitingPeriod() {
-        return ( this.record?.fields?.Benefits_Waiting_Period__c?.value ? "" + this.record.fields.Benefits_Waiting_Period__c.value + " Days" : undefined );
+        let response = "";
+        let period = this.record?.fields?.Benefits_Waiting_Period__c?.value;
+        if ( period || ( period == 0 ) ) {
+            // must render for non-null and "0 Days"...
+            response = period + " Days";
+        }
+        return response;
     }
 
 }

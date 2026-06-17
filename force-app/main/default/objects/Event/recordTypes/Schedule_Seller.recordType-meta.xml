@@ -645,6 +645,10 @@
     <picklistValues>
         <picklist>NSP_Event_Subtype__c</picklist>
         <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HR360 Solution</fullName>
             <default>false</default>
         </values>
@@ -657,11 +661,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management</fullName>
+            <fullName>Multiple Products</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management / Time &amp; Attendance</fullName>
+            <fullName>Organizational Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1120,6 +1128,10 @@
         </values>
         <values>
             <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Hold</fullName>
             <default>false</default>
         </values>
         <values>

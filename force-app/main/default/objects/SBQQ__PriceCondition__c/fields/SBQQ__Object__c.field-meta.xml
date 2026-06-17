@@ -7,6 +7,7 @@
     <inlineHelpText>Object against which the condition is evaluated.</inlineHelpText>
     <label>Object</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

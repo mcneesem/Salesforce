@@ -1,8 +1,10 @@
 public with sharing class NSP_AccountContactServiceHelper {
-    // test w/ NSP_AccountContactServiceHelperTest (87%)
+    // test w/ NSP_AccountContactServiceHelperTest (84%)
+
+    // DEPRECATED ~ See Apex: PortalProvisionAction, PortalClientSharing
 
     // create the Portal user and update the User Permissions
-    // NSP_AccountContactRelationTriggerHandler
+    // DEPRECATED
     public static void createExternalUser( Map<Id,AccountContactRelation> newACRMap , Map<Id,AccountContactRelation> oldACRMap ) {
         Set<Id> acrContactIdSet = new set<Id>();
         List<User> newUserList = new List<User>();
@@ -171,6 +173,7 @@ public with sharing class NSP_AccountContactServiceHelper {
 
     // removes the Project Community Permission from User
     // NSP_portalUserUpdate
+    // DEPRECATED
     @future
     public static void removeUserPermissions( Set<Id> userIdSet , Set<Id> permIdSet ) {
         List<PermissionSetAssignment> deleteUserPermList = new List<PermissionSetAssignment>();
@@ -226,6 +229,7 @@ public with sharing class NSP_AccountContactServiceHelper {
     }
 
     // NSP_portalUserUpdate
+    // DEPRECATED
     public static void createUserPerm( Set<Id> userIdSet , Set<Id> permIdSet ) {
         try {
             List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();

@@ -56,9 +56,19 @@
                 <label>Schedule_Seller_Time_Attendance</label>
             </value>
             <value>
-                <fullName>Schedule_Seller_Performance_Management_Time_Attendance</fullName>
+                <fullName>Schedule_Seller_Applicant_Tracking</fullName>
                 <default>false</default>
-                <label>Schedule_Seller_Performance_Management_Time_Attendance</label>
+                <label>Schedule_Seller_Applicant_Tracking</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_Organizational_Planning</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Organizational_Planning</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_Multiple_Products</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Multiple_Products</label>
             </value>
         </valueSetDefinition>
     </valueSet>

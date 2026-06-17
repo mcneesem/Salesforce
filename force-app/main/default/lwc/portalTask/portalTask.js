@@ -54,7 +54,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get updateRecordInput() {
         const fields = {};
         fields[PORTAL_TASK_ID_FIELD.fieldApiName] = this.recordId;
-        if ( !this.hasProjectTask ) {
+        if ( this.hasProjectTask ) {
+            fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending - Insperity"; // force-pending state for regular Portal Tasks...
+        } else {
             fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
         }
         if ( this.showValueInput ) {
@@ -104,17 +106,47 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     get hasGuidance() {
         return ( this.record?.fields?.Portal_Guidance__c?.value );
     }
-    get isCompleted() {
-        return ( this.status === "Completed" );
-    }
-    get status() {
-        return ( this.record?.fields?.Status__c?.value );
-    }
     get isEditable() {
         return ( this.record?.fields?.Is_Editable__c?.value );
     }
     get hasProjectTask() {
         return ( this.record?.fields?.Has_Project_Task__c?.value );
+    }
+
+    // status icon...
+    get status() {
+        return ( this.record?.fields?.Status__c?.value );
+    }
+    get statusIconTitle() {
+        let result = this.status;
+        if ( this.status === "Pending - Insperity" ) {
+            result = "Pending Review by Insperity";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "Action Required - Resubmit";
+        }
+        return result;
+    }
+    get statusIconName() {
+        let result = "utility:clock";
+        if ( this.status === "Completed" ) {
+            result = "utility:success";
+        } else if ( this.status === "Pending - Insperity" ) {
+            result = "utility:submit_for_approval";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "utility:warning";
+        }
+        return result;
+    }
+    get statusIconVariant() {
+        let result;
+        if ( this.status === "Completed" ) {
+            result = "success";
+        } else if ( this.status === "Pending - Insperity" ) {
+            result = "warning";
+        } else if ( this.status === "Pending - Client" ) {
+            result = "error";
+        }
+        return result;
     }
 
     @api variant;
@@ -321,8 +353,15 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         if ( event?.detail?.files?.length ) {
             this.showToastSuccess( "Success" , "File Uploaded" );
             this.modified();
-            if ( !this.hasProjectTask && this.isAutoSaveEnabled ) {
-                this.handleSave(); // auto-complete orphaned Portal Tasks...
+            let requiresSave = false;
+            if ( this.isAutoSaveEnabled ) {
+                requiresSave = !this.hasProjectTask; // always save orphaned Portal Tasks...
+                if ( this.hasProjectTask && ( this.status !== "Pending - Insperity" ) ) {
+                    requiresSave = true; // conditionally save regular Portal Tasks...
+                }
+            }
+            if ( requiresSave ) {
+                this.handleSave();
             }
         }
     }

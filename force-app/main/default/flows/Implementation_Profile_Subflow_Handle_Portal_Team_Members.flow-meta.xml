@@ -507,7 +507,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
                 <leftValueReference>f_ippositioncontact</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

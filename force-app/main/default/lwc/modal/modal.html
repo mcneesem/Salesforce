@@ -10,24 +10,19 @@
         >
             <div class="slds-modal__container ">
                 <header class="slds-modal__header">
-                
-                    <lightning-button-icon
-                    if:false={hideCloseBtn}
-                        class="slds-button slds-button_icon slds-modal__close"
+                    <lightning-button
+                        class="slds-modal__close"
                         title="Close"
-                        icon-name="utility:close"
-                        icon-class=""
-                        onclick={handleDialogClose}
-                    ></lightning-button-icon>
-                
-
+                        onclick={handleCloseModal}
+                        >
+                    </lightning-button>
                     <template if:true={hasHeaderString}>
                         <h2 class="slds-text-heading_medium slds-hyphenate header-string">
                             {header}
                         </h2>
                     </template>
                     <template if:false={hasHeaderString}>
-                        <!-- If you don't set the header public property, make sure to 
+                        <!-- If you don't set the header public property, make sure to
                             pass in some content into the header slot, so that the component
                             is accessible, as empty headings are considered not accessible. -->
                         <h2

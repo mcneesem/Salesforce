@@ -4,6 +4,8 @@ import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 export default class PortalEventList extends LightningElement {
     @api recordId; // is-a Project_Project__c.Id
 
+    // needs to show all events, event with no start date...
+    // ~ sort null start dates last, then alphabetically by name...
     error;
     records;
     @wire(getRelatedListRecords, {
@@ -20,11 +22,20 @@ export default class PortalEventList extends LightningElement {
     })
     listInfo({ error, data }) {
         if ( data ) {
-            this.records = data.records?.filter(
-                ( record ) => {
-                    // only show scheduled events...
-                    // ~ ignore events that are missing a start time...
-                    return ( record?.fields?.StartDateTime__c?.value );
+            // sort blank start dates to the end...
+            this.records = [...data.records].sort(
+                ( a , b ) => {
+                    const aValue = a?.fields?.StartDateTime__c?.value;
+                    const bValue = b?.fields?.StartDateTime__c?.value;
+                    let response = 0;
+                    if ( aValue && bValue ) {
+                        response = bValue - aValue;
+                    } else if ( aValue ) {
+                        response = -1;
+                    } else if ( bValue ) {
+                        response = 1;
+                    }
+                    return response;
                 }
             );
             this.error = undefined;

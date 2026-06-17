@@ -8,6 +8,7 @@
     <inlineHelpText>Enter a formula with operators, functions, and available fields on quote and target object. Not supported on legacy calculator.</inlineHelpText>
     <label>Tested Formula</label>
     <length>131072</length>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

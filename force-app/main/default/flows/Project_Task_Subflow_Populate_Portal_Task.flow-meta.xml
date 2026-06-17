@@ -3,62 +3,187 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_Collection_Sync</name>
+        <label>Assign Collection : Sync</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>rc_portaltasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Map_Each_Project_Task_to_Portal_Task</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Each_Project_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>store the portal task to create</description>
         <name>Assign_Create_Portal_Task_Record</name>
         <label>Assign : Create Portal Task Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Portal_Project__c</assignToReference>
+            <assignToReference>recordPortalTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Portal_Project.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskType</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Project_Task__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskStatus</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Due_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskName</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_create.Action__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskAction</elementReference>
+                <elementReference>Map_Project_Task_to_Portal_Task</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Validate_Create</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Project_Tasks_Collection</name>
+        <label>Assign : Project Tasks Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Generate Form 8973</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>General/Auto Liability Certificate of Coverage</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Client Logo</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Direct Debit Agreement</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Client User Access</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Deductions - Employee Level</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Set up Cell Phone reimbursements</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Employee Garnishments Provided</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>COBRA Takeover Form(s) received and submitted to COBRA Team</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Employees Currently on LOA</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>YTD Gross Wage Report Provided</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>PTO, paid sick leave, or other accrual policy received</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Employee Priming Data Provided</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>FEIN documentation</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Current Payroll Register</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projecttasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Job Costing Setup</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_All_Project_Tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Task_Record</name>
+        <label>Assign : Task Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recordProjectTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Each_Project_Task</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Map_Each_Project_Task_to_Portal_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -68,42 +193,38 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portal_task_to_update.Id</assignToReference>
+            <assignToReference>recordPortalTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Map_Project_Task_to_Portal_Task</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalTask.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Portal_Task.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_update.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskStatus</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_update.Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskType</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_update.Due_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_portal_task_to_update.Action__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>portalTaskAction</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Validate_Update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Record_Variables</name>
+        <label>Reset : Record Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Map_Each_Project_Task_to_Portal_Task</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalTask</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Task_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -119,6 +240,23 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_All_Project_Tasks</name>
+        <label>Set Fault Element : Get_All_Project_Tasks</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_All_Project_Tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -157,6 +295,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Sync_Portal_Task_Records</name>
+        <label>Set Fault Element : Sync_Portal_Task_Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sync_Portal_Task_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Upsert_Portal_Tasks</name>
         <label>Set Fault Element : Upsert_Portal_Tasks</label>
         <locationX>0</locationX>
@@ -174,44 +329,52 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Portal_Project_Exists</name>
-        <label>Portal Project Exists?</label>
+        <name>Operation1</name>
+        <label>Operation ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>None</defaultConnectorLabel>
         <rules>
-            <name>Yes_Record_Exist</name>
+            <name>Full_Sync</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Portal_Project</leftValueReference>
+                <leftValueReference>operationType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sync</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Project_Tasks_Collection</targetReference>
+            </connector>
+            <label>Full Sync</label>
+        </rules>
+        <rules>
+            <name>Record_Sync</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordProjectTask</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Portal_Task</targetReference>
+                <targetReference>Map_Project_Task_to_Portal_Task</targetReference>
             </connector>
-            <label>Yes : Record Exist</label>
+            <label>Record Sync</label>
         </rules>
     </decisions>
     <decisions>
         <description>Validate if collection is not empty</description>
-        <name>Portal_Tasks_Exists</name>
-        <label>Portal Tasks Exists?</label>
+        <name>Operation_Type</name>
+        <label>Operation Type ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>No_Create_Operation</name>
+            <name>Create_Operation</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Portal_Task</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>operationType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -222,18 +385,11 @@
             <connector>
                 <targetReference>Assign_Create_Portal_Task_Record</targetReference>
             </connector>
-            <label>No : Create Operation</label>
+            <label>Create Operation</label>
         </rules>
         <rules>
             <name>Yes_Update_Operation</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Portal_Task</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>operationType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -242,9 +398,60 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Update_Portal_Task_Record</targetReference>
+                <targetReference>Get_Portal_Task</targetReference>
             </connector>
             <label>Yes : Update Operation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Portal_Task_Exists</name>
+        <label>Portal Task Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Portal_Task_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Portal_Task</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Update_Portal_Task_Record</targetReference>
+            </connector>
+            <label>Yes : Portal Task Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Project_Tasks_Exists</name>
+        <label>Project Tasks Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Project_Tasks_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_projecttasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_projecttasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Each_Project_Task</targetReference>
+            </connector>
+            <label>Yes : Project Tasks Exists</label>
         </rules>
     </decisions>
     <decisions>
@@ -258,14 +465,14 @@
             <name>Proceed_to_Create</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>r_portal_task_to_create</leftValueReference>
+                <leftValueReference>recordPortalTask</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Portal_Tasks</targetReference>
+                <targetReference>Create_Portal_Task_Record</targetReference>
             </connector>
             <label>Proceed to Create</label>
         </rules>
@@ -280,14 +487,7 @@
             <name>Valid_Input</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>recordProjectTask</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordProjectTask.pse__Project__c</leftValueReference>
+                <leftValueReference>projectId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -297,6 +497,57 @@
                 <targetReference>Get_Portal_Project</targetReference>
             </connector>
             <label>Valid Input</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Portal_Project</name>
+        <label>Validate Portal Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Portal_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Portal_Project</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Operation1</targetReference>
+            </connector>
+            <label>Valid Portal Project</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Sync</name>
+        <label>Validate Sync</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Proceed_to_Sync_Tasks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_portaltasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_portaltasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sync_Portal_Task_Records</targetReference>
+            </connector>
+            <label>Proceed to Sync Tasks</label>
         </rules>
     </decisions>
     <decisions>
@@ -310,7 +561,7 @@
             <name>Proceed_to_Update</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>r_portal_task_to_update</leftValueReference>
+                <leftValueReference>recordPortalTask</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -322,7 +573,7 @@
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Portal Task Mapping</description>
+    <description>New Client Portal: Portal Task Mapping - Sync Version</description>
     <environments>Default</environments>
     <formulas>
         <name>portalTaskAction</name>
@@ -370,7 +621,7 @@
   &quot;Employee Deduction Authorization Form - ORK&quot; , &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; ,
   &quot;Set up Cell Phone reimbursements&quot; , &quot;Cell Phone reimbursements&quot; ,
   &quot;Employee Garnishments Provided&quot; , &quot;Garnishments&quot; ,
-  &quot;COBRA Takeover Form(s) received and submitted to COBRA Team&quot; , &quot;COBRA Takeover&quot; ,
+  &quot;COBRA Takeover Form(s) received and submitted to COBRA team&quot; , &quot;COBRA Takeover&quot; ,
   &quot;Employees Currently on LOA&quot; , &quot;LOA Information&quot; ,
   &quot;CSP Client Authorization/Cafeteria Plan documentation collected&quot; , &quot;Client Sponsored Plans&quot; ,
   {!recordProjectTask.Name}
@@ -413,6 +664,20 @@
     </formulas>
     <interviewLabel>Project Task - Subflow - Populate Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Subflow - Populate Portal Task</label>
+    <loops>
+        <name>Iterate_Each_Project_Task</name>
+        <label>Iterate : Each Project Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>rc_projecttasks</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Reset_Record_Variables</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Validate_Sync</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -433,15 +698,61 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <name>Create_Portal_Tasks</name>
-        <label>Create Portal Tasks</label>
+        <name>Create_Portal_Task_Record</name>
+        <label>Create Portal Task Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Portal_Tasks</targetReference>
         </faultConnector>
-        <inputReference>r_portal_task_to_create</inputReference>
+        <inputReference>recordPortalTask</inputReference>
     </recordCreates>
+    <recordCreates>
+        <name>Sync_Portal_Task_Records</name>
+        <label>Sync Portal Task Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Sync_Portal_Task_Records</targetReference>
+        </faultConnector>
+        <inputReference>rc_portaltasks</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <description>Get All Project Tasks from collection</description>
+        <name>Get_All_Project_Tasks</name>
+        <label>Get All Project Tasks</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Project_Tasks_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_All_Project_Tasks</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>projectId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>tc_projecttasks</elementReference>
+            </value>
+        </filters>
+        <object>pse__Project_Task__c</object>
+        <outputReference>rc_projecttasks</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Is_Completed__c</queriedFields>
+        <queriedFields>pse__Status__c</queriedFields>
+        <queriedFields>pse__End_Date_Time__c</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>Get_Portal_Project</name>
         <label>Get Portal Project</label>
@@ -449,7 +760,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Portal_Project_Exists</targetReference>
+            <targetReference>Validate_Portal_Project</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Clients</targetReference>
@@ -459,7 +770,7 @@
             <field>Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordProjectTask.pse__Project__c</elementReference>
+                <elementReference>projectId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -476,7 +787,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Portal_Tasks_Exists</targetReference>
+            <targetReference>Portal_Task_Exists</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Task</targetReference>
@@ -503,7 +814,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Upsert_Portal_Tasks</targetReference>
         </faultConnector>
-        <inputReference>r_portal_task_to_update</inputReference>
+        <inputReference>recordPortalTask</inputReference>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -538,6 +849,136 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Map_Each_Project_Task_to_Portal_Task</name>
+        <label>Map : Each Project Task to Portal Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_Collection_Sync</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <objectType>Portal_Task__c</objectType>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskName</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Project_Task__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Project.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Due_Date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Action__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskAction</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Type__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskType</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskStatus</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <transforms>
+        <name>Map_Project_Task_to_Portal_Task</name>
+        <label>Map : Project Task to Portal Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Operation_Type</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <objectType>Portal_Task__c</objectType>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskName</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Project_Task__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Project.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Due_Date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Action__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskAction</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskStatus</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Type__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskType</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
@@ -553,26 +994,33 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>r_portal_task_to_create</name>
-        <dataType>SObject</dataType>
+        <name>projectId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
     </variables>
     <variables>
-        <description>Hold portal task to update</description>
-        <name>r_portal_task_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <name>rc_portal_tasks_upsert</name>
+        <name>rc_portaltasks</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Task__c</objectType>
+    </variables>
+    <variables>
+        <description>All Project Tasks</description>
+        <name>rc_projecttasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Project_Task__c</objectType>
+    </variables>
+    <variables>
+        <name>recordPortalTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Task__c</objectType>
@@ -584,5 +1032,12 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Project_Task__c</objectType>
+    </variables>
+    <variables>
+        <name>tc_projecttasks</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

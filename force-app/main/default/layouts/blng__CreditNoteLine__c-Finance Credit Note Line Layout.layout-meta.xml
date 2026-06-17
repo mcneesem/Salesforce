@@ -376,6 +376,18 @@
                 <behavior>Readonly</behavior>
                 <field>blng__Refunds__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Inclusive_Tax_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Processed_GL_Transactions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__VAT_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -437,6 +449,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>blng__Unallocations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Shipping_Method__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

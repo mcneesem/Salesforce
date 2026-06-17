@@ -3,6 +3,11 @@
     <description>Core Sales User Permission Set</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Count_of_Pending_Oppty__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.NSP_Active_Influencer__c</field>
         <readable>true</readable>
     </fieldPermissions>
