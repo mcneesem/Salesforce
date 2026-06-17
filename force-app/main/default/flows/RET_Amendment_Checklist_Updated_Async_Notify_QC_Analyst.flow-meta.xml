@@ -70,7 +70,7 @@
         <locationY>0</locationY>
         <flowName>RET_Amendment_Checklist_Subflow_Email_Notifications</flowName>
         <inputAssignments>
-            <name>isAnalystQCByChanged</name>
+            <name>isChangedQCAnalyst</name>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
@@ -81,7 +81,6 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>varFaultElement</name>

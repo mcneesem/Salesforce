@@ -60,13 +60,13 @@
         <locationY>0</locationY>
         <flowName>RET_Amendment_Checklist_Subflow_Email_Notifications</flowName>
         <inputAssignments>
-            <name>isAnalystQCByChanged</name>
+            <name>isChangedConsultant</name>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>isConsultantChanged</name>
+            <name>isChangedQCAnalyst</name>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
