@@ -3,11 +3,19 @@
     <label>IWXBundle</label>
     <protected>false</protected>
     <values>
+        <field>Add_Flat_Fee_From_OP_Consumption_Rate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Add_Unit_Price_From_OP_Consumption_Rate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>NSP_Product_Description_Syntex__c</field>
         <value xsi:type="xsd:string">{Unit Price} PEPM, {Upper Tier_Flat Price} Monthly Minimum</value>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Static</value>
+        <value xsi:type="xsd:string">Dynamic</value>
     </values>
 </CustomMetadata>
