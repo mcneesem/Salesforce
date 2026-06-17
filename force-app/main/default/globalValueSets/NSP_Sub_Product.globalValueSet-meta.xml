@@ -105,23 +105,38 @@
         <default>false</default>
         <label>Revolution</label>
     </customValue>
-    <customValue>
+   <customValue>
         <fullName>Timestar SaaS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Timestar SaaS</label>
     </customValue>
-    <customValue>
+     <customValue>
         <fullName>UED Bundle</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>UED Bundle</label>
     </customValue>
-    <customValue>
+     <customValue>
         <fullName>WX Choice Custom</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>WX Choice Custom</label>
+    </customValue>
+    <customValue>
+        <fullName>I-9 Assist</fullName>
+        <default>false</default>
+        <label>I-9 Assist</label>
+    </customValue>
+    <customValue>
+        <fullName>E-Verify</fullName>
+        <default>false</default>
+        <label>E-Verify</label>
+    </customValue>
+    <customValue>
+        <fullName>I-9 Assist &amp; E-Verify</fullName>
+        <default>false</default>
+        <label>I-9 Assist &amp; E-Verify</label>
     </customValue>
     <customValue>
         <fullName>Insperity 401k Plan</fullName>

@@ -13,6 +13,18 @@
         <restricted>true</restricted>
         <valueSetName>NSP_Sub_Product</valueSetName>
         <valueSettings>
+            <controllingFieldValue>I-9 Assist &amp; E-Verify</controllingFieldValue>
+            <valueName>I-9 Assist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>I-9 Assist &amp; E-Verify</controllingFieldValue>
+            <valueName>E-Verify</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>I-9 Assist &amp; E-Verify</controllingFieldValue>
+            <valueName>I-9 Assist &amp; E-Verify</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
             <valueName>Choice Customized</valueName>
         </valueSettings>
