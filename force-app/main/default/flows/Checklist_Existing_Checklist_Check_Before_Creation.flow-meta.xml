@@ -767,10 +767,10 @@
             <label>Performance Management or Time and Attendance</label>
         </rules>
     </decisions>
-    <description>Screen flow that checks user permissions, related Opportunity stage, and Opportunity primary product to determine if and what checklist should be created. Runs to a subflow to actually create the Checklist.</description>
+    <description>DEPRECATED - Screen flow that checks user permissions, related Opportunity stage, and Opportunity primary product to determine if and what checklist should be created. Runs to a subflow to actually create the Checklist.</description>
     <environments>Default</environments>
-    <interviewLabel>Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Checklist - Existing Checklist Check Before Creation</label>
+    <interviewLabel>DEPRECATED - Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Checklist - Existing Checklist Check Before Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

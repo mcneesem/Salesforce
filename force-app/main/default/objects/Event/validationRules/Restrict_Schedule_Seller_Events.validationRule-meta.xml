@@ -7,10 +7,14 @@
   NOT( $Permission.Bypass_Restrict_Schedule_Seller_Events ) ,
   ( RecordType.DeveloperName = &apos;Schedule_Seller&apos; ) ,
   NOT( ISNEW() ) ,
-  OR( 
+  OR(
     ISCHANGED( OwnerId ) ,
     ISCHANGED( ActivityDateTime ) ,
-    ISCHANGED( DurationInMinutes )
+    ISCHANGED( DurationInMinutes ) ,
+    ISCHANGED( NSP_Event_Type__c ) ,
+    ISCHANGED( NSP_Event_Subtype__c ) ,
+    ISCHANGED( Subject ) ,
+    ISCHANGED( WhatId )
   )
 )</errorConditionFormula>
     <errorMessage>You are not allowed to modify this field for Schedule Seller Events.</errorMessage>

@@ -6,6 +6,7 @@
     <formula>ISPICKVAL(SBQQ__Rule__r.SBQQ__TargetObject__c, &apos;Calculator&apos;) || ISPICKVAL(SBQQ__Rule__r.SBQQ__TargetObject__c, &apos;Quote Line&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>RuleTargetsCalculator</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

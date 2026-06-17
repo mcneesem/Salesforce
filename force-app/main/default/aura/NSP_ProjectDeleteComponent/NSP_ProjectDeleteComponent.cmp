@@ -16,16 +16,16 @@
                 <div class="slds-p-horizontal_small" > <p>{!$Label.c.NSP_project_delete_allowed_error}</p></div>
             </aura:set>
         </aura:if>
-        
+
     </div>
     <!-- Display Lightning Data Service errors, if any -->
     <aura:if isTrue="{!not(empty(v.recordError))}">
         <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
             <span class="slds-assistive-text">error</span>
-            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+            <span class="slds-icon_container slds-icon-text-error slds-m-right_x-small" title="Description of icon when needed">
             </span>
             <h2> Error !:  {!v.recordError}
             </h2>
-        </div>  
+        </div>
     </aura:if>
 </aura:component>

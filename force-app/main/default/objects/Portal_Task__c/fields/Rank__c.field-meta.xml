@@ -22,6 +22,7 @@ CASE(
   /* Pre-Transition Setup */
   &quot;Employee Data Collection&quot; , 10 ,
   &quot;Federal Employer Identification Number (FEIN)&quot; , 20 ,
+  &quot;IRS Assignment Letter&quot; , 25 ,
   &quot;Current / Prior Payroll Report Samples&quot; , 30 ,
   &quot;Current / Prior Payroll Reports Samples&quot; , 31 ,
   &quot;Current Payroll Register and Reports&quot; , 32 ,

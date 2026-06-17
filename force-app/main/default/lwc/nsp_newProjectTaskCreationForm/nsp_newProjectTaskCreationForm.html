@@ -1,4 +1,4 @@
-<!-- 
+<!--
 @Name: nsp_newProjectTaskCreationForm
 @createddate: 02/28/2023
 @Story : STY-04038
@@ -14,7 +14,7 @@
                 </button>
                 <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerName}</h2>
             </header>
-            
+
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                 <lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError} object-api-name="pse__Project_Task__c" record-type-id={selectedRecTypeId} density="compact">
                         <lightning-spinner if:true={isLoading}></lightning-spinner>
@@ -45,13 +45,13 @@
                             </template>
                         </lightning-layout>
                     </div>
-  
+
                     <lightning-layout>
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                             <div class="custom-box">Date/Time Fields</div>
                         </lightning-layout-item>
                     </lightning-layout>
-  
+
                     <div class="slds-m-top_medium slds-p-around_medium">
                         <lightning-layout>
                             <lightning-layout-item size="6" class="slds-p-around_small">
@@ -62,7 +62,7 @@
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>
-  
+
                     <lightning-layout>
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                             <div class="custom-box">{bpsTaskHierarchyLabel}</div>
@@ -75,14 +75,14 @@
                             </lightning-layout-item>
                             <lightning-layout-item size="6" class="slds-p-around_small">
                                   <!-- Milestone Addition is moved to custom model -->
-                                  <c-nsp_case-custom-look-up 
+                                  <c-nsp_case-custom-look-up
                                   s-object-api-name="pse__Milestone__c"
                                   label="Milestone"
                                   icon-name = "standard:custom"
                                   parent-id = {projectId}
                                   onlookupupdate={handlelookupRecord}
                                   placeholder="Search Milestones...">
-                                  </c-nsp_case-custom-look-up>                                 
+                                  </c-nsp_case-custom-look-up>
                             </lightning-layout-item>
                         </lightning-layout>
                         <lightning-layout multiple-rows="true">
@@ -98,7 +98,7 @@
                             </template>
                         </lightning-layout>
                     </div>
-  
+
                     <lightning-layout>
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                             <div class="custom-box">{bpsTaskSystemInfoLabel}</div>
@@ -118,14 +118,14 @@
                             </template>
                         </lightning-layout>
                     </div>
-  
-                     <div if:true={showError} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
-                         <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+
+                     <div if:true={showError} class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                         <span class="slds-icon_container slds-icon-text-error slds-m-right_x-small" title="Description of icon when needed">
                              <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error" variant="inverse"></lightning-icon>
                          </span>
                          <h2>{errorMessageToDisplay}</h2>
                      </div>
-  
+
                     <footer class="slds-modal__footer">
                         <lightning-button class="slds-m-top_small slds-m-right_x-small" onclick={handleCancel} disabled={disableButton} label="Cancel"> </lightning-button>
                         <lightning-button class="slds-m-top_small slds-m-right_x-small" disabled={disableButton} onclick={handleButtonClick} type="submit" variant="brand" label="Save"> </lightning-button>

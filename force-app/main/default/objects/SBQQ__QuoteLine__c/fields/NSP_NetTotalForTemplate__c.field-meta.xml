@@ -2,7 +2,14 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_NetTotalForTemplate__c</fullName>
     <description>Net Total Used in Docusign Amendment Template</description>
-    <formula>IF(NSP_Net_Total__c &gt; 0, NSP_Net_Total__c , 0)</formula>
+    <formula>IF(
+  AND(
+    ( NSP_Net_Total__c &gt; 0 ) ,
+    NOT( Exclude_from_Net_Total__c )
+  ) ,
+  NSP_Net_Total__c ,
+  0
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Net Total For Template</label>
     <precision>18</precision>

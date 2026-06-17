@@ -58,18 +58,31 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     // Batchable
     //
     public Database.QueryLocator start( Database.BatchableContext bc ) {
+        Set<Id> parentIds = new Set<Id>();
+        Map<Id,ContentDocument> documentsMap = new Map<Id,ContentDocument>(
+            [
+                SELECT Id
+                FROM ContentDocument
+                WHERE ( CreatedDate <= :EntitySubscriptionRetentionJob.contentDocumentCreatedDateTime )
+            ]
+        );
+        parentIds.addAll( documentsMap.keySet() );
+        Map<Id,Case> casesMap = new Map<Id,Case>(
+            [
+                SELECT Id
+                FROM Case
+                WHERE (
+                    ( IsClosed = true )
+                    AND ( ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime )
+                )
+            ]
+        );
+        parentIds.addAll( casesMap.keySet() );
         return Database.getQueryLocator(
             [
                 SELECT Id
                 FROM EntitySubscription
-                WHERE ParentId IN (
-                    SELECT Id
-                    FROM Case
-                    WHERE (
-                        ( IsClosed = true )
-                        AND ( ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime )
-                    )
-                )
+                WHERE ( ParentId IN :parentIds )
                 ORDER BY CreatedDate ASC
             ]
         );
@@ -184,6 +197,39 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
                 caseClosedDateTime = System.now().addDays( -1 * EntitySubscriptionRetentionJob.soqlDaysLimitCases );
             }
             return caseClosedDateTime;
+        }
+        private set;
+    }
+
+    // how far back (in days) should be queried???
+    private static Integer soqlDaysLimitContentDocuments  {
+        private get {
+            if ( soqlDaysLimitContentDocuments == null ) {
+                Integer local = 180;
+                if ( ( EntitySubscriptionRetentionJob.settings != null )
+                    && ( EntitySubscriptionRetentionJob.settings.SoqlDaysLimitContentDocuments__c != null )
+                    )
+                {
+                    local = EntitySubscriptionRetentionJob.settings.SoqlDaysLimitContentDocuments__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysLimitContentDocuments = local;
+            }
+            return soqlDaysLimitContentDocuments;
+        }
+        private set;
+    }
+
+    // translates soqlDaysLimitContentDocuments into a specific DateTime value...
+    private static DateTime contentDocumentCreatedDateTime {
+        private get {
+            if ( contentDocumentCreatedDateTime == null ) {
+                contentDocumentCreatedDateTime = System.now().addDays( -1 * EntitySubscriptionRetentionJob.soqlDaysLimitContentDocuments );
+            }
+            return contentDocumentCreatedDateTime;
         }
         private set;
     }

@@ -45,14 +45,14 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item size="6" class="slds-p-around_small">
                                         <!-- Milestone Addition is moved to custom model -->
-                                        <c-nsp_case-custom-look-up 
+                                        <c-nsp_case-custom-look-up
                                         s-object-api-name="pse__Milestone__c"
                                         label="Milestone"
                                         icon-name = "standard:custom"
                                         parent-id = {projectId}
                                         onlookupupdate={handlelookupRecord}
                                         placeholder="Search Milestones...">
-                                        </c-nsp_case-custom-look-up> 
+                                        </c-nsp_case-custom-look-up>
                                     </lightning-layout-item>
                                 </lightning-layout>
                             <lightning-layout multiple-rows="true">
@@ -98,7 +98,7 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item size="6" class="slds-p-around_small">
                                         <lightning-input-field field-name="Time_Category__c"> </lightning-input-field>
-                                    </lightning-layout-item>   
+                                    </lightning-layout-item>
                                 </div>
                             </template>
 
@@ -137,8 +137,8 @@
                             </lightning-layout>
                         </div>
 
-                        <div if:true={showError} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
-                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                        <div if:true={showError} class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                            <span class="slds-icon_container slds-icon-text-error slds-m-right_x-small" title="Description of icon when needed">
                                 <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error" variant="inverse"></lightning-icon>
                             </span>
                             <h2>{errorMessageToDisplay}</h2>

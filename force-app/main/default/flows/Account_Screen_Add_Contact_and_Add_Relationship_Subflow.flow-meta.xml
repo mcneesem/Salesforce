@@ -175,7 +175,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Contact</targetReference>
+            <targetReference>Account_Subflow_Create_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -230,6 +230,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varErrorMessageToUser_Account_owned_by_Available</name>
+        <label>Assign varErrorMessageToUser - Account owned by Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessageToUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New Contacts can&apos;t be created on Accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Something_Went_Wrong_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varErrorMessageToUser_Contact_or_Account_was_not_chosen</name>
         <label>Assign varErrorMessageToUser - Contact or Account was not chosen</label>
         <locationX>0</locationX>
@@ -281,6 +298,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varErrorMessageToUser_Looks_like_you_are_creating_a_duplicate</name>
+        <label>Assign varErrorMessageToUser - Looks like you are creating a duplicate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessageToUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Looks like you are creating a duplicate Contact.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Something_Went_Wrong_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varErrorMessageToUser_Missing_varAccountId_or_varAction</name>
         <label>Assign varErrorMessageToUser - Missing varAccountId or varAction</label>
         <locationX>0</locationX>
@@ -294,6 +328,23 @@
         </assignmentItems>
         <connector>
             <targetReference>Which_is_error_message_is_populated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varErrorMessageToUser_New_Contact_Id_is_missing</name>
+        <label>Assign varErrorMessageToUser - New Contact Id is missing</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessageToUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New Contact Id is missing.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Something_Went_Wrong_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -364,23 +415,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Create_Contact</name>
-        <label>Assign varFaultElement - Create_Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Create_New_AccountContactRelation</name>
         <label>Assign varFaultElement - Create_New_AccountContactRelation</label>
         <locationX>0</locationX>
@@ -390,6 +424,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Create_New_AccountContactRelation</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Info_Return_if_Owned_by_Available</name>
+        <label>Assign varFaultElement - Get_Account_Info_Return_if_Owned_by_Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info_Return_if_Owned_by_Available</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -449,6 +500,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Potential_Duplicate_Contact</name>
+        <label>Assign varFaultElement - Get_Potential_Duplicate_Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Potential_Duplicate_Contact</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Update_AccountContactRelation</name>
         <label>Assign varFaultElement - Update_AccountContactRelation</label>
         <locationX>0</locationX>
@@ -487,6 +555,56 @@
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <decisions>
+        <name>Is_Account_owned_by_Available</name>
+        <label>Is Account owned by Available?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Enter_Contact_Information_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not owned by Available</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Owned_by_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_varErrorMessageToUser_Account_owned_by_Available</targetReference>
+            </connector>
+            <label>Yes - Owned by Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_there_a_duplicate_Contact</name>
+        <label>Is there a duplicate Contact?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_inputs_to_varContact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No potential duplicate</defaultConnectorLabel>
+        <rules>
+            <name>Yes_There_is_a_potential_duplicate_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varDuplicateContact</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_varErrorMessageToUser_Looks_like_you_are_creating_a_duplicate</targetReference>
+            </connector>
+            <label>Yes - There is a potential duplicate Contact</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Verify_Contact_and_Account_were_chosen</name>
         <label>Verify Contact and Account were chosen</label>
@@ -630,6 +748,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Verify_varContact_has_an_Id</name>
+        <label>Verify varContact has an Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_varErrorMessageToUser_New_Contact_Id_is_missing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>varContact Id is missing</defaultConnectorLabel>
+        <rules>
+            <name>varContact_has_an_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varContact.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_newly_created_AccountContactRelation_record</targetReference>
+            </connector>
+            <label>varContact has an Id</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_an_AccountContactRelation_record_created_on_Create_Contact</name>
         <label>Was an AccountContactRelation record created on Create Contact?</label>
         <locationX>0</locationX>
@@ -746,7 +889,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Enter_Contact_Information_Screen</targetReference>
+                <targetReference>Get_Account_Info_Return_if_Owned_by_Available</targetReference>
             </connector>
             <label>varAction = Add Contact</label>
         </rules>
@@ -881,19 +1024,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Contact</name>
-        <label>Create Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_newly_created_AccountContactRelation_record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Create_Contact</targetReference>
-        </faultConnector>
-        <inputReference>varContact</inputReference>
-    </recordCreates>
-    <recordCreates>
         <name>Create_New_AccountContactRelation</name>
         <label>Create New AccountContactRelation</label>
         <locationX>0</locationX>
@@ -906,6 +1036,38 @@
         </faultConnector>
         <inputReference>varACRtoCreate</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Account_Info_Return_if_Owned_by_Available</name>
+        <label>Get Account Info - Return if Owned by Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Account_owned_by_Available</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Account_Info_Return_if_Owned_by_Available</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>varAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>Get_AccountContactRelation_records_from_current_Account</name>
         <label>Get AccountContactRelation records from current Account</label>
@@ -999,6 +1161,44 @@
         <queriedFields>NSP_Job_Title__c</queriedFields>
         <queriedFields>NSP_Work_Phone__c</queriedFields>
         <queriedFields>NSP_Work_Email__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Potential_Duplicate_Contact</name>
+        <label>Get Potential Duplicate Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_there_a_duplicate_Contact</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Potential_Duplicate_Contact</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>LastName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Last_Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>newContact_Email.value</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Work_email__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>newContact_Email.value</elementReference>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <outputReference>varDuplicateContact</outputReference>
+        <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_AccountContactRelation</name>
@@ -1252,7 +1452,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Assign_inputs_to_varContact</targetReference>
+            <targetReference>Get_Potential_Duplicate_Contact</targetReference>
         </connector>
         <fields>
             <name>ContactInfo_DisplayText</name>
@@ -1755,6 +1955,26 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <name>Account_Subflow_Create_Contact</name>
+        <label>Account - Subflow - Create Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Verify_varContact_has_an_Id</targetReference>
+        </connector>
+        <flowName>Account_Subflow_Create_Contact</flowName>
+        <inputAssignments>
+            <name>varContact</name>
+            <value>
+                <elementReference>varContact</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>varContact.Id</assignToReference>
+            <name>varCreatedContactId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -1791,6 +2011,14 @@
         <objectType>AccountContactRelation</objectType>
     </variables>
     <variables>
+        <name>varAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
         <name>varAccountContactRelation</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1822,6 +2050,14 @@
     </variables>
     <variables>
         <name>varContact</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>varDuplicateContact</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

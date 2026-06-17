@@ -6,6 +6,7 @@
     <inlineHelpText>Use Quote, Quote Line or Quote Line Pricing Guidance when Price Rule Evaluation Scope is Calculation. Use Product Option when Price Rule Evaluation Scope is Configuration.</inlineHelpText>
     <label>Target Object</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

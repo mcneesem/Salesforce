@@ -222,10 +222,10 @@
             <label>Booking</label>
         </rules>
     </decisions>
-    <description>When a checklist is delete, update the corresponding &quot;Number of X Checklists&quot; on related Opportunity</description>
+    <description>DEPRECATED - When a checklist is delete, update the corresponding &quot;Number of X Checklists&quot; on related Opportunity</description>
     <environments>Default</environments>
-    <interviewLabel>Checklist - On Delete Update Opty Number of Checklists {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Checklist - On Delete Update Opty Number of Checklists</label>
+    <interviewLabel>DEPRECATED - Checklist - On Delete Update Opty Number of Checklists {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Checklist - On Delete Update Opty Number of Checklists</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

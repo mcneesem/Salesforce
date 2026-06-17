@@ -37,6 +37,21 @@
                 <label>Audit/Review Finding</label>
             </value>
             <value>
+                <fullName>Broker Delay</fullName>
+                <default>false</default>
+                <label>Broker Delay</label>
+            </value>
+            <value>
+                <fullName>Carrier Delay</fullName>
+                <default>false</default>
+                <label>Carrier Delay</label>
+            </value>
+            <value>
+                <fullName>Client Delay</fullName>
+                <default>false</default>
+                <label>Client Delay</label>
+            </value>
+            <value>
                 <fullName>Communication Issue</fullName>
                 <default>false</default>
                 <label>Communication Issue</label>

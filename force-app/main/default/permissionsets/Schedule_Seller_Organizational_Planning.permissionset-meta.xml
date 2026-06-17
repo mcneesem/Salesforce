@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Schedule_Seller_Organizational_Planning</name>
+    </customPermissions>
+    <description>Scheduling tool permission set for Sales Engineer Organizational Planning.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Schedule Seller: Organizational Planning</label>
+</PermissionSet>

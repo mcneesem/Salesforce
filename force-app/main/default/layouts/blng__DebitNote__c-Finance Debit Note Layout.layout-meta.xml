@@ -221,6 +221,14 @@
                 <behavior>Readonly</behavior>
                 <field>blng__Unallocations__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Cross_Border_Summary_Message__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Shipping_Method__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -250,6 +258,18 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>blng__Refunds__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__DeliveryTerms__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Import_Fees__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AVA_BLNG__Transport__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -282,6 +302,11 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>blng__DebitNote__c.blng__ApplyTax</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>blng__DebitNote__c.blng__CancelTax</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -289,7 +314,7 @@
         <platformActionListItems>
             <actionName>blng__DebitNote__c.blng__ApplyTax</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
+            <sortOrder>5</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>

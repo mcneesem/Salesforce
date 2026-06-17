@@ -1,12 +1,15 @@
 public with sharing class NSP_portalUserUpdate implements Queueable {
     // test w/ NSP_AccountContactServiceHelperTest (83%)
 
+    // DEPRECATED ~ See Apex: PortalProvisionAction, PortalClientSharing
+
     private Set<Id> userIdSet = new Set<Id>();
     private Boolean activeStatus = false;
     private Set<Id> permIdSet = new Set<Id>();
     private Set<Id> removePermUserIdSet = new Set<Id>();
     private Set<Id> permissionIdSet = new Set<Id>();
 
+    // DEPRECATED
     public static void enqueueJob(
         Set<Id> userIdSet ,
         Boolean activeStatus ,
@@ -43,6 +46,7 @@ public with sharing class NSP_portalUserUpdate implements Queueable {
         this.permissionIdSet = permissionIdSet;
     }
 
+    // DEPRECATED
     public void execute( QueueableContext context ) {
         try {
             NSP_portalUserUpdate.portalUsersActiveStatus(
