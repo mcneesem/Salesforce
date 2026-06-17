@@ -10,15 +10,18 @@
 )
 + IF(
   AND(
-    NSP_Scholarship_Price__c,
-    TODAY() &lt;= ( DATE(
-        YEAR(NSP_Scholarship_End_Date__c),
-        MONTH(NSP_Scholarship_End_Date__c) + 2,
-        1
-    ) - 1 )
-  ),
-&quot;_Scholarship&quot;,
-&quot;&quot;
+    NSP_Scholarship_Price__c ,
+    ( TODAY() &lt;= (
+        DATE(
+          YEAR( NSP_Scholarship_End_Date__c ) ,
+          ( MONTH( NSP_Scholarship_End_Date__c ) + 2 ) ,
+          1
+        ) - 1 
+      )
+    )
+  ) ,
+  &quot;_Scholarship&quot; ,
+  &quot;&quot;
 )</formula>
     <label>Product Description Key</label>
     <required>false</required>
