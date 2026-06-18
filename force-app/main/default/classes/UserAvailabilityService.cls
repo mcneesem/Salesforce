@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (86%)
+    // test w/ UserAvailabilityServiceTest (85%)
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -192,25 +192,6 @@ public with sharing class UserAvailabilityService {
         );
     }
 
-    // Helper: convert a flat list of integer counts into a matrix of rows with up to N columns
-    private static List<List<Integer>> convertToMatrix( List<Integer> counts ) {
-        List<List<Integer>> matrix = new List<List<Integer>>();
-        if ( ( counts != null ) && !counts.isEmpty() ) {
-            List<Integer> row = new List<Integer>();
-            for ( Integer c : counts ) {
-                row.add( ( c == null ) ? 0 : c );
-                if ( row.size() == UserAvailabilityService.daysLimit ) {
-                    matrix.add( new List<Integer>( row ) );
-                    row.clear();
-                }
-            }
-            if ( !row.isEmpty() ) {
-                matrix.add( new List<Integer>( row ) );
-            }
-        }
-        return matrix;
-    }
-
     // Add 30-minute buffer to Demo events with NSP_Event_Subtype__c
     private static List<Event> addBufferToEvents( List<Event> events ) {
         List<Event> processedEvents = new List<Event>();
@@ -224,8 +205,9 @@ public with sharing class UserAvailabilityService {
                     && ( processedEvent.EndDateTime != null )
                     )
                 {
-                    // Create new Event with extended EndDateTime (30 minutes buffer)
-                    processedEvent.EndDateTime = processedEvent.EndDateTime.addMinutes( 30 );
+                    // Extend 30 minutes before start and 30 minutes after end
+                    processedEvent.StartDateTime = processedEvent.StartDateTime.addMinutes( -1 * UserAvailabilityService.bufferMinutes );
+                    processedEvent.EndDateTime = processedEvent.EndDateTime.addMinutes( UserAvailabilityService.bufferMinutes );
                 }
                 processedEvents.add( processedEvent );
             }
@@ -234,23 +216,29 @@ public with sharing class UserAvailabilityService {
     }
 
     //Get total availability of users that are added to the Schedule Seller Permission Set
-    @AuraEnabled(cacheable=true)
-    public static List<List<Integer>> getAggregateCountsMatrix( String skill, String timeZone ) {
+    @AuraEnabled
+    public static List<List<List<Id>>> getAggregateUserIdsMatrix( String skill, String timeZone ) {
         // Build business day/time windows
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill, timeZone );
         // Build windows directly from events-only matrix
-        List<Event> windows = UserAvailabilityService.getMatrixWindows(daysOfWeek);
+        List<Event> windows = UserAvailabilityService.getMatrixWindows( daysOfWeek );
         // Union window: derive from earliest start and latest end among windows
-        Event window = UserAvailabilityService.getBoundingWindow(windows);
+        Event window = UserAvailabilityService.getBoundingWindow( windows );
         // Identify users with Schedule Seller Custom Permission
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
+        // Exclude users who already have >= 4 Schedule Seller Demo events in the current day
+        Map<Date, Set<Id>> cappedUsersByDay = UserAvailabilityService.usersLessFourDemosFilter(
+            window ,
+            userIds
+        );
         // Query all events for those users within the union window (bulkified)
         Map<Id,List<Event>> busyByUser = new Map<Id,List<Event>>();
         List<Event> events = UserAvailabilityService.getEventsForUser(
             userIds ,
             window
         );
+        // Single source of truth for the 30-minute Demo buffer
         events = UserAvailabilityService.addBufferToEvents( events );
         if ( ( events != null ) && !events.isEmpty() ) {
             for ( Event e : events ) {
@@ -267,58 +255,28 @@ public with sharing class UserAvailabilityService {
                 }
             }
         }
-        // Build windows for each slot
+        // Build ID lists for each slot and wrap into the daysLimit wide matrix
         return UserAvailabilityService.convertToMatrix(
             UserAvailabilityService.getAggregateAvailableSlots(
                 windows ,
                 userIds ,
                 busyByUser ,
-                skill
+                skill ,
+                cappedUsersByDay
             )
         );
     }
 
-    private static Event getBoundingWindow( List<Event> windows ) {
-        Event window = null;
-        if ( !windows.isEmpty() ) {
-            Datetime earliest = null;
-            Datetime latest = null;
-            for ( Event e : windows ) {
-                if ( e != null ) {
-                if ( e.StartDateTime != null && (earliest == null || e.StartDateTime < earliest) ) {
-                    earliest = e.StartDateTime;
-                }
-                if ( e.EndDateTime != null && (latest == null || e.EndDateTime > latest) ) {
-                    latest = e.EndDateTime;
-                }}
-            }
-            if ( earliest != null && latest != null ) {
-                window = new Event(StartDateTime = earliest, EndDateTime = latest);
-            }
-        }
-        return window;
-    }
-    private static List<Event> getMatrixWindows( DaysMatrix daysOfWeek ) {
-        List<Event> windows = new List<Event>();
-        if ( daysOfWeek != null && daysOfWeek.slots != null && !daysOfWeek.slots.isEmpty() ) {
-            for ( List<Event> slotPerDay : daysOfWeek.slots ) {
-                if ( slotPerDay != null && !slotPerDay.isEmpty() ) {
-                    windows.addAll(slotPerDay);
-                }
-            }
-        }
-        return windows;
-    }
-
-    private static List<Integer> getAggregateAvailableSlots(
+    private static List<List<Id>> getAggregateAvailableSlots(
         List<Event> windows ,
         Set<Id> userIds ,
         Map<Id,List<Event>> busyByUser ,
-        String skill
+        String skill ,
+        Map<Date,Set<Id>> cappedUsersByDay
         )
     {
-        // Collect integer counts per window
-        List<Integer> countsPerWindow = new List<Integer>();
+        // Collect available user ID lists per window
+        List<List<Id>> idsPerWindow = new List<List<Id>>();
         if ( ( windows != null )
             && ( userIds != null )
             && ( busyByUser != null )
@@ -327,23 +285,64 @@ public with sharing class UserAvailabilityService {
             )
         {
             for ( Event windowEvt : windows ) {
-                Integer totalForWindow = 0;
+                // Determine the calendar date this window slot falls on
+                Date windowDate = null;
+                if ( windowEvt.StartDateTime != null ) {
+                    windowDate = windowEvt.StartDateTime.date();
+                }
+                // Resolve which users are capped on this specific day
+                Set<Id> cappedToday = new Set<Id>();
+                if ( ( cappedUsersByDay != null )
+                    && ( windowDate != null )
+                    && ( cappedUsersByDay.get( windowDate ) != null )
+                    && cappedUsersByDay.containsKey( windowDate )
+                    )
+                {
+                    cappedToday = cappedUsersByDay.get( windowDate );
+                }
+                List<Id> availableForWindow = new List<Id>();
                 for ( Id uid : userIds ) {
+                    // Skip this user for this day if they are capped
+                    if ( cappedToday.contains( uid ) ) {
+                        continue;
+                    }
                     if ( busyByUser.containsKey( uid )
                         && ( busyByUser.get( uid ) != null )
                         )
                     {
-                        totalForWindow += UserAvailabilityService.countAvailableSlots(
+                        Integer slotCount = UserAvailabilityService.countAvailableSlots(
                             busyByUser.get( uid ) ,
                             windowEvt ,
                             skill
                         );
+                        if ( slotCount > 0 ) {
+                            availableForWindow.add( uid );
+                        }
                     }
                 }
-                countsPerWindow.add( totalForWindow );
+                idsPerWindow.add( availableForWindow );
             }
         }
-        return countsPerWindow;
+        return idsPerWindow;
+    }
+
+    // Helper: convert a flat list of user-ID lists into a matrix of rows with up to N columns
+    private static List<List<List<Id>>> convertToMatrix( List<List<Id>> userLists ) {
+        List<List<List<Id>>> matrix = new List<List<List<Id>>>();
+        if ( ( userLists != null ) && !userLists.isEmpty() ) {
+            List<List<Id>> row = new List<List<Id>>();
+            for ( List<Id> ids : userLists ) {
+                row.add( ( ids == null ) ? new List<Id>() : ids );
+                if ( row.size() == UserAvailabilityService.daysLimit ) {
+                    matrix.add( new List<List<Id>>( row ) );
+                    row.clear();
+                }
+            }
+            if ( !row.isEmpty() ) {
+                matrix.add( new List<List<Id>>( row ) );
+            }
+        }
+        return matrix;
     }
 
     // helper method to defeat sonar cognitive complexity...
@@ -387,6 +386,92 @@ public with sharing class UserAvailabilityService {
             }
         }
         return businessHoursFilter;
+    }
+
+    private static Map<Date, Set<Id>> usersLessFourDemosFilter( Event window , Set<Id> userIds ) {
+        Map<Date,Set<Id>> cappedUsersByDay = new Map<Date,Set<Id>>();
+        if ( ( window != null )
+            && ( userIds != null )
+            && !userIds.isEmpty()
+            && ( window.StartDateTime != null )
+            && ( window.EndDateTime != null )
+            && ( UserAvailabilityService.eventRecordTypeId != null )
+            )
+        {
+            for ( AggregateResult ar : [
+                        SELECT
+                            OwnerId ,
+                            DAY_ONLY(StartDateTime) eventDay ,
+                            COUNT(Id) cnt
+                        FROM Event
+                        WHERE (
+                            ( OwnerId IN :userIds )
+                            AND ( RecordTypeId = :UserAvailabilityService.eventRecordTypeId )
+                            AND ( NSP_Event_Subtype__c != null )
+                            AND ( StartDateTime >= :window.StartDateTime )
+                            AND ( StartDateTime < :window.EndDateTime )
+                        )
+                        GROUP BY OwnerId , DAY_ONLY(StartDateTime)
+                        HAVING ( COUNT(Id) >= 4 )
+                    ]
+                )
+            {
+                Date eventDay = (Date) ar.get( 'eventDay' );
+                Id ownerId = (Id)ar.get( 'OwnerId' );
+                if ( !cappedUsersByDay.containsKey( eventDay ) ) {
+                    cappedUsersByDay.put( eventDay , new Set<Id>() );
+                }
+                cappedUsersByDay.get( eventDay ).add( ownerId );
+            }
+        }
+        return cappedUsersByDay;
+    }
+
+    private static Event getBoundingWindow( List<Event> windows ) {
+        Event window = null;
+        if ( ( windows != null ) && !windows.isEmpty() ) {
+            Datetime earliest = null;
+            Datetime latest = null;
+            for ( Event e : windows ) {
+                if ( e != null ) {
+                    if ( ( e.StartDateTime != null )
+                        && ( ( earliest == null ) || ( e.StartDateTime < earliest ) )
+                        )
+                    {
+                        earliest = e.StartDateTime;
+                    }
+                    if ( ( e.EndDateTime != null )
+                        && ( ( latest == null ) || ( e.EndDateTime > latest ) )
+                        )
+                    {
+                        latest = e.EndDateTime;
+                    }
+                }
+            }
+            if ( ( earliest != null ) && ( latest != null ) ) {
+                window = new Event(
+                    StartDateTime=earliest ,
+                    EndDateTime=latest
+                );
+            }
+        }
+        return window;
+    }
+
+    private static List<Event> getMatrixWindows( DaysMatrix daysOfWeek ) {
+        List<Event> windows = new List<Event>();
+        if ( ( daysOfWeek != null )
+            && ( daysOfWeek.slots != null )
+            && !daysOfWeek.slots.isEmpty()
+            )
+        {
+            for ( List<Event> slotPerDay : daysOfWeek.slots ) {
+                if ( ( slotPerDay != null ) && !slotPerDay.isEmpty() ) {
+                    windows.addAll( slotPerDay );
+                }
+            }
+        }
+        return windows;
     }
 
     private static Integer getStepMinutes( String skill ) {
@@ -571,7 +656,7 @@ public with sharing class UserAvailabilityService {
             }
             // Query User records for all IDs in one bulkified query
             Map<Id,User> usersById = UserAvailabilityService.getUsers( userIdSet );
-            sorted = UserAvailabilityService.sortUsers( 
+            sorted = UserAvailabilityService.sortUsers(
                 UserAvailabilityService.evaluateUserEventLoad( userIds , busyByUser ) ,
                 usersById
             );
@@ -660,6 +745,28 @@ public with sharing class UserAvailabilityService {
         private set;
     }
 
+    private static Id eventRecordTypeId {
+        private get {
+            if ( ( eventRecordTypeId == null )
+                && ( UserAvailabilityService.settings != null )
+                )
+            {
+                String settingId = UserAvailabilityService.settings.EventRecordTypeId__c;
+                if ( String.isNotBlank( settingId ) && ( settingId InstanceOf Id ) ) {
+                    Id checkId = Id.valueOf( settingId );
+                    if ( ( checkId != null )
+                        && ( checkId.getSObjectType() == RecordType.getSObjectType() )
+                        )
+                    {
+                        eventRecordTypeId = checkId;
+                    }
+                }
+            }
+            return eventRecordTypeId;
+        }
+        private set;
+    }
+
     private static Integer daysLimit {
         private get {
             if ( daysLimit == null ) {
@@ -677,6 +784,26 @@ public with sharing class UserAvailabilityService {
                 daysLimit = local;
             }
             return daysLimit;
+        }
+        private set;
+    }
+
+    private static Integer bufferMinutes {
+        private get {
+            if ( bufferMinutes == null ) {
+                Integer local = 0;
+                if ( ( UserAvailabilityService.settings != null )
+                    && ( UserAvailabilityService.settings.BufferMinutes__c != null )
+                   )
+                {
+                    local = UserAvailabilityService.settings.BufferMinutes__c.intValue();
+                }
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                bufferMinutes = local;
+            }
+            return bufferMinutes;
         }
         private set;
     }
