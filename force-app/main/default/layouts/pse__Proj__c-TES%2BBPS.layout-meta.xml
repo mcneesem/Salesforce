@@ -123,6 +123,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>First_Use_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Invoice_Ready__c</field>
             </layoutItems>
             <layoutItems>
