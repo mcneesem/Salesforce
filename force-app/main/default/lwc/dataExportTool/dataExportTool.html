@@ -1,0 +1,122 @@
+<template>
+    <!-- Only rendered in non-sandbox orgs; self-hides via isSandbox gate inside Apex. -->
+    <template lwc:if={isVisible}>
+        <lightning-card title="Sandbox Data Export" icon-name="utility:download">
+
+            <!-- ── Health wire error ── -->
+            <template lwc:if={healthError}>
+                <c-error-panel error={healthError} parent="Data Export Tool"></c-error-panel>
+            </template>
+
+            <!-- ── Loading spinner ── -->
+            <template lwc:if={isLoading}>
+                <div class="slds-p-around_medium slds-align_absolute-center">
+                    <lightning-spinner size="small" alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- ── Main content (health loaded, no error, not sandbox) ── -->
+            <template lwc:if={isContentVisible}>
+
+                <!-- Gate locked warning -->
+                <template lwc:if={isGateLocked}>
+                    <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-around_small" role="alert">
+                        <lightning-icon
+                            icon-name="utility:warning"
+                            alternative-text="Warning"
+                            size="x-small"
+                            class="slds-m-right_x-small">
+                        </lightning-icon>
+                        <span>
+                            <strong>Export All</strong> is disabled until the
+                            <strong>ExternalId Objects</strong> health check shows
+                            <strong>PASS</strong>.
+                        </span>
+                    </div>
+                </template>
+
+                <!-- Export count summary -->
+                <template lwc:if={hasDefinitions}>
+                    <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-text-body_small">
+                        {definitions.length} export{definitionCountSuffix} configured.
+                    </p>
+
+                    <!-- Progress path (visible while exporting) -->
+                    <template lwc:if={isExporting}>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+                            <c-progress-bar
+                                steps={progressSteps}
+                                current-step={currentExportStep}>
+                            </c-progress-bar>
+                            <p class="slds-text-body_small slds-m-top_x-small slds-text-color_weak">
+                                {exportStatusText}
+                            </p>
+                        </div>
+                    </template>
+
+                    <!-- Per-export errors -->
+                    <template lwc:if={hasExportErrors}>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+                            <template for:each={exportErrors} for:item="exportErr">
+                                <div
+                                    key={exportErr.developerName}
+                                    class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_x-small"
+                                    role="alert">
+                                    <lightning-icon
+                                        icon-name="utility:error"
+                                        alternative-text="Error"
+                                        size="x-small"
+                                        class="slds-m-right_x-small"
+                                        inverse>
+                                    </lightning-icon>
+                                    {exportErr.message}
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <!-- Success banner (shown once all exports complete) -->
+                    <template lwc:if={showSuccessBanner}>
+                        <div
+                            class="slds-notify slds-notify_alert slds-theme_success slds-m-horizontal_medium slds-m-bottom_small"
+                            role="status">
+                            <lightning-icon
+                                icon-name="utility:success"
+                                alternative-text="Success"
+                                size="x-small"
+                                class="slds-m-right_x-small"
+                                inverse>
+                            </lightning-icon>
+                            {successMessage}
+                        </div>
+                    </template>
+
+                </template>
+
+                <!-- No definitions configured -->
+                <template lwc:else>
+                    <p class="slds-p-around_medium slds-text-body_small slds-text-color_weak">
+                        No active export definitions are configured.
+                        Add records to the <em>Data Export Query</em> custom metadata type.
+                    </p>
+                </template>
+
+            </template>
+
+            <!-- ── Footer: Export All button ── -->
+            <template lwc:if={isContentVisible}>
+                <div slot="footer">
+                    <lightning-button
+                        label={exportButtonLabel}
+                        variant="brand"
+                        icon-name="utility:download"
+                        disabled={isExportAllDisabled}
+                        title={exportButtonTitle}
+                        onclick={handleExportAll}>
+                    </lightning-button>
+                </div>
+            </template>
+
+        </lightning-card>
+    </template>
+</template>
