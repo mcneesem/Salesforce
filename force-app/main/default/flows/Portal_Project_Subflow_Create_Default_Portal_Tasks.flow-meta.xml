@@ -123,14 +123,14 @@
         <name>f_defaulttasks_action</name>
         <dataType>String</dataType>
         <expression>CASE(
-  TRIM( {!For_Each_Default_Task}),
-  &quot;Business Inception Date&quot;, &quot;Date&quot;,
-  &quot;Regular Rate Of Pay&quot;, &quot;&quot;,
-  &quot;Additional Documentation&quot;, &quot;&quot;,
-  &quot;Employee Payroll Documentation&quot;, &quot;&quot;,
-  &quot;Federal Employer Identification Number (FEIN)&quot;, &quot;Text&quot;,
-  &quot;Insperity Client Authorization&quot;, &quot;Docusign&quot;,
-  &quot;Client Sponsored Plans&quot;, &quot;Upload Information&quot;,
+  TRIM( {!For_Each_Default_Task} ) ,
+  &quot;Business Inception Date&quot; , &quot;Date&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;&quot; ,
+  &quot;Additional Documentation&quot; , &quot;&quot; ,
+  &quot;Employee Payroll Documentation&quot; , &quot;&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Text&quot; ,
+  &quot;Insperity Client Authorization&quot; , &quot;Docusign&quot; ,
+  &quot;Client Sponsored Plans&quot; , &quot;Upload Information&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
@@ -138,9 +138,9 @@
         <name>f_defaulttasks_status</name>
         <dataType>String</dataType>
         <expression>CASE(
-  TRIM( {!For_Each_Default_Task}),
-  &quot;Regular Rate Of Pay&quot;, &quot;Completed&quot;,
-  &quot;Additional Documentation&quot;, &quot;Completed&quot;,
+  TRIM( {!For_Each_Default_Task} ) ,
+  &quot;Regular Rate Of Pay&quot; , &quot;Completed&quot; ,
+  &quot;Additional Documentation&quot; , &quot;Completed&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
@@ -148,14 +148,14 @@
         <name>f_defaulttasks_type</name>
         <dataType>String</dataType>
         <expression>CASE(
-  TRIM( {!For_Each_Default_Task}),
-  &quot;Business Inception Date&quot;, &quot;Company Setup&quot;,
-  &quot;Regular Rate Of Pay&quot;, &quot;Employee Setup&quot;,
-  &quot;Additional Documentation&quot;, &quot;System Setup&quot;,
-  &quot;Employee Payroll Documentation&quot;, &quot;Employee Setup&quot;,
-  &quot;Federal Employer Identification Number (FEIN)&quot;, &quot;Pre-Transition Setup&quot;,
-  &quot;Insperity Client Authorization&quot;, &quot;Company Setup&quot;,
-  &quot;Client Sponsored Plans&quot;, &quot;Company Setup&quot;,
+  TRIM( {!For_Each_Default_Task} ) ,
+  &quot;Business Inception Date&quot; , &quot;Company Setup&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;Employee Setup&quot; ,
+  &quot;Additional Documentation&quot; , &quot;System Setup&quot; ,
+  &quot;Employee Payroll Documentation&quot; , &quot;Employee Setup&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Insperity Client Authorization&quot; , &quot;Company Setup&quot; ,
+  &quot;Client Sponsored Plans&quot; , &quot;Company Setup&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
