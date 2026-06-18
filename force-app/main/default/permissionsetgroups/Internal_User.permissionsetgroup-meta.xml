@@ -11,8 +11,6 @@
     <permissionSets>Assign_Connected_App_DocuSign</permissionSets>
     <permissionSets>Assign_Connected_App_LinkedIn_Sales_Navigator_Writeback</permissionSets>
     <permissionSets>Assign_Connected_App_SalesforceIQ</permissionSets>
-    <permissionSets>Assign_Connected_App_Salesforce_for_Android</permissionSets>
-    <permissionSets>Assign_Connected_App_Salesforce_for_iOS</permissionSets>
     <permissionSets>Assign_Connected_App_Wave_Web</permissionSets>
     <permissionSets>Assign_Connected_App_ZoomInfo</permissionSets>
     <permissionSets>Assign_Connected_App_tbid_digital_salesforce_com</permissionSets>
