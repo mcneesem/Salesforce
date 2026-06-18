@@ -1,6 +1,7 @@
-//DEPRECATED
 @isTest
 private class UserAvailabilityFlowTest {
+
+    // DEPRECATED
 
     @isTest
     private static void testGetUsers_withValidInput() {
