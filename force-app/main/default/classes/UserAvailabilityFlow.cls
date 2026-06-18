@@ -1,6 +1,7 @@
-//DEPRECATED
 public with sharing class UserAvailabilityFlow {
     // test w/ UserAvailabilityFlowTest (91%)
+
+    // DEPRECATED
 
     @InvocableMethod(label='Get Available Users')
     public static List<List<Id>> getUsers( List<UserAvailabilityFlow.UserAvailabilityInput> inputs ) {
