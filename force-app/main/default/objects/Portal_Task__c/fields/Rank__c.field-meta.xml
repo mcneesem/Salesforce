@@ -26,6 +26,7 @@ CASE(
   &quot;Current / Prior Payroll Report Samples&quot; , 30 ,
   &quot;Current / Prior Payroll Reports Samples&quot; , 31 ,
   &quot;Current Payroll Register and Reports&quot; , 32 ,
+  &quot;Job Costing / Labor Allocation Setup Information&quot; , 35 ,
   &quot;YTD Gross Wage Report&quot; , 40 ,
   &quot;Time Off Policies / Handbook&quot; , 50 ,
   &quot;Time Off Policies&quot; , 51 ,

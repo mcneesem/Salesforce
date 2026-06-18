@@ -24,7 +24,7 @@
         <inputParameters>
             <name>selectedPermissionSets</name>
             <value>
-                <elementReference>Custom_Permissions</elementReference>
+                <elementReference>Portal_Permissions</elementReference>
             </value>
         </inputParameters>
         <nameSegment>PortalPermitAction</nameSegment>
@@ -706,27 +706,14 @@
             <targetReference>Permit_Portal_User</targetReference>
         </connector>
         <fields>
-            <name>Permit_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(24, 24, 24);&quot;&gt;Permit&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>Custom_Permissions</name>
+            <name>Portal_Permissions</name>
             <choiceReferences>Portal_Site_Access</choiceReferences>
             <choiceReferences>Portal_Use_File_Actions</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>defaultPermissionSets</elementReference>
             </defaultValue>
-            <fieldText>Custom Permissions</fieldText>
+            <fieldText>Portal Permissions</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>

@@ -3,36 +3,6 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Populate_Portal_Client</name>
-        <label>Populate Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Account__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Client_Number__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.NSP_AIMS_Client__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Portal_Client</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Contact_Records_Count</name>
         <label>Set Contact Records Count</label>
         <locationX>0</locationX>
@@ -58,40 +28,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Check_Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Create_Portal_Client</name>
-        <label>Set Fault Element: Create_Portal_Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Portal_Client</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Account</name>
-        <label>Set Fault Element: Get_Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Account</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -150,15 +86,32 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_Portal_Client</name>
-        <label>Set Fault Element: Get_Portal_Client</label>
+        <name>Set_Fault_Element_Get_Portal_User</name>
+        <label>Set Fault Element: Get_Portal_User</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Portal_Client</stringValue>
+                <stringValue>Get_Portal_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Save_Account_Contact_Relation</name>
+        <label>Set Fault Element: Save_Account_Contact_Relation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Save_Account_Contact_Relation</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -184,6 +137,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Has_Non_Setup_DML_Account_Contact_Relation</name>
+        <label>Set Has Non-Setup DML (Account Contact Relation)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>hasNonSetupDML</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Enable_Portal_Client</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Has_Non_Setup_DML_Contact</name>
         <label>Set Has Non-Setup DML (Contact)</label>
         <locationX>0</locationX>
@@ -197,22 +166,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Check_Has_Non_Setup_DML</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Has_Non_Setup_DML_Portal_Client</name>
-        <label>Set Has Non-Setup DML (Portal Client)</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>hasNonSetupDML</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -244,37 +197,28 @@
             <targetReference>Update_Contact</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Store_Initial_Value_Enable_Portal_Client</name>
+        <label>Store Initial Value: Enable Portal Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>initialEnablePortalClient</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_Contact_Relationship.Enable_Portal_Client__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Enable_Screen</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
-    <decisions>
-        <name>Check_Account</name>
-        <label>Check Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Get_Contact</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Found_Account</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Portal_Client</targetReference>
-            </connector>
-            <label>Found Account</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Check_Account_Contact_Relationship</name>
         <label>Check Account Contact Relationship</label>
@@ -298,6 +242,31 @@
                 <targetReference>Check_Work_Email</targetReference>
             </connector>
             <label>Has Account Contact Relationship</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Changed_Enable_Portal_Client</name>
+        <label>Check Changed: Enable Portal Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Enable_Portal_Client</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Changed_Enable_Portal_Client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Enable_Portal_Client</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>initialEnablePortalClient</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Save_Account_Contact_Relation</targetReference>
+            </connector>
+            <label>Is Changed: Enable Portal Client</label>
         </rules>
     </decisions>
     <decisions>
@@ -401,6 +370,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Enable_Portal_Client</name>
+        <label>Check: Enable Portal Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled_Portal_Client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Enable_Portal_Client</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Contact</targetReference>
+            </connector>
+            <label>Is Enabled Portal Client</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Must show any Screen after non-setup DML (Portal Client, Contact) to break the Apex transaction threads before the setup DML (User, Permission Set Assignment) in the next step.</description>
         <name>Check_Has_Non_Setup_DML</name>
         <label>Check Has Non-Setup DML</label>
@@ -421,7 +412,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prepare_Screen</targetReference>
+                <targetReference>Get_Portal_User</targetReference>
             </connector>
             <label>Has Non-Setup DML</label>
         </rules>
@@ -502,28 +493,29 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Portal_Client</name>
-        <label>Check Portal Client</label>
+        <description>Must show any Screen after non-setup DML (Portal Client, Contact) to break the Apex transaction threads before the setup DML (User, Permission Set Assignment) in the next step.</description>
+        <name>Check_Portal_User</name>
+        <label>Check Portal User</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Populate_Portal_Client</targetReference>
+            <targetReference>Prepare_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Found_Portal_Client</name>
+            <name>Has_Portal_User</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>recordPortalClient</leftValueReference>
+                <leftValueReference>Get_Portal_User</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Contact</targetReference>
+                <targetReference>Set_Output_isSuccess</targetReference>
             </connector>
-            <label>Found Portal Client</label>
+            <label>Has Portal User</label>
         </rules>
     </decisions>
     <decisions>
@@ -546,7 +538,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Account</targetReference>
+                <targetReference>Store_Initial_Value_Enable_Portal_Client</targetReference>
             </connector>
             <label>Has Work Email</label>
         </rules>
@@ -637,43 +629,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Portal_Client</name>
-        <label>Create Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Set_Has_Non_Setup_DML_Portal_Client</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Create_Portal_Client</targetReference>
-        </faultConnector>
-        <inputReference>recordPortalClient</inputReference>
-    </recordCreates>
-    <recordLookups>
-        <name>Get_Account</name>
-        <label>Get Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Account</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Account</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account_Contact_Relationship.AccountId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>Get_Account_Contact_Relationship</name>
         <label>Get Account Contact Relationship</label>
@@ -778,32 +733,56 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Portal_Client</name>
-        <label>Get Portal Client</label>
+        <name>Get_Portal_User</name>
+        <label>Get Portal User</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Portal_Client</targetReference>
+            <targetReference>Check_Portal_User</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_Client</targetReference>
+            <targetReference>Set_Fault_Element_Get_Portal_User</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Account__c</field>
+            <field>ContactId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Account.Id</elementReference>
+                <elementReference>recordContact.Id</elementReference>
             </value>
         </filters>
-        <object>Portal_Client__c</object>
-        <outputReference>recordPortalClient</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Account__c</queriedFields>
-        <queriedFields>Client_Number__c</queriedFields>
-        <queriedFields>Name</queriedFields>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Save_Account_Contact_Relation</name>
+        <label>Save Account Contact Relation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Has_Non_Setup_DML_Account_Contact_Relation</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Save_Account_Contact_Relation</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Contact_Relationship.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Enable_Portal_Client__c</field>
+            <value>
+                <elementReference>Enable_Portal_Client</elementReference>
+            </value>
+        </inputAssignments>
+        <object>AccountContactRelation</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Contact</name>
         <label>Update Contact</label>
@@ -818,6 +797,52 @@
         <inputReference>recordContact</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Enable_Screen</name>
+        <label>Enable Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_Changed_Enable_Portal_Client</targetReference>
+        </connector>
+        <fields>
+            <name>Enable_Display_Text</name>
+            <fieldText>&lt;p&gt;When enabled, all Portal Clients related to this Account become visible to the Contact&apos;s Portal User.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Enable_Portal_Client</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_Account_Contact_Relationship.Enable_Portal_Client__c</elementReference>
+            </defaultValue>
+            <fieldText>Enable Portal Client</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Error_Screen_Account_Owner_Must_Have_Role</name>
         <label>Error Screen: Account Owner Must Have Role</label>
@@ -987,6 +1012,7 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <description>Must show any Screen after non-setup DML (Portal Client, Contact) to break the Apex transaction threads before the setup DML (User, Permission Set Assignment) in the next step.</description>
         <name>Prepare_Screen</name>
         <label>Prepare Screen</label>
         <locationX>0</locationX>
@@ -999,8 +1025,47 @@
         </connector>
         <fields>
             <name>Prepare_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Prepare&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Account Contact Relation (Id={!recordId})&lt;/p&gt;&lt;p&gt;- Work Email: {!Get_Account_Contact_Relationship.NSP_Work_Email__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Client &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;(Id=&lt;/span&gt;{!recordPortalClient.Id})&lt;/p&gt;&lt;p&gt;- Name&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;: {!recordPortalClient.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;(Id={!recordContact.Id})&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Portal Alias: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.Portal_Alias__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Preferred First Name: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.NSP_Preferred_First_Name__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Last Name: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.LastName}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Contact has been prepared.  Click Next to provision the Portal User.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Summary</name>
+            <fieldText>Summary</fieldText>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Summary_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Summary_Display_Text</name>
+                    <fieldText>&lt;ul&gt;&lt;li&gt;Account Contact Relation (Id={!recordId})&lt;ul&gt;&lt;li&gt;Work Email: {!Get_Account_Contact_Relationship.NSP_Work_Email__c}&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Portal Contact (Id={!recordContact.Id})&lt;ul&gt;&lt;li&gt;Portal Alias: {!recordContact.Portal_Alias__c}&lt;/li&gt;&lt;li&gt;Preferred First Name: {!recordContact.NSP_Preferred_First_Name__c}&lt;/li&gt;&lt;li&gt;Last Name: {!recordContact.LastName}&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithHeader</regionContainerType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1072,6 +1137,16 @@
     </variables>
     <variables>
         <name>hasNonSetupDML</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>initialEnablePortalClient</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

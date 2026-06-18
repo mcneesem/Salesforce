@@ -8,8 +8,20 @@
                 <lightning-layout-item size="6">
                     <template lwc:if={userName}>
                         <div class="slds-text-align_right">
-                            <span style="color: white; text-transform: uppercase;">{userName}</span>
-                            <img src={iconAvatarGreen} style="height: 2rem; margin-left: 0.25rem;" alt="Green Avatar Icon"/>
+                            <span class="slds-m-right_x-small" style="color: white; text-transform: uppercase;">{userName}</span>
+                            <img src={iconAvatarGreen} style="height: 2rem;" alt="Green Avatar Icon"/>
+                            <lightning-button-menu
+                                alternative-text="User Menu"
+                                menu-alignment="right"
+                                onselect={handleUserMenuSelect}
+                                variant="bare-inverse"
+                                >
+                                <lightning-menu-item
+                                    label="Logout"
+                                    value="logout"
+                                    >
+                                </lightning-menu-item>
+                            </lightning-button-menu>
                         </div>
                     </template>
                 </lightning-layout-item>

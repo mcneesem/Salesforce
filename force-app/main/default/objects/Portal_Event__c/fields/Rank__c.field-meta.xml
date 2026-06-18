@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rank__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(
+  Name ,
+  &quot;Client Transition Meeting&quot; , 10 ,
+  &quot;Employee Orientation&quot; , 20 ,
+  &quot;Configuration Call&quot; , 30 ,
+  &quot;Enrollment Administrator Training&quot; , 40 ,
+  &quot;Insperity Premier/Payroll Training&quot; , 50 ,
+  &quot;Time &amp; Attendance Training&quot; , 60 ,
+  &quot;Client Transition To Service&quot; , 70 ,
+  1000
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Rank</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
