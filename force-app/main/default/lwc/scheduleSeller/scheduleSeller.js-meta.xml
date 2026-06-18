@@ -34,12 +34,12 @@
                 label="Selected End DateTime"
                 role="outputOnly"
                 />
-                <property
+            <property
                 name="availableUserIds"
                 type="String[]"
-                label="Available User IDs"
+                label="Available User Ids"
                 role="outputOnly"
-        />
+                />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
