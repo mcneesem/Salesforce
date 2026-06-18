@@ -339,14 +339,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_EmailMessage_for_Completion</leftValueReference>
+                <leftValueReference>record.NSP_By_Consultant__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>record.NSP_By_Consultant__r.Email</leftValueReference>
+                <leftValueReference>record.NSP_Consultant__r.Email</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -391,6 +391,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_Analyst_QC_d_By__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Quality_Control_Assignment_Alert_0</targetReference>
             </connector>
@@ -404,10 +411,17 @@
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Amendment_Ready</name>
+            <name>RET_QC_CRM_Task_Creation</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>isChangedAmendmentReady</leftValueReference>
+                <leftValueReference>Get_Task_records</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_Reject__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -418,13 +432,6 @@
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Task_records</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -877,16 +884,6 @@
     </textTemplates>
     <variables>
         <name>isChangedAmendmentReady</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>isChangedConsultant</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
