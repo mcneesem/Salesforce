@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FileName__c</fullName>
+    <description>The desired CSV filename (without extension) for the exported file.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Enter the filename without the .csv extension (e.g., Account_Export). Spaces are not allowed.</inlineHelpText>
+    <label>File Name</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
