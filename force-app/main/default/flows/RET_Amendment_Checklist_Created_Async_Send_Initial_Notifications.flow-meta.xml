@@ -60,7 +60,7 @@
         <locationY>0</locationY>
         <flowName>RET_Amendment_Checklist_Subflow_Email_Notifications</flowName>
         <inputAssignments>
-            <name>isChangedConsultant</name>
+            <name>isChangedAmendmentReady</name>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
@@ -77,6 +77,5 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>
