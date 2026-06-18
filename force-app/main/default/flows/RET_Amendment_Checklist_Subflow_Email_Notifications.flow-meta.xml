@@ -325,6 +325,13 @@
             <name>Date_Analyst_Changed_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>Get_EmailMessage_for_Completion</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>record.NSP_Date_analyst__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
@@ -346,7 +353,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>record.NSP_Consultant__r.Email</leftValueReference>
+                <leftValueReference>record.NSP_By_Consultant__r.Email</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -379,13 +386,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>record.NSP_Analyst_QC_d_By__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>record.NSP_Analyst_QC_d_By__r.Email</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
