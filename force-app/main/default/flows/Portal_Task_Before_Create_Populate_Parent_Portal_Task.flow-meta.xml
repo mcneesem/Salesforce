@@ -86,15 +86,13 @@
         <name>f_parenttask</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!$Record.Name} ,
-  &quot;Employee Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Cell Phone reimbursements&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Garnishments&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;COBRA Takeover&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;LOA Information&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Insperity Client Authorization&quot; , &quot;Client Sponsored Plans&quot; ,
-  &quot;Cafeteria Plan Documentation&quot; , &quot;Client Sponsored Plans&quot; ,
+  {!$Record.Name},
+  &quot;Employee Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Cell Phone reimbursements&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Garnishments&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;COBRA Takeover&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;LOA Information&quot;, &quot;Employee Payroll Documentation&quot;,
   &quot;&quot;
 )</expression>
     </formulas>
@@ -199,20 +197,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>LOA Information</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Insperity Client Authorization</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Cafeteria Plan Documentation</stringValue>
             </value>
         </filters>
         <object>Portal_Task__c</object>

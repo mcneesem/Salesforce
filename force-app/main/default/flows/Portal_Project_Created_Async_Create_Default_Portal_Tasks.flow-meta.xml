@@ -39,7 +39,7 @@
             <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>IRS Assignment Letter</stringValue>
+                <stringValue>Federal Employer Identification Number (FEIN)</stringValue>
             </value>
         </assignmentItems>
         <connector>
