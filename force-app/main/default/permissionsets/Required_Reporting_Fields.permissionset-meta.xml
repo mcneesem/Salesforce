@@ -8,6 +8,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.DNB_Exclude_Company__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Days_Since_Termination__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2618,17 +2623,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__Quote__c.Has_NoahFace__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__Quote__c.Has_E_Verify__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Has_Employee_Navigator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Has_NoahFace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3386,7 +3391,7 @@
         <field>pse__Project_Task__c.NSP_Situation_Termination_Drivers__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.Portal_Guidance_API_Name__c</field>
         <readable>true</readable>

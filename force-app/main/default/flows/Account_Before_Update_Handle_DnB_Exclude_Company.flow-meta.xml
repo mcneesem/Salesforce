@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_DnB_Exclude_FALSE</name>
+        <label>Assign DnB Exclude - FALSE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DNB_Exclude_Company__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_DnB_Exclude_TRUE</name>
+        <label>Assign DnB Exclude - TRUE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DNB_Exclude_Company__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>When the NSP_Sales_Service_Account_Status__c field has a value of Active, Onboarding or On Demand, D&amp;B Exclude Company = TRUE, otherwise D&amp;B Exclude Company = FALSE.</description>
+        <name>Is_this_an_Active_Account_that_should_be_DnB_Excluded</name>
+        <label>Is this an Active Account that should be DnB Excluded?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_DnB_Exclude_FALSE</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not an Active Account</defaultConnectorLabel>
+        <rules>
+            <name>Active_Client</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Onboarding</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Demand</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_DnB_Exclude_TRUE</targetReference>
+            </connector>
+            <label>Active Client</label>
+        </rules>
+    </decisions>
+    <description>When the NSP_Sales_Service_Account_Status__c field has a value of Active, Onboarding or On Demand, D&amp;B Exclude Company = TRUE, otherwise D&amp;B Exclude Company = FALSE.</description>
+    <environments>Default</environments>
+    <interviewLabel>Account - Before Update - DnB Exclude Company {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account - Before Update - Handle DnB Exclude Company</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_this_an_Active_Account_that_should_be_DnB_Excluded</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Sales_Service_Account_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
