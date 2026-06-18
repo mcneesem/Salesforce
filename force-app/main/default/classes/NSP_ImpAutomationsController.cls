@@ -1,4 +1,4 @@
-public class NSP_ImpAutomationsController {
+public with sharing class NSP_ImpAutomationsController {
     // test w/ NSP_FSOImplementationControllerTest (100%)
 
     // create a Map of Imp Profile for a given record ID
@@ -297,8 +297,13 @@ public class NSP_ImpAutomationsController {
                     NSP_Sr_HR_Specialist__c ,
                     NSP_Transition_Specialist__c ,
                     NSP_OT_Representative__c ,
-                    Old_grp_health_plan_coverage_period_was__c, Old_plan_administrator_was_another_PEO__c, NSP_Onboarding_Specialist_Coordinator__c,
-                    Ongoing_CSP_cafeteria_plan_doc_has_been__c, Optum_Bank_HSA_Code__c, Optum_Bank_HSA_Group__c, NSP_Orientation_Coordinator__c,
+                    Old_grp_health_plan_coverage_period_was__c ,
+                    Old_plan_administrator_was_another_PEO__c ,
+                    NSP_Onboarding_Specialist_Coordinator__c ,
+                    Ongoing_CSP_cafeteria_plan_doc_has_been__c ,
+                    Optum_Bank_HSA_Code__c ,
+                    Optum_Bank_HSA_Group__c ,
+                    NSP_Orientation_Coordinator__c ,
                     NSP_Orientation_Planner__c ,
                     Orientation_Rep__c ,
                     Other_Health_Plan_Coverage_Type__c ,
@@ -492,7 +497,8 @@ public class NSP_ImpAutomationsController {
                     Insperity_last_day_of_2nd_pay_period__c ,
                     Is_Insperity_s_group_health_plan_replaci__c ,
                     KDM_Client_Number__c ,
-                    KDM__c, Misc_Contact_Cell_Phone__c ,
+                    KDM__c ,
+                    Misc_Contact_Cell_Phone__c ,
                     Misc_Contact_Number__c ,
                     Misc_Contact_Office_Phone__c ,
                     Misc_Contact__c ,
@@ -570,9 +576,11 @@ public class NSP_ImpAutomationsController {
                     Insperity_pay_frequency__c ,
                     NSP_Payroll_Specialist__r.NSP_Work_email__c ,
                     NSP_Project_Manager__r.NSP_Work_email__c ,
-                    NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c ,
+                    NSP_Asset__r.AccountId ,
+                    NSP_Payroll_Specialist__r.pse__Salesforce_User__c ,
                     NSP_Project_Manager__r.pse__Salesforce_User__c ,
-                    NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c ,
+                    NSP_Project_Manager__r.pse__Salesforce_User__r.Email ,
+                    NSP_Urgent_Medical_Needs_Emp_Details__c ,
                     NSP_Employees_on_LOA__c ,
                     NSP_Employee_Details_On_LOA__c ,
                     NSP_Old_Benefits_Package__c ,
