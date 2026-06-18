@@ -214,4 +214,5 @@ public class NSP_SalesConstants {
     public static final String Task_SubType = 'WX Quote';
     //Added as part of user story 280309
     public static final String INTEGRATION_USER_PROFILE_ID = '00e4x0000012vOHAAY';
+    public static final String SALES_SET = 'Sales Set';
 }

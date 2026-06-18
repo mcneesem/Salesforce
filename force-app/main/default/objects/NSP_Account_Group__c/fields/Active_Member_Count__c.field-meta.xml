@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Member_Count__c</fullName>
+    <description>Count of active members in this Sales Set (where Exit_Date__c is blank). Used to track the current size of the Sales Set.</description>
+    <inlineHelpText>Number of Accounts currently active in this Sales Set.</inlineHelpText>
+    <label>Sales Set Active Members</label>
+    <summaryFilterItems>
+        <field>NSP_Account_Group_Member__c.Exit_Date__c</field>
+        <operation>equals</operation>
+        <value></value>
+    </summaryFilterItems>
+    <summaryForeignKey>NSP_Account_Group_Member__c.NSP_Group__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

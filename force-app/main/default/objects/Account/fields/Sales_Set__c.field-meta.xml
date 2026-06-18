@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Set__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Links this Account to its active Sales Set. Auto-populated when Account is added as a member of a Sales Set.</description>
+    <inlineHelpText>The Sales Set this Account belongs to. This field is automatically maintained by the system when you add or remove the Account from a Sales Set.</inlineHelpText>
+    <label>Sales Set</label>
+    <referenceTo>NSP_Account_Group__c</referenceTo>
+    <relationshipLabel>Sales Set Members</relationshipLabel>
+    <relationshipName>Sales_Set_Members</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>
