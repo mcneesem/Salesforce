@@ -357,6 +357,7 @@
         <object>Account</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>NumberOfEmployees</queriedFields>
+        <queriedFields>Named_Account_Group__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -592,6 +593,12 @@
             <name>varSalesSetId</name>
             <value>
                 <elementReference>varSalesSetId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varNAG</name>
+            <value>
+                <elementReference>Get_Account.Named_Account_Group__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>

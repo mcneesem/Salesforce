@@ -169,6 +169,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Sales_Set__c</queriedFields>
         <queriedFields>Sales_Set_Status__c</queriedFields>
+        <queriedFields>Named_Account_Group__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -274,6 +275,12 @@
             <name>varSalesSetId</name>
             <value>
                 <elementReference>Get_Current_Account.Sales_Set__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varNAG</name>
+            <value>
+                <elementReference>Get_Current_Account.Named_Account_Group__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>

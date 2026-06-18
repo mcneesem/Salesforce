@@ -19,22 +19,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Add_Member_to_divest_collection</name>
-        <label>Add Member to divest collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>updateMembers</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>updateMember</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Build_divest_Members_collection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Add_Member_to_reactivate_collection</name>
         <label>Add Member to reactivate collection</label>
         <locationX>0</locationX>
@@ -48,6 +32,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Build_single_update_Account_reactivate_member</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Member_to_Remove_collection</name>
+        <label>Add Member to Remove collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>updateMembers</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>updateMember</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Build_single_update_Account_Remove</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -96,6 +96,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Find_Inactive_Member_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_Account_collection_Remove</name>
+        <label>Add to Account collection - Remove</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>updateAccounts</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>updateAccount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Build_Members_collection_Remove</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -321,6 +337,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Build_single_update_Account_Remove</name>
+        <label>Build single update Account - Remove</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>updateAccount.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Build_Members_collection_Remove.NSP_Member_Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateAccount.Sales_Set__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Account_collection_Remove</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Build_single_update_Member</name>
         <label>Build single update Member</label>
         <locationX>0</locationX>
@@ -329,7 +368,7 @@
             <assignToReference>updateMember.Id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Build_divest_Members_collection.Id</elementReference>
+                <elementReference>Build_Members_collection_Remove.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -347,12 +386,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_Member_to_divest_collection</targetReference>
+            <targetReference>Add_Member_to_Remove_collection</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Increment_Primary_Count_Divest</name>
-        <label>Increment Primary Count - Divest</label>
+        <name>Increment_Primary_Count_Remove</name>
+        <label>Increment Primary Count - Remove</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -363,7 +402,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Reset_updateMembers_for_redo_Divest</targetReference>
+            <targetReference>Reset_collections_for_redo_Remove</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -383,8 +422,32 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Reset_Primary_Count_Divest</name>
-        <label>Reset Primary Count - Divest</label>
+        <name>Reset_collections_for_redo_Remove</name>
+        <label>Reset collections for redo - Remove</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>updateMembers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>updateMembers</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateAccounts</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>updateAccounts</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Remove_Sales_Set_Members</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Primary_Count_Remove</name>
+        <label>Reset Primary Count - Remove</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -395,7 +458,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_divest_Members_collection</targetReference>
+            <targetReference>Build_Members_collection_Remove</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -431,23 +494,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Reset_updateMembers_for_redo_Divest</name>
-        <label>Reset updateMembers for redo - Divest</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>updateMembers</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>updateMembers</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Divest_Sales_Set_Members</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Reset_updateMembers_for_redo_Update</name>
         <label>Reset updateMembers for redo - Update</label>
         <locationX>0</locationX>
@@ -473,8 +519,8 @@
         </value>
     </choices>
     <choices>
-        <name>divestChoice</name>
-        <choiceText>Divest current member(s)</choiceText>
+        <name>removeChoice</name>
+        <choiceText>Remove current member(s)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>divest</stringValue>
@@ -489,14 +535,14 @@
         </value>
     </choices>
     <constants>
-        <name>Active</name>
+        <name>activeString</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Active</stringValue>
         </value>
     </constants>
     <constants>
-        <name>Available</name>
+        <name>availableId</name>
         <dataType>String</dataType>
         <value>
             <stringValue>0054x000008PgqNAAS</stringValue>
@@ -620,8 +666,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_for_Primary_Divest</name>
-        <label>Check for Primary - Divest</label>
+        <name>Check_for_Primary_Remove</name>
+        <label>Check for Primary - Remove</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -629,19 +675,19 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_is_Primary_Divest</name>
+            <name>Yes_is_Primary_Remove</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Build_divest_Members_collection.NSP_Primary__c</leftValueReference>
+                <leftValueReference>Build_Members_collection_Remove.NSP_Primary__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Increment_Primary_Count_Divest</targetReference>
+                <targetReference>Increment_Primary_Count_Remove</targetReference>
             </connector>
-            <label>Yes is Primary - Divest</label>
+            <label>Yes is Primary - Remove</label>
         </rules>
     </decisions>
     <decisions>
@@ -782,19 +828,19 @@
             <label>Update members</label>
         </rules>
         <rules>
-            <name>Divest_members</name>
+            <name>Remove_members</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>What_change_would_you_like_to_make</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>divestChoice</elementReference>
+                    <elementReference>removeChoice</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Divest_Sales_Set_Members</targetReference>
+                <targetReference>Remove_Sales_Set_Members</targetReference>
             </connector>
-            <label>Divest members</label>
+            <label>Remove members</label>
         </rules>
     </decisions>
     <decisions>
@@ -871,14 +917,14 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>Build_divest_Members_collection</name>
-        <label>Build divest Members collection</label>
+        <name>Build_Members_collection_Remove</name>
+        <label>Build Members collection - Remove</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <collectionReference>DivestSalesSetMembers.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Check_for_Primary_Divest</targetReference>
+            <targetReference>Check_for_Primary_Remove</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Any_Member_updates</targetReference>
@@ -1019,14 +1065,21 @@
             <field>Sales_Set_Status__c</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>Active</elementReference>
+                <elementReference>activeString</elementReference>
             </value>
         </filters>
         <filters>
             <field>OwnerId</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>Available</elementReference>
+                <elementReference>availableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Named_Account_Group__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNAG</elementReference>
             </value>
         </filters>
         <object>Account</object>
@@ -1162,141 +1215,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Divest_Sales_Set_Members</name>
-        <label>Divest Sales Set Members</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <backButtonLabel>Cancel</backButtonLabel>
-        <connector>
-            <targetReference>Reset_Primary_Count_Divest</targetReference>
-        </connector>
-        <fields>
-            <name>Copy_3_of_Manage_Sales_Set</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Manage Sales Set&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>DivestSalesSetMembers</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>NSP_Account_Group_Member__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Sales Set Members</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>currentActiveMembers</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>keyField</name>
-                <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group_Member__c&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;currentActiveMembers&quot;}</complexValue>
-                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Account_Name__c&quot;,&quot;guid&quot;:&quot;column-4fda&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Account&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;NSP_Primary__c&quot;,&quot;guid&quot;:&quot;column-85cf&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Main&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Primary&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Enter_Date_Sales__c&quot;,&quot;guid&quot;:&quot;column-5e32&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Join Date&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Enter Date - Sales&quot;,&quot;type&quot;:&quot;date-local&quot;},{&quot;apiName&quot;:&quot;Exit_Date__c&quot;,&quot;guid&quot;:&quot;column-eb71&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Exit Date&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Exit Date&quot;,&quot;type&quot;:&quot;date-local&quot;},{&quot;apiName&quot;:&quot;Status__c&quot;,&quot;guid&quot;:&quot;column-ca14&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Status&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Renew_Together__c&quot;,&quot;guid&quot;:&quot;column-9833&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Renew Together&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columnReferences</name>
-                <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group_Member__c&quot;,&quot;fieldReferences&quot;:[&quot;NSP_Account_Name__c&quot;,&quot;NSP_Primary__c&quot;,&quot;Enter_Date_Sales__c&quot;,&quot;Exit_Date__c&quot;,&quot;Sales_Set_Status__c&quot;,&quot;Renew_Together__c&quot;],&quot;elementReference&quot;:&quot;currentActiveMembers&quot;}</complexValue>
-                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>Divest_Text</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Select Accounts to divest from this Sales Set.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>Primary_Warning_Text</name>
-            <fieldText>&lt;p&gt;&lt;em style=&quot;color: rgb(255, 0, 0);&quot;&gt;Main Account cannot be removed from Sales Set.&lt;/em&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>primaryCount</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <elementReference>zeroCount</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>0</locationX>
@@ -1425,7 +1343,7 @@
             <name>What_change_would_you_like_to_make</name>
             <choiceReferences>addChoice</choiceReferences>
             <choiceReferences>updateChoice</choiceReferences>
-            <choiceReferences>divestChoice</choiceReferences>
+            <choiceReferences>removeChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>What change would you like to make?</fieldText>
             <fieldType>RadioButtons</fieldType>
@@ -1439,6 +1357,141 @@
                     <stringValue>12</stringValue>
                 </width>
             </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Remove_Sales_Set_Members</name>
+        <label>Remove Sales Set Members</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Cancel</backButtonLabel>
+        <connector>
+            <targetReference>Reset_Primary_Count_Remove</targetReference>
+        </connector>
+        <fields>
+            <name>Manage_Sales_Set_Remove</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Manage Sales Set&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>DivestSalesSetMembers</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>NSP_Account_Group_Member__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Sales Set Members</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>MULTI_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>currentActiveMembers</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>keyField</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group_Member__c&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;currentActiveMembers&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;NSP_Account_Name__c&quot;,&quot;guid&quot;:&quot;column-4fda&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Account&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;NSP_Primary__c&quot;,&quot;guid&quot;:&quot;column-85cf&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Main&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Primary&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Enter_Date_Sales__c&quot;,&quot;guid&quot;:&quot;column-5e32&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Join Date&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Enter Date - Sales&quot;,&quot;type&quot;:&quot;date-local&quot;},{&quot;apiName&quot;:&quot;Exit_Date__c&quot;,&quot;guid&quot;:&quot;column-eb71&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Exit Date&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Exit Date&quot;,&quot;type&quot;:&quot;date-local&quot;},{&quot;apiName&quot;:&quot;Status__c&quot;,&quot;guid&quot;:&quot;column-ca14&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Status&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Renew_Together__c&quot;,&quot;guid&quot;:&quot;column-9833&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Renew Together&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columnReferences</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group_Member__c&quot;,&quot;fieldReferences&quot;:[&quot;NSP_Account_Name__c&quot;,&quot;NSP_Primary__c&quot;,&quot;Enter_Date_Sales__c&quot;,&quot;Exit_Date__c&quot;,&quot;Sales_Set_Status__c&quot;,&quot;Renew_Together__c&quot;],&quot;elementReference&quot;:&quot;currentActiveMembers&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Divest_Text</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Select Accounts to remove from this Sales Set.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Primary_Warning_Text</name>
+            <fieldText>&lt;p&gt;&lt;em style=&quot;color: rgb(255, 0, 0);&quot;&gt;Main Account cannot be removed from Sales Set.&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>primaryCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>zeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1742,6 +1795,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Named_Account_Group__c from starting Account</description>
+        <name>varNAG</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
