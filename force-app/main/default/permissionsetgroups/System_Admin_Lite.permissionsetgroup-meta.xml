@@ -40,13 +40,10 @@
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
     <permissionSets>Onboarding_Profile_Edit</permissionSets>
     <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
-    <permissionSets>Opportunity_Record_Type_Renewal</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Compensation_Services</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_SSNVS_Team</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Editor</permissionSets>
-    <permissionSets>Renewal_Layout_Access</permissionSets>
-    <permissionSets>Renewal_Visibility</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
