@@ -89,7 +89,7 @@ private class UserAvailabilityServiceTest {
     private static void testGetAvailableUsersForWindow_validWindow() {
         List<User> users = getTestUsers();
         System.assertEquals(2, users.size(), 'Expect two test users');
-    
+
         // 9:00 - 10:00 window
         Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(9, 0, 0, 0));
         Datetime endDT = startDT.addHours(1);
@@ -117,7 +117,6 @@ private class UserAvailabilityServiceTest {
 
         System.assertEquals(0, available.size(), 'Invalid window or no skilled users should return empty list');
     }
-
 
     @isTest
     private static void testGetAggregateCountsMatrix_withTwoUsers() {
