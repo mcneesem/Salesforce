@@ -1,26 +1,30 @@
 <template>
-    <!-- Only rendered in non-sandbox orgs; self-hides via isSandbox gate inside Apex. -->
     <template lwc:if={isVisible}>
         <lightning-card title="Sandbox Data Export" icon-name="utility:download">
 
-            <!-- ── Health wire error ── -->
+            <!-- Health wire error -->
             <template lwc:if={healthError}>
                 <c-error-panel error={healthError} parent="Data Export Tool"></c-error-panel>
             </template>
 
-            <!-- ── Loading spinner ── -->
+            <!-- Definitions wire error -->
+            <template lwc:if={defsError}>
+                <c-error-panel error={defsError} parent="Data Export Tool"></c-error-panel>
+            </template>
+
+            <!-- Loading spinner -->
             <template lwc:if={isLoading}>
                 <div class="slds-p-around_medium slds-align_absolute-center">
                     <lightning-spinner size="small" alternative-text="Loading"></lightning-spinner>
                 </div>
             </template>
 
-            <!-- ── Main content (health loaded, no error, not sandbox) ── -->
+            <!-- Main content -->
             <template lwc:if={isContentVisible}>
 
-                <!-- Gate locked warning -->
+                <!-- Gate locked warning (static — use role="status") -->
                 <template lwc:if={isGateLocked}>
-                    <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-around_small" role="alert">
+                    <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-around_small" role="status">
                         <lightning-icon
                             icon-name="utility:warning"
                             alternative-text="Warning"
@@ -35,11 +39,19 @@
                     </div>
                 </template>
 
-                <!-- Export count summary -->
                 <template lwc:if={hasDefinitions}>
-                    <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-text-body_small">
-                        {definitions.length} export{definitionCountSuffix} configured.
-                    </p>
+                    <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <p class="slds-text-body_small">
+                            {definitions.length} export{definitionCountSuffix} configured.
+                        </p>
+                        <lightning-button-icon
+                            icon-name="utility:refresh"
+                            alternative-text="Refresh definitions"
+                            title="Refresh definitions"
+                            size="small"
+                            onclick={handleRefreshDefinitions}>
+                        </lightning-button-icon>
+                    </div>
 
                     <!-- Progress path (visible while exporting) -->
                     <template lwc:if={isExporting}>
@@ -75,19 +87,28 @@
                         </div>
                     </template>
 
-                    <!-- Success banner (shown once all exports complete) -->
+                    <!-- Success banner (dismissible) -->
                     <template lwc:if={showSuccessBanner}>
                         <div
-                            class="slds-notify slds-notify_alert slds-theme_success slds-m-horizontal_medium slds-m-bottom_small"
-                            role="status">
-                            <lightning-icon
-                                icon-name="utility:success"
-                                alternative-text="Success"
-                                size="x-small"
-                                class="slds-m-right_x-small"
-                                inverse>
-                            </lightning-icon>
-                            {successMessage}
+                            class="slds-notify slds-notify_alert slds-theme_success slds-m-horizontal_medium slds-m-bottom_small slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
+                            role="alert">
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <lightning-icon
+                                    icon-name="utility:success"
+                                    alternative-text="Success"
+                                    size="x-small"
+                                    class="slds-m-right_x-small"
+                                    inverse>
+                                </lightning-icon>
+                                {successMessage}
+                            </div>
+                            <lightning-button-icon
+                                icon-name="utility:close"
+                                alternative-text="Dismiss"
+                                size="small"
+                                variant="inverse"
+                                onclick={handleDismissSuccess}>
+                            </lightning-button-icon>
                         </div>
                     </template>
 
@@ -103,7 +124,7 @@
 
             </template>
 
-            <!-- ── Footer: Export All button ── -->
+            <!-- Footer: Export All button -->
             <template lwc:if={isContentVisible}>
                 <div slot="footer">
                     <lightning-button
@@ -119,4 +140,7 @@
 
         </lightning-card>
     </template>
+
+    <!-- Hidden container for download anchors (inside shadow DOM) -->
+    <div data-id="download-container" class="slds-hide"></div>
 </template>

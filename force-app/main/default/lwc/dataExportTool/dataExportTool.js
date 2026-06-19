@@ -1,27 +1,21 @@
 import { LightningElement, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
 import getExportDefinitions from '@salesforce/apex/DataExportController.getExportDefinitions';
 import executeExport from '@salesforce/apex/DataExportController.executeExport';
 
-/** Section key used by SandboxHealthController for the ExternalId Objects check. */
 const EXTERNAL_ID_SECTION_KEY = 'externalIdObjects';
-
-/**
- * Milliseconds to wait between triggering each file download.
- * Prevents browser pop-up blockers from suppressing successive downloads.
- */
 const DOWNLOAD_DELAY_MS = 150;
 
 export default class DataExportTool extends LightningElement {
-    // ── Wire backing fields ────────────────────────────────────────
     health = null;
     healthError = null;
     healthLoading = true;
 
     definitions = [];
+    defsError = null;
     defsLoading = true;
 
-    // ── Export runtime state ───────────────────────────────────────
     isExporting = false;
     currentExportStep = null;
     exportCompletedCount = 0;
@@ -29,7 +23,8 @@ export default class DataExportTool extends LightningElement {
     showSuccessBanner = false;
     successMessage = '';
 
-    // ── Wire: SandboxHealthController.getHealth ────────────────────
+    _wiredDefinitionsResult;
+    _pendingTimeouts = [];
 
     @wire(getHealth)
     wiredHealth({ data, error }) {
@@ -43,17 +38,23 @@ export default class DataExportTool extends LightningElement {
         this.healthLoading = false;
     }
 
-    // ── Wire: DataExportController.getExportDefinitions ───────────
-
     @wire(getExportDefinitions)
-    wiredDefinitions({ data, error }) {
+    wiredDefinitions(result) {
+        this._wiredDefinitionsResult = result;
+        const { data, error } = result;
         if (data) {
             this.definitions = data;
+            this.defsError = null;
         } else if (error) {
             this.definitions = [];
-            this.healthError = this.healthError || error;
+            this.defsError = error;
         }
         this.defsLoading = false;
+    }
+
+    disconnectedCallback() {
+        this._pendingTimeouts.forEach(clearTimeout);
+        this._pendingTimeouts = [];
     }
 
     // ── Visibility getters ────────────────────────────────────────
@@ -66,16 +67,16 @@ export default class DataExportTool extends LightningElement {
         return this.health != null && this.health.isSandbox === true;
     }
 
-    /**
-     * Component renders only when health is loaded AND the org is not a sandbox.
-     * The isSandbox gate prevents the card from appearing in production-like refresh orgs.
-     */
     get isVisible() {
         return !this.healthLoading && !this.isSandbox;
     }
 
+    get hasError() {
+        return this.healthError || this.defsError;
+    }
+
     get isContentVisible() {
-        return this.isVisible && !this.isLoading && !this.healthError;
+        return this.isVisible && !this.isLoading && !this.hasError;
     }
 
     // ── Health-gate getters ───────────────────────────────────────
@@ -105,7 +106,6 @@ export default class DataExportTool extends LightningElement {
         return this.definitions.length === 1 ? '' : 's';
     }
 
-    /** Steps array consumed by c-progress-bar. */
     get progressSteps() {
         return (this.definitions || []).map((d) => ({
             value: d.developerName,
@@ -115,8 +115,9 @@ export default class DataExportTool extends LightningElement {
 
     get exportStatusText() {
         const done = this.exportCompletedCount;
-        const total = Array.isArray(this.definitions) ? this.definitions.length : 0;
-        return `Running export ${done + 1} of ${total}\u2026`;
+        const total = this.definitions.length || 0;
+        const current = Math.min(done + 1, total);
+        return `Running export ${current} of ${total}…`;
     }
 
     // ── Button state getters ──────────────────────────────────────
@@ -126,24 +127,24 @@ export default class DataExportTool extends LightningElement {
     }
 
     get exportButtonLabel() {
-        return this.isExporting ? 'Exporting\u2026' : 'Export All';
+        return this.isExporting ? 'Exporting…' : 'Export All';
     }
 
     get exportButtonTitle() {
-        let title = 'Download all configured exports as CSV files';
         if (this.isGateLocked) {
-            title = 'ExternalId Objects health check must PASS before exporting';
-        } else if (this.isExporting) {
-            title = 'Export in progress\u2026';
+            return 'ExternalId Objects health check must PASS before exporting';
         }
-        return title;
+        if (this.isExporting) {
+            return 'Export in progress…';
+        }
+        return 'Download all configured exports as CSV files';
     }
 
     get hasExportErrors() {
         return Array.isArray(this.exportErrors) && this.exportErrors.length > 0;
     }
 
-    // ── Event handler ─────────────────────────────────────────────
+    // ── Event handlers ────────────────────────────────────────────
 
     handleExportAll() {
         if (this.isExportAllDisabled) {
@@ -157,14 +158,19 @@ export default class DataExportTool extends LightningElement {
         this.runNextExport(0);
     }
 
+    handleDismissSuccess() {
+        this.showSuccessBanner = false;
+    }
+
+    handleRefreshDefinitions() {
+        this.defsLoading = true;
+        refreshApex(this._wiredDefinitionsResult).finally(() => {
+            this.defsLoading = false;
+        });
+    }
+
     // ── Private helpers ───────────────────────────────────────────
 
-    /**
-     * Recursively processes each export definition in order.
-     * Uses setTimeout between downloads to avoid browser pop-up blocking.
-     *
-     * @param {number} index - Current position in this.definitions
-     */
     runNextExport(index) {
         if (index >= this.definitions.length) {
             this.finishExport();
@@ -193,10 +199,10 @@ export default class DataExportTool extends LightningElement {
                 this.exportCompletedCount = index + 1;
             })
             .finally(() => {
-                // eslint-disable-next-line @lwc/lwc/no-async-operation
-                setTimeout(() => {
+                const timeoutId = setTimeout(() => {
                     this.runNextExport(index + 1);
                 }, DOWNLOAD_DELAY_MS);
+                this._pendingTimeouts.push(timeoutId);
             });
     }
 
@@ -216,14 +222,6 @@ export default class DataExportTool extends LightningElement {
         }
     }
 
-    /**
-     * Triggers a browser file-download for the given CSV content.
-     * Creates a temporary anchor element in the page body, clicks it,
-     * then removes it after the browser has handled the download.
-     *
-     * @param {string} filename - Target filename including .csv extension
-     * @param {string} csvContent - CSV string to write to the file
-     */
     triggerCsvDownload(filename, csvContent) {
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const objectUrl = URL.createObjectURL(blob);
@@ -231,38 +229,35 @@ export default class DataExportTool extends LightningElement {
         anchor.href = objectUrl;
         anchor.download = filename;
         anchor.style.display = 'none';
-        document.body.appendChild(anchor);
+
+        const container = this.template.querySelector('[data-id="download-container"]');
+        container.appendChild(anchor);
         anchor.click();
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        setTimeout(() => {
-            document.body.removeChild(anchor);
+
+        const timeoutId = setTimeout(() => {
+            container.removeChild(anchor);
             URL.revokeObjectURL(objectUrl);
         }, 1000);
+        this._pendingTimeouts.push(timeoutId);
     }
 
-    /**
-     * Extracts a user-readable message from an Apex or network error object.
-     *
-     * @param {object} error - Error thrown by an @AuraEnabled Apex method
-     * @returns {string} Human-readable error message
-     */
     extractErrorMessage(error) {
-        let msg = 'Unknown error';
-        if (error) {
-            if (typeof error.body?.message === 'string') {
-                msg = error.body.message;
-            } else if (Array.isArray(error.body) && error.body.length > 0) {
-                msg = error.body.map((e) => e.message).join(', ');
-            } else if (typeof error.message === 'string') {
-                msg = error.message;
-            } else {
-                try {
-                    msg = JSON.stringify(error);
-                } catch (_e) {
-                    msg = 'Unknown error';
-                }
-            }
+        if (!error) {
+            return 'Unknown error';
         }
-        return msg;
+        if (typeof error.body?.message === 'string') {
+            return error.body.message;
+        }
+        if (Array.isArray(error.body) && error.body.length > 0) {
+            return error.body.map((e) => e.message).join(', ');
+        }
+        if (typeof error.message === 'string') {
+            return error.message;
+        }
+        try {
+            return JSON.stringify(error);
+        } catch (_e) {
+            return 'Unknown error';
+        }
     }
 }
