@@ -539,6 +539,8 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Address__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
