@@ -92,6 +92,11 @@
                 <label>WX Account Group</label>
             </value>
             <value>
+                <fullName>Sales Set</fullName>
+                <default>false</default>
+                <label>Sales Set</label>
+            </value>
+            <value>
                 <fullName>Ownership</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
