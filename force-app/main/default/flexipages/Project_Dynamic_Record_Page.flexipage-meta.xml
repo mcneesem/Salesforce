@@ -379,6 +379,16 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>pse__Proj__c.Portal_Resources</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Use_Portal_Resources}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>pse__Proj__c.NSP_Self_Assignment</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
@@ -458,16 +468,6 @@
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>PEO FSO Impl</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>pse__Proj__c.Portal_Resources</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Use_Portal_Resources}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
