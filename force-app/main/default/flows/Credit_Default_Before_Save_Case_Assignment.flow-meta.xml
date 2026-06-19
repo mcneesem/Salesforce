@@ -80,6 +80,32 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Fault_Address</name>
+        <label>Fault Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Address</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Fault_Path_Account_Teams</name>
+        <label>Fault Path Account Teams</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Teams</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Populate_Case_Related_Fields_On_Credit_Default</name>
         <label>Populate Case Related Fields On Credit Default</label>
         <locationX>0</locationX>
@@ -239,6 +265,13 @@
         <rules>
             <name>Not_Empty</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Teams</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Account_Teams</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -427,6 +460,9 @@
         <connector>
             <targetReference>Check_Account_Teams</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path_Account_Teams</targetReference>
+        </faultConnector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5) AND 6</filterLogic>
         <filters>
             <field>NSP_Account__c</field>
@@ -483,6 +519,9 @@
         <connector>
             <targetReference>Address_Decision</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Address</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Address_Type__c</field>
@@ -537,6 +576,13 @@
     </variables>
     <variables>
         <name>nonBusinessPrimaryUser</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
