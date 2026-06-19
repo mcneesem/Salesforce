@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that Find_Related_Contact_Screen_Flow has access to all Contact records...
 public without sharing class FindContactVoiceFlow {
-    // test w/ FindContactVoiceFlowTest (95%)
+    // test w/ FindContactVoiceFlowTest (88%)
 
     @InvocableMethod(label='Get Contacts by Phone')
     public static List<List<Contact>> getContactsByPhone( List<String> phoneNumbers ) {
@@ -11,8 +11,11 @@ public without sharing class FindContactVoiceFlow {
                 && String.isNotBlank( phoneNumbers[0] )
                 )
             {
-                String input = String.valueOf( phoneNumbers[0] ).trim();
-                if ( input.length() > 1 ) {
+                String input = FindContactVoiceFlow.filterInput( phoneNumbers[0].trim() );
+                if ( String.isNotBlank( input )
+                    && ( input.length() > 1 )
+                    )
+                {
                     Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
                     List<List<Contact>> searchResults = [
                         FIND :input
@@ -49,6 +52,23 @@ public without sharing class FindContactVoiceFlow {
             );
         }
         return result;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static String filterInput( String value ) {
+        if ( String.isNotBlank( value )
+            && ( FindContactVoiceFlow.countryCodes != null )
+            && !FindContactVoiceFlow.countryCodes.isEmpty()
+            )
+        {
+            for ( String countryCode : FindContactVoiceFlow.countryCodes ) {
+                if ( value.startsWith( countryCode ) ) {
+                    value = value.removeStart( countryCode );
+                    break;
+                }
+            }
+        }
+        return value;
     }
 
     //
@@ -103,6 +123,26 @@ public without sharing class FindContactVoiceFlow {
                 limitCreatedDate = local;
             }
             return limitCreatedDate;
+        }
+        private set;
+    }
+
+    private static List<String> countryCodes  {
+        private get {
+            if ( countryCodes == null ) {
+                List<String> local = new List<String>();
+                if ( FindContactVoiceFlow.settings != null ) {
+                    String rawCountryCodes = FindContactVoiceFlow.settings.CountryCodes__c;
+                    if ( String.isNotBlank( rawCountryCodes ) ) {
+                        List<String> splitCountryCodes = rawCountryCodes.split( ',' );
+                        if ( ( splitCountryCodes != null ) && ( splitCountryCodes.size() > 0 ) ) {
+                            local = splitCountryCodes;
+                        }
+                    }
+                }
+                countryCodes = local;
+            }
+            return countryCodes;
         }
         private set;
     }
