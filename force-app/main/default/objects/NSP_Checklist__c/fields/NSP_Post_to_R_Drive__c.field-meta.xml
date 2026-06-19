@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Post  to R Drive</label>
+    <label>DEPRECATED Post  to R Drive</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

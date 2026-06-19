@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Run Section 125</label>
+    <label>DEPRECATED Run Section 125</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -3,7 +3,7 @@
     <fullName>NSP_Send_email_to_Sales_PR_Info__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Send email to Sales PR Info</label>
+    <label>DEPRECATED Send email to Sales PR Info</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
