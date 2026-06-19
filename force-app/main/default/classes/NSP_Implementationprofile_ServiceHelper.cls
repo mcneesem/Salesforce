@@ -41,7 +41,6 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String MEDICAL_NEED_FN = 'urgentMedicalNeeds';
     private static final String WORKERS_CERTIFICATE_FN = 'workersCompCertificate';
     private static final String SEASONAL_EEFSO_FN = 'seasonalEEsFSO';
-    private static final String RRP_CASE_FN = 'RRPCase';
     private static final String OFFER_HSA_FN = 'clientOfferHSA';
     private static final String OFFER_OPTUM_FN = 'clientOfferOPTUM';
     private static final String MM_OPTUM_CASE = 'OptumBankcase';
@@ -149,7 +148,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             MEDICAL_NEED_FN ,
             WORKERS_CERTIFICATE_FN ,
             SEASONAL_EEFSO_FN ,
-            RRP_CASE_FN ,
             OFFER_HSA_FN ,
             OFFER_OPTUM_FN ,
             MM_OPTUM_CASE ,
@@ -278,9 +276,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         if(ipRecordsByAutomation.containsKey(SEASONAL_EEFSO_FN)){
             createCaseSeasonalEEFSO();
-        }
-        if(ipRecordsByAutomation.containsKey(RRP_CASE_FN)){
-            createCaseRRP();
         }
         if(ipRecordsByAutomation.containsKey(OFFER_HSA_FN)){
             createCaseHSA();
@@ -487,9 +482,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(SEASONAL_EEFSO_FN)){
                 checkForSeasonalEEFSO(ipRec, existingRec);
-            }
-            if(automationsToExecute.contains(RRP_CASE_FN)){
-                checkForRRPCase(ipRec, existingRec);
             }
             if(automationsToExecute.contains(OFFER_HSA_FN)){
                 checkForHSA(ipRec, existingRec);
@@ -760,23 +752,6 @@ public class NSP_Implementationprofile_ServiceHelper {
                if(existingRec == null ||  newRec.NSP_Form_Completed__c ||
                   newRec.Client_have_will_have_any_Seasonal_EEs__c != existingRec.Client_have_will_have_any_Seasonal_EEs__c){
                       updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SEASONAL_EEFSO_FN);
-                  }
-           }
-    }
-
-    private void checkForRRPCase(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-
-        if( newRec.RecordTypeId != ipFSORecordTypeId
-           || !newRec.NSP_Check_to_create_the_RRP_Case__c) {
-               return;
-           }
-
-        if(   newRec.RecordTypeId == ipFSORecordTypeId &&
-           newRec.NSP_Check_to_create_the_RRP_Case__c){
-
-               if(existingRec == null ||  newRec.NSP_Form_Completed__c ||
-                  newRec.NSP_Check_to_create_the_RRP_Case__c != existingRec.NSP_Check_to_create_the_RRP_Case__c){
-                      updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, RRP_CASE_FN);
                   }
            }
     }
@@ -1140,39 +1115,6 @@ public class NSP_Implementationprofile_ServiceHelper {
 
     }
 
-    public void createCaseRRP(){
-        //create case if RRP case is yes
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        List<Case> caseList = new List<Case>();
-
-        for(Id ipRecId : ipRecordsByAutomation.get(RRP_CASE_FN)){
-
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if(((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ) ){
-                Case eachCase = createCase(ipRec);
-                eachCase.NSP_Category__c = NSP_ServiceConstants.CATEGORY6;
-                eachCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY6;
-                eachCase.NSP_Due_Date__c=System.today().addDays(30);
-                if(ipRec.NSP_AIMS_Client_Name__c!=null && ipRec.NSP_AIMS_ClientNo__c!=null){
-                    eachCase.Subject=NSP_ServiceConstants.SUBJECT6+' '+ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')';
-                }
-
-                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
-                if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
-                    eachCase.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
-                }
-
-                caseList.add(eachCase);
-                ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, NSP_ServiceConstants.SUBCATEGORY6,RRP_CASE_FN,NSP_ServiceConstants.MISCELLANEOUS));
-            }
-        }
-
-        //check for existing Case and store the new cases
-        recToInsert.addAll(ipAutomationHelper.getnewCasestoInsert(caseList));
-        //check for existing Automation record and store the new Automation records
-        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
-
-    }
 
     public void createCaseHSA(){
         //create case for HSA with optum bank
