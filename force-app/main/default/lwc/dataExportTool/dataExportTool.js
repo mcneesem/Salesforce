@@ -19,9 +19,7 @@ export default class DataExportTool extends LightningElement {
     isExporting = false;
     currentExportStep = null;
     exportCompletedCount = 0;
-    exportErrors = [];
-    showSuccessBanner = false;
-    successMessage = '';
+    exportResults = [];
 
     _wiredDefinitionsResult;
     _pendingTimeouts = [];
@@ -68,7 +66,7 @@ export default class DataExportTool extends LightningElement {
     }
 
     get isVisible() {
-        return !this.healthLoading && !this.isSandbox;
+        return true;
     }
 
     get hasError() {
@@ -140,8 +138,15 @@ export default class DataExportTool extends LightningElement {
         return 'Download all configured exports as CSV files';
     }
 
-    get hasExportErrors() {
-        return Array.isArray(this.exportErrors) && this.exportErrors.length > 0;
+    get hasResults() {
+        return Array.isArray(this.exportResults) && this.exportResults.length > 0;
+    }
+
+    get sortedExportResults() {
+        return [...this.exportResults].sort((a, b) => {
+            if (a.isFail === b.isFail) return 0;
+            return a.isFail ? -1 : 1;
+        });
     }
 
     // ── Event handlers ────────────────────────────────────────────
@@ -152,14 +157,9 @@ export default class DataExportTool extends LightningElement {
         }
         this.isExporting = true;
         this.exportCompletedCount = 0;
-        this.exportErrors = [];
-        this.showSuccessBanner = false;
+        this.exportResults = [];
 
         this.runNextExport(0);
-    }
-
-    handleDismissSuccess() {
-        this.showSuccessBanner = false;
     }
 
     handleRefreshDefinitions() {
@@ -184,19 +184,17 @@ export default class DataExportTool extends LightningElement {
             .then((csv) => {
                 this.triggerCsvDownload(def.fileName + '.csv', csv || '');
                 this.exportCompletedCount = index + 1;
+                this.exportResults = [
+                    ...this.exportResults,
+                    { key: def.developerName, label: def.label || def.developerName, isPass: true, isFail: false, message: def.fileName + '.csv' }
+                ];
             })
             .catch((err) => {
-                this.exportErrors = [
-                    ...this.exportErrors,
-                    {
-                        developerName: def.developerName,
-                        message:
-                            (def.label || def.developerName) +
-                            ': ' +
-                            this.extractErrorMessage(err)
-                    }
-                ];
                 this.exportCompletedCount = index + 1;
+                this.exportResults = [
+                    ...this.exportResults,
+                    { key: def.developerName, label: def.label || def.developerName, isPass: false, isFail: true, message: this.extractErrorMessage(err) }
+                ];
             })
             .finally(() => {
                 const timeoutId = setTimeout(() => {
@@ -209,24 +207,12 @@ export default class DataExportTool extends LightningElement {
     finishExport() {
         this.isExporting = false;
         this.currentExportStep = null;
-        const errorCount = this.exportErrors.length;
-        const total = Array.isArray(this.definitions) ? this.definitions.length : 0;
-        const successCount = total - errorCount;
-        if (successCount > 0) {
-            this.showSuccessBanner = true;
-            this.successMessage =
-                successCount === 1
-                    ? '1 file downloaded successfully.'
-                    : successCount + ' files downloaded successfully.' +
-                      (errorCount > 0 ? ' ' + errorCount + ' failed.' : '');
-        }
     }
 
     triggerCsvDownload(filename, csvContent) {
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const objectUrl = URL.createObjectURL(blob);
+        const dataUri = 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvContent);
         const anchor = document.createElement('a');
-        anchor.href = objectUrl;
+        anchor.href = dataUri;
         anchor.download = filename;
         anchor.style.display = 'none';
 
@@ -236,7 +222,6 @@ export default class DataExportTool extends LightningElement {
 
         const timeoutId = setTimeout(() => {
             container.removeChild(anchor);
-            URL.revokeObjectURL(objectUrl);
         }, 1000);
         this._pendingTimeouts.push(timeoutId);
     }

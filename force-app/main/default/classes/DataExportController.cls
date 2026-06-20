@@ -104,7 +104,14 @@ public with sharing class DataExportController {
             if (String.isBlank(developerName)) {
                 throw new AuraHandledException('Export name is required.');
             }
-            DataExportQuery__mdt queryRecord = DataExportQuery__mdt.getInstance(developerName);
+            List<DataExportQuery__mdt> queryRecords = [
+                SELECT SOQLQuery__c, FileName__c
+                FROM DataExportQuery__mdt
+                WHERE DeveloperName = :developerName
+                AND IsActive__c = true
+                LIMIT 1
+            ];
+            DataExportQuery__mdt queryRecord = queryRecords.isEmpty() ? null : queryRecords[0];
             if (queryRecord == null || String.isBlank(queryRecord.SOQLQuery__c)) {
                 throw new AuraHandledException(
                     'Export definition not found or has no query configured: ' + developerName
@@ -120,7 +127,7 @@ public with sharing class DataExportController {
         } catch (Exception e) {
             NSP_ErrorLogHandler.logException(CLASS_NAME, 'executeExport', e);
             throw new AuraHandledException(
-                'Export failed for "' + developerName + '". Please contact your administrator.'
+                'Export failed for "' + developerName + '": ' + e.getMessage()
             );
         }
         return csvResult;

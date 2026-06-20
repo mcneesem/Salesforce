@@ -66,50 +66,28 @@
                         </div>
                     </template>
 
-                    <!-- Per-export errors -->
-                    <template lwc:if={hasExportErrors}>
-                        <div class="slds-p-horizontal_medium slds-p-bottom_small">
-                            <template for:each={exportErrors} for:item="exportErr">
-                                <div
-                                    key={exportErr.developerName}
-                                    class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_x-small"
-                                    role="alert">
-                                    <lightning-icon
-                                        icon-name="utility:error"
-                                        alternative-text="Error"
-                                        size="x-small"
-                                        class="slds-m-right_x-small"
-                                        inverse>
-                                    </lightning-icon>
-                                    {exportErr.message}
-                                </div>
-                            </template>
-                        </div>
-                    </template>
-
-                    <!-- Success banner (dismissible) -->
-                    <template lwc:if={showSuccessBanner}>
-                        <div
-                            class="slds-notify slds-notify_alert slds-theme_success slds-m-horizontal_medium slds-m-bottom_small slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
-                            role="alert">
-                            <div class="slds-grid slds-grid_vertical-align-center">
-                                <lightning-icon
-                                    icon-name="utility:success"
-                                    alternative-text="Success"
-                                    size="x-small"
-                                    class="slds-m-right_x-small"
-                                    inverse>
-                                </lightning-icon>
-                                {successMessage}
-                            </div>
-                            <lightning-button-icon
-                                icon-name="utility:close"
-                                alternative-text="Dismiss"
-                                size="small"
-                                variant="inverse"
-                                onclick={handleDismissSuccess}>
-                            </lightning-button-icon>
-                        </div>
+                    <!-- Per-export results (pass/fail rows) -->
+                    <template if:true={hasResults}>
+<lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
+                            <lightning-accordion-section name="exports" label="Exports">
+                                <ul class="slds-has-dividers_around-space">
+                                    <template for:each={sortedExportResults} for:item="result">
+                                        <li key={result.key} class="slds-item">
+                                            <lightning-layout class="slds-no-wrap" vertical-align="start">
+                                                <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_x-small">
+                                                    <lightning-icon if:true={result.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                                    <lightning-icon if:true={result.isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item class="slds-has-flexi-truncate">
+                                                    <span class="slds-text-title">{result.label}</span>
+                                                    <div class="slds-text-body_small slds-m-top_xx-small slds-truncate" title={result.message}>{result.message}</div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
                     </template>
 
                 </template>
