@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="NA" recipientType="User" relatedToType="SBQQ__QuoteLine__c">
+<messaging:plainTextEmailBody >
+Subscription Credit Active Workers
+*Subscription Credit quantity is based on the number of W-2 Workers at each monthly invoice and will be applied for {!relatedTo.Credit_Duration_Months__c} months from the date this Delivery Order is fully executed.
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>
