@@ -1,15 +1,15 @@
 /**
- * @AuraEnabled controller for the nsp_dataExportTool LWC.
- * Reads active DataExportQuery__mdt records and executes their stored SOQL
+ * @AuraEnabled controller for the sandboxDataExportTool LWC.
+ * Reads active SandboxDataExportQuery__mdt records and executes their stored SOQL
  * queries, returning each result set as a CSV string for client-side download.
  *
  * Security: with sharing + AccessLevel.USER_MODE on all dynamic queries.
  * CMT access uses built-in static methods (no SOQL on __mdt types).
  */
-public with sharing class DataExportController {
-    // test w/ DataExportControllerTest (TBD%)
+public with sharing class SandboxDataExportController {
+    // test w/ SandboxDataExportControllerTest (TBD%)
 
-    private static final String CLASS_NAME = DataExportController.class.getName();
+    private static final String CLASS_NAME = SandboxDataExportController.class.getName();
     private static final String QUOTE      = '"';
     private static final String DBL_QUOTE  = '""';
     private static final String COMMA      = ',';
@@ -34,9 +34,9 @@ public with sharing class DataExportController {
         @AuraEnabled public Integer sortOrder;
 
         /**
-         * @param rec Active DataExportQuery__mdt record to wrap
+         * @param rec Active SandboxDataExportQuery__mdt record to wrap
          */
-        public ExportDefinition(DataExportQuery__mdt rec) {
+        public ExportDefinition(SandboxDataExportQuery__mdt rec) {
             label         = rec.Label;
             developerName = rec.DeveloperName;
             fileName      = rec.FileName__c;
@@ -59,20 +59,17 @@ public with sharing class DataExportController {
     // ------------------------------------------------------------
 
     /**
-     * Returns all active DataExportQuery__mdt definitions sorted by SortOrder__c.
+     * Returns all active SandboxDataExportQuery__mdt definitions sorted by SortOrder__c.
      * Called on LWC initialisation to populate the export table.
      *
      * @return Ordered list of ExportDefinition wrappers
-     * @example
-     * List<DataExportController.ExportDefinition> defs =
-     *     DataExportController.getExportDefinitions();
      */
     @AuraEnabled(cacheable=true)
     public static List<ExportDefinition> getExportDefinitions() {
         List<ExportDefinition> definitions = new List<ExportDefinition>();
         try {
             List<ExportDefinition> active = new List<ExportDefinition>();
-            for (DataExportQuery__mdt rec : DataExportQuery__mdt.getAll().values()) {
+            for (SandboxDataExportQuery__mdt rec : SandboxDataExportQuery__mdt.getAll().values()) {
                 if (rec.IsActive__c) {
                     active.add(new ExportDefinition(rec));
                 }
@@ -89,13 +86,11 @@ public with sharing class DataExportController {
     }
 
     /**
-     * Executes the SOQL query stored in the named DataExportQuery__mdt record
+     * Executes the SOQL query stored in the named SandboxDataExportQuery__mdt record
      * and returns the results as a CSV-formatted string ready for download.
      *
-     * @param developerName DeveloperName of the DataExportQuery__mdt record to run
+     * @param developerName DeveloperName of the SandboxDataExportQuery__mdt record to run
      * @return CSV string with a header row followed by one data row per record
-     * @example
-     * String csv = DataExportController.executeExport('Account_Master');
      */
     @AuraEnabled
     public static String executeExport(String developerName) {
@@ -104,14 +99,14 @@ public with sharing class DataExportController {
             if (String.isBlank(developerName)) {
                 throw new AuraHandledException('Export name is required.');
             }
-            List<DataExportQuery__mdt> queryRecords = [
+            List<SandboxDataExportQuery__mdt> queryRecords = [
                 SELECT SOQLQuery__c, FileName__c
-                FROM DataExportQuery__mdt
+                FROM SandboxDataExportQuery__mdt
                 WHERE DeveloperName = :developerName
                 AND IsActive__c = true
                 LIMIT 1
             ];
-            DataExportQuery__mdt queryRecord = queryRecords.isEmpty() ? null : queryRecords[0];
+            SandboxDataExportQuery__mdt queryRecord = queryRecords.isEmpty() ? null : queryRecords[0];
             if (queryRecord == null || String.isBlank(queryRecord.SOQLQuery__c)) {
                 throw new AuraHandledException(
                     'Export definition not found or has no query configured: ' + developerName
@@ -137,15 +132,6 @@ public with sharing class DataExportController {
     // Private helpers
     // ------------------------------------------------------------
 
-    /**
-     * Converts a list of SObject records into a CSV string.
-     * The first row is a header derived from the populated field map keys.
-     * Values containing commas, double-quotes, or newlines are enclosed in
-     * double quotes; embedded double-quotes are escaped by doubling them.
-     *
-     * @param records Query results to serialise
-     * @return CSV-formatted string, or empty string when records is empty
-     */
     private static String buildCsv(List<SObject> records) {
         String csv = '';
         if (records != null && !records.isEmpty()) {
@@ -175,13 +161,6 @@ public with sharing class DataExportController {
         return csv;
     }
 
-    /**
-     * Wraps a string value in double quotes and escapes any embedded double
-     * quotes by doubling them (RFC 4180).
-     *
-     * @param value Raw cell value; null is treated as empty string
-     * @return Value enclosed in double quotes with internal quotes escaped
-     */
     private static String escapeCsvValue(String value) {
         String safe = (value == null) ? '' : value;
         return QUOTE + safe.replace(QUOTE, DBL_QUOTE) + QUOTE;

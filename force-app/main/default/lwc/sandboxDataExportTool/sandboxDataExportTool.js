@@ -1,13 +1,13 @@
 import { LightningElement, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
-import getExportDefinitions from '@salesforce/apex/DataExportController.getExportDefinitions';
-import executeExport from '@salesforce/apex/DataExportController.executeExport';
+import getExportDefinitions from '@salesforce/apex/SandboxDataExportController.getExportDefinitions';
+import executeExport from '@salesforce/apex/SandboxDataExportController.executeExport';
 
 const EXTERNAL_ID_SECTION_KEY = 'externalIdObjects';
 const DOWNLOAD_DELAY_MS = 150;
 
-export default class DataExportTool extends LightningElement {
+export default class SandboxDataExportTool extends LightningElement {
     health = null;
     healthError = null;
     healthLoading = true;
@@ -66,7 +66,7 @@ export default class DataExportTool extends LightningElement {
     }
 
     get isVisible() {
-        return true;
+        return !this.healthLoading && this.isSandbox;
     }
 
     get hasError() {
