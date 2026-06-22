@@ -4,12 +4,12 @@
 
             <!-- Health wire error -->
             <template lwc:if={healthError}>
-                <c-error-panel error={healthError} parent="Data Export Tool"></c-error-panel>
+                <c-error-panel error={healthError} parent="Sandbox Data Export Tool"></c-error-panel>
             </template>
 
             <!-- Definitions wire error -->
             <template lwc:if={defsError}>
-                <c-error-panel error={defsError} parent="Data Export Tool"></c-error-panel>
+                <c-error-panel error={defsError} parent="Sandbox Data Export Tool"></c-error-panel>
             </template>
 
             <!-- Loading spinner -->
@@ -68,7 +68,7 @@
 
                     <!-- Per-export results (pass/fail rows) -->
                     <template if:true={hasResults}>
-<lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
+                        <lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Exports">
                                 <ul class="slds-has-dividers_around-space">
                                     <template for:each={sortedExportResults} for:item="result">
@@ -96,7 +96,7 @@
                 <template lwc:else>
                     <p class="slds-p-around_medium slds-text-body_small slds-text-color_weak">
                         No active export definitions are configured.
-                        Add records to the <em>Data Export Query</em> custom metadata type.
+                        Add records to the <em>Sandbox Data Export Query</em> custom metadata type.
                     </p>
                 </template>
 

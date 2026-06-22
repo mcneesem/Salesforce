@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Stores SOQL query definitions used by the Sandbox Data Export Tool to generate CSV files for sandbox data imports.</description>
+    <label>Sandbox Data Export Query</label>
+    <pluralLabel>Sandbox Data Export Queries</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
