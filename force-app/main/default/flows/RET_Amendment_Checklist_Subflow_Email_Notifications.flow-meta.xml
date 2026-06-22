@@ -328,7 +328,7 @@
                 <leftValueReference>Get_EmailMessage_for_Completion</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -417,7 +417,7 @@
                 <leftValueReference>Get_Task_records</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -470,13 +470,22 @@
     <formulas>
         <name>Comment</name>
         <dataType>String</dataType>
-        <expression>if(!{!record.NSP_Description_Box__c}, &apos;Description Box, &apos;, &apos;&apos;)  + if(!{!record.NSP_Plan_Type__c}, &apos;Plan Type, &apos;, &apos;&apos;) + if(!{!record.NSP_Plan_Status__c}, &apos;Plan Status,  &apos;, &apos;&apos;) + if(!{!record.NSP_Auto_Enroll__c}, &apos;Auto Enroll, &apos;, &apos;&apos;) + if(!{!record.NSP_Match_C_U_Box__c}, &apos;Match C/U Box, &apos;, &apos;&apos;) + if(!{!record.NSP_Eligibility_Rules__c}, &apos;Eligibility Rules, &apos;, &apos;&apos;) +if(!{!record.NSP_Pre_Elig_Tab__c}, &apos;Pre-Elig Tab, &apos;, &apos;&apos;) + if(!{!record.NSP_Exclusions__c}, &apos;Exclusions, &apos;, &apos;&apos;) + if(!{!record.NSP_OMNI_Plan_codes__c}, &apos;OMNI Plan codes, &apos;, &apos;&apos;) + if(!{!record.NSP_Notes__c}, &apos;Notes, &apos;, &apos;&apos;) +
- if(!{!record.NSP_Company_Association__c}, &apos;Company Association, &apos;, &apos;&apos;) + 
- if(!{!record.NSP_Participant_Association__c}, &apos;Participant Association, &apos;, &apos;&apos;) + 
- if(!{!record.NSP_Subplan_Contribution_Rule__c}, &apos;Subplan Contribution Rule, &apos;, &apos;&apos;) + 
- if(!{!record.NSP_Newkirk_Book_Updated__c}, &apos;Newkirk Book Updated, &apos;, &apos;&apos;)  + 
- if(!{!record.NSP_Smartplan_qr__c}, &apos;Smart Plan, &apos;, &apos;&apos;) + 
- if(!{!record.NSP_Run_Eligiblity_qr__c}, &apos;Run Eligibility, &apos;, &apos;&apos;)</expression>
+        <expression>IF({!record.NSP_Description_Box__c},&quot;Description Box, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Plan_Type__c},&quot;Plan Type, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Plan_Status__c},&quot;Plan Status, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Auto_Enroll__c},&quot;Auto Enroll, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Match_C_U_Box__c},&quot;Match C/U Box, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Eligibility_Rules__c},&quot;Eligibility Rules, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Pre_Elig_Tab__c},&quot;Pre-Elig Tab, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Exclusions__c},&quot;Exclusions, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_OMNI_Plan_codes__c},&quot;OMNI Plan codes, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Notes__c},&quot;Notes, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Company_Association__c},&quot;Company Association, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Participant_Association__c},&quot;Participant Association, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Subplan_Contribution_Rule__c},&quot;Subplan Contribution Rule, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Newkirk_Book_Updated__c},&quot;Newkirk Book Updated, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Smartplan_qr__c},&quot;Smart Plan, &quot;,&quot;&quot;) &amp;
+IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>DueDate</name>
