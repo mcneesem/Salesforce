@@ -2,12 +2,36 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Clone_Required__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(AND(ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c, &apos;Amendment&apos;) ,SBQQ__PriorQuantity__c &gt; 0),
-    IF(OR( ISPICKVAL(NSP_Product_Type__c , &apos;iSolved Hardware&apos;), ISPICKVAL(NSP_Product_Type__c, &apos;Time &amp; Attendance Hardware&apos;),ISPICKVAL(NSP_Product_Type__c, &apos;Learning Direct&apos;),ISPICKVAL(NSP_Product_Type__c, &apos;Learning Select&apos;),ISPICKVAL(NSP_Product_Type__c, &apos;Learning Hosting&apos;),CONTAINS($Setup.Quote_Amend_Indicator_Settings__c.Product_Codes__c , SBQQ__ProductCode__c )) ,
-      IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos;, &apos;In Progress&apos;, 20, 20) ,
-      IF(NSP_Lock_On_QLI__c, IF(OR(SBQQ__Quote__r.NSP_Has_Renewable_Products__c &gt; 0,SBQQ__Quote__r.NSP_ListPriceProductCount__c &gt; 0),
-        IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos;, &apos;In Progress&apos;, 20, 20),
-        IMAGE(&apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos;, &apos;In Progress&apos;, 20, 20)) , &apos;&apos;) ) , &apos;&apos;)</formula>
+    <formula>IF(
+  AND(
+    ISPICKVAL( SBQQ__Quote__r.SBQQ__Type__c , &apos;Amendment&apos; ) ,
+    ( SBQQ__PriorQuantity__c &gt; 0 )
+  ) ,
+  IF(
+    OR(
+      ISPICKVAL( NSP_Product_Type__c , &apos;iSolved Hardware&apos; ) ,
+      ISPICKVAL( NSP_Product_Type__c , &apos;Time &amp; Attendance Hardware&apos; ) ,
+      ISPICKVAL( NSP_Product_Type__c , &apos;Learning Direct&apos; ) ,
+      ISPICKVAL( NSP_Product_Type__c , &apos;Learning Select&apos; ) ,
+      ISPICKVAL( NSP_Product_Type__c , &apos;Learning Hosting&apos; ) ,
+      CONTAINS( $Setup.Quote_Amend_Indicator_Settings__c.Product_Codes__c , SBQQ__ProductCode__c )
+    ) ,
+    IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; , &apos;In Progress&apos; , 20 , 20 ) ,
+    IF(
+      NSP_Lock_On_QLI__c ,
+      IF(
+        OR(
+          ( SBQQ__Quote__r.NSP_Has_Renewable_Products__c &gt; 0 ) ,
+          ( SBQQ__Quote__r.NSP_ListPriceProductCount__c &gt; 0 )
+        ) ,
+        IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; , &apos;In Progress&apos; , 20 , 20 ) ,
+        IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos; , &apos;In Progress&apos; , 20 , 20 )
+      ) ,
+      &apos;&apos;
+    )
+  ) ,
+  &apos;&apos;
+)</formula>
     <label>Amend Required?</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
