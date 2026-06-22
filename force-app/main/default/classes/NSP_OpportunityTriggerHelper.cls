@@ -1073,11 +1073,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     {
                         //Condition to allow woss asset creation
                         isAssetFound = false;
-                    } else if ( ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA ) || ( existingAsset.NSP_ProductBundle__c == NSP_OpportunityTriggerHelper.PAYROLL_ONLY ) )
-                        && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                    } else if ( ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_salesConstants.PROD_WX )
                         && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX )
-                        && ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                        && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                        && ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA )
+                            || ( existingAsset.NSP_ProductBundle__c == NSP_OpportunityTriggerHelper.PAYROLL_ONLY )
+                            )
                         )
                     {
                         isAssetFound = false;
