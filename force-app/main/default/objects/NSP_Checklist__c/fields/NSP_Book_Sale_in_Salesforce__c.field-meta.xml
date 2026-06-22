@@ -4,7 +4,7 @@
     <description>This field is used for Sales part of STY-01620</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Book Sale in Salesforce</label>
+    <label>DEPRECATED Book Sale in Salesforce</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

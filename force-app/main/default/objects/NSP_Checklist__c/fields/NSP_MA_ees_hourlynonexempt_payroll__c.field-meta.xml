@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Hourly MA ee’s must be weekly or b/w</label>
+    <label>DEPRECATED Hourly MA ee’s must be weekly</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

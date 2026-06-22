@@ -3,7 +3,7 @@
     <fullName>NSP_SF__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>SF %</label>
+    <label>DEPRECATED SF %</label>
     <precision>8</precision>
     <required>false</required>
     <scale>2</scale>
