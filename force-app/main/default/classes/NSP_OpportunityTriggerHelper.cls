@@ -26,6 +26,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private static final Id insuranceServiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Insurance_Service' );
     private static final Id certifyAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Certify' );
     private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
+    private static final String PAYROLL_ONLY ='Payroll Only';
 
     //
     // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -1072,7 +1073,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     {
                         //Condition to allow woss asset creation
                         isAssetFound = false;
-                    } else if ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA )
+                    } else if ( ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA ) || ( existingAsset.NSP_ProductBundle__c == NSP_OpportunityTriggerHelper.PAYROLL_ONLY ) )
                         && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
                         && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_salesConstants.PROD_WX )
                         && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX )
