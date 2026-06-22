@@ -210,8 +210,12 @@ public class NSP_CaseContactTriggerHelper {
                            String.isNotBlank(caseContactRec.NSP_Contact__c) &&
                            caseContactRec.NSP_IsPrimary__c == true){
                                primaryCheckedCaseContactMap.get(caseContactRec.NSP_Case__c).NSP_IsPrimary__c = false;
+                               caseContactRec.NSP_IsPrimary__c = true;
                                checkedcaseContactRecList.add(primaryCheckedCaseContactMap.get(caseContactRec.NSP_Case__c));
                            }
+                    }
+                    else{
+                        caseContactRec.NSP_IsPrimary__c = true;
                     }
                 }
             }

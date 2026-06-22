@@ -2,17 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <customErrors>
-        <name>Primary_Error</name>
-        <label>Primary Error</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <customErrorMessages>
-            <errorMessage>A Case must always have at least one Primary Contact. Please select another Case Contact as Primary before saving your changes.</errorMessage>
-            <fieldSelection>NSP_IsPrimary__c</fieldSelection>
-            <isFieldError>true</isFieldError>
-        </customErrorMessages>
-    </customErrors>
     <decisions>
         <name>Primary_case_contact_checking</name>
         <label>Primary case contact checking</label>
@@ -23,14 +12,14 @@
             <name>Primary_case_contact_not_exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Existing_Case_Contact_Records.Id</leftValueReference>
+                <leftValueReference>Existing_Case_Contact_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Primary_Error</targetReference>
+                <targetReference>Update_existing_Case_Contact</targetReference>
             </connector>
             <label>Primary case contact not exist</label>
         </rules>
@@ -88,10 +77,38 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>NSP_Case_Contacts__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_existing_Case_Contact</name>
+        <label>Update existing Case Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Case__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_IsPrimary__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NSP_IsPrimary__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -100,8 +117,8 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_IsPrimary__c</field>
-            <operator>EqualTo</operator>
+            <field>NSP_Case__c</field>
+            <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>

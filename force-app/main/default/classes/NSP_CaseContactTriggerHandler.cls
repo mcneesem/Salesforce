@@ -20,6 +20,8 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
      */
     public void beforeInsert(List<sObject> newList) {
         // added as a part of STY-03685
+        NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
+        caseContactTriggerHelperObj.beforeInsertDirector((List<NSP_Case_Contacts__c>)newList);
 	}
 
     /**
@@ -31,7 +33,6 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
      */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
     	 NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
-        caseContactTriggerHelperObj.beforeInsertDirector((List<NSP_Case_Contacts__c>)newList);
         caseContactTriggerHelperObj.afterInsertDirector((List<NSP_Case_Contacts__c>)newList,(Map<Id, NSP_Case_Contacts__c>) newMap);
     }
 
@@ -46,7 +47,7 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap){
 
          NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
-
+         caseContactTriggerHelperObj.beforeUpdateDirector((Map<Id, NSP_Case_Contacts__c>) newMap,(Map<Id, NSP_Case_Contacts__c>) oldMap);
     }
 
     /**
@@ -60,7 +61,6 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
         NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
         caseContactTriggerHelperObj.afterUpdateDirector((Map<Id, NSP_Case_Contacts__c>) newMap,(Map<Id, NSP_Case_Contacts__c>) oldMap);
-        caseContactTriggerHelperObj.beforeUpdateDirector((Map<Id, NSP_Case_Contacts__c>) newMap,(Map<Id, NSP_Case_Contacts__c>) oldMap);
     }
 
     /**
