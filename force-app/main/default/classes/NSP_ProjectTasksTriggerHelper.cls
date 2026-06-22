@@ -2469,49 +2469,44 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendEmailToProjectResourceStatic( Set<Id> projectTaskIdSet ) {
-        //A list to store all RET Templates
-        List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
+        
         //Map of project and current project task
-        Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = new Map<Id, pse__Project_Task__c>();
+        Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = NSP_ProjectTasksTriggerHelper.getProjectTaskRecordsMap( projectTaskIdSet );
         //Map of Project and the resource email address
-        Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
-
+        Map<Id, Map<String, String>> mapOfProjAndResourceEmail = NSP_ProjectTasksTriggerHelper.getMapOfProjAndResourceEmail( mapOfProjAndProjTask );
+        
         try{
-            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, Task_Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c
-                                                FROM pse__Project_Task__c WHERE Id IN: projectTaskIdSet AND pse__Project__r.TemplateName__c IN :retTemplateNames]){
-
-                                                                mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
-
-            }
-
-            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c','Task_Order__c', 'Responsible_Party__c'};
-
-                //Get a list of all the project task associated with the parent project
-            String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-                                .addFilter('pse__Project__c',  new List<Id>(mapOfProjAndProjTask.keySet()), NSP_QueryBuilder.Operator.INCLUDES).build();
-            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = (List<pse__Project_Task__c>) Database.query(query);
-
-            for(pse__Resource_Request__c resourceRequest: [SELECT Id, pse__Resource_Role__c, pse__Staffer_Resource__r.pse__Salesforce_User__r.Email, pse__Project__c
-                                                            FROM pse__Resource_Request__c
-                                                            WHERE pse__Project__c IN: mapOfProjAndProjTask.keySet()]){
-                                                                if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
-                                                                    mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
-                                                                }
-                                                                mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
-                                                            }
-
+            
+            //Get a list of all the project task associated with the parent project
+            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = [SELECT
+                                                                      Id, Name,
+                                                                      pse__Project__c, pse__Order__c,
+                                                                      Task_Order__c, Responsible_Party__c
+                                                                      FROM
+                                                                      pse__Project_Task__c
+                                                                      WHERE
+                                                                      pse__Project__c IN :mapOfProjAndProjTask.keySet()];
+            
             //If the next in line projTask Responsibe party is diff send an email to the proj resource who's resource role matches with the next in line projTask's Responsibe party
-            if(!listOfAllPrjTaskForAProject.isEmpty() && !mapOfProjAndResourceEmail.isEmpty()){
-                for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
-                    if(projTask.pse__Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).pse__Order__c+1 &&
-                        projTask.Task_Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).Task_Order__c+1 &&
-                        projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
-                        mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) &&
-                        mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
-                            sendEmailNotificationToResource(mapOfProjAndProjTask.get(projTask.pse__Project__c).Name, mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c), projTask.Id);
-                        }
-                }
-            }
+            if(listOfAllPrjTaskForAProject != null &&
+               !listOfAllPrjTaskForAProject.isEmpty() &&
+               mapOfProjAndResourceEmail != null &&
+               !mapOfProjAndResourceEmail.isEmpty()){
+                   for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
+                       pse__Project_Task__c currentProjTask = mapOfProjAndProjTask.get(projTask.pse__Project__c);
+                       
+                       if(currentProjTask != null && projTask.pse__Order__c == currentProjTask.pse__Order__c+1 &&
+                          projTask.Task_Order__c == currentProjTask.Task_Order__c+1 &&
+                          projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c &&
+                          mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) &&
+                          mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c) &&
+                          mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c) != null){
+                              sendEmailNotificationToResource(currentProjTask.Name,
+                                                              mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c),
+                                                              projTask.Id);
+                          }
+                   }
+               }
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
@@ -2519,29 +2514,106 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
+    
+    // ***********************************************************************************************
+    // MethodName: getProjectTaskRecordsMap
+    // Description: Retrieves Project Task records that belong to RET templates and returns a map
+    //              keyed by Project Id to the corresponding Project Task record.
+    // Params: Set<Id> projectTaskIdSet - Set of Project Task Ids to query
+    // Returns: Map<Id, pse__Project_Task__c> - Map of Project Id to Project Task record
+    // ***********************************************************************************************
+    private static Map<Id, pse__Project_Task__c> getProjectTaskRecordsMap( Set<Id> projectTaskIdSet ) {
+        
+        //Map of project and current project task
+        Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = new Map<Id, pse__Project_Task__c>();
+        if( projectTaskIdSet != null && !projectTaskIdSet.isEmpty() ) {
+            //A list to store all RET Templates
+            List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
+            
+            List<pse__Project_Task__c> projTaskRecords = [
+                SELECT
+                Id, Name, pse__Order__c, Task_Order__c, pse__Status__c,
+                pse__Project__r.TemplateName__c, Responsible_Party__c
+                FROM
+                pse__Project_Task__c
+                WHERE
+                Id IN: projectTaskIdSet
+                AND
+                pse__Project__r.TemplateName__c IN :retTemplateNames
+            ];
+            
+            if( projTaskRecords != null && !projTaskRecords.isEmpty() ) {
+                for(pse__Project_Task__c projTask: projTaskRecords) {
+                    mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
+                }
+            }
+        }
+        
+        return mapOfProjAndProjTask;
+    }
+    
+    //***********************************************************************************************
+    // MethodName: getMapOfProjAndResourceEmail
+    // Description: Builds a map of Project Id to a nested map of Resource Role to the staffer's
+    //              email address, based on Resource Requests associated with the given projects.
+    // Params: Map<Id, pse__Project_Task__c> mapOfProjAndProjTask - Map of Project Id to Project Task
+    // Returns: Map<Id, Map<String, String>> - Map of Project Id to (Resource Role -> Email)
+    //***********************************************************************************************
+    private static  Map<Id, Map<String, String>> getMapOfProjAndResourceEmail( Map<Id, pse__Project_Task__c> mapOfProjAndProjTask ) {
+        //Map of Project and the resource email address
+        Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
+        
+        if(mapOfProjAndProjTask != null && !mapOfProjAndProjTask.isEmpty()) {
+            List<pse__Resource_Request__c> resourceRequests =[
+                SELECT
+                Id, pse__Resource_Role__c,
+                pse__Staffer_Resource__r.pse__Salesforce_User__r.Email,
+                pse__Project__c
+                FROM
+                pse__Resource_Request__c
+                WHERE
+                pse__Project__c IN: mapOfProjAndProjTask.keySet()
+            ];
+            
+            for(pse__Resource_Request__c resourceRequest: resourceRequests){
+                if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
+                    mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
+                }
+                
+                mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
+            }
+        }
+        
+        return mapOfProjAndResourceEmail;
+    }
 
-    /***********************************************************************************************
-    * MethodName: sendEmailNotificationToResource
-    * Description : Helper method for sendEmailToProjectResource
-    * Params: String nextInLineProjTask, String completedProjTask, String sendToUserAddress, Id projTaskId
-    * Story : STY-02213
-    * ********************************************************************************************/
+    //***********************************************************************************************
+    // MethodName: sendEmailNotificationToResource
+    // Description : Helper method for sendEmailToProjectResource
+    // Params: String nextInLineProjTask, String completedProjTask, String sendToUserAddress, Id projTaskId
+    // Story : STY-02213
+    // ********************************************************************************************
 
     private static void sendEmailNotificationToResource(String completedProjTask, String sendToUserAddress, Id projTaskId){
-        //list to store to email address
-        List<String> toEmailAddress = new List<String>();
-        toEmailAddress.add(sendToUserAddress);
-        List<String> emailTempFields = new List<String>{'ID'};
-        //Get email template
-        EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_Send_email_to_resource');
-        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplate.Id, NULL, projTaskId);
-        email.setTemplateId(emailTemplate.Id);
-        email.setToAddresses(toEmailAddress);
-        //replace '$resource$' in the email template body with the completed project task name
-        String emailBody = email.getHtmlBody().replace('$resource$', completedProjTask);
-        email.setHtmlBody(emailBody);
-        email.setSaveAsActivity(false);
-        NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+
+        if(String.isNotBlank(completedProjTask) &&
+        String.isNotBlank(sendToUserAddress) &&
+        projTaskId != null) {
+            //list to store to email address
+            List<String> toEmailAddress = new List<String>();
+            toEmailAddress.add(sendToUserAddress);
+            List<String> emailTempFields = new List<String>{'ID'};
+            //Get email template
+            EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_Send_email_to_resource');
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplate.Id, NULL, projTaskId);
+            email.setTemplateId(emailTemplate.Id);
+            email.setToAddresses(toEmailAddress);
+            //replace '$resource$' in the email template body with the completed project task name
+            String emailBody = email.getHtmlBody().replace('$resource$', completedProjTask);
+            email.setHtmlBody(emailBody);
+            email.setSaveAsActivity(false);
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+        }
     }
 
     private static void sendSingleEmailMessage( Messaging.SingleEmailMessage message ) {
