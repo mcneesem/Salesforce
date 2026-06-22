@@ -16,7 +16,12 @@
       ISPICKVAL( NSP_Product_Type__c , &apos;Learning Hosting&apos; ) ,
       CONTAINS( $Setup.Quote_Amend_Indicator_Settings__c.Product_Codes__c , SBQQ__ProductCode__c )
     ) ,
-    IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; , &apos;In Progress&apos; , 20 , 20 ) ,
+    IMAGE(
+      &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; ,
+      &apos;In Progress&apos; ,
+      20 ,
+      20
+    ) ,
     IF(
       NSP_Lock_On_QLI__c ,
       IF(
@@ -24,8 +29,18 @@
           ( SBQQ__Quote__r.NSP_Has_Renewable_Products__c &gt; 0 ) ,
           ( SBQQ__Quote__r.NSP_ListPriceProductCount__c &gt; 0 )
         ) ,
-        IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; , &apos;In Progress&apos; , 20 , 20 ) ,
-        IMAGE( &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos; , &apos;In Progress&apos; , 20 , 20 )
+        IMAGE(
+          &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusGreen.png&apos; ,
+          &apos;In Progress&apos; ,
+          20 ,
+          20
+        ) ,
+        IMAGE(
+          &apos;/resource/blng__blng_slds/assets/images/InvoiceRun_StatusRed.png&apos; ,
+          &apos;In Progress&apos; ,
+          20 ,
+          20
+        )
       ) ,
       &apos;&apos;
     )
