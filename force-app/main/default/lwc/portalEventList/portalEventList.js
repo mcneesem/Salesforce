@@ -16,6 +16,7 @@ export default class PortalEventList extends LightningElement {
             'Portal_Event__c.Name' ,
             'Portal_Event__c.StartDateTime__c' ,
             'Portal_Event__c.EndDateTime__c' ,
+            'Portal_Event__c.Meeting_URL__c' ,
             'Portal_Event__c.Rank__c' ,
             'Portal_Event__c.Status__c' ,
             'Portal_Event__c.TimeZoneSidKey__c' ,

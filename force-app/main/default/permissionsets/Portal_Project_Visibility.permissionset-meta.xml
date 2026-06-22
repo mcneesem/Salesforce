@@ -56,6 +56,11 @@
         <field>Portal_Project__c.Total_Portal_Tasks__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Project__c.Welcome_Guidance_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Portal Project Visibility</label>
     <objectPermissions>

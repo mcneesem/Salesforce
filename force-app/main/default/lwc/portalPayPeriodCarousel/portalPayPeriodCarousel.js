@@ -94,12 +94,48 @@ export default class PortalPayPeriodCarousel extends LightningElement {
     //
 
     get activePanelIndex() {
-        const index = this.indicators.findIndex( indicator => indicator.id === this.activePanelDatasetId );
+        const index = this.indicators?.findIndex( indicator => indicator?.id === this.activePanelDatasetId );
         return ( ( index < 0 ) ? 0 : index );
     }
 
     get panelCssStyle() {
         return "transform:translateX(-" + ( this.activePanelIndex * 100 ) + "%)";
+    }
+
+    //
+    //
+    //
+
+    connectedCallback() {
+        window.addEventListener( 'resize' , this.handleResize );
+    }
+
+    disconnectedCallback() {
+        window.removeEventListener( 'resize' , this.handleResize );
+    }
+
+    renderedCallback() {
+        this.calculateWidth();
+    }
+
+    handleResize = () => {
+        this.calculateWidth();
+    }
+
+    exactWidth;
+    offsetWidth;
+    calculateWidth() {
+        const container = this.template.querySelector( '[data-id="container"]' );
+        if ( container ) {
+            // bounding rect width (includes decimal numbers)
+            this.exactWidth = container.getBoundingClientRect().width;
+            // offsetWidth (returns rounded integer value)
+            this.offsetWidth = container.offsetWidth;
+        }
+    }
+
+    get isEnabledCarousel() {
+        return ( this.exactWidth && ( this.exactWidth >= 335 ) && this.hasCarouselData );
     }
 
     //

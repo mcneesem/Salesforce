@@ -1,15 +1,21 @@
 <template>
     <lightning-layout multiple-rows>
-        <lightning-layout-item size="12" padding="around-medium" style="background-color: black;">
+        <lightning-layout-item
+            size="12"
+            class="slds-p-around_xx-small"
+            style="background-color: #004C97;"
+            >
             <lightning-layout>
-                <lightning-layout-item size="6">
-                    <img src={logoInsperity} style="height: 2rem;" alt="Insperity Logo"/>
+                <lightning-layout-item size="6" class="slds-grid_vertical-align-center">
+                    <img src={logoInsperity} style="height: 4rem;" alt="Insperity Logo"/>
                 </lightning-layout-item>
-                <lightning-layout-item size="6">
+                <lightning-layout-item size="6" class="slds-grid_vertical-align-center">
                     <template lwc:if={userName}>
-                        <div class="slds-text-align_right">
+                        <div class="slds-text-align_right slds-p-around_medium">
                             <span class="slds-m-right_x-small" style="color: white; text-transform: uppercase;">{userName}</span>
-                            <img src={iconAvatarGreen} style="height: 2rem;" alt="Green Avatar Icon"/>
+                            <template lwc:if={iconAvatar}>
+                                <img src={iconAvatar} style="height: 2rem;" alt="Avatar Icon"/>
+                            </template>
                             <lightning-button-menu
                                 alternative-text="User Menu"
                                 menu-alignment="right"
@@ -55,8 +61,8 @@
                 </div>
             </template>
             <template lwc:else>
-                <lightning-layout>
-                    <template lwc:if={showVerticalNavigation}>
+                <lightning-layout pull-to-boundary="medium">
+                    <template lwc:if={isEnabledVerticalNavigation}>
                         <lightning-layout-item flexibility="no-grow, no-shrink" class="background-color-white">
                             <lightning-vertical-navigation selected-item={selectedItem}>
                                 <template lwc:if={navigationItems}>

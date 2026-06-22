@@ -4,7 +4,9 @@ import ID_FIELD from "@salesforce/schema/Portal_Team_Member__c.Id";
 import NAME_FIELD from "@salesforce/schema/Portal_Team_Member__c.Name";
 import PORTAL_PROJECT_FIELD from "@salesforce/schema/Portal_Team_Member__c.Portal_Project__c";
 import CONTACT_FIELD from "@salesforce/schema/Portal_Team_Member__c.Contact__c";
+import CONTACT_EMAIL_FIELD from "@salesforce/schema/Portal_Team_Member__c.Contact_Email__c";
 import CONTACT_NAME_FIELD from "@salesforce/schema/Portal_Team_Member__c.Contact_Name__c";
+import CONTACT_PHONE_FIELD from "@salesforce/schema/Portal_Team_Member__c.Contact_Phone__c";
 import POSITION_FIELD from "@salesforce/schema/Portal_Team_Member__c.Position__c";
 import PORTAL_GUIDANCE_FIELD from "@salesforce/schema/Portal_Team_Member__c.Portal_Guidance__c";
 
@@ -20,7 +22,9 @@ export default class PortalTeamMemberPreview extends LightningElement {
             NAME_FIELD ,
             PORTAL_PROJECT_FIELD ,
             CONTACT_FIELD ,
+            CONTACT_EMAIL_FIELD ,
             CONTACT_NAME_FIELD ,
+            CONTACT_PHONE_FIELD ,
             POSITION_FIELD ,
             PORTAL_GUIDANCE_FIELD ,
         ] ,

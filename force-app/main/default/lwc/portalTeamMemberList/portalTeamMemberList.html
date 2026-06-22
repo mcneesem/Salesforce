@@ -2,19 +2,21 @@
     <div class="slds-is-relative">
         <template lwc:if={records}>
             <template lwc:if={hasData}>
-                <lightning-card title={title}>
-                    <lightning-layout>
-                        <lightning-layout-item size="12" padding="around-small">
-                            <ul>
-                                <template for:each={records} for:item="record">
-                                    <li key={record.fields.Id.value}>
-                                        <c-portal-team-member record={record}></c-portal-team-member>
-                                    </li>
-                                </template>
-                            </ul>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </lightning-card>
+                <div class="slds-box">
+                    <lightning-card title={title}>
+                        <lightning-layout>
+                            <lightning-layout-item size="12" padding="around-small">
+                                <ul>
+                                    <template for:each={records} for:item="record">
+                                        <li key={record.fields.Id.value}>
+                                            <c-portal-team-member record={record}></c-portal-team-member>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-card>
+                </div>
             </template>
         </template>
         <template lwc:else>

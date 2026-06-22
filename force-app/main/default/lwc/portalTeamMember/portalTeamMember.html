@@ -1,15 +1,45 @@
 <template>
     <template lwc:if={record}>
-        <lightning-layout>
-            <lightning-layout-item size="6" padding="around-small">
-                {position}
-                <c-portal-guidance variant="helptext" record-id={guidanceId}></c-portal-guidance>
-            </lightning-layout-item>
-            <lightning-layout-item size="6" padding="around-small">
-                <div class="slds-text-align_right">
-                    {name}
-                </div>
-            </lightning-layout-item>
-        </lightning-layout>
+        <div class="slds-p-around_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item
+                    size={columnSizeFull}
+                    small-device-size={columnSizeFull}
+                    medium-device-size={columnSizeFull}
+                    large-device-size={columnSizeLeft}
+                    >
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size={columnSizeFull}>
+                            {name}
+                        </lightning-layout-item>
+                        <lightning-layout-item size={columnSizeFull}>
+                            {position}
+                            <c-portal-guidance variant="helptext" record-id={guidanceId}></c-portal-guidance>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item
+                    size={columnSizeFull}
+                    small-device-size={columnSizeFull}
+                    medium-device-size={columnSizeFull}
+                    large-device-size={columnSizeRight}
+                    >
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size={columnSizeFull}>
+                            <lightning-formatted-email value={email}></lightning-formatted-email>
+                        </lightning-layout-item>
+                        <lightning-layout-item size={columnSizeFull}>
+                            <lightning-icon
+                                icon-name="utility:call"
+                                size="x-small"
+                                class="slds-m-right_xx-small"
+                                >
+                            </lightning-icon>
+                            <lightning-formatted-phone value={phone}></lightning-formatted-phone>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
     </template>
 </template>

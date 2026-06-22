@@ -1,7 +1,7 @@
 <template>
-    <div class="slds-is-relative">
+    <div class="slds-is-relative" data-id="container">
         <template lwc:if={records}>
-            <template lwc:if={hasCarouselData}>
+            <template lwc:if={isEnabledCarousel}>
                 <div class="slds-carousel">
                     <div class="slds-carousel__stage">
                         <!-- AUTOPLAY -->
@@ -52,7 +52,7 @@
                 </div>
             </template>
             <template lwc:else>
-                <!-- SINGLE -->
+                <!-- LIST -->
                 <template for:each={records} for:item="record">
                     <c-portal-pay-period
                         key={record.fields.Id.value}

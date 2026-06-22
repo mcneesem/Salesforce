@@ -106,6 +106,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.StartDateTime__c</fieldItem>
                 <identifier>RecordStartDateTime__cField</identifier>
             </fieldInstance>
@@ -136,8 +146,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Status__c</fieldItem>
-                <identifier>RecordStatus_cField</identifier>
+                <fieldItem>Record.Meeting_URL__c</fieldItem>
+                <identifier>RecordMeeting_URL_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f833fff7-b00d-4bd0-a680-708084cbc80d</name>

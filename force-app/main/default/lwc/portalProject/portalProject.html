@@ -4,9 +4,11 @@
             <template lwc:if={types}>
                 <template for:each={types} for:item="type">
                     <lightning-layout-item size="12" padding="around-small" key={type}>
-                        <lightning-card title={type}>
-                            <c-portal-task-list type={type} parent-record-id={record.fields.Id.value}></c-portal-task-list>
-                        </lightning-card>
+                        <div class="slds-box">
+                            <lightning-card title={type}>
+                                <c-portal-task-list type={type} parent-record-id={record.fields.Id.value}></c-portal-task-list>
+                            </lightning-card>
+                        </div>
                     </lightning-layout-item>
                 </template>
             </template>

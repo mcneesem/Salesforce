@@ -1,9 +1,9 @@
 <template>
     <template lwc:if={record}>
-        <lightning-layout>
-            <lightning-layout-item size="12" padding="around-small">
-                <lightning-layout multiple-rows>
-                    <lightning-layout-item size="12">
+        <div class="slds-m-around_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12">
+                    <div class="slds-text-body_regular slds-m-bottom_xx-small">
                         <lightning-formatted-date-time
                             value={startDateTime}
                             month="2-digit"
@@ -12,40 +12,45 @@
                             time-zone="UTC"
                             >
                         </lightning-formatted-date-time>
-                    </lightning-layout-item>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <div class="slds-text-body_regular slds-m-bottom_xx-small">
+                        {name}
+                    </div>
+                </lightning-layout-item>
+                <template lwc:if={startDateTime}>
                     <lightning-layout-item size="12">
-                        <lightning-layout>
-                            <lightning-layout-item size="7">
-                                {name}
-                            </lightning-layout-item>
-                            <lightning-layout-item size="5">
-                                <div class="slds-text-align_right">
-                                    <template lwc:if={startDateTime}>
-                                        <lightning-formatted-date-time
-                                            value={startDateTime}
-                                            hour="2-digit"
-                                            minute="2-digit"
-                                            time-zone={timeZoneSidKey}
-                                            >
-                                        </lightning-formatted-date-time>
-                                        <template lwc:if={endDateTime}>
-                                            &nbsp;-&nbsp;
-                                            <lightning-formatted-date-time
-                                                value={endDateTime}
-                                                hour="2-digit"
-                                                minute="2-digit"
-                                                time-zone={timeZoneSidKey}
-                                                time-zone-name="short"
-                                                >
-                                            </lightning-formatted-date-time>
-                                        </template>
-                                    </template>
-                                </div>
-                            </lightning-layout-item>
-                        </lightning-layout>
+                        <div class="slds-text-body_small slds-m-bottom_xx-small">
+                            <lightning-formatted-date-time
+                                value={startDateTime}
+                                hour="2-digit"
+                                minute="2-digit"
+                                time-zone={timeZoneSidKey}
+                                >
+                            </lightning-formatted-date-time>
+                            <template lwc:if={endDateTime}>
+                                &nbsp;-&nbsp;
+                                <lightning-formatted-date-time
+                                    value={endDateTime}
+                                    hour="2-digit"
+                                    minute="2-digit"
+                                    time-zone={timeZoneSidKey}
+                                    time-zone-name="short"
+                                    >
+                                </lightning-formatted-date-time>
+                            </template>
+                        </div>
                     </lightning-layout-item>
-                </lightning-layout>
-            </lightning-layout-item>
-        </lightning-layout>
+                </template>
+                <template lwc:if={meetingUrl}>
+                    <lightning-layout-item size="12">
+                        <div class="slds-text-body_small">
+                            <a href={meetingUrl}>Join the meeting now</a>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </div>
     </template>
 </template>

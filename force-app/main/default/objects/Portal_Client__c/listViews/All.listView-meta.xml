@@ -3,7 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Account__c</columns>
-    <columns>Client_Number__c</columns>
+    <columns>Client_Number_Formula__c</columns>
     <columns>TimeZoneSidKey__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>

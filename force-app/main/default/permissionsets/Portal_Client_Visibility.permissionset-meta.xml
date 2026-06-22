@@ -16,7 +16,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Client__c.Client_Number__c</field>
+        <field>Portal_Client__c.Client_Number_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

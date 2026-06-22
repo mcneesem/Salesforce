@@ -25,6 +25,44 @@ export default class PortalTaskList extends LightningElement {
         return ( this.isChild ? '' : '{ and: [ { Type__c: { eq: "' + this.type + '" }} , { Parent_Portal_Task__c: { eq: "" }} ] }' );
     }
 
+    //
+    //
+    //
+
+    get columnSizeFull() {
+        return 12;
+    }
+
+    get columnSizeTitle() {
+        return ( this.isChild ? 7 : 5 );
+    }
+
+    get columnSizeDueDate() {
+        return (
+            this.columnSizeFull
+            - this.columnSizeTitle
+            - this.columnSizeAction
+            - this.columnSizeUploads
+            - this.columnSizeStatus
+        );
+    }
+
+    get columnSizeAction() {
+        return 3;
+    }
+
+    get columnSizeUploads() {
+        return 1;
+    }
+
+    get columnSizeStatus() {
+        return 1;
+    }
+
+    //
+    //
+    //
+
     error;
     records;
     @wire(getRelatedListRecords, {

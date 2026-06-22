@@ -86,8 +86,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Client_Number__c</fieldItem>
-                <identifier>RecordClient_Number__cField</identifier>
+                <fieldItem>Record.Client_Number_Formula__c</fieldItem>
+                <identifier>RecordClient_Number_Formula_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
