@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Number_Of_Active_WSEEs__c</fullName>
     <externalId>false</externalId>
-    <formula>Case__r.Asset.NSP_Active_No_Employees__c</formula>
+    <formula>Case__r.Asset.NSP_Unique_Active_Employee__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Number Of Active WSEEs</label>
     <precision>18</precision>
