@@ -2,7 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Provides access to create, view, and edit Credit Defaults, including the Credit Default Creation Flow.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Create Credit Default</label>
+    <label>Credit Default Admin</label>
     <permissionSets>Credit_Default_Access</permissionSets>
     <permissionSets>Credit_Default_Screen_Creation</permissionSets>
     <permissionSets>Credit_Default_Visibility</permissionSets>
