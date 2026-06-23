@@ -10,14 +10,16 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     private Date eligibleStart;
     private Date eligibleEnd;
 
-    Map<String, NSP_Sales_Office_Mapping__c> salesOfficeMap = new Map<String, NSP_Sales_Office_Mapping__c>();
+    Map<String,NSP_Sales_Office_Mapping__c> salesOfficeMap = new Map<String,NSP_Sales_Office_Mapping__c>();
     Map<Id,Id> accountParentOpportunityMap = new Map<Id,Id>();
     Map<Id,String> accountSubClientMap = new Map<Id,String>();
     Set<String> opportunityBenefitPackageKeys = new Set<String>();
     Map<String,NSP_Sub_Client__c> entryOpportunityMap = new Map<String,NSP_Sub_Client__c>();
-    private Map<String, Decimal> fullTimeWSEEMap = new Map<String, Decimal>();
-    private Map<String, Decimal> partTimeWSEEMap = new Map<String, Decimal>();
-    private Map<String, Decimal> seasonalTimeWSEEMap = new Map<String, Decimal>();
+    private Map<String,Decimal> fullTimeWSEEMap = new Map<String,Decimal>();
+    private Map<String,Decimal> partTimeWSEEMap = new Map<String,Decimal>();
+    private Map<String,Decimal> seasonalTimeWSEEMap = new Map<String,Decimal>();
+    private List<Database.SaveResult> dmlSaveResults = new List<Database.SaveResult>();
+    private List<Exception> executeExceptions = new List<Exception>();
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -162,11 +164,163 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     'execute' ,
                     e
                 );
+                if ( this.executeExceptions != null ) {
+                    this.executeExceptions.add( e );
+                }
             }
         }
     }
 
     public void finish( Database.BatchableContext bc ) {
+        if ( GenerateRenewalOpportunitiesJob.isEnabled ) {
+            try {
+                List<String> toUsers = new List<String>();
+                toUsers.add( UserInfo.getUserEmail() );
+                if ( ( GenerateRenewalOpportunitiesJob.monitorEmailAddresses != null )
+                    && !GenerateRenewalOpportunitiesJob.monitorEmailAddresses.isEmpty()
+                    )
+                {
+                    toUsers.addAll( GenerateRenewalOpportunitiesJob.monitorEmailAddresses );
+                }
+                GenerateRenewalOpportunitiesJob.sendEmail(
+                    toUsers ,
+                    'GenerateRenewalOpportunitiesJob Complete' ,
+                    this.constructEmailBody( bc.getJobId() )
+                );
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    GenerateRenewalOpportunitiesJob.class.getName() ,
+                    'finish' ,
+                    e
+                );
+            }
+        }
+    }
+
+    private String constructEmailBody( Id jobId ) {
+        String jobIdValue = 'N/A';
+        if ( jobId != null ) {
+            jobIdValue = String.valueOf( jobId );
+        }
+        Set<Id> oppsId = this.collectOpportunitiesModified();
+        List<AggregateResult> aggregatedOpportunities = [
+            SELECT
+                NSP_Parent_Opportunity__c parentId ,
+                COUNT(Id) cnt
+            FROM Opportunity
+            WHERE ( Id IN :oppsId )
+            GROUP BY NSP_Parent_Opportunity__c
+        ];
+        Integer parentOpportunitiesCreated = this.countParentOpportunities( aggregatedOpportunities );
+        Integer childOpportunitiesCreated = this.countChildOpportunities( aggregatedOpportunities );
+        Integer subClientsModified = this.countSubClientsModified();
+        Integer errorsEncountered = this.countDmlErrors();
+        Integer totalExecuteExceptions = 0;
+        if ( this.executeExceptions != null ) {
+            totalExecuteExceptions = this.executeExceptions.size();
+        }
+        String body =
+            'Job Id: ' + jobIdValue + '<br/>'
+            + 'Parent Opportunities Created: ' + parentOpportunitiesCreated + '<br/>'
+            + 'Child Opportunities Created: ' + childOpportunitiesCreated + '<br/>'
+            + 'SubClients Modified: ' + subClientsModified + '<br/>'
+            + 'Errors Encountered: ' + errorsEncountered + '<br/>'
+            + 'Execute Exceptions: ' + totalExecuteExceptions + '<br/>';
+
+        return body;
+    }
+
+    private Set<Id> collectOpportunitiesModified() {
+        Set<Id> oppsId = new Set<Id>();
+        if ( ( this.dmlSaveResults != null ) && !this.dmlSaveResults.isEmpty() ) {
+            for ( Database.SaveResult result : this.dmlSaveResults ) {
+                if ( result != null && result.isSuccess() ) {
+                    Id recordId = result.getId();
+                    if ( ( recordId != null )
+                        && ( recordId.getSObjectType() == Opportunity.getSObjectType() )
+                        )
+                    {
+                        oppsId.add( recordId );
+                    }
+                }
+            }
+        }
+        return oppsId;
+    }
+    
+    private Integer countSubClientsModified() {
+        Integer subClientsModified = 0;
+        if ( ( this.dmlSaveResults != null ) && !this.dmlSaveResults.isEmpty() ) {
+            for ( Database.SaveResult result : this.dmlSaveResults ) {
+                if ( result != null && result.isSuccess() ) {
+                    Id recordId = result.getId();
+                    if ( ( recordId != null )
+                        && ( recordId.getSObjectType() == NSP_Sub_Client__c.getSObjectType() )
+                        )
+                    {
+                        subClientsModified++;
+                    }
+                }
+            }
+        }
+        return subClientsModified;
+    }
+
+    private Integer countDmlErrors() {
+        Integer errorsEncountered = 0;
+        if ( ( this.dmlSaveResults != null ) && !this.dmlSaveResults.isEmpty() ) {
+            for ( Database.SaveResult result : this.dmlSaveResults ) {
+                if ( ( result == null ) || !result.isSuccess() ) {
+                    errorsEncountered++;
+                }
+            }
+        }
+        return errorsEncountered;
+    }
+
+    private Integer countParentOpportunities( List<AggregateResult> aggregatedOpportunities ) {
+        Integer parentOpportunitiesCreated = 0;
+        if ( ( aggregatedOpportunities != null ) && !aggregatedOpportunities.isEmpty() ) {
+            for ( AggregateResult ar : aggregatedOpportunities ) {
+                if ( ar.get( 'parentId' ) == null ) {
+                    parentOpportunitiesCreated = Integer.valueOf( ar.get( 'cnt' ) );
+                }
+            }
+        }
+        return parentOpportunitiesCreated;
+    }
+
+    private Integer countChildOpportunities( List<AggregateResult> aggregatedOpportunities ) {
+        Integer childOpportunitiesCreated = 0;
+        if ( ( aggregatedOpportunities != null ) && !aggregatedOpportunities.isEmpty() ) {
+            for ( AggregateResult ar : aggregatedOpportunities ) {
+                if ( ar.get( 'parentId' ) != null ) {
+                    childOpportunitiesCreated += Integer.valueOf( ar.get( 'cnt' ) );
+                }
+            }
+        }
+        return childOpportunitiesCreated;
+    }
+
+    private static void sendEmail(
+        List<String> recipients ,
+        String subject ,
+        String body
+        )
+    {
+        if ( ( recipients != null )
+            && !recipients.isEmpty()
+            && String.isNotBlank( subject )
+            && String.isNotBlank( body )
+            )
+        {
+            Map<String,Object> inputs = new Map<String,Object>();
+            inputs.put( 'toEmailAddresses' , recipients );
+            inputs.put( 'emailSubject' , subject );
+            inputs.put( 'emailBody', body );
+            Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
+            sendEmailFlow.start();
+        }
     }
 
     //
@@ -236,6 +390,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 methodName ,
                 results
             );
+            if ( this.dmlSaveResults != null ) {
+                this.dmlSaveResults.addAll( results );
+            }
             if ( records.getSObjectType() == Opportunity.getSObjectType() ) {
                 this.processOpportunitiesPostDml( records , isParent );
             }
@@ -599,7 +756,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
-                Boolean local = False;
+                Boolean local = false;
                 if ( GenerateRenewalOpportunitiesJob.settings != null ) {
                     local = GenerateRenewalOpportunitiesJob.settings.IsEnabled__c;
                 }
@@ -624,6 +781,29 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 renewalRecordTypeId  = local;
             }
             return renewalRecordTypeId;
+        }
+        private set;
+    }
+
+    private static List<String> monitorEmailAddresses  {
+        private get {
+            if ( monitorEmailAddresses == null ) {
+                List<String> local = new List<String>();
+                if ( GenerateRenewalOpportunitiesJob.settings != null ) {
+                    String rawMonitorEmailAddresses = GenerateRenewalOpportunitiesJob.settings.MonitorEmailAddresses__c;
+                    if ( String.isNotBlank( rawMonitorEmailAddresses ) ) {
+                        List<String> splitMonitorEmailAddresses = rawMonitorEmailAddresses.split( '\r\n' );
+                        if ( ( splitMonitorEmailAddresses != null )
+                            && !splitMonitorEmailAddresses.isEmpty()
+                            )
+                        {
+                            local = splitMonitorEmailAddresses;
+                        }
+                    }
+                }
+                monitorEmailAddresses = local;
+            }
+            return monitorEmailAddresses;
         }
         private set;
     }
