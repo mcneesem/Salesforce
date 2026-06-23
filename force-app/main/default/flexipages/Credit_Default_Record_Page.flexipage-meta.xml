@@ -191,7 +191,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Client_Payroll_Contact__c</fieldItem>
-                <identifier>RecordClient_Payroll_Contact_cField</identifier>
+                <identifier>RecordClient_Payroll_Contact__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

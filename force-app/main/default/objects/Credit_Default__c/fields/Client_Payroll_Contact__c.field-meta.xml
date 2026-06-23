@@ -3,9 +3,9 @@
     <fullName>Client_Payroll_Contact__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Client Payroll Contact</label>
-    <referenceTo>NSP_Sub_Client_Contact__c</referenceTo>
-    <relationshipLabel>Credit Defaults</relationshipLabel>
-    <relationshipName>Credit_Defaults</relationshipName>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Credit Defaults (Client Payroll Contact)</relationshipLabel>
+    <relationshipName>Credit_Defaults1</relationshipName>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
