@@ -204,6 +204,63 @@ private class UserAvailabilityServiceTest {
         }
         Test.stopTest();
     }
+    @isTest
+    private static void testSortUsersByDailyLoad_sortsAscending() {
+        List<User> users = getTestUsers();
+        System.assertEquals( 2, users.size(), 'Expect two test users' );
+
+        List<Id> inputIds = new List<Id>();
+        for ( User u : users ) {
+            inputIds.add( u.Id );
+        }
+
+        // Setup creates u1 with 2 events and u2 with 1 event, both today
+        Test.startTest();
+        List<User> sorted = UserAvailabilityService.sortUsersByDailyLoad( inputIds, Date.today() );
+        Test.stopTest();
+
+        System.assertNotEquals( null, sorted, 'Sorted list should not be null' );
+        System.assertEquals( 2, sorted.size(), 'Both users should be returned' );
+
+        // Identify the busier user (2 events) — must rank LAST
+        Map<Id, Integer> eventCountByUser = new Map<Id, Integer>();
+        for ( AggregateResult ar : [
+            SELECT OwnerId, COUNT(Id) cnt
+            FROM Event
+            WHERE OwnerId IN :inputIds
+            AND DAY_ONLY( StartDateTime ) = :Date.today()
+            GROUP BY OwnerId
+        ] ) {
+            eventCountByUser.put( (Id) ar.get('OwnerId'), (Integer) ar.get('cnt') );
+        }
+
+        Integer firstLoad = eventCountByUser.containsKey( sorted[0].Id )
+            ? eventCountByUser.get( sorted[0].Id ) : 0;
+        Integer lastLoad = eventCountByUser.containsKey( sorted[ sorted.size() - 1 ].Id )
+            ? eventCountByUser.get( sorted[ sorted.size() - 1 ].Id ) : 0;
+
+        System.assertEquals(
+            true,
+            firstLoad <= lastLoad,
+            'Users should be sorted ascending by event count for the day'
+        );
+    }
+
+    @isTest
+    private static void testSortUsersByDailyLoad_nullAndEmptyGuards() {
+        Test.startTest();
+        List<User> r1 = UserAvailabilityService.sortUsersByDailyLoad( null, Date.today() );
+        List<User> r2 = UserAvailabilityService.sortUsersByDailyLoad( new List<Id>(), Date.today() );
+        List<User> r3 = UserAvailabilityService.sortUsersByDailyLoad(
+            new List<Id>{ UserInfo.getUserId() },
+            null
+        );
+        Test.stopTest();
+
+        System.assertEquals( 0, r1.size(), 'Null userIds should return empty list' );
+        System.assertEquals( 0, r2.size(), 'Empty userIds should return empty list' );
+        System.assertEquals( 0, r3.size(), 'Null date should return empty list' );
+    }
 
     @isTest
     private static void testGetEventsForUser_privateHelpers_viaPublicPaths() {

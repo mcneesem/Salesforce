@@ -417,6 +417,7 @@ public with sharing class UserAvailabilityService {
         return stepMinutes;
     }
 
+    //DEPRECATED
     public static List<Id> getAvailableUsersForWindow(
         Datetime startDateTime ,
         Datetime endDateTime ,
@@ -483,6 +484,7 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
+    //DEPRECATED
     private static List<Id> getAvailableUsersForWindowHelper(
         Map<Id,List<Event>> busyByUser ,
         Set<Id> userIds ,
@@ -516,6 +518,114 @@ public with sharing class UserAvailabilityService {
             }
         }
         return availableUsers;
+    }
+
+    private static Map<Id,User> getUsers( Set<Id> userIdSet ) {
+        Map<Id,User> usersById = new Map<Id,User>();
+        if ( ( userIdSet != null ) && !userIdSet.isEmpty() ) {
+            usersById = new Map<Id,User>(
+                [
+                    SELECT
+                        Id ,
+                        Name ,
+                        Email ,
+                        Title
+                    FROM User
+                    WHERE ( Id IN :userIdSet )
+                ]
+            );
+        }
+        return usersById;
+    }
+
+    public static List<User> sortUsersByDailyLoad( List<Id> userIds , Date selectedDate ) {
+        List<User> sorted = new List<User>();
+        if ( ( userIds != null )
+            && !userIds.isEmpty()
+            && ( selectedDate != null )
+            )
+        {
+            DateTime dayStart = DateTime.newInstanceGmt(
+                selectedDate.year() ,
+                selectedDate.month() ,
+                selectedDate.day() ,
+                0 ,
+                0 ,
+                0
+            );
+            DateTime dayEnd = dayStart.addDays( 1 );
+            Event dayWindow = new Event(
+                StartDateTime=dayStart ,
+                EndDateTime=dayEnd
+            );
+            Set<Id> userIdSet = new Set<Id>( userIds );
+            List<Event> events = UserAvailabilityService.getEventsForUser( userIdSet , dayWindow );
+            events = UserAvailabilityService.addBufferToEvents( events );
+            Map<Id,List<Event>> busyByUser = UserAvailabilityService.initializeBusyUserMap( userIdSet );
+            if ( ( events != null ) && !events.isEmpty() ) {
+                for ( Event e : events ) {
+                    if ( ( busyByUser != null ) && busyByUser.containsKey( e.OwnerId ) ) {
+                        busyByUser.get( e.OwnerId ).add( e );
+                    }
+                }
+            }
+            // Query User records for all IDs in one bulkified query
+            Map<Id,User> usersById = UserAvailabilityService.getUsers( userIdSet );
+            sorted = UserAvailabilityService.sortUsers( 
+                UserAvailabilityService.evaluateUserEventLoad( userIds , busyByUser ) ,
+                usersById
+            );
+        }
+        return sorted;
+    }
+
+    private static List<UserEventLoad> evaluateUserEventLoad( List<Id> userIds , Map<Id,List<Event>> busyByUser ) {
+        List<UserEventLoad> evaluated = new List<UserEventLoad>();
+        if( ( userIds != null ) && !userIds.isEmpty() ) {
+            for ( Id uid : userIds ) {
+                List<Event> userEvents = new List<Event>();
+                if ( ( busyByUser != null ) && busyByUser.containsKey( uid ) ) {
+                    userEvents = busyByUser.get( uid );
+                }
+                Integer load = ( ( userEvents != null ) ? userEvents.size() : 0 );
+                evaluated.add( new UserEventLoad( uid , load ) );
+            }
+        }
+        return evaluated;
+    }
+
+    private static List<User> sortUsers( List<UserEventLoad> prepared , Map<Id,User> usersById ) {
+        List<User> sorted = new List<User>();
+        if ( ( prepared != null ) && !prepared.isEmpty() ) {
+            prepared.sort();
+            for ( UserEventLoad u : prepared ) {
+                if ( ( usersById != null ) && usersById.containsKey( u.userId ) ) {
+                    sorted.add( usersById.get( u.userId ) );
+                }
+            }
+        }
+        return sorted;
+    }
+
+    // Rank users by event load, ascending
+    private class UserEventLoad implements Comparable {
+        private Id userId;
+        private Integer eventCount;
+        private UserEventLoad( Id userId, Integer eventCount ) {
+            this.userId = userId;
+            this.eventCount = eventCount;
+        }
+        public Integer compareTo( Object other ) {
+            UserEventLoad o = (UserEventLoad) other;
+            Integer local = 0;
+            if ( this.eventCount < o.eventCount ) {
+                local = -1;
+            }
+            if ( this.eventCount > o.eventCount ) {
+                local = 1;
+            }
+            return local;
+        }
     }
 
     private static List<Event> getEventsForUser( Set<Id> userIds , Event window ) {

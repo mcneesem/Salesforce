@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_Users</name>
-        <label>Get Users</label>
+        <name>Get_Available_Users_sorted</name>
+        <label>Get Available Users sorted</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <actionName>UserAvailabilityFlow</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Records_Null_Check</targetReference>
+            <targetReference>Availability_Matrix_Null_Check</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Element_Assignment_Get_Users</targetReference>
+            <targetReference>Fault_Element_Assignment_Get_Available_Users_sorted</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>endDateTime</name>
+            <name>selectedDate</name>
             <value>
-                <elementReference>Seller.endDateTime</elementReference>
+                <elementReference>selectedDate</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>skill</name>
+            <name>userIds</name>
             <value>
-                <elementReference>Seller.skill</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>startDateTime</name>
-            <value>
-                <elementReference>Seller.startDateTime</elementReference>
+                <elementReference>Available_User_Ids</elementReference>
             </value>
         </inputParameters>
         <nameSegment>UserAvailabilityFlow</nameSegment>
@@ -154,6 +148,23 @@
         </assignmentItems>
         <connector>
             <targetReference>Create_Event_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_Assignment_Get_Available_Users_sorted</name>
+        <label>Fault Element Assignment Get_Available_Users_sorted</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Available_Users_sorted</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -455,7 +466,7 @@
     </decisions>
     <dynamicChoiceSets>
         <name>AvailableUsers</name>
-        <collectionReference>Get_User_Records</collectionReference>
+        <collectionReference>Get_Available_Users_sorted</collectionReference>
         <dataType>String</dataType>
         <displayField>Name</displayField>
         <object>User</object>
@@ -467,6 +478,11 @@
         <dataType>Boolean</dataType>
         <expression>IF({!$Permission.Schedule_Seller_Admin}, TRUE, FALSE)</expression>
     </formulas>
+    <formulas>
+        <name>selectedDate</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE({!Seller.startDateTime})</expression>
+    </formulas>
     <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Schedule Seller</label>
@@ -475,8 +491,8 @@
         <label>Loop Users</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Get_User_Records</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
+        <collectionReference>Get_Available_Users_sorted</collectionReference>
+        <iterationOrder>Desc</iterationOrder>
         <nextValueConnector>
             <targetReference>Demo_Owner_Automatically_Assigned</targetReference>
         </nextValueConnector>
@@ -880,6 +896,27 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Available_User_Ids</name>
+        <label>Available User Ids</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Available_Users_sorted</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Seller.availableUserIds[$EachItem]</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>chooseDemoOwner</name>
         <dataType>String</dataType>
