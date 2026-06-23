@@ -293,11 +293,12 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         serviceAppointmentRecToUpdate.Description = mapWorkOrderProjectTask.pse__Long_Description__c;
         serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;
         serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;
-        // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from Dispatched/In Progress to null: [Status]
+        // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from *** to null: [Status]
         serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
         if ( String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
-            && mapWorkOrderProjectTask.pse__Status__c != 'null'
-        ) {
+            && ( mapWorkOrderProjectTask.pse__Status__c != 'null' )
+            )
+        {
             serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
         }
         serviceAppointmentRecToUpdate.Duration = (
