@@ -51,12 +51,35 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Work_Email_And_Phone_Assignment_Wipe_Out</name>
+        <label>Work Email And Phone Assignment Wipe Out</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.FDM_Phone_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FDM_Work_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>ACR_Found</name>
         <label>ACR Found</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Work_Email_And_Phone_Assignment_Wipe_Out</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
