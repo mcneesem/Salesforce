@@ -1,16 +1,16 @@
 ({
     saveLead : function(component, event) {
-        var action = component.get("c.createAccount");
-        var accountObject = component.get("v.AccountObj");
-        var conObj = component.get("v.contactObj"); // Added as part of STY-02211
+        let action = component.get("c.createAccount");
+        let accountObject = component.get("v.AccountObj");
+        let conObj = component.get("v.contactObj"); // Added as part of STY-02211
             action.setParams({ accountObject : JSON.stringify(accountObject),
                             contactObject : JSON.stringify(conObj)});
             action.setCallback(this, function(response) {
-            var state = response.getState();
+            let state = response.getState();
             if (state == "SUCCESS") {
                 if(response.getReturnValue() === "success"){
-                    var base_url = window.location.origin;
-                    window.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Partner");
+                    let base_url = globalThis.location.origin;
+                    globalThis.location.href = base_url +$A.get("$Label.c.NSP_ThankYou_Partner");
                     component.set("v.isSpinner", false);
                 }else if(response.getReturnValue() === "exists"){
                     this.showErrorModal(component, event, $A.get("$Label.c.NSP_Partner_Form_Duplicate_Account_Message"));
@@ -25,13 +25,13 @@
         $A.enqueueAction(action);
     },
     getPicklistValues : function(component, event) {
-        var action = component.get("c.returnAllPickListValues");
+        let action = component.get("c.returnAllPickListValues");
         action.setCallback(this, function(response) {
-            var state = response.getState();
+            let state = response.getState();
 
             if (state == "SUCCESS") {
 
-                var picklistvalues = response.getReturnValue();
+                let picklistvalues = response.getReturnValue();
 
                 if(picklistvalues.fieldAPIName === ''){
 
@@ -62,16 +62,16 @@
     },
 
     getStatePicklistValues : function(component, event) {
-        var action = component.get("c.getDependentMap");
+        let action = component.get("c.getDependentMap");
         action.setParams({ objDetail : component.get("v.AccountObj"),
                         contrfieldApiName : 'BillingCountryCode',
                             depfieldApiName : 'BillingStateCode'});
         action.setCallback(this, function(response) {
-            var state = response.getState();
+            let state = response.getState();
 
             if (state == "SUCCESS") {
 
-                var picklistvalues = response.getReturnValue();
+                let picklistvalues = response.getReturnValue();
 
                 component.set("v.state",picklistvalues['United States']);
                 component.set("v.AccountObj.BillingState",picklistvalues['United States'][0]);
