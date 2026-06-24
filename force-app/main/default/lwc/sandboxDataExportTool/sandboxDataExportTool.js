@@ -17,7 +17,6 @@ export default class SandboxDataExportTool extends LightningElement {
     defsLoading = true;
 
     isExporting = false;
-    currentExportStep = null;
     exportCompletedCount = 0;
     exportResults = [];
 
@@ -66,7 +65,7 @@ export default class SandboxDataExportTool extends LightningElement {
     }
 
     get isVisible() {
-        return !this.healthLoading && this.isSandbox;
+        return !this.healthLoading && !this.isSandbox;
     }
 
     get hasError() {
@@ -104,11 +103,8 @@ export default class SandboxDataExportTool extends LightningElement {
         return this.definitions.length === 1 ? '' : 's';
     }
 
-    get progressSteps() {
-        return (this.definitions || []).map((d) => ({
-            value: d.developerName,
-            label: d.label || d.developerName
-        }));
+    get exportResultsCountSuffix() {
+        return this.sortedExportResults.length === 1 ? '' : 's';
     }
 
     get exportStatusText() {
@@ -118,7 +114,7 @@ export default class SandboxDataExportTool extends LightningElement {
         return `Running export ${current} of ${total}…`;
     }
 
-    // ── Button state getters ──────────────────────────────────────
+// ── Button state getters ──────────────────────────────────────
 
     get isExportAllDisabled() {
         return this.isGateLocked || this.isExporting || !this.hasDefinitions;
@@ -136,6 +132,18 @@ export default class SandboxDataExportTool extends LightningElement {
             return 'Export in progress…';
         }
         return 'Download all configured exports as CSV files';
+    }
+
+    get isPreExport() {
+        return !this.isExporting && !this.hasResults;
+    }
+
+    get isAllExportsPass() {
+        return !this.isExporting && this.hasResults && this.exportResults.every(r => r.isPass);
+    }
+
+    get hasExportFailures() {
+        return !this.isExporting && this.exportResults.some(r => r.isFail);
     }
 
     get hasResults() {

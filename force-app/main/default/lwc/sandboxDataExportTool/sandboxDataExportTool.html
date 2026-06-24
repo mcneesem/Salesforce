@@ -24,52 +24,68 @@
 
                 <!-- Gate locked warning (static — use role="status") -->
                 <template lwc:if={isGateLocked}>
-                    <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-around_small" role="status">
+                    <div class="slds-box slds-theme_warning slds-m-around_small slds-grid slds-grid_vertical-align-center" role="status">
                         <lightning-icon
                             icon-name="utility:warning"
                             alternative-text="Warning"
                             size="x-small"
                             class="slds-m-right_x-small">
                         </lightning-icon>
-                        <span>
-                            <strong>Export All</strong> is disabled until the
-                            <strong>ExternalId Objects</strong> health check shows
-                            <strong>PASS</strong>.
-                        </span>
+                        <span><strong>Export All</strong> is disabled until the <strong>ExternalId Objects</strong> health check shows <strong>PASS</strong>.</span>
                     </div>
                 </template>
 
                 <template lwc:if={hasDefinitions}>
-                    <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-                        <p class="slds-text-body_small">
-                            {definitions.length} export{definitionCountSuffix} configured.
-                        </p>
-                        <lightning-button-icon
-                            icon-name="utility:refresh"
-                            alternative-text="Refresh definitions"
-                            title="Refresh definitions"
-                            size="small"
-                            onclick={handleRefreshDefinitions}>
-                        </lightning-button-icon>
-                    </div>
-
-                    <!-- Progress path (visible while exporting) -->
-                    <template lwc:if={isExporting}>
-                        <div class="slds-p-horizontal_medium slds-p-bottom_small">
-                            <c-progress-bar
-                                steps={progressSteps}
-                                current-step={currentExportStep}>
-                            </c-progress-bar>
-                            <p class="slds-text-body_small slds-m-top_x-small slds-text-color_weak">
-                                {exportStatusText}
+                    <!-- Pre-export definition list -->
+                    <template lwc:if={isPreExport}>
+                        <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                            <p class="slds-text-body_small">
+                                {definitions.length} export{definitionCountSuffix} configured.
                             </p>
+                            <lightning-button
+                                label="Refresh"
+                                icon-name="utility:refresh"
+                                variant="neutral"
+                                onclick={handleRefreshDefinitions}>
+                            </lightning-button>
                         </div>
+
+                        <lightning-accordion allow-multiple-sections-open class="slds-m-horizontal_small slds-m-bottom_small">
+                            <lightning-accordion-section name="exports" label="Configured Exports">
+                                <ul class="slds-has-dividers_around-space">
+                                    <template for:each={definitions} for:item="def">
+                                        <li key={def.developerName} class="slds-item slds-p-vertical_xx-small slds-p-horizontal_small">
+                                            <span class="slds-text-body_small">{def.label}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </template>
+
+                    <!-- Export progress text -->
+                    <template lwc:if={isExporting}>
+                        <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_small slds-text-body_small slds-text-color_weak">
+                            {exportStatusText}
+                        </p>
                     </template>
 
                     <!-- Per-export results (pass/fail rows) -->
                     <template if:true={hasResults}>
+                        <template if:false={isExporting}>
+                            <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                                <p class="slds-text-body_small">
+                                    {exportResults.length} export{exportResultsCountSuffix} performed.
+                                </p>
+                            </div>
+                        </template>
+
                         <lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Exports">
+                                <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
+                                    <lightning-icon lwc:if={isAllExportsPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                    <lightning-icon lwc:if={hasExportFailures} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                </lightning-layout>
                                 <ul class="slds-has-dividers_around-space">
                                     <template for:each={sortedExportResults} for:item="result">
                                         <li key={result.key} class="slds-item">
