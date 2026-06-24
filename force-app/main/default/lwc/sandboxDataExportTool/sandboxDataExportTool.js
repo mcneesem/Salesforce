@@ -82,9 +82,9 @@ export default class SandboxDataExportTool extends LightningElement {
         let pass = false;
         if (this.health && Array.isArray(this.health.sections)) {
             const section = this.health.sections.find(
-                (s) => s?.key === EXTERNAL_ID_SECTION_KEY
+                s => s?.key === EXTERNAL_ID_SECTION_KEY
             );
-            pass = section != null && section.status === 'PASS';
+            pass = section?.status === 'PASS';
         }
         return pass;
     }
@@ -250,6 +250,7 @@ export default class SandboxDataExportTool extends LightningElement {
         try {
             return JSON.stringify(error);
         } catch (error) {
+            console.error('Error stringifying error object:', error);
             return 'Unknown error';
         }
     }
