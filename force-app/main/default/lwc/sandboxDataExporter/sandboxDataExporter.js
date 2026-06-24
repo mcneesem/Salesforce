@@ -19,9 +19,11 @@ export default class SandboxDataExportTool extends LightningElement {
     isExporting = false;
     exportCompletedCount = 0;
     exportResults = [];
+    selectedDeveloperNames = new Set();
 
     _wiredDefinitionsResult;
     _pendingTimeouts = [];
+    _exportQueue = [];
 
     @wire(getHealth)
     wiredHealth({ data, error }) {
@@ -41,6 +43,7 @@ export default class SandboxDataExportTool extends LightningElement {
         const { data, error } = result;
         if (data) {
             this.definitions = data;
+            this.selectedDeveloperNames = new Set(data.map(d => d.developerName));
             this.defsError = null;
         } else if (error) {
             this.definitions = [];
@@ -109,29 +112,58 @@ export default class SandboxDataExportTool extends LightningElement {
 
     get exportStatusText() {
         const done = this.exportCompletedCount;
-        const total = this.definitions.length || 0;
+        const total = this._exportQueue.length || 0;
         const current = Math.min(done + 1, total);
         return `Running export ${current} of ${total}…`;
     }
 
-// ── Button state getters ──────────────────────────────────────
+    get selectableDefinitions() {
+        return this.definitions.map(d => ({
+            ...d,
+            isSelected: this.selectedDeveloperNames.has(d.developerName)
+        }));
+    }
+
+    get selectedDefinitions() {
+        return this.definitions.filter(d => this.selectedDeveloperNames.has(d.developerName));
+    }
+
+    get selectedCount() {
+        return this.selectedDeveloperNames.size;
+    }
+
+    get selectedCountSuffix() {
+        return this.selectedCount === 1 ? '' : 's';
+    }
+
+    get isAllSelected() {
+        return this.definitions.length > 0 && this.selectedCount === this.definitions.length;
+    }
+
+    get isNoneSelected() {
+        return this.selectedCount === 0;
+    }
+
+    // ── Button state getters ──────────────────────────────────────
 
     get isExportAllDisabled() {
-        return this.isGateLocked || this.isExporting || !this.hasDefinitions;
+        return this.isGateLocked || this.isExporting || !this.hasDefinitions || this.isNoneSelected;
     }
 
     get exportButtonLabel() {
-        return this.isExporting ? 'Exporting…' : 'Export All';
+        return this.isExporting ? 'Exporting…' : 'Export';
     }
 
     get exportButtonTitle() {
         let title;
         if (this.isGateLocked) {
             title = 'ExternalId Objects health check must PASS before exporting';
+        } else if (this.isNoneSelected) {
+            title = 'Select at least one export to run';
         } else if (this.isExporting) {
             title = 'Export in progress…';
         } else {
-            title = 'Download all configured exports as CSV files';
+            title = 'Download selected exports as CSV files';
         }
         return title;
     }
@@ -154,15 +186,19 @@ export default class SandboxDataExportTool extends LightningElement {
 
     get sortedExportResults() {
         return [...this.exportResults].sort((a, b) => {
-            if (a.isFail === b.isFail) return 0;
-            return a.isFail ? -1 : 1;
+            let order = 0;
+            if (a.isFail !== b.isFail) {
+                order = a.isFail ? -1 : 1;
+            }
+            return order;
         });
     }
 
     // ── Event handlers ────────────────────────────────────────────
 
-    handleExportAll() {
+    handleExport() {
         if (!this.isExportAllDisabled) {
+            this._exportQueue = [...this.selectedDefinitions];
             this.isExporting = true;
             this.exportCompletedCount = 0;
             this.exportResults = [];
@@ -170,8 +206,28 @@ export default class SandboxDataExportTool extends LightningElement {
         }
     }
 
+    handleSelectAll() {
+        this.selectedDeveloperNames = new Set(this.definitions.map(d => d.developerName));
+    }
+
+    handleDeselectAll() {
+        this.selectedDeveloperNames = new Set();
+    }
+
+    handleDefinitionToggle(event) {
+        const developerName = event.target.dataset.developerName;
+        const next = new Set(this.selectedDeveloperNames);
+        if (event.target.checked) {
+            next.add(developerName);
+        } else {
+            next.delete(developerName);
+        }
+        this.selectedDeveloperNames = next;
+    }
+
     handleRefreshDefinitions() {
         this.defsLoading = true;
+        this.exportResults = [];
         refreshApex(this._wiredDefinitionsResult).finally(() => {
             this.defsLoading = false;
         });
@@ -180,10 +236,10 @@ export default class SandboxDataExportTool extends LightningElement {
     // ── Private helpers ───────────────────────────────────────────
 
     runNextExport(index) {
-        if (index >= this.definitions.length) {
+        if (index >= this._exportQueue.length) {
             this.finishExport();
         } else {
-            const def = this.definitions[index];
+            const def = this._exportQueue[index];
             this.currentExportStep = def.developerName;
 
             executeExport({ developerName: def.developerName })
@@ -247,6 +303,7 @@ export default class SandboxDataExportTool extends LightningElement {
             try {
                 message = JSON.stringify(error);
             } catch (stringifyError) {
+                console.error('Error stringifying the error object:', stringifyError);
                 message = 'Unknown error';
             }
         }
