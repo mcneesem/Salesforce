@@ -22,9 +22,8 @@
             <!-- Main content -->
             <template lwc:if={isContentVisible}>
 
-                <!-- Gate locked warning (static — use role="status") -->
                 <template lwc:if={isGateLocked}>
-                    <div class="slds-box slds-theme_warning slds-m-around_small slds-grid slds-grid_vertical-align-center" role="status">
+                    <output class="slds-box slds-theme_warning slds-m-around_small slds-grid slds-grid_vertical-align-center">
                         <lightning-icon
                             icon-name="utility:warning"
                             alternative-text="Warning"
@@ -32,7 +31,7 @@
                             class="slds-m-right_x-small">
                         </lightning-icon>
                         <span><strong>Export All</strong> is disabled until the <strong>ExternalId Objects</strong> health check shows <strong>PASS</strong>.</span>
-                    </div>
+                    </output>
                 </template>
 
                 <template lwc:if={hasDefinitions}>
