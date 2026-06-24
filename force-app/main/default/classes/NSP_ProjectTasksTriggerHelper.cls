@@ -2659,9 +2659,8 @@ public class NSP_ProjectTasksTriggerHelper {
 
     private static void sendEmailNotificationToResource(String completedProjTask, String sendToUserAddress, Id projTaskId){
 
-        if(String.isNotBlank(completedProjTask) &&
-        String.isNotBlank(sendToUserAddress) &&
-        projTaskId != null) {
+        if(String.isNotBlank(sendToUserAddress) &&
+        projTaskId != null ) {
             //list to store to email address
             List<String> toEmailAddress = new List<String>();
             toEmailAddress.add(sendToUserAddress);
