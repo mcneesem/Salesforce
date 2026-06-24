@@ -30,7 +30,7 @@
                             size="x-small"
                             class="slds-m-right_x-small">
                         </lightning-icon>
-                        <span><strong>Export All</strong> is disabled until the <strong>ExternalId Objects</strong> health check shows <strong>PASS</strong>.</span>
+                        <span><strong>Export</strong> is disabled until the <strong>ExternalId Objects</strong> health check shows <strong>PASS</strong>.</span>
                     </output>
                 </template>
 
@@ -39,7 +39,7 @@
                     <template lwc:if={isPreExport}>
                         <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
                             <p class="slds-text-body_small">
-                                {definitions.length} export{definitionCountSuffix} configured.
+                                {selectedCount} of {definitions.length} export{definitionCountSuffix} selected.
                             </p>
                             <lightning-button
                                 label="Refresh"
@@ -51,10 +51,20 @@
 
                         <lightning-accordion allow-multiple-sections-open class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Configured Exports">
+                                <div slot="actions" class="slds-grid slds-grid_vertical-align-center slds-m-right_small">
+                                    <lightning-button-icon lwc:if={isAllSelected} icon-name="utility:check" alternative-text="Deselect all" title="Deselect all" variant="bare" size="small" onclick={handleDeselectAll}></lightning-button-icon>
+                                    <lightning-button-icon lwc:else icon-name="utility:add" alternative-text="Select all" title="Select all" variant="bare" size="small" onclick={handleSelectAll}></lightning-button-icon>
+                                </div>
                                 <ul class="slds-has-dividers_around-space">
-                                    <template for:each={definitions} for:item="def">
+                                    <template for:each={selectableDefinitions} for:item="def">
                                         <li key={def.developerName} class="slds-item slds-p-vertical_xx-small slds-p-horizontal_small">
-                                            <span class="slds-text-body_small">{def.label}</span>
+                                            <lightning-input
+                                                type="checkbox"
+                                                label={def.label}
+                                                checked={def.isSelected}
+                                                data-developer-name={def.developerName}
+                                                onchange={handleDefinitionToggle}>
+                                            </lightning-input>
                                         </li>
                                     </template>
                                 </ul>
@@ -76,6 +86,12 @@
                                 <p class="slds-text-body_small">
                                     {exportResults.length} export{exportResultsCountSuffix} performed.
                                 </p>
+                                <lightning-button
+                                    label="Refresh"
+                                    icon-name="utility:refresh"
+                                    variant="neutral"
+                                    onclick={handleRefreshDefinitions}>
+                                </lightning-button>
                             </div>
                         </template>
 
@@ -126,7 +142,7 @@
                         icon-name="utility:download"
                         disabled={isExportAllDisabled}
                         title={exportButtonTitle}
-                        onclick={handleExportAll}>
+                        onclick={handleExport}>
                     </lightning-button>
                 </div>
             </template>
