@@ -34,21 +34,28 @@
                     </output>
                 </template>
 
+                <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <template if:false={isExporting}>
+                        <p class="slds-text-body_small">
+                            <template lwc:if={isPreExport}>
+                                {selectedCount} of {definitions.length} export{definitionCountSuffix} selected.
+                            </template>
+                            <template lwc:if={hasResults}>
+                                {exportResults.length} export{exportResultsCountSuffix} performed.
+                            </template>
+                        </p>
+                        <lightning-button
+                            label="Refresh"
+                            icon-name="utility:refresh"
+                            variant="neutral"
+                            onclick={handleRefreshDefinitions}>
+                        </lightning-button>
+                    </template>
+                </div>
+
                 <template lwc:if={hasDefinitions}>
                     <!-- Pre-export definition list -->
                     <template lwc:if={isPreExport}>
-                        <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-                            <p class="slds-text-body_small">
-                                {selectedCount} of {definitions.length} export{definitionCountSuffix} selected.
-                            </p>
-                            <lightning-button
-                                label="Refresh"
-                                icon-name="utility:refresh"
-                                variant="neutral"
-                                onclick={handleRefreshDefinitions}>
-                            </lightning-button>
-                        </div>
-
                         <lightning-accordion allow-multiple-sections-open class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Configured Exports">
                                 <div slot="actions" class="slds-grid slds-grid_vertical-align-center slds-m-right_small">
@@ -74,27 +81,13 @@
 
                     <!-- Export progress text -->
                     <template lwc:if={isExporting}>
-                        <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_small slds-text-body_small slds-text-color_weak">
+                        <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-text-body_small slds-text-color_weak">
                             {exportStatusText}
                         </p>
                     </template>
 
                     <!-- Per-export results (pass/fail rows) -->
                     <template if:true={hasResults}>
-                        <template if:false={isExporting}>
-                            <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-                                <p class="slds-text-body_small">
-                                    {exportResults.length} export{exportResultsCountSuffix} performed.
-                                </p>
-                                <lightning-button
-                                    label="Refresh"
-                                    icon-name="utility:refresh"
-                                    variant="neutral"
-                                    onclick={handleRefreshDefinitions}>
-                                </lightning-button>
-                            </div>
-                        </template>
-
                         <lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Exports">
                                 <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
