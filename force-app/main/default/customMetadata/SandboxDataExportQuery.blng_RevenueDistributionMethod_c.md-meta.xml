@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>blng__RevenueDistributionMethod__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FileName__c</field>
+        <value xsi:type="xsd:string">blng__RevenueDistributionMethod__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SOQLQuery__c</field>
+        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,Id, blng__Active__c,blng__DistributionMethod__c,blng__FullRecognitionDate__c,blng__MonthlyRecognitionProration__c,blng__Notes__c,blng__RevenueScheduleTermEndDate__c,blng__RevenueScheduleTermStartDate__c,blng__RevenueTransactionCreationProcess__c,blng__Type__c,Name FROM blng__RevenueDistributionMethod__c</value>
+    </values>
+    <values>
+        <field>SortOrder__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

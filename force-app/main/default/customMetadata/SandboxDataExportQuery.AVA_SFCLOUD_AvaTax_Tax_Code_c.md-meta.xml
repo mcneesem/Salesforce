@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>AVA_SFCLOUD__AvaTax_Tax_Code__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FileName__c</field>
+        <value xsi:type="xsd:string">AVA_SFCLOUD__AvaTax_Tax_Code__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SOQLQuery__c</field>
+        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,Id,AVA_SFCLOUD__companyId__c,AVA_SFCLOUD__description__c,AVA_SFCLOUD__entityUseCode__c,AVA_SFCLOUD__goodsServiceCode__c,AVA_SFCLOUD__isActive__c,AVA_SFCLOUD__isPhysical__c,AVA_SFCLOUD__isSSTCertified__c,AVA_SFCLOUD__parentTaxCode__c,AVA_SFCLOUD__taxCodeTypeId__c,CreatedById,CreatedDate,CurrencyIsoCode,IsDeleted,LastModifiedById,LastModifiedDate,LastReferencedDate,LastViewedDate,Name,OwnerId FROM AVA_SFCLOUD__AvaTax_Tax_Code__c</value>
+    </values>
+    <values>
+        <field>SortOrder__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
