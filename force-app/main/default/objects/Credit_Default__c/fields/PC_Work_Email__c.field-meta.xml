@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PC_Work_Email__c</fullName>
+    <description>Payroll Contact Work Email</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>PC Work Email</label>
