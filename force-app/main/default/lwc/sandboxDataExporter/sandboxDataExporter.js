@@ -125,13 +125,15 @@ export default class SandboxDataExportTool extends LightningElement {
     }
 
     get exportButtonTitle() {
+        let title;
         if (this.isGateLocked) {
-            return 'ExternalId Objects health check must PASS before exporting';
+            title = 'ExternalId Objects health check must PASS before exporting';
+        } else if (this.isExporting) {
+            title = 'Export in progress…';
+        } else {
+            title = 'Download all configured exports as CSV files';
         }
-        if (this.isExporting) {
-            return 'Export in progress…';
-        }
-        return 'Download all configured exports as CSV files';
+        return title;
     }
 
     get isPreExport() {
@@ -160,14 +162,12 @@ export default class SandboxDataExportTool extends LightningElement {
     // ── Event handlers ────────────────────────────────────────────
 
     handleExportAll() {
-        if (this.isExportAllDisabled) {
-            return;
+        if (!this.isExportAllDisabled) {
+            this.isExporting = true;
+            this.exportCompletedCount = 0;
+            this.exportResults = [];
+            this.runNextExport(0);
         }
-        this.isExporting = true;
-        this.exportCompletedCount = 0;
-        this.exportResults = [];
-
-        this.runNextExport(0);
     }
 
     handleRefreshDefinitions() {
@@ -182,34 +182,33 @@ export default class SandboxDataExportTool extends LightningElement {
     runNextExport(index) {
         if (index >= this.definitions.length) {
             this.finishExport();
-            return;
+        } else {
+            const def = this.definitions[index];
+            this.currentExportStep = def.developerName;
+
+            executeExport({ developerName: def.developerName })
+                .then((csv) => {
+                    this.triggerCsvDownload(def.fileName + '.csv', csv || '');
+                    this.exportCompletedCount = index + 1;
+                    this.exportResults = [
+                        ...this.exportResults,
+                        { key: def.developerName, label: def.label || def.developerName, isPass: true, isFail: false, message: def.fileName + '.csv' }
+                    ];
+                })
+                .catch((err) => {
+                    this.exportCompletedCount = index + 1;
+                    this.exportResults = [
+                        ...this.exportResults,
+                        { key: def.developerName, label: def.label || def.developerName, isPass: false, isFail: true, message: this.extractErrorMessage(err) }
+                    ];
+                })
+                .finally(() => {
+                    const timeoutId = setTimeout(() => {
+                        this.runNextExport(index + 1);
+                    }, DOWNLOAD_DELAY_MS);
+                    this._pendingTimeouts.push(timeoutId);
+                });
         }
-
-        const def = this.definitions[index];
-        this.currentExportStep = def.developerName;
-
-        executeExport({ developerName: def.developerName })
-            .then((csv) => {
-                this.triggerCsvDownload(def.fileName + '.csv', csv || '');
-                this.exportCompletedCount = index + 1;
-                this.exportResults = [
-                    ...this.exportResults,
-                    { key: def.developerName, label: def.label || def.developerName, isPass: true, isFail: false, message: def.fileName + '.csv' }
-                ];
-            })
-            .catch((err) => {
-                this.exportCompletedCount = index + 1;
-                this.exportResults = [
-                    ...this.exportResults,
-                    { key: def.developerName, label: def.label || def.developerName, isPass: false, isFail: true, message: this.extractErrorMessage(err) }
-                ];
-            })
-            .finally(() => {
-                const timeoutId = setTimeout(() => {
-                    this.runNextExport(index + 1);
-                }, DOWNLOAD_DELAY_MS);
-                this._pendingTimeouts.push(timeoutId);
-            });
     }
 
     finishExport() {
@@ -235,23 +234,22 @@ export default class SandboxDataExportTool extends LightningElement {
     }
 
     extractErrorMessage(error) {
+        let message;
         if (!error) {
-            return 'Unknown error';
+            message = 'Unknown error';
+        } else if (typeof error.body?.message === 'string') {
+            message = error.body.message;
+        } else if (Array.isArray(error.body) && error.body.length > 0) {
+            message = error.body.map((e) => e.message).join(', ');
+        } else if (typeof error.message === 'string') {
+            message = error.message;
+        } else {
+            try {
+                message = JSON.stringify(error);
+            } catch (stringifyError) {
+                message = 'Unknown error';
+            }
         }
-        if (typeof error.body?.message === 'string') {
-            return error.body.message;
-        }
-        if (Array.isArray(error.body) && error.body.length > 0) {
-            return error.body.map((e) => e.message).join(', ');
-        }
-        if (typeof error.message === 'string') {
-            return error.message;
-        }
-        try {
-            return JSON.stringify(error);
-        } catch (error) {
-            console.error('Error stringifying error object:', error);
-            return 'Unknown error';
-        }
+        return message;
     }
 }
