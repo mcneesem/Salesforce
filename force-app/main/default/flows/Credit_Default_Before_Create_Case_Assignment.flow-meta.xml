@@ -124,13 +124,6 @@
                 <elementReference>BusinessAdvisor</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.Client_Address__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Client_Address__r.NSP_Address_LP__r.NSP_Address_Type__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Check_Non_Business_Advisor</targetReference>
         </connector>
