@@ -20,9 +20,9 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
      */
     public void beforeInsert(List<sObject> newList) {
         // added as a part of STY-03685
-        NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
+		NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
         caseContactTriggerHelperObj.beforeInsertDirector((List<NSP_Case_Contacts__c>)newList);
-	}
+    }
 
     /**
      * Handles after insert for Case Contacts
@@ -47,7 +47,7 @@ public class NSP_CaseContactTriggerHandler implements NSP_ITriggerHandler{
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap){
 
          NSP_CaseContactTriggerHelper caseContactTriggerHelperObj = new NSP_CaseContactTriggerHelper();
-         caseContactTriggerHelperObj.beforeUpdateDirector((Map<Id, NSP_Case_Contacts__c>) newMap,(Map<Id, NSP_Case_Contacts__c>) oldMap);
+        caseContactTriggerHelperObj.beforeUpdateDirector((Map<Id, NSP_Case_Contacts__c>) newMap,(Map<Id, NSP_Case_Contacts__c>) oldMap);
     }
 
     /**
