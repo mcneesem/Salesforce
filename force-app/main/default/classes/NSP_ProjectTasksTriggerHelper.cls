@@ -2497,29 +2497,11 @@ public class NSP_ProjectTasksTriggerHelper {
                 for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject) {
                     pse__Project_Task__c currentProjTask = mapOfProjAndProjTask.get( projTask.pse__Project__c );
                     if ( currentProjTask != null ) {
-                        Boolean checkOrder = (
-                            ( currentProjTask.pse__Order__c != null )
-                            && ( projTask.pse__Order__c == ( currentProjTask.pse__Order__c + 1 ) )
-                        );
-
-                        Boolean checkTaskOrder = (
-                            ( currentProjTask.Task_Order__c != null )
-                            && ( projTask.Task_Order__c == ( currentProjTask.Task_Order__c + 1 ) )
-                        );
-
-                        Boolean checkResponsibleParty = (
-                            projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c
-                        );
-
-                        if ( checkOrder && checkTaskOrder && checkResponsibleParty
-                        && mapOfProjAndResourceEmail.containsKey( projTask.pse__Project__c )
-                        && mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).containsKey( projTask.Responsible_Party__c )
-                        && ( mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) != null )
-                        )
-                        {
+                        String emailAddress = NSP_ProjectTasksTriggerHelper.getEmailAddress( currentProjTask, projTask, mapOfProjAndResourceEmail);
+                        if( String.isNotBlank(emailAddress) ) {
                             NSP_ProjectTasksTriggerHelper.sendEmailNotificationToResource(
                                 currentProjTask.Name ,
-                                mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) ,
+                                emailAddress ,
                                 projTask.Id
                             );
                         }
@@ -2532,6 +2514,63 @@ public class NSP_ProjectTasksTriggerHelper {
                 'sendEmailToProjectResource'
             );
         }
+    }
+
+    // ***********************************************************************************************
+    // MethodName: getEmailAddress
+    // Description: Retrieves the email address of the responsible party for the next sequential
+    //              project task. Returns the email only when the next task (projTask) immediately
+    //              follows the current task in both Order and Task_Order, AND has a different
+    //              Responsible Party — indicating a handoff to a new resource.
+    // Params: pse__Project_Task__c currentProjTask - The current project task being processed
+    //         pse__Project_Task__c projTask - The next project task to check for handoff
+    //         Map<Id, Map<String, String>> mapOfProjAndResourceEmail - Map of Project Id to
+    //              (Responsible Party -> Email) lookup
+    // Returns: String - Email address of the next task's responsible party, or empty string
+    //          if conditions are not met
+    // ***********************************************************************************************
+    private static String getEmailAddress( pse__Project_Task__c currentProjTask, pse__Project_Task__c projTask, Map<Id, Map<String, String>> mapOfProjAndResourceEmail )
+    {
+        String returnEmailAddress = '';
+        if( currentProjTask != null &&
+        projTask != null &&
+        mapOfProjAndResourceEmail != null &&
+        !mapOfProjAndResourceEmail?.isEmpty() )
+        {
+            // Check if the next task's Order is exactly one greater than the current task's Order
+            Boolean checkOrder = (
+                ( currentProjTask.pse__Order__c != null )
+                && ( projTask.pse__Order__c == ( currentProjTask.pse__Order__c + 1 ) )
+            );
+
+            // Check if the next task's Task_Order is exactly one greater than the current task's Task_Order
+            Boolean checkTaskOrder = (
+                ( currentProjTask.Task_Order__c != null )
+                && ( projTask.Task_Order__c == ( currentProjTask.Task_Order__c + 1 ) )
+            );
+
+            // Check if the responsible party has changed between the current and next task (handoff scenario)
+            Boolean checkResponsibleParty = (
+                projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c
+            );
+
+            // Check if the email for the next task's responsible party exists in the resource email map
+            Boolean checkProjectAndResourceEmail = (
+                mapOfProjAndResourceEmail.containsKey( projTask.pse__Project__c )
+                && mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).containsKey( projTask.Responsible_Party__c )
+                && ( mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) != null )
+            );
+
+            // Only return the email if all conditions are met: sequential order, task handoff, and valid email exists
+            if ( checkOrder
+            && checkTaskOrder
+            && checkResponsibleParty
+            && checkProjectAndResourceEmail ) {
+                returnEmailAddress = mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c );
+            }
+        }
+
+        return returnEmailAddress;
     }
 
     // ***********************************************************************************************
