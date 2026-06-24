@@ -25,18 +25,22 @@
                     large-device-size={columnSizeRight}
                     >
                     <lightning-layout multiple-rows>
-                        <lightning-layout-item size={columnSizeFull}>
-                            <lightning-formatted-email value={email}></lightning-formatted-email>
-                        </lightning-layout-item>
-                        <lightning-layout-item size={columnSizeFull}>
-                            <lightning-icon
-                                icon-name="utility:call"
-                                size="x-small"
-                                class="slds-m-right_xx-small"
-                                >
-                            </lightning-icon>
-                            <lightning-formatted-phone value={phone}></lightning-formatted-phone>
-                        </lightning-layout-item>
+                        <template lwc:if={email}>
+                            <lightning-layout-item size={columnSizeFull}>
+                                <lightning-formatted-email value={email}></lightning-formatted-email>
+                            </lightning-layout-item>
+                        </template>
+                        <template lwc:if={phone}>
+                            <lightning-layout-item size={columnSizeFull}>
+                                <lightning-icon
+                                    icon-name="utility:call"
+                                    size="x-small"
+                                    class="slds-m-right_xx-small"
+                                    >
+                                </lightning-icon>
+                                <lightning-formatted-phone value={phone}></lightning-formatted-phone>
+                            </lightning-layout-item>
+                        </template>
                     </lightning-layout>
                 </lightning-layout-item>
             </lightning-layout>

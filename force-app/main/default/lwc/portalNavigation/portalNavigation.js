@@ -13,36 +13,6 @@ import USER_NAME_FIELD from '@salesforce/schema/User.Name';
 export default class PortalNavigation extends NavigationMixin(LightningElement) {
     @api showVerticalNavigation;
 
-    get isEnabledVerticalNavigation() {
-        return ( this.showVerticalNavigation && ( this.currentBreakpoint == 'desktop' ) );
-    }
-
-    resizeListener;
-    connectedCallback() {
-        this.evaluateBreakpoint( window.innerWidth );
-        this.resizeListener = () => this.evaluateBreakpoint( window.innerWidth );
-        window.addEventListener( 'resize' , this.resizeListener );
-    }
-
-    disconnectedCallback() {
-        window.removeEventListener( 'resize' , this.resizeListener );
-    }
-
-    currentWidth;
-    currentBreakpoint = 'desktop';
-    evaluateBreakpoint( width ) {
-        if ( width ) {
-            this.currentWidth = width;
-            if ( width < 768 ) {
-                this.currentBreakpoint = 'mobile';
-            } else if ( ( width >= 768 ) && ( width <= 1023 ) ) {
-                this.currentBreakpoint = 'tablet';
-            } else {
-                this.currentBreakpoint = 'desktop';
-            }
-        }
-    }
-
     iconAvatarBlueCircle = portalStaticResources + '/svg/Name_BLUE_CIRCLE_RGB_30.svg';
     iconAvatarGreenCircle = portalStaticResources + '/svg/Name_GREEN_CIRCLE_RGB_30.svg';
 

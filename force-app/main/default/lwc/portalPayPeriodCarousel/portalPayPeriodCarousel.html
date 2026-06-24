@@ -1,8 +1,9 @@
 <template>
-    <div class="slds-is-relative" data-id="container">
+    <div class="slds-is-relative">
         <template lwc:if={records}>
-            <template lwc:if={isEnabledCarousel}>
-                <div class="slds-carousel">
+            <template lwc:if={hasCarouselData}>
+                <div class="slds-carousel slds-show_small">
+                    <!-- SHOW CAROUSEL ON TABLET AND DESKTOP -->
                     <div class="slds-carousel__stage">
                         <!-- AUTOPLAY -->
                         <span class="slds-carousel__autoplay">
@@ -50,9 +51,19 @@
                         </ul>
                     </div>
                 </div>
+                <div class="slds-hide_small">
+                    <!-- SHOW LIST ON MOBILE -->
+                    <template for:each={records} for:item="record">
+                        <c-portal-pay-period
+                            key={record.fields.Id.value}
+                            record={record}
+                            >
+                        </c-portal-pay-period>
+                    </template>
+                </div>
             </template>
             <template lwc:else>
-                <!-- LIST -->
+                <!-- SINGLE -->
                 <template for:each={records} for:item="record">
                     <c-portal-pay-period
                         key={record.fields.Id.value}
