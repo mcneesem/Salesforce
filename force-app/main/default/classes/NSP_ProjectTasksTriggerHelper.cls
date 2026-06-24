@@ -2469,44 +2469,63 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendEmailToProjectResourceStatic( Set<Id> projectTaskIdSet ) {
-        
         //Map of project and current project task
-        Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = NSP_ProjectTasksTriggerHelper.getProjectTaskRecordsMap( projectTaskIdSet );
-        //Map of Project and the resource email address
-        Map<Id, Map<String, String>> mapOfProjAndResourceEmail = NSP_ProjectTasksTriggerHelper.getMapOfProjAndResourceEmail( mapOfProjAndProjTask );
-        
-        try{
-            
+	    Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = NSP_ProjectTasksTriggerHelper.getProjectTaskRecordsMap( projectTaskIdSet );
+	    //Map of Project and the resource email address
+	    Map<Id, Map<String, String>> mapOfProjAndResourceEmail = NSP_ProjectTasksTriggerHelper.getMapOfProjAndResourceEmail( mapOfProjAndProjTask );
+
+        try {
+
             //Get a list of all the project task associated with the parent project
-            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = [SELECT
-                                                                      Id, Name,
-                                                                      pse__Project__c, pse__Order__c,
-                                                                      Task_Order__c, Responsible_Party__c
-                                                                      FROM
-                                                                      pse__Project_Task__c
-                                                                      WHERE
-                                                                      pse__Project__c IN :mapOfProjAndProjTask.keySet()];
-            
+            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = [
+                SELECT
+                Id, Name,
+                pse__Project__c, pse__Order__c,
+                Task_Order__c, Responsible_Party__c
+                FROM
+                pse__Project_Task__c
+                WHERE
+                pse__Project__c IN :mapOfProjAndProjTask.keySet()
+            ];
+
             //If the next in line projTask Responsibe party is diff send an email to the proj resource who's resource role matches with the next in line projTask's Responsibe party
             if(listOfAllPrjTaskForAProject != null &&
-               !listOfAllPrjTaskForAProject.isEmpty() &&
-               mapOfProjAndResourceEmail != null &&
-               !mapOfProjAndResourceEmail.isEmpty()){
-                   for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
-                       pse__Project_Task__c currentProjTask = mapOfProjAndProjTask.get(projTask.pse__Project__c);
-                       
-                       if(currentProjTask != null && projTask.pse__Order__c == currentProjTask.pse__Order__c+1 &&
-                          projTask.Task_Order__c == currentProjTask.Task_Order__c+1 &&
-                          projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c &&
-                          mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) &&
-                          mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c) &&
-                          mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c) != null){
-                              sendEmailNotificationToResource(currentProjTask.Name,
-                                                              mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c),
-                                                              projTask.Id);
-                          }
-                   }
-               }
+            !listOfAllPrjTaskForAProject.isEmpty() &&
+            mapOfProjAndResourceEmail != null &&
+            !mapOfProjAndResourceEmail.isEmpty())
+            {
+                for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject) {
+                    pse__Project_Task__c currentProjTask = mapOfProjAndProjTask.get( projTask.pse__Project__c );
+                    if ( currentProjTask != null ) {
+                        Boolean checkOrder = (
+                            ( currentProjTask.pse__Order__c != null )
+                            && ( projTask.pse__Order__c == ( currentProjTask.pse__Order__c + 1 ) )
+                        );
+
+                        Boolean checkTaskOrder = (
+                            ( currentProjTask.Task_Order__c != null )
+                            && ( projTask.Task_Order__c == ( currentProjTask.Task_Order__c + 1 ) )
+                        );
+
+                        Boolean checkResponsibleParty = (
+                            projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c
+                        );
+
+                        if ( checkOrder && checkTaskOrder && checkResponsibleParty
+                        && mapOfProjAndResourceEmail.containsKey( projTask.pse__Project__c )
+                        && mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).containsKey( projTask.Responsible_Party__c )
+                        && ( mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) != null )
+                        )
+                        {
+                            NSP_ProjectTasksTriggerHelper.sendEmailNotificationToResource(
+                                currentProjTask.Name ,
+                                mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) ,
+                                projTask.Id
+                            );
+                        }
+                    }
+                }
+            }
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
@@ -2514,7 +2533,7 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
-    
+
     // ***********************************************************************************************
     // MethodName: getProjectTaskRecordsMap
     // Description: Retrieves Project Task records that belong to RET templates and returns a map
@@ -2523,35 +2542,36 @@ public class NSP_ProjectTasksTriggerHelper {
     // Returns: Map<Id, pse__Project_Task__c> - Map of Project Id to Project Task record
     // ***********************************************************************************************
     private static Map<Id, pse__Project_Task__c> getProjectTaskRecordsMap( Set<Id> projectTaskIdSet ) {
-        
+
         //Map of project and current project task
         Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = new Map<Id, pse__Project_Task__c>();
         if( projectTaskIdSet != null && !projectTaskIdSet.isEmpty() ) {
             //A list to store all RET Templates
             List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
-            
+
             List<pse__Project_Task__c> projTaskRecords = [
                 SELECT
                 Id, Name, pse__Order__c, Task_Order__c, pse__Status__c,
                 pse__Project__r.TemplateName__c, Responsible_Party__c
                 FROM
                 pse__Project_Task__c
-                WHERE
-                Id IN: projectTaskIdSet
-                AND
-                pse__Project__r.TemplateName__c IN :retTemplateNames
+                WHERE (
+                    ( Id IN: projectTaskIdSet )
+                    AND ( pse__Project__c != null )
+                    AND ( pse__Project__r.TemplateName__c IN :retTemplateNames )
+                )
             ];
-            
+
             if( projTaskRecords != null && !projTaskRecords.isEmpty() ) {
                 for(pse__Project_Task__c projTask: projTaskRecords) {
                     mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
                 }
             }
         }
-        
+
         return mapOfProjAndProjTask;
     }
-    
+
     //***********************************************************************************************
     // MethodName: getMapOfProjAndResourceEmail
     // Description: Builds a map of Project Id to a nested map of Resource Role to the staffer's
@@ -2562,7 +2582,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static  Map<Id, Map<String, String>> getMapOfProjAndResourceEmail( Map<Id, pse__Project_Task__c> mapOfProjAndProjTask ) {
         //Map of Project and the resource email address
         Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
-        
+
         if(mapOfProjAndProjTask != null && !mapOfProjAndProjTask.isEmpty()) {
             List<pse__Resource_Request__c> resourceRequests =[
                 SELECT
@@ -2571,19 +2591,23 @@ public class NSP_ProjectTasksTriggerHelper {
                 pse__Project__c
                 FROM
                 pse__Resource_Request__c
-                WHERE
-                pse__Project__c IN: mapOfProjAndProjTask.keySet()
+                WHERE (
+                    ( pse__Project__c IN: mapOfProjAndProjTask.keySet() )
+                    AND ( pse__Staffer_Resource__c != null )
+                    AND ( pse__Staffer_Resource__r.pse__Salesforce_User__c != null )
+                    AND ( pse__Staffer_Resource__r.pse__Salesforce_User__r.Email != null )
+                    )
             ];
-            
+
             for(pse__Resource_Request__c resourceRequest: resourceRequests){
                 if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
                     mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
                 }
-                
+
                 mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
             }
         }
-        
+
         return mapOfProjAndResourceEmail;
     }
 
