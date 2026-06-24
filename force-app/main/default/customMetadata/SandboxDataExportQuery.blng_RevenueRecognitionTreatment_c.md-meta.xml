@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>blng__RevenueRecognitionTreatment__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FileName__c</field>
+        <value xsi:type="xsd:string">blng__RevenueRecognitionTreatment__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SOQLQuery__c</field>
+        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,blng__RevenueDistributionMethod__r.NSP_External_Id__c,blng__RevenueFinanceBook__r.NSP_External_Id__c,blng__RevenueGLRule__r.NSP_External_Id__c,blng__RevenueLegalEntity__r.NSP_External_Id__c,blng__RevenueRecognitionRule__r.NSP_External_Id__c,Id,blng__Active__c,blng__FlatAmount__c,blng__Notes__c,blng__Percentage__c,blng__ProcessingOrder__c,blng__RevenueAgreementAssociation__c,blng__RevenueScheduleAmount__c,blng__RevenueScheduleCreationAction__c,blng__Type__c,blng__ValidateResult__c,Name FROM blng__RevenueRecognitionTreatment__c</value>
+    </values>
+    <values>
+        <field>SortOrder__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

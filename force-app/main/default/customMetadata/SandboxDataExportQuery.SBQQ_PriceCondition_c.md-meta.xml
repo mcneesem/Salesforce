@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SBQQ__PriceCondition__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FileName__c</field>
+        <value xsi:type="xsd:string">SBQQ__PriceCondition__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SOQLQuery__c</field>
+        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,SBQQ__Rule__r.NSP_External_Id__c,SBQQ__TestedVariable__r.NSP_External_Id__c, SBQQ__Field__c, SBQQ__FilterFormula__c, SBQQ__FilterType__c, SBQQ__FilterVariable__c, SBQQ__Index__c, SBQQ__Object__c, SBQQ__Operator__c, SBQQ__TestedFormula__c, SBQQ__Value__c from SBQQ__PriceCondition__c</value>
+    </values>
+    <values>
+        <field>SortOrder__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

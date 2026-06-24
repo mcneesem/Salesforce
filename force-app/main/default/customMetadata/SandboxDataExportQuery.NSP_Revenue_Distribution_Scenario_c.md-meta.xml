@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>NSP_Revenue_Distribution_Scenario__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FileName__c</field>
+        <value xsi:type="xsd:string">NSP_Revenue_Distribution_Scenario__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SOQLQuery__c</field>
+        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,NSP_Primary_Rev_Rec_Rule__r.NSP_External_Id__c,Name,Id,NSP_Immediate_Rule_Cred__c,NSP_Immediate_Rule_Inv__c,NSP_Product__c,NSP_Project_Rev_Rec_Rule12_Cred__c,NSP_Project_Rev_Rec_Rule12_Inv__c,NSP_Project_Rev_Rec_Rule_Cred__c,NSP_Project_Rev_Rec_Rule_Inv__c,NSP_X12_Delay_1Rule_Cred__c,NSP_X12_Delay_1Rule_Inv__c,NSP_X12_Month_Rule_Cred__c,NSP_X12_Month_Rule_Inv__c FROM NSP_Revenue_Distribution_Scenario__c</value>
+    </values>
+    <values>
+        <field>SortOrder__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
