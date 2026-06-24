@@ -30,7 +30,7 @@
             <template if:true={sections}>
                 <!-- Collapsible sections using lightning-accordion -->
                 <lightning-layout-item size="12">
-                    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleToggle}>
+                    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleToggle} class="slds-m-horizontal_small slds-m-bottom_small">
                         <div class="slds-clearfix">
                             <div class="slds-float_left slds-m-left_x-small slds-p-bottom_small">
                                 <lightning-button-icon
@@ -54,7 +54,7 @@
 
                                 <!-- If this is a grouped section (e.g., Custom Settings) render nested accordion -->
                                 <template if:true={section.children}>
-                                    <lightning-accordion allow-multiple-sections-open active-section-name={activeChildSections}>
+                                    <lightning-accordion allow-multiple-sections-open active-section-name={activeChildSections} class="slds-m-horizontal_small slds-m-bottom_small">
                                         <template for:each={section.children} for:item="child">
                                             <lightning-accordion-section key={child.key} name={child.name} label={child.label}>
                                                 <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">

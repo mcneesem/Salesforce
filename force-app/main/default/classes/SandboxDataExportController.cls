@@ -1,13 +1,5 @@
-/**
- * @AuraEnabled controller for the sandboxDataExportTool LWC.
- * Reads active SandboxDataExportQuery__mdt records and executes their stored SOQL
- * queries, returning each result set as a CSV string for client-side download.
- *
- * Security: with sharing + AccessLevel.USER_MODE on all dynamic queries.
- * CMT access uses built-in static methods (no SOQL on __mdt types).
- */
 public with sharing class SandboxDataExportController {
-    // test w/ SandboxDataExportControllerTest (TBD%)
+    // test w/ SandboxDataExportControllerTest (90%)
 
     private static final String CLASS_NAME = SandboxDataExportController.class.getName();
     private static final String QUOTE      = '"';
@@ -15,27 +7,12 @@ public with sharing class SandboxDataExportController {
     private static final String COMMA      = ',';
     private static final String NEWLINE    = '\n';
 
-    // ------------------------------------------------------------
-    // Inner DTO
-    // ------------------------------------------------------------
-
-    /**
-     * Lightweight DTO sent to the LWC to populate the export table.
-     * Implements Comparable so the list can be sorted by SortOrder__c.
-     */
     public class ExportDefinition implements Comparable {
-        /** Human-readable label from the CMT record. */
         @AuraEnabled public String  label;
-        /** DeveloperName — used as the key when calling executeExport. */
         @AuraEnabled public String  developerName;
-        /** Desired CSV filename without the .csv extension. */
         @AuraEnabled public String  fileName;
-        /** Execution order; lower values run first. */
         @AuraEnabled public Integer sortOrder;
 
-        /**
-         * @param rec Active SandboxDataExportQuery__mdt record to wrap
-         */
         public ExportDefinition(SandboxDataExportQuery__mdt rec) {
             label         = rec.Label;
             developerName = rec.DeveloperName;
@@ -43,27 +20,13 @@ public with sharing class SandboxDataExportController {
             sortOrder     = (rec.SortOrder__c != null) ? rec.SortOrder__c.intValue() : 9999;
         }
 
-        /**
-         * Sorts ascending by sortOrder.
-         * @param compareTo Object to compare against
-         * @return Negative if this comes first, positive if other comes first
-         */
+        // Sorts ascending by sortOrder
         public Integer compareTo(Object compareTo) {
             ExportDefinition other = (ExportDefinition) compareTo;
             return sortOrder - other.sortOrder;
         }
     }
 
-    // ------------------------------------------------------------
-    // AuraEnabled methods
-    // ------------------------------------------------------------
-
-    /**
-     * Returns all active SandboxDataExportQuery__mdt definitions sorted by SortOrder__c.
-     * Called on LWC initialisation to populate the export table.
-     *
-     * @return Ordered list of ExportDefinition wrappers
-     */
     @AuraEnabled(cacheable=true)
     public static List<ExportDefinition> getExportDefinitions() {
         List<ExportDefinition> definitions = new List<ExportDefinition>();
@@ -85,13 +48,8 @@ public with sharing class SandboxDataExportController {
         return definitions;
     }
 
-    /**
-     * Executes the SOQL query stored in the named SandboxDataExportQuery__mdt record
-     * and returns the results as a CSV-formatted string ready for download.
-     *
-     * @param developerName DeveloperName of the SandboxDataExportQuery__mdt record to run
-     * @return CSV string with a header row followed by one data row per record
-     */
+    // Executes the SOQL query stored in the named SandboxDataExportQuery__mdt record
+    // and returns the results as a CSV-formatted string ready for download.
     @AuraEnabled
     public static String executeExport(String developerName) {
         String csvResult = '';
@@ -112,11 +70,9 @@ public with sharing class SandboxDataExportController {
                     'Export definition not found or has no query configured: ' + developerName
                 );
             }
-            List<SObject> records = Database.query(
-                queryRecord.SOQLQuery__c.trim(),
-                AccessLevel.USER_MODE
-            );
-            csvResult = buildCsv(records);
+            String soql = queryRecord.SOQLQuery__c.trim();
+            List<SObject> records = Database.query(soql, AccessLevel.USER_MODE);
+            csvResult = buildCsv(records, soql);
         } catch (AuraHandledException ahe) {
             throw ahe;
         } catch (Exception e) {
@@ -132,26 +88,24 @@ public with sharing class SandboxDataExportController {
     // Private helpers
     // ------------------------------------------------------------
 
-    private static String buildCsv(List<SObject> records) {
+    @TestVisible
+    private static String buildCsv(List<SObject> records, String soql) {
         String csv = '';
         if (records != null && !records.isEmpty()) {
-            List<String> fieldNames = new List<String>(
-                records[0].getPopulatedFieldsAsMap().keySet()
-            );
-            fieldNames.sort();
+            List<String> columns = parseSelectColumns(soql);
 
             List<String> rows = new List<String>();
             List<String> header = new List<String>();
-            for (String fieldName : fieldNames) {
-                header.add(escapeCsvValue(fieldName));
+            for (String col : columns) {
+                header.add(escapeCsvValue(col));
             }
             rows.add(String.join(header, COMMA));
 
             for (SObject record : records) {
-                Map<String, Object> fieldValues = record.getPopulatedFieldsAsMap();
+                Map<String, Object> flatValues = flattenFieldValues(record.getPopulatedFieldsAsMap());
                 List<String> cells = new List<String>();
-                for (String fieldName : fieldNames) {
-                    Object val = fieldValues.get(fieldName);
+                for (String col : columns) {
+                    Object val = flatValues.get(col);
                     cells.add(escapeCsvValue(val == null ? '' : String.valueOf(val)));
                 }
                 rows.add(String.join(cells, COMMA));
@@ -161,6 +115,40 @@ public with sharing class SandboxDataExportController {
         return csv;
     }
 
+    // Parses the SELECT clause to return columns in the order they appear in the query.
+    @TestVisible
+    private static List<String> parseSelectColumns(String soql) {
+        String upper = soql.toUpperCase();
+        Integer selectIdx = upper.indexOf('SELECT') + 6;
+        Integer fromIdx   = upper.indexOf(' FROM ');
+        String fieldsPart = soql.substring(selectIdx, fromIdx).trim();
+        List<String> columns = new List<String>();
+        for (String col : fieldsPart.split(',')) {
+            columns.add(col.trim());
+        }
+        return columns;
+    }
+
+    // Returns a flat map of column name -> value, expanding SObject values into
+    // dot-notation entries. Non-SObject fields are passed through unchanged.
+    @TestVisible
+    private static Map<String, Object> flattenFieldValues(Map<String, Object> fieldMap) {
+        Map<String, Object> flat = new Map<String, Object>();
+        for (String key : fieldMap.keySet()) {
+            Object val = fieldMap.get(key);
+            if (val instanceof SObject) {
+                Map<String, Object> childFields = ((SObject) val).getPopulatedFieldsAsMap();
+                for (String childKey : childFields.keySet()) {
+                    flat.put(key + '.' + childKey, childFields.get(childKey));
+                }
+            } else {
+                flat.put(key, val);
+            }
+        }
+        return flat;
+    }
+
+    @TestVisible
     private static String escapeCsvValue(String value) {
         String safe = (value == null) ? '' : value;
         return QUOTE + safe.replace(QUOTE, DBL_QUOTE) + QUOTE;
