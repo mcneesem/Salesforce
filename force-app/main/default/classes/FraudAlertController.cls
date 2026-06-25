@@ -28,27 +28,26 @@ public with sharing class FraudAlertController {
      */
 
     @AuraEnabled(cacheable=false)
-    public static Boolean hasFraudAlert(Id recordId, String objectApiName) {
+    public static Boolean hasFraudAlert(Id recordId) {
         Boolean isFraudAlert = false;
         try {
-            if (recordId != null && !String.isBlank(objectApiName)) {
-                String objectName = objectApiName.trim();
+            if (recordId != null ) {
+               // String objectName = objectApiName.trim();
 
-                if (objectName == OBJECT_ACCOUNT) {
+                if (recordId.getSObjectType() == Account.getSObjectType()) {
                     isFraudAlert = checkAccountFraudAlert(recordId);
                 }
-                else if (objectName == OBJECT_CASE) {
+                else if (recordId.getSObjectType() == Case.getSObjectType()) {
                     isFraudAlert = checkCaseFraudAlert(recordId);
                 }
             }
-
-            return isFraudAlert ;
 
         } catch (Exception ex) {
             throw new AuraHandledException(
                 'Unable to evaluate fraud alert status. Please contact your system administrator.'
             );
         }
+        return isFraudAlert ;
     }
 
 
@@ -60,15 +59,19 @@ public with sharing class FraudAlertController {
      *                  false otherwise.
      */
     private static Boolean checkAccountFraudAlert(Id accountId) {
-        List<AccountContactRelation> relations = [
-            SELECT Id
-            FROM AccountContactRelation
-            WHERE AccountId = :accountId
-              AND Contact.Fraud_Alert__c = true
-            WITH USER_MODE
-            LIMIT 1
-        ];
-        return !relations.isEmpty();
+        Boolean accFraudAlert = false;
+        if(accountId != null ){
+            List<AccountContactRelation> relations = [
+                SELECT Id
+                FROM AccountContactRelation
+                WHERE AccountId = :accountId
+                AND Contact.Fraud_Alert__c = true
+                WITH USER_MODE
+                LIMIT 1
+            ];
+           accFraudAlert = !relations.isEmpty();
+        }
+        return accFraudAlert;
     }
 
     /**
@@ -78,14 +81,18 @@ public with sharing class FraudAlertController {
      *               false otherwise.
      */
     private static Boolean checkCaseFraudAlert(Id caseId) {
-        List<NSP_Case_Contacts__c> caseContacts = [
-            SELECT Id
-            FROM NSP_Case_Contacts__c
-            WHERE NSP_Case__c = :caseId
-            AND NSP_Contact__r.Fraud_Alert__c = true
-            WITH USER_MODE
-            LIMIT 1
-        ];
-        return !caseContacts.isEmpty();
+        Boolean caseFraudAlert = false;
+        if(caseId != null ){
+            List<NSP_Case_Contacts__c> caseContacts = [
+                SELECT Id
+                FROM NSP_Case_Contacts__c
+                WHERE NSP_Case__c = :caseId
+                AND NSP_Contact__r.Fraud_Alert__c = true
+                WITH USER_MODE
+                LIMIT 1
+            ];
+            caseFraudAlert = !caseContacts.isEmpty();
+        }
+        return caseFraudAlert;
     }
 }

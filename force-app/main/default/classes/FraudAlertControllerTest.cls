@@ -20,7 +20,7 @@ private class FraudAlertControllerTest {
     // ─────────────────────────────────────────────────────────────────────────
 
     @TestSetup
-    static void setupTestData() {
+    private static void setupTestData() {
         Account testAccount = (Account) NSP_TestExtendedDataFactory.createSObject(
             new Account(), ACCOUNT_FACTORY_KEY, false
         );
@@ -54,22 +54,26 @@ private class FraudAlertControllerTest {
     // ─────────────────────────────────────────────────────────────────────────
 
     @isTest
-    static void shouldReturnTrue_WhenAccountRelatedContactHasFraudAlert() {
-        Account testAccount = [SELECT Id FROM Account WHERE Name = :ACCOUNT_NAME_FRAUD LIMIT 1];
+    private static void shouldReturnTrue_WhenAccountRelatedContactHasFraudAlert() {
+        List<Account> testAccounts = [SELECT Id FROM Account WHERE Name = :ACCOUNT_NAME_FRAUD LIMIT 1];
+
+        Assert.isFalse(
+            testAccounts.isEmpty(),
+            'Expected a test Account with a Contact.'
+        );
 
         Test.startTest();
-        Boolean result = FraudAlertController.hasFraudAlert(testAccount.Id, OBJECT_ACCOUNT);
+        Boolean result = FraudAlertController.hasFraudAlert(testAccounts[0].Id);
         Test.stopTest();
 
-        Assert.areEqual(
-            true,
+        Assert.isTrue(
             result,
             'hasFraudAlert should return true when Account has a related Contact with Fraud_Alert__c = true'
         );
     }
 
     @isTest
-    static void shouldReturnFalse_WhenAccountHasNoFraudAlertContacts() {
+    private static void shouldReturnFalse_WhenAccountHasNoFraudAlertContacts() {
         Account noFraudAccount = (Account) NSP_TestExtendedDataFactory.createSObject(
             new Account(), ACCOUNT_FACTORY_KEY, false
         );
@@ -84,7 +88,7 @@ private class FraudAlertControllerTest {
         insert safeContact;
 
         Test.startTest();
-        Boolean result = FraudAlertController.hasFraudAlert(noFraudAccount.Id, OBJECT_ACCOUNT);
+        Boolean result = FraudAlertController.hasFraudAlert(noFraudAccount.Id);
         Test.stopTest();
 
         Assert.areEqual(
@@ -94,29 +98,34 @@ private class FraudAlertControllerTest {
         );
     }
 
-
-
     // ─────────────────────────────────────────────────────────────────────────
     // Case Tests
     // ─────────────────────────────────────────────────────────────────────────
 
     @isTest
-    static void shouldReturnTrue_WhenCaseContactHasFraudAlert() {
-        Case fraudCase = [SELECT Id FROM Case WHERE ContactId != null LIMIT 1];
+    private static void shouldReturnTrue_WhenCaseContactHasFraudAlert() {
+        List<Case> fraudCases = [SELECT Id FROM Case WHERE ContactId != null LIMIT 1];
+
+
+        Assert.isFalse(
+            fraudCases.isEmpty(),
+            'Expected a test Case with a Contact.'
+        );
 
         Test.startTest();
-        Boolean result = FraudAlertController.hasFraudAlert(fraudCase.Id, OBJECT_CASE);
+        Boolean result = FraudAlertController.hasFraudAlert(fraudCases[0].Id);
         Test.stopTest();
 
-        Assert.areEqual(
-            true,
+        Assert.isTrue(
             result,
             'hasFraudAlert should return true when Case ContactId points to a Contact with Fraud_Alert__c = true'
         );
     }
 
+
+
     @isTest
-    static void shouldReturnFalse_WhenCaseContactHasNoFraudAlert() {
+    private static void shouldReturnFalse_WhenCaseContactHasNoFraudAlert() {
         Account noFraudAccount = (Account) NSP_TestExtendedDataFactory.createSObject(
             new Account(), ACCOUNT_FACTORY_KEY, false
         );
@@ -138,7 +147,7 @@ private class FraudAlertControllerTest {
         insert safeCase;
 
         Test.startTest();
-        Boolean result = FraudAlertController.hasFraudAlert(safeCase.Id, OBJECT_CASE);
+        Boolean result = FraudAlertController.hasFraudAlert(safeCase.Id);
         Test.stopTest();
 
         Assert.areEqual(
@@ -149,7 +158,7 @@ private class FraudAlertControllerTest {
     }
 
     @isTest
-    static void shouldReturnFalse_WhenCaseHasNoContact() {
+    private static void shouldReturnFalse_WhenCaseHasNoContact() {
         Case noContactCase = (Case) NSP_TestExtendedDataFactory.createSObject(
             new Case(), CASE_FACTORY_KEY, false
         );
@@ -157,7 +166,7 @@ private class FraudAlertControllerTest {
         insert noContactCase;
 
         Test.startTest();
-        Boolean result = FraudAlertController.hasFraudAlert(noContactCase.Id, OBJECT_CASE);
+        Boolean result = FraudAlertController.hasFraudAlert(noContactCase.Id);
         Test.stopTest();
 
         Assert.areEqual(
