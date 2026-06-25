@@ -200,7 +200,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.PC_Work_Email__c</fieldItem>
+                <fieldItem>Record.Payroll_Contact_Work_Email__c</fieldItem>
                 <identifier>RecordPC_Work_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -256,7 +256,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.PC_Phone_Number__c</fieldItem>
+                <fieldItem>Record.Payroll_Contact_Phone__c</fieldItem>
                 <identifier>RecordPC_Phone_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>

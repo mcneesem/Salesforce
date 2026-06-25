@@ -10,12 +10,12 @@
     NOT(ISBLANK(FDM_Phone_Number__c)),
     NOT(ISBLANK(Mobile_Number__c))
   ),
-
-  NOT(ISBLANK (Client_Payroll_Contact__c)),
+  
+  NOT(ISBLANK(Client_Payroll_Contact__c)),
 
   OR(
-    NOT(ISBLANK(PC_Phone_Number__c)),
-    NOT(ISBLANK(PC_Work_Email__c))
+    NOT(ISBLANK(Payroll_Contact_Phone__c)),
+    NOT(ISBLANK(Payroll_Contact_Work_Email__c))
   ),
 
   NOT(ISBLANK(Client_Address__c)),

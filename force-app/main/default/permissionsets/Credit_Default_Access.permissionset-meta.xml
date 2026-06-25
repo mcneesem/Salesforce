@@ -157,12 +157,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Credit_Default__c.PC_Phone_Number__c</field>
+        <field>Credit_Default__c.Payroll_Contact_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Credit_Default__c.PC_Work_Email__c</field>
+        <field>Credit_Default__c.Payroll_Contact_Work_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

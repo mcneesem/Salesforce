@@ -21,14 +21,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.PC_Phone_Number__c</assignToReference>
+            <assignToReference>$Record.Payroll_Contact_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Account_Contact_Relationship.NSP_Work_Phone__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.PC_Work_Email__c</assignToReference>
+            <assignToReference>$Record.Payroll_Contact_Work_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Account_Contact_Relationship.NSP_Work_Email__c</elementReference>
