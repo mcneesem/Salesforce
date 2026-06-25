@@ -461,6 +461,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Fraud_Alert__c</fieldItem>
+                <identifier>RecordFraud_Alert_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-35f62514-4e16-4499-aa56-d3a0717786c9</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1275,6 +1285,12 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

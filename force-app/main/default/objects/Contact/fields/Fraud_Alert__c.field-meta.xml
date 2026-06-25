@@ -3,7 +3,7 @@
     <fullName>Fraud_Alert__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Fraud Alert - Contact Credit Services</description>
-    <inlineHelpText>Fraud Alert - Contact Credit Services</inlineHelpText>
+    <inlineHelpText>Contact has previously been involved in defrauding Insperity.</inlineHelpText>
     <label>Fraud Alert</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
