@@ -22,7 +22,7 @@
         <name>Add_new_OCR_to_collection</name>
         <label>Add new OCR to collection</label>
         <locationX>2437</locationX>
-        <locationY>2928</locationY>
+        <locationY>3078</locationY>
         <assignmentItems>
             <assignToReference>OCRCollection</assignToReference>
             <operator>Add</operator>
@@ -51,10 +51,196 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Create_Referral_OCR</name>
+        <label>Assign varFaultElement - Create_Referral_OCR</label>
+        <locationX>314</locationX>
+        <locationY>1872</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Referral_OCR</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_createOCRs</name>
+        <label>Assign varFaultElement - createOCRs</label>
+        <locationX>2613</locationX>
+        <locationY>3378</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>createOCRs</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</name>
+        <label>Assign varFaultElement - Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</label>
+        <locationX>1546</locationX>
+        <locationY>1656</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_and_not_already_OCR</name>
+        <label>Assign varFaultElement - Get_ACR_Record_that_matches_Referral_and_not_already_OCR</label>
+        <locationX>1810</locationX>
+        <locationY>1548</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_ACR_Record_that_matches_Referral_and_not_already_OCR</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_All_OCR_Contact_Ids</name>
+        <label>Assign varFaultElement - Get_All_OCR_Contact_Ids</label>
+        <locationX>3405</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_All_OCR_Contact_Ids</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Primary_Contact_Info_if_Referred_By_is_populated</name>
+        <label>Assign varFaultElement - Get_Primary_Contact_Info_if_Referred_By_is_populated</label>
+        <locationX>2250</locationX>
+        <locationY>1332</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Primary_Contact_Info_if_Referred_By_is_populated</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Primary_OCR_Contact_ID</name>
+        <label>Assign varFaultElement - Get_Primary_OCR_Contact_ID</label>
+        <locationX>3141</locationX>
+        <locationY>1116</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Primary_OCR_Contact_ID</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Referral_ACR_record</name>
+        <label>Assign varFaultElement - Get_Referral_ACR_record</label>
+        <locationX>1106</locationX>
+        <locationY>1872</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Referral_ACR_record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Triggering_Record</name>
+        <label>Assign varFaultElement - Get_Triggering_Record</label>
+        <locationX>3933</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Triggering_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetAllAcrsOnAccount</name>
+        <label>Assign varFaultElement - GetAllAcrsOnAccount</label>
+        <locationX>2877</locationX>
+        <locationY>2538</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetAllAcrsOnAccount</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Referral_s_OCR</name>
+        <label>Assign varFaultElement - Update_Referral_s_OCR</label>
+        <locationX>842</locationX>
+        <locationY>1980</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Referral_s_OCR</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Count_ACRs</name>
         <label>Count ACRs</label>
         <locationX>2173</locationX>
-        <locationY>2496</locationY>
+        <locationY>2646</locationY>
         <assignmentItems>
             <assignToReference>countACRs</assignToReference>
             <operator>AssignCount</operator>
@@ -70,7 +256,7 @@
         <name>CreateNewOCRs</name>
         <label>CreateNewOCRs</label>
         <locationX>2437</locationX>
-        <locationY>2820</locationY>
+        <locationY>2970</locationY>
         <assignmentItems>
             <assignToReference>OpportunityContactRole.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -117,7 +303,7 @@
         <name>Check_Count_ACRs</name>
         <label>Check Count ACRs</label>
         <locationX>2173</locationX>
-        <locationY>2604</locationY>
+        <locationY>2754</locationY>
         <defaultConnector>
             <targetReference>LoopEachACRtoCreateOCR</targetReference>
         </defaultConnector>
@@ -162,7 +348,7 @@
         <name>Do_ACR_Records_exist_on_the_Account</name>
         <label>Do ACR Records exist on the Account?</label>
         <locationX>1953</locationX>
-        <locationY>2388</locationY>
+        <locationY>2538</locationY>
         <defaultConnector>
             <targetReference>Count_ACRs</targetReference>
         </defaultConnector>
@@ -277,7 +463,7 @@
             <label>Referral ACR should be referenced to update OCR</label>
         </rules>
     </decisions>
-    <description>If a Sales Opportunity is created, populate additional Contact Roles and Account Contact Relationships based on (Sales) Roles.</description>
+    <description>When an open Sales Opportunity is created, populate additional Contact Roles and Account Contact Relationships based on AccountContactRelationship criteria.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Created - Async - Populate Sales Contact Roles and Account Contact Relationships {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Created - Async - Contact Roles and Account Contact Relationships</label>
@@ -299,7 +485,7 @@
         <name>LoopEachACRtoCreateOCR</name>
         <label>LoopEachACRtoCreateOCR</label>
         <locationX>2349</locationX>
-        <locationY>2712</locationY>
+        <locationY>2862</locationY>
         <collectionReference>GetAllAcrsOnAccount</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -337,8 +523,7 @@
             <targetReference>GetAllAcrsOnAccount</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Create_Referral_OCR</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ContactId</field>
@@ -389,9 +574,9 @@
         <name>createOCRs</name>
         <label>createOCRs</label>
         <locationX>2349</locationX>
-        <locationY>3120</locationY>
+        <locationY>3270</locationY>
         <faultConnector>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_createOCRs</targetReference>
         </faultConnector>
         <inputReference>OCRCollection</inputReference>
     </recordCreates>
@@ -405,8 +590,7 @@
             <targetReference>Referral_ACR_to_OCR_Decisions</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -444,8 +628,7 @@
             <targetReference>Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_and_not_already_OCR</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -483,8 +666,7 @@
             <targetReference>Loop_over_Opty_OCRs_to_get_ContactIds</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_All_OCR_Contact_Ids</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -508,8 +690,7 @@
             <targetReference>Is_there_a_Referral_Contact</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Primary_Contact_Info_if_Referred_By_is_populated</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -542,8 +723,7 @@
             <targetReference>Is_there_a_Primary_OCR</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Primary_OCR_Contact_ID</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -576,8 +756,7 @@
             <targetReference>Update_Referral_s_OCR</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Referral_ACR_record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -607,6 +786,9 @@
         <connector>
             <targetReference>Check_Triggering_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Triggering_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -623,14 +805,13 @@
         <name>GetAllAcrsOnAccount</name>
         <label>GetAllACRsOnAccount</label>
         <locationX>1953</locationX>
-        <locationY>2280</locationY>
+        <locationY>2430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Do_ACR_Records_exist_on_the_Account</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_GetAllAcrsOnAccount</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -681,8 +862,7 @@
             <targetReference>GetAllAcrsOnAccount</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Update_Referral_s_OCR</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -780,12 +960,18 @@
         <name>ErrorHandler</name>
         <label>ErrorHandler</label>
         <locationX>2613</locationX>
-        <locationY>3228</locationY>
+        <locationY>3486</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity_Created_Create_OCRs_and_ACRs</stringValue>
+                <stringValue>Opportunity_Created_Async_Contact_Roles_and_Account_Contact_Relationships</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -845,6 +1031,13 @@
     </variables>
     <variables>
         <name>referralContactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
