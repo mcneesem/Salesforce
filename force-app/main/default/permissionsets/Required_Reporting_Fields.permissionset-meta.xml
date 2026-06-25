@@ -2328,6 +2328,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.Product_Description_Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.Promo_Applicable_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
