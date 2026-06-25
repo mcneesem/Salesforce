@@ -18,14 +18,12 @@
             <name>templateId</name>
             <value>
                 <elementReference>emailTemplateId</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
             <name>whatId</name>
             <value>
                 <elementReference>relatedRecordId</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
@@ -55,31 +53,21 @@
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recipientAddresses</name>
-            <value>
-                <collectionElements>
-                    <elementReference>toAddress</elementReference>
-                </collectionElements>
-            </value>
+            <value/>
         </inputParameters>
         <inputParameters>
             <name>ccAddresses</name>
-            <value>
-                <collectionElements>
-                    <elementReference>ccAddress</elementReference>
-                </collectionElements>
-            </value>
+            <value/>
         </inputParameters>
         <inputParameters>
             <name>senderType</name>
             <value>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
                 <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>senderAddress</name>
             <value>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
                 <stringValue>no-reply@insperity.com</stringValue>
             </value>
         </inputParameters>
@@ -93,13 +81,11 @@
             <name>emailSubject</name>
             <value>
                 <elementReference>emailSubject</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
                 <stringValue>&lt;p&gt;{!emailBody}&lt;/p&gt;</stringValue>
             </value>
         </inputParameters>
@@ -107,14 +93,12 @@
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
             <name>useLineBreaks</name>
             <value>
                 <booleanValue>false</booleanValue>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
@@ -130,14 +114,12 @@
             <name>relatedRecordId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
             <name>logEmailOnSend</name>
             <value>
                 <booleanValue>true</booleanValue>
-                <inputConfiguratorMode>Custom</inputConfiguratorMode>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -163,15 +145,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Content_Document_Link</name>
-        <label>Assign Fault Element - Content Document Link</label>
+        <name>Assign_Fault_Element_Content_Document_Links</name>
+        <label>Assign Fault Element - Content Document Links</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Content_Document_Link</stringValue>
+                <stringValue>Get_Content_Document_Links</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -180,15 +162,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Get_EmailTemplate</name>
-        <label>Assign Fault Element - Get EmailTemplate</label>
+        <name>Assign_Fault_Element_Get_Email_Template</name>
+        <label>Assign Fault Element - Get Email Template</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_EmailTemplate</stringValue>
+                <stringValue>Get_Email_Template</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -276,7 +258,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Content_Document_Link</targetReference>
+            <targetReference>Get_Content_Document_Links</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -286,7 +268,7 @@
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>relatedRecordId</assignToReference>
-            <operator>Add</operator>
+            <operator>Assign</operator>
             <value>
                 <elementReference>Get_Implementation_Profile.Id</elementReference>
             </value>
@@ -308,7 +290,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_EmailTemplate</targetReference>
+            <targetReference>Get_Email_Template</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -337,8 +319,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Get_Content_Document_Link</name>
-        <label>Check Get Content Document Link</label>
+        <name>Check_Get_Content_Document_Links</name>
+        <label>Check Get Content Document Links</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -349,14 +331,14 @@
             <name>Not_Null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Content_Document_Link</leftValueReference>
+                <leftValueReference>Get_Content_Document_Links</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Content_Document_Link</leftValueReference>
+                <leftValueReference>Get_Content_Document_Links</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -369,12 +351,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Get_Implementation</name>
-        <label>Check Get Implementation</label>
+        <name>Check_Get_Implementation_Profile</name>
+        <label>Check Get Implementation Profile</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Content_Document_Link</targetReference>
+            <targetReference>Get_Content_Document_Links</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -438,11 +420,11 @@
     </decisions>
     <decisions>
         <name>Check_Project_Manger_Email</name>
-        <label>Check  Project Manger Email</label>
+        <label>Check Project Manger Email</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Content_Document_Link</targetReference>
+            <targetReference>Get_Content_Document_Links</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -456,7 +438,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Implementation_Profile.NSP_Project_Manager__r.NSP_Work_email__c</leftValueReference>
+                <leftValueReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__r.Email</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -474,7 +463,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Is_Project_Linked_to_ProjectTask</targetReference>
+            <targetReference>Is_Project_Linked_To_Project_Task</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Exist</defaultConnectorLabel>
         <rules>
@@ -540,12 +529,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Project_Linked_to_ProjectTask</name>
-        <label>Is Project Linked to ProjectTask</label>
+        <name>Is_Project_Linked_To_Project_Task</name>
+        <label>Is Project Linked To Project Task</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Content_Document_Link</targetReference>
+            <targetReference>Get_Content_Document_Links</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -591,10 +580,10 @@
     <label>Project Task - Updated - Async - Email Automation</label>
     <loops>
         <name>Loop_Attachments</name>
-        <label>Loop Attachments</label>
+        <label>Loop Content Document Links</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Get_Content_Document_Link</collectionReference>
+        <collectionReference>Get_Content_Document_Links</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Check_Document_Latest_VersionId</targetReference>
@@ -623,16 +612,16 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Content_Document_Link</name>
-        <label>Get Content Document Link</label>
+        <name>Get_Content_Document_Links</name>
+        <label>Get Content Document Links</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Get_Content_Document_Link</targetReference>
+            <targetReference>Check_Get_Content_Document_Links</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Content_Document_Link</targetReference>
+            <targetReference>Assign_Fault_Element_Content_Document_Links</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -651,19 +640,21 @@
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>ContentDocumentLink</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ContentDocumentId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_EmailTemplate</name>
-        <label>Get EmailTemplate</label>
+        <name>Get_Email_Template</name>
+        <label>Get Email Template</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Project_Linked_to_ProjectTask</targetReference>
+            <targetReference>Is_Project_Linked_To_Project_Task</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_EmailTemplate</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Email_Template</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -686,7 +677,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Get_Implementation</targetReference>
+            <targetReference>Check_Get_Implementation_Profile</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Get_Implementation_Profile</targetReference>
@@ -743,6 +734,9 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Project_Task_Email_Automation__mdt</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>To_Address__c</queriedFields>
+        <queriedFields>Email_Template__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -765,9 +759,9 @@
         </filters>
         <filters>
             <field>Name</field>
-            <operator>IsNull</operator>
+            <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>Client Logo</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
