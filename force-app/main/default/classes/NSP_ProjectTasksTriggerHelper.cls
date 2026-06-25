@@ -2661,7 +2661,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 FROM EmailTemplate
                 WHERE ( DeveloperName = 'NSP_Send_email_to_resource' )
                 LIMIT 1
-            ]
+            ];
             Id emailTemplateId = null;
             if ( ( templates != null ) && !templates.isEmpty() ) {
                 emailTemplateId = templates[0].Id;
