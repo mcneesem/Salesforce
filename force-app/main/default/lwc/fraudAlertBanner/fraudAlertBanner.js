@@ -16,7 +16,6 @@ export default class FraudAlertBanner extends LightningElement {
         if (data) {
             this.contactFraudAlert = getFieldValue(data, CONTACT_FRAUD_ALERT) === true;
         } else if (error) {
-            console.error('Fraud Alert (Contact LDS) Error:', error);
             this.contactFraudAlert = false;
         }
     }
@@ -24,10 +23,9 @@ export default class FraudAlertBanner extends LightningElement {
     // Account / Opportunity / Case — imperative call, bypasses LDS cache entirely
     connectedCallback() {
         if (this.objectApiName !== 'Contact') {
-            hasFraudAlert({ recordId: this.recordId, objectApiName: this.objectApiName })
+            hasFraudAlert({ recordId: this.recordId })
                 .then(result => { this.apexResult = result === true; })
                 .catch(error => {
-                    console.error('Fraud Alert Error:', error);
                     this.apexResult = false;
                 });
         }

@@ -47,6 +47,7 @@ private class FraudAlertControllerTest {
         fraudCase.AccountId = testAccount.Id;
         fraudCase.ContactId = fraudContact.Id;
         insert fraudCase;
+
     }
 
     // ─────────────────────────────────────────────────────────────────────────

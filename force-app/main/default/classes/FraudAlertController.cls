@@ -66,7 +66,6 @@ public with sharing class FraudAlertController {
                 FROM AccountContactRelation
                 WHERE AccountId = :accountId
                 AND Contact.Fraud_Alert__c = true
-                WITH USER_MODE
                 LIMIT 1
             ];
            accFraudAlert = !relations.isEmpty();
@@ -88,7 +87,6 @@ public with sharing class FraudAlertController {
                 FROM NSP_Case_Contacts__c
                 WHERE NSP_Case__c = :caseId
                 AND NSP_Contact__r.Fraud_Alert__c = true
-                WITH USER_MODE
                 LIMIT 1
             ];
             caseFraudAlert = !caseContacts.isEmpty();
