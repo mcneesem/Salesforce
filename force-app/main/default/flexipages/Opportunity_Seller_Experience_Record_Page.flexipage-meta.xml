@@ -3255,6 +3255,21 @@
                         <valueListItems>
                             <value>NAME</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Record_ID__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Client__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Status_Date__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Sales_Consultant__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
