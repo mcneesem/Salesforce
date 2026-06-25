@@ -172,6 +172,11 @@
                 <default>false</default>
                 <label>NSP_ActionType__c</label>
             </value>
+            <value>
+                <fullName>NSP_Quoted_Quantity__c</fullName>
+                <default>false</default>
+                <label>NSP_Quoted_Quantity__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
