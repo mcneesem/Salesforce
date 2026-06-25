@@ -2672,7 +2672,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static Id resourceTemplateId {
-        private get resourceTemplateId {
+        private get {
             if ( resourceTemplateId == null ) {
                 List<EmailTemplate> templates = [
                     SELECT Id
