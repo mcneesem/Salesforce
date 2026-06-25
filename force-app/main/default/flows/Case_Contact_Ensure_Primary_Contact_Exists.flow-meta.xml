@@ -2,6 +2,19 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Primary_value_update</name>
+        <label>Primary value update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_IsPrimary__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Primary_case_contact_checking</name>
         <label>Primary case contact checking</label>
@@ -15,11 +28,18 @@
                 <leftValueReference>Existing_Case_Contact_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Existing_Case_Contact_Records</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_existing_Case_Contact</targetReference>
+                <targetReference>Primary_value_update</targetReference>
             </connector>
             <label>Primary case contact not exist</label>
         </rules>
@@ -64,13 +84,6 @@
             </value>
         </filters>
         <filters>
-            <field>NSP_IsPrimary__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
             <field>Id</field>
             <operator>NotEqualTo</operator>
             <value>
@@ -81,34 +94,6 @@
         <object>NSP_Case_Contacts__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_existing_Case_Contact</name>
-        <label>Update existing Case Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.NSP_Case__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_IsPrimary__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NSP_IsPrimary__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -128,4 +113,11 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
