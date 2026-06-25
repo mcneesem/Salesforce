@@ -2656,22 +2656,12 @@ public class NSP_ProjectTasksTriggerHelper {
         if ( String.isNotBlank( sendToUserAddress ) && ( projTaskId != null ) ) {
             List<String> toEmailAddress = new List<String>();
             toEmailAddress.add( sendToUserAddress );
-            List<EmailTemplate> templates = [
-                SELECT Id
-                FROM EmailTemplate
-                WHERE ( DeveloperName = 'NSP_Send_email_to_resource' )
-                LIMIT 1
-            ];
-            Id emailTemplateId = null;
-            if ( ( templates != null ) && !templates.isEmpty() ) {
-                emailTemplateId = templates[0].Id;
-            }
             Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
-                emailTemplateId ,
+                NSP_ProjectTasksTriggerHelper.resourceTemplateId ,
                 null ,
                 projTaskId
             );
-            email.setTemplateId( emailTemplateId );
+            email.setTemplateId( NSP_ProjectTasksTriggerHelper.resourceTemplateId );
             email.setToAddresses( toEmailAddress );
             //replace '$resource$' in the email template body with the completed project task name
             String emailBody = email.getHtmlBody().replace( '$resource$' , completedProjTask );
@@ -2679,6 +2669,26 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setSaveAsActivity( false );
             NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
         }
+    }
+
+    private static Id resourceTemplateId {
+        private get resourceTemplateId() {
+            if ( resourceTemplateId == null ) {
+                List<EmailTemplate> templates = [
+                    SELECT Id
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = 'NSP_Send_email_to_resource' )
+                    LIMIT 1
+                ];
+                Id local = null;
+                if ( ( templates != null ) && !templates.isEmpty() ) {
+                    local = templates[0].Id;
+                }
+                resourceTemplateId = local;
+            }
+            return resourceTemplateId;
+        }
+        private set;
     }
 
     private static void sendSingleEmailMessage( Messaging.SingleEmailMessage message ) {
