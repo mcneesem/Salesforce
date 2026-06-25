@@ -7286,6 +7286,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.Product_Description_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Product2.Promo_Applicable_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10912,6 +10917,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.NSP_WX_Threshold_Pct_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Product_Description_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

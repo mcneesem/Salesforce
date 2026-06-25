@@ -1,15 +1,7 @@
-//
-// Represents the Quote trigger helper which handles all the logic.
-// Modification History
-// -------------------------------------------------------------------------------------
-// author           | Date              | Description
-// -------------------------------------------------------------------------------------
-// Rahul         11-17-2022            Modified this class for user story 128436
-//
 public class NSP_QuoteTriggerHelper {
-    // test w/ NSP_QuoteTriggerTest, NSP_QuoteTriggerHelper_Test (83%)
+    // test w/ NSP_QuoteTriggerTest, NSP_QuoteTriggerHelper_Test (84%)
     // test w/ NSP_QuoteTriggerTest (82%)
-    // test w/ NSP_QuoteTriggerHelper_Test (56%)
+    // test w/ NSP_QuoteTriggerHelper_Test (57%)
 
     private static Boolean STOP_ACCOUNT_QUERY = false;
     private static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE = System.Label.NSP_Incorrect_Pricing_Model;
@@ -108,6 +100,7 @@ public class NSP_QuoteTriggerHelper {
         populateInsperitySigner( quoteNewMap , quoteOldMap );
         createEnrollmentFee( quoteNewMap , quoteOldMap );
         calcTaxOnOpportunity( quoteNewMap , quoteOldMap );
+        this.makeDescriptions( quoteNewMap , quoteOldMap );
         for ( SBQQ__Quote__c quote : quoteNewMap.values() ) {
             if ( ( quote.SBQQ__Primary__c == true )
                 && ( quote.SBQQ__Primary__c != quoteOldMap.get( quote.Id ).SBQQ__Primary__c )
@@ -1673,6 +1666,138 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
         if ( !opportunitiesWithPrimaryQuote.isEmpty() ) {
              NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote( opportunitiesWithPrimaryQuote );
         }
+    }
+
+    //method to dynamically update descriptions on quote lines
+    private void makeDescriptions( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+        Set<Id> approvedQuotes = this.buildApprovedQuoteIds( quoteNewMap , quoteOldMap );
+        if ( ( approvedQuotes != null ) && !approvedQuotes.isEmpty() ) {
+            //quote lines that need description update
+            List<SBQQ__QuoteLine__c> approvedLines = new List<SBQQ__QuoteLine__c>(
+                [
+                    SELECT Id , Product_Description_Template__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        ( SBQQ__Quote__c IN :approvedQuotes )
+                        AND ( Product_Description_Template__c != null )
+                    )
+                ]
+            );
+            // extract all template names for all quote lines...
+            List<String> requiredTemplates = new List<String>();
+            for ( SBQQ__QuoteLine__c line : approvedLines ) {
+                if ( String.isNotBlank( line.Product_Description_Template__c ) ) {
+                    requiredTemplates.add( line.Product_Description_Template__c );
+                }
+            }
+            this.generateDescriptions( requiredTemplates , approvedLines );
+        }
+    }
+
+    //method to get approved quotes
+    private Set<Id> buildApprovedQuoteIds( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+        Set<Id> approvedQuotes = new Set<Id>();
+        if ( ( quoteNewMap != null )
+            && ( !quoteNewMap.isEmpty() )
+            && ( quoteOldMap != null )
+            && ( !quoteOldMap.isEmpty() )
+            )
+        {
+            //get the quotes which have been approved
+            for (Id quoteId : quoteNewMap.keyset() ) {
+                if ( quoteNewMap.containsKey( quoteId )
+                    && ( quoteNewMap.get( quoteId ) != null )
+                    && ( quoteNewMap.get( quoteId ).SBQQ__Status__c == 'Approved' )
+                    && quoteOldMap.containsKey( quoteId )
+                    && ( quoteOldMap.get( quoteId ) != null )
+                    && ( quoteOldMap.get( quoteId ).SBQQ__Status__c != 'Approved' )
+                    )
+                {
+                    approvedQuotes.add( quoteId );
+                }
+            }
+        }
+        return approvedQuotes;
+    }
+
+    //method to update description using rendered email template
+    private void generateDescriptions( List<String> requiredTemplates , List<SBQQ__QuoteLine__c> approvedLines ) {
+        try {
+            List<SBQQ__QuoteLine__c> linesToUpdate = new List<SBQQ__QuoteLine__c>();
+            Map<String,String> templateNameMap = this.getEmailTemplates( requiredTemplates );
+            //render description and stamp it
+            if ( ( approvedLines != null )
+                && ( !approvedLines.isEmpty() )
+                )
+            {
+                for ( SBQQ__QuoteLine__c line : approvedLines ) {
+                    linesToUpdate = this.getDescriptionFromTemplate(
+                        line ,
+                        templateNameMap ,
+                        linesToUpdate
+                    );
+                }
+            }
+            //perform dml
+            if ( ( linesToUpdate != null ) && !linesToUpdate.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( linesToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'generateDescriptions' ,
+                    results
+                );
+            }
+        } catch( Exception e ) {
+            NSP_QuoteTriggerHelper.handleException( e , 'generateDescriptions' );
+        }
+    }
+    
+    //method to get description from rendered template
+    private List<SBQQ__QuoteLine__c> getDescriptionFromTemplate(
+        SBQQ__QuoteLine__c line ,
+        Map<String,String> templateNameMap ,
+        List<SBQQ__QuoteLine__c> linesToUpdate
+        )
+    {
+        if ( linesToUpdate == null ) {
+            linesToUpdate = new List<SBQQ__QuoteLine__c>();
+        }
+        if ( ( line != null  )
+            && ( templateNameMap != null )
+            && String.isNotBlank( line.Product_Description_Template__c )
+            && templateNameMap.containsKey( line.Product_Description_Template__c )
+            && ( templateNameMap.get( line.Product_Description_Template__c ) != null )
+            )
+        {
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
+                templateNameMap.get( line.Product_Description_Template__c ) ,
+                null ,
+                line.Id
+            );
+            if ( email != null ) {
+                line.NSP_Description_To_Store_Internal__c = email.getPlainTextBody();
+                linesToUpdate.add( line );
+            }
+        }
+        return linesToUpdate;
+    }
+
+    //get email templates
+    private Map<String,String> getEmailTemplates( List<String> requiredTemplates ) {
+        Map<String,String> templateNameMap = new Map<String,String>();
+        if ( ( requiredTemplates != null ) && !requiredTemplates.isEmpty() ) {
+            //fetch all templates using api names.
+            for ( EmailTemplate template : [
+                        SELECT Id , DeveloperName
+                        FROM EmailTemplate
+                        WHERE ( DeveloperName IN :requiredTemplates )
+                    ]
+                )
+            {
+                templateNameMap.put( template.DeveloperName , template.Id );
+            }
+        }
+        return templateNameMap;
     }
 
     // for test code coverage only...
