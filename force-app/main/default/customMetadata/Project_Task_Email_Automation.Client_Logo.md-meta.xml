@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>To_Address__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Monica.Adams@insperity.com</value>
     </values>
 </CustomMetadata>

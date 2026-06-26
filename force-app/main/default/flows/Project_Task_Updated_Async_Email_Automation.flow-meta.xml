@@ -86,7 +86,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>&lt;p&gt;{!emailBody}&lt;/p&gt;</stringValue>
+                <elementReference>emailBody</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -98,7 +98,7 @@
         <inputParameters>
             <name>useLineBreaks</name>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -251,7 +251,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ccAddress</assignToReference>
+            <assignToReference>ccAddresses</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__r.Email</elementReference>
@@ -259,6 +259,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_Content_Document_Links</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assignment_to_Recipient_Address</name>
+        <label>Assignment to Recipient Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recipientAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Project_Task_Email_Automation.To_Address__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Email_Template</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -275,22 +291,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Check_Project_Manger_Email</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assignment_to_ToAddress</name>
-        <label>Assignment to ToAddress</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>toAddress</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Get_Project_Task_Email_Automation.To_Address__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Email_Template</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -385,14 +385,14 @@
             <name>Present</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>toAddress</leftValueReference>
+                <leftValueReference>recipientAddresses</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>toAddress</leftValueReference>
+                <leftValueReference>recipientAddresses</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -491,7 +491,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assignment_to_ToAddress</targetReference>
+                <targetReference>Assignment_to_Recipient_Address</targetReference>
             </connector>
             <label>Exist</label>
         </rules>
@@ -801,7 +801,7 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>ccAddress</name>
+        <name>ccAddresses</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -836,16 +836,16 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>relatedRecordId</name>
+        <name>recipientAddresses</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>toAddress</name>
+        <name>relatedRecordId</name>
         <dataType>String</dataType>
-        <isCollection>true</isCollection>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
