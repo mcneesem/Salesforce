@@ -140,13 +140,6 @@
                 <elementReference>Get_Project_Record.pse__Account__r.Name</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Client_Number__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Project_Record.pse__Account__r.NSP_AIMS_Client__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Create_Portal_Client</targetReference>
         </connector>
