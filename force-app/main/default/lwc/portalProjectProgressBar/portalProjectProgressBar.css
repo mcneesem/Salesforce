@@ -1,0 +1,8 @@
+:host {
+    --slds-c-card-header-spacing-inline: 0rem;
+    --slds-c-card-heading-font-size: 1.5rem;
+}
+
+.line-height-title {
+    line-height: 2.125rem;
+}

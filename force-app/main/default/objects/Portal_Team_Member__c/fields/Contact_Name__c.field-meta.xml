@@ -2,11 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Contact_Name__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(
-  NOT( ISBlANK( Contact__r.MiddleName ) ) ,
-  Contact__r.FirstName &amp; &quot; &quot; &amp; Contact__r.MiddleName &amp; &quot; &quot; &amp; Contact__r.LastName ,
-  Contact__r.FirstName &amp; &quot; &quot; &amp; Contact__r.LastName
-)</formula>
+    <formula>Contact__r.NSP_Preferred_First_Name__c &amp; &quot; &quot; &amp; Contact__r.LastName</formula>
     <label>Contact Name</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -7,6 +7,7 @@ import TOTAL_PORTAL_TASKS_FIELD from "@salesforce/schema/Portal_Project__c.Total
 
 export default class PortalProjectProgressBar extends LightningElement {
     @api recordId; // is-a Portal_Project__c.Id
+    @api title;
 
     error;
     record; // is-a Portal_Project__c
