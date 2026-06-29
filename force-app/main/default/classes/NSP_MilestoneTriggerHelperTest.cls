@@ -1,15 +1,8 @@
-/**
- * Author: Jatin Ahuja
-* Represents test class for Milestone Trigger Helper
-* Test Class to cover Milestone Trigger Handler and Helper classes 
-* Modified Date: 12 Sep 2022
-*/
 @isTest
-public class NSP_MilestoneTriggerHelperTest {
+private class NSP_MilestoneTriggerHelperTest {
 
-    
-    public static final String PROJECTDEFAULTS = 'NSP_TestDataFactory.ProjectDefaults';
-    public static final String MILESTONEDEFAULTS = 'NSP_TestDataFactory.MileStoneDefaults';
+    private static final String PROJECTDEFAULTS = 'NSP_TestDataFactory.ProjectDefaults';
+    private static final String MILESTONEDEFAULTS = 'NSP_TestDataFactory.MileStoneDefaults';
     private static final String TEST1 = 'test';
 
     private static final List<String> MILESTONE_FIELDS = new List<String>{
@@ -20,18 +13,18 @@ public class NSP_MilestoneTriggerHelperTest {
         'Id',
         'Name'
     };
-	// setup test data
-    @TestSetup
-    public static void setupData(){
+
+    @testSetup
+    private static void setupData() {
         //Test Setup
         Id PEORecordTypeId  = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', NSP_ServiceConstants.PEOProject);
         String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get('PEO_Project_Task').getRecordTypeId();
-        
+
         //Insert Test Account record
         Account accountRec = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         accountRec.Name = 'Test Account';
         INSERT accountRec;
-        
+
         //Insert ACR record
         NSP_TestHelper.createContact(accountRec.Id, true);
         List<String> acrFields = new List<String>{'Id','ContactId','AccountId','NSP_Community_Access__c'};
@@ -40,16 +33,16 @@ public class NSP_MilestoneTriggerHelperTest {
         AccountContactRelation acrObj = Database.query(query);
         acrObj.NSP_Community_Access__c = NSP_ServiceConstants.peoCommunityAccess;
         UPDATE acrObj;
-        
+
         Case oCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
         insert oCase;
-        
+
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), PROJECTDEFAULTS, false);
         oProject.pse__Start_Date__c = Date.Today();
         oProject.Name = 'Test Project';
         oPRoject.Case__c = oCase.Id;
         insert oProject;
-        
+
         // inserting project
         pse__Proj__c peoProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         peoProject.Name = 'Test Project 1';
@@ -58,13 +51,13 @@ public class NSP_MilestoneTriggerHelperTest {
         peoProject.pse__Start_Date__c = system.today();
         peoProject.pse__Account__c =accountRec.Id;
         INSERT peoProject;
-        
+
         pse__Milestone__c oMilestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
         oMilestone.pse__Project__c = oProject.id;
         oMilestone.Name = TEST1;
         oMilestone.pse__Target_Date__c = System.Today().addDays(10);
         insert oMilestone;
-        
+
         pse__Project_Task__c oProjectTask1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask1.pse__Project__c = oProject.Id;
         oProjectTask1.pse__Milestone__c = oMilestone.id;
@@ -72,17 +65,12 @@ public class NSP_MilestoneTriggerHelperTest {
         insert oProjectTask1;
 
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
     }
 
-    /**
-    * Classes Covered
-    * NSP_MilestoneTriggerHandler.beforeUpdate
-    * NSP_MilestoneTriggerHelper.handleMilestoneCompletion
-    */
     @isTest
-    public static void handleMilestoneCompletion(){
+    private static void handleMilestoneCompletion() {
         pse__Proj__c oProject = [SELECT Id, Name from pse__Proj__c WHERE Id != null LIMIT 1];
         List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT Id FROM pse__Project_Task__c WHERE pse__Project__c = :oProject.Id LIMIT 1]);
         List<pse__Milestone__c> lMileStones = new List<pse__Milestone__c>([SELECT Id FROM pse__Milestone__c WHERE pse__Project__c = :oProject.Id LIMIT 1]);
@@ -100,36 +88,26 @@ public class NSP_MilestoneTriggerHelperTest {
         }catch(Exception ex){
             System.assertEquals(NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS,[SELECT pse__Status__c FROM pse__Milestone__c WHERE Id =: lMileStones[0].Id].pse__Status__c);
         }
-      /*  System.assertEquals(NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS,[SELECT pse__Status__c FROM pse__Milestone__c WHERE Id =: lMileStones[0].Id].pse__Status__c);
-        
-        System.assertEquals(NSP_ServiceConstants.TASKCOMPLETE,[SELECT pse__Status__c FROM pse__Milestone__c WHERE Id =: lMileStones[0].Id].pse__Status__c);
-       
-*/
         Test.stopTest();
     }
-    
-    /***********************************************************************************************
-    * MethodName: updateRecordTypeUnitTest
-    * Description : Test Method to Validate record type for milestone
-    * ********************************************************************************************/
+
     @isTest
-    public static void updateRecordTypeUnitTest(){
-        
-		// create BPS Project
+    private static void updateRecordTypeUnitTest() {
+        // create BPS Project
         pse__Proj__c bpsProject =  (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), PROJECTDEFAULTS, false);
         bpsProject.pse__Start_Date__c = Date.Today();
         bpsProject.Name = 'TestBPS';
         bpsProject.RecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('TES_BPS')?.getRecordTypeId();
-        insert bpsProject;  
+        insert bpsProject;
 
         // create PEOproject
         pse__Proj__c peoProject =  (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), PROJECTDEFAULTS, false);
         peoProject.pse__Start_Date__c = Date.Today();
         peoProject.Name = 'TestPEO';
         peoProject.RecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project')?.getRecordTypeId();
-        insert peoProject;  
+        insert peoProject;
 
-        
+
         List<pse__Milestone__c> milestoneList = new List<pse__Milestone__c>();
         //create bps milestone
         pse__Milestone__c bpsMilestone =  (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
@@ -144,7 +122,7 @@ public class NSP_MilestoneTriggerHelperTest {
         milestoneList.add(peoMilestone);
         String peoAPIname = NSP_ServiceConstants.PEOMILSTONE;
         String bpsAPIname = NSP_ServiceConstants.BPSMILESTONE;
-        
+
         Id recordTypeIdBPS = SObjectType.pse__Milestone__c.getRecordTypeInfosByDeveloperName().get(bpsAPIname).getRecordTypeId();
         Id recordTypeIdPEO = SObjectType.pse__Milestone__c.getRecordTypeInfosByDeveloperName().get(peoAPIname).getRecordTypeId();
 
@@ -155,13 +133,9 @@ public class NSP_MilestoneTriggerHelperTest {
         Test.stopTest();
 
     }
-    
-    /***********************************************************************************************
-    * MethodName: updateTargetDateTest
-    * Description : Test Method to Validate the Milestone Start and  End Date Assignment   
-    * ********************************************************************************************/
+
     @isTest
-    static void updateTargetDateTest(){
+    private static void updateTargetDateTest() {
 
         // create PEO project
         pse__Proj__c peoProject =  (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), PROJECTDEFAULTS, false);
@@ -170,13 +144,13 @@ public class NSP_MilestoneTriggerHelperTest {
         peoProject.RecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project')?.getRecordTypeId();
         peoProject.TemplateName__c= label.Middle_Market_Implementation_Project;
         peoProject.pse__End_Date__c = System.Today().addDays(180);
-        insert peoProject;  
-        
+        insert peoProject;
+
         // create milestone
         pse__Milestone__c peoMilestone =  (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
         peoMilestone.pse__Project__c = peoProject.Id;
         peoMilestone.pse__Target_Date__c = System.Today().addDays(10);
-        
+
         Test.startTest();
         Insert peoMilestone;
         Test.stopTest();
@@ -184,13 +158,8 @@ public class NSP_MilestoneTriggerHelperTest {
         System.assertEquals(peoProject.pse__Start_Date__c, milestone.pse__Start_Date__c);
     }
 
-    
-    /***********************************************************************************************
-    * MethodName: checkDuplicateMilestoneTest
-    * Description : Test Method to check isDuplicate if milestone with same name is already present
-    * ********************************************************************************************/
     @isTest
-    static void checkDuplicateMilestoneTest(){
+    private static void checkDuplicateMilestoneTest() {
         //Given
         String query1 = new NSP_QueryBuilder('pse__Proj__c', PROJECT_TASK_FIELDS).addStartsWithFilter('Name' , 'Test').addLimit(1).build();
         pse__Proj__c projectRec =  Database.query(query1);
@@ -199,7 +168,7 @@ public class NSP_MilestoneTriggerHelperTest {
         pse__Milestone__c milestoneDuplic =  (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
         milestoneDuplic.pse__Project__c = projectRec.Id;
         milestoneDuplic.Name = TEST1;
-        
+
         //When
         Test.startTest();
         Insert milestoneDuplic;
@@ -208,68 +177,56 @@ public class NSP_MilestoneTriggerHelperTest {
         //Then
         String query2 = new NSP_QueryBuilder('pse__Milestone__c', MILESTONE_FIELDS).addFilter('Name', TEST1).build();
         List<pse__Milestone__c> milestoneRecs = (List<pse__Milestone__c>) Database.query(query2);
-        
+
         System.assertNotEquals(milestoneRecs[0].NSP_isDuplicate__c, milestoneRecs[1].NSP_isDuplicate__c,'One Milstone Marked as duplicate');
     }
-    
-    /******************************************************************
-    * MethodName: testMilestoneSharing
-    * Description : Test Method to check milestone sharing 
-    * ****************************************************************/
-    //positive
+
     @isTest
-    static void testMilestoneSharing(){
+    private static void testMilestoneSharing() {
         List<String> accFields = new List<String>{'Id','Name'};
         String accQuery = new NSP_QueryBuilder('Account', accFields)
             .addFilter('Name', 'Test Account').addLimit(1).build();
         Account acc = Database.query(accQuery);
-        
-    	List<String> projFields = new List<String>{'Id'};
+
+        List<String> projFields = new List<String>{'Id'};
         String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
             .addFilter('pse__Account__c', acc.Id).addLimit(1).build();
         pse__Proj__c projRec = Database.query(query);
-        
+
         pse__Milestone__c milestoneRec = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
         milestoneRec.pse__Project__c = projRec.Id;
         milestoneRec.NSP_Visible_to_Client__c = true;
         milestoneRec.pse__Target_Date__c = System.Today().addDays(10);
-        
+
         Test.startTest();
         INSERT milestoneRec;
-        /* System.assertEquals(1,[SELECT Id , ParentId , UserorGroupId 
-                               FROM pse__Milestone__share 
-                               WHERE ParentId =:milestoneRec.Id  
-                               AND RowCause = :Schema.pse__Milestone__share.RowCause.InsperitySharing__c ].Size()); */
         Test.stopTest();
     }
-    
-    /******************************************************************
-    * MethodName: testMilestoneSharing
-    * Description : Test Method to check milestone not getting shared 
-    * ****************************************************************/
-    //negative
+
     @isTest
-    static void testNoMilestoneSharing(){
+    private static void testNoMilestoneSharing() {
         List<String> accFields = new List<String>{'Id','Name'};
         String accQuery = new NSP_QueryBuilder('Account', accFields)
             .addFilter('Name', 'Test Account').addLimit(1).build();
         Account acc = Database.query(accQuery);
-        
-    	List<String> projFields = new List<String>{'Id'};
+
+        List<String> projFields = new List<String>{'Id'};
         String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
             .addFilter('pse__Account__c', acc.Id).addLimit(1).build();
         pse__Proj__c projRec = Database.query(query);
-        
+
         pse__Milestone__c milestoneRec = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), MILESTONEDEFAULTS, false);
         milestoneRec.pse__Project__c = projRec.Id;
         milestoneRec.pse__Target_Date__c = System.Today().addDays(10);
-        
+
         Test.startTest();
         INSERT milestoneRec;
-        System.assertEquals(0,[SELECT Id , ParentId , UserorGroupId 
-                               FROM pse__Milestone__share 
-                               WHERE ParentId =:milestoneRec.Id  
+        System.assertEquals(0,[SELECT Id , ParentId , UserorGroupId
+                               FROM pse__Milestone__share
+                               WHERE ParentId =:milestoneRec.Id
                                AND RowCause = :Schema.pse__Milestone__share.RowCause.InsperitySharing__c ].Size());
         Test.stopTest();
     }
+
 }
+//
