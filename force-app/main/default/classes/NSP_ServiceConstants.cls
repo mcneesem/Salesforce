@@ -807,8 +807,6 @@ public class NSP_ServiceConstants {
     public static final String RETOPSPROCESSING = 'RET Ops - Processing';
 
     //FIEDL API NAMES
-    public static final String MORETHANONEFEIN ='NSP_Does_company_have_more_than_one_FEIN__c';
-    public static final String COMMISSIONONLYEE ='NSP_Commission_only_employees__c';
     public static final String NEWPRODUCT='New Product';
 
     public static final String SYSTEM_ADMINISTRATOR ='System Administrator';
