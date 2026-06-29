@@ -1,8 +1,9 @@
 <template>
     <template lwc:if={record}>
         <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded} modstamp={modstamp}></c-portal-related-files>
-        <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" padding="around-small">
+        <lightning-layout multiple-rows="true">
+            <!-- MEDIUM -->
+            <lightning-layout-item size="12" padding="around-small" class="slds-show_medium">
                 <lightning-layout onclick={handleClickAccordion} onkeydown={handleKeyDown} multiple-rows={isMultipleRows}>
                     <lightning-layout-item
                         size={titleSize}
@@ -16,19 +17,19 @@
                         <template lwc:if={isParent}>
                             <template lwc:if={hasBody}>
                                 <template lwc:if={showBody}>
-                                    <lightning-icon icon-name="utility:chevrondown" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                    <lightning-icon icon-name="utility:chevrondown" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
                                 </template>
                                 <template lwc:else>
-                                    <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                    <lightning-icon icon-name="utility:chevronright" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
                                 </template>
                             </template>
                             <template lwc:else>
-                                <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                <lightning-icon icon-name="utility:chevronright" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
                             </template>
                         </template>
                         {name}
                         <template lwc:if={hasGuidance}>
-                            <c-portal-guidance variant="helptext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
+                            <c-portal-guidance variant="helptext" record-id={guidanceId}></c-portal-guidance>
                         </template>
                     </lightning-layout-item>
                     <template lwc:if={showDueDate}>
@@ -39,7 +40,7 @@
                             large-device-size={dueDateSize}
                             >
                             <lightning-formatted-date-time
-                                value={record.fields.Due_Date__c.value}
+                                value={dueDate}
                                 month="2-digit"
                                 day="2-digit"
                                 year="numeric"
@@ -53,127 +54,14 @@
                         small-device-size={actionSize}
                         medium-device-size={actionSize}
                         large-device-size={actionSize}
-                        onclick={handleClickAction}
-                        onkeydown={handleKeyDown}
                         >
-                        <template lwc:if={showFileUploadInput}>
-                            <lightning-file-upload
-                                name="fileUploader"
-                                record-id={record.fields.Id.value}
-                                onuploadfinished={handleUploadFinished}
-                                disabled={isInputDisabled}
-                                variant="label-hidden"
-                                class="relative-up_small"
-                                multiple
-                                >
-                            </lightning-file-upload>
-                        </template>
-                        <template lwc:elseif={showDocusignInput}>
-                            Docusign&nbsp;<c-helptext content="You will be directed to Docusign for this item. Once verified, the status will show as completed."></c-helptext>
-                        </template>
-                        <template lwc:elseif={showValueInput}>
-                            <lightning-layout>
-                                <template lwc:if={showInputDate}>
-                                    <lightning-layout-item flexibility="auto" class="slds-m-bottom_xx-small">
-                                        <lightning-input
-                                            type="date"
-                                            label={name}
-                                            value={recordValue}
-                                            onchange={handleChangeInput}
-                                            onfocus={handleFocusInput}
-                                            onblur={handleBlurInput}
-                                            variant="label-hidden"
-                                            disabled={isInputDisabled}
-                                            date-style="short"
-                                            style="max-width: 14.375rem;"
-                                            >
-                                        </lightning-input>
-                                    </lightning-layout-item>
-                                </template>
-                                <template lwc:elseif={showInputDateTime}>
-                                    <lightning-layout-item flexibility="auto">
-                                        <lightning-input
-                                            type="datetime"
-                                            label={name}
-                                            value={recordValue}
-                                            onchange={handleChangeInput}
-                                            onfocus={handleFocusInput}
-                                            onblur={handleBlurInput}
-                                            variant="label-hidden"
-                                            disabled={isInputDisabled}
-                                            date-style="short"
-                                            time-style="short"
-                                            style="max-width: 14.375rem;"
-                                            >
-                                        </lightning-input>
-                                    </lightning-layout-item>
-                                </template>
-                                <template lwc:elseif={showInputInteger}>
-                                    <lightning-layout-item flexibility="auto">
-                                        <lightning-input
-                                            type="number"
-                                            label={name}
-                                            value={recordValue}
-                                            step="1"
-                                            onchange={handleChangeInput}
-                                            onfocus={handleFocusInput}
-                                            onblur={handleBlurInput}
-                                            variant="label-hidden"
-                                            disabled={isInputDisabled}
-                                            style="max-width: 14.375rem;"
-                                            >
-                                        </lightning-input>
-                                    </lightning-layout-item>
-                                </template>
-                                <template lwc:elseif={showInputText}>
-                                    <lightning-layout-item flexibility="auto">
-                                        <lightning-input
-                                            type="text"
-                                            label={name}
-                                            value={recordValue}
-                                            step="1"
-                                            max-length="10"
-                                            onchange={handleChangeInput}
-                                            onfocus={handleFocusInput}
-                                            onblur={handleBlurInput}
-                                            variant="label-hidden"
-                                            disabled={isInputDisabled}
-                                            style="max-width: 14.375rem;"
-                                            >
-                                        </lightning-input>
-                                    </lightning-layout-item>
-                                </template>
-                                <template lwc:if={showSaveButtonIcon}>
-                                    <lightning-layout-item flexibility="auto, no-grow">
-                                        <lightning-button-icon
-                                            title="Save"
-                                            icon-name="utility:save"
-                                            onclick={handleClickSave}
-                                            class="slds-m-left_x-small"
-                                            variant={saveButtonVariant}
-                                            disabled={isSaveDisabled}
-                                            >
-                                        </lightning-button-icon>
-                                    </lightning-layout-item>
-                                </template>
-                            </lightning-layout>
-                            <template lwc:if={showSaveButton}>
-                                <lightning-layout horizontal-align="end">
-                                    <lightning-layout-item>
-                                        <lightning-button
-                                            label="Save"
-                                            onclick={handleClickSave}
-                                            variant={saveButtonVariant}
-                                            disabled={isSaveDisabled}
-                                            >
-                                        </lightning-button>
-                                    </lightning-layout-item>
-                                </lightning-layout>
-                            </template>
-                        </template>
-                        <template lwc:else>
-                            {action}
-                        </template>
+                        <c-portal-task-action
+                            record={record}
+                            disabled={isInputDisabled}
+                            onmodified={handleModified}
+                            ontoasted={handleToasted}
+                            >
+                        </c-portal-task-action>
                     </lightning-layout-item>
                     <template lwc:if={showRelatedFiles}>
                         <lightning-layout-item
@@ -190,7 +78,9 @@
                                 </div>
                             </template>
                             <template lwc:else>
-                                <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                                <span style="white-space: nowrap;">
+                                    <lightning-icon icon-name="utility:form" size={iconSize} alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                                </span>
                             </template>
                         </lightning-layout-item>
                     </template>
@@ -213,7 +103,7 @@
                         <lightning-icon
                             icon-name={statusIconName}
                             variant={statusIconVariant}
-                            size="xx-small"
+                            size={iconSize}
                             title={statusIconTitle}
                             alternative-text={statusIconTitle}
                             >
@@ -221,14 +111,107 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
+            <!-- SMALL -->
+            <lightning-layout-item size="12" padding="around-small" class="slds-hide_medium">
+                <lightning-layout onclick={handleClickAccordion} onkeydown={handleKeyDown} multiple-rows="true">
+                    <lightning-layout-item
+                        size="12"
+                        small-device-size="6"
+                        medium-device-size="6"
+                        large-device-size="6"
+                        onclick={handleClickTitle}
+                        onkeydown={handleKeyDown}
+                        class={titleClass}
+                        >
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <template lwc:if={isParent}>
+                                    <template lwc:if={hasBody}>
+                                        <template lwc:if={showBody}>
+                                            <lightning-icon icon-name="utility:chevrondown" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                        </template>
+                                        <template lwc:else>
+                                            <lightning-icon icon-name="utility:chevronright" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                        </template>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-icon icon-name="utility:chevronright" size={iconSize} alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                    </template>
+                                </template>
+                                <lightning-icon
+                                    icon-name={statusIconName}
+                                    variant={statusIconVariant}
+                                    size={iconSize}
+                                    title={statusIconTitle}
+                                    alternative-text={statusIconTitle}
+                                    >
+                                </lightning-icon>&nbsp;
+                                {name}
+                                <template lwc:if={hasGuidance}>
+                                    <c-portal-guidance variant="helptext" record-id={guidanceId}></c-portal-guidance>
+                                </template>
+                            </lightning-layout-item>
+                            <template lwc:if={showDueDate}>
+                                <lightning-layout-item size="12">
+                                    <lightning-formatted-date-time
+                                        value={dueDate}
+                                        month="2-digit"
+                                        day="2-digit"
+                                        year="numeric"
+                                        time-zone="UTC"
+                                        >
+                                    </lightning-formatted-date-time>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item
+                        size="12"
+                        small-device-size="6"
+                        medium-device-size="6"
+                        large-device-size="6"
+                        >
+                        <lightning-layout>
+                            <lightning-layout-item flexibility="auto, no-grow">
+                                <c-portal-task-action
+                                    record={record}
+                                    disabled={isInputDisabled}
+                                    onmodified={handleModified}
+                                    ontoasted={handleToasted}
+                                    >
+                                </c-portal-task-action>
+                            </lightning-layout-item>
+                            <template lwc:if={showRelatedFiles}>
+                                <lightning-layout-item
+                                    flexibility="auto, no-grow"
+                                    onclick={handleClickFiles}
+                                    onkeydown={handleKeyDown}
+                                    >
+                                    <template lwc:if={isLoading}>
+                                        <div class="slds-is-relative slds-size_1-of-2 slds-m-top_x-small">
+                                            <lightning-spinner alternative-text="Loading" size="xx-small"></lightning-spinner>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="slds-m-left_xx-small" style="white-space: nowrap;">
+                                            <lightning-icon icon-name="utility:form" size={iconSize} alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                                        </span>
+                                    </template>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <!-- BODY -->
             <template lwc:if={hasBody}>
                 <template lwc:if={showBody}>
                     <lightning-layout-item size="12" padding="around-medium">
                         <template lwc:if={hasGuidance}>
-                            <c-portal-guidance variant="richtext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
+                            <c-portal-guidance variant="richtext" record-id={guidanceId}></c-portal-guidance>
                         </template>
                         <template lwc:if={isParent}>
-                            <c-portal-task-list variant="child" parent-record-id={record.fields.Id.value}></c-portal-task-list>
+                            <c-portal-task-list variant="child" parent-record-id={recordId}></c-portal-task-list>
                         </template>
                     </lightning-layout-item>
                 </template>

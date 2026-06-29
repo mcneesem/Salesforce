@@ -2,9 +2,9 @@
     <template lwc:if={record}>
         <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded}></c-portal-related-files>
         <template lwc:if={hasResource}>
-            <lightning-layout class="slds-no-wrap">
-                <lightning-layout-item alignment-bump="right" class="slds-has-flexi-truncate">
-                    <div class="slds-truncate slds-m-bottom_small">
+            <lightning-layout>
+                <lightning-layout-item size="12">
+                    <div class="slds-m-top_small" title={title}>
                         <a
                             href="javascript:void(0);"
                             data-id={parentRecordId}

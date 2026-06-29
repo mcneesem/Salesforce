@@ -1,29 +1,36 @@
 <template>
     <template lwc:if={hasContent}>
         <lightning-card class="background-color-white">
-            <lightning-layout multiple-rows>
-                <template lwc:if={bar}>
-                    <lightning-layout-item size="12" padding="around-small" key={bar.fields.Id.value}>
-                        <c-portal-project-progress-bar record-id={bar.fields.Id.value}></c-portal-project-progress-bar>
-                    </lightning-layout-item>
-                </template>
-                <lightning-layout-item size="12" padding="horizontal-small">
-                    <lightning-tabset>
-                        <template lwc:if={projectId}>
-                            <lightning-tab label="Overview">
-                                <c-portal-client-tab-home record-id={recordId} project-id={projectId}></c-portal-client-tab-home>
-                            </lightning-tab>
-                        </template>
-                        <template lwc:if={projects}>
-                            <template for:each={projects} for:item="project">
-                                <lightning-tab label={project.fields.Label__c.value} key={project.fields.Id.value}>
-                                    <c-portal-project-tab record={project}></c-portal-project-tab>
+            <div class="slds-p-around_small">
+                <lightning-layout multiple-rows>
+                    <template lwc:if={bar}>
+                        <lightning-layout-item size="12" padding="around-small" key={bar.fields.Id.value}>
+                            <c-portal-project-progress-bar record-id={bar.fields.Id.value}></c-portal-project-progress-bar>
+                        </lightning-layout-item>
+                    </template>
+                    <lightning-layout-item size="12" padding="horizontal-small">
+                        <lightning-tabset>
+                            <template lwc:if={projectId}>
+                                <lightning-tab label="Overview">
+                                    <c-portal-client-tab-home
+                                        record-id={recordId}
+                                        project-id={projectId}
+                                        guidance-id={guidanceId}
+                                        >
+                                    </c-portal-client-tab-home>
                                 </lightning-tab>
                             </template>
-                        </template>
-                    </lightning-tabset>
-                </lightning-layout-item>
-            </lightning-layout>
+                            <template lwc:if={projects}>
+                                <template for:each={projects} for:item="project">
+                                    <lightning-tab label={project.fields.Label__c.value} key={project.fields.Id.value}>
+                                        <c-portal-project-tab record={project}></c-portal-project-tab>
+                                    </lightning-tab>
+                                </template>
+                            </template>
+                        </lightning-tabset>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
         </lightning-card>
     </template>
 </template>

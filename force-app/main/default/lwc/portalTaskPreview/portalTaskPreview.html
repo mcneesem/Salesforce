@@ -3,7 +3,7 @@
         <c-error-panel error={error} parent="c-portal-task-preview"></c-error-panel>
     </template>
     <template lwc:if={record}>
-        <c-portal-task record={record} variant={variant} save-variant="auto"></c-portal-task>
+        <c-portal-task record={record} variant={variant}></c-portal-task>
     </template>
     <template lwc:else>
         <template lwc:if={recordId}>

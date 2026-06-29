@@ -11,7 +11,7 @@
     <description>Grants the Permissions require to access Portal-related records, tabs, and components within the external Portal Pages.</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Client__c.Client_Number__c</field>
+        <field>Portal_Client__c.Client_Number_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22,6 +22,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Event__c.EndDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Event__c.Meeting_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -116,6 +121,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Project__c.Welcome_Guidance_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Resource__c.Link_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -186,7 +196,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Team_Member__c.Contact_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Team_Member__c.Contact_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Team_Member__c.Contact_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

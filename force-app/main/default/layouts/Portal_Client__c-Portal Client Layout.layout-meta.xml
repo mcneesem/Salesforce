@@ -29,8 +29,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Client_Number__c</field>
+                <behavior>Readonly</behavior>
+                <field>Client_Number_Formula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
