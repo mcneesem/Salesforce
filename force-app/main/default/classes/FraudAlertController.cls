@@ -32,7 +32,6 @@ public with sharing class FraudAlertController {
         Boolean isFraudAlert = false;
         try {
             if (recordId != null ) {
-               // String objectName = objectApiName.trim();
 
                 if (recordId.getSObjectType() == Account.getSObjectType()) {
                     isFraudAlert = checkAccountFraudAlert(recordId);
