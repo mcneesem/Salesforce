@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>O</label>
             </value>
+            <value>
+                <fullName>Y</fullName>
+                <default>false</default>
+                <label>Y</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
