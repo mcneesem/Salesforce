@@ -1,0 +1,125 @@
+<template>
+    <lightning-layout onclick={handleClickAction} onkeydown={handleKeyDown}>
+        <lightning-layout-item size="12" >
+            <template lwc:if={showFileUploadInput}>
+                <lightning-file-upload
+                    name="fileUploader"
+                    record-id={recordId}
+                    onuploadfinished={handleUploadFinished}
+                    disabled={isInputDisabled}
+                    variant="label-hidden"
+                    class="relative-up_small"
+                    multiple
+                    >
+                </lightning-file-upload>
+            </template>
+            <template lwc:elseif={showDocusignInput}>
+                <span>Docusign&nbsp;<c-helptext content="You will be directed to Docusign for this item. Once verified, the status will show as completed."></c-helptext></span>
+            </template>
+            <template lwc:elseif={showValueInput}>
+                <lightning-layout>
+                    <template lwc:if={showInputDate}>
+                        <lightning-layout-item flexibility="auto" class="slds-m-bottom_xx-small">
+                            <lightning-input
+                                type="date"
+                                label={name}
+                                value={recordValue}
+                                onchange={handleChangeInput}
+                                onfocus={handleFocusInput}
+                                onblur={handleBlurInput}
+                                variant="label-hidden"
+                                disabled={isInputDisabled}
+                                date-style="short"
+                                style="max-width: 14.375rem;"
+                                >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:elseif={showInputDateTime}>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-input
+                                type="datetime"
+                                label={name}
+                                value={recordValue}
+                                onchange={handleChangeInput}
+                                onfocus={handleFocusInput}
+                                onblur={handleBlurInput}
+                                variant="label-hidden"
+                                disabled={isInputDisabled}
+                                date-style="short"
+                                time-style="short"
+                                style="max-width: 14.375rem;"
+                                >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:elseif={showInputInteger}>
+                        <lightning-layout-item flexibility="auto">
+                            <lightning-input
+                                type="number"
+                                label={name}
+                                value={recordValue}
+                                step="1"
+                                onchange={handleChangeInput}
+                                onfocus={handleFocusInput}
+                                onblur={handleBlurInput}
+                                variant="label-hidden"
+                                disabled={isInputDisabled}
+                                style="max-width: 14.375rem;"
+                                >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:elseif={showInputText}>
+                        <lightning-layout-item flexibility="auto">
+                            <!-- ultimately needs custom fein-validation logic -->
+                            <lightning-input
+                                type="text"
+                                label={name}
+                                value={recordValue}
+                                step="1"
+                                max-length="10"
+                                onchange={handleChangeInput}
+                                onfocus={handleFocusInput}
+                                onblur={handleBlurInput}
+                                variant="label-hidden"
+                                disabled={isInputDisabled}
+                                style="max-width: 14.375rem;"
+                                >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:if={showSaveButtonIcon}>
+                        <lightning-layout-item flexibility="auto, no-grow">
+                            <lightning-button-icon
+                                title="Save"
+                                icon-name="utility:save"
+                                onclick={handleClickSave}
+                                class="slds-m-left_x-small"
+                                variant={saveButtonVariant}
+                                disabled={isSaveDisabled}
+                                >
+                            </lightning-button-icon>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+                <template lwc:if={showSaveButton}>
+                    <lightning-layout horizontal-align="end">
+                        <lightning-layout-item>
+                            <lightning-button
+                                label="Save"
+                                onclick={handleClickSave}
+                                variant={saveButtonVariant}
+                                disabled={isSaveDisabled}
+                                >
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+            <template lwc:else>
+                <span>{action}</span>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

@@ -62,8 +62,8 @@
             </template>
             <template lwc:else>
                 <lightning-layout pull-to-boundary="medium">
-                    <template lwc:if={isEnabledVerticalNavigation}>
-                        <lightning-layout-item flexibility="no-grow, no-shrink" class="background-color-white">
+                    <template lwc:if={showVerticalNavigation}>
+                        <lightning-layout-item flexibility="no-grow, no-shrink" class="background-color-white slds-show_large">
                             <lightning-vertical-navigation selected-item={selectedItem}>
                                 <template lwc:if={navigationItems}>
                                     <template for:each={navigationItems} for:item="navigationItem">
