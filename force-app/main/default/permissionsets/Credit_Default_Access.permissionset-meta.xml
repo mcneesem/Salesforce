@@ -87,6 +87,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Credit_Default__c.Client_Payroll_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Credit_Default__c.Clients_Response__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -148,6 +153,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Credit_Default__c.Other_Client_Info_Credit_Should_Know__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Credit_Default__c.Payroll_Contact_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Credit_Default__c.Payroll_Contact_Work_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
