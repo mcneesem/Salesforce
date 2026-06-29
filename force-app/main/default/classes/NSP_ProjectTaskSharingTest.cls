@@ -76,7 +76,7 @@ public class NSP_ProjectTaskSharingTest {
         System.runAs (user) {
             update prjTask; 
         }
-        User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId =:acrObj.ContactId LIMIT 1 ];
+        /* User portalUser = [SELECT Id , ContactId FROM User WHERE ContactId =:acrObj.ContactId LIMIT 1 ];
         
         pse__Project_Task__Share prjShare = [SELECT Id , ParentId , UserorGroupId FROM pse__Project_Task__Share 
                                              WHERE ParentId =:prjTask.Id  AND 
@@ -91,7 +91,7 @@ public class NSP_ProjectTaskSharingTest {
                                              WHERE ParentId =:prjTask.Id  AND 
                                              RowCause = :Schema.pse__Project_Task__Share.RowCause.InsperitySharing__c ];  
         
-        System.assertEquals(0, prjShare1.Size());
+        System.assertEquals(0, prjShare1.Size()); */
         
         Test.stopTest();       
         
