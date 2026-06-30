@@ -3,16 +3,16 @@
     <label>blng__FinancePeriod__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">blng__FinancePeriod__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,blng__FinanceBook__r.NSP_External_Id__c,blng__LegalEntity__r.NSP_External_Id__c,blng__Notes__c,blng__PeriodEndDate__c,blng__PeriodStartDate__c,blng__PeriodStatus__c,blng__PeriodType__c,Id,Name,NSP_Finance_Period_External_Id__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c, blng__FinanceBook__r.NSP_External_Id__c,blng__LegalEntity__r.NSP_External_Id__c,blng__Notes__c,blng__PeriodEndDate__c,blng__PeriodStartDate__c,blng__PeriodStatus__c,blng__PeriodType__c,Id,Name,NSP_Finance_Period_External_Id__c FROM blng__FinancePeriod__c where blng__PeriodStartDate__c  &gt; 2024-01-01</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">blng__FinancePeriod__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

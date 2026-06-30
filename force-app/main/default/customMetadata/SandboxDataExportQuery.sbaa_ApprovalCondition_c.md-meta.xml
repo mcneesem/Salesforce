@@ -3,16 +3,16 @@
     <label>sbaa__ApprovalCondition__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">sbaa__ApprovalCondition__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,sbaa__ApprovalRule__r.NSP_External_Id__c,sbaa__TestedVariable__r.NSP_External_Id__c,Id,sbaa__EnableSmartApproval__c,sbaa__FilterField__c,sbaa__FilterType__c,sbaa__FilterValue__c,sbaa__FilterVariable__c,sbaa__Index__c,sbaa__Operator__c,sbaa__TestedField__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,sbaa__ApprovalRule__r.NSP_External_Id__c,sbaa__TestedVariable__r.NSP_External_Id__c,Id,sbaa__EnableSmartApproval__c,sbaa__FilterField__c,sbaa__FilterType__c,sbaa__FilterValue__c,sbaa__FilterVariable__c,sbaa__Index__c,sbaa__Operator__c,sbaa__TestedField__c FROM sbaa__ApprovalCondition__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">sbaa__ApprovalCondition__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

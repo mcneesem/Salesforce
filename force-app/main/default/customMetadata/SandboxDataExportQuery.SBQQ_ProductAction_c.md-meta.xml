@@ -3,16 +3,16 @@
     <label>SBQQ__ProductAction__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">SBQQ__ProductAction__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__Rule__r.NSP_External_Id__c, SBQQ__FilterField__c, SBQQ__FilterValue__c, SBQQ__Operator__c, SBQQ__Product__c, SBQQ__Required__c, SBQQ__Type__c, SBQQ__ValueAttribute__c, SBQQ__ValueField__c, SBQQ__ValueObject__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,SBQQ__Rule__r.NSP_External_Id__c, SBQQ__FilterField__c, SBQQ__FilterValue__c, SBQQ__Operator__c, SBQQ__Product__c, SBQQ__Required__c, SBQQ__Type__c, SBQQ__ValueAttribute__c, SBQQ__ValueField__c, SBQQ__ValueObject__c from SBQQ__ProductAction__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__ProductAction__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

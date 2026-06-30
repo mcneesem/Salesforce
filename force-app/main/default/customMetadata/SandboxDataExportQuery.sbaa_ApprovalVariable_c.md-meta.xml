@@ -3,16 +3,16 @@
     <label>sbaa__ApprovalVariable__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">sbaa__ApprovalVariable__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,Id,Name,sbaa__AggregateField__c,sbaa__AggregateFunction__c,sbaa__CombineWith__c,sbaa__FilterField__c,sbaa__FilterValue__c,sbaa__ListVariable__c,sbaa__NetVariable__c,sbaa__Operator__c,sbaa__TargetObject__c,sbaa__Type__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,Id,Name,sbaa__AggregateField__c,sbaa__AggregateFunction__c,sbaa__CombineWith__c,sbaa__FilterField__c,sbaa__FilterValue__c,sbaa__ListVariable__c,sbaa__NetVariable__c,sbaa__Operator__c,sbaa__TargetObject__c,sbaa__Type__c FROM sbaa__ApprovalVariable__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">sbaa__ApprovalVariable__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

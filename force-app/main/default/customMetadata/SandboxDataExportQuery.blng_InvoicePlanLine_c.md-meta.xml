@@ -3,16 +3,16 @@
     <label>blng__InvoicePlanLine__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">blng__InvoicePlanLine__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,blng__InvoicePlan__r.NSP_External_Id__c,Id,blng__CommencementDateOffsetUnits__c,blng__CommencementDateOffset__c,blng__CommencementDate__c,blng__FlatAmount__c,blng__Percentage__c,blng__ProcessingOrder__c,blng__ServicePeriodEnd__c,blng__ServicePeriodStart__c,blng__Type__c,Name,NSP_Billing_Commencement_Trigger__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,blng__InvoicePlan__r.NSP_External_Id__c,Id,blng__CommencementDateOffsetUnits__c,blng__CommencementDateOffset__c,blng__CommencementDate__c,blng__FlatAmount__c,blng__Percentage__c,blng__ProcessingOrder__c,blng__ServicePeriodEnd__c,blng__ServicePeriodStart__c,blng__Type__c,Name,NSP_Billing_Commencement_Trigger__c FROM blng__InvoicePlanLine__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">blng__InvoicePlanLine__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

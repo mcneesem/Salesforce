@@ -3,16 +3,16 @@
     <label>Product2</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">Product2</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c, Id, name,  blng__BillingRule__r.NSP_External_Id__c,blng__TaxRule__r.NSP_External_Id__c,NSP_Revenue_Recognition_Rule_Credit__r.NSP_External_Id__c,blng__RevenueRecognitionRule__r.NSP_External_Id__c,	NSP_Product_Credit_Tax_GL_Rule__r.NSP_External_Id__c,NSP_Product_Credit_GL_Rule__r.NSP_External_Id__c,NSP_Legal_Entity__r.NSP_External_Id__c,AVA_SFCLOUD__AvaTax_Tax_Code__r.NSP_External_Id__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">select NSP_External_Id__c, Id, name,  blng__BillingRule__r.NSP_External_Id__c,blng__TaxRule__r.NSP_External_Id__c,NSP_Revenue_Recognition_Rule_Credit__r.NSP_External_Id__c,blng__RevenueRecognitionRule__r.NSP_External_Id__c,	NSP_Product_Credit_Tax_GL_Rule__r.NSP_External_Id__c,NSP_Product_Credit_GL_Rule__r.NSP_External_Id__c,NSP_Legal_Entity__r.NSP_External_Id__c,AVA_SFCLOUD__AvaTax_Tax_Code__r.NSP_External_Id__c from product2</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">Product2</value>
     </values>
     <values>
         <field>SortOrder__c</field>
