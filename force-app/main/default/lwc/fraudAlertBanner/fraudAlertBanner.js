@@ -1,5 +1,5 @@
-import { LightningElement, api, wire } from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { LightningElement , api , wire } from 'lwc';
+import { getRecord , getFieldValue } from 'lightning/uiRecordApi';
 import hasFraudAlert from '@salesforce/apex/FraudAlertController.hasFraudAlert';
 import CONTACT_FRAUD_ALERT from '@salesforce/schema/Contact.Fraud_Alert__c';
 
@@ -20,7 +20,7 @@ export default class FraudAlertBanner extends LightningElement {
         }
     }
 
-    // Account / Opportunity / Case — imperative call, bypasses LDS cache entirely
+    // Account / Case — imperative call, bypasses LDS cache entirely
     connectedCallback() {
         if (this.objectApiName !== 'Contact') {
             hasFraudAlert({ recordId: this.recordId })
@@ -32,12 +32,12 @@ export default class FraudAlertBanner extends LightningElement {
     }
 
     get contactRecordId() {
-        return this.objectApiName === 'Contact' ? this.recordId : undefined;
+        return ( ( this.objectApiName === 'Contact' ) ? this.recordId : undefined );
     }
 
     get showBanner() {
-        return this.objectApiName === 'Contact'
-            ? this.contactFraudAlert
-            : this.apexResult;
+        return ( ( this.objectApiName === 'Contact' ) ? this.contactFraudAlert : this.apexResult );
     }
+
 }
+//
