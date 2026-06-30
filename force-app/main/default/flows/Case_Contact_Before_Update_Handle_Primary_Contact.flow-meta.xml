@@ -3,6 +3,19 @@
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_varFaultElement_for_Existing_Case_Contact_records</name>
+        <label>Assign varFaultElement for Existing Case Contact records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Existing_Case_Contact_Record</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Primary_value_update</name>
         <label>Primary value update</label>
         <locationX>0</locationX>
@@ -20,6 +33,9 @@
         <label>Primary case contact checking</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Primary_value_update</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Primary_case_contact_not_exist</name>
@@ -38,9 +54,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Primary_value_update</targetReference>
-            </connector>
             <label>Primary case contact not exist</label>
         </rules>
     </decisions>
@@ -75,6 +88,9 @@
         <connector>
             <targetReference>Primary_case_contact_checking</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_for_Existing_Case_Contact_records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Case__c</field>
