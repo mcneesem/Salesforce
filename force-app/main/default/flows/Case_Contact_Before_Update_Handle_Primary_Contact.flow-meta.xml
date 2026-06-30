@@ -29,8 +29,8 @@
         </assignmentItems>
     </assignments>
     <decisions>
-        <name>Primary_case_contact_checking</name>
-        <label>Primary case contact checking</label>
+        <name>Check_Existing_Case_Contacts</name>
+        <label>Check Existing Case Contacts</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -38,7 +38,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Primary_case_contact_not_exist</name>
+            <name>Other_Case_Contacts_Exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Existing_Case_Contact_Records</leftValueReference>
@@ -54,7 +54,7 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <label>Primary case contact not exist</label>
+            <label>Other Case Contacts Exist</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -86,7 +86,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Primary_case_contact_checking</targetReference>
+            <targetReference>Check_Existing_Case_Contacts</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_for_Existing_Case_Contact_records</targetReference>
