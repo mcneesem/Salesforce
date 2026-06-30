@@ -359,6 +359,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>IsChangedDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Amendment_Checklist_Processed</targetReference>
             </connector>
@@ -432,6 +439,13 @@
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsChangedRejected</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -902,6 +916,13 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         </value>
     </variables>
     <variables>
+        <name>IsChangedDate</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>isChangedQCAnalyst</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -910,6 +931,13 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>IsChangedRejected</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>record</name>
