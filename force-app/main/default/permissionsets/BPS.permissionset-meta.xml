@@ -6,6 +6,11 @@
     </customPermissions>
     <description>BPS Permission Set</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Count_of_Pending_Oppty__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Asset.NSP_Product_Segment__c</field>
         <readable>true</readable>
