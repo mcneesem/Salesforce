@@ -1,7 +1,4 @@
-/**
- * @description Unit tests for FraudAlertController, verifying fraud alert detection
- *              across Contact, Account, Opportunity, and Case record contexts.
- */
+// Unit tests for FraudAlertController, verifying fraud alert detection across Contact, Account, Opportunity, and Case record contexts.
 @isTest
 private class FraudAlertControllerTest {
 
@@ -178,3 +175,4 @@ private class FraudAlertControllerTest {
     }
 
 }
+//
