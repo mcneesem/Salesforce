@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FieldApiNames__c</fullName>
+    <description>The list of API field names to be retrieved when generating the CSV export.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Enter comma-separate list of API field names to be retrieved from the specified SObject API Name.</inlineHelpText>
+    <label>Field API Names</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

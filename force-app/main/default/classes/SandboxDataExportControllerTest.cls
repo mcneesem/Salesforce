@@ -118,7 +118,7 @@ private class SandboxDataExportControllerTest {
         SandboxDataExportQuery__mdt rec = new SandboxDataExportQuery__mdt(
             Label         = 'Test Export',
             DeveloperName = 'Test_Export',
-            FileName__c   = 'test_export',
+            SObjectApiName__c   = 'test_export',
             IsActive__c   = true
         );
 
@@ -128,17 +128,17 @@ private class SandboxDataExportControllerTest {
         System.assertEquals(9999, def.sortOrder, 'Null SortOrder__c should default to 9999');
         System.assertEquals('Test Export', def.label,         'Label should match CMT Label');
         System.assertEquals('Test_Export', def.developerName, 'DeveloperName should match');
-        System.assertEquals('test_export', def.fileName,      'FileName should match FileName__c');
+        System.assertEquals('test_export', def.fileName,      'FileName should match SObjectApiName__c');
     }
 
     @IsTest
     private static void exportDefinition_compareTo_sortsCorrectly() {
         SandboxDataExportQuery__mdt rec1 = new SandboxDataExportQuery__mdt(
-            Label = 'A', DeveloperName = 'A', FileName__c = 'a',
+            Label = 'A', DeveloperName = 'A', SObjectApiName__c = 'a',
             IsActive__c = true, SortOrder__c = 10
         );
         SandboxDataExportQuery__mdt rec2 = new SandboxDataExportQuery__mdt(
-            Label = 'B', DeveloperName = 'B', FileName__c = 'b',
+            Label = 'B', DeveloperName = 'B', SObjectApiName__c = 'b',
             IsActive__c = true, SortOrder__c = 20
         );
 
@@ -157,9 +157,9 @@ private class SandboxDataExportControllerTest {
 
     @IsTest
     private static void exportDefinition_bulkSort_isStable() {
-        SandboxDataExportQuery__mdt r1 = new SandboxDataExportQuery__mdt(Label='Z',DeveloperName='Z',FileName__c='z',IsActive__c=true,SortOrder__c=50);
-        SandboxDataExportQuery__mdt r2 = new SandboxDataExportQuery__mdt(Label='M',DeveloperName='M',FileName__c='m',IsActive__c=true,SortOrder__c=25);
-        SandboxDataExportQuery__mdt r3 = new SandboxDataExportQuery__mdt(Label='A',DeveloperName='A',FileName__c='a',IsActive__c=true,SortOrder__c=1);
+        SandboxDataExportQuery__mdt r1 = new SandboxDataExportQuery__mdt(Label='Z',DeveloperName='Z',SObjectApiName__c='z',IsActive__c=true,SortOrder__c=50);
+        SandboxDataExportQuery__mdt r2 = new SandboxDataExportQuery__mdt(Label='M',DeveloperName='M',SObjectApiName__c='m',IsActive__c=true,SortOrder__c=25);
+        SandboxDataExportQuery__mdt r3 = new SandboxDataExportQuery__mdt(Label='A',DeveloperName='A',SObjectApiName__c='a',IsActive__c=true,SortOrder__c=1);
 
         List<SandboxDataExportController.ExportDefinition> items =
             new List<SandboxDataExportController.ExportDefinition>{
@@ -172,37 +172,6 @@ private class SandboxDataExportControllerTest {
         System.assertEquals(1,  items.get(0).sortOrder, 'First item should have lowest sortOrder');
         System.assertEquals(25, items.get(1).sortOrder, 'Middle item should be in middle');
         System.assertEquals(50, items.get(2).sortOrder, 'Last item should have highest sortOrder');
-    }
-
-    // ------------------------------------------------------------
-    // parseSelectColumns
-    // ------------------------------------------------------------
-
-    @IsTest
-    private static void parseSelectColumns_singleField() {
-        List<String> cols = SandboxDataExportController.parseSelectColumns('SELECT Id FROM Account');
-        System.assertEquals(1, cols.size(), 'Should parse one column');
-        System.assertEquals('Id', cols[0], 'Column should be Id');
-    }
-
-    @IsTest
-    private static void parseSelectColumns_multipleFields() {
-        List<String> cols = SandboxDataExportController.parseSelectColumns(
-            'SELECT Id, Name, Phone FROM Account'
-        );
-        System.assertEquals(3, cols.size(), 'Should parse three columns');
-        System.assertEquals('Id',    cols[0], 'First column should be Id');
-        System.assertEquals('Name',  cols[1], 'Second column should be Name');
-        System.assertEquals('Phone', cols[2], 'Third column should be Phone');
-    }
-
-    @IsTest
-    private static void parseSelectColumns_relationshipField() {
-        List<String> cols = SandboxDataExportController.parseSelectColumns(
-            'SELECT Id, Owner.Name FROM Case'
-        );
-        System.assertEquals(2, cols.size(), 'Should parse two columns');
-        System.assertEquals('Owner.Name', cols[1], 'Relationship field should be preserved as dot-notation');
     }
 
     // ------------------------------------------------------------
@@ -264,25 +233,25 @@ private class SandboxDataExportControllerTest {
 
     @IsTest
     private static void buildCsv_nullRecords_returnsEmptyString() {
-        String result = SandboxDataExportController.buildCsv(null, 'SELECT Id FROM Account');
+        List<String> columns = new List<String>{ 'Id' };
+        String result = SandboxDataExportController.buildCsv(null, columns);
         System.assertEquals('', result, 'Null records should return empty string');
     }
 
     @IsTest
     private static void buildCsv_emptyRecords_returnsEmptyString() {
-        String result = SandboxDataExportController.buildCsv(
-            new List<SObject>(), 'SELECT Id FROM Account'
-        );
+        List<String> columns = new List<String>{ 'Id' };
+        String result = SandboxDataExportController.buildCsv(new List<SObject>(), columns);
         System.assertEquals('', result, 'Empty record list should return empty string');
     }
 
     @IsTest
     private static void buildCsv_withRecords_producesCorrectHeaderAndRows() {
         List<User> users = [SELECT Id, Username FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-        String soql = 'SELECT Id, Username FROM User';
+        List<String> columns = new List<String>{ 'Id', 'Username' };
 
         Test.startTest();
-        String csv = SandboxDataExportController.buildCsv(users, soql);
+        String csv = SandboxDataExportController.buildCsv(users, columns);
         Test.stopTest();
 
         List<String> lines = csv.split('\n');
@@ -293,15 +262,15 @@ private class SandboxDataExportControllerTest {
     }
 
     @IsTest
-    private static void buildCsv_columnOrderMatchesSoql() {
+    private static void buildCsv_columnOrderMatchesFieldList() {
         List<User> users = [SELECT Username, Id FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-        String soql = 'SELECT Username, Id FROM User';
+        List<String> columns = new List<String>{ 'Username', 'Id' };
 
-        String csv = SandboxDataExportController.buildCsv(users, soql);
+        String csv = SandboxDataExportController.buildCsv(users, columns);
 
         String headerRow = csv.split('\n')[0];
         Integer usernamePos = headerRow.indexOf('"Username"');
         Integer idPos       = headerRow.indexOf('"Id"');
-        System.assert(usernamePos < idPos, 'Username column should appear before Id column per SOQL order');
+        System.assert(usernamePos < idPos, 'Username column should appear before Id column per field list order');
     }
 }
