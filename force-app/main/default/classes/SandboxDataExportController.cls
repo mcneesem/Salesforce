@@ -2,8 +2,6 @@ public with sharing class SandboxDataExportController {
     // test w/ SandboxDataExportControllerTest (90%)
 
     private static final String CLASS_NAME = SandboxDataExportController.class.getName();
-    private static final String QUOTE      = '"';
-    private static final String DBL_QUOTE  = '""';
     private static final String COMMA      = ',';
     private static final String NEWLINE    = '\n';
 
@@ -16,7 +14,7 @@ public with sharing class SandboxDataExportController {
         public ExportDefinition(SandboxDataExportQuery__mdt rec) {
             label         = rec.Label;
             developerName = rec.DeveloperName;
-            fileName      = rec.FileName__c;
+            fileName      = rec.SObjectApiName__c;
             sortOrder     = (rec.SortOrder__c != null) ? rec.SortOrder__c.intValue() : 9999;
         }
 
@@ -48,8 +46,8 @@ public with sharing class SandboxDataExportController {
         return definitions;
     }
 
-    // Executes the SOQL query stored in the named SandboxDataExportQuery__mdt record
-    // and returns the results as a CSV-formatted string ready for download.
+    // Builds a SOQL query from the named SandboxDataExportQuery__mdt record using
+    // NSP_QueryBuilder and returns the results as a CSV-formatted string ready for download.
     @AuraEnabled
     public static String executeExport(String developerName) {
         String csvResult = '';
@@ -58,25 +56,31 @@ public with sharing class SandboxDataExportController {
                 throw new AuraHandledException('Export name is required.');
             }
             List<SandboxDataExportQuery__mdt> queryRecords = [
-                SELECT SOQLQuery__c, FileName__c
+                SELECT FieldApiNames__c, SObjectApiName__c
                 FROM SandboxDataExportQuery__mdt
                 WHERE DeveloperName = :developerName
                 AND IsActive__c = true
                 LIMIT 1
             ];
             SandboxDataExportQuery__mdt queryRecord = queryRecords.isEmpty() ? null : queryRecords[0];
-            if (queryRecord == null || String.isBlank(queryRecord.SOQLQuery__c)) {
+            if (queryRecord == null || String.isBlank(queryRecord.SObjectApiName__c)
+                || String.isBlank(queryRecord.FieldApiNames__c)) {
                 throw new AuraHandledException(
-                    'Export definition not found or has no query configured: ' + developerName
+                    'Export definition not found or missing SObject/field configuration: ' + developerName
                 );
             }
-            String soql = queryRecord.SOQLQuery__c.trim();
-            List<SObject> records = Database.query(soql, AccessLevel.USER_MODE);
-            csvResult = buildCsv(records, soql);
-        } catch (AuraHandledException ahe) {
+            List<String> fields = new List<String>();
+            for (String field : queryRecord.FieldApiNames__c.split(',')) {
+                fields.add(field.trim());
+            }
+            NSP_QueryBuilder builder = new NSP_QueryBuilder(queryRecord.SObjectApiName__c, fields);
+            String soql = builder.build();
+            List<SObject> records = Database.query( soql );
+            csvResult = SandboxDataExportController.buildCsv( records , fields );
+        } catch ( AuraHandledException ahe ) {
             throw ahe;
-        } catch (Exception e) {
-            NSP_ErrorLogHandler.logException(CLASS_NAME, 'executeExport', e);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException( CLASS_NAME , 'executeExport' , e );
             throw new AuraHandledException(
                 'Export failed for "' + developerName + '": ' + e.getMessage()
             );
@@ -89,24 +93,23 @@ public with sharing class SandboxDataExportController {
     // ------------------------------------------------------------
 
     @TestVisible
-    private static String buildCsv(List<SObject> records, String soql) {
+    private static String buildCsv( List<SObject> records , List<String> columns ) {
         String csv = '';
-        if (records != null && !records.isEmpty()) {
-            List<String> columns = parseSelectColumns(soql);
-
+        if ( ( records != null )
+           && !records.isEmpty() ) {
             List<String> rows = new List<String>();
             List<String> header = new List<String>();
             for (String col : columns) {
-                header.add(escapeCsvValue(col));
+                header.add( SandboxDataExportController.escapeCsvValue( col ) );
             }
-            rows.add(String.join(header, COMMA));
+            rows.add( String.join( header , COMMA ) );
 
             for (SObject record : records) {
-                Map<String, Object> flatValues = flattenFieldValues(record.getPopulatedFieldsAsMap());
+                Map<String, Object> flatValues = SandboxDataExportController.flattenFieldValues( record.getPopulatedFieldsAsMap() );
                 List<String> cells = new List<String>();
                 for (String col : columns) {
-                    Object val = flatValues.get(col);
-                    cells.add(escapeCsvValue(val == null ? '' : String.valueOf(val)));
+                    Object val = flatValues.get( col );
+                    cells.add( SandboxDataExportController.escapeCsvValue( ( val == null ) ? '' : String.valueOf( val ) ) );
                 }
                 rows.add(String.join(cells, COMMA));
             }
@@ -115,34 +118,24 @@ public with sharing class SandboxDataExportController {
         return csv;
     }
 
-    // Parses the SELECT clause to return columns in the order they appear in the query.
-    @TestVisible
-    private static List<String> parseSelectColumns(String soql) {
-        String upper = soql.toUpperCase();
-        Integer selectIdx = upper.indexOf('SELECT') + 6;
-        Integer fromIdx   = upper.indexOf(' FROM ');
-        String fieldsPart = soql.substring(selectIdx, fromIdx).trim();
-        List<String> columns = new List<String>();
-        for (String col : fieldsPart.split(',')) {
-            columns.add(col.trim());
-        }
-        return columns;
-    }
-
     // Returns a flat map of column name -> value, expanding SObject values into
     // dot-notation entries. Non-SObject fields are passed through unchanged.
     @TestVisible
-    private static Map<String, Object> flattenFieldValues(Map<String, Object> fieldMap) {
+    private static Map<String, Object> flattenFieldValues( Map<String , Object> fieldMap ) {
         Map<String, Object> flat = new Map<String, Object>();
-        for (String key : fieldMap.keySet()) {
-            Object val = fieldMap.get(key);
-            if (val instanceof SObject) {
-                Map<String, Object> childFields = ((SObject) val).getPopulatedFieldsAsMap();
-                for (String childKey : childFields.keySet()) {
-                    flat.put(key + '.' + childKey, childFields.get(childKey));
+        if ( ( fieldMap != null )
+           && !fieldMap.isEmpty() ){
+            for (String key : fieldMap.keySet()){
+                Object val = fieldMap.get( key );
+                if ( ( val != null )
+                  && ( val instanceof SObject ) ){
+                    Map<String, Object> childFields = ( ( SObject ) val ).getPopulatedFieldsAsMap();
+                    for (String childKey : childFields.keySet()) {
+                        flat.put( key + '.' + childKey, childFields.get( childKey ) );
+                    }
+                } else {
+                    flat.put( key , val );
                 }
-            } else {
-                flat.put(key, val);
             }
         }
         return flat;
@@ -151,6 +144,6 @@ public with sharing class SandboxDataExportController {
     @TestVisible
     private static String escapeCsvValue(String value) {
         String safe = (value == null) ? '' : value;
-        return QUOTE + safe.replace(QUOTE, DBL_QUOTE) + QUOTE;
+        return '"' + safe.replace( '"' , '""' ) + '"';
     }
 }
