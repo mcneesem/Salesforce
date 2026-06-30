@@ -3,16 +3,16 @@
     <label>ConsumptionSchedule</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">ConsumptionSchedule</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,IsActive,blng__BillingRule__r.NSP_External_Id__c,blng__RevenueRecognitionRule__r.NSP_External_Id__c,blng__TaxRule__r.NSP_External_Id__c,Id,BillingTerm,BillingTermUnit,CurrencyIsoCode,Description,MatchingAttribute,Name,NSP_Consumption_Schedule_External_ID__c,NSP_Partner_Account__c,RatingMethod,SBQQ__Category__c,Type,UnitOfMeasure</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,isactive,blng__billingrule__r.NSP_External_Id__c,blng__revenuerecognitionrule__r.NSP_External_Id__c,blng__taxrule__r.NSP_External_Id__c ,Id,billingterm,billingtermunit,currencyisocode,description,matchingattribute,NAME,nsp_consumption_schedule_external_id__c,nsp_partner_account__c,ratingmethod,sbqq__category__c,type,unitofmeasure from ConsumptionSchedule</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">ConsumptionSchedule</value>
     </values>
     <values>
         <field>SortOrder__c</field>

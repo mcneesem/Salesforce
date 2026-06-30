@@ -3,17 +3,17 @@
     <label>SBQQ__ConfigurationRule__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">SBQQ__ConfigurationRule__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__ProductRule__r.NSP_External_Id__c,SBQQ__ProductFeature__r.NSP_External_Id__c,
+SBQQ__Active__c, SBQQ__AscendingNestedLevel__c, SBQQ__DescendingActionNesting__c, SBQQ__DescendingNestedLevel__c,  SBQQ__Product__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,SBQQ__ProductRule__r.NSP_External_Id__c,SBQQ__ProductFeature__r.NSP_External_Id__c,
-SBQQ__Active__c, SBQQ__AscendingNestedLevel__c, SBQQ__DescendingActionNesting__c, SBQQ__DescendingNestedLevel__c,  SBQQ__Product__c  from SBQQ__ConfigurationRule__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__ConfigurationRule__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>

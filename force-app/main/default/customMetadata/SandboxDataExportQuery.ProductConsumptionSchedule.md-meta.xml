@@ -3,16 +3,16 @@
     <label>ProductConsumptionSchedule</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">ProductConsumptionSchedule</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,ConsumptionSchedule.NSP_External_Id__c,ProductId</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">Select NSP_External_Id__c,ConsumptionSchedule.NSP_External_Id__c,ProductId from ProductConsumptionSchedule</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">ProductConsumptionSchedule</value>
     </values>
     <values>
         <field>SortOrder__c</field>

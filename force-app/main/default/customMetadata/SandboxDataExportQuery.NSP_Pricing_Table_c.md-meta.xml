@@ -3,16 +3,16 @@
     <label>NSP_Pricing_Table__c</label>
     <protected>false</protected>
     <values>
-        <field>FileName__c</field>
-        <value xsi:type="xsd:string">NSP_Pricing_Table__c</value>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,Name, NSP_End_Date__c,  NSP_List_Minimum_Fee__c, NSP_List_Price__c, NSP_Lower_Bound__c, NSP_Maximum_Quantity__c, NSP_Price_Term__c, NSP_Pricing_Model__c, NSP_Product_Code__c, NSP_Product_Type__c, NSP_Product__c,NSP_Scholarship_Minimum_Fee__c, NSP_Start_Date__c, NSP_Threshold_Applicable__c, NSP_Upper_Bound__c, NSP_WA_List_Minimum_Fee__c, NSP_WX_Scholarship_Price__c,Seasonal_Pricing__c,IsPricingActive__c,Setup_Price__c</value>
     </values>
     <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SOQLQuery__c</field>
-        <value xsi:type="xsd:string">SELECT NSP_External_Id__c,Name, NSP_End_Date__c,  NSP_List_Minimum_Fee__c, NSP_List_Price__c, NSP_Lower_Bound__c, NSP_Maximum_Quantity__c, NSP_Price_Term__c, NSP_Pricing_Model__c, NSP_Product_Code__c, NSP_Product_Type__c, NSP_Product__c,NSP_Scholarship_Minimum_Fee__c, NSP_Start_Date__c, NSP_Threshold_Applicable__c, NSP_Upper_Bound__c, NSP_WA_List_Minimum_Fee__c, NSP_WX_Scholarship_Price__c,Seasonal_Pricing__c,IsPricingActive__c,Setup_Price__c from NSP_Pricing_Table__c</value>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">NSP_Pricing_Table__c</value>
     </values>
     <values>
         <field>SortOrder__c</field>
