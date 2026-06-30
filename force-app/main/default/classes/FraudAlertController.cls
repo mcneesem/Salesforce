@@ -4,7 +4,7 @@
  *              Account, Opportunity, and Case record pages by evaluating the
  *              Fraud_Alert__c field on related Contact records.
  */
-public with sharing class FraudAlertController {
+public without sharing class FraudAlertController {
 
     // test w/ FraudAlertControllerTest (80%)
 
