@@ -2,17 +2,16 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <isExposed>true</isExposed>
-    <description>Displays a prominent fraud alert banner when a related Contact has Fraud_Alert__c set to true. Supports Contact, Account, Opportunity, and Case record pages.</description>
+    <description>Displays a prominent fraud alert banner when a related Contact has Fraud_Alert__c set to true. Supports Contact, Account, and Case record pages.</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
-                <object>Contact</object>
                 <object>Account</object>
-                <object>Opportunity</object>
                 <object>Case</object>
+                <object>Contact</object>
             </objects>
         </targetConfig>
     </targetConfigs>
