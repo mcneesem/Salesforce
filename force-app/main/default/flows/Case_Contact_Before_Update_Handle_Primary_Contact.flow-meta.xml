@@ -45,8 +45,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Case Contact - Ensure Primary Contact Exists {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Case Contact - Ensure Primary Contact Exists</label>
+    <interviewLabel>Case Contact - Before Update - Handle Primary Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Contact - Before Update - Handle Primary Contact</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
