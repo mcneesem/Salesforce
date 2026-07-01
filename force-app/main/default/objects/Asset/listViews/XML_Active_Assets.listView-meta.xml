@@ -8,6 +8,8 @@
     <columns>NSP_Current_SaaS_Seats__c</columns>
     <columns>NSP_ProductBundle__c</columns>
     <columns>NSP_Product_Segment__c</columns>
+    <columns>ASSET.CREATED_DATE</columns>
+    <columns>CREATEDBY_USER.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>ASSET.RECORDTYPE</field>
@@ -19,5 +21,5 @@
         <operation>equals</operation>
         <value>Onboarding,Active</value>
     </filters>
-    <label>XML Active Assets</label>
+    <label>Time Wage Import Active Assets</label>
 </ListView>
