@@ -1,5 +1,5 @@
 public class NSP_ImplementationHelper {
-    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (78%)
+    // test w/ NSP_ImplementationHelperTest, NSP_ImplementationProfileControllerTest (78%)
 
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
@@ -185,7 +185,7 @@ public class NSP_ImplementationHelper {
     private static String getDBAName( Object userId ) {
         String response = null;
         if ( ( userId != null ) && ( userId InstanceOf Id ) ) {
-            Id recordId = Id.valueOf( userId );
+            Id recordId = (Id)userId;
             List<User> records = [
                 SELECT Name
                 FROM User
