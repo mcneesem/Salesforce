@@ -131,6 +131,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_to_eligibleMembers_collection</name>
+        <label>Add to eligibleMembers collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>eligibleMembers</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Check_Access_Loop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Access_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_to_Inactive_Member_IDs_Collection</name>
         <label>Add to Inactive Member IDs Collection</label>
         <locationX>0</locationX>
@@ -144,6 +160,39 @@
         </assignmentItems>
         <connector>
             <targetReference>Find_Active_Members</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_foundNAG</name>
+        <label>Assign foundNAG</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>foundNAG</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reset_eligibleMembers_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Check_User_Access</name>
+        <label>Assign varFaultElement Check_User_Access</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Check_User_Access</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -189,6 +238,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Eligible_Members</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Eligible_Members_Find</name>
+        <label>Assign varFaultElement Get_Eligible_Members_Find</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Eligible_Members_Find</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -446,6 +512,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Reset_editableRecordId</name>
+        <label>Reset editableRecordId</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>editableRecordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_User_Access</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_eligibleMembers_collection</name>
+        <label>Reset eligibleMembers collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>eligibleMembers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>eligibleMembers</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Sales_Set_Members_Find</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Reset_Primary_Count_Remove</name>
         <label>Reset Primary Count - Remove</label>
         <locationX>0</locationX>
@@ -641,6 +739,51 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Any_Selections</name>
+        <label>Any Selections?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_foundNAG</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No selections</defaultConnectorLabel>
+        <rules>
+            <name>Yes_selections</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Eligible_Sales_Set_Members.selectedRows</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_new_Members_collection</targetReference>
+            </connector>
+            <label>Yes selections</label>
+        </rules>
+        <rules>
+            <name>No_selections_NoNag</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Eligible_Sales_Set_Members.selectedRows</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>foundNAG</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No selections NoNag</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_for_Primary</name>
         <label>Check for Primary</label>
         <locationX>0</locationX>
@@ -713,6 +856,56 @@
                 <targetReference>Find_Active_Members</targetReference>
             </connector>
             <label>Yes current Members exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Eligible_Members_Found</name>
+        <label>Eligible Members Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_foundNAG</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Eligible Members Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Eligible_Members_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>eligibleMembers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Sales_Set_Members</targetReference>
+            </connector>
+            <label>Yes - Eligible Members Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Edit_Access</name>
+        <label>Has Edit Access?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Access_Loop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Edit Access</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Edit_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_eligibleMembers_collection</targetReference>
+            </connector>
+            <label>Yes Edit Access</label>
         </rules>
     </decisions>
     <decisions>
@@ -789,6 +982,28 @@
                 <targetReference>Build_single_reactivate_Member</targetReference>
             </connector>
             <label>Yes this is it</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Name_Entered</name>
+        <label>Name Entered?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No Name Entered</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Name_Entered</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Enter_Account_Name</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Eligible_Members_Search</targetReference>
+            </connector>
+            <label>Yes Name Entered</label>
         </rules>
     </decisions>
     <decisions>
@@ -874,7 +1089,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Sales_Set_Id_Missing</targetReference>
+            <targetReference>Error_Screen_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Sales Set value</defaultConnectorLabel>
         <rules>
@@ -891,6 +1106,32 @@
                 <targetReference>Get_Current_Sales_Set_Members</targetReference>
             </connector>
             <label>Yes Sales Set value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Search_Results</name>
+        <label>Search Results?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen_No_Results</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Search Results</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Search_Results</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>eligibleMembers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Add_Sales_Set_Members</targetReference>
+            </connector>
+            <label>Yes Search Results</label>
         </rules>
     </decisions>
     <description>Subflow to allow user to add, update, or remove Sales Set Account Group Members</description>
@@ -959,6 +1200,20 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
+        <name>Check_Access_Loop</name>
+        <label>Check Access Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>searchMembers</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Reset_editableRecordId</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Search_Results</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Find_Active_Members</name>
         <label>Find Active Members</label>
         <locationX>0</locationX>
@@ -1019,6 +1274,46 @@
         <inputReference>createMembers</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>Check_User_Access</name>
+        <label>Check User Access</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Edit_Access</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Check_User_Access</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Check_Access_Loop.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>HasEditAccess</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>editableRecordId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Current_Sales_Set_Members</name>
         <label>Get Current Sales Set Members</label>
         <locationX>0</locationX>
@@ -1055,7 +1350,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Add_Sales_Set_Members</targetReference>
+            <targetReference>Eligible_Members_Found</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Eligible_Members</targetReference>
@@ -1084,6 +1379,49 @@
         </filters>
         <object>Account</object>
         <outputReference>eligibleMembers</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>NSP_FEIN__c</queriedFields>
+        <queriedFields>DNB_Connect_DUNS_Number__c</queriedFields>
+        <queriedFields>NumberOfEmployees</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Eligible_Members_Search</name>
+        <label>Get Eligible Members - Search</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Access_Loop</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Eligible_Members_Find</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Sales_Set_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>activeString</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>availableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Enter_Account_Name</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>searchMembers</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>NSP_FEIN__c</queriedFields>
@@ -1125,7 +1463,7 @@
         <allowPause>false</allowPause>
         <backButtonLabel>Cancel</backButtonLabel>
         <connector>
-            <targetReference>Build_new_Members_collection</targetReference>
+            <targetReference>Any_Selections</targetReference>
         </connector>
         <fields>
             <name>Add_SS_Members</name>
@@ -1186,12 +1524,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isShowSearchBar</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>columnReferences</name>
                 <value>
                     <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Account&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;NSP_FEIN__c&quot;],&quot;elementReference&quot;:&quot;eligibleMembers&quot;}</complexValue>
@@ -1210,12 +1542,107 @@
                 </width>
             </styleProperties>
         </fields>
+        <fields>
+            <name>SelectionTextNAG</name>
+            <fieldText>&lt;p&gt;Select from these Accounts in the same Named Account Group. Otherwise click Next to find a specific Account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>foundNAG</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SelectionTextNonNAG</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Select Account and click Next.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>foundNAG</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Error_Screen</name>
+        <name>Add_Sales_Set_Members_Find</name>
+        <label>Add Sales Set Members - Find</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Cancel</backButtonLabel>
+        <connector>
+            <targetReference>Name_Entered</targetReference>
+        </connector>
+        <fields>
+            <name>Add_SS_Members_Find</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Add Sales Set Members&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Enter_Account_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Enter Account Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please enter at least three characters.&lt;/p&gt;</errorMessage>
+                <formulaExpression>OR( LEN({!Enter_Account_Name}) = 0,  LEN({!Enter_Account_Name}) &gt; 2 )</formulaExpression>
+            </validationRule>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen_Id</name>
         <label>Error Screen</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -1223,8 +1650,56 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>FaultMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Copy_1_of_Record_not_found_message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Blank Sales Set Id.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen_No_Results</name>
+        <label>Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>No_results_found_message</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;No eligible Accounts found with that name.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Fault_Message_Screen</name>
+        <label>Fault Message Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>FaultMessage_DisplayText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1498,30 +1973,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Sales_Set_Id_Missing</name>
-        <label>Sales Set Id Missing</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Copy_1_of_Record_not_found_message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Blank Sales Set Id.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Update_Sales_Set_Members</name>
         <label>Update Sales Set Members</label>
         <locationX>0</locationX>
@@ -1669,14 +2120,14 @@
             <targetReference>Sales_Set_value</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Fault_Message_Screen</targetReference>
         </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -1732,12 +2183,29 @@
         <objectType>NSP_Account_Group_Member__c</objectType>
     </variables>
     <variables>
+        <name>editableRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>eligibleMembers</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>foundNAG</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>inactiveMemberIDs</name>
@@ -1756,6 +2224,15 @@
         <value>
             <numberValue>0.0</numberValue>
         </value>
+    </variables>
+    <variables>
+        <description>Search results for user-specified Account name</description>
+        <name>searchMembers</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <name>updateAccount</name>
