@@ -1,5 +1,5 @@
 public with sharing class SandboxDataExportController {
-    // test w/ SandboxDataExportControllerTest (90%)
+    // test w/ SandboxDataExportControllerTest (89%)
 
     private static final String CLASS_NAME = SandboxDataExportController.class.getName();
     private static final String COMMA      = ',';
@@ -56,7 +56,7 @@ public with sharing class SandboxDataExportController {
                 throw new AuraHandledException('Export name is required.');
             }
             List<SandboxDataExportQuery__mdt> queryRecords = [
-                SELECT FieldApiNames__c, SObjectApiName__c
+                SELECT FieldApiNames__c , SObjectApiName__c , OrderBy__c
                 FROM SandboxDataExportQuery__mdt
                 WHERE DeveloperName = :developerName
                 AND IsActive__c = true
@@ -74,6 +74,9 @@ public with sharing class SandboxDataExportController {
                 fields.add(field.trim());
             }
             NSP_QueryBuilder builder = new NSP_QueryBuilder(queryRecord.SObjectApiName__c, fields);
+            if (String.isNotBlank(queryRecord.OrderBy__c)) {
+                builder.orderBy(queryRecord.OrderBy__c, 'ASC', false);
+            }
             String soql = builder.build();
             List<SObject> records = Database.query( soql );
             csvResult = SandboxDataExportController.buildCsv( records , fields );
