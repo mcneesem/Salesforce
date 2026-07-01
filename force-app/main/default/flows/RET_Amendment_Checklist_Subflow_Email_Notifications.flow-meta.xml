@@ -360,7 +360,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IsChangedDate</leftValueReference>
+                <leftValueReference>isChangedDate</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -442,7 +442,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IsChangedRejected</leftValueReference>
+                <leftValueReference>isChangedReject</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -916,7 +916,7 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         </value>
     </variables>
     <variables>
-        <name>IsChangedDate</name>
+        <name>isChangedDate</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -933,7 +933,7 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         </value>
     </variables>
     <variables>
-        <name>IsChangedRejected</name>
+        <name>isChangedReject</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
