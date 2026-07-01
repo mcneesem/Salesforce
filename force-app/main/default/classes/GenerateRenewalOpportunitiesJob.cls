@@ -184,7 +184,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 }
                 GenerateRenewalOpportunitiesJob.sendEmail(
                     toUsers ,
-                    'GenerateRenewalOpportunitiesJob Complete' ,
+                    'Generate Renewal Opportunities Job Complete' ,
                     this.constructEmailBody( bc.getJobId() )
                 );
             } catch ( Exception e ) {
@@ -223,7 +223,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             'Job Id: ' + jobIdValue + '<br/>'
             + 'Parent Opportunities Created: ' + parentOpportunitiesCreated + '<br/>'
             + 'Child Opportunities Created: ' + childOpportunitiesCreated + '<br/>'
-            + 'SubClients Modified: ' + subClientsModified + '<br/>'
+            + 'Sub Clients Modified: ' + subClientsModified + '<br/>'
             + 'Errors Encountered: ' + errorsEncountered + '<br/>'
             + 'Execute Exceptions: ' + totalExecuteExceptions + '<br/>';
 
@@ -247,7 +247,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         }
         return oppsId;
     }
-    
+
     private Integer countSubClientsModified() {
         Integer subClientsModified = 0;
         if ( ( this.dmlSaveResults != null ) && !this.dmlSaveResults.isEmpty() ) {
