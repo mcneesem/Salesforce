@@ -60,7 +60,7 @@
         <locationY>0</locationY>
         <flowName>RET_Amendment_Checklist_Subflow_Email_Notifications</flowName>
         <inputAssignments>
-            <name>IsChangedRejected</name>
+            <name>isChangedReject</name>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
