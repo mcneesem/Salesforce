@@ -3,7 +3,7 @@
     <fullName>NSP_Minimum_met__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Minimum met?</label>
+    <label>DEPRECATED Minimum met?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

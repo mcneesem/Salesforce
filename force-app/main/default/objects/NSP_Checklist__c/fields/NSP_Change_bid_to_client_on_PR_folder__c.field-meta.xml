@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Change bid # to client # on P&amp;R folder</label>
+    <label>DEPRECATED Change bid # to client # on P</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

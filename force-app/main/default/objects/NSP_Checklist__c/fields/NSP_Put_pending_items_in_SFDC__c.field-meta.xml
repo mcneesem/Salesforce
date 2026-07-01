@@ -4,7 +4,7 @@
     <description>This field is used for Sales part of STY-01620</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Put pending items in SFDC</label>
+    <label>DEPRECATED Put pending items in SFDC</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

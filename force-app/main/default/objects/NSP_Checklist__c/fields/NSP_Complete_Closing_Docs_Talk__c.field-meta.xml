@@ -3,7 +3,7 @@
     <fullName>NSP_Complete_Closing_Docs_Talk__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Complete Closing Docs Talk</label>
+    <label>DEPRECATED Complete Closing Docs Talk</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

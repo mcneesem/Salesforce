@@ -3,7 +3,7 @@
     <fullName>NSP_Book_In_Salesforce__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Book In Salesforce</label>
+    <label>DEPRECATED Book In Salesforce</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
