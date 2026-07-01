@@ -223,13 +223,6 @@
             <leftValueReference>currentItem_Filter_Static_List.QualifiedApiName</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
-                <stringValue>NSP_HRSupportTeam</stringValue>
-            </rightValue>
-        </conditions>
-        <conditions>
-            <leftValueReference>currentItem_Filter_Static_List.QualifiedApiName</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
                 <stringValue>NSP_AllOSCordinator</stringValue>
             </rightValue>
         </conditions>

@@ -595,13 +595,11 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         //email template for Client Transition
         NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(INTERNAL_DISCOVERY_FN);
         NSP_PEO_Implementations__mdt pf1 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ALLOSCOORDINATOR);
-        NSP_PEO_Implementations__mdt pf2 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.HRSUPPORT);
         NSP_PEO_Implementations__mdt pf3 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ORIENTCOORDINATOR);
 
         List<String> listOfToAddresses = new List<String>();
         listOfTOAddresses.add(pf.NSP_Email_Address__c);
         listOfTOAddresses.add(pf1.NSP_Email_Address__c);
-        listOfTOAddresses.add(pf2.NSP_Email_Address__c);
         listOfTOAddresses.add(pf3.NSP_Email_Address__c);
 
         String subjectString = 'Client Transition Meeting for ';
