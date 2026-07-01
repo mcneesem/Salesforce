@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varAccountToUpdate.DNB_Exclude_Company__c</assignToReference>
+            <assignToReference>varAccountToUpdate.dnb_exclude_company__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>false</booleanValue>
@@ -38,7 +38,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varAccountToUpdate.DNB_Exclude_Company__c</assignToReference>
+            <assignToReference>varAccountToUpdate.dnb_exclude_company__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -356,7 +356,7 @@
             <name>Exclude_TRUE</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>varAccount.DNB_Exclude_Company__c</leftValueReference>
+                <leftValueReference>varAccount.dnb_exclude_company__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -414,7 +414,7 @@
         <object>Account</object>
         <outputReference>varAccount</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>DNB_Exclude_Company__c</queriedFields>
+        <queriedFields>dnb_exclude_company__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Opportunity_History</name>
