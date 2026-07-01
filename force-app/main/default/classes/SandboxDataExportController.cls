@@ -77,6 +77,7 @@ public with sharing class SandboxDataExportController {
             if (String.isNotBlank(queryRecord.OrderBy__c)) {
                 builder.orderBy(queryRecord.OrderBy__c, 'ASC', false);
             }
+            builder.addFilter('NSP_External_Id__c', (Object) null, NSP_QueryBuilder.Operator.NOT_EQUALS);
             String soql = builder.build();
             List<SObject> records = Database.query( soql );
             csvResult = SandboxDataExportController.buildCsv( records , fields );
