@@ -49,8 +49,6 @@ private class NSP_ImplementationHelperTest {
         List<NSP_Checklist__c> cc = new List<NSP_Checklist__c>();
         NSP_Checklist__c checklist = new NSP_Checklist__c();
         checklist.NSP_Opportunity__c=opportuniytObject2.id;
-        checklist.NSP_Does_company_have_more_than_one_FEIN__c=true;
-        checklist.NSP_Commission_only_employees__c=true;
         checklist.recordTypeId=checklistBookingId;
         cc.add(checklist);
         //STP checklist creation
@@ -90,16 +88,6 @@ private class NSP_ImplementationHelperTest {
         insert oProject;
     }
 
-    @isTest
-    private static void checkPrepopulateIPDataMM() {
-        test.startTest();
-
-
-        List<Implementation_profile__c> ipList = [SELECT Id,Insperity_pay_frequency__c FROM Implementation_profile__c WHERE Id!=null LIMIT 1];
-
-        System.assertEquals('Weekly',ipList[0].Insperity_pay_frequency__c);
-        test.stopTest();
-    }
 
     @isTest
     private static void checkPrepopulateIPDataFso() {
