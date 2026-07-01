@@ -340,8 +340,12 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
 
     private List<NSP_Account_Group__c> updateAccountGroups(Map<String, String> mapAccIdGrp, Map<Id, Account> mapAccounts) {
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
-        if (( mapAccIdGrp != null && !mapAccIdGrp.isEmpty() ) ||
-        ( mapAccounts != null && !mapAccounts.isEmpty() ) ) {
+        if ( ( mapAccIdGrp != null )
+        && !mapAccIdGrp.isEmpty()
+        && ( mapAccounts != null )
+        && !mapAccounts.isEmpty()
+        )
+        {
 
             Boolean hasBypassPermission = FeatureManagement.checkPermission('Bypass_Termination_Reason_Rules');
             for (NSP_Account_Group__c accGrp : [
