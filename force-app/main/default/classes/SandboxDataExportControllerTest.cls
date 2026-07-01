@@ -273,4 +273,27 @@ private class SandboxDataExportControllerTest {
         Integer idPos       = headerRow.indexOf('"Id"');
         System.assert(usernamePos < idPos, 'Username column should appear before Id column per field list order');
     }
+
+    // ------------------------------------------------------------
+    // NSP_QueryBuilder integration (ORDER BY)
+    // ------------------------------------------------------------
+
+    @IsTest
+    private static void queryBuilder_orderBy_producesExpectedClause() {
+        List<String> fields = new List<String>{ 'Id', 'Name' };
+        NSP_QueryBuilder builder = new NSP_QueryBuilder('Account', fields);
+        builder.orderBy('Name', 'ASC', false);
+        String soql = builder.build();
+
+        System.assert(soql.contains('ORDER BY Name ASC'), 'Query should contain ORDER BY Name ASC');
+    }
+
+    @IsTest
+    private static void queryBuilder_noOrderBy_omitsClause() {
+        List<String> fields = new List<String>{ 'Id', 'Name' };
+        NSP_QueryBuilder builder = new NSP_QueryBuilder('Account', fields);
+        String soql = builder.build();
+
+        System.assert(!soql.contains('ORDER BY'), 'Query without orderBy should not contain ORDER BY');
+    }
 }
