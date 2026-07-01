@@ -139,6 +139,11 @@
                 <label>No Interest from Employees</label>
             </value>
             <value>
+                <fullName>Non-Renewal</fullName>
+                <default>false</default>
+                <label>Non-Renewal</label>
+            </value>
+            <value>
                 <fullName>Not a good time to make the change</fullName>
                 <default>false</default>
                 <label>Not a good time to make the change</label>
@@ -202,6 +207,11 @@
                 <fullName>Solution Too Robust</fullName>
                 <default>false</default>
                 <label>Solution Too Robust</label>
+            </value>
+            <value>
+                <fullName>Terming</fullName>
+                <default>false</default>
+                <label>Terming</label>
             </value>
             <value>
                 <fullName>Testing Concerns</fullName>
@@ -468,8 +478,16 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Non-Renewal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
             <controllingFieldValue>Retirement</controllingFieldValue>
             <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Terming</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Service</controllingFieldValue>

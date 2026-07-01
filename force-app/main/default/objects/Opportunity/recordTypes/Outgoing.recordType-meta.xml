@@ -29,6 +29,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Adjusted_ACA__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_Retained_WC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Client_Type__c</picklist>
         <values>
             <fullName>Client</fullName>
@@ -67,6 +89,63 @@
         </values>
         <values>
             <fullName>System</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Competitive_Bid_Received__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Coverage_Groups__c</picklist>
+        <values>
+            <fullName>CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Current_Multi_Year_Contract__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -131,6 +210,28 @@
         </values>
         <values>
             <fullName>Termination Clause</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Incentive_Offered__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Incentive_Signed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -335,6 +436,43 @@
         </values>
         <values>
             <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Mid_Year_Change_Type__c</picklist>
+        <values>
+            <fullName>Client Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractual Requirement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Save Attempt</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Multi_Year_Addendum_Signed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Multi_Year_Contract__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4673,6 +4811,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Profitability__c</picklist>
+        <values>
+            <fullName>Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Red</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yellow</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Promotion_Code__c</picklist>
         <values>
             <fullName>2025 2-year Agreement</fullName>
@@ -4711,15 +4864,226 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>2026 Q2 Kicker</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>2026 Quick Start</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>NCI-RS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Renewal_Benefits_Package__c</picklist>
+        <values>
+            <fullName>Freedom Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Enhanced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freedom Value Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Enhanced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independence Value Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Classic Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Enhanced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Saver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Select</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberty Value Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pacific Northwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Renewal_Status__c</picklist>
+        <values>
+            <fullName>1st Follow-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2nd Follow-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3rd Follow-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4th Follow-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Demand</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Download</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intro Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Enrollment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Priced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terming</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Renewal_Team__c</picklist>
+        <values>
+            <fullName>Manually Assigned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team 3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Schedule_B_Signed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service_Package__c</picklist>
+        <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - AS Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - WD Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - WD Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Asset Plus Prop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - WD Bundle Plus</fullName>
             <default>false</default>
         </values>
     </picklistValues>
