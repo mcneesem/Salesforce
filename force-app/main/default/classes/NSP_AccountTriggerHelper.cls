@@ -1516,7 +1516,8 @@ public class NSP_AccountTriggerHelper {
             Map<Id,Integer> accEmployeesByIds = new Map<Id,Integer>();
             // put accountId By NumberOfEmployees in Map - only when value changes
             for ( Account accList : newMap.values() ) {
-                if ( accList.NumberOfEmployees != oldMap.get( accList.Id ).NumberOfEmployees ) {
+                if ( ( accList.NumberOfEmployees != oldMap.get( accList.Id ).NumberOfEmployees )
+                  || ( accList.Sales_Set__c != oldMap.get( accList.Id ).Sales_Set__c ) ) {
                     accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
                 }
             }
