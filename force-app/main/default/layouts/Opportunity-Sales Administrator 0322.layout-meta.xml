@@ -738,9 +738,10 @@
         <relatedList>NSP_Sales_to_Implementation__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddDefaultTeam</excludeButtons>
         <fields>MemberName</fields>
-        <fields>TeamMemberRole</fields>
         <fields>OppAccessLevel</fields>
+        <fields>TeamMemberRole</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
