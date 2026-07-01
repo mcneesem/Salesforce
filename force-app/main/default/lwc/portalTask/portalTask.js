@@ -1,8 +1,9 @@
-import { LightningElement , api } from "lwc";
+import { LightningElement , api , wire } from "lwc";
 import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from "lightning/navigation";
 import Toast from "lightning/toast";
 import { deleteRecord } from "lightning/uiRecordApi";
+import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
 import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
@@ -18,6 +19,35 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     set record( value ) {
         this._record = value;
         this.modified();
+    }
+
+    _children; // is-a List<Portal_Task__c>
+    get children() {
+        return this._children;
+    }
+    @api
+    set children( value ) {
+        this._children = value;
+        this.calculateSummaryStatus();
+    }
+
+    @wire(getRelatedListRecords, {
+        parentRecordId: '$recordId' ,
+        relatedListId: 'Child_Portal_Tasks__r' ,
+        fields: [
+            'Portal_Task__c.Id' ,
+            'Portal_Task__c.Status__c' ,
+        ] ,
+        sortBy: [ 'Portal_Task__c.Rank__c' ]
+    })
+    childrenInfo({ error, data }) {
+        if ( data ) {
+            this.children = data.records;
+            this.error = undefined;
+        } else if ( error ) {
+            this.error = error;
+            this.children = undefined;
+        }
     }
 
     //
@@ -53,7 +83,54 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get status() {
-        return ( this.record?.fields?.Status__c?.value );
+        let local = this.record?.fields?.Status__c?.value;
+        if ( ( local == "Summary") && this.summaryStatus ) {
+            local = this.summaryStatus;
+        }
+        return local;
+    }
+
+    summaryStatus;
+    calculateSummaryStatus() {
+        let local;
+        if ( ( this.record?.fields?.Status__c?.value == "Summary") && ( this.children?.length > 0 ) ) {
+            const rankedStatuses = [
+                "Pending" ,
+                "Pending - Client" ,
+                "Pending - Insperity" ,
+                "Completed" ,
+            ];
+            const uniqueChildStatuses = Array.from(
+                this.children.reduce(
+                    ( accumulator , currentValue ) => {
+                        let childStatus = currentValue?.fields?.Status__c?.value;
+                        if ( childStatus && rankedStatuses.includes( childStatus ) ) {
+                            accumulator.add( childStatus );
+                        }
+                        return accumulator;
+                    } ,
+                    new Set()
+                )
+            );
+            const sortedChildStatuses = uniqueChildStatuses.slice().sort(
+                ( a , b ) => {
+                    let order = 0;
+                    if ( rankedStatuses.includes( a ) && rankedStatuses.includes( b ) ) {
+                        order = ( rankedStatuses.indexOf( a ) - rankedStatuses.indexOf( b ) );
+                    } else if ( rankedStatuses.includes( a ) >= 0 ) {
+                        order = -1;
+                    } else {
+                        order = 1;
+                    }
+                    return order;
+                }
+            );
+            local = rankedStatuses[0];
+            if ( sortedChildStatuses.length > 0 ) {
+                local = sortedChildStatuses[0];
+            }
+        }
+        this.summaryStatus = local;
     }
 
     //
