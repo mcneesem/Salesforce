@@ -18,13 +18,6 @@
             <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Regular Rate Of Pay</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>defaultTaskNames</assignToReference>
-            <operator>Add</operator>
-            <value>
                 <stringValue>Additional Documentation</stringValue>
             </value>
         </assignmentItems>

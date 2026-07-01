@@ -28,7 +28,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) AND ( 6 OR 7 OR 8 OR 9 OR 10 OR 11 ) )</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) AND ( 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 ) )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -106,6 +106,13 @@
                 <stringValue>Employees Currently on LOA</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Review and Provide RRP Education</stringValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
@@ -116,7 +123,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Project_Task_Subflow_Populate_Portal_Task</name>
         <label>Project Task - Subflow - Populate Portal Task</label>
