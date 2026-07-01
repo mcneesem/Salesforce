@@ -141,6 +141,9 @@
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Regular Rate Of Pay&quot; , &quot;Completed&quot; ,
   &quot;Additional Documentation&quot; , &quot;Completed&quot; ,
+  &quot;Employee Payroll Documentation&quot; , &quot;Summary&quot; ,
+  &quot;Client Sponsored Plans&quot; , &quot;Summary&quot; ,
+  &quot;Insperity Client Authorization&quot; , &quot;Summary&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
