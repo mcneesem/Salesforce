@@ -682,9 +682,10 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                     if ( ( oldMap != null ) && oldMap.containsKey(accountTeam.Id) ) {
                         oldAccountTeam = oldMap.get( accountTeam.Id );
                     }
+                    Boolean isInsert = ( oldAccountTeam == null );
                     if ( ( accountTeam.NSP_Role__c == NSP_ServiceConstants.PayrollSpecialist )
-                        || ( ( oldAccountTeam != null )
-                            && ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
+                        && ( isInsert
+                            || ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
                                 || ( oldAccountTeam.NSP_Account__c != accountTeam.NSP_Account__c )
                                 )
                             )
