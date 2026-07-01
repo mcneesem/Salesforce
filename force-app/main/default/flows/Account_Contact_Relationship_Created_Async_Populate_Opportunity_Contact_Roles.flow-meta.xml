@@ -2,14 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>58.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <constants>
-        <name>FlowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Account Contact Relationship Create to Insert OCRs</stringValue>
-        </value>
-    </constants>
-    <description>If the Account Contact Relationship isPrimary or has a certain (Sales) Role, create Opportunity Contact Roles on open Opportunities related to the Account.</description>
+    <description>If the Account Contact Relationship isActive and Is Opportunity Role = True, create Opportunity Contact Roles on open Opportunities related to the Account.</description>
     <environments>Default</environments>
     <interviewLabel>Account Contact Relationship - Created - Async - Populate Opportunity Contact Roles {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Contact Relationship - Created - Async - Populate Opportunity Contact Roles</label>
@@ -35,7 +28,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 AND 2) OR (1 AND (3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11))</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>IsActive</field>
             <operator>EqualTo</operator>
@@ -44,73 +37,10 @@
             </value>
         </filters>
         <filters>
-            <field>NSP_Is_Primary__c</field>
+            <field>Is_Opportunity_Role__c</field>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Channel Partner</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>COI</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Decision Maker</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Economic Buyer</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Economic Decision Maker</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Evaluator</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Executive Sponsor</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Influencer</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Technical Buyer</stringValue>
             </value>
         </filters>
         <object>AccountContactRelation</object>
@@ -138,20 +68,4 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
-    <variables>
-        <name>OpportunityContactRole</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>OpportunityContactRole</objectType>
-    </variables>
-    <variables>
-        <name>OpporuntunityContactRoleCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>OpportunityContactRole</objectType>
-    </variables>
 </Flow>
