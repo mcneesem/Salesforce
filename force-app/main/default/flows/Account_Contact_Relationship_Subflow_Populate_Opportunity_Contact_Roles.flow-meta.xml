@@ -5,8 +5,8 @@
     <assignments>
         <name>Add_Opty_Contact_Role_to_collections</name>
         <label>Add Opty Contact Role to collections</label>
-        <locationX>270</locationX>
-        <locationY>1190</locationY>
+        <locationX>2250</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>OCRCollection</assignToReference>
             <operator>Add</operator>
@@ -28,8 +28,8 @@
     <assignments>
         <name>AllopptsInsertthisACRasOCR</name>
         <label>AllopptsInsertthisACRasOCR</label>
-        <locationX>710</locationX>
-        <locationY>974</locationY>
+        <locationX>2690</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>AllOppACRinsert</assignToReference>
             <operator>Assign</operator>
@@ -44,8 +44,8 @@
     <assignments>
         <name>Assign_varFaultElement_CreateOCRs</name>
         <label>Assign varFaultElement - CreateOCRs</label>
-        <locationX>974</locationX>
-        <locationY>2666</locationY>
+        <locationX>2954</locationX>
+        <locationY>2774</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -61,8 +61,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Open_Opportunitites</name>
         <label>Assign varFaultElement - Get_Open_Opportunitites</label>
-        <locationX>1502</locationX>
-        <locationY>350</locationY>
+        <locationX>3482</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -75,10 +75,44 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Renewal_OCRs</name>
+        <label>Assign varFaultElement - Get_Renewal_OCRs</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Renewal_OCRs</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Renewal_Opportunities</name>
+        <label>Assign varFaultElement - Get_Renewal_Opportunities</label>
+        <locationX>1370</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Renewal_Opportunities</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_GetAllOCR</name>
         <label>Assign varFaultElement - GetAllOCR</label>
-        <locationX>1238</locationX>
-        <locationY>866</locationY>
+        <locationX>3218</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -92,10 +126,27 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Insert_Renewal_OCRs</name>
+        <label>Assign varFaultElement - Insert_Renewal_OCRs</label>
+        <locationX>314</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Insert_Renewal_OCRs</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_UpdateOCRRecord</name>
         <label>Assign varFaultElement - UpdateOCRRecord</label>
-        <locationX>446</locationX>
-        <locationY>1490</locationY>
+        <locationX>2426</locationX>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -109,10 +160,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Create_Renewal_OCR</name>
+        <label>Create Renewal OCR</label>
+        <locationX>138</locationX>
+        <locationY>1790</locationY>
+        <assignmentItems>
+            <assignToReference>opportunitycontactrole.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>record.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>opportunitycontactrole.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Optys_Missing_OCR</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Renewal_OCR_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>InsertMissingACROpportunityContactRoleRecord</name>
         <label>InsertMissingACROpportunityContactRoleRecord</label>
-        <locationX>686</locationX>
-        <locationY>2282</locationY>
+        <locationX>2666</locationX>
+        <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>opportunitycontactrole.IsPrimary</assignToReference>
             <operator>Assign</operator>
@@ -162,8 +236,8 @@
     <assignments>
         <name>InsertOpportunityContactRoleRecord</name>
         <label>InsertOpportunityContactRoleRecord</label>
-        <locationX>382</locationX>
-        <locationY>2282</locationY>
+        <locationX>2362</locationX>
+        <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>opportunitycontactrole.IsPrimary</assignToReference>
             <operator>Assign</operator>
@@ -211,10 +285,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Missing_OCR_Opty</name>
+        <label>Missing OCR Opty</label>
+        <locationX>446</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>MIssingOpptyACR</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Renewal_Opty_Ids</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Renewal_Opty_Ids</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Missing_OCR_Opty_Ids</name>
+        <label>Missing OCR Opty Ids</label>
+        <locationX>446</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>MIssingOpptyACR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Renewal_Opty_Ids</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Optys_For_OCR_Create</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>MissingOpptyLIst</name>
         <label>MissingOpptyLIst</label>
-        <locationX>446</locationX>
-        <locationY>1706</locationY>
+        <locationX>2426</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>MIssingOpptyACR</assignToReference>
             <operator>Add</operator>
@@ -229,8 +335,8 @@
     <assignments>
         <name>Opportunity_IDs</name>
         <label>Opportunity IDs</label>
-        <locationX>534</locationX>
-        <locationY>566</locationY>
+        <locationX>2514</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>OpportunityIds</assignToReference>
             <operator>Add</operator>
@@ -243,10 +349,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Renewal_OCR_Collection</name>
+        <label>Renewal OCR Collection</label>
+        <locationX>138</locationX>
+        <locationY>1898</locationY>
+        <assignmentItems>
+            <assignToReference>OCRInsertCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>opportunitycontactrole</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Optys_Missing_OCR</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>UpdateOpportunityContactRole</name>
         <label>UpdateOpportunityContactRole</label>
-        <locationX>270</locationX>
-        <locationY>1082</locationY>
+        <locationX>2250</locationX>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>opportunitycontactrole.IsPrimary</assignToReference>
             <operator>Assign</operator>
@@ -289,8 +411,8 @@
     <decisions>
         <name>Do_OCRs_Exist</name>
         <label>Do OCRs Exist?</label>
-        <locationX>446</locationX>
-        <locationY>866</locationY>
+        <locationX>2426</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>AllopptsInsertthisACRasOCR</targetReference>
         </defaultConnector>
@@ -312,10 +434,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Find_Missing_OCR_Optys</name>
+        <label>Find Missing OCR Optys</label>
+        <locationX>358</locationX>
+        <locationY>1106</locationY>
+        <defaultConnector>
+            <targetReference>Missing_OCR_Opty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Renewal OCR Missing</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_OCR_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Existing_OCR_Optys_Ids</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>Loop_Renewal_Opty_Ids</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Renewal_Opty_Ids</targetReference>
+            </connector>
+            <label>Renewal OCR Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>IfAllOpptsInsert</name>
         <label>IfAllOpptsInsert</label>
-        <locationX>446</locationX>
-        <locationY>2066</locationY>
+        <locationX>2426</locationX>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>LoopEachOppForMissingOpp</targetReference>
         </defaultConnector>
@@ -339,7 +486,7 @@
     <decisions>
         <name>Is_AccountId_blank</name>
         <label>Is AccountId blank?</label>
-        <locationX>908</locationX>
+        <locationX>2558</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>AccountId is blank</defaultConnectorLabel>
         <rules>
@@ -360,7 +507,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Open_Sales_Opportunitites</targetReference>
+                <targetReference>Sales_or_Renewal_ACR</targetReference>
             </connector>
             <label>AccountId is not blank</label>
         </rules>
@@ -368,8 +515,8 @@
     <decisions>
         <name>MissingOpptyforThisACR</name>
         <label>MissingOpptyforThisACR</label>
-        <locationX>358</locationX>
-        <locationY>1598</locationY>
+        <locationX>2338</locationX>
+        <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>MissingOpptyLIst</targetReference>
         </defaultConnector>
@@ -393,8 +540,8 @@
     <decisions>
         <name>Open_Opportunities_Exist</name>
         <label>Open Opportunities Exist?</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationX>2030</locationX>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Loop_over_Open_Optys</targetReference>
         </defaultConnector>
@@ -412,6 +559,121 @@
             <label>No Open Optys</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Optys_For_OCR_Create</name>
+        <label>Optys For OCR Create ?</label>
+        <locationX>314</locationX>
+        <locationY>1574</locationY>
+        <defaultConnectorLabel>OCR Exists</defaultConnectorLabel>
+        <rules>
+            <name>Optys_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>MIssingOpptyACR</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>MIssingOpptyACR</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Optys_Missing_OCR</targetReference>
+            </connector>
+            <label>Optys Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Renewal_OCRs_Exists</name>
+        <label>Renewal OCRs Exists ?</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Missing_OCR_Opty_Ids</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OCRs Not Found</defaultConnectorLabel>
+        <rules>
+            <name>OCRs_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Renewal_OCRs</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Renewal_OCRs</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Existing_OCR_Optys_Ids</targetReference>
+            </connector>
+            <label>OCRs Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Renewal_Optys_Exist</name>
+        <label>Renewal Optys Exist ?</label>
+        <locationX>710</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Optys Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_Optys_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Renewal_Opportunities</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Renewal_Opportunities</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Renewal_Opty_Ids</targetReference>
+            </connector>
+            <label>Renewal Optys Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sales_or_Renewal_ACR</name>
+        <label>Sales or Renewal ACR ?</label>
+        <locationX>1370</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Get_Open_Sales_Opportunitites</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sales ACR</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_ACR</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>record.Renewal_Paperwork__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Renewal_Opportunities</targetReference>
+            </connector>
+            <label>Renewal ACR</label>
+        </rules>
+    </decisions>
     <description>For Sales process, adds Contact Roles to open Opportunities if the new or updated Account Contact Relationship isPrimary or has certain (Sales) Roles</description>
     <environments>Default</environments>
     <interviewLabel>Account_Contact_Relationship_Subflow_Populate_Opportunity_Contact_Roles {!$Flow.CurrentDateTime}</interviewLabel>
@@ -419,8 +681,8 @@
     <loops>
         <name>ForEachOppId</name>
         <label>ForEachOppId</label>
-        <locationX>294</locationX>
-        <locationY>2174</locationY>
+        <locationX>2274</locationX>
+        <locationY>2282</locationY>
         <collectionReference>OpportunityIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -431,10 +693,24 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
+        <name>Loop_Optys_Missing_OCR</name>
+        <label>Loop Optys Missing OCR</label>
+        <locationX>50</locationX>
+        <locationY>1682</locationY>
+        <collectionReference>MIssingOpptyACR</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Create_Renewal_OCR</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Insert_Renewal_OCRs</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Loop_over_Open_Optys</name>
         <label>Loop over Open Optys</label>
-        <locationX>446</locationX>
-        <locationY>458</locationY>
+        <locationX>2426</locationX>
+        <locationY>566</locationY>
         <collectionReference>Get_Open_Sales_Opportunitites</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -445,10 +721,24 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
+        <name>Loop_Renewal_Opty_Ids</name>
+        <label>Loop Renewal Opty Ids</label>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
+        <collectionReference>Renewal_Opty_Ids</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Find_Missing_OCR_Optys</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Optys_For_OCR_Create</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>LoopEachOCRforMatchingACR</name>
         <label>LoopEachOCRforMatchingACR</label>
-        <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationX>2162</locationX>
+        <locationY>1082</locationY>
         <collectionReference>GetAllOCR</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -461,8 +751,8 @@
     <loops>
         <name>LoopEachOppForMissingOpp</name>
         <label>LoopEachOppForMissingOpp</label>
-        <locationX>598</locationX>
-        <locationY>2174</locationY>
+        <locationX>2578</locationX>
+        <locationY>2282</locationY>
         <collectionReference>MIssingOpptyACR</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -475,8 +765,8 @@
     <loops>
         <name>OpptysThatDonthavethisACR</name>
         <label>OpptysThatDonthavethisACR</label>
-        <locationX>182</locationX>
-        <locationY>1490</locationY>
+        <locationX>2162</locationX>
+        <locationY>1598</locationY>
         <collectionReference>OpportunityIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -508,18 +798,28 @@
     <recordCreates>
         <name>CreateOCRs</name>
         <label>CreateOCRs</label>
-        <locationX>446</locationX>
-        <locationY>2558</locationY>
+        <locationX>2426</locationX>
+        <locationY>2666</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_CreateOCRs</targetReference>
+        </faultConnector>
+        <inputReference>OCRInsertCollection</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Insert_Renewal_OCRs</name>
+        <label>Insert Renewal OCRs</label>
+        <locationX>50</locationX>
+        <locationY>2090</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Insert_Renewal_OCRs</targetReference>
         </faultConnector>
         <inputReference>OCRInsertCollection</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Open_Sales_Opportunitites</name>
         <label>Get Open Sales Opportunitites</label>
-        <locationX>50</locationX>
-        <locationY>242</locationY>
+        <locationX>2030</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Open_Opportunities_Exist</targetReference>
@@ -584,10 +884,72 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Renewal_OCRs</name>
+        <label>Get Renewal OCRs</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Renewal_OCRs_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Renewal_OCRs</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>Renewal_Opty_Ids</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>record.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OpportunityContactRole</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Renewal_Opportunities</name>
+        <label>Get Renewal Opportunities</label>
+        <locationX>710</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Renewal_Optys_Exist</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Renewal_Opportunities</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>record.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Setup.Renewal_Opportunity_Settings__c.RenewalRecordTypeId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetAllOCR</name>
         <label>GetAllOCR</label>
-        <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationX>2426</locationX>
+        <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Do_OCRs_Exist</targetReference>
@@ -617,8 +979,8 @@
     <recordUpdates>
         <name>UpdateOCRRecord</name>
         <label>UpdateOCRRecord</label>
-        <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationX>2162</locationX>
+        <locationY>1490</locationY>
         <connector>
             <targetReference>OpptysThatDonthavethisACR</targetReference>
         </connector>
@@ -628,7 +990,7 @@
         <inputReference>OCRCollection</inputReference>
     </recordUpdates>
     <start>
-        <locationX>782</locationX>
+        <locationX>2432</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_AccountId_blank</targetReference>
@@ -638,8 +1000,8 @@
     <subflows>
         <name>ErrorHandler</name>
         <label>ErrorHandler</label>
-        <locationX>1502</locationX>
-        <locationY>458</locationY>
+        <locationX>3482</locationX>
+        <locationY>566</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -660,6 +1022,48 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Existing_OCR_Optys_Ids</name>
+        <label>Existing OCR Optys Ids</label>
+        <locationX>182</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>Loop_Renewal_Opty_Ids</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Renewal_OCRs[$EachItem].OpportunityId</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <transforms>
+        <name>Renewal_Opty_Ids</name>
+        <label>Renewal Opty Ids</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Get_Renewal_OCRs</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Renewal_Opportunities[$EachItem].Id</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
         <name>ACRExists</name>
         <dataType>Boolean</dataType>
