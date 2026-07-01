@@ -340,11 +340,11 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
 
     private List<NSP_Account_Group__c> updateAccountGroups(Map<String, String> mapAccIdGrp, Map<Id, Account> mapAccounts) {
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
-        if (mapAccIdGrp == null || mapAccounts == null) {
-            return lstOfAccGrps;
-        }
-        Boolean hasBypassPermission = FeatureManagement.checkPermission('Bypass_Termination_Reason_Rules');
-        for (NSP_Account_Group__c accGrp : [
+        if (( mapAccIdGrp != null && !mapAccIdGrp.isEmpty() ) ||
+        ( mapAccounts != null && !mapAccounts.isEmpty() ) ) {
+
+            Boolean hasBypassPermission = FeatureManagement.checkPermission('Bypass_Termination_Reason_Rules');
+            for (NSP_Account_Group__c accGrp : [
                 SELECT
                 Id, NSP_Account__c, NSP_Type__c,
                 Primary_Term_Reason__c, Sub_Term_Reason__c,
@@ -358,21 +358,26 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 Id IN :mapAccIdGrp.keyset()
                 AND
                 NSP_Type__c != :NSP_ServiceConstants.TYPECONTROLLEDGROUP
-            ]
-        ) {
-            Id accountId = mapAccIdGrp.get(accGrp.Id);
-            if (accountId != null
-                && mapAccounts.containsKey(accountId)
-                && (hasBypassPermission
-                    || accGrp.Account__r?.WO_Asset__r?.NSP_Written_Term_recd__c != true
-                    || accGrp.NSP_Type__c != 'Renewal Probability'
-                    || !hasIncompleteTerminationInfo(accGrp))
-            ) {
-                accGrp.NSP_Account__c = mapAccounts.get(accountId).Name;
-                accGrp.Account__c = accountId;
-                lstOfAccGrps.add(accGrp);
-            }
-        }
+                ]
+                ) {
+                    Id accountId = mapAccIdGrp.get(accGrp.Id);
+                    Boolean violatesPrimaryTerminationReasonRule = (
+                        !hasBypassPermission
+                        && accGrp.Account__r?.WO_Asset__r?.NSP_Written_Term_recd__c
+                        && ( accGrp.NSP_Type__c == 'Renewal Probability' )
+                        && this.hasIncompleteTerminationInfo( accGrp )
+                        );
+                        if ( ( accountId != null )
+                        && mapAccounts.containsKey( accountId )
+                        && !violatesPrimaryTerminationReasonRule
+                        )
+                        {
+                            accGrp.NSP_Account__c = mapAccounts.get(accountId).Name;
+                            accGrp.Account__c = accountId;
+                            lstOfAccGrps.add(accGrp);
+                        }
+                    }
+                }
 
         return lstOfAccGrps;
     }
