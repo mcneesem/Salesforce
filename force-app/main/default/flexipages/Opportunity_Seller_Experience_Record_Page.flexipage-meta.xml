@@ -909,6 +909,68 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_CountAsSale__c</fieldItem>
+                <identifier>RecordNSP_CountAsSale_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Booked_Date__c</fieldItem>
+                <identifier>RecordNSP_Booked_Date_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-8c094f26-ab37-4320-847c-4b196e7cfa39</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TotalAnnualPayroll__c</fieldItem>
+                <identifier>RecordNSP_TotalAnnualPayroll_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-d9f7945c-617c-4c00-9113-e3c482cbcca2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-8c094f26-ab37-4320-847c-4b196e7cfa39</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column35</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-d9f7945c-617c-4c00-9113-e3c482cbcca2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column36</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-99025c8a-5d51-4f4b-95e8-058f6608d05e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Closed_Lost_Group__c</fieldItem>
                 <identifier>RecordClosed_Lost_Group_cField</identifier>
             </fieldInstance>
@@ -2680,6 +2742,36 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-99025c8a-5d51-4f4b-95e8-058f6608d05e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Closing Details</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection18</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-607f9db8-8748-46c2-b4df-7bad097c1d4f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3162,6 +3254,21 @@
                     <valueList>
                         <valueListItems>
                             <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Record_ID__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Client__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Status_Date__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Sales_Consultant__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
