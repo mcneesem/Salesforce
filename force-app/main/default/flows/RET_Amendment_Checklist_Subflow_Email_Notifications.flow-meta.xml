@@ -921,6 +921,9 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>isChangedQCAnalyst</name>
@@ -938,6 +941,9 @@ IF({!record.NSP_Run_Eligiblity_qr__c},&quot;Run Eligibility, &quot;,&quot;&quot;
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>record</name>
