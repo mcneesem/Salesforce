@@ -277,10 +277,10 @@
             <label>Referral ACR should be referenced to update OCR</label>
         </rules>
     </decisions>
-    <description>Added COI check for Referral ACR/OCR to work with updated Apex, Get ACRs does not equal referralContactId, updated referral decision node to handle dupes and nonprofits, moved existing OCR loop up...nonprofit info from Opty vs ACR, flipped role check to formula in last loop, removed COI filter for referral ACR/OCR, non profit on referral OCR</description>
+    <description>DEPRECATED - Added COI check for Referral ACR/OCR to work with updated Apex, Get ACRs does not equal referralContactId, updated referral decision node to handle dupes and nonprofits, moved existing OCR loop up...nonprofit info from Opty vs ACR, flipped role check to formula in last loop, removed COI filter for referral ACR/OCR, non profit on referral OCR</description>
     <environments>Default</environments>
-    <interviewLabel>Opportunity Created - Create OCRs and ACRs {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity Created - Create OCRs and ACRs</label>
+    <interviewLabel>DEPRECATED - Opportunity Created - Create OCRs and ACRs {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Opportunity Created - Create OCRs and ACRs</label>
     <loops>
         <name>Loop_over_Opty_OCRs_to_get_ContactIds</name>
         <label>Loop over Opty OCRs to get ContactIds</label>
