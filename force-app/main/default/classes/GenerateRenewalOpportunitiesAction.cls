@@ -7,12 +7,12 @@ public with sharing class GenerateRenewalOpportunitiesAction {
             for ( MonthYearData input : inputs ) {
                 if ( ( input != null )
                     && String.isNotBlank( input.monthValue )
-                    && monthMap.containsKey( input.monthValue )
-                    && ( monthMap.get( input.monthValue ) != null )
+                    && GenerateRenewalOpportunitiesAction.MONTH_MAP.containsKey( input.monthValue )
+                    && ( GenerateRenewalOpportunitiesAction.MONTH_MAP.get( input.monthValue ) != null )
                     )
                 {
                     GenerateRenewalOpportunitiesJob.executeBatch(
-                        monthMap.get( input.monthValue ) ,
+                        GenerateRenewalOpportunitiesAction.MONTH_MAP.get( input.monthValue ) ,
                         input.yearValue
                     );
                 }
@@ -27,7 +27,7 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         public Integer yearValue;
     }
 
-    private static final Map<String,Integer> monthMap = new Map<String,Integer>{
+    private static final Map<String,Integer> MONTH_MAP = new Map<String,Integer>{
         'Jan' => 1 ,
         'Feb' => 2 ,
         'Mar' => 3 ,
