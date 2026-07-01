@@ -606,6 +606,16 @@
                 <identifier>RecordLastModifiedByIdField1</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Renewal_Created__c</fieldItem>
+                <identifier>RecordRenewal_Created__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-8473b482-f249-4a7e-9bb5-fad183bb0bd5</name>
         <type>Facet</type>
     </flexiPageRegions>
