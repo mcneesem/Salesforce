@@ -16,8 +16,8 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>PC_Number_and_Email_Assignement</name>
-        <label>PC Number and Email Assignement</label>
+        <name>PC_Number_and_Email_Assignment</name>
+        <label>PC Number and Email Assignment</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -35,11 +35,63 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>PC_Number_and_Email_Assignment_Wipe_Out</name>
+        <label>PC Number and Email Assignment Wipe Out</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Payroll_Contact_Phone__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Payroll_Contact_Work_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Account_and_Contact_Check</name>
+        <label>Account and Contact Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Account_Id__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Client_Payroll_Contact__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Contact_Relationship</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Account_Contact_Relationship</name>
         <label>Check Account Contact Relationship</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>PC_Number_and_Email_Assignment_Wipe_Out</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Not Exist</defaultConnectorLabel>
         <rules>
             <name>Exist</name>
@@ -52,7 +104,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>PC_Number_and_Email_Assignement</targetReference>
+                <targetReference>PC_Number_and_Email_Assignment</targetReference>
             </connector>
             <label>Exist</label>
         </rules>
@@ -99,6 +151,13 @@
                 <elementReference>$Record.Client_Payroll_Contact__c</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Case__r.AccountId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>AccountContactRelation</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -107,7 +166,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Account_Contact_Relationship</targetReference>
+            <targetReference>Account_and_Contact_Check</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
