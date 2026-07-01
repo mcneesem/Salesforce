@@ -3,16 +3,6 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <formulas>
-        <name>isAnalystQCByChanged</name>
-        <dataType>Boolean</dataType>
-        <expression>{!$Record.NSP_Analyst_QC_d_By__c} != {!$Record__Prior.NSP_Analyst_QC_d_By__c} &amp;&amp; Not (ISNULL({!$Record.NSP_Analyst_QC_d_By__r.Id}))</expression>
-    </formulas>
-    <formulas>
-        <name>isConsultantChanged</name>
-        <dataType>Boolean</dataType>
-        <expression>NOT(ISNULL({!$Record.NSP_By_Consultant__c})) &amp;&amp; {!$Record.NSP_Amendment_ready_for_processing__c} &amp;&amp; (  ( {!$Record.NSP_By_Consultant__r.Id} != {!$Record__Prior.NSP_By_Consultant__r.Id} || {!$Record.NSP_Amendment_ready_for_processing__c} !={!$Record__Prior.NSP_Amendment_ready_for_processing__c}))</expression>
-    </formulas>
     <interviewLabel>RET-Amendment Checklist - Updated - Async - Notify Consultant {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET-Amendment Checklist - Updated - Async - Notify Consultant</label>
     <processMetadataValues>
@@ -96,11 +86,4 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>varFaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>
