@@ -3,7 +3,7 @@
     <fullName>NSP_Full_Time_Margin__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Full Time Margin</label>
+    <label>DEPRECATED Full Time Margin</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -3,7 +3,7 @@
     <fullName>NSP_Part_Time_Margin__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Part Time Margin</label>
+    <label>DEPRECATED Part Time Margin</label>
     <length>80</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

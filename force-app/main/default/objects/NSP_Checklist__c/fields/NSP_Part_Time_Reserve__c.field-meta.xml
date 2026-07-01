@@ -3,7 +3,7 @@
     <fullName>NSP_Part_Time_Reserve__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Part Time Reserve</label>
+    <label>DEPRECATED Part Time Reserve</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

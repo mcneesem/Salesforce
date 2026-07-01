@@ -3,7 +3,7 @@
     <fullName>NSP_BankruptcyReceivershipCreditapprovl__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Have they ever been in bankruptcy?</label>
+    <label>DEPRECATED Have they ever been in bankru</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

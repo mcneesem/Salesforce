@@ -3,7 +3,7 @@
     <fullName>NSP_CompleteCLOSINGDOCSTASKin_Salesforce__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Complete CLOSING DOCS TASK in Salesforce</label>
+    <label>DEPRECATED Complete CLOSING DOCS TASK in</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

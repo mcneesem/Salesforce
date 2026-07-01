@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This field is used to capture WO booking checklist</description>
     <externalId>false</externalId>
-    <label>EEs</label>
+    <label>DEPRECATED EEs</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
