@@ -180,15 +180,22 @@ public class NSP_ImplementationHelper {
     //
     // MethodName: getDBAName
     // Description : get user name based on the user selected
-    // Params:        userId
+    // Params: userId
     //
-    private static String getDBAName(Object userId){
-        if(userId!=null){
-            Id id=(Id)userId;
-            User userRec=[SELECT Name from User WHERE Id=:id];
-            return userRec.Name;
+    private static String getDBAName( Object userId ) {
+        String response = null;
+        if ( ( userId != null ) && ( userId InstanceOf Id ) ) {
+            Id recordId = Id.valueOf( userId );
+            List<User> records = [
+                SELECT Name
+                FROM User
+                WHERE ( Id = :recordId )
+            ];
+            if ( ( records != null ) && !records.isEmpty() ) {
+                response = records[0].Name;
+            }
         }
-        return null;
+        return response;
     }
 
     //
