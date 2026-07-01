@@ -123,7 +123,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Project_Task_Subflow_Populate_Portal_Task</name>
         <label>Project Task - Subflow - Populate Portal Task</label>
