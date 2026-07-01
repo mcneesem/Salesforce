@@ -184,7 +184,7 @@ public class NSP_ImplementationHelper {
     //
     private static String getDBAName( Object userId ) {
         String response = null;
-        if ( ( userId != null ) && ( userId InstanceOf Id ) ) {
+        if ( userId != null ) {
             Id recordId = (Id)userId;
             List<User> records = [
                 SELECT Name
