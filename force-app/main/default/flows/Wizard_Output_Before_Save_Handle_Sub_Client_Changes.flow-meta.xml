@@ -42,6 +42,26 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Depopulating_Sub_Client_Contact_And_Sub_Client_Contact_Address</name>
+        <label>Depopulating Sub Client Contact And Sub Client Contact Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Client_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Client_Contact_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Populate_Sub_Client_Contact_Address</name>
         <label>Populate Sub Client Contact Address</label>
         <locationX>0</locationX>
@@ -87,11 +107,39 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_For_Sub_Client</name>
+        <label>Check For Sub Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Depopulating_Sub_Client_Contact_And_Sub_Client_Contact_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sub Client Not Present</defaultConnectorLabel>
+        <rules>
+            <name>Sub_Client_Is_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Sub_Client__r</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sub_Client_Contact</targetReference>
+            </connector>
+            <label>Sub Client  Is Present</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Sub_Client_Contact</name>
         <label>Check Sub Client Contact</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Depopulating_Sub_Client_Contact_And_Sub_Client_Contact_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Exist</defaultConnectorLabel>
         <rules>
             <name>Exist</name>
             <conditionLogic>and</conditionLogic>
@@ -214,6 +262,13 @@
                 <elementReference>$Record.NSP_WSEE__c</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Paid_Non_Paid__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Paid WSEE</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Sub_Client_Contact__c</object>
         <queriedFields>Id</queriedFields>
@@ -258,16 +313,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Sub_Client_Contact</targetReference>
+            <targetReference>Check_For_Sub_Client</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Sub_Client__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <filters>
             <field>NSP_WSEE__c</field>
             <operator>IsNull</operator>
