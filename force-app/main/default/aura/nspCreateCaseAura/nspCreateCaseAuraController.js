@@ -6,10 +6,7 @@
         if(pageRef != null && pageRef != ''){
             let state = pageRef.state; // state holds any query params
             let base64Context = state.inContextOfRef;
-            /*
-                *For some reason, the string starts with "1.", if somebody knows why,
-                *this solution could be better generalized.
-            */
+            // For some reason, the string starts with "1.", if somebody knows why, this solution could be better generalized.
             if (base64Context.startsWith("1\.")) {
                 base64Context = base64Context.substring(2);
             }
@@ -21,7 +18,7 @@
         window.addEventListener("popstate", $A.getCallback(function () {
             var navEvt;
 
-            if(parentID !=null & parentID != '' ){
+            if(parentID !=null && parentID != '' ){
                 navEvt = $A.get("e.force:navigateToSObject");
                 navEvt.setParams({
                 recordId: parentID,
