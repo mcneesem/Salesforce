@@ -66,14 +66,28 @@ public without sharing class NSP_AssignedResourceTriggerHelper {
                     }
                 }
             }
-            if(!mapOfProjectTaskOwnerAndSAOwnerId.isEmpty() && !mapprojectTaskStartDateTime.isEmpty() && !mapprojectTaskEndDateTime.isEmpty() && !mapprojectTaskServTerr.isEmpty()){
-                for(pse__Project_Task__c pTask : [SELECT id, pse__Start_Date_Time__c, pse__End_Date_Time__c  FROM pse__Project_Task__c WHERE ID IN : mapOfProjectTaskOwnerAndSAOwnerId.keyset()]){
-                    if(pTask != null){
-                        pTask.OwnerId = mapOfProjectTaskOwnerAndSAOwnerId.get(pTask.id);
-                        pTask.pse__Start_Date_Time__c = mapprojectTaskStartDateTime.get(pTask.id);
-                        pTask.pse__End_Date_Time__c = mapprojectTaskEndDateTime.get(pTask.id);
-                        pTask.NSP_Dispatch_Region__c = mapprojectTaskServTerr.get(pTask.Id).Name;
-                        listOfProjectTaskId.add(pTask);
+            if ( !mapOfProjectTaskOwnerAndSAOwnerId.isEmpty()
+                && !mapprojectTaskStartDateTime.isEmpty()
+                && !mapprojectTaskEndDateTime.isEmpty()
+                && !mapprojectTaskServTerr.isEmpty()
+                )
+            {
+                for ( pse__Project_Task__c pTask : [
+                            SELECT
+                                Id ,
+                                pse__Start_Date_Time__c ,
+                                pse__End_Date_Time__c
+                            FROM pse__Project_Task__c
+                            WHERE ( Id IN :mapOfProjectTaskOwnerAndSAOwnerId.keyset() )
+                        ]
+                    )
+                {
+                    if ( pTask != null ) {
+                        pTask.OwnerId = mapOfProjectTaskOwnerAndSAOwnerId.get( pTask.Id );
+                        pTask.pse__Start_Date_Time__c = mapprojectTaskStartDateTime.get( pTask.Id );
+                        pTask.pse__End_Date_Time__c = mapprojectTaskEndDateTime.get( pTask.Id );
+                        pTask.NSP_Dispatch_Region__c = mapprojectTaskServTerr.get( pTask.Id ).Name;
+                        listOfProjectTaskId.add( pTask );
                     }
                 }
             }
@@ -87,7 +101,7 @@ public without sharing class NSP_AssignedResourceTriggerHelper {
             }
             if ( !listOfProjectTaskId.isEmpty() ) {
                 List<Database.SaveResult> res = Database.update( listOfProjectTaskId , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_AssignedResourceTriggerHelper.class.getName() ,
                     'afterUpdateDirector:update:pse__Project_Task__c' ,
                     res
