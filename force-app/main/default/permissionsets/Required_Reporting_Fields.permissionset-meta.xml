@@ -323,6 +323,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.HRCore_Strategic_Partner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.HRRC_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
