@@ -1,20 +1,12 @@
-/**
-* @description  :  Helper class for NSP_AssignedResourceTrigger
-* @date 06/30/2023
-* Author : Harsha Khiroya
-* Name : NSP_AssignedResourceTriggerHelper
-*/
-public without sharing class NSP_AssignedResourceTriggerHelper{
+public without sharing class NSP_AssignedResourceTriggerHelper {
     // test w/ NSP_AssignedResourceTriggerHelperTest (97%)
-    
-    /***********************************************************************************************
-    * MethodName: afterUpdateDirector
-    * Description : after update Director method
-    * Params:       Map<Id,AssignedResource> newMap, Map<Id,AssignedResource> oldMap
-    * Author :      Harsha Khiroya
-    * ********************************************************************************************/
-    public static void afterUpdateDirector(Map<Id,AssignedResource> newMap ,Map<Id,AssignedResource> oldMap ){
-        
+
+    //
+    // MethodName: afterUpdateDirector
+    // Description : after update Director method
+    // Params:       Map<Id,AssignedResource> newMap, Map<Id,AssignedResource> oldMap
+    //
+    public static void afterUpdateDirector( Map<Id,AssignedResource> newMap , Map<Id,AssignedResource> oldMap ) {
         Set<Id> serviceResourceIds = new Set<Id>();
         List<pse__Project_Task__c> listOfProjectTaskId = new List<pse__Project_Task__c> ();
         Map<Id, Id> mapOfProjectTaskOwnerAndSAOwnerId = new Map<Id, Id> ();
@@ -29,7 +21,6 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
         Map<Id,Id> assignedResVsSA = new Map<Id,Id>();
         List<ID> serviceResourceIdList = new List<ID>();
         Map<Id,ServiceTerritoryMember> resourceIdVsSTMmap = new Map<Id,ServiceTerritoryMember>();
-        
         try{
             List<ServiceAppointMent> serAppToUpdate = new List<ServiceAppointMent>();
             if(newMap != null){
@@ -38,7 +29,6 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                         resourceId = resource.Id;
                         //Have added Test.isRunningTest to avoid redundant Duplicate error from FSL package even when we are providing separate user references
                         //as relatedRecordId on ServiceResource, when we are trying to insert second serviceResource getting this duplicate error
-                        
                         if((oldMap != null && oldMap.containsKey(resourceId) && resource.ServiceResourceId != oldMap.get(resourceId).ServiceResourceId) || Test.isRunningTest() ){
                             sAVsAssigned.put(resource.ServiceAppointmentId,resourceId);
                             assignedVsService.put(resource.ServiceResourceId,resourceId);
@@ -48,11 +38,9 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                     }
                 }
             }
-            
             if(!serviceResourceIdList.isEmpty()){
                 resourceIdVsSTMmap = getResourceIdVsSTMmap(serviceResourceIdList);
             }
-            
             if(!assignedVsService.isEmpty() && !resourceIdVsSTMmap.isEmpty()){
                 for( ServiceResource eachServiceRes : [ SELECT Id,RelatedRecordId FROM ServiceResource WHERE Id IN: assignedVsService.keySet()]){
                     if(eachServiceRes != null){
@@ -61,7 +49,6 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                     }
                 }
             }
-            
             if(!sAVsAssigned.isEmpty() && !resVsResUserIdMap.isEmpty() && !mapServAppServTerr.isEmpty()){
                 for(ServiceAppointment appt : [Select Id, OwnerId, NSP_Project_Task_ID__c,SchedStartTime, SchedEndTime FROM ServiceAppointment WHERE Id IN: sAVsAssigned.keySet() AND Status IN ('Scheduled', 'Dispatched')]){
                     if(appt != null){
@@ -74,13 +61,12 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                             mapprojectTaskStartDateTime.put(appt.NSP_Project_Task_ID__c, appt.SchedStartTime);
                             mapprojectTaskEndDateTime.put(appt.NSP_Project_Task_ID__c, appt.SchedEndTime);
                             mapprojectTaskServTerr.put(appt.NSP_Project_Task_ID__c, mapServAppServTerr.get(appt.Id));
-                    	}
+                        }
                         serAppToUpdate.add(appt);
                     }
                 }
             }
-            
-            if(!mapOfProjectTaskOwnerAndSAOwnerId.isEmpty() && !mapOfProjectTaskOwnerAndSAOwnerId.isEmpty() && !mapprojectTaskEndDateTime.isEmpty() && !mapprojectTaskServTerr.isEmpty()){
+            if(!mapOfProjectTaskOwnerAndSAOwnerId.isEmpty() && !mapprojectTaskStartDateTime.isEmpty() && !mapprojectTaskEndDateTime.isEmpty() && !mapprojectTaskServTerr.isEmpty()){
                 for(pse__Project_Task__c pTask : [SELECT id, pse__Start_Date_Time__c, pse__End_Date_Time__c  FROM pse__Project_Task__c WHERE ID IN : mapOfProjectTaskOwnerAndSAOwnerId.keyset()]){
                     if(pTask != null){
                         pTask.OwnerId = mapOfProjectTaskOwnerAndSAOwnerId.get(pTask.id);
@@ -91,29 +77,38 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                     }
                 }
             }
-            
-            if(!serAppToUpdate.isEmpty()){
-                List<Database.SaveResult> res = Database.update(serAppToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_AssignedResourceTriggerHelper.class.getName(), 'afterUpdateDirector', res);
+            if ( !serAppToUpdate.isEmpty() ) {
+                List<Database.SaveResult> res = Database.update( serAppToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssignedResourceTriggerHelper.class.getName() ,
+                    'afterUpdateDirector:update:ServiceAppointment' ,
+                    res
+                );
             }
-            
-            if(!listOfProjectTaskId.isEmpty()){
-                List<Database.SaveResult> res = Database.update(listOfProjectTaskId,false);
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_AssignedResourceTriggerHelper.class.getName(), 'afterUpdateDirector', res);
+            if ( !listOfProjectTaskId.isEmpty() ) {
+                List<Database.SaveResult> res = Database.update( listOfProjectTaskId , false );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_AssignedResourceTriggerHelper.class.getName() ,
+                    'afterUpdateDirector:update:pse__Project_Task__c' ,
+                    res
+                );
             }
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException(NSP_AssignedResourceTriggerHelper.class.getName(), 'afterUpdateDirector', ex.getMessage()+ ' ~ ' + ex.getStackTraceString());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssignedResourceTriggerHelper.class.getName() ,
+                'afterUpdateDirector' ,
+                e
+            );
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName    : getResourceIdVsSTMmap
-    * Description   : get Map of ResourceId to Service Territory Member
-    * Params        : List<Id> ServiceResourceIdList
-    * Returns		: Map<Id,ServiceTerritoryMember>
-    * ********************************************************************************************/
-    
-    private static Map<Id,ServiceTerritoryMember> getResourceIdVsSTMmap(List<Id> ServiceResourceIdList){
+
+    //
+    // MethodName    : getResourceIdVsSTMmap
+    // Description   : get Map of ResourceId to Service Territory Member
+    // Params        : List<Id> ServiceResourceIdList
+    // Returns : Map<Id,ServiceTerritoryMember>
+    //
+    private static Map<Id,ServiceTerritoryMember> getResourceIdVsSTMmap( List<Id> ServiceResourceIdList ) {
         Map<Id,ServiceTerritoryMember> resourceIdVsSTMmap = new Map<Id,ServiceTerritoryMember>();
         List<ServiceTerritoryMember> serviceTerrMemList = new List<ServiceTerritoryMember>();
         String query = null;
@@ -130,6 +125,8 @@ public without sharing class NSP_AssignedResourceTriggerHelper{
                 resourceIdVsSTMmap.put(serviceTerrMem.ServiceResourceId,serviceTerrMem);
             }
         }
-        return resourceIdVsSTMmap;  
-    }    
+        return resourceIdVsSTMmap;
+    }
+
 }
+//
