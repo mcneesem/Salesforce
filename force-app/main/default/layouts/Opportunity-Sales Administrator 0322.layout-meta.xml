@@ -785,10 +785,10 @@
         <relatedList>Opportunity.NSP_Parent_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>OppContactRoleMultiEdit</excludeButtons>
         <fields>ContactName</fields>
-        <fields>Role</fields>
-        <fields>NSP_isReferral__c</fields>
         <fields>IsPrimary</fields>
+        <fields>Role</fields>
         <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>
