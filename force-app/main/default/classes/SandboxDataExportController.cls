@@ -1,9 +1,6 @@
 public with sharing class SandboxDataExportController {
     // test w/ SandboxDataExportControllerTest (89%)
 
-    private static final String CLASS_NAME = SandboxDataExportController.class.getName();
-    private static final String COMMA      = ',';
-    private static final String NEWLINE    = '\n';
 
     public class ExportDefinition implements Comparable {
         @AuraEnabled public String  label;
@@ -38,7 +35,7 @@ public with sharing class SandboxDataExportController {
             active.sort();
             definitions = active;
         } catch (Exception e) {
-            NSP_ErrorLogHandler.logException(CLASS_NAME, 'getExportDefinitions', e);
+            NSP_ErrorLogHandler.logException(SandboxDataExportController.class.getName(), 'getExportDefinitions', e);
             throw new AuraHandledException(
                 'Unable to load export definitions. Please contact your administrator.'
             );
@@ -63,10 +60,19 @@ public with sharing class SandboxDataExportController {
                 LIMIT 1
             ];
             SandboxDataExportQuery__mdt queryRecord = queryRecords.isEmpty() ? null : queryRecords[0];
-            if (queryRecord == null || String.isBlank(queryRecord.SObjectApiName__c)
-                || String.isBlank(queryRecord.FieldApiNames__c)) {
+            if ( queryRecord == null ) {
                 throw new AuraHandledException(
-                    'Export definition not found or missing SObject/field configuration: ' + developerName
+                    'Export definition not found: ' + developerName
+                );
+            }
+            else if ( String.isBlank( queryRecord.SObjectApiName__c ) ) {
+                throw new AuraHandledException(
+                    'Export definition missing SObject configuration: ' + developerName
+                );
+            }
+            else if ( String.isBlank( queryRecord.FieldApiNames__c ) ) {
+                throw new AuraHandledException(
+                    'Export definition missing field configuration: ' + developerName
                 );
             }
             List<String> fields = new List<String>();
@@ -84,7 +90,7 @@ public with sharing class SandboxDataExportController {
         } catch ( AuraHandledException ahe ) {
             throw ahe;
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException( CLASS_NAME , 'executeExport' , e );
+            NSP_ErrorLogHandler.logException( SandboxDataExportController.class.getName() , 'executeExport' , e );
             throw new AuraHandledException(
                 'Export failed for "' + developerName + '": ' + e.getMessage()
             );
@@ -100,13 +106,15 @@ public with sharing class SandboxDataExportController {
     private static String buildCsv( List<SObject> records , List<String> columns ) {
         String csv = '';
         if ( ( records != null )
-           && !records.isEmpty() ) {
+           && !records.isEmpty()
+           && ( columns != null )
+           && !columns.isEmpty() ) {
             List<String> rows = new List<String>();
             List<String> header = new List<String>();
             for (String col : columns) {
                 header.add( SandboxDataExportController.escapeCsvValue( col ) );
             }
-            rows.add( String.join( header , COMMA ) );
+            rows.add( String.join( header , ',' ) );
 
             for (SObject record : records) {
                 Map<String, Object> flatValues = SandboxDataExportController.flattenFieldValues( record.getPopulatedFieldsAsMap() );
@@ -115,7 +123,7 @@ public with sharing class SandboxDataExportController {
                     Object val = flatValues.get( col );
                     cells.add( SandboxDataExportController.escapeCsvValue( ( val == null ) ? '' : String.valueOf( val ) ) );
                 }
-                rows.add(String.join(cells, COMMA));
+                rows.add(String.join(cells, ','));
             }
             csv = String.join(rows, NEWLINE);
         }
