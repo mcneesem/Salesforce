@@ -1,5 +1,5 @@
 public without sharing class NSP_AssignedResourceTriggerHelper {
-    // test w/ NSP_AssignedResourceTriggerHelperTest (97%)
+    // test w/ NSP_AssignedResourceTriggerHelper_Test (97%)
 
     //
     // MethodName: afterUpdateDirector
