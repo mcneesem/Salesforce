@@ -39,7 +39,7 @@
             <field>NSP_Reject__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>NSP_Amendment_Checklist__c</object>
