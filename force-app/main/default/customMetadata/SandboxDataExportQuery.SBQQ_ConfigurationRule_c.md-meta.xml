@@ -12,11 +12,11 @@ SBQQ__Active__c, SBQQ__AscendingNestedLevel__c, SBQQ__DescendingActionNesting__c
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SObjectApiName__c</field>
-        <value xsi:type="xsd:string">SBQQ__ConfigurationRule__c</value>
+        <field>OrderBy__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
-        <field>SortOrder__c</field>
-        <value xsi:nil="true"/>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__ConfigurationRule__c</value>
     </values>
 </CustomMetadata>
