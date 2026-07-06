@@ -504,8 +504,8 @@
         <dataType>Date</dataType>
         <expression>TODAY()</expression>
     </formulas>
-    <interviewLabel>Amendment Checklist Processing {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Amendment Checklist Processing</label>
+    <interviewLabel>DEPRECATED - Amendment Checklist Processing {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Amendment Checklist Processing</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
