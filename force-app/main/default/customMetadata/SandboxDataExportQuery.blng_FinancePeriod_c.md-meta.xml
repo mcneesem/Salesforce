@@ -11,11 +11,11 @@
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>SObjectApiName__c</field>
-        <value xsi:type="xsd:string">blng__FinancePeriod__c</value>
+        <field>OrderBy__c</field>
+        <value xsi:type="xsd:string">blng__PeriodStartDate__c</value>
     </values>
     <values>
-        <field>SortOrder__c</field>
-        <value xsi:nil="true"/>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">blng__FinancePeriod__c</value>
     </values>
 </CustomMetadata>
