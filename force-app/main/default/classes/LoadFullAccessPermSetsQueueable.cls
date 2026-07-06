@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (76%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (79%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -187,10 +187,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     // *******************************************************************************************
     public static void loadExternalIds( String currObjName ) {
         if (!String.isBlank(currObjName)) {
-            NSP_QueryBuilder builder = new NSP_QueryBuilder(currObjName, new List<String>{ 'Id', 'NSP_External_Id__c','blng__PeriodStartDate__c' });
-            builder.addFilter('NSP_External_Id__c', (Object) null, NSP_QueryBuilder.Operator.EQUALS);
+            NSP_QueryBuilder builder = new NSP_QueryBuilder(currObjName, new List<String>{ 'Id' , 'NSP_External_Id__c' });
+            builder.addFilter( 'NSP_External_Id__c' , (Object) null , NSP_QueryBuilder.Operator.EQUALS );
             if (currObjName == 'blng__FinancePeriod__c') {
-                builder.addFilter('blng__PeriodStartDate__c', (Object) '2024-01-02', NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS);
+                builder.addFilter( 'blng__PeriodStartDate__c' , (Object) '2024-01-02' , NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS );
             }
             String soql = builder.build();
             List<SObject> updObjList = Database.query(soql);
