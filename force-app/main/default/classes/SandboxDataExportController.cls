@@ -1,24 +1,16 @@
 public with sharing class SandboxDataExportController {
-    // test w/ SandboxDataExportControllerTest (89%)
+    // test w/ SandboxDataExportControllerTest (84%)
 
 
-    public class ExportDefinition implements Comparable {
+    public class ExportDefinition {
         @AuraEnabled public String  label;
         @AuraEnabled public String  developerName;
         @AuraEnabled public String  fileName;
-        @AuraEnabled public Integer sortOrder;
 
         public ExportDefinition(SandboxDataExportQuery__mdt rec) {
             label         = rec.Label;
             developerName = rec.DeveloperName;
             fileName      = rec.SObjectApiName__c;
-            sortOrder     = (rec.SortOrder__c != null) ? rec.SortOrder__c.intValue() : 9999;
-        }
-
-        // Sorts ascending by sortOrder
-        public Integer compareTo(Object compareTo) {
-            ExportDefinition other = (ExportDefinition) compareTo;
-            return sortOrder - other.sortOrder;
         }
     }
 
@@ -26,14 +18,11 @@ public with sharing class SandboxDataExportController {
     public static List<ExportDefinition> getExportDefinitions() {
         List<ExportDefinition> definitions = new List<ExportDefinition>();
         try {
-            List<ExportDefinition> active = new List<ExportDefinition>();
             for (SandboxDataExportQuery__mdt rec : SandboxDataExportQuery__mdt.getAll().values()) {
                 if (rec.IsActive__c) {
-                    active.add(new ExportDefinition(rec));
+                    definitions.add(new ExportDefinition(rec));
                 }
             }
-            active.sort();
-            definitions = active;
         } catch (Exception e) {
             NSP_ErrorLogHandler.logException(SandboxDataExportController.class.getName(), 'getExportDefinitions', e);
             throw new AuraHandledException(
@@ -125,7 +114,7 @@ public with sharing class SandboxDataExportController {
                 }
                 rows.add(String.join(cells, ','));
             }
-            csv = String.join(rows, NEWLINE);
+            csv = String.join(rows, '\n');
         }
         return csv;
     }
