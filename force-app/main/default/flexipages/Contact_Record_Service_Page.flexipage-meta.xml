@@ -3413,8 +3413,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Portal_Phone__c</fieldItem>
-                <identifier>RecordPortal_Phone_cField</identifier>
+                <fieldItem>Record.Portal_First_Name__c</fieldItem>
+                <identifier>RecordPortal_First_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3425,6 +3425,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Portal_Email__c</fieldItem>
                 <identifier>RecordPortal_Email_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Phone__c</fieldItem>
+                <identifier>RecordPortal_Phone_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2cb53231-50e7-457f-baf6-a82f1b1f7b15</name>
