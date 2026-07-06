@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Renewal_Opportunities_Closed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_Renewal_Opportunities_Closed ) ,
+  ( RecordType.DeveloperName = &quot;Renewal&quot; ) ,
+  OR(
+    ISPICKVAL( StageName , &quot;Closed Won - Renewal&quot; ) ,
+    ISPICKVAL( StageName , &quot;Closed Lost - Renewal&quot; )
+  ) ,
+  NOT( ISCHANGED( StageName ) ) ,
+  NOT( ISCHANGED( Renewal_Status__c ) )
+)</errorConditionFormula>
+    <errorMessage>Renewal Opportunities cannot be edited when the Stage is Closed Won/Lost. Please reach out to Renewal Leadership to reopen.</errorMessage>
+</ValidationRule>
