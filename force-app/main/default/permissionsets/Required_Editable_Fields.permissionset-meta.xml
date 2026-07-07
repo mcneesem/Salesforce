@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Fields needed for any/all Users to manage when requirements dictate "Any/All Users should be able to edit X field"</description>
+    <description>Fields needed for any/all Users to manage when requirements dictate &quot;Any/All Users should be able to edit X field&quot;</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Portal_Phone__c</field>
+        <field>Contact.Portal_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Portal_Email__c</field>
+        <field>Contact.Portal_First_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Portal_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
