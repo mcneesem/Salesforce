@@ -24,7 +24,6 @@ public with sharing class SandboxDataExportController {
                 }
             }
         } catch (Exception e) {
-            NSP_ErrorLogHandler.logException(SandboxDataExportController.class.getName(), 'getExportDefinitions', e);
             throw new AuraHandledException(
                 'Unable to load export definitions. Please contact your administrator.'
             );
