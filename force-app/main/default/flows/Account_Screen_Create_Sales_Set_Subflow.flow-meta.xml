@@ -53,6 +53,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Current_Sales_Set_Member</name>
+        <label>Assign varFaultElement Get_Current_Sales_Set_Member</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Current_Sales_Set_Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Current_Sales_Sets</name>
         <label>Assign varFaultElement Get_Current_Sales_Sets</label>
         <locationX>0</locationX>
@@ -87,6 +104,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Update_Member</name>
+        <label>Assign varFaultElement Update_Member</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varSalesSetId_Add</name>
         <label>Assign varSalesSetId Add</label>
         <locationX>0</locationX>
@@ -99,7 +133,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_Sales_Set_Member</targetReference>
+            <targetReference>Get_Current_Sales_Set_Member</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -115,30 +149,31 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_Sales_Set_Member</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Build_Sales_Set_Member_New</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Build_Sales_Set_Member</name>
-        <label>Build Sales Set Member</label>
+        <name>Build_Sales_Set_Member_New</name>
+        <label>Build Sales Set Member - New</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>createMember.NSP_Member_Account__c</assignToReference>
+            <assignToReference>dmlMember.NSP_Member_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>varAccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>createMember.NSP_Group__c</assignToReference>
+            <assignToReference>dmlMember.NSP_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>varSalesSetId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>createMember.NumberOfEmployees_Sales__c</assignToReference>
+            <assignToReference>dmlMember.NumberOfEmployees_Sales__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Account.NumberOfEmployees</elementReference>
@@ -146,6 +181,36 @@
         </assignmentItems>
         <connector>
             <targetReference>Create_Member</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Build_Sales_Set_Member_Update</name>
+        <label>Build Sales Set Member - Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>dmlMember.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Current_Sales_Set_Member.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>dmlMember.Exit_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>blankDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>dmlMember.NumberOfEmployees_Sales__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.NumberOfEmployees</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Member</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -194,7 +259,7 @@
             <assignToReference>updateAccount.Sales_Set_Membership__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>createMember.Id</elementReference>
+                <elementReference>dmlMember.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -223,6 +288,31 @@
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <decisions>
+        <name>Found_Inactive_Member</name>
+        <label>Found Inactive Member?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Build_Sales_Set_Member_New</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Member Found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Member_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Current_Sales_Set_Member</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_Sales_Set_Member_Update</targetReference>
+            </connector>
+            <label>Yes - Member Found</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Next_Action</name>
         <label>Next Action?</label>
@@ -261,16 +351,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Record_Id_Null_Check</name>
-        <label>Record Id Null Check</label>
+        <name>varAccountIdNullCheck</name>
+        <label>varAccountId Null Check</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Record_not_found</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Record Id Missing</defaultConnectorLabel>
+        <defaultConnectorLabel>varAccountId Missing</defaultConnectorLabel>
         <rules>
-            <name>Record_Id_Valid</name>
+            <name>varAccountId_Valid</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varAccountId</leftValueReference>
@@ -282,10 +372,15 @@
             <connector>
                 <targetReference>Get_Account</targetReference>
             </connector>
-            <label>Record Id Valid</label>
+            <label>varAccountId Valid</label>
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>blankDate</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE(&quot;&quot;)</expression>
+    </formulas>
     <interviewLabel>Account - Screen - Create Sales Set - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - Screen - Create Sales Set - Subflow</label>
     <processMetadataValues>
@@ -318,7 +413,7 @@
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Member</targetReference>
         </faultConnector>
-        <inputReference>createMember</inputReference>
+        <inputReference>dmlMember</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Create_Sales_Set</name>
@@ -361,6 +456,40 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Current_Sales_Set_Member</name>
+        <label>Get Current Sales Set Member</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Found_Inactive_Member</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Current_Sales_Set_Member</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Member_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Group__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varSalesSetId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Account_Group_Member__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Group__c</queriedFields>
+        <queriedFields>NSP_Member_Account__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Current_Sales_Sets</name>
         <label>Get Current Sales Sets</label>
         <locationX>0</locationX>
@@ -398,6 +527,19 @@
             <targetReference>Assign_varFaultElement_Update_Account</targetReference>
         </faultConnector>
         <inputReference>updateAccount</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Member</name>
+        <label>Update Member</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Build_updateAccount_New</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Member</targetReference>
+        </faultConnector>
+        <inputReference>dmlMember</inputReference>
     </recordUpdates>
     <screens>
         <name>Add_Account_to_Sales_Set</name>
@@ -478,13 +620,13 @@
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Account_Group_ID_18__c&quot;,&quot;guid&quot;:&quot;column-7d0b&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Sales Set ID&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Group ID (18)&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-2154&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Sales Set Name&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Group Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Account__c&quot;,&quot;guid&quot;:&quot;column-2d85&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Main Account&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:2,&quot;sortable&quot;:true,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-2154&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Sales Set Name&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Group Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Account__c&quot;,&quot;guid&quot;:&quot;column-2d85&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Main Account&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:1,&quot;sortable&quot;:true,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Account_Group_ID_18__c&quot;,&quot;guid&quot;:&quot;column-7d0b&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Sales Set ID&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Group ID (18)&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>columnReferences</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group__c&quot;,&quot;fieldReferences&quot;:[&quot;Account_Group_ID_18__c&quot;,&quot;Name&quot;,&quot;NSP_Account__c&quot;],&quot;elementReference&quot;:&quot;currentSalesSets&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;NSP_Account_Group__c&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;NSP_Account__c&quot;,&quot;Account_Group_ID_18__c&quot;],&quot;elementReference&quot;:&quot;currentSalesSets&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
@@ -501,6 +643,30 @@
             </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Fault_Message_Screen</name>
+        <label>Fault Message Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>FaultMessage_DisplayText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -561,7 +727,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Record_not_found_message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Blank varAccountId.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Blank varAccountId.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -579,7 +745,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Record_Id_Null_Check</targetReference>
+            <targetReference>varAccountIdNullCheck</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -607,6 +773,9 @@
         <label>Insperity Fault Handler Subflow Flow 1</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -617,7 +786,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Account_Screen_Create_Sales_Set</stringValue>
+                <stringValue>Account_Screen_Create_Sales_Set_Subflow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -627,14 +796,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>createMember</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Account_Group_Member__c</objectType>
-    </variables>
     <variables>
         <name>createSalesSet</name>
         <dataType>SObject</dataType>
@@ -650,6 +811,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Account_Group__c</objectType>
+    </variables>
+    <variables>
+        <name>dmlMember</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Account_Group_Member__c</objectType>
     </variables>
     <variables>
         <name>updateAccount</name>
