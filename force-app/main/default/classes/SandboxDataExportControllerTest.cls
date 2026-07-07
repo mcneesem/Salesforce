@@ -1,13 +1,4 @@
-/**
- * Unit tests for SandboxDataExportController.
- * Verifies export-definition loading, CSV building, and error-path behaviour.
- *
- * All tests run without seeAllData so that they remain hermetic in CI.
- * CMT records cannot be inserted in tests; we exercise the controller paths
- * that do not depend on specific CMT data being present, and verify error
- * handling for blank/null inputs.
- */
-@IsTest
+@isTest
 private class SandboxDataExportControllerTest {
     // test w/ SandboxDataExportControllerTest (TBD%)
 
@@ -15,7 +6,7 @@ private class SandboxDataExportControllerTest {
     // getExportDefinitions
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void getExportDefinitions_returnsListWithoutException() {
         Test.startTest();
         List<SandboxDataExportController.ExportDefinition> defs =
@@ -29,7 +20,7 @@ private class SandboxDataExportControllerTest {
     // executeExport – error paths
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void executeExport_blankDeveloperName_throwsAuraHandledException() {
         Exception caught;
         Test.startTest();
@@ -43,7 +34,7 @@ private class SandboxDataExportControllerTest {
         System.assertNotEquals(null, caught, 'AuraHandledException expected for blank name');
     }
 
-    @IsTest
+    @isTest
     private static void executeExport_nullDeveloperName_throwsAuraHandledException() {
         Exception caught;
         Test.startTest();
@@ -57,7 +48,7 @@ private class SandboxDataExportControllerTest {
         System.assertNotEquals(null, caught, 'AuraHandledException expected for null name');
     }
 
-    @IsTest
+    @isTest
     private static void executeExport_unknownDeveloperName_throwsAuraHandledException() {
         Exception caught;
         Test.startTest();
@@ -75,7 +66,7 @@ private class SandboxDataExportControllerTest {
         );
     }
 
-    @IsTest
+    @isTest
     private static void executeExport_withFirstActiveCmtRecord_producesNonEmptyCsv() {
         List<SandboxDataExportController.ExportDefinition> defs =
             SandboxDataExportController.getExportDefinitions();
@@ -98,7 +89,7 @@ private class SandboxDataExportControllerTest {
     // ExportDefinition inner class
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void exportDefinition_test() {
         SandboxDataExportQuery__mdt rec = new SandboxDataExportQuery__mdt(
             Label         = 'Test Export',
@@ -119,25 +110,25 @@ private class SandboxDataExportControllerTest {
     // escapeCsvValue
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void escapeCsvValue_plainValue_wrapsInQuotes() {
         String result = SandboxDataExportController.escapeCsvValue('hello');
         System.assertEquals('"hello"', result, 'Plain value should be wrapped in double quotes');
     }
 
-    @IsTest
+    @isTest
     private static void escapeCsvValue_valueWithComma_wrapsInQuotes() {
         String result = SandboxDataExportController.escapeCsvValue('hello,world');
         System.assertEquals('"hello,world"', result, 'Value with comma should be wrapped in quotes');
     }
 
-    @IsTest
+    @isTest
     private static void escapeCsvValue_valueWithDoubleQuote_escapesQuotes() {
         String result = SandboxDataExportController.escapeCsvValue('say "hello"');
         System.assertEquals('"say ""hello"""', result, 'Embedded double quotes should be doubled');
     }
 
-    @IsTest
+    @isTest
     private static void escapeCsvValue_nullValue_returnsEmptyQuotes() {
         String result = SandboxDataExportController.escapeCsvValue(null);
         System.assertEquals('""', result, 'Null value should produce empty quoted string');
@@ -147,7 +138,7 @@ private class SandboxDataExportControllerTest {
     // flattenFieldValues
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void flattenFieldValues_plainFields_passThroughUnchanged() {
         Account acc = new Account(Name = 'Acme', Phone = '555-1234');
         Map<String, Object> flat = SandboxDataExportController.flattenFieldValues(
@@ -157,7 +148,7 @@ private class SandboxDataExportControllerTest {
         System.assertEquals('555-1234', flat.get('Phone'), 'Phone should pass through');
     }
 
-    @IsTest
+    @isTest
     private static void flattenFieldValues_sobjectValue_expandsToDotNotation() {
         // Query a User with Profile relationship to get a real SObject value in the map
         User u = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
@@ -172,21 +163,21 @@ private class SandboxDataExportControllerTest {
     // buildCsv
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void buildCsv_nullRecords_returnsEmptyString() {
         List<String> columns = new List<String>{ 'Id' };
         String result = SandboxDataExportController.buildCsv(null, columns);
         System.assertEquals('', result, 'Null records should return empty string');
     }
 
-    @IsTest
+    @isTest
     private static void buildCsv_emptyRecords_returnsEmptyString() {
         List<String> columns = new List<String>{ 'Id' };
         String result = SandboxDataExportController.buildCsv(new List<SObject>(), columns);
         System.assertEquals('', result, 'Empty record list should return empty string');
     }
 
-    @IsTest
+    @isTest
     private static void buildCsv_withRecords_producesCorrectHeaderAndRows() {
         List<User> users = [SELECT Id, Username FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
         List<String> columns = new List<String>{ 'Id', 'Username' };
@@ -202,7 +193,7 @@ private class SandboxDataExportControllerTest {
         System.assert(lines[1].contains(users[0].Id),  'Data row should contain the user Id');
     }
 
-    @IsTest
+    @isTest
     private static void buildCsv_columnOrderMatchesFieldList() {
         List<User> users = [SELECT Username, Id FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
         List<String> columns = new List<String>{ 'Username', 'Id' };
@@ -219,7 +210,7 @@ private class SandboxDataExportControllerTest {
     // NSP_QueryBuilder integration (ORDER BY)
     // ------------------------------------------------------------
 
-    @IsTest
+    @isTest
     private static void queryBuilder_orderBy_producesExpectedClause() {
         List<String> fields = new List<String>{ 'Id', 'Name' };
         NSP_QueryBuilder builder = new NSP_QueryBuilder('Account', fields);
@@ -229,7 +220,7 @@ private class SandboxDataExportControllerTest {
         System.assert(soql.contains('ORDER BY Name ASC'), 'Query should contain ORDER BY Name ASC');
     }
 
-    @IsTest
+    @isTest
     private static void queryBuilder_noOrderBy_omitsClause() {
         List<String> fields = new List<String>{ 'Id', 'Name' };
         NSP_QueryBuilder builder = new NSP_QueryBuilder('Account', fields);
@@ -237,4 +228,6 @@ private class SandboxDataExportControllerTest {
 
         System.assert(!soql.contains('ORDER BY'), 'Query without orderBy should not contain ORDER BY');
     }
+
 }
+//
