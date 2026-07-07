@@ -17,6 +17,7 @@
     <permissionSets>Case_Account_Contact_Information</permissionSets>
     <permissionSets>Case_Creation_Screen_Flow</permissionSets>
     <permissionSets>Case_Guidance_Access</permissionSets>
+    <permissionSets>Credit_Default_Visibility</permissionSets>
     <permissionSets>DNB_Connect_Components_access_Insperity</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>
