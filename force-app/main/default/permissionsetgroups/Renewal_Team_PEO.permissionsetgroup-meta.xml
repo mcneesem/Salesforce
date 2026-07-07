@@ -5,6 +5,7 @@
     <permissionSets>Bypass_Restrict_Renewal_Opportunities</permissionSets>
     <permissionSets>NSP_Opportunity_Permission</permissionSets>
     <permissionSets>Opportunity_Record_Type_Renewal</permissionSets>
+    <permissionSets>Opportunity_Renewal_Edit_Access</permissionSets>
     <permissionSets>Renewal_Layout_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
