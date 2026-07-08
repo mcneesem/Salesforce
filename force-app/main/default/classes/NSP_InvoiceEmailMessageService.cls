@@ -81,9 +81,9 @@ public class NSP_InvoiceEmailMessageService {
                             // Setting Invoice Email Sent checkbox to TRUE
                             invUpd.NSP_Invoice_Email_Sent__c = true;
                         }
+                        //adding to invoice list for update.
+                        invcToUpdate.add(invUpd);
                     }
-                    //adding to invoice list for update.
-                    invcToUpdate.add(invUpd);
                 }
             }
             if(invcToUpdate.size() >0) {
