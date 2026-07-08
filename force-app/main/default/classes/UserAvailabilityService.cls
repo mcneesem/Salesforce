@@ -228,7 +228,7 @@ public with sharing class UserAvailabilityService {
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Exclude users who already have >= 4 Schedule Seller Demo events in the current day
-        Map<Date, Set<Id>> cappedUsersByDay = UserAvailabilityService.usersLessFourDemosFilter(
+        Map<Date,Set<Id>> cappedUsersByDay = UserAvailabilityService.usersLessFourDemosFilter(
             window ,
             userIds
         );
@@ -388,7 +388,7 @@ public with sharing class UserAvailabilityService {
         return businessHoursFilter;
     }
 
-    private static Map<Date, Set<Id>> usersLessFourDemosFilter( Event window , Set<Id> userIds ) {
+    private static Map<Date,Set<Id>> usersLessFourDemosFilter( Event window , Set<Id> userIds ) {
         Map<Date,Set<Id>> cappedUsersByDay = new Map<Date,Set<Id>>();
         if ( ( window != null )
             && ( userIds != null )
