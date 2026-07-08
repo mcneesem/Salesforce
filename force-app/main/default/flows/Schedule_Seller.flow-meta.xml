@@ -168,23 +168,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Fault_Element_Assignment_Get_Available_Users_sorted</name>
-        <label>Fault Element Assignment Get_Available_Users_sorted</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Available_Users_sorted</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Fault_Element_Assignment_Get_Opportunity</name>
         <label>Fault Element Assignment Get_Opportunity</label>
         <locationX>0</locationX>
@@ -202,19 +185,18 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Fault_Element_Assignment_Get_Users</name>
-        <label>Fault Element Assignment Get Users</label>
+        <name>Fault_Element_Assignment_Get_User_Records</name>
+        <label>Fault Element Assignment Get_User_Records</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Users</stringValue>
+                <stringValue>Get_User_Records</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
