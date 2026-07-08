@@ -1,8 +1,6 @@
 public with sharing class UserAvailabilityFlow {
     // test w/ UserAvailabilityFlowTest (100%)
 
-    // DEPRECATED
-
     @InvocableMethod(label='Get Available Users')
     public static List<List<User>> getUsers( List<UserAvailabilityFlow.UserAvailabilityInput> inputs ) {
         List<List<User>> response = new List<List<User>>();
@@ -28,4 +26,6 @@ public with sharing class UserAvailabilityFlow {
         @InvocableVariable(required=false)
         public Date selectedDate;
     }
+
 }
+//
