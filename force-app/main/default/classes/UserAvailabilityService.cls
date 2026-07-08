@@ -519,16 +519,22 @@ public with sharing class UserAvailabilityService {
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Load overlapping events once for all eligible users (only if inputs are valid)
-        Event window = new Event(
-            StartDateTime=startDateTime ,
+        // Expand query window backwards by 30 minutes to catch events whose buffer extends into requested slot
+        Event queryWindow = new Event(
+            StartDateTime=startDateTime.addMinutes( -30 ) ,
             EndDateTime=endDateTime
         );
         List<Event> overlapping = UserAvailabilityService.getEventsForUser(
             userIds ,
-            window
+            queryWindow
         );
         // Apply 30-min buffer to Demo events
         overlapping = UserAvailabilityService.addBufferToEvents( overlapping );
+        // Use original requested window for availability calculation
+        Event window = new Event(
+            StartDateTime=startDateTime ,
+            EndDateTime=endDateTime
+        );
         // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
         Map<Id,List<Event>> busyByUser = UserAvailabilityService.initializeBusyUserMap( userIds );
         if ( ( overlapping != null ) && !overlapping.isEmpty() ) {
