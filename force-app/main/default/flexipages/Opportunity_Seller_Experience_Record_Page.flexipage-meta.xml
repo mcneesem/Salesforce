@@ -3396,7 +3396,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Quotes</value>
+                    <value>SBQQ__Quotes2__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListDisplayType</name>
@@ -3406,25 +3406,16 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
-                            <value>QUOTE.QUOTENUMBER</value>
+                            <value>NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>QUOTE.NAME</value>
+                            <value>OWNER.LAST_NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>QUOTE.ISSYNCING</value>
+                            <value>SBQQ__Status__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>QUOTE.EXPIRATIONDATE</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>QUOTE.SUBTOTAL</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>QUOTE.TOTALPRICE</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CreatedBy</value>
+                            <value>SBQQ__Primary__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
