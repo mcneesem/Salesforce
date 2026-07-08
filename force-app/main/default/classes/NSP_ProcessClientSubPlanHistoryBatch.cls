@@ -103,8 +103,8 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     }
                     chsUpdateList.add( eachCSH );
                 }
-                if ( eachCSH.NSP_Future_Lead_Parent__c != null
-                    && eachCSH.NSP_Future_Lead_Parent__c <= System.today()
+                if ( ( eachCSH.NSP_Future_Lead_Parent__c != null )
+                    && ( eachCSH.NSP_Future_Lead_Parent__c <= System.today() )
                     )
                 {
                     // asset added as lead parent
@@ -112,20 +112,23 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                         // if asset is already marked as client is lead parent
                         assetIdset.add( eachCSH.NSP_Asset__c );
                     } else {
-                        Asset eachAsset = New Asset( Id=eachCSH.NSP_Asset__c ); // Set Data on Asset
+                        Asset eachAsset = new Asset();
+                        eachAsset.Id = eachCSH.NSP_Asset__c;
                         eachAsset.NSP_Client_is_Lead_Parent__c = true;
                         eachAsset.NSP_RET_lead_parent__c = null;
                         eachAsset.NSP_Process_Order_Change__c = false;
                         eachAsset.NSP_Change_Order_Process_Contract_Status__c = null;
                         assetUpdateMap.put( eachAsset.Id , eachAsset );
                     }
-                } else if ( eachCSH.NSP_Start_Date__c != null
-                    && eachCSH.NSP_Start_Date__c == System.today()
-                    && eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c != null
+                } else if ( ( eachCSH.NSP_Start_Date__c != null )
+                    && ( eachCSH.NSP_Start_Date__c == System.today() )
+                    && ( eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c != null )
+                    && ( eachCSH.NSP_Asset__c != eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c )
                     )
                 {
                     // for asset added as memeber and not lead parent
-                    Asset eachAsset = New Asset( Id=eachCSH.NSP_Asset__c ); // Set Data on Asset
+                    Asset eachAsset = new Asset();
+                    eachAsset.Id = eachCSH.NSP_Asset__c;
                     eachAsset.NSP_Client_is_Lead_Parent__c = false;
                     eachAsset.NSP_RET_lead_parent__c = eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c;
                     eachAsset.NSP_Process_Order_Change__c = false;
