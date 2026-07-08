@@ -280,8 +280,14 @@
                 <componentName>generateRenewalOpportunities</componentName>
                 <identifier>c_generateRenewalOpportunities</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Generate_Renewal_Opportunities}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Bypass_Restrict_Renewal_Opportunities}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
