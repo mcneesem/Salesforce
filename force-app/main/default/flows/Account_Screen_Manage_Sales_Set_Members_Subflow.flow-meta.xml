@@ -1069,7 +1069,7 @@
             <targetReference>Sales_Set_value</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Account_Screen_Add_Sales_Set_Members_Subflow</name>
         <label>Account - Screen - Add Sales Set Members - Subflow</label>

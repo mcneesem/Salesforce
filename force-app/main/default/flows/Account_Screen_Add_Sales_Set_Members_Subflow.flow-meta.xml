@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Filter_Editable_Records_NAG</name>
+        <label>Filter Editable Records - NAG</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>ObjectAccessFilter</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Eligible_Members_Found</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <dataTypeMappings>
+            <typeName>U__editableRecords</typeName>
+            <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Filter_Editable_Records_NAG</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>searchMembers</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>ObjectAccessFilter</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>eligibleMembers</assignToReference>
+            <name>editableRecords</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>isTruncated</assignToReference>
+            <name>isTruncated</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Filter_Editable_Records_Search</name>
+        <label>Filter Editable Records - Search</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>ObjectAccessFilter</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Search_Results</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <dataTypeMappings>
+            <typeName>U__editableRecords</typeName>
+            <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Filter_Editable_Records_Search</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>searchMembers</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>ObjectAccessFilter</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>eligibleMembers</assignToReference>
+            <name>editableRecords</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>isTruncated</assignToReference>
+            <name>isTruncated</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -67,22 +145,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Add_to_eligibleMembers_collection</name>
-        <label>Add to eligibleMembers collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>eligibleMembers</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Check_Access_Loop</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Access_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_foundNAG</name>
         <label>Assign foundNAG</label>
         <locationX>0</locationX>
@@ -99,23 +161,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Check_User_Access</name>
-        <label>Assign varFaultElement Check_User_Access</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Check_User_Access</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Create_new_Members</name>
         <label>Assign varFaultElement Create_new_Members</label>
         <locationX>0</locationX>
@@ -125,6 +170,40 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Create_new_Members</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Filter_Editable_Records_NAG</name>
+        <label>Assign varFaultElement Filter_Editable_Records_NAG</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Filter_Editable_Records_NAG</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Filter_Editable_Records_Search</name>
+        <label>Assign varFaultElement Filter_Editable_Records_Search</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Filter_Editable_Records_Search</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -306,22 +385,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Reset_editableRecordId</name>
-        <label>Reset editableRecordId</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>editableRecordId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_User_Access</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Reset_eligibleMembers_collection</name>
         <label>Reset eligibleMembers collection</label>
         <locationX>0</locationX>
@@ -334,7 +397,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_Sales_Set_Members_Find</targetReference>
+            <targetReference>Add_Sales_Set_Members_Search</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -493,31 +556,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Has_Edit_Access</name>
-        <label>Has Edit Access?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Access_Loop</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Edit Access</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Edit_Access</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>editableRecordId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_to_eligibleMembers_collection</targetReference>
-            </connector>
-            <label>Yes Edit Access</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Check if Account is already in the current Sales Set as an inactive member</description>
         <name>Is_Inactive_Member</name>
         <label>Is Inactive Member?</label>
@@ -569,6 +607,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>NAG_Members_Found</name>
+        <label>NAG Members Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Eligible_Members_Found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - NAG Members Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_NAG_Members_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>searchMembers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Filter_Editable_Records_NAG</targetReference>
+            </connector>
+            <label>Yes - NAG Members Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Name_Entered</name>
         <label>Name Entered?</label>
         <locationX>0</locationX>
@@ -616,6 +679,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Search_Members_Found</name>
+        <label>Search Members Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Search_Results</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Search Members Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Search_Members_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>searchMembers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Filter_Editable_Records_Search</targetReference>
+            </connector>
+            <label>Yes - Search Members Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Search_Results</name>
         <label>Search Results?</label>
         <locationX>0</locationX>
@@ -634,11 +722,33 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>isTruncated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
                 <targetReference>Add_Sales_Set_Members</targetReference>
             </connector>
             <label>Yes Search Results</label>
+        </rules>
+        <rules>
+            <name>Results_Truncated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isTruncated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen_Truncated</targetReference>
+            </connector>
+            <label>Results Truncated</label>
         </rules>
     </decisions>
     <description>To add new Accounts to a Sales Set</description>
@@ -676,20 +786,6 @@
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Any_new_Members</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Check_Access_Loop</name>
-        <label>Check Access Loop</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>searchMembers</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Reset_editableRecordId</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Search_Results</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -739,53 +835,13 @@
         <inputReference>createMembers</inputReference>
     </recordCreates>
     <recordLookups>
-        <name>Check_User_Access</name>
-        <label>Check User Access</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Has_Edit_Access</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Check_User_Access</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>RecordId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Check_Access_Loop.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>UserId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>HasEditAccess</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <object>UserRecordAccess</object>
-        <outputAssignments>
-            <assignToReference>editableRecordId</assignToReference>
-            <field>RecordId</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Eligible_Members</name>
         <label>Get Eligible Members</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Eligible_Members_Found</targetReference>
+            <targetReference>NAG_Members_Found</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Eligible_Members</targetReference>
@@ -813,14 +869,14 @@
             </value>
         </filters>
         <object>Account</object>
-        <outputReference>eligibleMembers</outputReference>
+        <outputReference>searchMembers</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <queriedFields>NumberOfEmployees</queriedFields>
         <queriedFields>OwnerId</queriedFields>
+        <queriedFields>NumberOfEmployees</queriedFields>
+        <queriedFields>NSP_Sales_Office__c</queriedFields>
         <queriedFields>NSP_Account_Status__c</queriedFields>
         <queriedFields>NSP_Sales_Service_Account_Status__c</queriedFields>
-        <queriedFields>NSP_Sales_Office__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Eligible_Members_Search</name>
@@ -829,7 +885,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Access_Loop</targetReference>
+            <targetReference>Search_Members_Found</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Eligible_Members_Find</targetReference>
@@ -950,7 +1006,7 @@
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-f6ba&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Account_Status__c&quot;,&quot;guid&quot;:&quot;column-fd5d&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Sales Account Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Sales_Service_Account_Status__c&quot;,&quot;guid&quot;:&quot;column-17b0&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Service Account Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NumberOfEmployees&quot;,&quot;guid&quot;:&quot;column-291b&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Employees&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Owner.Name&quot;,&quot;guid&quot;:&quot;column-81a5&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Owner&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;sortable&quot;:false,&quot;label&quot;:null},{&quot;apiName&quot;:&quot;NSP_Sales_Office__c&quot;,&quot;guid&quot;:&quot;column-bc04&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;sortable&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;referenceLabelConfigs&quot;:{&quot;User&quot;:{&quot;keyPrefix&quot;:&quot;005&quot;,&quot;nameFieldApiName&quot;:&quot;Name&quot;,&quot;nameFieldLabel&quot;:&quot;Full Name&quot;}},&quot;linkToRecord&quot;:true,&quot;label&quot;:&quot;Sales Office&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-f6ba&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Account_Status__c&quot;,&quot;guid&quot;:&quot;column-fd5d&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Sales Account Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Sales_Service_Account_Status__c&quot;,&quot;guid&quot;:&quot;column-17b0&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Service Account Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NumberOfEmployees&quot;,&quot;guid&quot;:&quot;column-291b&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Employees&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;OwnerId&quot;,&quot;guid&quot;:&quot;column-81a5&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Owner&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Owner ID&quot;,&quot;type&quot;:&quot;customReferenceLabel&quot;,&quot;linkToRecord&quot;:true,&quot;referenceLabelConfigs&quot;:{&quot;User&quot;:{&quot;keyPrefix&quot;:&quot;005&quot;,&quot;nameFieldApiName&quot;:&quot;Name&quot;,&quot;nameFieldLabel&quot;:&quot;Full Name&quot;}}},{&quot;apiName&quot;:&quot;NSP_Sales_Office__c&quot;,&quot;guid&quot;:&quot;column-bc04&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;sortable&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;referenceLabelConfigs&quot;:{&quot;User&quot;:{&quot;keyPrefix&quot;:&quot;005&quot;,&quot;nameFieldApiName&quot;:&quot;Name&quot;,&quot;nameFieldLabel&quot;:&quot;Full Name&quot;}},&quot;linkToRecord&quot;:true,&quot;label&quot;:&quot;Sales Office&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -963,7 +1019,7 @@
             <inputParameters>
                 <name>columnReferences</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Account&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;NSP_Account_Status__c&quot;,&quot;NSP_Sales_Service_Account_Status__c&quot;,&quot;NumberOfEmployees&quot;,&quot;Owner.Name&quot;,&quot;NSP_Sales_Office__c&quot;],&quot;elementReference&quot;:&quot;eligibleMembers&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Account&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;NSP_Account_Status__c&quot;,&quot;NSP_Sales_Service_Account_Status__c&quot;,&quot;NumberOfEmployees&quot;,&quot;OwnerId&quot;,&quot;NSP_Sales_Office__c&quot;],&quot;elementReference&quot;:&quot;eligibleMembers&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
@@ -1030,8 +1086,8 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Add_Sales_Set_Members_Find</name>
-        <label>Add Sales Set Members - Find</label>
+        <name>Add_Sales_Set_Members_Search</name>
+        <label>Add Sales Set Members - Search</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>true</allowBack>
@@ -1112,7 +1168,35 @@
         <allowPause>false</allowPause>
         <fields>
             <name>No_results_found_message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;No eligible Accounts found with that name.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;No eligible Accounts found with that name.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen_Truncated</name>
+        <label>Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Add_Sales_Set_Members_Search</targetReference>
+        </connector>
+        <fields>
+            <name>Truncated_message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Too many records to process. Please narrow your search criteria&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1157,7 +1241,7 @@
             <targetReference>Sales_Set_value</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
@@ -1242,6 +1326,17 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Set when Filter Editable Records truncates return list.</description>
+        <name>isTruncated</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>Search results for user-specified Account name</description>

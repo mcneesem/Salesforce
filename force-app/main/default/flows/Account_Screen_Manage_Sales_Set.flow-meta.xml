@@ -70,7 +70,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>No_Edit_Access_Message</targetReference>
+            <targetReference>Not_Eligible_for_Sales_Set_Message</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Account found</defaultConnectorLabel>
         <rules>
@@ -95,7 +95,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Owned_by_Available</targetReference>
+            <targetReference>Account_Screen_Create_Sales_Set_Subflow</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Active Sales Set value</defaultConnectorLabel>
         <rules>
@@ -144,31 +144,6 @@
                 <targetReference>Get_Current_Account</targetReference>
             </connector>
             <label>Yes Edit Access</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Owned_by_Available</name>
-        <label>Owned by Available?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Account_Screen_Create_Sales_Set_Subflow</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No not owned by Available</defaultConnectorLabel>
-        <rules>
-            <name>Yes_owned_by_Available</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Current_Account.OwnerId</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>availableId</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Error_Screen_Available</targetReference>
-            </connector>
-            <label>Yes owned by Available</label>
         </rules>
     </decisions>
     <decisions>
@@ -295,30 +270,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Error_Screen_Available</name>
-        <label>Error Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Error_Message_Avaiable</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;This Account is Available and not eligible for Sales Set membership.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Fault_Message_Screen</name>
         <label>Fault Message Screen</label>
         <locationX>0</locationX>
@@ -367,6 +318,30 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Not_Eligible_for_Sales_Set_Message</name>
+        <label>Not Eligible for Sales Set Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>No_SS_access_message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;You do not have access to add this Account to a Sales Set.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Record_not_found</name>
         <label>Record not found</label>
         <locationX>0</locationX>
@@ -397,7 +372,7 @@
             <targetReference>Record_Id_Null_Check</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Account_Screen_Create_Sales_Set_Subflow</name>
         <label>Account - Screen - Create Sales Set - Subflow</label>
