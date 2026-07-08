@@ -35,12 +35,12 @@ private class UserAvailabilityServiceTest {
         // Create Events for both users across a deterministic window: today 8-12
         Datetime base = Datetime.newInstance(Date.today(), Time.newInstance(8, 0, 0, 0));
         List<Event> evts = new List<Event>{
-            new Event(OwnerId = u1.Id, StartDateTime = base, EndDateTime = base.addHours(1)),                      // 8-9 busy u1
-            new Event(OwnerId = u1.Id, StartDateTime = base.addHours(2), EndDateTime = base.addHours(3)),          // 10-11 busy u1
+            new Event(OwnerId = u1.Id, StartDateTime = base, EndDateTime = base.addHours(1)), // 8-9 busy u1
+            new Event(OwnerId = u1.Id, StartDateTime = base.addHours(2), EndDateTime = base.addHours(3)), // 10-11 busy u1
             new Event(OwnerId = u2.Id, StartDateTime = base.addMinutes(30), EndDateTime = base.addHours(1).addMinutes(30)) // 8:30-9:30 busy u2
         };
         insert evts;
-        
+
         List<BusinessHours> defaultBusinessHours = [
             SELECT Id
             FROM BusinessHours
@@ -48,7 +48,7 @@ private class UserAvailabilityServiceTest {
             ORDER BY CreatedDate ASC
             LIMIT 1
         ];
-        
+
         Schedule_Seller_Settings__c scheduleSettings = new Schedule_Seller_Settings__c();
         scheduleSettings.SetupOwnerId = UserInfo.getOrganizationId();
         scheduleSettings.Name = 'Test';
