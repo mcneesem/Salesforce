@@ -33200,44 +33200,12 @@
   {
     "id": "01p4x00000VMCUdAAP",
     "name": "NSP_ProjectAssetTriggerHelper",
-    "totalLines": 33,
+    "totalLines": 1,
     "lines": {
-      "14": 1,
-      "16": 1,
-      "17": 1,
-      "18": 1,
-      "20": 1,
-      "22": 1,
-      "24": 1,
-      "25": 1,
-      "37": 1,
-      "38": 1,
-      "39": 1,
-      "40": 1,
-      "41": 1,
-      "42": 1,
-      "43": 1,
-      "44": 1,
-      "47": 1,
-      "48": 1,
-      "51": 1,
-      "53": 1,
-      "54": 1,
-      "58": 1,
-      "59": 1,
-      "60": 1,
-      "61": 1,
-      "62": 1,
-      "63": 1,
-      "64": 1,
-      "67": 1,
-      "68": 1,
-      "69": 1,
-      "71": 0,
-      "72": 0
+      "4": 1
     },
-    "totalCovered": 31,
-    "coveredPercent": 94
+    "totalCovered": 1,
+    "coveredPercent": 100
   },
   {
     "id": "01p4x00000VMCReAAP",
@@ -57235,7 +57203,7 @@
   {
     "id": "01p4x00000VMCUcAAP",
     "name": "NSP_ProjectAssetTriggerHandler",
-    "totalLines": 11,
+    "totalLines": 10,
     "lines": {
       "6": 1,
       "7": 1,
@@ -57246,11 +57214,10 @@
       "37": 1,
       "47": 0,
       "59": 1,
-      "70": 1,
-      "74": 1
+      "70": 1
     },
-    "totalCovered": 10,
-    "coveredPercent": 91
+    "totalCovered": 9,
+    "coveredPercent": 90
   },
   {
     "id": "01p4x00000VMCRvAAP",
