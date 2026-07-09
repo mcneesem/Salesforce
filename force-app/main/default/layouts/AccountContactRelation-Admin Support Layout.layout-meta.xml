@@ -82,6 +82,10 @@
                 <behavior>Edit</behavior>
                 <field>Client_Communication_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Paperwork__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
