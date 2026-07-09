@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_task_owner</name>
         <label>Send Email to task owner</label>
-        <locationX>110</locationX>
-        <locationY>539</locationY>
+        <locationX>506</locationX>
+        <locationY>384</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record_to_trace_email_sent</name>
         <label>Assign varFaultElement - Create_Email_Message_Record_to_trace_email_sent</label>
-        <locationX>374</locationX>
-        <locationY>755</locationY>
+        <locationX>770</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -69,8 +69,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email_to_task_owner</name>
         <label>Assign varFaultElement - Send_Email_to_task_owner</label>
-        <locationX>638</locationX>
-        <locationY>647</locationY>
+        <locationX>1034</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -83,49 +83,13 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Check_if_owner_Id_is_changed</name>
-        <label>Check if owner Id is changed</label>
-        <locationX>506</locationX>
-        <locationY>431</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>changed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.OwnerId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.OwnerId</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Subject</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>S2I Installation - Quality Control Issue</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.OwnerId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Email_to_task_owner</targetReference>
-            </connector>
-            <label>changed?</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
         <defaultConnector>
-            <targetReference>Check_if_owner_Id_is_changed</targetReference>
+            <targetReference>Send_Email_to_task_owner</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -141,15 +105,14 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Fault paths added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>linkToTask</name>
         <dataType>String</dataType>
-        <expression>LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260)) + &quot;/lightning/r/Task/&quot; + {!$Record.Id} + &quot;/view&quot;</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
     </formulas>
-    <interviewLabel>Send Email to when S2I task owner is updated {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Send Email to owner when S2I task owner is updated</label>
+    <interviewLabel>Task - Updated - Async - Notify S2I Installation Ownership Changed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Task - Updated - Async - Notify S2I Installation Ownership Changed</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -172,8 +135,8 @@
     <recordCreates>
         <name>Create_Email_Message_Record_to_trace_email_sent</name>
         <label>Create Email Message Record to trace email sent.</label>
-        <locationX>110</locationX>
-        <locationY>647</locationY>
+        <locationX>506</locationX>
+        <locationY>492</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Email_Message_Record_to_trace_email_sent</targetReference>
         </faultConnector>
@@ -225,19 +188,44 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subject__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>S2I Installation - Quality Control Issue</stringValue>
+            </value>
+        </filters>
         <object>Task</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>638</locationX>
-        <locationY>755</locationY>
+        <locationX>1034</locationX>
+        <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
