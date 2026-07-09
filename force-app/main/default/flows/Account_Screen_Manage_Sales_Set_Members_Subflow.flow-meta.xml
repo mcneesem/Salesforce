@@ -83,6 +83,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_currentPrimary</name>
+        <label>Assign currentPrimary</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>currentPrimary</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Find_Active_Members.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>is_Active_Member</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Current_Sales_Set_Members</name>
         <label>Assign varFaultElement Get_Current_Sales_Set_Members</label>
         <locationX>0</locationX>
@@ -186,13 +202,29 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Increment_Primary_Count_Update</name>
-        <label>Increment Primary Count - Update</label>
+        <name>Increment_Primary_Count_Checked</name>
+        <label>Increment Primary Count - Checked</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>primaryCount</assignToReference>
             <operator>Add</operator>
+            <value>
+                <elementReference>oneCount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Build_update_Members_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increment_Primary_Count_Unchecked</name>
+        <label>Increment Primary Count - Unchecked</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>primaryCount</assignToReference>
+            <operator>Subtract</operator>
             <value>
                 <elementReference>oneCount</elementReference>
             </value>
@@ -210,7 +242,7 @@
             <assignToReference>primaryCount</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>zeroCount</elementReference>
+                <elementReference>oneCount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -281,13 +313,6 @@
             <numberValue>1.0</numberValue>
         </value>
     </constants>
-    <constants>
-        <name>zeroCount</name>
-        <dataType>Number</dataType>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
-    </constants>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -347,9 +372,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Build_update_Members_collection</targetReference>
+            <targetReference>Was_it_Primary</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No is not Primary</defaultConnectorLabel>
         <rules>
             <name>Yes_is_Primary</name>
             <conditionLogic>and</conditionLogic>
@@ -361,7 +386,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Increment_Primary_Count_Update</targetReference>
+                <targetReference>Increment_Primary_Count_Checked</targetReference>
             </connector>
             <label>Yes is Primary</label>
         </rules>
@@ -414,6 +439,31 @@
                 <targetReference>Add_to_Active_Members_Collection</targetReference>
             </connector>
             <label>Yes Member is Active</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>is_Primary</name>
+        <label>is Primary?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>is_Active_Member</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Primary</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Find_Active_Members.NSP_Primary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_currentPrimary</targetReference>
+            </connector>
+            <label>Yes - Primary</label>
         </rules>
     </decisions>
     <decisions>
@@ -482,7 +532,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>primaryCount</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>oneCount</elementReference>
                 </rightValue>
@@ -516,6 +566,31 @@
                 <targetReference>Get_Current_Sales_Set_Members</targetReference>
             </connector>
             <label>Yes Sales Set value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Was_it_Primary</name>
+        <label>Was it Primary?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Build_update_Members_collection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No it was not Primary</defaultConnectorLabel>
+        <rules>
+            <name>Yes_it_was_Primary</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Build_update_Members_collection.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>currentPrimary</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Increment_Primary_Count_Unchecked</targetReference>
+            </connector>
+            <label>Yes it was Primary</label>
         </rules>
     </decisions>
     <description>Subflow to allow user to add, update, or remove Sales Set Account Group Members</description>
@@ -558,7 +633,7 @@
         <collectionReference>currentMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>is_Active_Member</targetReference>
+            <targetReference>is_Primary</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Manage_Sales_Set_Members</targetReference>
@@ -1051,7 +1126,7 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>primaryCount</leftValueReference>
-                    <operator>GreaterThan</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
                         <elementReference>oneCount</elementReference>
                     </rightValue>
@@ -1069,7 +1144,7 @@
             <targetReference>Sales_Set_value</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Account_Screen_Add_Sales_Set_Members_Subflow</name>
         <label>Account - Screen - Add Sales Set Members - Subflow</label>
@@ -1140,6 +1215,13 @@
         <objectType>NSP_Account_Group_Member__c</objectType>
     </variables>
     <variables>
+        <name>currentPrimary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>inactiveMemberIDs</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
@@ -1154,7 +1236,7 @@
         <isOutput>false</isOutput>
         <scale>0</scale>
         <value>
-            <numberValue>0.0</numberValue>
+            <numberValue>1.0</numberValue>
         </value>
     </variables>
     <variables>

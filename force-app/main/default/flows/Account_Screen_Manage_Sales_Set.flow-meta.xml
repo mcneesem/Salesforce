@@ -372,7 +372,7 @@
             <targetReference>Record_Id_Null_Check</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Account_Screen_Create_Sales_Set_Subflow</name>
         <label>Account - Screen - Create Sales Set - Subflow</label>
