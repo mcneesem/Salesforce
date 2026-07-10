@@ -5,6 +5,7 @@
     <label>Team Mandalorians</label>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>Bypass_Restrict_Opportunity_Backward_Stage</permissionSets>
     <permissionSets>Bypass_Restrict_Renewal_Opportunities</permissionSets>
     <permissionSets>Bypass_Restrict_Renewal_Opportunities_Closed</permissionSets>
     <permissionSets>Case_Account_Contact_Information</permissionSets>
