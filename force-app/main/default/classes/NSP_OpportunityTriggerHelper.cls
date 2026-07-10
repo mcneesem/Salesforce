@@ -20,7 +20,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
     public static Map<String, Integer> opptyStageOrder = retrieveFieldPicklistOrder(Opportunity.StageName);
-    private static Boolean hasAdminPermission = CustomPermissionController.checkUserPermission('Advanced_Salesforce_Administrator', UserInfo.getUserId());
+    private static Boolean hasAdminPermission = CustomPermissionController.checkUserPermission('Bypass_Restrict_Opportunity_Backward_Stage', UserInfo.getUserId());
     private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
 
     private static final Id insuranceServiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Insurance_Service' );
