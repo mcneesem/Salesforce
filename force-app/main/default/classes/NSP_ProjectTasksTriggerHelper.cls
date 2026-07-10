@@ -217,7 +217,6 @@ public class NSP_ProjectTasksTriggerHelper {
             )
         {
             Boolean createCspAuthFormReceived = false;
-
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HCFSA ) ) {
                 createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_HCFSA_FSO' );
@@ -247,7 +246,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private void createCspAuthorizationFormReceivedTask( pse__Project_Task__c pt , Boolean createCspAuthFormReceived ) {
-        if (createCspAuthFormReceived) {
+        if ( createCspAuthFormReceived ) {
             this.buildCspFsoChildTask( pt , 'CSP_Client_Authorization_Form_Received' );
         }
     }
