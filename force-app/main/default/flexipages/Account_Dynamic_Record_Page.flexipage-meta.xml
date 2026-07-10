@@ -130,6 +130,26 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.Add_Contact_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Add_Relationship_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.One_Time_Sync_Single_Record</value>
                             <visibilityRule>
                                 <criteria>
