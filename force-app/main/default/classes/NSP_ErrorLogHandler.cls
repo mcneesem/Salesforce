@@ -73,7 +73,7 @@ public with sharing class NSP_ErrorLogHandler {
     //
 
     // DEPRECATED ~ see logException
-    // ~ 55 classes
+    // ~ 46 classes
     public static void logSaveException( String className , String methodName , String message ) {
         NSP_ErrorLogHandler.insertLog(
             className ,
@@ -84,7 +84,7 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // ~ 7 classes
+    // ~ 6 classes
     public static void logSaveResult( String className , String methodName , List<Database.SaveResult> saveResultList ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -94,8 +94,7 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // This method logs error for the failed results of Database.insert/update operation in DB.
-    // ~ 23 classes
+    // ~ 16 classes
     public static void logSaveResultsException( String className , String methodName , List<Database.SaveResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -105,20 +104,8 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // This method logs error for the failed results of Database.delete operation in DB.
     // ~ 3 classes
     public static void logDeleteResultsException( String className , String methodName , List<Database.DeleteResult> results ) {
-        NSP_ErrorLogHandler.logResults(
-            className ,
-            methodName ,
-            results
-        );
-    }
-
-    // DEPRECATED ~ see logResults
-    // This method logs error for the failed results of Database.upsert operation in DB.
-    // ~ 6 classes
-    public static void logUpsertResultsException( String className , String methodName , List<Database.UpsertResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
             methodName ,
@@ -166,6 +153,8 @@ public with sharing class NSP_ErrorLogHandler {
         }
         if ( messages.isEmpty() ) {
             messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        } else {
+            messages.add( NSP_ErrorLogHandler.getStackTraceString() );
         }
         return messages;
     }
@@ -186,6 +175,8 @@ public with sharing class NSP_ErrorLogHandler {
         }
         if ( messages.isEmpty() ) {
             messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        } else {
+            messages.add( NSP_ErrorLogHandler.getStackTraceString() );
         }
         return messages;
     }
@@ -206,9 +197,18 @@ public with sharing class NSP_ErrorLogHandler {
         }
         if ( messages.isEmpty() ) {
             messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        } else {
+            messages.add( NSP_ErrorLogHandler.getStackTraceString() );
         }
         return messages;
     }
+
+    private static String getStackTraceString() {
+        return NSP_ErrorLogHandler.NEW_LINE
+            + (new CustomException()).getStackTraceString();
+    }
+
+    private class CustomException extends Exception {}
 
     //
     // PRIVATE

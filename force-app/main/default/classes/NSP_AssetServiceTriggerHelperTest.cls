@@ -159,6 +159,9 @@ private class NSP_AssetServiceTriggerHelperTest {
 
         // THEN
         System.assertEquals(woAsset.NSP_Client_Segment_type__c, NSP_ServiceConstants.EG100AssetSegment);
+
+        // increased code coverage
+        NSP_AssetProjectCreation.testHandleException( null , null );
     }
 
     @isTest
