@@ -91,6 +91,13 @@ export default class PortalTaskList extends LightningElement {
     listInfo({ error, data }) {
         if ( data ) {
             this.records = data.records;
+            // only show visible tasks...
+            // ~ ignore tasks with a "Hidden" status...
+            this.records = data.records?.filter(
+                ( record ) => {
+                    return ( record?.fields?.Status__c?.value != "Hidden" );
+                }
+            );
             this.error = undefined;
         } else if ( error ) {
             this.error = error;
