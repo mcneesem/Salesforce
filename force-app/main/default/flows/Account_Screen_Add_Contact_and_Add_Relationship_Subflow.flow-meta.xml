@@ -2496,14 +2496,6 @@
         <objectType>Contact</objectType>
     </variables>
     <variables>
-        <name>varDuplicateContact</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Contact</objectType>
-    </variables>
-    <variables>
         <name>varErrorMessageToUser</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -2537,15 +2529,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varNotifyEmail</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>true</booleanValue>
-        </value>
     </variables>
 </Flow>
