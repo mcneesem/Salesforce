@@ -3,7 +3,7 @@ import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from "lightning/navigation";
 import Toast from "lightning/toast";
 import { deleteRecord } from "lightning/uiRecordApi";
-import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
+import { getRelatedListRecords } from "lightning/uiRelatedListApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
 import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
@@ -31,18 +31,29 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         this.calculateSummaryStatus();
     }
 
+    get hasChildren() {
+        return ( this.children?.length > 0 );
+    }
+
     @wire(getRelatedListRecords, {
-        parentRecordId: '$recordId' ,
-        relatedListId: 'Child_Portal_Tasks__r' ,
+        parentRecordId: "$recordId" ,
+        relatedListId: "Child_Portal_Tasks__r" ,
         fields: [
-            'Portal_Task__c.Id' ,
-            'Portal_Task__c.Status__c' ,
+            "Portal_Task__c.Id" ,
+            "Portal_Task__c.Status__c" ,
         ] ,
-        sortBy: [ 'Portal_Task__c.Rank__c' ]
+        sortBy: [ "Portal_Task__c.Rank__c" ]
     })
     childrenInfo({ error, data }) {
         if ( data ) {
             this.children = data.records;
+            // only show visible children...
+            // ~ ignore children with a "Hidden" status...
+            this.children = data.records?.filter(
+                ( child ) => {
+                    return ( child?.fields?.Status__c?.value != "Hidden" );
+                }
+            );
             this.error = undefined;
         } else if ( error ) {
             this.error = error;
@@ -82,18 +93,26 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( this.record?.fields?.Name?.value ? this.record.fields.Name.value : undefined );
     }
 
+    get recordStatus() {
+        return this.record?.fields?.Status__c?.value;
+    }
+
     get status() {
-        let local = this.record?.fields?.Status__c?.value;
-        if ( ( local == "Summary") && this.summaryStatus ) {
+        let local = this.recordStatus;
+        if ( this.summaryStatus ) {
             local = this.summaryStatus;
         }
         return local;
     }
 
+    get isSummary() {
+        return ( this.recordStatus == "Summary" );
+    }
+
     summaryStatus;
     calculateSummaryStatus() {
         let local;
-        if ( ( this.record?.fields?.Status__c?.value == "Summary") && ( this.children?.length > 0 ) ) {
+        if ( this.isSummary && this.hasChildren ) {
             const rankedStatuses = [
                 "Pending" ,
                 "Pending - Client" ,
@@ -131,6 +150,10 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             }
         }
         this.summaryStatus = local;
+    }
+
+    get isVisible() {
+        return ( this.record && ( this.recordStatus != "Hidden" ) && ( !this.isSummary || this.hasChildren ) );
     }
 
     //
@@ -299,7 +322,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         try {
             await logInfo(
                 {
-                    className: 'PortalTask' ,
+                    className: "PortalTask" ,
                     methodName: log ,
                     info: message ,
                 }
@@ -386,19 +409,19 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     handleNavigate( event ) {
         this.stopPropagation( event );
         switch ( event?.detail?.type ) {
-            case 'external__filePreview':
+            case "external__filePreview":
                 this.handleModalFilePreview( event?.detail?.state );
                 break;
-            case 'external__delete':
+            case "external__delete":
                 this.handleModalConfirmDelete( event?.detail?.state );
                 break;
-            case 'standard__namedPage':
+            case "standard__namedPage":
                 this[NavigationMixin.Navigate]( event?.detail );
                 break;
-            case 'standard__recordPage':
+            case "standard__recordPage":
                 this[NavigationMixin.Navigate]( event?.detail );
                 break;
-            case 'standard__webPage':
+            case "standard__webPage":
                 this[NavigationMixin.Navigate]( event?.detail );
                 break;
             default:
@@ -459,7 +482,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     errorMessage = JSON.stringify( error );
                 }
                 this.showToastError( errorLabel , errorMessage );
-                this.handleLogInfo( 'handleDeleteRecord' , JSON.stringify( error ) );
+                this.handleLogInfo( "handleDeleteRecord" , JSON.stringify( error ) );
             }
             this.modified();
             this.isDeleting = false;
