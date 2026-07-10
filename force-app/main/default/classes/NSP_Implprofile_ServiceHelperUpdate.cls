@@ -3,7 +3,7 @@
 // Refactored FSO IP - AZD-352367
 //
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (80%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -56,6 +56,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
     private static final String CSP_DOCS_FSO = 'CSP_doc_s_not_received';
+    private static final String CSP_AUTH_FORM_RECEIVED_FSO = 'CSP_Client_Authorization_Form_Received';
     private static final String CSP_HCFSA_FSO ='CSP_HCFSA_FSO';
     private static final String CSP_HSA_FSO ='CSP_HSA_FSO';
     private static final String CSP_DCFSA_FSO ='CSP_DCFSA_FSO';
@@ -948,7 +949,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjectTaskForClientSposoredPlan(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             emailNotifyInternalDiscovery(automation,ipRecId);
             emailNotifyOnsiteDiscovery(automation,ipRecId);
-            createProjectTaskForCobraTakeoverForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId); 
+            createProjectTaskForCobraTakeoverForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForCobraFormReceived(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
         }
     }
@@ -1064,6 +1065,62 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 );
             }
         }
+    }
+
+    // CSP Client Authorization Form Received - Task
+    private void createTaskForCspAuthFormReceived(
+        pse__Proj__c proj,
+        Id ipRecId,
+        Implementation_Profile__c ipwithValue,
+        Id workCalendarId,
+        pse__Project_Task__c pt
+    )
+    {
+        pse__Project_Task__c eachProjecttask = null;
+
+        if (this.isCspAuthFormReceivedApplicable( ipRecId ))
+        {
+            NSP_ProjectTask_Automation__mdt pta =
+                NSP_ProjectTask_Automation__mdt.getInstance(CSP_AUTH_FORM_RECEIVED_FSO);
+
+            if (pta != null)
+            {
+                eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                    proj,
+                    pta,
+                    ipRecId,
+                    ipwithValue,
+                    workCalendarId,
+                    pt
+                );
+            }
+        }
+
+        if (eachProjecttask != null){
+            projectTaskToInsertList.add(eachProjecttask);
+        }
+    }
+
+    private Boolean isCspAuthFormReceivedApplicable(Id ipRecId) {
+        Boolean isApplicable = false;
+        Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+
+        if (ipRec != null
+            && ipRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES
+            && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
+            && (
+                ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)
+                || ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)
+                || ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)
+                || ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)
+                || ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)
+                || ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)
+            )
+           ) {
+               isApplicable = true;
+           }
+
+        return isApplicable;
     }
 
    //Health Care FSA - Task
@@ -1951,6 +2008,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     this.createTaskForMedical( proj , ipRecId , ipwithValue , workCalendarId , pt );
                     this.createTaskForDental( proj , ipRecId , ipwithValue , workCalendarId , pt );
                     this.createTaskForVision( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForCspAuthFormReceived( proj , ipRecId , ipwithValue , workCalendarId , pt);
                 }
             }
         }

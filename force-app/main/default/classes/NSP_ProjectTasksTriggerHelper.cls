@@ -216,24 +216,39 @@ public class NSP_ProjectTasksTriggerHelper {
             && String.isNotBlank( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c )
             )
         {
+            Boolean createCspAuthFormReceived = false;
+
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HCFSA ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_HCFSA_FSO' );
             }
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HSA ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_HSA_FSO' );
             }
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DCFSA ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_DCFSA_FSO' );
             }
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.MEDICAL ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_MEDICAL_FSO' );
             }
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DENTAL ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_DENTAL_FSO' );
             }
             if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.VISION ) ) {
+                createCspAuthFormReceived = true;
                 this.buildCspFsoChildTask( pt , 'CSP_VISION_FSO' );
             }
+            this.createCspAuthorizationFormReceivedTask( pt , createCspAuthFormReceived );
+        }
+    }
+
+    private void createCspAuthorizationFormReceivedTask( pse__Project_Task__c pt , Boolean createCspAuthFormReceived ) {
+        if (createCspAuthFormReceived) {
+            this.buildCspFsoChildTask( pt , 'CSP_Client_Authorization_Form_Received' );
         }
     }
 
@@ -2945,7 +2960,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static Boolean isStatusChangedToScheduled(pse__Project_Task__c projectTask, pse__Project_Task__c priorProjectTask){
         return isValueChanged(projectTask, priorProjectTask, 'pse__Status__c') && projectTask.pse__Status__c == 'Scheduled' && (projectTask.NSP_Create_Work_Order__c && projectTask.NSP_Dispatch_Region__c != null);
     }
-    
+
     //
     // MethodName: isStatusChangedToScheduled
     // Description : check if status changed to schedule
