@@ -138,6 +138,7 @@
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>Due_Date__c</fields>
+        <fields>Status__c</fields>
         <fields>Rank__c</fields>
         <relatedList>Portal_Task__c.Parent_Portal_Task__c</relatedList>
         <sortField>Rank__c</sortField>

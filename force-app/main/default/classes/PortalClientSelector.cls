@@ -63,7 +63,7 @@ public with sharing class PortalClientSelector {
                 );
             }
         } catch ( Exception e ) {
-            PortalClientSelector.handleException( e , 'logInfo' );
+            System.debug( ' ~ PortalClientSelector ~ e=' + e );
         }
     }
 
