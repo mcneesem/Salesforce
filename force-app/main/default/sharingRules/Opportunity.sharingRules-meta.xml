@@ -50,6 +50,19 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Renewal_Opportunities</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares Renewal Opportunities with Renewal Team Members</description>
+        <label>Renewal Opportunities</label>
+        <sharedTo>
+            <group>PEO_Renewals</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Renewal</value>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sales_Enablement_Analyst</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Sales Enablement Analyst</label>
