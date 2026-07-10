@@ -4,13 +4,13 @@
     <externalId>false</externalId>
     <formula>IF(
   AND(
-    Sub_Client_Contact__r.Source__c = &quot;Workday&quot; ,
+    ( Sub_Client_Contact__r.Source__c = &quot;Workday&quot; ) ,
     NOT( ISBLANK( Sub_Client_Contact__r.Workday_Employee_ID__c ) )
   ) ,
   Sub_Client_Contact__r.Workday_Employee_ID__c ,
   IF(
     AND(
-      Sub_Client_Contact__r.Source__c = &quot;AIMS&quot; ,
+      ( Sub_Client_Contact__r.Source__c = &quot;AIMS&quot; ) ,
       NOT( ISBLANK( Sub_Client_Contact__r.Per_ID__c ) )
     ) ,
     Sub_Client_Contact__r.Per_ID__c ,
