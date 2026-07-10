@@ -1,10 +1,6 @@
-/**
-* @description : NSP_QueryBuilder provides an object-oriented way of building SOQL queries without resorting to string manipulation.
-* @date : 09/29/2022
-* Author : Nishkarsh Manav
-* Name : NSP_QueryBuilder
-*/
 public with sharing class NSP_QueryBuilder {
+    // test w/ NSP_QueryBuilderTest (??%)
+
     private static final String WHERE_IDENTIFIER = ' WHERE ';
     private static final String LIMIT_IDENTIFIER = ' LIMIT ';
     private static final String AND_IDENTIFIER = ' AND ';
@@ -25,20 +21,29 @@ public with sharing class NSP_QueryBuilder {
         setupBaseQuery(objectApiName, fields);
     }
 
-    /** Methods to add in Future
-     * public NSP_QueryBuilder setEnforceFLS(Boolean enforceFLS)
-     * public NSP_QueryBuilder setOffset(Integer offsetCount)
-     */
+    // Methods to add in Future
+    // public NSP_QueryBuilder setEnforceFLS(Boolean enforceFLS)
+    // public NSP_QueryBuilder setOffset(Integer offsetCount)
 
-    public NSP_QueryBuilder orderBy(String fieldName, String direction, Boolean nullsLast){
-        if(string.isNotBlank(fieldName)){
-            this.orderBy = ' ORDER BY ' + fieldName + ' ' + direction;
+    public NSP_QueryBuilder orderBy( String fieldName , String direction , Boolean nullsLast ) {
+        return this.orderBy( fieldName , direction , ( nullsLast ? 'LAST' : '' ) );
+    }
+
+    public NSP_QueryBuilder orderBy( String fieldName , String directionOption , String nullsOption ) {
+        if ( String.isNotBlank( fieldName ) ) {
+            String directionSuffix = '';
+            if ( ( directionOption == 'ASC' ) || ( directionOption == 'DESC' ) ) {
+                directionSuffix = ' ' + directionOption;
+            }
+            String nullsSuffix = '';
+            if ( ( nullsOption == 'FIRST' ) || ( nullsOption == 'LAST' ) ) {
+                nullsSuffix = ' NULLS ' + nullsOption;
+            }
+            this.orderBy = ' ORDER BY ' + fieldName + directionSuffix + nullsSuffix;
         }
         return this;
     }
-    
-    
-    
+
     public NSP_QueryBuilder addFilter(String fieldName, String fieldValue){
         addFilter(fieldName, fieldValue, null, true);
 
@@ -116,7 +121,7 @@ public with sharing class NSP_QueryBuilder {
     }
 
     public String build(){
-        String query = this.baseQuery; 
+        String query = this.baseQuery;
 
         if(!this.filters.isEmpty()){
             query += WHERE_IDENTIFIER + String.join(filters, AND_IDENTIFIER);
@@ -125,7 +130,7 @@ public with sharing class NSP_QueryBuilder {
         if(this.isSecurityEnforced){
             query += ' WITH SECURITY_ENFORCED ';
         }
-        
+
         if(this.orderBy != null){
             query += this.orderBy;
         }
@@ -189,4 +194,6 @@ public with sharing class NSP_QueryBuilder {
 
    public enum Operator { EQUALS, NOT_EQUALS, LIKES, INCLUDES, NOT_IN , GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS}
    public class RequiredInfoMissingException extends Exception{}
+
 }
+//

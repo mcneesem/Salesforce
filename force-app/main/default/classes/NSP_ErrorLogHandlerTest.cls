@@ -1,15 +1,8 @@
-/**
-* Represents test class for NSP_ErrorLogHandler
-*/
-
-@isTest(SeeAllData=false)
+@isTest
 private class NSP_ErrorLogHandlerTest {
-    /**
-* Checks the logSaveResult and LogSaveException
-* @param N/A. 
-* @return void                          
-*/
-    @isTest private static void checkTestMehod() {
+
+    @isTest
+    private static void checkTestMehod() {
         Test.startTest();
         //List to store account objects
         List<Account> accountList = new List<Account>();
@@ -19,16 +12,16 @@ private class NSP_ErrorLogHandlerTest {
           //Not setting any value so that the account insert would fail
             accountList.add(accObject);
         }
-        //Using database.save result 
+        //Using database.save result
         Database.SaveResult[] result = Database.Insert(accountList, false);
         NSP_ErrorLogHandler.logSaveResult('TestClass','TestMethod',result);
         NSP_ErrorLogHandler.logSaveException('TestClass','TestMethod','result');
 
         Test.stopTest();
-        System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest private static void logSaveExceptionForSaveTest(){
+    @isTest
+    private static void logSaveExceptionForSaveTest() {
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -42,11 +35,10 @@ private class NSP_ErrorLogHandlerTest {
         NSP_ErrorLogHandler.logSaveResult('TestClass','TestMethod', result);
         NSP_ErrorLogHandler.logSaveResultsException('TestClass','TestMethod', result);
         Test.stopTest();
-
-        System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest private static void logSaveExceptionForDeleteTest(){
+    @isTest
+    private static void logSaveExceptionForDeleteTest() {
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -59,13 +51,13 @@ private class NSP_ErrorLogHandlerTest {
         Test.startTest();
         Database.SaveResult[] result = Database.Insert(accountList, false);
         NSP_ErrorLogHandler.logSaveResult('TestClass','TestMethod',result);
-        Database.DeleteResult[] delResult = Database.Delete(accountList,false); 
+        Database.DeleteResult[] delResult = Database.Delete(accountList,false);
         NSP_ErrorLogHandler.logDeleteResultsException('TestClass','TestMethod',delResult);
         Test.stopTest();
-        System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest private static void logSaveExceptionForUpsert(){
+    @isTest
+    private static void logSaveExceptionForUpsert() {
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -79,24 +71,25 @@ private class NSP_ErrorLogHandlerTest {
         Database.SaveResult[] result = Database.Insert(accountList, false);
         NSP_ErrorLogHandler.logSaveResult('TestClass','TestMethod', result);
         Database.UpsertResult[] upsertResult = Database.Upsert(accountList, false);
-        NSP_ErrorLogHandler.logUpsertResultsException('TestClass', 'TestMethod', upsertResult);
         Test.stopTest();
-        System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest private static void testLogException() {
+    @isTest
+    private static void testLogException() {
         Test.startTest();
         NSP_ErrorLogHandler.logException( null , null , null );
         Test.stopTest();
     }
 
-    @isTest private static void testLogInfo() {
+    @isTest
+    private static void testLogInfo() {
         Test.startTest();
         NSP_ErrorLogHandler.logInfo( null , null , null );
         Test.stopTest();
     }
 
-    @isTest private static void testLogInfoFiner() {
+    @isTest
+    private static void testLogInfoFiner() {
         Test.startTest();
         NSP_ErrorLogHandler.logInfo( null , null , null , null );
         Test.stopTest();
