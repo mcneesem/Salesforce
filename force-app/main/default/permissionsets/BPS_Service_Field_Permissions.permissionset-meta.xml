@@ -5238,6 +5238,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Event.Location</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Event.Long_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5369,6 +5374,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Is_Referral_Task__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.NSP_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26311,17 +26321,17 @@
         <field>pse__Project_Task__c.Portal_Guidance_API_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.Portal_Task_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.Portal_Task_Action__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.Portal_Task_Type__c</field>
         <readable>true</readable>
