@@ -644,7 +644,7 @@
   &quot;Complete&quot; , &quot;Completed&quot; ,
   &quot;Pending - Insperity&quot; , &quot;Pending - Insperity&quot; ,
   &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
- &quot;Canceled&quot; , &quot;Hidden&quot; ,
+  &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
