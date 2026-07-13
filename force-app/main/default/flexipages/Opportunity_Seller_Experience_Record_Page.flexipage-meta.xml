@@ -2957,50 +2957,40 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND (8 OR 9)</booleanFilter>
+                    <booleanFilter>(1 OR 2 ) AND (3  OR 4 OR 5 OR 6) AND 7</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WO</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WS</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HRScale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Insurance Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Has_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>Opportunity</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Opportunity_Locked</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Closed Lost</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Opportunity</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Opportunity_Locked</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
