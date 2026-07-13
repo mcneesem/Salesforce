@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Render_Template</name>
         <label>Render Template</label>
-        <locationX>415</locationX>
-        <locationY>2724</locationY>
+        <locationX>389</locationX>
+        <locationY>2532</locationY>
         <actionName>EmailTemplateRenderer</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -40,8 +40,8 @@
     <actionCalls>
         <name>Send_Email</name>
         <label>Send Email</label>
-        <locationX>415</locationX>
-        <locationY>3222</locationY>
+        <locationX>389</locationX>
+        <locationY>3030</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -125,8 +125,8 @@
     <assignments>
         <name>Assign_ContentDocumentLinkIds</name>
         <label>Assign ContentDocumentLinkIds</label>
-        <locationX>703</locationX>
-        <locationY>2148</locationY>
+        <locationX>677</locationX>
+        <locationY>1956</locationY>
         <assignmentItems>
             <assignToReference>contentDocumentIds</assignToReference>
             <operator>Add</operator>
@@ -141,8 +141,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Content_Document_Links</name>
         <label>Assign varFaultElement Get Content Document Links</label>
-        <locationX>1471</locationX>
-        <locationY>1824</locationY>
+        <locationX>1445</locationX>
+        <locationY>1632</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -158,8 +158,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Email_Template</name>
         <label>Assign varFaultElement Get Email Template</label>
-        <locationX>1207</locationX>
-        <locationY>2616</locationY>
+        <locationX>1181</locationX>
+        <locationY>2424</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -175,8 +175,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Implementation_Profile</name>
         <label>Assign varFaultElement Get Implementation Profile</label>
-        <locationX>712</locationX>
-        <locationY>1032</locationY>
+        <locationX>1709</locationX>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -184,15 +184,11 @@
                 <stringValue>Get_Implementation_Profile</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Flow_For_Email</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_GetToaddressFromMetadata</name>
         <label>Assign varFaultElement GetToaddressFromMetadata</label>
-        <locationX>1999</locationX>
+        <locationX>2237</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -209,8 +205,8 @@
     <assignments>
         <name>Assign_varFaultElement_Render_Template</name>
         <label>Assign varFaultElement Render Template</label>
-        <locationX>679</locationX>
-        <locationY>2832</locationY>
+        <locationX>653</locationX>
+        <locationY>2640</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -226,8 +222,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Email</name>
         <label>Assign varFaultElement Send Email</label>
-        <locationX>679</locationX>
-        <locationY>3330</locationY>
+        <locationX>653</locationX>
+        <locationY>3138</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -240,9 +236,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Update_Implementation_Profile</name>
+        <label>Assign varFaultElement Update Implementation Profile</label>
+        <locationX>2501</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Implementation_Profile</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignFeinDocumentationEmail</name>
         <label>AssignFeinDocumentationEmail</label>
-        <locationX>679</locationX>
+        <locationX>653</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>ToEmailAddress</assignToReference>
@@ -252,14 +265,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_Project_Linked_To_Project_Task</targetReference>
+            <targetReference>Get_Implementation_Profile</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assignment_to_CcAddress</name>
         <label>Assignment to CcAddress</label>
-        <locationX>96</locationX>
-        <locationY>1356</locationY>
+        <locationX>367</locationX>
+        <locationY>1248</locationY>
         <assignmentItems>
             <assignToReference>ccAddresses</assignToReference>
             <operator>Add</operator>
@@ -274,8 +287,8 @@
     <assignments>
         <name>Assignment_to_Related_RecordId</name>
         <label>Assignment to  Related RecordId</label>
-        <locationX>228</locationX>
-        <locationY>1140</locationY>
+        <locationX>499</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>relatedRecordId</assignToReference>
             <operator>Assign</operator>
@@ -290,8 +303,8 @@
     <decisions>
         <name>Check_Client_Implementation_Coordinator</name>
         <label>Check Client Implementation Coordinator</label>
-        <locationX>228</locationX>
-        <locationY>1248</locationY>
+        <locationX>499</locationX>
+        <locationY>1140</locationY>
         <defaultConnector>
             <targetReference>Get_Content_Document_Links</targetReference>
         </defaultConnector>
@@ -322,8 +335,8 @@
     <decisions>
         <name>Check_Document_Latest_VersionId</name>
         <label>Check Document Latest VersionId</label>
-        <locationX>835</locationX>
-        <locationY>2040</locationY>
+        <locationX>809</locationX>
+        <locationY>1848</locationY>
         <defaultConnector>
             <targetReference>Loop_Content_Document_Links</targetReference>
         </defaultConnector>
@@ -347,8 +360,8 @@
     <decisions>
         <name>Check_Get_Content_Document_Links</name>
         <label>Check Get Content Document Links</label>
-        <locationX>679</locationX>
-        <locationY>1824</locationY>
+        <locationX>653</locationX>
+        <locationY>1632</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Template</targetReference>
         </defaultConnector>
@@ -379,8 +392,8 @@
     <decisions>
         <name>Check_Get_Implementation_Profile</name>
         <label>Check Get Implementation Profile</label>
-        <locationX>382</locationX>
-        <locationY>1032</locationY>
+        <locationX>653</locationX>
+        <locationY>924</locationY>
         <defaultConnector>
             <targetReference>Get_Content_Document_Links</targetReference>
         </defaultConnector>
@@ -404,8 +417,8 @@
     <decisions>
         <name>Check_if_Email_Params_are_present</name>
         <label>Check if Email Params are present</label>
-        <locationX>679</locationX>
-        <locationY>3114</locationY>
+        <locationX>653</locationX>
+        <locationY>2922</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Present</name>
@@ -440,8 +453,8 @@
     <decisions>
         <name>Check_Template_Params</name>
         <label>Check Template Params</label>
-        <locationX>679</locationX>
-        <locationY>2616</locationY>
+        <locationX>653</locationX>
+        <locationY>2424</locationY>
         <defaultConnector>
             <targetReference>Check_if_Email_Params_are_present</targetReference>
         </defaultConnector>
@@ -472,7 +485,7 @@
     <decisions>
         <name>CheckFeinDocumentationPresent</name>
         <label>CheckFeinDocumentationPresent</label>
-        <locationX>1207</locationX>
+        <locationX>1313</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -492,60 +505,13 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Project_Linked_To_Project_Task</name>
-        <label>Is Project Linked To Project Task</label>
-        <locationX>679</locationX>
-        <locationY>816</locationY>
-        <defaultConnector>
-            <targetReference>Get_Content_Document_Links</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.pse__Project__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Implementation_Profile</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>IsFeinDocumentationName</name>
-        <label>IsFeinDocumentationName</label>
-        <locationX>1735</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>FeinDocumentation</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>FEIN Documentation</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GetToaddressFromMetadata</targetReference>
-            </connector>
-            <label>FeinDocumentation</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>783</locationX>
-        <locationY>276</locationY>
+        <locationX>643</locationX>
+        <locationY>384</locationY>
         <defaultConnector>
-            <targetReference>IsFeinDocumentationName</targetReference>
+            <targetReference>GetToaddressFromMetadata</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -568,8 +534,8 @@
     <loops>
         <name>Loop_Content_Document_Links</name>
         <label>Loop Content Document Links</label>
-        <locationX>615</locationX>
-        <locationY>1932</locationY>
+        <locationX>589</locationX>
+        <locationY>1740</locationY>
         <collectionReference>Get_Content_Document_Links</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -601,8 +567,8 @@
     <recordLookups>
         <name>Get_Content_Document_Links</name>
         <label>Get Content Document Links</label>
-        <locationX>679</locationX>
-        <locationY>1716</locationY>
+        <locationX>653</locationX>
+        <locationY>1524</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Get_Content_Document_Links</targetReference>
@@ -634,8 +600,8 @@
     <recordLookups>
         <name>Get_Email_Template</name>
         <label>Get Email Template</label>
-        <locationX>679</locationX>
-        <locationY>2508</locationY>
+        <locationX>653</locationX>
+        <locationY>2316</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Template_Params</targetReference>
@@ -660,8 +626,8 @@
     <recordLookups>
         <name>Get_Implementation_Profile</name>
         <label>Get Implementation Profile</label>
-        <locationX>382</locationX>
-        <locationY>924</locationY>
+        <locationX>653</locationX>
+        <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Get_Implementation_Profile</targetReference>
@@ -696,7 +662,7 @@
     <recordLookups>
         <name>GetToaddressFromMetadata</name>
         <label>GetToaddressFromMetadata</label>
-        <locationX>1207</locationX>
+        <locationX>1313</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -726,6 +692,40 @@
             <field>NSP_Email_Address__c</field>
         </outputAssignments>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Implementation_Profile</name>
+        <label>Update Implementation Profile</label>
+        <locationX>643</locationX>
+        <locationY>276</locationY>
+        <connector>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Implementation_Profile</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.pse__Project__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Inactive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Has_FEIN_documentation_been_collected__c</field>
+            <value>
+                <stringValue>Yes</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Implementation_Profile__c</object>
+    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -744,11 +744,25 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>FEIN Documentation</stringValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+                <targetReference>Update_Implementation_Profile</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -758,8 +772,8 @@
     <subflows>
         <name>Fault_Flow_For_Email</name>
         <label>Fault Handler Subflow</label>
-        <locationX>679</locationX>
-        <locationY>3438</locationY>
+        <locationX>653</locationX>
+        <locationY>3246</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
