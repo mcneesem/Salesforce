@@ -351,15 +351,18 @@ Create if not exist and if exists create project to support multiple project to 
         <dataType>String</dataType>
         <expression>IF(
   NOT( ISBLANK( {!Get_Project_Record.Id} ) ) ,
-  &quot;New Client&quot;
-    + &quot; - &quot;
-    + TEXT( MONTH( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
-    + &quot;.&quot;
-    + TEXT( DAY( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
-    + &quot;.&quot;
-    + TEXT( YEAR( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
-    + &quot; - &quot;
-    + {!Get_Project_Record.pse__Account__r.Name} ,
+  LEFT(
+    &quot;New Client&quot;
+    &amp; &quot; - &quot;
+    &amp; TEXT( MONTH( {!Get_Project_Record.pse__Start_Date__c} ) )
+    &amp; &quot;.&quot;
+    &amp; TEXT( DAY( {!Get_Project_Record.pse__Start_Date__c} ) )
+    &amp; &quot;.&quot;
+    &amp; TEXT( YEAR( {!Get_Project_Record.pse__Start_Date__c} ) )
+    &amp; &quot; - &quot;
+    &amp; {!Get_Project_Record.pse__Account__r.Name} ,
+    80
+  ) ,
   &quot;&quot;
 )</expression>
     </formulas>
