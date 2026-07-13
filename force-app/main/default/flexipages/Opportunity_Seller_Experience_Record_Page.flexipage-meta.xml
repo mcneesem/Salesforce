@@ -1310,6 +1310,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.STP_Requested_First_Pay_Date__c</fieldItem>
                 <identifier>RecordSTP_Requested_First_Pay_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f3f60a66-2935-46fa-8d51-33556b684a93</name>
