@@ -1608,12 +1608,6 @@ public class NSP_ProjectTasksTriggerHelper {
         if ( !sProjectTasksIds.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
-        if ( !projectTaskIdSet.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(
-                projectTaskIdSet ,
-                mapofProjecttasks
-            );
-        }
         if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset
             && !accountIdList.isEmpty()
             )
