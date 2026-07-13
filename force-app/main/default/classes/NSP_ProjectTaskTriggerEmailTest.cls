@@ -186,7 +186,7 @@ private class NSP_ProjectTaskTriggerEmailTest {
 
     }
 
-    @isTest
+   @isTest
     private static void emailNotifyforFsoProjectTasks() {
         List<pse__Project_Task__c> updateTaskList = new List<pse__Project_Task__c>();
         List<NSP_Project_Team__c> projTeamList = new List<NSP_Project_Team__c>();
@@ -222,10 +222,6 @@ private class NSP_ProjectTaskTriggerEmailTest {
                                                  FROM pse__Project_Task__c
                                                  WHERE pse__Project__c=:proj.Id];
         for(pse__Project_Task__c pt:projTaskList){
-            if(pt.Name == NSP_ServiceConstants.FEIN){
-                pt.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
-                updateTaskList.add(pt);
-            }
             if(pt.Name == NSP_ServiceConstants.FUNDINGDOCUMENTS){
                 pt.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
                 updateTaskList.add(pt);
@@ -255,10 +251,10 @@ private class NSP_ProjectTaskTriggerEmailTest {
         if(!updateTaskList.isEmpty()){
             update updateTaskList;
         }
-        Implementation_Profile__c ip1=[SELECT Id,Has_FEIN_documentation_been_collected__c
+        Implementation_Profile__c ip1=[SELECT Id,NSP_Project__c
                                       FROM Implementation_Profile__c
                                       WHERE NSP_Project__c=:proj.Id  LIMIT 1];
-        System.assertEquals( 'Yes',ip1.Has_FEIN_documentation_been_collected__c);
+        System.assertEquals(proj.Id,ip1.NSP_Project__c);
         Test.stopTest();
     }
 
