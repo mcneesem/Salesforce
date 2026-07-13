@@ -186,7 +186,7 @@ private class NSP_ProjectTaskTriggerEmailTest {
 
     }
 
-   @isTest
+    @isTest
     private static void emailNotifyforFsoProjectTasks() {
         List<pse__Project_Task__c> updateTaskList = new List<pse__Project_Task__c>();
         List<NSP_Project_Team__c> projTeamList = new List<NSP_Project_Team__c>();
