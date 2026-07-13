@@ -1302,9 +1302,9 @@
                 <identifier>RecordSTP_Requested_First_Pay_Date_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Opportunity_Locked</rightValue>
+                        <rightValue>Closed Won</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
