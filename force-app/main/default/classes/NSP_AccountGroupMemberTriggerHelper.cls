@@ -30,6 +30,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     public static void afterDeleteDirector( List<NSP_Account_Group_Member__c> oldList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
         try {
             NSP_AccountGroupMemberTriggerHelper.updatePrimaryForLastGroupMember( oldList , oldMap );
+            NSP_AccountGroupMemberTriggerHelper.nullifySalesSetLookup( oldList );
             NSP_AccountGroupMemberTriggerHelper.createSelfGroupForAccount( oldList );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -481,6 +482,37 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                     accGroMember.NSP_Payroll_Employees__c = null;
                 }
             }
+        }
+    }
+
+    public static void nullifySalesSetLookup( List<NSP_Account_Group_Member__c> oldList  ) {
+        try {
+            List<Account> lstOfAcctsToUpdate = new List<Account>();
+            if ( ( oldList != null ) && !oldList.isEmpty() ) {
+                for( NSP_Account_Group_Member__c accGrpM : oldList ){
+                    if( accGrpM.NSP_Type__c != NSP_SalesConstants.SALES_SET ){
+                        Account acctToUpdate = new Account(
+                            Id = accGrpM.NSP_Member_Account__c ,
+                            Sales_Set__c = null
+                        );
+                        lstOfAcctsToUpdate.add( acctToUpdate );
+                    }
+                }
+            }
+            if ( !lstOfAcctsToUpdate.isEmpty() ) {
+                Database.SaveResult[] results = Database.update( lstOfAcctsToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'nullifySalesSetLookup:Account' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'nullifySalesSetLookup' ,
+                e
+            );
         }
     }
 

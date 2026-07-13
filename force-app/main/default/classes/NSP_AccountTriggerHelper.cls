@@ -850,16 +850,12 @@ public class NSP_AccountTriggerHelper {
                     || accountTeamMemberId.contains( UserInfo.getUserId() )
                     || accOwnerSalesOfficeMap.containsKey( UserInfo.getUserId() )
                 );
-                Boolean isBypassedAllowed = (
-                    CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() )
-                    || CustomPermissionController.checkUserPermission( 'Auto_Create_Opportunity_From_Account' , UserInfo.getUserId() )
-                );
                 Boolean isAllowUpdate = this.isAllowedAccountChange(
                     this.isAllowedFieldChanges( acc , oldRecord ) ,
                     ( oldRecord.OwnerId == availableUserId ) ,
                     isAllowAssignAvailable ,
                     accOwnerSalesOfficeMap.isEmpty() ,
-                    isBypassedAllowed ,
+                    CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() ) ,
                     isValidCurrentUser
                 );
                 if ( !isAllowUpdate ) {
@@ -877,10 +873,6 @@ public class NSP_AccountTriggerHelper {
         if ( ( newRecord != null ) && ( oldRecord != null ) ) {
             response = (
                 ( newRecord.NSP_Last_Updated__c != oldRecord.NSP_Last_Updated__c )
-                || ( newRecord.NSP_AIMS_Renewal_Date__c != oldRecord.NSP_AIMS_Renewal_Date__c ) // ignore changes to Roll-Up Summary...
-                || ( newRecord.Total_PEPM__c != oldRecord.Total_PEPM__c ) // ignore changes to Roll-Up Summary...
-                || ( newRecord.Count_of_Pending_Oppty__c != oldRecord.Count_of_Pending_Oppty__c ) // ignore changes to Roll-Up Summary...
-                || ( newRecord.Count_of_Closed_Won_Oppty__c != oldRecord.Count_of_Closed_Won_Oppty__c ) // ignore changes to Roll-Up Summary...
                 || ( newRecord.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c )
                 || ( ( newRecord.NSP_Sales_Service_Account_Status__c != oldRecord.NSP_Sales_Service_Account_Status__c )
                     && ( newRecord.NSP_Sales_Service_Account_Status__c == 'Prospecting' )
@@ -896,7 +888,7 @@ public class NSP_AccountTriggerHelper {
         Boolean isAvailablePreviousOwner ,
         Boolean isAllowAssignAvailable ,
         Boolean isEmptyAccountOwnerSalesOfficeMap ,
-        Boolean isBypassedAllowed ,
+        Boolean isValidCurrentUserRole ,
         Boolean isValidCurrentUser
         )
     {
@@ -908,7 +900,7 @@ public class NSP_AccountTriggerHelper {
             isAllowed = true;
         } else if (
             ( isEmptyAccountOwnerSalesOfficeMap )
-            || ( isBypassedAllowed )
+            || ( isValidCurrentUserRole )
             || ( isValidCurrentUser )
             )
         {
@@ -1514,6 +1506,46 @@ public class NSP_AccountTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'updateAGMPayrollEmployees' );
+        }
+    }
+
+    // update field NumberOfEmployees_Sales on Account Group Member from NumberOfEmployees of Account
+    public static void updateAGMNumberOfEmployees( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
+        try {
+            List<NSP_Account_Group_Member__c> accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
+            Map<Id,Integer> accEmployeesByIds = new Map<Id,Integer>();
+            // put accountId By NumberOfEmployees in Map - only when value changes
+            for ( Account accList : newMap.values() ) {
+                if ( ( accList.NumberOfEmployees != oldMap.get( accList.Id ).NumberOfEmployees )
+                  || ( accList.Sales_Set__c != oldMap.get( accList.Id ).Sales_Set__c ) ) {
+                    accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
+                }
+            }
+            // update Account Group Member field NumberOfEmployees_Sales from Account field NumberOfEmployees
+            if ( !accEmployeesByIds.isEmpty() ) {
+                for ( NSP_Account_Group_Member__c accGroMember : [
+                            SELECT Id , NSP_Member_Account__c , NumberOfEmployees_Sales__c
+                            FROM NSP_Account_Group_Member__c
+                            WHERE ( NSP_Member_Account__c = :accEmployeesByIds.keySet() )
+                        ]
+                    )
+                {
+                    if ( accGroMember.NumberOfEmployees_Sales__c != accEmployeesByIds.get( accGroMember.NSP_Member_Account__c ) ) {
+                        accGroMember.NumberOfEmployees_Sales__c = accEmployeesByIds.get( accGroMember.NSP_Member_Account__c );
+                        accGroupMemberToBeUpdated.add( accGroMember );
+                    }
+                }
+            }
+            if ( !accGroupMemberToBeUpdated.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( accGroupMemberToBeUpdated , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountTriggerHelper.class.getName() ,
+                    'updateAGMNumberOfEmployees:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployees' );
         }
     }
 
