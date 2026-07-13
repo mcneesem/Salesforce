@@ -677,8 +677,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AIMS_Business_Inception_date__c</fieldItem>
-                <identifier>RecordNSP_AIMS_Business_Inception_date_cField</identifier>
+                <fieldItem>Record.NSP_Year_Established__c</fieldItem>
+                <identifier>RecordNSP_Year_Established_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1692,8 +1692,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AIMS_Business_Inception_date__c</fieldItem>
-                <identifier>RecordNSP_AIMS_Business_Inception_date_cField2</identifier>
+                <fieldItem>Record.NSP_Year_Established__c</fieldItem>
+                <identifier>RecordNSP_Year_Established_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2755,7 +2755,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Zoom Info</value>
+                    <value>ZoomInfo</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab18</identifier>
