@@ -362,7 +362,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00GPb00000VFSBqMAP</stringValue>
+                <stringValue>00GOy00000IpS9bMAF</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -374,7 +374,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>Workday Chat</stringValue>
+                <stringValue>Contact Center HRScale Chat</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
