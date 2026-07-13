@@ -21,6 +21,20 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>NCS_Manager_Opportunity_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>NCS Manager Opportunity Access</label>
+        <sharedTo>
+            <group>NSP_New_Client_Sales</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>StageName</field>
+            <operation>equals</operation>
+            <value>Closing,Closed Lost,Closed Won</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
         <accessLevel>Edit</accessLevel>
         <label>NCS Sales Compensation Opportunity Access</label>
@@ -35,19 +49,17 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Primary_Product_is_WS_or_WA</fullName>
+        <fullName>Renewal_Opportunities</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>If Primary Product is WS, HRScale or WA, share with MidMarket Admins</description>
-        <label>Primary Product is WS or WA</label>
+        <description>Shares Renewal Opportunities with Renewal Team Members</description>
+        <label>Renewal Opportunities</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>PEO_Renewals</group>
         </sharedTo>
         <criteriaItems>
-            <field>NSP_PrimaryProduct__c</field>
+            <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>HR360 - Select Edition,HRCore - Select Edition,HRScale</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+            <value>Renewal</value>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Sales_Enablement_Analyst</fullName>
