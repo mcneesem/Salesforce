@@ -3,7 +3,7 @@
     <fullName>Enter_Date_Sales__c</fullName>
     <defaultValue>TODAY()</defaultValue>
     <encryptionScheme>None</encryptionScheme>
-    <label>Join Date</label>
+    <label>Sales Set Join Date</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

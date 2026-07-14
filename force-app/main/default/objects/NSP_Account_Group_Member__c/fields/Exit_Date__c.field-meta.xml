@@ -4,7 +4,7 @@
     <description>The date when this Account left the Sales Set (for divestitures). When populated, the member status becomes &quot;Removed&quot; and Member Type changes to &quot;Divestiture&quot;.</description>
     <encryptionScheme>None</encryptionScheme>
     <inlineHelpText>Enter the date this Account exited the Sales Set. Leave blank for active members.</inlineHelpText>
-    <label>Exit Date</label>
+    <label>Sales Set Exit Date</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

@@ -227,9 +227,6 @@
                         <valueListItems>
                             <value>Exit_Date__c</value>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Renew_Together__c</value>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

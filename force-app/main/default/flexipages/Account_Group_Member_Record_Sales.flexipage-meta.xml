@@ -89,16 +89,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Renew_Together__c</fieldItem>
-                <identifier>RecordRenew_Together_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NumberOfEmployees_Sales__c</fieldItem>
@@ -125,8 +115,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Member_Account__c</fieldItem>
-                <identifier>RecordNSP_Member_Account_cField</identifier>
+                <fieldItem>Record.NSP_Account_Name__c</fieldItem>
+                <identifier>RecordNSP_Account_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

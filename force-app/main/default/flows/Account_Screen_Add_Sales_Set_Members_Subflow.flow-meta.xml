@@ -907,7 +907,7 @@
         </filters>
         <filters>
             <field>Name</field>
-            <operator>StartsWith</operator>
+            <operator>Contains</operator>
             <value>
                 <elementReference>Enter_Account_Name</elementReference>
             </value>
