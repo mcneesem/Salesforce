@@ -42,20 +42,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>401K Core</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Escalations</stringValue>
-            </value>
-        </filters>
         <object>VoiceCall</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
