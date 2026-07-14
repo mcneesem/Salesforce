@@ -3,7 +3,7 @@
     <fullName>Sales_Set_Join_Date__c</fullName>
     <formula>Sales_Set_Membership__r.Enter_Date_Sales__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Join Date</label>
+    <label>Sales Set Join Date</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Date</type>
