@@ -1256,7 +1256,7 @@ NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
 NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
 NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
 
- OR(
+ OR( 
         NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
 ),
