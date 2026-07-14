@@ -251,10 +251,10 @@ private class NSP_ProjectTaskTriggerEmailTest {
         if(!updateTaskList.isEmpty()){
             update updateTaskList;
         }
-        Implementation_Profile__c ip1=[SELECT Id,NSP_Project__c
-                                      FROM Implementation_Profile__c
-                                      WHERE NSP_Project__c=:proj.Id  LIMIT 1];
-        System.assertEquals(proj.Id,ip1.NSP_Project__c);
+        List< Implementation_Profile__c> ipList = [ SELECT Id,NSP_Project__c
+                                                   FROM Implementation_Profile__c
+                                                   WHERE NSP_Project__c=:proj.Id  LIMIT 1];
+        System.assertEquals(!ipList.isEmpty(),true);
         Test.stopTest();
     }
 
