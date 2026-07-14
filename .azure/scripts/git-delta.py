@@ -233,35 +233,44 @@ def findParentElements( filepath , searchFullNames , verbose=False ):
             if os.path.isfile( filepath ):
                 namespace = NAMESPACE_SOAP_SFORCE_METADATA
                 xmlns = " xmlns=\"" + namespace + "\""
-                ET.register_namespace( "" , namespace )
-                tree = ET.parse( filepath )
-                root = tree.getroot()
-                # build parentMap
-                parentMap = {c: p for p in root.iter() for c in p}
-                # iterate through all elements in the tree
-                for element in root.iter():
-                    if element.text:
-                        for i , searchFullName in enumerate( searchFullNames ):
-                            if searchFullName in element.text:
-                                # only care about <fullName> element matches...
-                                localTag = element.tag
-                                if '}' in element.tag:
-                                    # extract the local name after the '}'
-                                    localTag = element.tag.split('}', 1)[1]
-                                if ( localTag == "fullName" ):
-                                    # found a critical <fullName> element...
-                                    if verbose:
-                                        print( "found: " + searchFullName )
-                                        print( ET.tostring( element ).decode( "utf-8" ).replace( xmlns , "" ).strip() )
-                                    if element in parentMap:
-                                        # pull the parent element from the parent map for the critical <fullName> element...
-                                        parentElement = parentMap[element]
-                                        if parentElement is not None:
-                                            # store the rendered parent element in the response...
-                                            value = "    " + ET.tostring( parentElement , encoding="utf-8" , short_empty_elements=False ).decode( "utf-8" ).replace( xmlns , "" ).strip()
-                                            response[searchFullName] = value
-                                            if verbose:
-                                                print( value )
+                root = None
+                try:
+                    # attempt to parse xml file into root...
+                    ET.register_namespace( "" , namespace )
+                    root = ET.parse( filepath ).getroot()
+                except Exception as e:
+                    root = None
+                    if "error" not in response:
+                        response["error"] = []
+                    response["error"].append( "*** Exception occurred during ElementTree.parse in findParentElements ***" )
+                    response["error"].append( e )
+                if root:
+                    # build parentMap
+                    parentMap = {c: p for p in root.iter() for c in p}
+                    # iterate through all elements in the root...
+                    for element in root.iter():
+                        if element.text:
+                            for i , searchFullName in enumerate( searchFullNames ):
+                                if searchFullName in element.text:
+                                    # only care about <fullName> element matches...
+                                    localTag = element.tag
+                                    if '}' in element.tag:
+                                        # extract the local name after the '}'
+                                        localTag = element.tag.split('}', 1)[1]
+                                    if ( localTag == "fullName" ):
+                                        # found a critical <fullName> element...
+                                        if verbose:
+                                            print( "found: " + searchFullName )
+                                            print( ET.tostring( element ).decode( "utf-8" ).replace( xmlns , "" ).strip() )
+                                        if element in parentMap:
+                                            # pull the parent element from the parent map for the critical <fullName> element...
+                                            parentElement = parentMap[element]
+                                            if parentElement is not None:
+                                                # store the rendered parent element in the response...
+                                                value = "    " + ET.tostring( parentElement , encoding="utf-8" , short_empty_elements=False ).decode( "utf-8" ).replace( xmlns , "" ).strip()
+                                                response[searchFullName] = value
+                                                if verbose:
+                                                    print( value )
     if verbose:
         print( " ----- " )
     return response
@@ -282,18 +291,21 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
         )
     # concatenate modified parent elements into a reduced xml file...
     if modifiedParentElements:
-        outputFileBody = ""
-        outputFileBody += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-        outputFileBody += "<" + metadataType + " xmlns=\"" + NAMESPACE_SOAP_SFORCE_METADATA + "\">\n"
-        for key in modifiedParentElements:
-            outputFileBody += modifiedParentElements[key]
-            outputFileBody += "\n"
-        outputFileBody += "</" + metadataType + ">\n"
-        if verbose:
-            print( "outputFileBody: " + filepath )
-            print( outputFileBody )
-        with open( filepath , 'w' ) as f:
-            f.write( outputFileBody )
+        if "error" in modifiedParentElements:
+            print( modifiedParentElements["error"] )
+        else:
+            outputFileBody = ""
+            outputFileBody += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+            outputFileBody += "<" + metadataType + " xmlns=\"" + NAMESPACE_SOAP_SFORCE_METADATA + "\">\n"
+            for key in modifiedParentElements:
+                outputFileBody += modifiedParentElements[key]
+                outputFileBody += "\n"
+            outputFileBody += "</" + metadataType + ">\n"
+            if verbose:
+                print( "outputFileBody: " + filepath )
+                print( outputFileBody )
+            with open( filepath , 'w' ) as f:
+                f.write( outputFileBody )
     if verbose:
         print( " ----- " )
 
