@@ -353,7 +353,10 @@ public with sharing class SetupAuditTrailQueueable implements Queueable {
                 System.URL orgDomainUrl = System.URL.getOrgDomainUrl();
                 if ( orgDomainUrl != null ) {
                     System.Domain orgDomain = System.DomainParser.parse( orgDomainUrl );
-                    if ( orgDomain != null ) {
+                    if ( ( orgDomain != null )
+                        && String.isNotBlank( orgDomain.getSandboxName() )
+                        )
+                    {
                         local = orgDomain.getSandboxName();
                     }
                 }
