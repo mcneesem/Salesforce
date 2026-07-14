@@ -5569,7 +5569,7 @@
   {
     "id": "01p4x00000NS3nBAAT",
     "name": "NSP_UserTriggerHelper",
-    "totalLines": 466,
+    "totalLines": 464,
     "lines": {
       "4": 1,
       "11": 1,
@@ -6034,11 +6034,9 @@
       "903": 1,
       "904": 1,
       "905": 1,
-      "906": 1,
-      "912": 1,
-      "913": 1
+      "906": 1
     },
-    "totalCovered": 388,
+    "totalCovered": 386,
     "coveredPercent": 83
   },
   {
