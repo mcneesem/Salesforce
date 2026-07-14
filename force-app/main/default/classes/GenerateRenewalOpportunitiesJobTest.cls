@@ -88,6 +88,9 @@ private class GenerateRenewalOpportunitiesJobTest {
             SELECT COUNT()
             FROM Opportunity
         ];
+        System.assertEquals(
+            2, cnt
+        );
     }
 
 }
