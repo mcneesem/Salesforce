@@ -18,43 +18,13 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>NSP_Middle_Market_PTO_Specialists</name>
-                <type>queue</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
-        </assignedApprover>
-        <entryCriteria>
-            <criteriaItems>
-                <field>NSP_Accrual_Profile__c.NSP_Is_this_a_Middle_Market_client__c</field>
-                <operation>equals</operation>
-                <value>Yes</value>
-            </criteriaItems>
-        </entryCriteria>
-        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>MM PTO Received</label>
-        <name>MM_PTO_Received</name>
-    </approvalStep>
-    <approvalStep>
-        <allowDelegate>false</allowDelegate>
-        <assignedApprover>
-            <approver>
                 <name>NSP_National_PTO</name>
                 <type>queue</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
-        <entryCriteria>
-            <criteriaItems>
-                <field>NSP_Accrual_Profile__c.NSP_Is_this_a_Middle_Market_client__c</field>
-                <operation>equals</operation>
-                <value>No</value>
-            </criteriaItems>
-        </entryCriteria>
         <label>National PTO Received</label>
         <name>National_PTO_Received</name>
-        <rejectBehavior>
-            <type>RejectRequest</type>
-        </rejectBehavior>
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
