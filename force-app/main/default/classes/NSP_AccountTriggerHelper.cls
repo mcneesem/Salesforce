@@ -850,12 +850,16 @@ public class NSP_AccountTriggerHelper {
                     || accountTeamMemberId.contains( UserInfo.getUserId() )
                     || accOwnerSalesOfficeMap.containsKey( UserInfo.getUserId() )
                 );
+                Boolean isBypassedAllowed = (
+                    CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() )
+                    || CustomPermissionController.checkUserPermission( 'Auto_Create_Opportunity_From_Account' , UserInfo.getUserId() )
+                );
                 Boolean isAllowUpdate = this.isAllowedAccountChange(
                     this.isAllowedFieldChanges( acc , oldRecord ) ,
                     ( oldRecord.OwnerId == availableUserId ) ,
                     isAllowAssignAvailable ,
                     accOwnerSalesOfficeMap.isEmpty() ,
-                    CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() ) ,
+                    isBypassedAllowed ,
                     isValidCurrentUser
                 );
                 if ( !isAllowUpdate ) {
@@ -873,6 +877,10 @@ public class NSP_AccountTriggerHelper {
         if ( ( newRecord != null ) && ( oldRecord != null ) ) {
             response = (
                 ( newRecord.NSP_Last_Updated__c != oldRecord.NSP_Last_Updated__c )
+                || ( newRecord.NSP_AIMS_Renewal_Date__c != oldRecord.NSP_AIMS_Renewal_Date__c ) // ignore changes to Roll-Up Summary...
+                || ( newRecord.Total_PEPM__c != oldRecord.Total_PEPM__c ) // ignore changes to Roll-Up Summary...
+                || ( newRecord.Count_of_Pending_Oppty__c != oldRecord.Count_of_Pending_Oppty__c ) // ignore changes to Roll-Up Summary...
+                || ( newRecord.Count_of_Closed_Won_Oppty__c != oldRecord.Count_of_Closed_Won_Oppty__c ) // ignore changes to Roll-Up Summary...
                 || ( newRecord.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c )
                 || ( ( newRecord.NSP_Sales_Service_Account_Status__c != oldRecord.NSP_Sales_Service_Account_Status__c )
                     && ( newRecord.NSP_Sales_Service_Account_Status__c == 'Prospecting' )
@@ -888,7 +896,7 @@ public class NSP_AccountTriggerHelper {
         Boolean isAvailablePreviousOwner ,
         Boolean isAllowAssignAvailable ,
         Boolean isEmptyAccountOwnerSalesOfficeMap ,
-        Boolean isValidCurrentUserRole ,
+        Boolean isBypassedAllowed ,
         Boolean isValidCurrentUser
         )
     {
@@ -900,7 +908,7 @@ public class NSP_AccountTriggerHelper {
             isAllowed = true;
         } else if (
             ( isEmptyAccountOwnerSalesOfficeMap )
-            || ( isValidCurrentUserRole )
+            || ( isBypassedAllowed )
             || ( isValidCurrentUser )
             )
         {
