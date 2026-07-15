@@ -5,7 +5,7 @@
         <name>Assign_Business_Drivers</name>
         <label>Assign Business Drivers</label>
         <locationX>50</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Situation_Termination_Drivers__c</assignToReference>
             <operator>Assign</operator>
@@ -18,7 +18,7 @@
         <name>Assign_Business_Drivers_and_Efforts_to_retain</name>
         <label>Assign Business Drivers and Efforts to retain</label>
         <locationX>578</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Situation_Termination_Drivers__c</assignToReference>
             <operator>Assign</operator>
@@ -38,7 +38,7 @@
         <name>Assign_efforts_to_retain</name>
         <label>Assign efforts to retain</label>
         <locationX>314</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Efforts_To_Retain__c</assignToReference>
             <operator>Assign</operator>
@@ -48,26 +48,62 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Assign_RSAP</name>
-        <label>Assign RSAP</label>
-        <locationX>182</locationX>
-        <locationY>719</locationY>
+        <name>Fault_Engagement_Path_Record</name>
+        <label>Fault Engagement Path Record</label>
+        <locationX>842</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Associated_RSAP__c</assignToReference>
+            <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_RSAP_Record.Id</elementReference>
+                <stringValue>Get_Engagement_Path_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Get_Initiative_Records</targetReference>
-        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Initiative_Records</name>
+        <label>Fault Initiative Records</label>
+        <locationX>1106</locationX>
+        <locationY>827</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Initiative_Records</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Fault_Project_Record</name>
+        <label>Fault Project Record</label>
+        <locationX>2162</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project_Record</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Fault_RSAP_Record</name>
+        <label>Fault RSAP Record</label>
+        <locationX>1634</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RSAP_Record</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <decisions>
         <name>Check_for_Initiative_and_Engagement_path</name>
         <label>Check for Initiative and Engagement path</label>
         <locationX>182</locationX>
-        <locationY>1043</locationY>
+        <locationY>935</locationY>
         <defaultConnector>
             <targetReference>Assign_Business_Drivers_and_Efforts_to_retain</targetReference>
         </defaultConnector>
@@ -139,7 +175,7 @@
     <decisions>
         <name>Check_for_project_record</name>
         <label>Check for project record</label>
-        <locationX>809</locationX>
+        <locationX>1337</locationX>
         <locationY>395</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -168,7 +204,7 @@
     <decisions>
         <name>Check_RSAP_Record</name>
         <label>Check RSAP Record</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>611</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -182,7 +218,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_RSAP</targetReference>
+                <targetReference>Get_Initiative_Records</targetReference>
             </connector>
             <label>RSAP available</label>
         </rules>
@@ -213,11 +249,14 @@
         <name>Get_Engagement_Path_Record</name>
         <label>Get Engagement Path Record</label>
         <locationX>182</locationX>
-        <locationY>935</locationY>
+        <locationY>827</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_for_Initiative_and_Engagement_path</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Engagement_Path_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Relationship_Strategy_Action_Plan__c</field>
@@ -245,11 +284,14 @@
         <name>Get_Initiative_Records</name>
         <label>Get Initiative Records</label>
         <locationX>182</locationX>
-        <locationY>827</locationY>
+        <locationY>719</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Engagement_Path_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Initiative_Records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Relationship_Strategy_Action_Plan__c</field>
@@ -283,12 +325,15 @@
     <recordLookups>
         <name>Get_Project_Record</name>
         <label>Get Project Record</label>
-        <locationX>809</locationX>
+        <locationX>1337</locationX>
         <locationY>287</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_for_project_record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Project_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -308,12 +353,15 @@
     <recordLookups>
         <name>Get_RSAP_Record</name>
         <label>Get RSAP Record</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>503</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_RSAP_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_RSAP_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Account__c</field>
@@ -338,7 +386,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>683</locationX>
+        <locationX>1211</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Project_Record</targetReference>
@@ -363,4 +411,11 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

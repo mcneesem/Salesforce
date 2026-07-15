@@ -869,16 +869,6 @@
                 <identifier>RecordNSP_Situation_Termination_Drivers_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Associated_RSAP__c</fieldItem>
-                <identifier>RecordAssociated_RSAP_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-5d62656a-025b-4a9a-89a5-f0a30f893afc</name>
         <type>Facet</type>
     </flexiPageRegions>
