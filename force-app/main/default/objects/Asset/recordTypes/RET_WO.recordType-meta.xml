@@ -2247,7 +2247,7 @@
     <picklistValues>
         <picklist>NSP_Service_Region__c</picklist>
         <values>
-            <fullName>FSO - Southwest</fullName>
+            <fullName>FSO - East</fullName>
             <default>false</default>
         </values>
         <values>
