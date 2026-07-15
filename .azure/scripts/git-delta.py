@@ -242,8 +242,11 @@ def findParentElements( filepath , searchFullNames , verbose=False ):
                     root = None
                     if "error" not in response:
                         response["error"] = []
-                    response["error"].append( "*** Exception occurred during ElementTree.parse in findParentElements ***" )
-                    response["error"].append( e )
+                    response["error"].append( "Exception occurred during ElementTree.parse in findParentElements" ) # message
+                    response["error"].append( filepath ) # fileName
+                    response["error"].append( str( e ) ) # exception
+                    if verbose:
+                        print( response["error"] )
                 if root:
                     # build parentMap
                     parentMap = {c: p for p in root.iter() for c in p}
@@ -281,6 +284,7 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
         print( "git-delta.py: writeMetadataFile" )
         print( filepath )
         print( searchFullNames )
+    response = {}
     # extract all modified parent elements...
     modifiedParentElements = None
     if filepath in searchFullNames:
@@ -292,7 +296,8 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
     # concatenate modified parent elements into a reduced xml file...
     if modifiedParentElements:
         if "error" in modifiedParentElements:
-            print( modifiedParentElements["error"] )
+            # bubble up errors thrown in findParentElements...
+            response["error"] = modifiedParentElements["error"]
         else:
             outputFileBody = ""
             outputFileBody += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -308,6 +313,7 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
                 f.write( outputFileBody )
     if verbose:
         print( " ----- " )
+    return response
 
 # Trim Diff Line
 def trimDiffLine( line , verbose=False ):
@@ -448,6 +454,7 @@ def scanGitDiffLines( lines , verbose=False ):
 
     if verbose:
         print( searchFullNames )
+    response = {}
     if searchFullNames:
         if verbose:
             print( len( searchFullNames ) )
@@ -464,14 +471,21 @@ def scanGitDiffLines( lines , verbose=False ):
                 print( metadataFolder + ": xmlName: " + str( metadataTypeMap[metadataFolder]["xmlName"] ) )
             if metadataFolder:
                 # re-write metadata file...
-                writeMetadataFile(
+                writeMetadataFileResponse = writeMetadataFile(
                     path ,
                     searchFullNames ,
                     metadataTypeMap[metadataFolder]["xmlName"] ,
                     verbose
                 )
+                if writeMetadataFileResponse:
+                    if "error" in writeMetadataFileResponse:
+                        # bubble up errors thrown in writeMetadataFile...
+                        if "errors" not in response:
+                            response["errors"] = []
+                        response["errors"].append( writeMetadataFileResponse["error"] )
     if verbose:
         print( " ----- " )
+    return response
 
 # Parse Command Response
 def parseCommandResponse( stdout , verbose=False ):
@@ -568,7 +582,7 @@ def main():
             print( len( gitDiffLines ) )
         print( " ----- " )
 
-    scanGitDiffLines( gitDiffLines , args.verbose )
+    scanGitDiffLinesResponse = scanGitDiffLines( gitDiffLines , args.verbose )
 
     gitDiffPaths = parseCommandResponse(
         runCommand(
@@ -605,6 +619,23 @@ def main():
         print( " ----- " )
 
     copyPackageFiles( gitDiffs , args.output , args.verbose )
+
+    # output any errors found before ending the process...
+    if scanGitDiffLinesResponse:
+        if "errors" in scanGitDiffLinesResponse:
+            # bubble up errors thrown in scanGitDiffLines...
+            errorMessages = None
+            for error in scanGitDiffLinesResponse["errors"]:
+                errorMessage = ", ".join( error )
+                if not errorMessages:
+                    errorMessages = []
+                errorMessages.append( errorMessage )
+            if errorMessages:
+                gitDeltaPythonErrors = " | ".join( errorMessages )
+                print( f"##vso[task.setvariable variable=gitDeltaPythonErrors]{gitDeltaPythonErrors}" )
+                if args.verbose:
+                    print( gitDeltaPythonErrors )
+
     if args.verbose:
         print( " ----- " )
 
