@@ -2345,19 +2345,16 @@
                             <value>OPPORTUNITY.NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>ACCOUNT.NAME</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>OPPORTUNITY.STAGE_NAME</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>NSP_PrimaryProduct__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>OPPORTUNITY.TYPE</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>OPPORTUNITY.CLOSE_DATE</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CORE.USERS.FULL_NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NSP_Sales_Office__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
