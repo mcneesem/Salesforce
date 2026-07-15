@@ -479,6 +479,20 @@
         <value>TESImplementationSupport@insperity.com</value>
     </labels>
     <labels>
+        <fullName>HR_Consulting_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Consulting Envelope Configuration</shortDescription>
+        <value>a8NPb0000024qV7MAI</value>
+    </labels>
+    <labels>
+        <fullName>HR_Consulting_Wet_Envelope</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Consulting Wet Envelope</shortDescription>
+        <value>a8NPb0000024qdBMAQ</value>
+    </labels>
+    <labels>
         <fullName>HRCore_Setup_Fee_Products</fullName>
         <language>en_US</language>
         <protected>false</protected>

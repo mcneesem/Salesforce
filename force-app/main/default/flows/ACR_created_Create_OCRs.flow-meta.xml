@@ -8,10 +8,10 @@
             <stringValue>Account Contact Relationship Create to Insert OCRs</stringValue>
         </value>
     </constants>
-    <description>flipped subflow input back to $record from $recordId</description>
+    <description>DEPRECATED - flipped subflow input back to $record from $recordId</description>
     <environments>Default</environments>
-    <interviewLabel>ACR created - Create OCRs {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>ACR created - Create OCRs</label>
+    <interviewLabel>DEPRECATED - ACR created - Create OCRs {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - ACR created - Create OCRs</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -122,7 +122,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>ACR_Subflow_Create_or_Update_related_OCRs_on_Open_Optys</name>
         <label>ACR Subflow - Create or Update related OCRs on Open Optys</label>

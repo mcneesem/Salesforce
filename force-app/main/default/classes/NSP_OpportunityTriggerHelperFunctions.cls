@@ -1,6 +1,8 @@
 public with sharing class NSP_OpportunityTriggerHelperFunctions {
-    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (90%)
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_UserAndOwnerFunctionsTest, NSP_AccountTriggerHelperTest (91%)
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (89%)
     // test w/ NSP_OpportunityTriggerHelperTest (84%)
+    // test w/ NSP_UserAndOwnerFunctionsTest (74%)
     // test w/ NSP_AccountTriggerHelperTest (65%)
 
     private static Map<Id,User> customerSuccessUsers;
@@ -215,35 +217,88 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
 
     }
 
-    //
-    // MethodName: getAccountOwnerEmail
-    // Description : This method will update the Point of Contact and Customer Signer on Opportunity after Insert
-    // Params: Set<Id> accountId
-    //
-    public static void getAccountOwnerEmail( Set<Id> accountId ) {
-        // STY-02090
-        Map<Id,Id> accountOpportunityMap = new Map<Id,Id>();
-        List<Opportunity>opportunityList =[Select Id , Name,NSP_Customer_Signer__c ,NSP_Primary_Contact__c,AccountId from Opportunity WHERE AccountId IN:accountId];
-        for(Opportunity opp:opportunityList){
-            accountOpportunityMap.put(opp.AccountId,opp.Id);
+    // update the Point of Contact and Customer Signer on Opportunity after Insert
+    public static void populatePrimaryContactCustomerSigner( Set<Id> accountIds ) {
+        if ( NSP_OpportunityTriggerHelper.isEnabledFutureCustomerSigner
+            && !System.isFuture() // prevent AsyncExceptions...
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
+            )
+        {
+            NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmailFuture( accountIds );
+        } else {
+            NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail( accountIds );
         }
-        Map<Id,String> accountContactMap = new Map<Id,String>();
-        for (AccountContactRelation accountObj: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId, Account.Owner.Email from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
-            accountContactMap.put(accountObj.AccountId,accountObj.ContactId );
-        }
-        List<Opportunity> UpdateOpplist = new List<Opportunity>();
-        //Iterating over the optys and stamping account owner email
-        for (Opportunity opportunityObject: opportunityList) {
-            if (accountContactMap.containsKey(opportunityObject.AccountId)) {
-                Opportunity opp = new opportunity();
-                opp.Id=opportunityObject.Id;
-                opp.NSP_Primary_Contact__c = accountContactMap.get(opportunityObject.AccountId);
-                opp.NSP_Customer_Signer__c = accountContactMap.get(opportunityObject.AccountId);
-                UpdateOpplist.add(opp);
+    }
+    @future
+    private static void getAccountOwnerEmailFuture( Set<Id> accountIds ) {
+        NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail( accountIds );
+    }
+    public static void getAccountOwnerEmail( Set<Id> accountIds ) {
+        try {
+            // STY-02090
+            Map<Id,Id> accountOpportunityMap = new Map<Id,Id>();
+            List<Opportunity> opportunityList = [
+                SELECT
+                    Id ,
+                    Name ,
+                    NSP_Customer_Signer__c ,
+                    NSP_Primary_Contact__c ,
+                    AccountId
+                FROM Opportunity
+                WHERE ( AccountId IN :accountIds )
+            ];
+            for ( Opportunity opp : opportunityList ) {
+                accountOpportunityMap.put(
+                    opp.AccountId ,
+                    opp.Id
+                );
             }
-        }
-        if(!UpdateOpplist.isEmpty()){
-            Database.update(UpdateOpplist,false);
+            Map<Id,String> accountContactMap = new Map<Id,String>();
+            for ( AccountContactRelation accountObj : [
+                        SELECT
+                            Id ,
+                            ContactId ,
+                            NSP_Is_Primary__c ,
+                            AccountId ,
+                            Account.Owner.Email
+                        FROM AccountContactRelation
+                        WHERE (
+                            ( NSP_Is_Primary__c = true )
+                            AND ( AccountId IN :accountIds )
+                        )
+                    ]
+                )
+            {
+                accountContactMap.put(
+                    accountObj.AccountId ,
+                    accountObj.ContactId
+                );
+            }
+            List<Opportunity> records = new List<Opportunity>();
+            //Iterating over the optys and stamping account owner email
+            for ( Opportunity opportunityObject : opportunityList ) {
+                if ( accountContactMap.containsKey( opportunityObject.AccountId ) ) {
+                    Opportunity opp = new opportunity();
+                    opp.Id = opportunityObject.Id;
+                    opp.NSP_Primary_Contact__c = accountContactMap.get( opportunityObject.AccountId );
+                    opp.NSP_Customer_Signer__c = accountContactMap.get( opportunityObject.AccountId );
+                    records.add( opp );
+                }
+            }
+            if ( !records.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( records , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerHelperFunctions.class.getName() ,
+                    'getAccountOwnerEmail:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OpportunityTriggerHelperFunctions.class.getName() ,
+                'getAccountOwnerEmail' ,
+                e
+            );
         }
     }
 

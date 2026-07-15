@@ -1922,6 +1922,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Fraud_Alert__c</fieldItem>
+                <identifier>RecordFraud_Alert_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5608ab67-a9fd-404a-be4b-dca2615d4202</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3089,6 +3099,12 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
                 <identifier>force_relatedListQuickLinksContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

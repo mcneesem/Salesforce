@@ -3,7 +3,7 @@
     <fullName>NSP_Send_email_to_Sales_PR_wpayment_info__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Send email to Sales PR w/payment info.</label>
+    <label>DEPRECATED Send email to Sales PR w/paym</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

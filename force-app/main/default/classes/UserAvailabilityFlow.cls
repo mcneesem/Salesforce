@@ -1,32 +1,30 @@
 public with sharing class UserAvailabilityFlow {
-    // test w/ UserAvailabilityFlowTest (91%)
+    // test w/ UserAvailabilityFlowTest (100%)
 
     @InvocableMethod(label='Get Available Users')
-    public static List<List<Id>> getUsers( List<UserAvailabilityFlow.UserAvailabilityInput> inputs ) {
-        List<List<Id>> response = new List<List<Id>>();
+    public static List<List<User>> getUsers( List<UserAvailabilityFlow.UserAvailabilityInput> inputs ) {
+        List<List<User>> response = new List<List<User>>();
         if ( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( UserAvailabilityFlow.UserAvailabilityInput i : inputs ) {
-                List<Id> userIds = UserAvailabilityService.getAvailableUsersForWindow(
-                    i.startDateTime ,
-                    i.endDateTime ,
-                    i.skill
-                );
-                if ( userIds == null ) {
-                    userIds = new List<Id>();
+                List<Id> userIds = i.userIds;
+                List<User> sortedUsers = new List<User>();
+                if ( ( userIds != null ) && !userIds.isEmpty() && ( i.selectedDate != null ) ) {
+                    sortedUsers = UserAvailabilityService.sortUsersByDailyLoad(
+                        userIds ,
+                        i.selectedDate
+                    );
                 }
-                response.add( userIds );
+                response.add( sortedUsers );
             }
         }
         return response;
     }
 
     public class UserAvailabilityInput {
-        @InvocableVariable(required=true)
-        public Datetime startDateTime;
-        @InvocableVariable(required=true)
-        public Datetime endDateTime;
-        @InvocableVariable(required=true)
-        public String skill;
+        @InvocableVariable(required=false)
+        public List<Id> userIds;
+        @InvocableVariable(required=false)
+        public Date selectedDate;
     }
 
 }

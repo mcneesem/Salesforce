@@ -4,7 +4,7 @@
     <description>This field is used for Sales part of STY-01620</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>servicefee AIMS matches final signedSchB</label>
+    <label>DEPRECATED servicefee AIMS matches final</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

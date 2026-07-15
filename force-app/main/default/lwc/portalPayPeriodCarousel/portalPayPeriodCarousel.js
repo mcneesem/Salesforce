@@ -94,7 +94,7 @@ export default class PortalPayPeriodCarousel extends LightningElement {
     //
 
     get activePanelIndex() {
-        const index = this.indicators.findIndex( indicator => indicator.id === this.activePanelDatasetId );
+        const index = this.indicators?.findIndex( indicator => indicator?.id === this.activePanelDatasetId );
         return ( ( index < 0 ) ? 0 : index );
     }
 

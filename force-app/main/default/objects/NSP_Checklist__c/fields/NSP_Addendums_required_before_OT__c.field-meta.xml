@@ -3,7 +3,7 @@
     <fullName>NSP_Addendums_required_before_OT__c</fullName>
     <description>This field is used for Sales part of STY-01620</description>
     <externalId>false</externalId>
-    <label>Addendums required before OT</label>
+    <label>DEPRECATED Addendums required before OT</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

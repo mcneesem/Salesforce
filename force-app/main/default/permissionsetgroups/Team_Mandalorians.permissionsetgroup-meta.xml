@@ -5,10 +5,17 @@
     <label>Team Mandalorians</label>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>Bypass_Restrict_Renewal_Opportunities</permissionSets>
+    <permissionSets>Bypass_Restrict_Renewal_Opportunities_Closed</permissionSets>
     <permissionSets>Case_Account_Contact_Information</permissionSets>
     <permissionSets>Default_Account_Team_View</permissionSets>
     <permissionSets>Default_Opportunity_Team_View</permissionSets>
+    <permissionSets>Generate_Renewal_Opportunities</permissionSets>
+    <permissionSets>Opportunity_Record_Type_Renewal</permissionSets>
+    <permissionSets>Opportunity_Renewal_Edit_Access</permissionSets>
     <permissionSets>Public_Group_Membership_View</permissionSets>
     <permissionSets>Queue_Membership_View</permissionSets>
+    <permissionSets>Renewal_Layout_Access</permissionSets>
+    <permissionSets>Renewal_Visibility</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

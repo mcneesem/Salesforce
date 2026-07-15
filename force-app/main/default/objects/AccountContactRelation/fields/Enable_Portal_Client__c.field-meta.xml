@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_Portal_Client__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Controls visibility of the Portal Client records for the related Account to the related Contact/User (PortalClientSharing, Portal_Client__Share).</description>
+    <inlineHelpText>When enabled, all Portal Clients related to this Account become visible to the Contact&apos;s Portal User.</inlineHelpText>
+    <label>Enable Portal Client</label>
+    <type>Checkbox</type>
+</CustomField>

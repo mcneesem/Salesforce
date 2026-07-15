@@ -62,6 +62,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Renewal_Paperwork__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Is_Primary__c</field>
             </layoutItems>
         </layoutColumns>

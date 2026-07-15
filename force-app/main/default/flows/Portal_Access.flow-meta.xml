@@ -163,6 +163,12 @@
         <locationY>0</locationY>
         <flowName>Portal_Access_Notify</flowName>
         <inputAssignments>
+            <name>isEnabledSendNotification</name>
+            <value>
+                <elementReference>isEnabledSendNotification</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>portalUserId</elementReference>
@@ -225,6 +231,10 @@
             </value>
         </inputAssignments>
         <outputAssignments>
+            <assignToReference>isEnabledSendNotification</assignToReference>
+            <name>isEnabledSendNotification</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>isSuccessProvision</assignToReference>
             <name>isSuccess</name>
         </outputAssignments>
@@ -241,6 +251,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isEnabledSendNotification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

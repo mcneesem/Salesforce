@@ -1,17 +1,31 @@
 <template>
     <template lwc:if={recordId}>
         <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" padding="around-small">
-                <c-portal-client-welcome></c-portal-client-welcome>
+            <lightning-layout-item size={columnSizeFull}>
+                <div class="slds-p-vertical_small">
+                    <c-portal-client-welcome guidance-id={guidanceId}></c-portal-client-welcome>
+                </div>
             </lightning-layout-item>
-            <lightning-layout-item size="12">
-                <lightning-layout multiple-rows>
-                    <lightning-layout-item size="12" medium-device-size="7" padding="around-small">
+            <lightning-layout-item size={columnSizeFull}>
+                <lightning-layout pull-to-boundary="small" multiple-rows>
+                    <lightning-layout-item
+                        size={columnSizeFull}
+                        small-device-size={columnSizeFull}
+                        medium-device-size={columnSizeFull}
+                        large-device-size={columnSizeLeft}
+                        padding="around-small"
+                        >
                         <template lwc:if={projectId}>
                             <c-portal-team-member-list record-id={projectId}></c-portal-team-member-list>
                         </template>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" medium-device-size="5" padding="around-small">
+                    <lightning-layout-item
+                        size={columnSizeFull}
+                        small-device-size={columnSizeFull}
+                        medium-device-size={columnSizeFull}
+                        large-device-size={columnSizeRight}
+                        padding="around-small"
+                        >
                         <template lwc:if={projectId}>
                             <c-portal-client-important-dates record-id={recordId} project-id={projectId}></c-portal-client-important-dates>
                         </template>

@@ -114,10 +114,6 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * Description: Filter record for other functions
-    * @return void
-    */
     public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> cobraProjectTaskList = new List<pse__Project_Task__c>();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
@@ -450,12 +446,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * @MethodName: updateDocusignAsset
-    * @Description: Populate related Active asset for docusign use
-    * @param :List<Id> accountList
-    * @return void
-    */
+    //
+    // @MethodName: updateDocusignAsset
+    // @Description: Populate related Active asset for docusign use
+    // @param :List<Id> accountList
+    // @return void
+    //
     public static void updateDocusignAsset(List<ID> accountList) {
         List<String> excludeStatusValues = new List<String>();
         List<String> excluderecordTypeWithStatusValues = new List<String>();
@@ -532,11 +528,11 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName:  createCobraSubTasks
-    * Description : Create sub tasks for cobra
-    * Params: List<pse__Project_Task__c> cobraProjectTaskList
-    * ********************************************************************************************/
+    //
+    // MethodName:  createCobraSubTasks
+    // Description : Create sub tasks for cobra
+    // Params: List<pse__Project_Task__c> cobraProjectTaskList
+    //
     public void createCobraSubTasks(List<pse__Project_Task__c> cobraProjectTaskList){
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
         NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_GUIDELINES_MM);
@@ -552,8 +548,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask.pse__Hierarchy_Depth__c =1;
                 eachProjecttask.pse__Order__c=1;
                 eachProjecttask.Task_Order__c=90;
-                if(String.isNotBlank(System.label.COBRA_Guidelines)){
-                    eachProjecttask.pse__Long_Description__c = System.label.COBRA_Guidelines;
+                if(String.isNotBlank(System.Label.COBRA_Guidelines)){
+                    eachProjecttask.pse__Long_Description__c = System.Label.COBRA_Guidelines;
                 }
                 //
                 cobraChildProjectTaskList.add(eachProjecttask);
@@ -563,8 +559,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask1.pse__Hierarchy_Depth__c =2;
                 eachProjecttask1.pse__Order__c=2;
                 eachProjecttask1.Task_Order__c=91;
-                if(String.isNotBlank(System.label.COBRA_Team)){
-                    eachProjecttask1.pse__Long_Description__c = System.label.COBRA_Team;
+                if(String.isNotBlank(System.Label.COBRA_Team)){
+                    eachProjecttask1.pse__Long_Description__c = System.Label.COBRA_Team;
                 }
                 cobraChildProjectTaskList.add(eachProjecttask1);
                 //
@@ -574,8 +570,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask2.pse__Hierarchy_Depth__c =3;
                 eachProjecttask2.pse__Order__c=3;
                 eachProjecttask2.Task_Order__c=92;
-                if(String.isNotBlank(System.label.COBRA_Packet)){
-                    eachProjecttask2.pse__Long_Description__c = System.label.COBRA_Packet;
+                if(String.isNotBlank(System.Label.COBRA_Packet)){
+                    eachProjecttask2.pse__Long_Description__c = System.Label.COBRA_Packet;
                 }
                 cobraChildProjectTaskList.add(eachProjecttask2);
             }
@@ -605,11 +601,11 @@ public class NSP_ProjectTasksTriggerHelper {
             pta =  NSP_ProjectTask_Automation__mdt.getInstance( automation );
             if ( automation == HSA_OPTUM_MM ) {
                 hierarchyDepth = 1;
-                longDescription = System.label.HSA_With_Optum_Bank;
+                longDescription = System.Label.HSA_With_Optum_Bank;
             }
             if ( automation == HSA_OPTUM_NO_MM ) {
                 hierarchyDepth = 2;
-                longDescription = System.label.HSA_With_No_Optum_Bank;
+                longDescription = System.Label.HSA_With_No_Optum_Bank;
             }
         }
         List<pse__Project_Task__c> hsaProjectTaskList = new List<pse__Project_Task__c>();
@@ -700,13 +696,12 @@ public class NSP_ProjectTasksTriggerHelper {
         return eachProjectTask;
     }
 
-    /**
-    * Update Project Task Completed and Started checkbox based on its Status.
-    * @param lProjectTasks Map of New project Tasks.
-    * @param mOldProjecTasks Map of Old project Tasks.
-    * @return void
-    *
-    */
+    //
+    // Update Project Task Completed and Started checkbox based on its Status.
+    // @param lProjectTasks Map of New project Tasks.
+    // @param mOldProjecTasks Map of Old project Tasks.
+    // @return void
+    //
     public void updateStartedorCompleted(List<pse__Project_Task__c> lProjectTasks,Map<Id, pse__Project_Task__c> mOldProjecTasks){
         Map<Id,pse__Project_Task__c> mCompletedTasks = new Map<Id,pse__Project_Task__c>();
         for(pse__Project_Task__c oProjectTask: lProjectTasks){
@@ -732,11 +727,11 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * Check if all Related Terminations forms are Approved , otherwise throw Error
-    * @param lProjectTasks List of New project Task.
-    * @return void
-    */
+    //
+    // Check if all Related Terminations forms are Approved , otherwise throw Error
+    // @param lProjectTasks List of New project Task.
+    // @return void
+    //
     public void checkRelatedTerminationsFormStatus(Map<Id,pse__Project_Task__c> mCompletedTasks){
         List<String> lTerminationFormStatus = new List<String>{NSP_ServiceConstants.PR_SUPERVISOR_APPROVED, NSP_ServiceConstants.TERM_SUPERVISOR_APPROVED};
 
@@ -767,12 +762,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 oProjecTask.addError(System.Label.ShowErrorMessageWhenPercentage100ButStatusNotComplete);
             }
 
-            /* commented as a part of <DF-02510>
-            if(oProjecTask.NSP_Percentage_Complete__c == '0%'
-                && oldMap.get(oProjecTask.id).NSP_Percentage_Complete__c != '0%'){
-                    oProjecTask.addError(System.Label.ShowErrorMessageWhenPercentageMoveBackToZero);
-            } */
-                // Added Or condition as part of DF-2180
+            // Added Or condition as part of DF-2180
             if(oProjecTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ||
             oProjecTask.pse__Status__c == NSP_ServiceConstants.PROJECT_TASK_CANCELLED){
                 oProjecTask.NSP_Percentage_Complete__c = HUNDRED_PERCENT;
@@ -1097,13 +1087,12 @@ public class NSP_ProjectTasksTriggerHelper {
         return response;
     }
 
-    /**
-    * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
-    * @param projectTaskNewMap Map of New project.
-    * @param projecttaskOldMap Map of Old project.
-    * @return void
-    *
-    */
+    //
+    // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
+    // @param projectTaskNewMap Map of New project.
+    // @param projecttaskOldMap Map of Old project.
+    // @return void
+    //
     @future
     public static void onChangeOfProjectTemplate(Set<Id> projectTaskList){
         Set<Id> projectsIdSet = new Set<Id>();
@@ -1147,12 +1136,12 @@ public class NSP_ProjectTasksTriggerHelper {
 
         }
     }
-    /**
-    * This method update Template Used field on Project from Template Name field on Project task
-    * @param projectTaskList List of New project.
-    * @return void
-    *
-    */
+
+    //
+    // This method update Template Used field on Project from Template Name field on Project task
+    // @param projectTaskList List of New project.
+    // @return void
+    //
     public void updateTemplateUsedFieldOnProject(List<pse__Project_Task__c> projectTaskList){
         Set<Id> setOfProjectId = new Set<Id>();
         Map<Id, Set<String>> mapOfProjectIdAndSetOfTemplateNameOnProjectTask = new Map<Id, Set<String>>();
@@ -1457,12 +1446,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * Update Depenedent Task Resources about Precending Task Completion if Responsible Party is Different
-    * @param mNewProjectTasks Map of New project.
-    * @param mOldProjectTasks Map of Old project.
-    * @return void
-    */
+    //
+    // Update Depenedent Task Resources about Precending Task Completion if Responsible Party is Different
+    // @param mNewProjectTasks Map of New project.
+    // @param mOldProjectTasks Map of Old project.
+    // @return void
+    //
     public void afterUpdateTaskfilters(Map<Id, pse__Project_Task__c> mNewProjectTasks,Map<Id, pse__Project_Task__c> oldMapProjecttasks){
         Set<Id> sProjectTasksIds = new Set<Id>();
         Map<Id,Id> mapofProjecttasks = new Map<Id,Id>();
@@ -2089,13 +2078,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * Update Start Date and End date on Project Task using Offset date and # number of days offset.
-    * USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
-    * @param projectTaskList List of project.
-    * @return void
-    */
-
+    //
+    // Update Start Date and End date on Project Task using Offset date and # number of days offset.
+    // USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
+    // @param projectTaskList List of project.
+    // @return void
+    //
     public void setStartDateAndEndDateOnProjectTask(List<pse__Project_Task__c> projectTaskList){
         Set<Id> setOfProjectId                         = new Set<Id>();
         Map<Id,pse__Proj__c> projectMap                = new Map<Id,pse__Proj__c> ();
@@ -2134,7 +2122,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**calling platform event trigger from after insert to call the setStartDateAndEndDateOnProjectTaskQTP method**/
+    // calling platform event trigger from after insert to call the setStartDateAndEndDateOnProjectTaskQTP method
     public void platformEventToSetStartDateAndTimePT(Map<Id, pse__Project_Task__c> newMap){
         Map<String, Object> mapInputParams = new Map<String, Object>{
             'projectTaskIdsOffsetDate' => (Set<Id>) newMap.keySet()
@@ -2144,15 +2132,14 @@ public class NSP_ProjectTasksTriggerHelper {
         List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
     }
 
-    /**
-    * @description : Update Start Date and End date on Project Task using Offset date and # number of days offset.
-    * USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
-    * Start and End date fields ON PROJECT TASKS are updated by manage package and its overwritting the value.
-    To overcome this issue the method is called in AFTER INSERT transcation.
-    * @param projectTaskSet Id of project.
-    * @return void
-    */
-
+    //
+    // @description : Update Start Date and End date on Project Task using Offset date and # number of days offset.
+    // USE THIS METHOD IF YOU ADD MORE VALUES TO OFFSET DATE.
+    // Start and End date fields ON PROJECT TASKS are updated by manage package and its overwritting the value.
+    // To overcome this issue the method is called in AFTER INSERT transcation.
+    // @param projectTaskSet Id of project.
+    // @return void
+    //
     public static void setStartDateAndEndDateOnProjectTaskQTP(Set<Id> projectTaskSet){
         Set<Id> setOfProjectId                         = new Set<Id>();
         Map<Id, Date> mapOfProjectIdAndAccountRenewal  = new Map<Id, Date>();
@@ -2219,13 +2206,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * This will update Parent Project Status to Cancelled if Reinstatement Requested Task is marked as Complete
-    * @param projectTaskList List of project Task.
-    * @param oldMap Map of Project Id and Project
-    * @return void
-    */
-
+    //
+    // This will update Parent Project Status to Cancelled if Reinstatement Requested Task is marked as Complete
+    // @param projectTaskList List of project Task.
+    // @param oldMap Map of Project Id and Project
+    // @return void
+    //
     public void cancelParentProjectIfProjectTaskIsCompletedonReinstatementRequestedTask(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> oldMap){
         Set<Id> setOfProjectId                 = new Set<Id> ();
         Set<Id> setOfParentProject             = new Set<Id> ();
@@ -2258,13 +2244,11 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-
-    /**
-    * Update Template Name field on Project Task and Templates Used field on Project
-    * @param projectTaskList List of project.
-    * @return void
-    */
-
+    //
+    // Update Template Name field on Project Task and Templates Used field on Project
+    // @param projectTaskList List of project.
+    // @return void
+    //
     public void updateTemplateNameOnProjectTaskAndTemplatesUsedOnProject(List<pse__Project_Task__c> projectTaskList){
         Set<Id> setOfProjectId = new Set<Id>();
         Map<Id, pse__Proj__c> mapOfProjectTaskIdAndProject = new Map<Id, pse__Proj__c>();
@@ -2289,12 +2273,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: assignQueueTasks
-    * Description : This Method will update Queue as the Owner of MM and FSO projects
-    * Params:      List<pse__Project_Task__c> projectTaskList
-    * Author :Nischay
-    * ********************************************************************************************/
+    //
+    // MethodName: assignQueueTasks
+    // Description : This Method will update Queue as the Owner of MM and FSO projects
+    // Params:      List<pse__Project_Task__c> projectTaskList
+    // Author :Nischay
+    //
     public static void assignQueueTasks(List<pse__Project_Task__c> projectTaskList){
         try{
             Set<Id>projectIdSet = new set<Id>();
@@ -2341,13 +2325,13 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateEmailsTransitionToService
-    * Description : Update ListToemails from Account Teams members emails
-    * Story : STY-00711
-    * Params: List<pse__Project_Task__c> newList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
+    //
+    // MethodName: updateEmailsTransitionToService
+    // Description : Update ListToemails from Account Teams members emails
+    // Story : STY-00711
+    // Params: List<pse__Project_Task__c> newList
+    // Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
+    //
     public static void updateEmailsTransitionToService(List<pse__Project_Task__c> newList , Map<Id,pse__Project_Task__c> oldProjectTaskMap){
         try{
             set<Id> setAccountIds = new set<Id>();
@@ -2469,47 +2453,46 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendEmailToProjectResourceStatic( Set<Id> projectTaskIdSet ) {
-        //A list to store all RET Templates
-        List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
-        //Map of project and current project task
-        Map<Id, pse__Project_Task__c> mapOfProjAndProjTask = new Map<Id, pse__Project_Task__c>();
-        //Map of Project and the resource email address
-        Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
-
-        try{
-            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, Task_Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c
-                                                FROM pse__Project_Task__c WHERE Id IN: projectTaskIdSet AND pse__Project__r.TemplateName__c IN :retTemplateNames]){
-
-                                                                mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
-
-            }
-
-            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c','Task_Order__c', 'Responsible_Party__c'};
-
-                //Get a list of all the project task associated with the parent project
-            String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-                                .addFilter('pse__Project__c',  new List<Id>(mapOfProjAndProjTask.keySet()), NSP_QueryBuilder.Operator.INCLUDES).build();
-            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = (List<pse__Project_Task__c>) Database.query(query);
-
-            for(pse__Resource_Request__c resourceRequest: [SELECT Id, pse__Resource_Role__c, pse__Staffer_Resource__r.pse__Salesforce_User__r.Email, pse__Project__c
-                                                            FROM pse__Resource_Request__c
-                                                            WHERE pse__Project__c IN: mapOfProjAndProjTask.keySet()]){
-                                                                if(!mapOfProjAndResourceEmail.containsKey(resourceRequest.pse__Project__c)){
-                                                                    mapOfProjAndResourceEmail.put(resourceRequest.pse__Project__c, new Map<String,String>());
-                                                                }
-                                                                mapOfProjAndResourceEmail.get(resourceRequest.pse__Project__c).put(resourceRequest.pse__Resource_Role__c, resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email);
-                                                            }
-
+        try {
+            //Map of project and current project task
+            Map<Id,pse__Project_Task__c> mapOfProjAndProjTask = NSP_ProjectTasksTriggerHelper.getProjectTaskRecordsMap( projectTaskIdSet );
+            //Map of Project and the resource email address
+            Map<Id,Map<String,String>> mapOfProjAndResourceEmail = NSP_ProjectTasksTriggerHelper.getMapOfProjAndResourceEmail( mapOfProjAndProjTask );
+            //Get a list of all the project task associated with the parent project
+            List<pse__Project_Task__c> listOfAllPrjTaskForAProject = [
+                SELECT
+                    Id ,
+                    Name ,
+                    pse__Project__c ,
+                    pse__Order__c ,
+                    Task_Order__c ,
+                    Responsible_Party__c
+                FROM pse__Project_Task__c
+                WHERE ( pse__Project__c IN :mapOfProjAndProjTask.keySet() )
+            ];
             //If the next in line projTask Responsibe party is diff send an email to the proj resource who's resource role matches with the next in line projTask's Responsibe party
-            if(!listOfAllPrjTaskForAProject.isEmpty() && !mapOfProjAndResourceEmail.isEmpty()){
-                for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
-                    if(projTask.pse__Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).pse__Order__c+1 &&
-                        projTask.Task_Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).Task_Order__c+1 &&
-                        projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
-                        mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) &&
-                        mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
-                            sendEmailNotificationToResource(mapOfProjAndProjTask.get(projTask.pse__Project__c).Name, mapOfProjAndResourceEmail.get(projTask.pse__Project__c).get(projTask.Responsible_Party__c), projTask.Id);
+            if ( ( listOfAllPrjTaskForAProject != null )
+                && !listOfAllPrjTaskForAProject.isEmpty()
+                && ( mapOfProjAndResourceEmail != null )
+                && !mapOfProjAndResourceEmail.isEmpty()
+                )
+            {
+                for ( pse__Project_Task__c projTask : listOfAllPrjTaskForAProject ) {
+                    pse__Project_Task__c currentProjTask = mapOfProjAndProjTask.get( projTask.pse__Project__c );
+                    if ( currentProjTask != null ) {
+                        String emailAddress = NSP_ProjectTasksTriggerHelper.getEmailAddress(
+                            currentProjTask ,
+                            projTask ,
+                            mapOfProjAndResourceEmail
+                        );
+                        if( String.isNotBlank( emailAddress ) ) {
+                            NSP_ProjectTasksTriggerHelper.sendEmailNotificationToResource(
+                                currentProjTask.Name ,
+                                emailAddress ,
+                                projTask.Id
+                            );
                         }
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -2520,28 +2503,192 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: sendEmailNotificationToResource
-    * Description : Helper method for sendEmailToProjectResource
-    * Params: String nextInLineProjTask, String completedProjTask, String sendToUserAddress, Id projTaskId
-    * Story : STY-02213
-    * ********************************************************************************************/
+    //
+    // MethodName: getEmailAddress
+    // Description: Retrieves the email address of the responsible party for the next sequential
+    //              project task. Returns the email only when the next task (projTask) immediately
+    //              follows the current task in both Order and Task_Order, AND has a different
+    //              Responsible Party — indicating a handoff to a new resource.
+    // Params: pse__Project_Task__c currentProjTask - The current project task being processed
+    //         pse__Project_Task__c projTask - The next project task to check for handoff
+    //         Map<Id, Map<String, String>> mapOfProjAndResourceEmail - Map of Project Id to
+    //              (Responsible Party -> Email) lookup
+    // Returns: String - Email address of the next task's responsible party, or empty string
+    //          if conditions are not met
+    //
+    private static String getEmailAddress(
+        pse__Project_Task__c currentProjTask ,
+        pse__Project_Task__c projTask ,
+        Map<Id,Map<String,String>> mapOfProjAndResourceEmail
+        )
+    {
+        String returnEmailAddress = '';
+        if ( ( currentProjTask != null )
+            && ( projTask != null )
+            && ( mapOfProjAndResourceEmail != null )
+            && !mapOfProjAndResourceEmail?.isEmpty()
+            )
+        {
+            // Check if the next task's Order is exactly one greater than the current task's Order
+            Boolean checkOrder = (
+                ( currentProjTask.pse__Order__c != null )
+                && ( projTask.pse__Order__c == ( currentProjTask.pse__Order__c + 1 ) )
+            );
+            // Check if the next task's Task_Order is exactly one greater than the current task's Task_Order
+            Boolean checkTaskOrder = (
+                ( currentProjTask.Task_Order__c != null )
+                && ( projTask.Task_Order__c == ( currentProjTask.Task_Order__c + 1 ) )
+            );
+            // Check if the responsible party has changed between the current and next task (handoff scenario)
+            Boolean checkResponsibleParty = ( projTask.Responsible_Party__c != currentProjTask.Responsible_Party__c );
+            // Check if the email for the next task's responsible party exists in the resource email map
+            Boolean checkProjectAndResourceEmail = (
+                ( projTask.pse__Project__c != null )
+                && ( projTask.Responsible_Party__c != null )
+                && mapOfProjAndResourceEmail.containsKey( projTask.pse__Project__c )
+                && mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).containsKey( projTask.Responsible_Party__c )
+                && ( mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c ) != null )
+            );
+            // Only return the email if all conditions are met: sequential order, task handoff, and valid email exists
+            if ( checkOrder
+                && checkTaskOrder
+                && checkResponsibleParty
+                && checkProjectAndResourceEmail
+                )
+            {
+                returnEmailAddress = mapOfProjAndResourceEmail.get( projTask.pse__Project__c ).get( projTask.Responsible_Party__c );
+            }
+        }
+        return returnEmailAddress;
+    }
 
-    private static void sendEmailNotificationToResource(String completedProjTask, String sendToUserAddress, Id projTaskId){
-        //list to store to email address
-        List<String> toEmailAddress = new List<String>();
-        toEmailAddress.add(sendToUserAddress);
-        List<String> emailTempFields = new List<String>{'ID'};
-        //Get email template
-        EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_Send_email_to_resource');
-        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplate.Id, NULL, projTaskId);
-        email.setTemplateId(emailTemplate.Id);
-        email.setToAddresses(toEmailAddress);
-        //replace '$resource$' in the email template body with the completed project task name
-        String emailBody = email.getHtmlBody().replace('$resource$', completedProjTask);
-        email.setHtmlBody(emailBody);
-        email.setSaveAsActivity(false);
-        NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+    //
+    // MethodName: getProjectTaskRecordsMap
+    // Description: Retrieves Project Task records that belong to RET templates and returns a map
+    //              keyed by Project Id to the corresponding Project Task record.
+    // Params: Set<Id> projectTaskIdSet - Set of Project Task Ids to query
+    // Returns: Map<Id, pse__Project_Task__c> - Map of Project Id to Project Task record
+    //
+    private static Map<Id,pse__Project_Task__c> getProjectTaskRecordsMap( Set<Id> projectTaskIdSet ) {
+        //Map of project and current project task
+        Map<Id,pse__Project_Task__c> mapOfProjAndProjTask = new Map<Id,pse__Project_Task__c>();
+        if ( ( projectTaskIdSet != null ) && !projectTaskIdSet.isEmpty() ) {
+            //A list to store all RET Templates
+            List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split( ',' );
+            List<pse__Project_Task__c> projTaskRecords = [
+                SELECT
+                    Id ,
+                    Name ,
+                    pse__Order__c ,
+                    Task_Order__c ,
+                    pse__Status__c ,
+                    pse__Project__r.TemplateName__c ,
+                    Responsible_Party__c
+                FROM pse__Project_Task__c
+                WHERE (
+                    ( Id IN: projectTaskIdSet )
+                    AND ( pse__Project__c != null )
+                    AND ( pse__Project__r.TemplateName__c IN :retTemplateNames )
+                )
+            ];
+            if ( ( projTaskRecords != null ) && !projTaskRecords.isEmpty() ) {
+                for ( pse__Project_Task__c projTask : projTaskRecords ) {
+                    mapOfProjAndProjTask.put( projTask.pse__Project__c , projTask );
+                }
+            }
+        }
+        return mapOfProjAndProjTask;
+    }
+
+    //
+    // MethodName: getMapOfProjAndResourceEmail
+    // Description: Builds a map of Project Id to a nested map of Resource Role to the staffer's
+    //              email address, based on Resource Requests associated with the given projects.
+    // Params: Map<Id, pse__Project_Task__c> mapOfProjAndProjTask - Map of Project Id to Project Task
+    // Returns: Map<Id, Map<String, String>> - Map of Project Id to (Resource Role -> Email)
+    //
+    private static Map<Id,Map<String,String>> getMapOfProjAndResourceEmail( Map<Id,pse__Project_Task__c> mapOfProjAndProjTask ) {
+        //Map of Project and the resource email address
+        Map<Id,Map<String,String>> mapOfProjAndResourceEmail = new Map<Id,Map<String,String>>();
+        if ( ( mapOfProjAndProjTask != null ) && !mapOfProjAndProjTask.isEmpty() ) {
+            List<pse__Resource_Request__c> resourceRequests =[
+                SELECT
+                    Id ,
+                    pse__Resource_Role__c ,
+                    pse__Staffer_Resource__r.pse__Salesforce_User__r.Email ,
+                    pse__Project__c
+                FROM pse__Resource_Request__c
+                WHERE (
+                    ( pse__Project__c IN: mapOfProjAndProjTask.keySet() )
+                    AND ( pse__Staffer_Resource__c != null )
+                    AND ( pse__Staffer_Resource__r.pse__Salesforce_User__c != null )
+                    AND ( pse__Staffer_Resource__r.pse__Salesforce_User__r.Email != null )
+                )
+            ];
+            for ( pse__Resource_Request__c resourceRequest : resourceRequests ) {
+                if ( !mapOfProjAndResourceEmail.containsKey( resourceRequest.pse__Project__c ) ) {
+                    mapOfProjAndResourceEmail.put(
+                        resourceRequest.pse__Project__c ,
+                        new Map<String,String>()
+                    );
+                }
+                mapOfProjAndResourceEmail.get( resourceRequest.pse__Project__c ).put(
+                    resourceRequest.pse__Resource_Role__c ,
+                    resourceRequest.pse__Staffer_Resource__r.pse__Salesforce_User__r.Email
+                );
+            }
+        }
+        return mapOfProjAndResourceEmail;
+    }
+
+    //
+    // MethodName: sendEmailNotificationToResource
+    // Description : Helper method for sendEmailToProjectResource
+    // Params: String nextInLineProjTask, String completedProjTask, String sendToUserAddress, Id projTaskId
+    // Story : STY-02213
+    //
+    private static void sendEmailNotificationToResource(
+        String completedProjTask ,
+        String sendToUserAddress ,
+        Id projTaskId
+        )
+    {
+        if ( String.isNotBlank( sendToUserAddress ) && ( projTaskId != null ) ) {
+            List<String> toEmailAddress = new List<String>();
+            toEmailAddress.add( sendToUserAddress );
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
+                NSP_ProjectTasksTriggerHelper.resourceTemplateId ,
+                null ,
+                projTaskId
+            );
+            email.setTemplateId( NSP_ProjectTasksTriggerHelper.resourceTemplateId );
+            email.setToAddresses( toEmailAddress );
+            //replace '$resource$' in the email template body with the completed project task name
+            String emailBody = email.getHtmlBody().replace( '$resource$' , completedProjTask );
+            email.setHtmlBody( emailBody );
+            email.setSaveAsActivity( false );
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+        }
+    }
+
+    private static Id resourceTemplateId {
+        private get {
+            if ( resourceTemplateId == null ) {
+                List<EmailTemplate> templates = [
+                    SELECT Id
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = 'NSP_Send_email_to_resource' )
+                    LIMIT 1
+                ];
+                Id local = null;
+                if ( ( templates != null ) && !templates.isEmpty() ) {
+                    local = templates[0].Id;
+                }
+                resourceTemplateId = local;
+            }
+            return resourceTemplateId;
+        }
+        private set;
     }
 
     private static void sendSingleEmailMessage( Messaging.SingleEmailMessage message ) {
@@ -2579,12 +2726,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: beforeUpdateDirector
-    * Description : before update director mehtod
-    * Params: List<pse__Project_Task__c> newProjectTasks
-    * Params:  Map<Id, pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
+    //
+    // MethodName: beforeUpdateDirector
+    // Description : before update director mehtod
+    // Params: List<pse__Project_Task__c> newProjectTasks
+    // Params:  Map<Id, pse__Project_Task__c> oldProjectTaskMap
+    //
     public void beforeUpdateDirector(List<pse__Project_Task__c> newProjectTasks, Map<Id, pse__Project_Task__c> oldProjectTaskMap){
         // Get filtered data on the basis of different conditions
         Map<String, Object> filteredData = getBeforeUpdateFilteredData(newProjectTasks, oldProjectTaskMap);
@@ -2593,12 +2740,12 @@ public class NSP_ProjectTasksTriggerHelper {
         doBeforeUpdateActions(filteredData);
     }
 
-    /***********************************************************************************************
-    * MethodName: getBeforeUpdateFilteredData
-    * Description : filter before update Records
-    * Params: List<pse__Project_Task__c> newProjectTasks
-    * Params:  Map<Id, pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
+    //
+    // MethodName: getBeforeUpdateFilteredData
+    // Description : filter before update Records
+    // Params: List<pse__Project_Task__c> newProjectTasks
+    // Params:  Map<Id, pse__Project_Task__c> oldProjectTaskMap
+    //
     private Map<String, Object> getBeforeUpdateFilteredData(List<pse__Project_Task__c> newProjectTasks, Map<Id, pse__Project_Task__c> oldProjectTaskMap){
         Map<String, Object> dataMap = new Map<String, Object>();
         try{
@@ -2650,11 +2797,11 @@ public class NSP_ProjectTasksTriggerHelper {
         return dataMap;
     }
 
-        /***********************************************************************************************
-    * MethodName: doBeforeUpdateActions
-    * Description : before Update Actions
-    * Params: Map<String, Object> filteredDataMap
-    * ********************************************************************************************/
+    //
+    // MethodName: doBeforeUpdateActions
+    // Description : before Update Actions
+    // Params: Map<String, Object> filteredDataMap
+    //
     private void doBeforeUpdateActions(Map<String, Object> filteredDataMap){
         List<pse__Project_Task__c> scheduledProjectTasks = (List<pse__Project_Task__c>) filteredDataMap.get('scheduledProjectTasks');
         Set<Id> scheduledProjectTaskOwnerIds = (Set<Id>) filteredDataMap.get('scheduledProjectTaskOwnerIds');
@@ -2668,14 +2815,14 @@ public class NSP_ProjectTasksTriggerHelper {
 
     }
 
-        /***********************************************************************************************
-    * MethodName: assignResourceToServiceAppointment
-    * Description : assuign Resource to SA before Scheduling
-    * Params: List<pse__Project_Task__c> projectTasks
-    * Params: Set<Id> ownerIds
-    * Params: Set<Id> projectTaskId
-    * STY-03891
-    * ********************************************************************************************/
+    //
+    // MethodName: assignResourceToServiceAppointment
+    // Description : assuign Resource to SA before Scheduling
+    // Params: List<pse__Project_Task__c> projectTasks
+    // Params: Set<Id> ownerIds
+    // Params: Set<Id> projectTaskId
+    // STY-03891
+    //
     private void assignResourceToServiceAppointment(List<pse__Project_Task__c> projectTasks, Set<Id> ownerIds, Set<Id> projectTaskId ){
         Map<Id,Id> mapUserIdsToServiceResource = new Map<Id,Id>();
         Map<Id,WorkOrder> mapPtIDToWo = new Map<Id,WorkOrder>();
@@ -2789,22 +2936,23 @@ public class NSP_ProjectTasksTriggerHelper {
         );
     }
 
-    /***********************************************************************************************
-    * MethodName: isStatusChangedToScheduled
-    * Description : check if status changed to schedule
-    * Params: pse__Project_Task__c projectTask
-    * Params: pse__Project_Task__c priorProjectTask
-    * ********************************************************************************************/
+    //
+    // MethodName: isStatusChangedToScheduled
+    // Description : check if status changed to schedule
+    // Params: pse__Project_Task__c projectTask
+    // Params: pse__Project_Task__c priorProjectTask
+    //
     private static Boolean isStatusChangedToScheduled(pse__Project_Task__c projectTask, pse__Project_Task__c priorProjectTask){
         return isValueChanged(projectTask, priorProjectTask, 'pse__Status__c') && projectTask.pse__Status__c == 'Scheduled' && (projectTask.NSP_Create_Work_Order__c && projectTask.NSP_Dispatch_Region__c != null);
     }
-    /***********************************************************************************************
-    * MethodName: isStatusChangedToScheduled
-    * Description : check if status changed to schedule
-    * Params: SObject newObj
-    * Params: SObject oldObj
-    * Params: String fieldName
-    * ********************************************************************************************/
+    
+    //
+    // MethodName: isStatusChangedToScheduled
+    // Description : check if status changed to schedule
+    // Params: SObject newObj
+    // Params: SObject oldObj
+    // Params: String fieldName
+    //
     private static Boolean isValueChanged(SObject newObj, SObject oldObj, String fieldName){
         return newObj != null && oldObj != null && String.isNotBlank(fieldName) ? newObj.get(fieldName) != oldObj.get(fieldName) : false;
     }
@@ -2883,12 +3031,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: handleBeforeDeleteOfProjTemp
-    * Description : Helper method to check before deleting a project Task
-    * Params:       List<pse__Project_Task__c> projTasks
-    * Created as part of STY-04554
-    * ********************************************************************************************/
+    //
+    // MethodName: handleBeforeDeleteOfProjTemp
+    // Description : Helper method to check before deleting a project Task
+    // Params:       List<pse__Project_Task__c> projTasks
+    // Created as part of STY-04554
+    //
     public void handleBeforeDeleteOfProjTemp(List<pse__Project_Task__c> projTasks) {
 
         try{

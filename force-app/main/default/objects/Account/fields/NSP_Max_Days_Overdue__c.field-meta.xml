@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>136</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Max Days Overdue</label>
+    <label>DEPRECATED Max Days Overdue</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -68,7 +68,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNB_Exclude_Company__c</field>
+        <field>Account.dnb_exclude_company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1218,7 +1218,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.DNB_Exclude_Company__c</field>
+        <field>Lead.dnb_exclude_company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

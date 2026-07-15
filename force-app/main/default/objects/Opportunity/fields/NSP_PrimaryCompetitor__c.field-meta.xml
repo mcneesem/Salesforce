@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_PrimaryCompetitor__c</fullName>
     <description>Field used to track primary competitor</description>
-    <externalId>false</externalId>
+    <externalId>false</externalId>    
     <label>Primary Competitor</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -13,6 +13,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Able</fullName>
+                <default>false</default>
+                <label>Able</label>
+            </value>
+            <value>
                 <fullName>ADP</fullName>
                 <default>false</default>
                 <label>ADP</label>
@@ -21,11 +26,6 @@
                 <fullName>ADP Total Source</fullName>
                 <default>false</default>
                 <label>ADP Total Source</label>
-            </value>
-            <value>
-                <fullName>Able</fullName>
-                <default>false</default>
-                <label>Able</label>
             </value>
             <value>
                 <fullName>Advanstaff</fullName>
@@ -58,6 +58,11 @@
                 <label>BambooHR</label>
             </value>
             <value>
+                <fullName>BBSI</fullName>
+                <default>false</default>
+                <label>BBSI</label>
+            </value>
+            <value>
                 <fullName>Cbiz</fullName>
                 <default>false</default>
                 <label>Cbiz</label>
@@ -73,9 +78,29 @@
                 <label>Cobalt Astra</label>
             </value>
             <value>
+                <fullName>Cornerstone</fullName>
+                <default>false</default>
+                <label>Cornerstone</label>
+            </value>
+            <value>
                 <fullName>Custom Business Solutions</fullName>
                 <default>false</default>
                 <label>Custom Business Solutions</label>
+            </value>
+            <value>
+                <fullName>Dayforce</fullName>
+                <default>false</default>
+                <label>Dayforce</label>
+            </value>
+            <value>
+                <fullName>Decision HR</fullName>
+                <default>false</default>
+                <label>Decision HR</label>
+            </value>
+            <value>
+                <fullName>Deel</fullName>
+                <default>false</default>
+                <label>Deel</label>
             </value>
             <value>
                 <fullName>EmphasisHR</fullName>
@@ -93,14 +118,29 @@
                 <label>Employer Flexible</label>
             </value>
             <value>
+                <fullName>Employers Solution</fullName>
+                <default>false</default>
+                <label>Employers Solution</label>
+            </value>
+            <value>
                 <fullName>Engage</fullName>
                 <default>false</default>
                 <label>Engage</label>
             </value>
             <value>
+                <fullName>Engage PEO</fullName>
+                <default>false</default>
+                <label>Engage PEO</label>
+            </value>
+            <value>
                 <fullName>Extensis</fullName>
                 <default>false</default>
                 <label>Extensis</label>
+            </value>
+            <value>
+                <fullName>ExtensisHR</fullName>
+                <default>false</default>
+                <label>ExtensisHR</label>
             </value>
             <value>
                 <fullName>Fusion</fullName>
@@ -113,9 +153,19 @@
                 <label>G&amp;A Partners</label>
             </value>
             <value>
+                <fullName>G&amp;G Partners</fullName>
+                <default>false</default>
+                <label>G&amp;G Partners</label>
+            </value>
+            <value>
                 <fullName>GovCon Pay</fullName>
                 <default>false</default>
                 <label>GovCon Pay</label>
+            </value>
+            <value>
+                <fullName>Graystone Strategy</fullName>
+                <default>false</default>
+                <label>Graystone Strategy</label>
             </value>
             <value>
                 <fullName>Gusto</fullName>
@@ -123,14 +173,39 @@
                 <label>Gusto</label>
             </value>
             <value>
+                <fullName>Harbor America HiBob</fullName>
+                <default>false</default>
+                <label>Harbor America HiBob</label>
+            </value>
+            <value>
                 <fullName>HR&amp;P</fullName>
                 <default>false</default>
                 <label>HR&amp;P</label>
             </value>
             <value>
+                <fullName>HR&amp;P Human Resources</fullName>
+                <default>false</default>
+                <label>HR&amp;P Human Resources</label>
+            </value>
+            <value>
+                <fullName>Infor</fullName>
+                <default>false</default>
+                <label>Infor</label>
+            </value>
+            <value>
                 <fullName>In House</fullName>
                 <default>false</default>
                 <label>In House</label>
+            </value>
+            <value>
+                <fullName>Intuit</fullName>
+                <default>false</default>
+                <label>Intuit</label>
+            </value>
+            <value>
+                <fullName>iSolved</fullName>
+                <default>false</default>
+                <label>iSolved</label>
             </value>
             <value>
                 <fullName>JustWorks</fullName>
@@ -148,6 +223,11 @@
                 <label>Lever 1</label>
             </value>
             <value>
+                <fullName>Namely</fullName>
+                <default>false</default>
+                <label>Namely</label>
+            </value>
+            <value>
                 <fullName>NEMR</fullName>
                 <default>false</default>
                 <label>NEMR</label>
@@ -163,9 +243,9 @@
                 <label>None</label>
             </value>
             <value>
-                <fullName>OEM PEO</fullName>
+                <fullName>Oasis</fullName>
                 <default>false</default>
-                <label>OEM PEO</label>
+                <label>Oasis</label>
             </value>
             <value>
                 <fullName>Odyssey OneSource</fullName>
@@ -173,9 +253,24 @@
                 <label>Odyssey OneSource</label>
             </value>
             <value>
+                <fullName>OEM PEO</fullName>
+                <default>false</default>
+                <label>OEM PEO</label>
+            </value>
+            <value>
+                <fullName>OneDigital</fullName>
+                <default>false</default>
+                <label>OneDigital</label>
+            </value>
+            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>Papaya Global</fullName>
+                <default>false</default>
+                <label>Papaya Global</label>
             </value>
             <value>
                 <fullName>Paychex</fullName>
@@ -208,6 +303,16 @@
                 <label>Prestige</label>
             </value>
             <value>
+                <fullName>Prestige PEO</fullName>
+                <default>false</default>
+                <label>Prestige PEO</label>
+            </value>
+            <value>
+                <fullName>Propel HR</fullName>
+                <default>false</default>
+                <label>Propel HR</label>
+            </value>
+            <value>
                 <fullName>ProSource</fullName>
                 <default>false</default>
                 <label>ProSource</label>
@@ -218,9 +323,19 @@
                 <label>Questco</label>
             </value>
             <value>
+                <fullName>Resourcing Edge</fullName>
+                <default>false</default>
+                <label>Resourcing Edge</label>
+            </value>
+            <value>
                 <fullName>Rippling</fullName>
                 <default>false</default>
                 <label>Rippling</label>
+            </value>
+            <value>
+                <fullName>Sage</fullName>
+                <default>false</default>
+                <label>Sage</label>
             </value>
             <value>
                 <fullName>Sequent</fullName>
@@ -231,6 +346,21 @@
                 <fullName>Sequoia</fullName>
                 <default>false</default>
                 <label>Sequoia</label>
+            </value>
+            <value>
+                <fullName>Sequoia One</fullName>
+                <default>false</default>
+                <label>Sequoia One</label>
+            </value>
+            <value>
+                <fullName>ServiceNow</fullName>
+                <default>false</default>
+                <label>ServiceNow</label>
+            </value>
+            <value>
+                <fullName>SWBC</fullName>
+                <default>false</default>
+                <label>SWBC</label>
             </value>
             <value>
                 <fullName>Tandem HR</fullName>
@@ -246,6 +376,31 @@
                 <fullName>Trinet</fullName>
                 <default>false</default>
                 <label>Trinet</label>
+            </value>
+            <value>
+                <fullName>UKG</fullName>
+                <default>false</default>
+                <label>UKG</label>
+            </value>
+            <value>
+                <fullName>Velocity Global</fullName>
+                <default>false</default>
+                <label>Velocity Global</label>
+            </value>
+            <value>
+                <fullName>Vensure</fullName>
+                <default>false</default>
+                <label>Vensure</label>
+            </value>
+            <value>
+                <fullName>Visier</fullName>
+                <default>false</default>
+                <label>Visier</label>
+            </value>
+            <value>
+                <fullName>Workday</fullName>
+                <default>false</default>
+                <label>Workday</label>
             </value>
             <value>
                 <fullName>Zenefits</fullName>

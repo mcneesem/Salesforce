@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>IWXBundleW2</label>
+    <protected>false</protected>
+    <values>
+        <field>Add_Flat_Fee_From_OP_Consumption_Rate__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Add_Unit_Price_From_OP_Consumption_Rate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>NSP_Product_Description_Syntex__c</field>
+        <value xsi:type="xsd:string">{Unit Price} PEPM, {Upper Tier_Flat Price} Monthly Minimum</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Dynamic</value>
+    </values>
+</CustomMetadata>

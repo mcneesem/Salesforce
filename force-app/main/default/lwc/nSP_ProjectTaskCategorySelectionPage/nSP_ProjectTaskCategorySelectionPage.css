@@ -1,13 +1,9 @@
-:host{
-    --sds-c-card-header-color-background:#f3f2f2;
-    --sds-c-card-header-bottom-border:solid 1px gray;
-}
-.container{
-    background-color: #FFF;
+.container {
+    background-color: var(--slds-g-color-surface-1, #fff);
     border-radius: var(--slds-g-radius-border-1, 0.25rem);
 }
-.paddingBotton{
-    padding-bottom: 6rem;
+.paddingBotton {
+    padding-bottom: var(--slds-g-spacing-12, 6rem);
 }
 
 .overflowContent {

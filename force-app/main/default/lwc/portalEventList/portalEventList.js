@@ -16,14 +16,24 @@ export default class PortalEventList extends LightningElement {
             'Portal_Event__c.Name' ,
             'Portal_Event__c.StartDateTime__c' ,
             'Portal_Event__c.EndDateTime__c' ,
+            'Portal_Event__c.Meeting_URL__c' ,
+            'Portal_Event__c.Rank__c' ,
+            'Portal_Event__c.Status__c' ,
             'Portal_Event__c.TimeZoneSidKey__c' ,
         ] ,
-        sortBy: [ 'Portal_Event__c.StartDateTime__c' , 'Portal_Event__c.Name' ]
+        sortBy: [ 'Portal_Event__c.StartDateTime__c' , 'Portal_Event__c.Rank__c' ]
     })
     listInfo({ error, data }) {
         if ( data ) {
+            // only show visible events...
+            // ~ ignore events with a "Hidden" status...
+            this.records = data.records?.filter(
+                ( record ) => {
+                    return ( record?.fields?.Status__c?.value != "Hidden" );
+                }
+            );
             // sort blank start dates to the end...
-            this.records = [...data.records].sort(
+            this.records = this.records?.sort(
                 ( a , b ) => {
                     const aValue = a?.fields?.StartDateTime__c?.value;
                     const bValue = b?.fields?.StartDateTime__c?.value;

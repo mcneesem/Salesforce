@@ -103,6 +103,7 @@
   &quot;LOA Information&quot; , &quot;LOA_INFORMATION&quot; ,
   &quot;Additional Documentation&quot; , &quot;ADDITIONAL_DOCUMENTATION&quot; ,
   &quot;Regular Rate Of Pay&quot; , &quot;REGULAR_RATE_OF_PAY&quot; ,
+  &quot;IRS Assignment Letter&quot; , &quot;IRS_ASSIGNMENT_LETTER&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>

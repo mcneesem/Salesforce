@@ -18,7 +18,7 @@
             <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Cafeteria Plan Documentation</stringValue>
+                <stringValue>Client Sponsored Plans</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -55,7 +55,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Client Sponsored Plans</stringValue>
+                <stringValue>Cafeteria Plan Documentation</stringValue>
             </value>
         </filters>
         <object>Portal_Task__c</object>

@@ -2,10 +2,12 @@ import { api , wire } from "lwc";
 import LightningModal from "lightning/modal";
 import isCommunityContext from "@salesforce/apex/PortalClientSelector.isCommunityContext";
 import useFileActions from "@salesforce/customPermission/Portal_Use_File_Actions";
+import Id from '@salesforce/user/Id';
 
 export default class PortalFileListModal extends LightningModal {
     @api links; // is-a ContentDocumentLink[]
     @api disabled; // is-a Boolean
+    currentUserId = Id; // is-the current User.Id
 
     isCommunity = false;
     @wire( isCommunityContext )
@@ -82,8 +84,10 @@ export default class PortalFileListModal extends LightningModal {
                 this._columns.push(
                     {
                         type: 'action' ,
-                        typeAttributes: { rowActions: this.actions } ,
-                    },
+                        typeAttributes: {
+                            rowActions: this.getRowActions.bind( this ) ,
+                        } ,
+                    } ,
                 );
             }
         }
@@ -93,16 +97,19 @@ export default class PortalFileListModal extends LightningModal {
     _data;
     get data() {
         if ( !this._data && this.links ) {
-            this._data = this.links.map(link => {
-                return {
-                    documentId: link.fields.ContentDocumentId.value ,
-                    titleIcon: this.fileTypeIcon( link.fields.ContentDocument.value.fields.FileType.value ) ,
-                    title: link.fields.ContentDocument.value.fields.Title.value ,
-                    owner: link.fields.ContentDocument.value.fields.Owner.value.fields.Name.value ,
-                    lastModified: link.fields.ContentDocument.value.fields.LastModifiedDate.value ,
-                    size: this.printableContentSize( link.fields.ContentDocument.value.fields.ContentSize.value ) ,
+            this._data = this.links.map(
+                link => {
+                    return {
+                        documentId: link.fields?.ContentDocumentId?.value ,
+                        titleIcon: this.fileTypeIcon( link.fields?.ContentDocument?.value?.fields?.FileType?.value ) ,
+                        title: link.fields?.ContentDocument?.value?.fields?.Title?.value ,
+                        ownerId: link.fields?.ContentDocument?.value?.fields?.OwnerId?.value ,
+                        owner: link.fields?.ContentDocument?.value?.fields?.Owner?.value?.fields?.Name?.value ,
+                        lastModified: link.fields?.ContentDocument?.value?.fields?.LastModifiedDate?.value ,
+                        size: this.printableContentSize( link.fields?.ContentDocument?.value?.fields?.ContentSize?.value ) ,
+                    }
                 }
-            });
+            );
         }
         return this._data;
     }
@@ -147,6 +154,24 @@ export default class PortalFileListModal extends LightningModal {
         return ( useFileActions === true );
     }
 
+    // PMCC ~ each action of each row may be gated by Custom Permission or other criteria...
+    getRowActions( row , doneCallback ) {
+        let local = [];
+        if ( row ) {
+            if ( this.canUseFileActions ) {
+                local.push(
+                    { label: 'Preview' , name: 'previewExternal' } ,
+                    { label: 'Download' , name: 'download' }
+                );
+                if ( !this.disabled && ( row.ownerId == this.currentUserId ) ) {
+                    local.push( { label: 'Delete' , name: 'deleteExternal' } );
+                }
+            }
+        }
+        doneCallback( local );
+    }
+
+    // DEPRECATED
     // PMCC ~ each action may be gated by Custom Permission or other criteria...
     _actions;
     get actions() {

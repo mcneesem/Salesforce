@@ -1,17 +1,24 @@
 <template>
     <template lwc:if={hasContent}>
-        <lightning-card class="background-color-white">
+        <div class="slds-p-horizontal_small">
             <lightning-layout multiple-rows>
                 <template lwc:if={bar}>
-                    <lightning-layout-item size="12" padding="around-small" key={bar.fields.Id.value}>
-                        <c-portal-project-progress-bar record-id={bar.fields.Id.value}></c-portal-project-progress-bar>
+                    <lightning-layout-item size="12" padding="horizontal-small">
+                        <div class="slds-p-bottom_x-small">
+                            <c-portal-project-progress-bar record-id={bar.fields.Id.value} title="Onboarding Tracker"></c-portal-project-progress-bar>
+                        </div>
                     </lightning-layout-item>
                 </template>
                 <lightning-layout-item size="12" padding="horizontal-small">
-                    <lightning-tabset>
+                    <lightning-tabset class="tabset-links">
                         <template lwc:if={projectId}>
                             <lightning-tab label="Overview">
-                                <c-portal-client-tab-home record-id={recordId} project-id={projectId}></c-portal-client-tab-home>
+                                <c-portal-client-tab-home
+                                    record-id={recordId}
+                                    project-id={projectId}
+                                    guidance-id={guidanceId}
+                                    >
+                                </c-portal-client-tab-home>
                             </lightning-tab>
                         </template>
                         <template lwc:if={projects}>
@@ -24,6 +31,6 @@
                     </lightning-tabset>
                 </lightning-layout-item>
             </lightning-layout>
-        </lightning-card>
+        </div>
     </template>
 </template>

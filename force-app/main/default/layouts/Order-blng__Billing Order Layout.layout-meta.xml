@@ -86,6 +86,10 @@
                 <behavior>Readonly</behavior>
                 <field>IsReductionOrder</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NSP_Transaction_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -3,7 +3,17 @@
     <description>Grants Tab Visibility, View All Object Permissions, and Read Field Permissions for Portal Team Member (Portal_Team_Member__c).</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Team_Member__c.Contact_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Team_Member__c.Contact_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Team_Member__c.Contact_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

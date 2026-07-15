@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to access Salesforce Mobile (iOS or Android).</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Salesforce Mobile</label>
+    <permissionSets>Assign_Connected_App_Salesforce_for_Android</permissionSets>
+    <permissionSets>Assign_Connected_App_Salesforce_for_iOS</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

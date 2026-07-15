@@ -115,8 +115,7 @@ public without sharing class PortalPermitAction {
                 response = '[DRY-RUN]' + response;
             }
         } catch ( Exception e ) {
-            response = ''
-                + 'Type: ' + e.getTypeName() + '\n'
+            response = 'Type: ' + e.getTypeName() + '\n'
                 + 'Message: ' + e.getMessage() + '\n' + '\n'
                 + 'Stack Trace: ' + e.getStackTraceString()
                 ;

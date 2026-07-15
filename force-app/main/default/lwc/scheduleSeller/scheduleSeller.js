@@ -1,5 +1,5 @@
 import { LightningElement , api , wire } from 'lwc';
-import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
+import getAggregateUserIdsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateUserIdsMatrix';
 import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
 import getTimeBlocks from '@salesforce/apex/UserAvailabilityService.getTimeBlocks';
 import isScheduleSellerAdmin from '@salesforce/apex/UserAvailabilityService.isScheduleSellerAdmin';
@@ -7,11 +7,11 @@ import { NavigationMixin } from 'lightning/navigation';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 
 export default class ScheduleSeller extends NavigationMixin(LightningElement) {
-    @api skill;
-    @api timeZone;
+    _skill;
+    _timeZone;
     @api startDateTime;
     @api endDateTime;
-
+    @api availableUserIds = [];
     error;
     columns = [];
     timeBlocks = [];
@@ -19,6 +19,28 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
     // Store raw matrix from Apex directly (M rows × N columns)
     matrix = [];
+
+    @api
+    get skill() {
+        return this._skill;
+    }
+    set skill(v) {
+        this._skill = v;
+        this.loadMatrix();
+    }
+
+    @api
+    get timeZone() {
+        return this._timeZone;
+    }
+    set timeZone(v) {
+        this._timeZone = v;
+        this.loadMatrix();
+    }
+
+    connectedCallback() {
+        this.loadMatrix();
+    }
 
     // Computed property to help with template rendering
     // Returns a copy of tableData with explicit count values for template
@@ -67,9 +89,9 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                             )
                         );
                         //
-
-                        const countVal = counts[colIndex];
                         // default Button disabled when zero availability
+                        const idArray = ( Array.isArray( counts[colIndex] ) ? counts[colIndex] : [] );
+                        const countVal = idArray.length;
                         let isDisabled = ( countVal === 0 );
                         if ( !isDisabled && !this.isAdmin ) {
                             const startRounded = new Date(startUTCDate.getTime());
@@ -84,6 +106,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                             start: startUTCDate.toISOString() , // "2026-01-28T14:00:00Z"
                             end: endUTCDate.toISOString() , // "2026-01-28T15:00:00Z"
                             disabled: isDisabled,
+                            idsJson: JSON.stringify( idArray ),
                             // Add disabled attribute to make it unclickable in template
                         }
                     }
@@ -158,18 +181,21 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     }
 
     // Matrix data for the M time slots × N business days
-    @wire(
-        getAggregateCountsMatrix ,
-        { skill: '$skill',timeZone: '$timeZone'}
-    )
-    wiredMatrix( { data , error } ) {
-        if ( data ) {
-            // Assign Apex matrix directly; no re-mapping
-            this.matrix = ( Array.isArray( data ) ? data : [] );
-            this.error = undefined;
-        } else if ( error ) {
-            this.error = error;
-            this.matrix = [];
+    async loadMatrix() {
+        if ( this._skill && this._timeZone ) {
+            try {
+                const data = await getAggregateUserIdsMatrix(
+                    {
+                        skill: this._skill,
+                        timeZone: this._timeZone
+                    }
+                );
+                this.matrix = ( Array.isArray(data) ? data : [] );
+                this.error = undefined;
+            } catch (e) {
+                this.error = e;
+                this.matrix = [];
+            }
         }
     }
 
@@ -197,6 +223,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         if ( !isDisabled && dataStart && dataEnd ) {
             this.startDateTime = dataStart;
             this.endDateTime = dataEnd;
+            this.availableUserIds = JSON.parse( event.currentTarget.dataset.ids || '[]' );
             // Move Flow to next screen
             this.dispatchEvent( new FlowNavigationNextEvent() );
         }

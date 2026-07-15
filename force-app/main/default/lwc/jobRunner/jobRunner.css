@@ -1,7 +1,3 @@
 .table-section {
     max-width: 100%;
 }
-
-:host {
-    --sds-c-data-table-cell-text-wrap: wrap;
-}
