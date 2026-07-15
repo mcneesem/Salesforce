@@ -831,16 +831,6 @@
                 <identifier>RecordNSP_FEIN_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Count_of_Pending_Oppty__c</fieldItem>
-                <identifier>RecordCount_of_Pending_Oppty_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-6cb8d459-3e9a-483d-8f83-dcf1996e4eff</name>
         <type>Facet</type>
     </flexiPageRegions>
