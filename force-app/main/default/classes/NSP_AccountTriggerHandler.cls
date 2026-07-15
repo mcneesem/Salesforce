@@ -56,21 +56,21 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
 
     public void beforeUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
-       
+
          if (!this.hasRun() ) {
             this.markRun();
             accountTriggerHelperObject.beforeUpdateDirector((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
             accountTriggerHelperObject.accountUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
-			
+
         }
     }
 
     /**
      * Handles after update for Account.
      * @param newMap Map of New Account.
-     * @param oldMap Map of Old Account. 
-     * @return void           
-     *                
+     * @param oldMap Map of Old Account.
+     * @return void
+     *
      */
 
     public void afterUpdate(Map < Id, sObject > newMap, Map < Id, sObject > oldMap) {
@@ -85,9 +85,9 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
         }
         //added as part of STY-02846 changes
         NSP_AccountTriggerHelper.updateAGMPayrollEmployees((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
-        
+        NSP_AccountTriggerHelper.updateAGMNumberOfEmployees((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
     }
-    
+
 /**
 * Handles before delete for Account.
 * @param oldList List, oldMap of New Account.
@@ -101,7 +101,7 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
         accountTriggerHelperObject.restrictDelete((List < Account >) oldList, (Map < Id, Account > ) oldMap);
     }
-    
+
     public void afterDelete(List < sObject > oldList, Map < Id, sObject > oldMap) { // story 199298
         NSP_AccountTriggerHelper accountTriggerHelperObject = new NSP_AccountTriggerHelper();
         accountTriggerHelperObject.afterDeleteDirector((List < Account >) oldList, (Map < Id, Account > ) oldMap);
