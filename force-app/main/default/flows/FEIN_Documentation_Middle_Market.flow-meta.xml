@@ -1,51 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Render_Template</name>
-        <label>Render Template</label>
-        <locationX>389</locationX>
-        <locationY>2532</locationY>
-        <actionName>EmailTemplateRenderer</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Check_if_Email_Params_are_present</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Render_Template</targetReference>
-        </faultConnector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>templateId</name>
-            <value>
-                <elementReference>emailTemplateId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>whatId</name>
-            <value>
-                <elementReference>relatedRecordId</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>EmailTemplateRenderer</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>emailBody</assignToReference>
-            <name>htmlBody</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>emailSubject</assignToReference>
-            <name>subject</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Send_Email</name>
-        <label>Send Email</label>
-        <locationX>389</locationX>
-        <locationY>3030</locationY>
+        <name>FeinDocumentationEmail</name>
+        <label>FeinDocumentationEmail</label>
+        <locationX>155</locationX>
+        <locationY>1548</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Send_Email</targetReference>
+            <targetReference>Assign_varFaultElement_FeinDocEmail</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -55,54 +18,27 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>ccRecipientAddressList</name>
-        </inputParameters>
-        <inputParameters>
-            <name>ccRecipientAddressCollection</name>
-            <value>
-                <elementReference>ccAddresses</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <stringValue>OrgWideEmailAddress</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>senderAddress</name>
             <value>
-                <stringValue>no-reply@insperity.com</stringValue>
+                <elementReference>GetIp.NSP_Project_Manager__r.NSP_Work_email__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <elementReference>emailSubject</elementReference>
+                <elementReference>EmailSubject</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <elementReference>emailBody</elementReference>
+                <elementReference>EmailBody</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>useLineBreaks</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>attachmentIdCollection</name>
-            <value>
-                <elementReference>contentVersionIds</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -123,76 +59,9 @@
     <apiVersion>60.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_ContentDocumentLinkIds</name>
-        <label>Assign ContentDocumentLinkIds</label>
-        <locationX>677</locationX>
-        <locationY>1956</locationY>
-        <assignmentItems>
-            <assignToReference>contentVersionIds</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Content_Document_Links.ContentDocument.LatestPublishedVersionId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Content_Document_Links</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Content_Document_Links</name>
-        <label>Assign varFaultElement Get Content Document Links</label>
-        <locationX>1445</locationX>
-        <locationY>1632</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Content_Document_Links</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Flow_For_Email</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Email_Template</name>
-        <label>Assign varFaultElement Get Email Template</label>
-        <locationX>1181</locationX>
-        <locationY>2424</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Email_Template</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Flow_For_Email</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Implementation_Profile</name>
-        <label>Assign varFaultElement Get Implementation Profile</label>
-        <locationX>1709</locationX>
-        <locationY>924</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Implementation_Profile</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Flow_For_Email</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_GetToaddressFromMetadata</name>
-        <label>Assign varFaultElement GetToaddressFromMetadata</label>
-        <locationX>2237</locationX>
+        <name>Assign_varFaultElement</name>
+        <label>Assign varFaultElement getToAddressv</label>
+        <locationX>2003</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -207,15 +76,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Render_Template</name>
-        <label>Assign varFaultElement Render Template</label>
-        <locationX>653</locationX>
-        <locationY>2640</locationY>
+        <name>Assign_varFaultElement_Content_Document</name>
+        <label>Assign varFaultElement Content Document</label>
+        <locationX>683</locationX>
+        <locationY>1248</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Render_Template</stringValue>
+                <stringValue>get_Content_Document</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -224,15 +93,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Send_Email</name>
-        <label>Assign varFaultElement Send Email</label>
-        <locationX>653</locationX>
-        <locationY>3138</locationY>
+        <name>Assign_varFaultElement_FeinDocEmail</name>
+        <label>Assign varFaultElement FeinDocEmail</label>
+        <locationX>419</locationX>
+        <locationY>1656</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Send_Email</stringValue>
+                <stringValue>FeinDocumentationEmail</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -240,15 +109,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Update_Implementation_Profile</name>
-        <label>Assign varFaultElement Update Implementation Profile</label>
-        <locationX>2501</locationX>
-        <locationY>384</locationY>
+        <name>Assign_varFaultElement_GetIp</name>
+        <label>Assign varFaultElement GetIp</label>
+        <locationX>1211</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update_Implementation_Profile</stringValue>
+                <stringValue>GetIp</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -259,244 +128,46 @@
     <assignments>
         <name>AssignFeinDocumentationEmail</name>
         <label>AssignFeinDocumentationEmail</label>
-        <locationX>653</locationX>
+        <locationX>1013</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>ToEmailAddress</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>feinDocEmailAddress</elementReference>
+                <elementReference>FeinDocEmailId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Implementation_Profile</targetReference>
+            <targetReference>CheckToAddress</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assignment_to_CcAddress</name>
-        <label>Assignment to CcAddress</label>
-        <locationX>367</locationX>
-        <locationY>1248</locationY>
+        <name>recordLink</name>
+        <label>Record link creation</label>
+        <locationX>243</locationX>
+        <locationY>1356</locationY>
         <assignmentItems>
-            <assignToReference>ccAddresses</assignToReference>
+            <assignToReference>ContentRecordLink</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Implementation_Profile.NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c</elementReference>
+                <elementReference>recordLinkCreation</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Content_Document_Links</targetReference>
+            <targetReference>loop_On_Content_Document</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Assignment_to_Related_RecordId</name>
-        <label>Assignment to  Related RecordId</label>
-        <locationX>499</locationX>
-        <locationY>1032</locationY>
-        <assignmentItems>
-            <assignToReference>relatedRecordId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Implementation_Profile.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Client_Implementation_Coordinator</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_Client_Implementation_Coordinator</name>
-        <label>Check Client Implementation Coordinator</label>
-        <locationX>499</locationX>
-        <locationY>1140</locationY>
-        <defaultConnector>
-            <targetReference>Get_Content_Document_Links</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Email_is_Exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Implementation_Profile.NSP_Onboarding_Specialist_Coordinator__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Implementation_Profile.NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assignment_to_CcAddress</targetReference>
-            </connector>
-            <label>Email is Exist</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Document_Latest_VersionId</name>
-        <label>Check Document Latest VersionId</label>
-        <locationX>809</locationX>
-        <locationY>1848</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Content_Document_Links</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>VersionId_is_Exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Content_Document_Links.ContentDocument.LatestPublishedVersionId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_ContentDocumentLinkIds</targetReference>
-            </connector>
-            <label>VersionId is Exist</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Get_Content_Document_Links</name>
-        <label>Check Get Content Document Links</label>
-        <locationX>653</locationX>
-        <locationY>1632</locationY>
-        <defaultConnector>
-            <targetReference>Get_Email_Template</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Not_Null</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Content_Document_Links</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Content_Document_Links</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop_Content_Document_Links</targetReference>
-            </connector>
-            <label>Not Null</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Get_Implementation_Profile</name>
-        <label>Check Get Implementation Profile</label>
-        <locationX>653</locationX>
-        <locationY>924</locationY>
-        <defaultConnector>
-            <targetReference>Get_Content_Document_Links</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Not_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Implementation_Profile</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assignment_to_Related_RecordId</targetReference>
-            </connector>
-            <label>Not Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_if_Email_Params_are_present</name>
-        <label>Check if Email Params are present</label>
-        <locationX>653</locationX>
-        <locationY>2922</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Present</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ToEmailAddress</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>emailBody</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>emailSubject</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Email</targetReference>
-            </connector>
-            <label>Present</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Template_Params</name>
-        <label>Check Template Params</label>
-        <locationX>653</locationX>
-        <locationY>2424</locationY>
-        <defaultConnector>
-            <targetReference>Check_if_Email_Params_are_present</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Call_Render_Template</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>relatedRecordId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>emailTemplateId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Render_Template</targetReference>
-            </connector>
-            <label>Call Render Template</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>CheckFeinDocumentationPresent</name>
         <label>CheckFeinDocumentationPresent</label>
-        <locationX>1313</locationX>
+        <locationX>1376</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CheckFeinDocumentationEmailPresent</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>feinDocEmailAddress</leftValueReference>
+                <leftValueReference>FeinDocEmailId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -509,13 +180,93 @@
         </rules>
     </decisions>
     <decisions>
+        <name>CheckToAddress</name>
+        <label>CheckToAddress</label>
+        <locationX>1013</locationX>
+        <locationY>816</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FeinDocumentationIsNotNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ToEmailAddress</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetIp</targetReference>
+            </connector>
+            <label>FeinDocumentationIsNotNull</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>GetIpIsBlank</name>
+        <label>GetIpIsBlank</label>
+        <locationX>551</locationX>
+        <locationY>1032</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isNotNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetIp</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetIp.NSP_Project_Manager__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetIp.NSP_Project_Manager__r.NSP_Work_email__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_Content_Document</targetReference>
+            </connector>
+            <label>isNotBlank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsFeinDocumentationName</name>
+        <label>IsFeinDocumentationName</label>
+        <locationX>1821</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FeinDocumentation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FEIN Documentation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetToaddressFromMetadata</targetReference>
+            </connector>
+            <label>FeinDocumentation</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>643</locationX>
-        <locationY>384</locationY>
+        <locationX>812</locationX>
+        <locationY>276</locationY>
         <defaultConnector>
-            <targetReference>GetToaddressFromMetadata</targetReference>
+            <targetReference>IsFeinDocumentationName</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -533,20 +284,25 @@
     </decisions>
     <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
+    <formulas>
+        <name>recordLinkCreation</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260})) &amp;{!loop_On_Content_Document.ContentDocumentId} &amp; BR()</expression>
+    </formulas>
     <interviewLabel>FEIN Documentation Middle Market {!$Flow.CurrentDateTime}</interviewLabel>
     <label>FEIN Documentation Middle Market</label>
     <loops>
-        <name>Loop_Content_Document_Links</name>
-        <label>Loop Content Document Links</label>
-        <locationX>589</locationX>
-        <locationY>1740</locationY>
-        <collectionReference>Get_Content_Document_Links</collectionReference>
+        <name>loop_On_Content_Document</name>
+        <label>loop On Content Document</label>
+        <locationX>155</locationX>
+        <locationY>1248</locationY>
+        <collectionReference>get_Content_Document</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Check_Document_Latest_VersionId</targetReference>
+            <targetReference>recordLink</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_Email_Template</targetReference>
+            <targetReference>FeinDocumentationEmail</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -569,16 +325,16 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Content_Document_Links</name>
-        <label>Get Content Document Links</label>
-        <locationX>653</locationX>
-        <locationY>1524</locationY>
+        <name>get_Content_Document</name>
+        <label>get Content Document</label>
+        <locationX>155</locationX>
+        <locationY>1140</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Get_Content_Document_Links</targetReference>
+            <targetReference>loop_On_Content_Document</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Content_Document_Links</targetReference>
+            <targetReference>Assign_varFaultElement_Content_Document</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -602,42 +358,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Email_Template</name>
-        <label>Get Email Template</label>
-        <locationX>653</locationX>
-        <locationY>2316</locationY>
+        <name>GetIp</name>
+        <label>GetIp</label>
+        <locationX>551</locationX>
+        <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Template_Params</targetReference>
+            <targetReference>GetIpIsBlank</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Email_Template</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>FEIN_Documentation</stringValue>
-            </value>
-        </filters>
-        <object>EmailTemplate</object>
-        <outputAssignments>
-            <assignToReference>emailTemplateId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Implementation_Profile</name>
-        <label>Get Implementation Profile</label>
-        <locationX>653</locationX>
-        <locationY>816</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Get_Implementation_Profile</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Implementation_Profile</targetReference>
+            <targetReference>Assign_varFaultElement_GetIp</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -647,33 +377,25 @@
                 <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Inactive__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Implementation_Profile__c</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_AIMS_Client_Name__c</queriedFields>
+        <queriedFields>NSP_AIMS_ClientNo__c</queriedFields>
         <queriedFields>NSP_Project_Manager__c</queriedFields>
-        <queriedFields>NSP_Onboarding_Specialist_Coordinator__c</queriedFields>
-        <sortField>LastModifiedDate</sortField>
-        <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>GetToaddressFromMetadata</name>
         <label>GetToaddressFromMetadata</label>
-        <locationX>1313</locationX>
+        <locationX>1376</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckFeinDocumentationPresent</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_GetToaddressFromMetadata</targetReference>
+            <targetReference>Assign_varFaultElement</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -692,44 +414,10 @@
         </filters>
         <object>NSP_PEO_Implementations__mdt</object>
         <outputAssignments>
-            <assignToReference>feinDocEmailAddress</assignToReference>
+            <assignToReference>FeinDocEmailId</assignToReference>
             <field>NSP_Email_Address__c</field>
         </outputAssignments>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Implementation_Profile</name>
-        <label>Update Implementation Profile</label>
-        <locationX>643</locationX>
-        <locationY>276</locationY>
-        <connector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Implementation_Profile</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Project__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.pse__Project__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Inactive__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Has_FEIN_documentation_been_collected__c</field>
-            <value>
-                <stringValue>Yes</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Implementation_Profile__c</object>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -748,25 +436,11 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>pse__Project__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>FEIN Documentation</stringValue>
-            </value>
-        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Update_Implementation_Profile</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -776,8 +450,8 @@
     <subflows>
         <name>Fault_Flow_For_Email</name>
         <label>Fault Handler Subflow</label>
-        <locationX>653</locationX>
-        <locationY>3246</locationY>
+        <locationX>419</locationX>
+        <locationY>1764</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -798,50 +472,30 @@
             </value>
         </inputAssignments>
     </subflows>
+    <textTemplates>
+        <name>ContentLink</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{!recordLinkCreation} &lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>EmailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;The IRS Documentation for {!GetIp.NSP_AIMS_Client_Name__c} ({!GetIp.NSP_AIMS_ClientNo__c}) has been collected and is attached.&lt;br&gt;&lt;br&gt;{!ContentRecordLink}&lt;br&gt;Regards,&lt;br&gt;{!GetIp.NSP_Project_Manager__r.FirstName} {!GetIp.NSP_Project_Manager__r.LastName}&lt;br&gt;{!GetIp.NSP_Project_Manager__r.NSP_Job_Title__c}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>EmailSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!GetIp.NSP_AIMS_Client_Name__c} ({!GetIp.NSP_AIMS_ClientNo__c}) – IRS Documentation collected</text>
+    </textTemplates>
     <variables>
-        <name>ccAddresses</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>contentVersionIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>emailBody</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>emailSubject</name>
+        <name>ContentRecordLink</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>emailTemplateId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>feinDocEmailAddress</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>relatedRecordId</name>
+        <name>FeinDocEmailId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
