@@ -3,8 +3,8 @@
     <apiVersion>60.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_varFaultElement_Get_Project_Task_Record</name>
-        <label>Assign varFaultElement - Get_Project_Task_Record</label>
+        <name>Fault_Project_Task_Record</name>
+        <label>Fault Project Task Record</label>
         <locationX>842</locationX>
         <locationY>566</locationY>
         <assignmentItems>
@@ -20,8 +20,24 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Get_RSAP_Record</name>
-        <label>Assign varFaultElement - Get_RSAP_Record</label>
+        <name>Fault_Update_Project_Task</name>
+        <label>Fault Update Project Task</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Project_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>RSAP_Fault_Element</name>
+        <label>RSAP Fault Element</label>
         <locationX>1370</locationX>
         <locationY>350</locationY>
         <assignmentItems>
@@ -36,22 +52,13 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Update_Project_Task_Record</name>
-        <label>Assign varFaultElement - Update_Project_Task_Record</label>
-        <locationX>314</locationX>
-        <locationY>782</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Project_Task_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
+    <constants>
+        <name>flowName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Update_Initiation_Record</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Is_Initiative_Record_Valid</name>
         <label>Is Initiative Record Valid</label>
@@ -146,7 +153,6 @@
             <label>RSAP Valid</label>
         </rules>
     </decisions>
-    <description>Updated with fault paths and removed triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>Update Initiation Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Initiation Record</label>
@@ -179,7 +185,7 @@
             <targetReference>Is_Valid_Project_Task</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Project_Task_Record</targetReference>
+            <targetReference>Fault_Project_Task_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -222,7 +228,7 @@
             <targetReference>RSAP_Exists</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_RSAP_Record</targetReference>
+            <targetReference>RSAP_Fault_Element</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -246,7 +252,7 @@
         <locationX>50</locationX>
         <locationY>674</locationY>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Project_Task_Record</targetReference>
+            <targetReference>Fault_Update_Project_Task</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -256,12 +262,6 @@
                 <elementReference>Get_Project_Task_Record.Id</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Associated_RSAP__c</field>
-            <value>
-                <elementReference>Get_RSAP_Record.Id</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>NSP_Situation_Termination_Drivers__c</field>
             <value>
