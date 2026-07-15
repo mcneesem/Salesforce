@@ -20,6 +20,7 @@
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
+    <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Config_Admin</permissionSets>

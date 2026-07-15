@@ -2,15 +2,18 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>NSP Sales Administrator</label>
+    <label>Sales Administrator</label>
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_Report_Builder</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
+    <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
+    <permissionSets>Checklist_Create_All_Types</permissionSets>
+    <permissionSets>Checklist_Create_Booking</permissionSets>
+    <permissionSets>Checklist_Create_Sales_Engineer_Questionnaire</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
-    <permissionSets>Checklist_Edit</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
@@ -30,5 +33,5 @@
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <permissionSets>force__VoiceOutbound</permissionSets>
-    <status>Updated</status>
+    <status>Updating</status>
 </PermissionSetGroup>
