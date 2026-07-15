@@ -52,13 +52,6 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Update_Initiation_Record</stringValue>
-        </value>
-    </constants>
     <decisions>
         <name>Is_Initiative_Record_Valid</name>
         <label>Is Initiative Record Valid</label>
