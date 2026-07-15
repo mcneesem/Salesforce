@@ -102,7 +102,7 @@
         <inputParameters>
             <name>attachmentIdCollection</name>
             <value>
-                <elementReference>contentDocumentIds</elementReference>
+                <elementReference>contentVersionIds</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -128,7 +128,7 @@
         <locationX>677</locationX>
         <locationY>1956</locationY>
         <assignmentItems>
-            <assignToReference>contentDocumentIds</assignToReference>
+            <assignToReference>contentVersionIds</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Loop_Content_Document_Links.ContentDocument.LatestPublishedVersionId</elementReference>
@@ -184,6 +184,10 @@
                 <stringValue>Get_Implementation_Profile</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Email</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_GetToaddressFromMetadata</name>
@@ -261,7 +265,7 @@
             <assignToReference>ToEmailAddress</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>FeinDocEmailId</elementReference>
+                <elementReference>feinDocEmailAddress</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -425,7 +429,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ToEmailAddress</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -492,7 +496,7 @@
             <name>CheckFeinDocumentationEmailPresent</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>FeinDocEmailId</leftValueReference>
+                <leftValueReference>feinDocEmailAddress</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -688,7 +692,7 @@
         </filters>
         <object>NSP_PEO_Implementations__mdt</object>
         <outputAssignments>
-            <assignToReference>FeinDocEmailId</assignToReference>
+            <assignToReference>feinDocEmailAddress</assignToReference>
             <field>NSP_Email_Address__c</field>
         </outputAssignments>
     </recordLookups>
@@ -802,16 +806,9 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>contentDocumentIds</name>
+        <name>contentVersionIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>ContentRecordLink</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
@@ -837,7 +834,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>FeinDocEmailId</name>
+        <name>feinDocEmailAddress</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
