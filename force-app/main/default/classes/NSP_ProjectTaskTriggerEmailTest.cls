@@ -254,7 +254,7 @@ private class NSP_ProjectTaskTriggerEmailTest {
         List< Implementation_Profile__c> ipList = [ SELECT Id,NSP_Project__c
                                                    FROM Implementation_Profile__c
                                                    WHERE NSP_Project__c=:proj.Id  LIMIT 1];
-        System.assertEquals(!ipList.isEmpty(),true);
+        Assert.areEqual(!ipList.isEmpty(),true);
         Test.stopTest();
     }
 
