@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Service_Region__c</fullName>
-    <externalId>false</externalId>
     <label>Service Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -11,6 +10,26 @@
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>FSO - Central</fullName>
+                <default>false</default>
+                <label>FSO - Central</label>
+            </value>
+            <value>
+                <fullName>FSO - East</fullName>
+                <default>false</default>
+                <label>FSO - East</label>
+            </value>
+            <value>
+                <fullName>FSO - Northeast</fullName>
+                <default>false</default>
+                <label>FSO - Northeast</label>
+            </value>
+            <value>
+                <fullName>FSO - Western</fullName>
+                <default>false</default>
+                <label>FSO - Western</label>
+            </value>
             <value>
                 <fullName>MMSO - Central</fullName>
                 <default>false</default>
@@ -47,35 +66,22 @@
                 <label>MMSO - West</label>
             </value>
             <value>
-                <fullName>FSO - Central</fullName>
-                <default>false</default>
-                <label>FSO - Central</label>
-            </value>
-            <value>
-                <fullName>FSO - Northeast</fullName>
-                <default>false</default>
-                <label>FSO - Northeast</label>
-            </value>
-            <value>
-                <fullName>FSO - Southeast</fullName>
-                <default>false</default>
-                <label>FSO - Southeast</label>
-            </value>
-            <value>
-                <fullName>FSO - Western</fullName>
-                <default>false</default>
-                <label>FSO - Western</label>
-            </value>
-            <value>
-                <fullName>FSO - Southwest</fullName>
-                <default>false</default>
-                <label>FSO - Southwest</label>
-            </value>
-            <value>
                 <fullName>FSO - Houston</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>FSO - Houston</label>
+            </value>
+            <value>
+                <fullName>FSO - Southeast</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FSO - Southeast</label>
+            </value>
+            <value>
+                <fullName>FSO - Southwest</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FSO - Southwest</label>
             </value>
             <value>
                 <fullName>MMSO - MidMarket</fullName>
