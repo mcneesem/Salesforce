@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>Arbitration_Agreement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Created__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

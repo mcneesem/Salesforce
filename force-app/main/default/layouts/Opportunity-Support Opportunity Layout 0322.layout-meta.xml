@@ -1395,13 +1395,11 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>AddDefaultTeam</excludeButtons>
         <fields>MemberName</fields>
-        <fields>TeamMemberRole</fields>
         <fields>OppAccessLevel</fields>
-        <fields>NSP_Primary_Owner__c</fields>
+        <fields>TeamMemberRole</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
-        <sortField>TeamMemberRole</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -1439,14 +1437,10 @@
         <relatedList>Opportunity.NSP_Parent_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>OppContactRoleMultiEdit</excludeButtons>
         <fields>ContactName</fields>
-        <fields>Role</fields>
-        <fields>NSP_isReferral__c</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
+        <fields>Role</fields>
         <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>

@@ -1,8 +1,9 @@
 public with sharing class NSP_OpportunityTriggerHelper {
-    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (77%)
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (78%)
     // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (76%)
     // test w/ NSP_OpportunityTriggerHelperTest (75%)
     // test w/ NSP_AccountTriggerHelperTest (42%)
+    // test w/ NSP_UserAndOwnerFunctionsTest (40%)
     // test w/ OpportunityCloseWonTest (38%)
 
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
@@ -25,6 +26,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private static final Id insuranceServiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Insurance_Service' );
     private static final Id certifyAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Certify' );
     private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
+    private static final String PAYROLL_ONLY ='Payroll Only';
 
     //
     // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -168,7 +170,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue( newTaskOpportunityList , null );
         }
         // added as a part of DF-01497
-        getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
+        NSP_OpportunityTriggerHelper.getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
         // publish sync events for all new opportunies...
         this.publishNewRecords( newList );
     }
@@ -346,7 +348,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(opportunityNewMap.values());
 
         // Account list is empty or not
-        oppHelperFuncObj.getAccountOwnerEmail(opportunityNewAccountList,accountIdSet);
+        oppHelperFuncObj.getAccountOwnerEmail( opportunityNewAccountList , accountIdSet );
         NSP_UserAndOwnerFunctions uofobj = new NSP_UserAndOwnerFunctions();
         if(!optyList.isEmpty()){
             uofobj.getQuoteOwner(optyList,quoteId);
@@ -963,6 +965,20 @@ public with sharing class NSP_OpportunityTriggerHelper {
         private set;
     }
 
+    public static Boolean isEnabledFutureCustomerSigner {
+        public get {
+            if ( isEnabledFutureCustomerSigner == null ) {
+                Boolean local = false;
+                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
+                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_FutureCustomerSigner__c;
+                }
+                isEnabledFutureCustomerSigner = local;
+            }
+            return isEnabledFutureCustomerSigner;
+        }
+        private set;
+    }
+
     //
     // Iterates tthrough closed won oportunity and looks for product where asset should be created
     // @param closedWonOpptyList of closed won Opportunity.
@@ -1057,11 +1073,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     {
                         //Condition to allow woss asset creation
                         isAssetFound = false;
-                    } else if ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA )
-                        && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                    } else if ( ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_salesConstants.PROD_WX )
                         && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX )
-                        && ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                        && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                        && ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA )
+                            || ( existingAsset.NSP_ProductBundle__c == NSP_OpportunityTriggerHelper.PAYROLL_ONLY )
+                            )
                         )
                     {
                         isAssetFound = false;
@@ -1167,25 +1185,43 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-    //
-    // MethodName: getRelatedACR
-    // Description : This method will fetch the Primary ACR records related to Opportunity Account
-    // Params: Set<Id> accountId ,Set<Id>OpportunityIds
-    //
-    public static void getRelatedACR( Set<Id> accountId , Set<Id> OpportunityIds ) {
-      Map < Id, AccountContactRelation > accountACRMap = new Map < Id, AccountContactRelation > ();
-        Set<Id> OppAccountId = new Set<Id>();
-        for (AccountContactRelation accountContactRelation: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
-            accountACRMap.put(accountContactRelation.AccountId,accountContactRelation );
+    private static void getRelatedACR( Set<Id> accountIds , Set<Id> opportunityIds ) {
+        Map<Id,AccountContactRelation> accountACRMap = new Map<Id,AccountContactRelation>();
+        Set<Id> oppAccountIds = new Set<Id>();
+        for ( AccountContactRelation accountContactRelation: [
+                    SELECT
+                        Id ,
+                        ContactId ,
+                        NSP_Is_Primary__c ,
+                        AccountId
+                    FROM AccountContactRelation
+                    WHERE (
+                        ( NSP_Is_Primary__c = true )
+                        AND ( AccountId IN :accountIds )
+                    )
+                ]
+            )
+        {
+            accountACRMap.put(
+                accountContactRelation.AccountId ,
+                accountContactRelation
+            );
         }
-        List<Opportunity> OpportunityList =[Select Id, AccountId from Opportunity WHERE Id IN:OpportunityIds];
-        for(Opportunity opp:OpportunityList){
-            if(accountACRMap.containsKey(opp.AccountId) && accountACRMap.get(opp.AccountId)!=null){
-               OppAccountId.add(opp.AccountId);
+        List<Opportunity> records = [
+            SELECT Id , AccountId
+            FROM Opportunity
+            WHERE ( Id IN :opportunityIds )
+        ];
+        for ( Opportunity opp : records ) {
+            if ( accountACRMap.containsKey( opp.AccountId )
+                && ( accountACRMap.get( opp.AccountId ) != null )
+                )
+            {
+                oppAccountIds.add( opp.AccountId );
             }
         }
-        if(!OppAccountId.isEmpty()){
-            NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(OppAccountId);
+        if ( !oppAccountIds.isEmpty() ) {
+            NSP_OpportunityTriggerHelperFunctions.populatePrimaryContactCustomerSigner( oppAccountIds );
         }
     }
 

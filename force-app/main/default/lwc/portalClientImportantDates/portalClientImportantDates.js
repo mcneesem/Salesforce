@@ -52,12 +52,16 @@ export default class PortalClientImportantDates extends LightningElement {
         }
     }
 
-    get leftColumnSize() {
-        return "7";
+    get columnSizeFull() {
+        return 12;
     }
 
-    get rightColumnSize() {
-        return "5";
+    get columnSizeLeft() {
+        return 7;
+    }
+
+    get columnSizeRight() {
+        return ( this.columnSizeFull - this.columnSizeLeft );
     }
 
     get effectiveDateHelpText() {

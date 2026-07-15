@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -238,8 +239,8 @@
     </relatedContent>
     <relatedLists>
         <fields>MemberName</fields>
-        <fields>OppAccessLevel</fields>
         <fields>TeamMemberRole</fields>
+        <fields>OppAccessLevel</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
@@ -258,7 +259,8 @@
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
-        <fields>ACCOUNT.NAME</fields>
+        <fields>NSP_PrimaryProduct__c</fields>
+        <fields>OPPORTUNITY.TYPE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>Opportunity.NSP_Parent_Opportunity__c</relatedList>
     </relatedLists>
@@ -267,6 +269,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Team_Member__c</fields>
+        <fields>NSP_Percent_Split__c</fields>
+        <fields>NSP_Number_of_Employees__c</fields>
+        <fields>NSP_Enrollment_Fee__c</fields>
+        <fields>NSP_Sales_Office__c</fields>
         <relatedList>NSP_Employee_Split__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -276,23 +283,30 @@
         <relatedList>RelatedPartnerList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
         <fields>TASK.STATUS</fields>
-        <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>EVENT.LOCATION</fields>
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>dfsle__Status__c</fields>
+        <fields>dfsle__Reason__c</fields>
         <relatedList>dfsle__EnvelopeStatus__c.dfsle__Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Checklist_Type__c</fields>
         <fields>RECORDTYPE</fields>
@@ -313,15 +327,19 @@
     </relatedLists>
     <relatedLists>
         <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
+        <fields>NSP_Client__c</fields>
+        <fields>NSP_Account_Status__c</fields>
+        <fields>NSP_Status__c</fields>
+        <fields>NSP_First_Pay_Date__c</fields>
         <relatedList>Asset.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Payment_Date__c</fields>
+        <fields>NSP_Payment_Method__c</fields>
+        <fields>NSP_Payment_Amount__c</fields>
+        <fields>NSP_WX_WA_Enrollment_Fee_Received__c</fields>
+        <fields>NSP_Docupay_Upfront_fee_Inc_Tax__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -330,18 +348,27 @@
         <fields>INFLUENCE</fields>
         <fields>REVENUE_SHARE</fields>
         <fields>OCR.ROLE</fields>
+        <fields>CM.STATUS</fields>
         <relatedList>RelatedCampaignInfluence2List</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__NetAmount__c</fields>
+        <fields>OWNER.LAST_NAME</fields>
         <fields>SBQQ__Status__c</fields>
-        <fields>CREATEDBY_USER</fields>
         <fields>SBQQ__Primary__c</fields>
         <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Contact.CNTC_FIRST_NAME</fields>
+        <fields>Contact.NAME</fields>
+        <fields>NSP_Reward_Type__c</fields>
+        <fields>NSP_Benefits_Non_Profit__c</fields>
+        <fields>NSP_Non_ProfitName__c</fields>
+        <fields>NSP_Reward_Paid_Date__c</fields>
         <relatedList>NSP_Reward__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -353,7 +380,13 @@
         <relatedList>RelatedProcessHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
+        <fields>NSP_Record_ID__c</fields>
+        <fields>NSP_Client__c</fields>
+        <fields>NSP_Status__c</fields>
+        <fields>NSP_Status_Date__c</fields>
+        <fields>NSP_Sales_Consultant__c</fields>
         <relatedList>NSP_Sales_to_Implementation__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>

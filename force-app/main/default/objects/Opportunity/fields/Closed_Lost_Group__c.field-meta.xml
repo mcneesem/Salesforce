@@ -52,6 +52,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Closed Lost - Renewal</controllingFieldValue>
             <valueName>Service</valueName>
         </valueSettings>
         <valueSettings>

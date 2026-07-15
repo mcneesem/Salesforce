@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Renewal Team - PEO</label>
+    <permissionSets>Bypass_Restrict_Renewal_Opportunities</permissionSets>
+    <permissionSets>NSP_Opportunity_Permission</permissionSets>
+    <permissionSets>Opportunity_Record_Type_Renewal</permissionSets>
+    <permissionSets>Opportunity_Renewal_Edit_Access</permissionSets>
+    <permissionSets>Renewal_Layout_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

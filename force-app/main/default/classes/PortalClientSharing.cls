@@ -242,10 +242,7 @@ public without sharing class PortalClientSharing implements Queueable {
                     FROM AccountContactRelation
                     WHERE ( Id IN :this.recordIds )
                 ];
-                Set<Id> contactIds = new Set<Id>();
-                for ( AccountContactRelation record : records ) {
-                    contactIds.add( record.ContactId );
-                }
+                Set<Id> contactIds = this.pickContactIds( records );
                 //
                 existingShares = [
                     SELECT Id , ParentId , Parent.Name , UserOrGroupId , UserOrGroup.Name
@@ -321,7 +318,6 @@ public without sharing class PortalClientSharing implements Queueable {
                 accountClientsMap.put( client.Account__c , new List<Portal_Client__c>() );
             }
             accountClientsMap.get( client.Account__c ).add( client );
-
         }
         return accountClientsMap;
     }
@@ -376,7 +372,10 @@ public without sharing class PortalClientSharing implements Queueable {
             List<AccountContactRelation> relations = [
                 SELECT Id , AccountId , ContactId
                 FROM AccountContactRelation
-                WHERE ( ContactId IN :contactIds )
+                WHERE (
+                    ( ContactId IN :contactIds )
+                    AND ( Enable_Portal_Client__c = true )
+                )
             ];
             for ( AccountContactRelation relation : relations ) {
                 if ( !accountContactMap.containsKey( relation.AccountId ) ) {
@@ -622,6 +621,80 @@ public without sharing class PortalClientSharing implements Queueable {
                 results
             );
         }
+    }
+
+    //
+    // ContentDocumentLinks
+    //
+
+    @AuraEnabled
+    public static void createPortalLinks( String recordId , List<String> contentDocumentIds ) {
+        try {
+            List<ContentDocumentLink> insertLinks = PortalClientSharing.buildPortalLinks(
+                PortalClientSharing.selectPortalTask( recordId ) ,
+                contentDocumentIds
+            );
+            if ( ( insertLinks != null ) && !insertLinks.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( insertLinks , false );
+                NSP_ErrorLogHandler.logResults(
+                    PortalClientSharing.class.getName() ,
+                    'createPortalLinks:insert' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                PortalClientSharing.class.getName() ,
+                'createPortalLinks' ,
+                e
+            );
+        }
+    }
+
+    private static Portal_Task__c selectPortalTask( String recordId ) {
+        List<Portal_Task__c> records = null;
+        if ( String.isNotBlank( recordId ) ) {
+            records = [
+                SELECT Id , Project_Task__c
+                FROM Portal_Task__c
+                WHERE (
+                    ( Id = :recordId )
+                    AND ( Project_Task__c != null )
+                )
+            ];
+        }
+        Portal_Task__c record = null;
+        if ( ( records != null ) && !records.isEmpty() ) {
+            record = records[0];
+        }
+        return record;
+    }
+
+    private static List<ContentDocumentLink> buildPortalLinks( Portal_Task__c record , List<String> contentDocumentIds ) {
+        List<ContentDocumentLink> links = new List<ContentDocumentLink>();
+        if ( ( record != null )
+            && String.isNotBlank( record.Project_Task__c )
+            && ( contentDocumentIds != null )
+            && !contentDocumentIds.isEmpty()
+            )
+        {
+            for ( String documentId : contentDocumentIds ) {
+                if ( String.isNotBlank( documentId )
+                    && ( documentId InstanceOf Id )
+                    && ( Id.valueOf( documentId ).getSObjectType() == ContentDocument.getSObjectType() )
+                    )
+                {
+                    ContentDocumentLink link = new ContentDocumentLink(
+                        ContentDocumentId=documentId ,
+                        LinkedEntityId=record.Project_Task__c ,
+                        ShareType='V' ,
+                        Visibility='AllUsers'
+                    );
+                    links.add( link );
+                }
+            }
+        }
+        return links;
     }
 
     //

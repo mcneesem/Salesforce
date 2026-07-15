@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Submittable__c</fullName>
+    <formula>AND(
+  NOT(ISBLANK(Payroll_Specialist__c)),
+  NOT(ISBLANK(Financial_Decision_Maker__c)),
+
+  OR(
+    NOT(ISBLANK(FDM_Work_Email__c)),
+    NOT(ISBLANK(FDM_Phone_Number__c)),
+    NOT(ISBLANK(Mobile_Number__c))
+  ),
+  
+  NOT(ISBLANK(Client_Payroll_Contact__c)),
+
+  OR(
+    NOT(ISBLANK(Payroll_Contact_Phone__c)),
+    NOT(ISBLANK(Payroll_Contact_Work_Email__c))
+  ),
+
+  NOT(ISBLANK(Client_Address__c)),
+
+  Total_Credit_Default_Sub_Clients__c &gt;= 1,
+
+  NOT(ISBLANK(Client_Legal_Name__c)),
+  NOT(ISBLANK(Original_Employment_Date__c)),
+  NOT(ISBLANK(Number_Of_Active_WSEEs__c)),
+  NOT(ISBLANK(TEXT(Method_Of_Payment__c))),
+  NOT(ISBLANK(TEXT(WSEEs_Worked_In_NY_TX_VA__c))),
+
+  IF(
+    ISPICKVAL(WSEEs_Worked_In_NY_TX_VA__c, &quot;Yes&quot;),
+    NOT(ISBLANK(Which_States__c)),
+    TRUE
+  ),
+
+  NOT(ISBLANK(TEXT(Are_There_Any_Related_Clients__c))),
+
+  IF(
+    ISPICKVAL(Are_There_Any_Related_Clients__c, &quot;Yes&quot;),
+    Total_Credit_Default_Related_Accounts__c &gt;= 1,
+    TRUE
+  ),
+
+  NOT(ISBLANK(TEXT(Reason_For_Default__c))),
+
+  Has_All_Required_Long_Text_Fields__c,
+
+  Total_Credit_Default_Pay_Periods__c &gt;= 1,
+
+  NOT(ISBLANK(Approver__c))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Is Submittable</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1921,6 +1921,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Fraud_Alert__c</fieldItem>
+                <identifier>RecordFraud_Alert_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5608ab67-a9fd-404a-be4b-dca2615d4202</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3403,8 +3413,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Portal_Phone__c</fieldItem>
-                <identifier>RecordPortal_Phone_cField</identifier>
+                <fieldItem>Record.Portal_First_Name__c</fieldItem>
+                <identifier>RecordPortal_First_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3415,6 +3425,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Portal_Email__c</fieldItem>
                 <identifier>RecordPortal_Email_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Phone__c</fieldItem>
+                <identifier>RecordPortal_Phone_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2cb53231-50e7-457f-baf6-a82f1b1f7b15</name>
@@ -3841,6 +3861,12 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
                 <identifier>force_relatedListQuickLinksContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

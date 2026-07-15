@@ -2,7 +2,7 @@
     <template lwc:if={recordId}>
         <template lwc:if={record}>
             <template lwc:if={isHelpText}>
-                &nbsp;<c-helptext content={helpText}></c-helptext>
+                &nbsp;<c-helptext content={helpText} icon-variant="bare"></c-helptext>
             </template>
             <template lwc:if={isRichText}>
                 <lightning-formatted-rich-text value={richText}></lightning-formatted-rich-text>

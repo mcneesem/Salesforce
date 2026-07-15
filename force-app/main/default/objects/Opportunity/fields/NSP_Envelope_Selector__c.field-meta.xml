@@ -40,16 +40,24 @@
                 NSP_Selected_Template__c = &apos;ContractorManagement&apos; ,
                 $Label.Contractor_Management_Envelope_Configuration ,
                 IF(
-                  NSP_Selected_Template__c == null , &apos;&apos; ,
+                  AND(
+                    ISPICKVAL( NSP_PrimaryProduct__c , &apos;HR Consulting Services&apos; ) ,
+                    ISPICKVAL( NSP_Client_For_Life__c , &apos;WO/WS&apos; )
+                  ) ,
+                  $Label.HR_Consulting_Envelope_Configuration ,
                   IF(
-                    OR(
-                      NSP_Selected_Template__c == &apos;StandardEmployeeHandbookSOW&apos; ,
-                      NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos; ,
-                      NSP_Selected_Template__c == &apos;SalarySurveySOW&apos; ,
-                      NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;
-                    ) ,
-                    $Label.NSP_HR_Services_Envelope_Configuration ,
-                    $Label.NSP_WX_Envelope_Configuration
+                    NSP_Selected_Template__c == null ,
+                    &apos;&apos; ,
+                    IF(
+                      OR(
+                        NSP_Selected_Template__c == &apos;StandardEmployeeHandbookSOW&apos; ,
+                        NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos; ,
+                        NSP_Selected_Template__c == &apos;SalarySurveySOW&apos; ,
+                        NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;
+                      ) ,
+                      $Label.NSP_HR_Services_Envelope_Configuration ,
+                      $Label.NSP_WX_Envelope_Configuration
+                    )
                   )
                 )
               )

@@ -82,6 +82,11 @@
                 <label>Time &amp; Attendance</label>
             </value>
             <value>
+                <fullName>Time Wage Import</fullName>
+                <default>false</default>
+                <label>Time Wage Import</label>
+            </value>
+            <value>
                 <fullName>WO</fullName>
                 <default>false</default>
                 <label>WO</label>

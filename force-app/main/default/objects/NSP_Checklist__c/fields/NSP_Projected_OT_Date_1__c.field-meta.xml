@@ -4,7 +4,7 @@
     <description>This field is used for Sales part of STY-01620</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Projected OT Date 1</label>
+    <label>DEPRECATED Projected OT Date 1</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

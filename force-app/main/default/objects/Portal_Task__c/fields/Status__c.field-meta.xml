@@ -30,6 +30,16 @@
                 <default>false</default>
                 <label>Completed</label>
             </value>
+            <value>
+                <fullName>Hidden</fullName>
+                <default>false</default>
+                <label>Hidden</label>
+            </value>
+            <value>
+                <fullName>Summary</fullName>
+                <default>false</default>
+                <label>Summary</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

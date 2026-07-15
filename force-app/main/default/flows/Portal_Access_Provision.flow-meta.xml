@@ -34,6 +34,22 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Enable_Send_Notification</name>
+        <label>Enable Send Notification</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>isEnabledSendNotification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Provision_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Populate_Contact_Salesforce_User_Certinia</name>
         <label>Populate Contact Salesforce User (Certinia)</label>
         <locationX>0</locationX>
@@ -310,7 +326,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Provision_Screen</targetReference>
+                <targetReference>Enable_Send_Notification</targetReference>
             </connector>
             <label>Has Portal User</label>
         </rules>
@@ -495,7 +511,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Contact_Provision_Screen</targetReference>
+            <targetReference>Set_Output_portalUserId</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Contact_Certinia</targetReference>
@@ -503,33 +519,6 @@
         <inputReference>recordContact</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Contact_Provision_Screen</name>
-        <label>(Contact) Provision Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Set_Output_portalUserId</targetReference>
-        </connector>
-        <fields>
-            <name>Contact_Provision_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Provision&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;- Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact (Id={!recordContact.Id})&lt;/p&gt;&lt;p&gt;- Portal Alias: {!recordContact.Portal_Alias__c}&lt;/p&gt;&lt;p&gt;- Salesforce User: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.pse__Salesforce_User__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
     <screens>
         <name>Error_Screen_Flow_FaultMessage</name>
         <label>Error Screen: Flow FaultMessage</label>
@@ -711,8 +700,47 @@
         </connector>
         <fields>
             <name>Provision_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Provision&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Alias: {!recordPortalUser.Alias}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Nickname: {!recordPortalUser.CommunityNickname}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Email: {!recordPortalUser.Email}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Portal User has been provisioned.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Summary</name>
+            <fieldText>Summary</fieldText>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Summary_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Summary_Display_Text</name>
+                    <fieldText>&lt;ul&gt;&lt;li&gt;Portal User (Id={!recordPortalUser.Id})&lt;ul&gt;&lt;li&gt;Full Name: {!recordPortalUser.Name}&lt;/li&gt;&lt;li&gt;Username: {!recordPortalUser.Username}&lt;/li&gt;&lt;li&gt;Alias: {!recordPortalUser.Alias}&lt;/li&gt;&lt;li&gt;Nickname: {!recordPortalUser.CommunityNickname}&lt;/li&gt;&lt;li&gt;Email: {!recordPortalUser.Email}&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithHeader</regionContainerType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -769,6 +797,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isEnabledSendNotification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

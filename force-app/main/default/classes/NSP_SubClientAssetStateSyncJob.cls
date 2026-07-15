@@ -136,6 +136,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                         NSP_Union_Employee__c
                     FROM NSP_Sub_Client_Contact__c
                     WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
+                    LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactLimit
                 ];
                 if ( !subClientContact.isEmpty() ) {
                     NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
@@ -210,7 +211,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
     private static Integer soqlAddressLimit {
         private get {
             if ( soqlAddressLimit == null ) {
-                Integer local = 50000;
+                Integer local = 25000;
                 if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
                     && ( NSP_SubClientAssetStateSyncJob.settings.SoqlAddressLimit__c != null )
                     )
@@ -224,6 +225,27 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 soqlAddressLimit = local;
             }
             return soqlAddressLimit;
+        }
+        private set;
+    }
+
+    private static Integer soqlContactLimit {
+        private get {
+            if ( soqlContactLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlContactLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlContactLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlContactLimit = local;
+            }
+            return soqlContactLimit;
         }
         private set;
     }

@@ -1,11 +1,5 @@
-/**
-* @description  :  Helper class for Implementation profile.
-* @date 09/13/2022
-* Author : Bindushree R
-* Name : NSP_ImplementationHelper
-*/
 public class NSP_ImplementationHelper {
-    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (78%)
+    // test w/ NSP_ImplementationHelperTest, NSP_ImplementationProfileControllerTest (78%)
 
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
@@ -13,11 +7,11 @@ public class NSP_ImplementationHelper {
     private static final String SUCCESS_PARAM = 'success';
     private static final String FAIL_PARAM = 'fail';
 
-    /***********************************************************************************************
-    * MethodName: prepopulateIPData
-    * Description : prepopulate IP fields based on opportunities related checklist
-    * Params:       String  accountId
-    * ********************************************************************************************/ 
+    //
+    // MethodName: prepopulateIPData
+    // Description : prepopulate IP fields based on opportunities related checklist
+    // Params:       String  accountId
+    //
     @AuraEnabled
     public static Implementation_Profile__c prepopulateIPData(String accountId){
         try{
@@ -28,63 +22,63 @@ public class NSP_ImplementationHelper {
             throw new AuraHandledException(exc.getMessage());
         }
     }
-    
+
     public static Implementation_Profile__c prepopulateIPData(String accountId, Implementation_Profile__c ip){
         try{
             List<Opportunity> oppList=[SELECT Id FROM Opportunity WHERE AccountId=:accountId AND StageName=:NSP_ServiceConstants.CLOSED_WON AND
                              Type=:NSP_ServiceConstants.NEWPRODUCT AND NSP_PrimaryProduct__c=:NSP_ServiceConstants.WO_ASSET_RECORDTYPE
                                                         ORDER BY CreatedDate LIMIT 1];
-            
+
             if(!oppList.isEmpty() && oppList.size()>0){
                 List<NSP_ChecklistIPMapping__mdt> checklistIPMappingMdt = [SELECT NSP_Source_Field__c, NSP_Source_Object__c,NSP_Source_Type__c,
                                     NSP_Target_Field__c,NSP_Target_Object__c FROM NSP_ChecklistIPMapping__mdt WHERE NSP_Source_Field__c != NULL];
-                
+
                 Map<string,List<NSP_ChecklistIPMapping__mdt>> mapOfChecklistIPMappingMdt = new Map<string,List<NSP_ChecklistIPMapping__mdt>>();
-                
+
                 for(NSP_ChecklistIPMapping__mdt checklistIPMapping : checklistIPMappingMdt){
-                    
+
                     List<NSP_ChecklistIPMapping__mdt> checklistIPMappingMdtList=new List<NSP_ChecklistIPMapping__mdt>();
                     if(mapOfChecklistIPMappingMdt.containsKey(checklistIPMapping.NSP_Source_Type__c)){
                         checklistIPMappingMdtList=mapOfChecklistIPMappingMdt.get(checklistIPMapping.NSP_Source_Type__c);
                     }
-                    
+
                     checklistIPMappingMdtList.add(checklistIPMapping);
                     mapOfChecklistIPMappingMdt.put(checklistIPMapping.NSP_Source_Type__c,checklistIPMappingMdtList);
                 }
-                
+
                 for(string recordTypeName : mapOfChecklistIPMappingMdt.keySet()){
                     string checkListQuery=constructChecklistQuery(mapOfChecklistIPMappingMdt.get(recordTypeName),oppList[0].Id,recordTypeName);
-                    
+
                     List<NSP_Checklist__c> checkListObj = Database.query(checkListQuery);
-                    
+
                     if(checkListObj!=null && checkListObj.size()>0){
                         getChecklistDataIntoIP(mapOfChecklistIPMappingMdt.get(recordTypeName),checkListObj[0],ip);
-                    }                    
-                }               
-                
+                    }
+                }
+
             }
             return ip;
-            
+
         } catch(Exception excep){
             throw new AuraHandledException(excep.getMessage());
         }
-        
+
     }
-    
-    /***********************************************************************************************
-    * MethodName: constructChecklistQuery
-    * Description : prepare dynamic query for checklist object
-    * Params:       List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList, Id oppId,string recordTypeName
-    * ********************************************************************************************/ 
+
+    //
+    // MethodName: constructChecklistQuery
+    // Description : prepare dynamic query for checklist object
+    // Params:       List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList, Id oppId,string recordTypeName
+    //
     public static String constructChecklistQuery(List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList,  Id oppId,string recordTypeName){
-        
+
         Set<String> fieldsToQuerySet = new Set<String>();
         for(NSP_ChecklistIPMapping__mdt checklistIPMapping : checklistIPMappingList){
             if(String.isNotBlank(checklistIPMapping.NSP_Source_Field__c)){
-                fieldsToQuerySet.add(checklistIPMapping.NSP_Source_Field__c);    
+                fieldsToQuerySet.add(checklistIPMapping.NSP_Source_Field__c);
             }
         }
-        
+
         String objectToQuery = '';
         for(NSP_ChecklistIPMapping__mdt checklistIPMapping: checklistIPMappingList){
             if(checklistIPMapping.NSP_Source_Object__c != null){
@@ -92,15 +86,15 @@ public class NSP_ImplementationHelper {
                 break;
             }
         }
-        
+
         Map<String, String> filterMap = new Map<String,String>{ 'NSP_Opportunity__c' => oppId,'RecordType.Name'=>recordTypeName};
             String query = getQuery(new List<String>(fieldsToQuerySet),objectToQuery,filterMap,null);
         return query;
-        
-    } 
-    
-    
-    
+
+    }
+
+
+
     public static String getQuery(List<String> fieldsToQueryList, String objectToQuery, Map<String, String> filterMap, Integer range){
         //query construction
         String fieldsToQuery = String.join(fieldsToQueryList, ',');
@@ -123,36 +117,28 @@ public class NSP_ImplementationHelper {
             query += ' LIMIT ' + range;
         }
         return query;
-    } 
-    
-    /***********************************************************************************************
-    * MethodName: getChecklistDataIntoIP
-    * Description : get checklist data into IP
-    * Params:       List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList, NSP_Checklist__c checkList,Implementation_Profile__c ip
-    * ********************************************************************************************/ 
-    
-     public static void getChecklistDataIntoIP(List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList,NSP_Checklist__c checkList,Implementation_Profile__c ip){     
-                 
+    }
+
+    //
+    // MethodName: getChecklistDataIntoIP
+    // Description : get checklist data into IP
+    // Params:       List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList, NSP_Checklist__c checkList,Implementation_Profile__c ip
+    //
+    public static void getChecklistDataIntoIP(List<NSP_ChecklistIPMapping__mdt> checklistIPMappingList,NSP_Checklist__c checkList,Implementation_Profile__c ip){
+
         //looping through metadata reocrds to fetch the field api names
         for(NSP_ChecklistIPMapping__mdt checklistIPMapping : checklistIPMappingList){
             if(String.isNotBlank(checklistIPMapping.NSP_Target_Field__c) && String.isNotBlank(checklistIPMapping.NSP_Source_Field__c)){
-                
+
                 Object value= checkList.get(checklistIPMapping.NSP_Source_Field__c);
-                ip.put(checklistIPMapping.NSP_Target_Field__c, applyValueConversionPolicy(checklistIPMapping.NSP_Source_Field__c,value)); 
-                
+                ip.put(checklistIPMapping.NSP_Target_Field__c, applyValueConversionPolicy(checklistIPMapping.NSP_Source_Field__c,value));
+
             }
         }
     }
-    
+
     private static object applyValueConversionPolicy(string sourceFieldName,object value){
         switch on sourceFieldName{
-            when 'NSP_Does_company_have_more_than_one_FEIN__c'{
-                return boolean.valueOf(value) ? 'No':null;
-            }
-            
-            when 'NSP_Commission_only_employees__c'{
-                return boolean.valueOf(value) ?'Yes':null;
-            }
             when 'NSP_ClientRelatedtootherInsperityClient__c'{
                 return value=='Yes'?'Related Clients ':null;
             }
@@ -167,10 +153,10 @@ public class NSP_ImplementationHelper {
                     return value;
                 }
                 return string.valueOf(value).toLowerCase();
-                
+
             }
             when 'NSP_Client_FEIN__c'{
-                
+
                 if(value==null){
                     return value;
                 }
@@ -182,40 +168,46 @@ public class NSP_ImplementationHelper {
             }
 
             when 'NSP_Pay_Frequency__c'{
-                return value == 'Biweekly' ? 'Bi-Weekly' : value;  
+                return value == 'Biweekly' ? 'Bi-Weekly' : value;
             }
-            
+
             when else {
                 return value;
             }
         }
     }
-    
-     /***********************************************************************************************
-    * MethodName: getDBAName
-    * Description : get user name based on the user selected
-    * Params:        userId
-    * ********************************************************************************************/ 
-    
-    private static String getDBAName(Object userId){
-        if(userId!=null){
-            Id id=(Id)userId;
-            User userRec=[SELECT Name from User WHERE Id=:id]; 
-            return userRec.Name;
+
+    //
+    // MethodName: getDBAName
+    // Description : get user name based on the user selected
+    // Params: userId
+    //
+    private static String getDBAName( Object userId ) {
+        String response = null;
+        if ( userId != null ) {
+            Id recordId = (Id)userId;
+            List<User> records = [
+                SELECT Name
+                FROM User
+                WHERE ( Id = :recordId )
+            ];
+            if ( ( records != null ) && !records.isEmpty() ) {
+                response = records[0].Name;
+            }
         }
-        return null;
+        return response;
     }
 
-    /**
-     * Copies data from one IP record to multiple records & send status email on process completion.
-     * @param recordIds List of Id of the target IP records to which data will be written.
-     * @param config Map containing configuration settings for the data copy process.
-     *   - fieldValues: JSON serialized string containing the field values to update on target IP records.
-     *   - sourceId: ID of the source record.
-     *   - recType: Type of the record being copied.
-     *   - userEmail: Email address to send the status mail after the copy action.
-     *   - postUpsertRecords: JSON serialized list of SObject records to insert or update as child objects of the target IP records.
-     */
+    //
+    // Copies data from one IP record to multiple records & send status email on process completion.
+    // @param recordIds List of Id of the target IP records to which data will be written.
+    // @param config Map containing configuration settings for the data copy process.
+    //   - fieldValues: JSON serialized string containing the field values to update on target IP records.
+    //   - sourceId: ID of the source record.
+    //   - recType: Type of the record being copied.
+    //   - userEmail: Email address to send the status mail after the copy action.
+    //   - postUpsertRecords: JSON serialized list of SObject records to insert or update as child objects of the target IP records.
+    //
     @future(callout=true)
     public static void copyIpRecordData(List<String> recordIds, Map<String, String> config){
         try {
@@ -240,8 +232,8 @@ public class NSP_ImplementationHelper {
                         delete existingRecordsToDelete;
                     }
                 }
-                
-                // Create IP child object records on all the target IP records 
+
+                // Create IP child object records on all the target IP records
                 Database.insert(postUpsertRecords);
 
                 // Update incoming field values on target IP records
@@ -273,7 +265,7 @@ public class NSP_ImplementationHelper {
         for(String recId : recordIds){
             Implementation_Profile__c ipObj = (Implementation_Profile__c) JSON.deserialize(fieldValues, Implementation_Profile__c.class);
             ipObj.Id = recId;
-            
+
             recToUpdate.add(ipObj);
         }
 
@@ -314,7 +306,7 @@ public class NSP_ImplementationHelper {
             inputs.put('emailSubject', subject);
             inputs.put('emailBody', body);
             Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
-            sendEmailFlow.start();  
+            sendEmailFlow.start();
         } else {
             // First, reserve email capacity for the current Apex transaction
             Messaging.reserveSingleEmailCapacity(1);
@@ -335,10 +327,12 @@ public class NSP_ImplementationHelper {
         List<String> failedRecords = ipRecordsMap.get(FAIL_PARAM);
 
         String emailBody = getCopyActionStatusEmailBody(sourceName, recType, successRecords, failedRecords);
-        
+
         // Strings to hold the email addresses to which you are sending the email.
         String[] toAddresses = new String[] { userEmail };
 
         sendEmail(toAddresses, getCopyActionStatusEmailSubject(sourceName), emailBody);
     }
+
 }
+//

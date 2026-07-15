@@ -35,12 +35,12 @@ private class UserAvailabilityServiceTest {
         // Create Events for both users across a deterministic window: today 8-12
         Datetime base = Datetime.newInstance(Date.today(), Time.newInstance(8, 0, 0, 0));
         List<Event> evts = new List<Event>{
-            new Event(OwnerId = u1.Id, StartDateTime = base, EndDateTime = base.addHours(1)),                      // 8-9 busy u1
-            new Event(OwnerId = u1.Id, StartDateTime = base.addHours(2), EndDateTime = base.addHours(3)),          // 10-11 busy u1
+            new Event(OwnerId = u1.Id, StartDateTime = base, EndDateTime = base.addHours(1)), // 8-9 busy u1
+            new Event(OwnerId = u1.Id, StartDateTime = base.addHours(2), EndDateTime = base.addHours(3)), // 10-11 busy u1
             new Event(OwnerId = u2.Id, StartDateTime = base.addMinutes(30), EndDateTime = base.addHours(1).addMinutes(30)) // 8:30-9:30 busy u2
         };
         insert evts;
-        
+
         List<BusinessHours> defaultBusinessHours = [
             SELECT Id
             FROM BusinessHours
@@ -48,7 +48,7 @@ private class UserAvailabilityServiceTest {
             ORDER BY CreatedDate ASC
             LIMIT 1
         ];
-        
+
         Schedule_Seller_Settings__c scheduleSettings = new Schedule_Seller_Settings__c();
         scheduleSettings.SetupOwnerId = UserInfo.getOrganizationId();
         scheduleSettings.Name = 'Test';
@@ -121,9 +121,8 @@ private class UserAvailabilityServiceTest {
     @isTest
     private static void testGetAggregateCountsMatrix_withTwoUsers() {
         Test.startTest();
-        List<List<Integer>> matrix = UserAvailabilityService.getAggregateCountsMatrix('Schedule_Seller_HR360', 'America/Chicago');
+        List<List<List<Id>>> matrix = UserAvailabilityService.getAggregateUserIdsMatrix('Schedule_Seller_HR360', 'America/Chicago');
         Test.stopTest();
-
         System.assertNotEquals(null, matrix, 'Aggregate matrix should not be null');
         System.assert(matrix.size() >= 0, 'Aggregate matrix should have 0 or more rows');
     }
@@ -204,22 +203,62 @@ private class UserAvailabilityServiceTest {
         }
         Test.stopTest();
     }
-
     @isTest
-    private static void testGetEventsForUser_privateHelpers_viaPublicPaths() {
-        // Indirectly exercise helper by calling public methods that use it with a tight window
+    private static void testSortUsersByDailyLoad_sortsAscending() {
         List<User> users = getTestUsers();
-        System.assertEquals(2, users.size(), 'Expect two test users');
+        System.assertEquals( 2, users.size(), 'Expect two test users' );
 
-        // Small window that overlaps at least one event
-        Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(8, 30, 0, 0));
-        Datetime endDT = startDT.addMinutes(45);
+        List<Id> inputIds = new List<Id>();
+        for ( User u : users ) {
+            inputIds.add( u.Id );
+        }
 
+        // Setup creates u1 with 2 events and u2 with 1 event, both today
         Test.startTest();
-        List<Id> available = UserAvailabilityService.getAvailableUsersForWindow(startDT, endDT, 'Schedule_Seller');
+        List<User> sorted = UserAvailabilityService.sortUsersByDailyLoad( inputIds, Date.today() );
         Test.stopTest();
 
-        System.assertNotEquals(null, available, 'Should execute without error using private helper');
+        System.assertNotEquals( null, sorted, 'Sorted list should not be null' );
+        System.assertEquals( 2, sorted.size(), 'Both users should be returned' );
+
+        // Identify the busier user (2 events) — must rank LAST
+        Map<Id, Integer> eventCountByUser = new Map<Id, Integer>();
+        for ( AggregateResult ar : [
+            SELECT OwnerId, COUNT(Id) cnt
+            FROM Event
+            WHERE OwnerId IN :inputIds
+            AND DAY_ONLY( StartDateTime ) = :Date.today()
+            GROUP BY OwnerId
+        ] ) {
+            eventCountByUser.put( (Id) ar.get('OwnerId'), (Integer) ar.get('cnt') );
+        }
+
+        Integer firstLoad = eventCountByUser.containsKey( sorted[0].Id )
+            ? eventCountByUser.get( sorted[0].Id ) : 0;
+        Integer lastLoad = eventCountByUser.containsKey( sorted[ sorted.size() - 1 ].Id )
+            ? eventCountByUser.get( sorted[ sorted.size() - 1 ].Id ) : 0;
+
+        System.assertEquals(
+            true,
+            firstLoad <= lastLoad,
+            'Users should be sorted ascending by event count for the day'
+        );
+    }
+
+    @isTest
+    private static void testSortUsersByDailyLoad_nullAndEmptyGuards() {
+        Test.startTest();
+        List<User> r1 = UserAvailabilityService.sortUsersByDailyLoad( null, Date.today() );
+        List<User> r2 = UserAvailabilityService.sortUsersByDailyLoad( new List<Id>(), Date.today() );
+        List<User> r3 = UserAvailabilityService.sortUsersByDailyLoad(
+            new List<Id>{ UserInfo.getUserId() },
+            null
+        );
+        Test.stopTest();
+
+        System.assertEquals( 0, r1.size(), 'Null userIds should return empty list' );
+        System.assertEquals( 0, r2.size(), 'Empty userIds should return empty list' );
+        System.assertEquals( 0, r3.size(), 'Null date should return empty list' );
     }
 
 }

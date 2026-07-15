@@ -1,16 +1,27 @@
-<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c}) - Logo " recipientType="User" relatedToType="Implementation_Profile__c">
+<messaging:emailTemplate subject="Client Logo for {!relatedTo.NSP_AIMS_Client_Name__c} ({!relatedTo.NSP_AIMS_ClientNo__c})" recipientType="User" relatedToType="Implementation_Profile__c">
 <messaging:HtmlEmailBody >
 
 <html>
   <body>
   <c:InsperityEmailHeader />
-  <p>The Logo for the new client {!relatedTo.NSP_AIMS_Client_Name__c} {!relatedTo.NSP_AIMS_ClientNo__c} is in the 
-   Client Reference and ready for cobranding. </p>
+  <p>The Logo for the new client {!relatedTo.NSP_AIMS_Client_Name__c} 
+      <apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.NSP_AIMS_ClientNo__c))}">
+          ({!relatedTo.NSP_AIMS_ClientNo__c})
+      </apex:outputPanel>
+     is attached. 
+  </p>
   
 
 <p>Regards,<br/>
-{!relatedTo.NSP_Project_Manager__r.Name}<br/>
-{!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}</p>
+    <apex:outputPanel rendered="{!relatedTo.RecordType.DeveloperName = 'FSO'}">
+        {!relatedTo.NSP_Onboarding_Specialist_Coordinator__r.Name}<br/>
+        {!relatedTo.NSP_Onboarding_Specialist_Coordinator__r.NSP_Job_Title__c}
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!relatedTo.RecordType.DeveloperName = 'Middle_Market'}">
+        {!relatedTo.NSP_Transition_Specialist__r.Name}<br/>
+        {!relatedTo.NSP_Transition_Specialist__r.NSP_Job_Title__c}
+    </apex:outputPanel>
+</p>
 <c:InsperityEmailFooter />
 </body>
 </html>

@@ -3,9 +3,31 @@
     <fullName>Contact_Name__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-  NOT( ISBlANK( Contact__r.MiddleName ) ) ,
-  Contact__r.FirstName &amp; &quot; &quot; &amp; Contact__r.MiddleName &amp; &quot; &quot; &amp; Contact__r.LastName ,
-  Contact__r.FirstName &amp; &quot; &quot; &amp; Contact__r.LastName
+  NOT( ISBLANK( Contact__r.Portal_First_Name__c ) ) ,
+  Contact__r.Portal_First_Name__c ,
+  IF(
+    NOT( ISBLANK( Contact__r.NSP_Preferred_First_Name__c ) ) ,
+    Contact__r.NSP_Preferred_First_Name__c ,
+    IF(
+      NOT( ISBLANK( Contact__r.FirstName) ) ,
+      Contact__r.FirstName ,
+      &quot;&quot;
+    )
+  )
+)
+&amp; IF(
+  OR(
+    NOT( ISBLANK( Contact__r.Portal_First_Name__c ) ) ,
+    NOT( ISBLANK( Contact__r.NSP_Preferred_First_Name__c ) ) ,
+    NOT( ISBLANK( Contact__r.FirstName ) )
+  ) ,
+  &quot; &quot; ,
+  &quot;&quot;
+)
+&amp; IF(
+  NOT( ISBLANK( Contact__r.LastName ) ) ,
+  Contact__r.LastName ,
+  &quot;&quot;
 )</formula>
     <label>Contact Name</label>
     <required>false</required>

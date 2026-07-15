@@ -6,7 +6,8 @@ private class NSP_SubClientAssetSyncJob_Test {
         SubClientAssetStateSyncJobSettings__c settings = SubClientAssetStateSyncJobSettings__c.getOrgDefaults();
         settings.IsEnabled__c = True;
         settings.BatchSize__c = 200;
-        settings.SoqlAddressLimit__c = 40000;
+        settings.SoqlAddressLimit__c = 20000;
+        settings.SoqlContactLimit__c = 20000;
         upsert settings;
 
         //Account creation

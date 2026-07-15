@@ -2155,28 +2155,28 @@ export function amendmentForNonClonedLineCalculation(quote,lines){
     let disc;
     let discountedValue;
     if(quoteType == 'Amendment' && quoteTransType != 'Termination'){
-        let clone = lines[0].record["NSP_Clone_Required__c"];
-        console.log('----test--'+clone + (clone.includes('Red')));
-        lines.forEach(function(line){
+        if(lines){
+            let clone = lines[0].record["NSP_Clone_Required__c"];
+            lines.forEach(function(line){
+                if( line && line.record && line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && clone && clone.includes('Red') && line.record["SBQQ__PricingMethod__c"] == 'Block'){
+                    CustomerPrice = line.record["SBQQ__CustomerPrice__c"];
+                    deltaPrice = line.record["SBQQ__SpecialPrice__c"];
+                    line.record["NSP_Delta_Total__c"] =  deltaPrice;
+                    disc = line.record["NSP_Delta_Discount__c"];
+                    discountedValue = CustomerPrice -[disc];
+                    line.record["SBQQ__NetPrice__c"] =discountedValue;
+                    line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
 
-            if(line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && clone.includes('Red') && line.record["SBQQ__PricingMethod__c"] == 'Block'){
-                CustomerPrice = line.record["SBQQ__CustomerPrice__c"];
-                 deltaPrice = line.record["SBQQ__SpecialPrice__c"];
-               line.record["NSP_Delta_Total__c"] =  deltaPrice;
-                disc = line.record["NSP_Delta_Discount__c"];
-                discountedValue = CustomerPrice -[disc];
-                line.record["SBQQ__NetPrice__c"] =discountedValue;
-                line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                }
+                if(  line._innerModel.record.SBQQ__Product__r.Family == 'Support' &&  line.record["SBQQ__BillingFrequency__c"] == 'Annual' && line.record["NSP_ActionType__c"] == 'Add Product')
+                {
+                    console.log('--inside hardware--');
+                    line.record["NSP_Delta_Total__c"] =   (line.record["NSP_Quoted_Quantity__c"]) * (line.record["SBQQ__ListPrice__c"] - line.record["SBQQ__AdditionalDiscountAmount__c"]);
+                    console.log('--inside hardware--'+ line.record["NSP_Delta_Total__c"]);
+                }
 
-            }
-            if(  line._innerModel.record.SBQQ__Product__r.Family == 'Support' &&  line.record["SBQQ__BillingFrequency__c"] == 'Annual' && line.record["NSP_ActionType__c"] == 'Add Product')
-            {
-                console.log('--inside hardware--');
-                line.record["NSP_Delta_Total__c"] =   (line.record["NSP_Quoted_Quantity__c"]) * (line.record["SBQQ__ListPrice__c"] - line.record["SBQQ__AdditionalDiscountAmount__c"]);
-                console.log('--inside hardware--'+ line.record["NSP_Delta_Total__c"]);
-            }
-
-        });
+            });
+        }
     }
 }
 export function checkSerialIdValidationFlag(quote, lines){

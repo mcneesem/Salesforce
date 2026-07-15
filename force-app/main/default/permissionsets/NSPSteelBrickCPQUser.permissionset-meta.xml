@@ -6377,6 +6377,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Product_Description_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Promo_Applicable_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>

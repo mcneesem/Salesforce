@@ -48,7 +48,7 @@
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
-    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
             <name>Credit_Default_Rejection</name>

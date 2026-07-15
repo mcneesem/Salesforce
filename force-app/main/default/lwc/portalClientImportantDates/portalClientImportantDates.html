@@ -1,73 +1,108 @@
 <template>
-    <lightning-card title="Important Dates">
-        <div class="slds-is-relative">
-            <template lwc:if={fields}>
-                <template lwc:if={record}>
-                    <lightning-layout multiple-rows>
-                        <lightning-layout-item size="12" padding="around-small">
-                            <ul>
-                                <li>
-                                    <lightning-layout>
-                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
-                                            Insperity Effective Date&nbsp;*&nbsp;
-                                            <c-helptext content={effectiveDateHelpText}></c-helptext>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
-                                            <lightning-formatted-date-time
-                                                value={effectiveDate}
-                                                month="long"
-                                                day="2-digit"
-                                                year="numeric"
-                                                time-zone="UTC"
+    <div class="slds-box slds-theme_default">
+        <lightning-card title="Important Dates">
+            <div class="slds-is-relative">
+                <template lwc:if={fields}>
+                    <template lwc:if={record}>
+                        <lightning-layout multiple-rows>
+                            <lightning-layout-item size={columnSizeFull} padding="around-small">
+                                <ul>
+                                    <li class="slds-p-around_small">
+                                        <lightning-layout multiple-rows>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeLeft}
+                                                class="slds-p-right_x-small"
                                                 >
-                                            </lightning-formatted-date-time>
-                                        </lightning-layout-item>
-                                    </lightning-layout>
-                                </li>
-                                <li>
-                                    <lightning-layout>
-                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
-                                            Insperity Benefits Effective Date&nbsp;*
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
-                                            <lightning-formatted-date-time
-                                                value={benefitsEffectiveDate}
-                                                month="long"
-                                                day="2-digit"
-                                                year="numeric"
-                                                time-zone="UTC"
+                                                Insperity Effective Date&nbsp;*&nbsp;
+                                                <c-helptext content={effectiveDateHelpText}></c-helptext>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeRight}
                                                 >
-                                            </lightning-formatted-date-time>
-                                        </lightning-layout-item>
-                                    </lightning-layout>
-                                </li>
-                                <li>
-                                    <lightning-layout>
-                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
-                                            Insperity Benefits Waiting Period
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
-                                            {benefitsWaitingPeriod}
-                                        </lightning-layout-item>
-                                    </lightning-layout>
-                                </li>
-                                <template lwc:if={projectId}>
-                                    <c-portal-pay-period-carousel record-id={projectId}></c-portal-pay-period-carousel>
-                                </template>
-                            </ul>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium">
-                            * If applicable: To ensure no overlap in coverage, remember to terminate current payroll or benefits services prior to your Insperity effective dates.
-                        </lightning-layout-item>
-                    </lightning-layout>
+                                                <lightning-formatted-date-time
+                                                    value={effectiveDate}
+                                                    month="long"
+                                                    day="2-digit"
+                                                    year="numeric"
+                                                    time-zone="UTC"
+                                                    >
+                                                </lightning-formatted-date-time>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </li>
+                                    <li class="slds-p-around_small">
+                                        <lightning-layout multiple-rows>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeLeft}
+                                                class="slds-p-right_x-small"
+                                                >
+                                                Insperity Benefits Effective Date&nbsp;*
+                                            </lightning-layout-item>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeRight}
+                                                >
+                                                <lightning-formatted-date-time
+                                                    value={benefitsEffectiveDate}
+                                                    month="long"
+                                                    day="2-digit"
+                                                    year="numeric"
+                                                    time-zone="UTC"
+                                                    >
+                                                </lightning-formatted-date-time>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </li>
+                                    <li class="slds-p-around_small">
+                                        <lightning-layout multiple-rows>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeLeft}
+                                                class="slds-p-right_x-small"
+                                                >
+                                                Insperity Benefits Waiting Period
+                                            </lightning-layout-item>
+                                            <lightning-layout-item
+                                                size={columnSizeFull}
+                                                small-device-size={columnSizeFull}
+                                                medium-device-size={columnSizeFull}
+                                                large-device-size={columnSizeRight}
+                                                >
+                                                {benefitsWaitingPeriod}
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </li>
+                                    <template lwc:if={projectId}>
+                                        <c-portal-pay-period-carousel record-id={projectId}></c-portal-pay-period-carousel>
+                                    </template>
+                                </ul>
+                            </lightning-layout-item>
+                            <lightning-layout-item size={columnSizeFull} padding="around-medium" >
+                                * If applicable: To ensure no overlap in coverage, remember to terminate current payroll or benefits services prior to your Insperity effective dates.
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </template>
+                    <template lwc:else>
+                        <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+                    </template>
                 </template>
                 <template lwc:else>
                     <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
                 </template>
-            </template>
-            <template lwc:else>
-                <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
-            </template>
-        </div>
-    </lightning-card>
+            </div>
+        </lightning-card>
+    </div>
 </template>

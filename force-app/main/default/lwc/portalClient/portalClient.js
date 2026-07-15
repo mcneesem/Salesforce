@@ -15,6 +15,7 @@ export default class PortalClient extends LightningElement {
             'Portal_Project__c.Name' ,
             'Portal_Project__c.Label__c' ,
             'Portal_Project__c.Portal_Client__c' ,
+            'Portal_Project__c.Welcome_Guidance_Id__c' ,
         ] ,
         sortBy: [ 'Portal_Project__c.Id' ]
     })
@@ -37,6 +38,11 @@ export default class PortalClient extends LightningElement {
 
     get projectId() {
         return ( this.projects ? this.projects[0]?.fields?.Id?.value : undefined );
+    }
+
+    get guidanceId() {
+        // change to generically pass Portal_Project__c.Portal_Guidance__c
+        return ( this.projects ? this.projects[0]?.fields?.Welcome_Guidance_Id__c?.value : undefined );
     }
 
     get hasContent() {

@@ -83,21 +83,21 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
-        <fields>Portal_Client__c</fields>
+        <fields>Portal_Project__c</fields>
         <fields>Position__c</fields>
         <fields>Contact__c</fields>
         <relatedList>Portal_Team_Member__c.Portal_Guidance__c</relatedList>
-        <sortField>Portal_Client__c</sortField>
+        <sortField>Portal_Project__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
-        <fields>Portal_Client__c</fields>
+        <fields>Portal_Project__c</fields>
         <fields>Type__c</fields>
         <fields>Due_Date__c</fields>
         <relatedList>Portal_Task__c.Portal_Guidance__c</relatedList>
-        <sortField>Portal_Client__c</sortField>
+        <sortField>Portal_Project__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

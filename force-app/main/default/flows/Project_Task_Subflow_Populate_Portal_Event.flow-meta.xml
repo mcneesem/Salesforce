@@ -127,6 +127,13 @@
                 <stringValue>Premier Training</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_projectmeetings</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Transition Progress Meeting</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Project_Meetings_Tasks</targetReference>
         </connector>
@@ -509,7 +516,19 @@
   &quot;Enrollment Administrator Training&quot; , &quot;Enrollment Administrator Training&quot; ,
   &quot;Transition to Service&quot; , &quot;Client Transition To Service&quot; ,
   &quot;Premier Training&quot; , &quot;Insperity Premier/Payroll Training&quot; ,
+  &quot;Transition Progress Meeting&quot; , &quot;Transition Progress Meeting&quot; ,
   &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Status for portal event</description>
+        <name>portalEventStatus</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  {!recordProjectTask.pse__Status__c} ,
+  &quot;Complete&quot; , &quot;Completed&quot; ,
+  &quot;Canceled&quot; , &quot;Hidden&quot; ,
+  &quot;Pending&quot;
 )</expression>
     </formulas>
     <interviewLabel>Project Task - Subflow - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
@@ -659,6 +678,7 @@
         <queriedFields>Name</queriedFields>
         <queriedFields>pse__Start_Date_Time__c</queriedFields>
         <queriedFields>pse__End_Date_Time__c</queriedFields>
+        <queriedFields>pse__Status__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Portal_Event</name>
@@ -752,6 +772,13 @@
                     <elementReference>recordProjectTask.Id</elementReference>
                 </value>
             </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalEventStatus</elementReference>
+                </value>
+            </transformValueActions>
         </transformValues>
     </transforms>
     <transforms>
@@ -801,6 +828,13 @@
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>recordProjectTask.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalEventStatus</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>

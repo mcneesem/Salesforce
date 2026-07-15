@@ -29,6 +29,11 @@
                 <label>CAM</label>
             </value>
             <value>
+                <fullName>Core/EG</fullName>
+                <default>false</default>
+                <label>Core/EG</label>
+            </value>
+            <value>
                 <fullName>Cross-sell</fullName>
                 <default>false</default>
                 <label>Cross-sell</label>
@@ -44,9 +49,19 @@
                 <label>Extended Lookback</label>
             </value>
             <value>
-                <fullName>Termination</fullName>
+                <fullName>Medical Downgrade</fullName>
                 <default>false</default>
-                <label>Termination</label>
+                <label>Medical Downgrade</label>
+            </value>
+            <value>
+                <fullName>MidMarket</fullName>
+                <default>false</default>
+                <label>MidMarket</label>
+            </value>
+            <value>
+                <fullName>Mid-Year Change</fullName>
+                <default>false</default>
+                <label>Mid-Year Change</label>
             </value>
             <value>
                 <fullName>New Product</fullName>
@@ -54,9 +69,19 @@
                 <label>New Product</label>
             </value>
             <value>
+                <fullName>Non-Renewal</fullName>
+                <default>false</default>
+                <label>Non-Renewal</label>
+            </value>
+            <value>
                 <fullName>Renewal</fullName>
                 <default>false</default>
                 <label>Renewal</label>
+            </value>
+            <value>
+                <fullName>Termination</fullName>
+                <default>false</default>
+                <label>Termination</label>
             </value>
             <value>
                 <fullName>WX_WA CAM</fullName>
@@ -119,6 +144,26 @@
         <valueSettings>
             <controllingFieldValue>New Product</controllingFieldValue>
             <valueName>WX_WA CAM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
+            <valueName>Core/EG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
+            <valueName>Medical Downgrade</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
+            <valueName>MidMarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
+            <valueName>Mid-Year Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
+            <valueName>Non-Renewal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Existing Product</controllingFieldValue>

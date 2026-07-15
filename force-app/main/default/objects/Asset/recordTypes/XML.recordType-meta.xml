@@ -3,7 +3,7 @@
     <fullName>XML</fullName>
     <active>true</active>
     <compactLayoutAssignment>NSP_Custom_Compact_Layout</compactLayoutAssignment>
-    <label>XML</label>
+    <label>Time Wage Import</label>
     <picklistValues>
         <picklist>Component__c</picklist>
         <values>

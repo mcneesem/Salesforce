@@ -4,8 +4,8 @@ import PORTAL_PAY_PERIOD_OBJECT from "@salesforce/schema/Portal_Pay_Period__c";
 
 export default class PortalPayPeriod extends LightningElement {
     @api record; // is-a Portal_Pay_Period__c
-    error;
 
+    error;
     fields;
     @wire(getObjectInfo, {
         objectApiName: PORTAL_PAY_PERIOD_OBJECT
@@ -22,16 +22,36 @@ export default class PortalPayPeriod extends LightningElement {
         }
     }
 
-    get leftColumnSize() {
-        return "7";
+    get columnSizeFull() {
+        return 12;
     }
 
-    get rightColumnSize() {
-        return "5";
+    get columnSizeLeft() {
+        return 7;
+    }
+
+    get columnSizeRight() {
+        return ( this.columnSizeFull - this.columnSizeLeft );
     }
 
     get hasFirstPayPeriod() {
         return ( this.record?.fields?.First_Pay_Period_Start__c?.value && this.record?.fields?.First_Pay_Period_End__c?.value );
+    }
+
+    get firstPayPeriodStart() {
+        return this.record?.fields?.First_Pay_Period_Start__c?.value;
+    }
+
+    get firstPayPeriodEnd() {
+        return this.record?.fields?.First_Pay_Period_End__c?.value;
+    }
+
+    get firstPayDate() {
+        return this.record?.fields?.First_Pay_Date__c?.value;
+    }
+
+    get payFrequency() {
+        return this.record?.fields?.Pay_Frequency__c?.value;
     }
 
 }

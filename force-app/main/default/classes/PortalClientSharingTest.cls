@@ -34,6 +34,18 @@ private class PortalClientSharingTest {
         sharedContact.Portal_Alias__c = 'lastname.number';
         insert sharedContact;
         //
+        List<AccountContactRelation> sharedAccountContactRelations = new List<AccountContactRelation>(
+            [
+                SELECT Id
+                FROM AccountContactRelation
+                ORDER BY CreatedDate DESC
+            ]
+        );
+        for ( AccountContactRelation sharedAccountContactRelation : sharedAccountContactRelations ) {
+            sharedAccountContactRelation.Enable_Portal_Client__c = true;
+        }
+        update sharedAccountContactRelations;
+        //
         Portal_Client__c sharedPortalClient = new Portal_Client__c();
         sharedPortalClient.Name = 'sharedPortalClientName';
         sharedPortalClient.Account__c = sharedAccount.Id;
@@ -68,6 +80,27 @@ private class PortalClientSharingTest {
         System.runas( deploymentManager ) {
             insert sharedPortalUser;
         }
+        //
+        pse__Proj__c sharedProject = new pse__Proj__c();
+        sharedProject.Name = 'sharedProject';
+        insert sharedProject;
+        //
+        pse__Project_Task__c sharedProjectTask = new pse__Project_Task__c();
+        sharedProjectTask.Name = 'sharedProjectTask';
+        sharedProjectTask.pse__Project__c = sharedProject.Id;
+        insert sharedProjectTask;
+        //
+        Portal_Project__c sharedPortalProject = new Portal_Project__c();
+        sharedPortalProject.Name = 'sharedPortalProject';
+        sharedPortalProject.Portal_Client__c = sharedPortalClient.Id;
+        sharedPortalProject.Project__c = sharedProject.Id;
+        insert sharedPortalProject;
+        //
+        Portal_Task__c sharedPortalTask = new Portal_Task__c();
+        sharedPortalTask.Name = 'sharedPortalTask';
+        sharedPortalTask.Portal_Project__c = sharedPortalProject.Id;
+        sharedPortalTask.Project_Task__c = sharedProjectTask.Id;
+        insert sharedPortalTask;
         //
     }
 
@@ -168,15 +201,46 @@ private class PortalClientSharingTest {
             ]
         );
         //
-        //insert new Portal_Client__Share(
-        //    ParentId=clients.values()[0].Id ,
-        //    UserOrGroupId=portalUsers.values()[0].Id ,
-        //    AccessLevel='Read' ,
-        //    RowCause=Schema.Portal_Client__Share.RowCause.InsperitySharing__c
-        //);
-        //
         Test.startTest();
         PortalClientSharing.enqueueJob( clients.keySet() );
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testCreatePortalLinks() {
+        List<Portal_Task__c> records = new List<Portal_Task__c>(
+            [
+                SELECT Id
+                FROM Portal_Task__c
+                ORDER BY CreatedDate DESC
+                LIMIT 1
+            ]
+        );
+        //
+        String recordId = records[0].Id;
+        //
+        ContentVersion sharedContentVersion = new ContentVersion(
+            Title='sharedContentVersion' ,
+            PathOnClient='sharedContentVersion' ,
+            VersionData=Blob.valueOf( 'sharedContentVersion' ) ,
+            FirstPublishLocationId=recordId
+        );
+        insert sharedContentVersion;
+        //
+        List<ContentVersion> sharedContentVersions = [
+            SELECT Id , ContentDocumentId
+            FROM ContentVersion
+            WHERE ( Id = :sharedContentVersion.Id )
+            LIMIT 1
+        ];
+        //
+        List<String> contentDocumentIds = new List<String>();
+        for ( ContentVersion content : sharedContentVersions ) {
+            contentDocumentIds.add( content.ContentDocumentId );
+        }
+        //
+        Test.startTest();
+        PortalClientSharing.createPortalLinks( recordId , contentDocumentIds );
         Test.stopTest();
     }
 

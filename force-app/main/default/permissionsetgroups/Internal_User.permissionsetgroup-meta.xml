@@ -11,14 +11,13 @@
     <permissionSets>Assign_Connected_App_DocuSign</permissionSets>
     <permissionSets>Assign_Connected_App_LinkedIn_Sales_Navigator_Writeback</permissionSets>
     <permissionSets>Assign_Connected_App_SalesforceIQ</permissionSets>
-    <permissionSets>Assign_Connected_App_Salesforce_for_Android</permissionSets>
-    <permissionSets>Assign_Connected_App_Salesforce_for_iOS</permissionSets>
     <permissionSets>Assign_Connected_App_Wave_Web</permissionSets>
     <permissionSets>Assign_Connected_App_ZoomInfo</permissionSets>
     <permissionSets>Assign_Connected_App_tbid_digital_salesforce_com</permissionSets>
     <permissionSets>Case_Account_Contact_Information</permissionSets>
     <permissionSets>Case_Creation_Screen_Flow</permissionSets>
     <permissionSets>Case_Guidance_Access</permissionSets>
+    <permissionSets>Credit_Default_Visibility</permissionSets>
     <permissionSets>DNB_Connect_Components_access_Insperity</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>

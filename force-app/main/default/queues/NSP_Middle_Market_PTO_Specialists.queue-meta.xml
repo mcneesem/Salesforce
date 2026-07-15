@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>midmarketptoteam@insperity.com</email>
+    <email>national.ptospecialists@insperity.com</email>
     <name>Middle Market PTO Specialists</name>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>NSP_Accrual_Profile__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>pse__Proj__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>pse__Project_Task__c</sobjectType>
     </queueSobject>
 </Queue>

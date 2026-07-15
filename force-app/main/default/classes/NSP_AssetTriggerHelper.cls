@@ -105,45 +105,49 @@ public with sharing class NSP_AssetTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) {
-        this.updateInvoiceDate( newMap.values() , oldMap );
-        if ( NSP_AssetTriggerHelper.isEnabledAccountAssetSummary ) {
-            AccountAssetSummary.accountWOWXFieldUpdate( newMap.values() , oldMap );
-        } else {
-            this.peoTESClientStatus( newMap.values() , oldMap );
-        }
-        this.updateRETAsset( newMap.values() , oldMap );
-        Set<Id> asstIdSet = new Set<Id>();
-        List<Asset> ast = new List<Asset>();
-        List<Asset> docusignAsset = new List<Asset>();
-        for ( Asset asst : newMap.values() ) {
-            Asset oldRecord = oldMap.get( asst.Id );
-            if ( oldRecord != null ) {
-                if ( ( asst.NSP_Government_Contractor__c != oldRecord.NSP_Government_Contractor__c )
-                    && ( asst.recordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
-                    )
-                {
-                    asstIdSet.add( asst.Id );
-                }
-                if ( asst.Status != oldRecord.Status ) {
-                    ast.add( asst );
-                }
-                if ( ( asst.Status != oldRecord.Status )
-                    && ( asst.RecordTypeId != NSP_AssetTriggerHelper.woAssetRecordTypeId )
-                    && ( asst.RecordTypeId != NSP_AssetTriggerHelper.cpqAssetRecordTypeId )
-                    )
-                {
-                    docusignAsset.add( asst );
+        try {
+            this.updateInvoiceDate( newMap.values() , oldMap );
+            if ( NSP_AssetTriggerHelper.isEnabledAccountAssetSummary ) {
+                AccountAssetSummary.accountWOWXFieldUpdate( newMap.values() , oldMap );
+            } else {
+                this.peoTESClientStatus( newMap.values() , oldMap );
+            }
+            this.updateRETAsset( newMap.values() , oldMap );
+            Set<Id> asstIdSet = new Set<Id>();
+            List<Asset> ast = new List<Asset>();
+            List<Asset> docusignAsset = new List<Asset>();
+            for ( Asset asst : newMap.values() ) {
+                Asset oldRecord = oldMap.get( asst.Id );
+                if ( oldRecord != null ) {
+                    if ( ( asst.NSP_Government_Contractor__c != oldRecord.NSP_Government_Contractor__c )
+                        && ( asst.recordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                        )
+                    {
+                        asstIdSet.add( asst.Id );
+                    }
+                    if ( asst.Status != oldRecord.Status ) {
+                        ast.add( asst );
+                    }
+                    if ( ( asst.Status != oldRecord.Status )
+                        && ( asst.RecordTypeId != NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                        && ( asst.RecordTypeId != NSP_AssetTriggerHelper.cpqAssetRecordTypeId )
+                        )
+                    {
+                        docusignAsset.add( asst );
+                    }
                 }
             }
-        }
-        if ( !docusignAsset.isEmpty() ) {
-            NSP_AssetTriggerHelper.updateAssetInDocusign( docusignAsset );
-        }
-        if ( !ast.isEmpty() ) {
-            NSP_AssetTriggerHelper.updateActiveAssets( ast );
-        }
-        if ( !asstIdSet.isEmpty() ) {
-            this.mapGovernmentContratcorOnPDS( asstIdSet );
+            if ( !docusignAsset.isEmpty() ) {
+                NSP_AssetTriggerHelper.updateAssetInDocusign( docusignAsset );
+            }
+            if ( !ast.isEmpty() ) {
+                NSP_AssetTriggerHelper.updateActiveAssets( ast );
+            }
+            if ( !asstIdSet.isEmpty() ) {
+                this.mapGovernmentContratcorOnPDS( asstIdSet );
+            }
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
     }
 

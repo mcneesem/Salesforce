@@ -1,29 +1,19 @@
-//***Test Class for NSP_QuoteTriggerHelper Class***
-/**
-* @description  : Test Class forNSP_QuoteTriggerHelper Class
-* @author Rakesh Das
-* @date 09/03/2021
-* Name : NSP_QuoteTriggerHelper_Test
-*/
-@IsTest
-public with sharing class NSP_QuoteTriggerHelper_Test {
-    public static final String OPP_TYPE_NEW_PRODUCT = 'New Product'; // Added as part of code fix
-    public NSP_QuoteTriggerHelper_Test() {
-
-    }
+@isTest
+private with sharing class NSP_QuoteTriggerHelper_Test {
+    private static final String OPP_TYPE_NEW_PRODUCT = 'New Product'; // Added as part of code fix
 
     @testSetup
-    static void setupTestData(){
-       // NSP_TestHelpser th = new NSP_TestHelper();
+    private static void setupTestData() {
+        // NSP_TestHelpser th = new NSP_TestHelper();
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         NSP_TestHelper.createProduct('Test Product',true);
-       
     }
 
-    static testMethod void pricebookmappingTest(){
+    @isTest
+    private static void pricebookmappingTest() {
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled=true;
         NSP_QuoteLineTriggerHandler.TriggerDisabled=true;
 
@@ -32,13 +22,13 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         product1.ProductCode = 'PerformSmart Traditional';
         update product1;
 
-        
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id, OPP_TYPE_NEW_PRODUCT ,true);
         PriceBookEntry pe1 = NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
         SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
         insert quote1;
         List<SBQQ__Quoteline__c> qlines = NSP_TestHelper.createCPQQuotelines(quote1,new List<Product2>{product1},new List<PriceBookEntry> {pe1}, false);
        	qlines[0].NSP_Lock_On_QLI__c = true;
+        qLines[0].Product_Description_Template__c = 'Test';
         insert qlines;
         Test.startTest();
         quote1.ApprovalStatus__c = NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED;
@@ -49,13 +39,12 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         System.assertEquals(quote1.ApprovalStatus__c, NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED);
         NSP_BudgetaryQuoteTaxController.stampTaxFieldsToQuote(new List<String> {opp1.Id});
         Test.stopTest();
-
-
     }
 
-    static testMethod void pricebookmappingTestwithClone(){
+    @isTest
+    private static void pricebookmappingTestwithClone() {
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled=true;
         NSP_QuoteLineTriggerHandler.TriggerDisabled=true;
 
@@ -64,7 +53,6 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         product1.ProductCode = 'PerformSmart Traditional';
         update product1;
 
-        
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id, OPP_TYPE_NEW_PRODUCT ,true);
         PriceBookEntry pe1 = NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
         SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
@@ -83,8 +71,9 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         System.assertEquals(quote1.ApprovalStatus__c, NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED);
        Test.stopTest();
     }
-    static testMethod void partnerPriceBookTest(){
 
+    @isTest
+    private static void partnerPriceBookTest() {
         Account acc1 = [SELECT Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1]; //Added WHERE Condition as part of code fix
         Product2 product1 = [SELECT Id, Name FROM Product2 WHERE Name = 'Test Product' LIMIT 1]; //Added WHERE Condition as part of code fix
         Account partnerAcc = new Account();
@@ -99,11 +88,10 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
         System.assertEquals(opp1.NSP_Partner__c, partnerAcc.Id);
         Test.stopTest();
-
     }
 
-    static testMethod void talentConnectValidationTest(){
-
+    @isTest
+    private static void talentConnectValidationTest() {
         Account acc1 = [SELECT Id, Name FROM Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1]; //Added WHERE Condition as part of code fix
         Test.startTest();
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id, OPP_TYPE_NEW_PRODUCT ,true);
@@ -117,9 +105,8 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
         System.assertEquals(quote1.NSP_TC_Implementation_Plan_Selected__c, 'Custom');
     }
 
-
-    static testMethod void recrutingPricebookmappingTest(){
-
+    @isTest
+    private static void recrutingPricebookmappingTest() {
         Account acc1 = [SELECT Id, Name FROM Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1]; //Added WHERE Condition as part of code fix
         Test.startTest();
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id, OPP_TYPE_NEW_PRODUCT ,false);
@@ -128,7 +115,7 @@ public with sharing class NSP_QuoteTriggerHelper_Test {
 
         Test.stopTest();
         System.assertEquals(opp1.NSP_PrimaryProduct__c, 'Recruiting Services');
-
     }
 
 }
+//

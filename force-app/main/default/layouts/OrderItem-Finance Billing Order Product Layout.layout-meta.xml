@@ -134,6 +134,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Product_Description_Key__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_QL_ActionType__c</field>
             </layoutItems>
             <layoutItems>

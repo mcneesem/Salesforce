@@ -39,6 +39,13 @@
                     <elementReference>$Record.OwnerId</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Setup.Renewal_Opportunity_Settings__c.RenewalRecordTypeId__c</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Opportunity_Subflow_Email_Alerts</targetReference>
             </connector>

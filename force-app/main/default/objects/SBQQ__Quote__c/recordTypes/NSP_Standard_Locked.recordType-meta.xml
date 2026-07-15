@@ -1082,7 +1082,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>E-Verify</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I-9 Assist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I-9 Assist %26 E-Verify</fullName>
             <default>false</default>
         </values>
         <values>

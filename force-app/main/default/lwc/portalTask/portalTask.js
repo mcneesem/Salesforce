@@ -1,17 +1,12 @@
-import { LightningElement , api } from "lwc";
+import { LightningElement , api , wire } from "lwc";
 import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from "lightning/navigation";
 import Toast from "lightning/toast";
-import { deleteRecord , updateRecord } from "lightning/uiRecordApi";
+import { deleteRecord } from "lightning/uiRecordApi";
+import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
 import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
-import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
-import PORTAL_TASK_STATUS_FIELD from "@salesforce/schema/Portal_Task__c.Status__c";
-import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
-import PORTAL_TASK_VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
-import PORTAL_TASK_VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer__c";
-import PORTAL_TASK_VALUE_TEXT_FIELD from "@salesforce/schema/Portal_Task__c.Value_Text__c";
 import viewErrorPanel from "@salesforce/customPermission/View_Error_Panel";
 
 export default class PortalTask extends NavigationMixin(LightningElement) {
@@ -23,100 +18,170 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     @api
     set record( value ) {
         this._record = value;
-        if ( this.showInputDate ) {
-            this.recordValue = this.record?.fields?.Value_Date__c?.value;
-        } else if ( this.showInputDateTime ) {
-            this.recordValue = this.record?.fields?.Value_DateTime__c?.value;
-        } else if ( this.showInputInteger ) {
-            this.recordValue = this.record?.fields?.Value_Integer__c?.value;
-        } else if ( this.showInputText ) {
-            this.recordValue = this.record?.fields?.Value_Text__c?.value;
-        }
         this.modified();
     }
 
-    _recordValue; // is-an ANY ~ populated from various Portal_Task__c.Value_***__c fields...
-    get recordValue() {
-        return this._recordValue;
+    _children; // is-a List<Portal_Task__c>
+    get children() {
+        return this._children;
     }
-    set recordValue( value ) {
-        this._recordValue = value;
-        // when undefined, initialize input value to record value...
-        if ( !this.inputValue ) {
-            this.inputValue = value;
+    @api
+    set children( value ) {
+        this._children = value;
+        this.calculateSummaryStatus();
+    }
+
+    @wire(getRelatedListRecords, {
+        parentRecordId: '$recordId' ,
+        relatedListId: 'Child_Portal_Tasks__r' ,
+        fields: [
+            'Portal_Task__c.Id' ,
+            'Portal_Task__c.Status__c' ,
+        ] ,
+        sortBy: [ 'Portal_Task__c.Rank__c' ]
+    })
+    childrenInfo({ error, data }) {
+        if ( data ) {
+            this.children = data.records;
+            this.error = undefined;
+        } else if ( error ) {
+            this.error = error;
+            this.children = undefined;
         }
     }
+
+    //
+    // Field Accessors
+    //
 
     get recordId() {
         return ( this.record?.fields?.Id?.value ? this.record.fields.Id.value : undefined );
     }
 
-    get updateRecordInput() {
-        const fields = {};
-        fields[PORTAL_TASK_ID_FIELD.fieldApiName] = this.recordId;
-        if ( this.hasProjectTask ) {
-            fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending - Insperity"; // force-pending state for regular Portal Tasks...
-        } else {
-            fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
+    get action() {
+        return ( this.record?.fields?.Action__c?.value ? this.record.fields.Action__c.value : undefined );
+    }
+
+    get dueDate() {
+        return ( this.record?.fields?.Due_Date__c?.value ? this.record.fields.Due_Date__c.value : undefined );
+    }
+
+    get guidanceId() {
+        return ( this.record?.fields?.Portal_Guidance__c?.value ? this.record.fields.Portal_Guidance__c.value : undefined );
+    }
+
+    get hasProjectTask() {
+        return ( this.record?.fields?.Has_Project_Task__c?.value );
+    }
+
+    get isEditable() {
+        return ( this.record?.fields?.Is_Editable__c?.value );
+    }
+
+    get name() {
+        return ( this.record?.fields?.Name?.value ? this.record.fields.Name.value : undefined );
+    }
+
+    get status() {
+        let local = this.record?.fields?.Status__c?.value;
+        if ( ( local == "Summary") && this.summaryStatus ) {
+            local = this.summaryStatus;
         }
-        if ( this.showValueInput ) {
-            if ( this.showInputDate ) {
-                fields[PORTAL_TASK_VALUE_DATE_FIELD.fieldApiName] = this.recordValue;
-            } else if ( this.showInputDateTime ) {
-                fields[PORTAL_TASK_VALUE_DATETIME_FIELD.fieldApiName] = this.recordValue;
-            } else if ( this.showInputInteger ) {
-                fields[PORTAL_TASK_VALUE_INTEGER_FIELD.fieldApiName] = this.recordValue;
-            } else if ( this.showInputText ) {
-                fields[PORTAL_TASK_VALUE_TEXT_FIELD.fieldApiName] = this.recordValue;
+        return local;
+    }
+
+    summaryStatus;
+    calculateSummaryStatus() {
+        let local;
+        if ( ( this.record?.fields?.Status__c?.value == "Summary") && ( this.children?.length > 0 ) ) {
+            const rankedStatuses = [
+                "Pending" ,
+                "Pending - Client" ,
+                "Pending - Insperity" ,
+                "Completed" ,
+            ];
+            const uniqueChildStatuses = Array.from(
+                this.children.reduce(
+                    ( accumulator , currentValue ) => {
+                        let childStatus = currentValue?.fields?.Status__c?.value;
+                        if ( childStatus && rankedStatuses.includes( childStatus ) ) {
+                            accumulator.add( childStatus );
+                        }
+                        return accumulator;
+                    } ,
+                    new Set()
+                )
+            );
+            const sortedChildStatuses = uniqueChildStatuses.slice().sort(
+                ( a , b ) => {
+                    let order = 0;
+                    if ( rankedStatuses.includes( a ) && rankedStatuses.includes( b ) ) {
+                        order = ( rankedStatuses.indexOf( a ) - rankedStatuses.indexOf( b ) );
+                    } else if ( rankedStatuses.includes( a ) >= 0 ) {
+                        order = -1;
+                    } else {
+                        order = 1;
+                    }
+                    return order;
+                }
+            );
+            local = rankedStatuses[0];
+            if ( sortedChildStatuses.length > 0 ) {
+                local = sortedChildStatuses[0];
             }
         }
-        return { fields };
+        this.summaryStatus = local;
     }
 
     //
-    //
+    // Guidance
     //
 
-    isVisibleBody = false;
     get showBody() {
         return ( this.isChild || this.isVisibleBody );
     }
+
     get hasBody() {
         return ( this.hasGuidance || this.isParent );
     }
-    stopPropagation( event ) {
-        event?.stopPropagation();
+
+    get hasGuidance() {
+        return ( this.guidanceId );
     }
+
+    isVisibleBody = false;
     toggleVisibleBody( event ) {
         this.stopPropagation( event );
         this.isVisibleBody = !this.isVisibleBody;
         this.modified();
     }
+
+    stopPropagation( event ) {
+        event?.stopPropagation();
+    }
+
     handleClickAccordion( event ) {
         if ( !this.isVisibleBody ) {
             this.toggleVisibleBody( event );
         }
     }
+
     handleClickTitle( event ) {
         this.toggleVisibleBody( event );
     }
+
     handleKeyDown( event ) {
         // only created to appease sonar...
     }
-    get hasGuidance() {
-        return ( this.record?.fields?.Portal_Guidance__c?.value );
-    }
-    get isEditable() {
-        return ( this.record?.fields?.Is_Editable__c?.value );
-    }
-    get hasProjectTask() {
-        return ( this.record?.fields?.Has_Project_Task__c?.value );
+
+    //
+    // Status Icon
+    //
+
+    get iconSize() {
+        return "xx-small";
     }
 
-    // status icon...
-    get status() {
-        return ( this.record?.fields?.Status__c?.value );
-    }
     get statusIconTitle() {
         let result = this.status;
         if ( this.status === "Pending - Insperity" ) {
@@ -126,6 +191,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         }
         return result;
     }
+
     get statusIconName() {
         let result = "utility:clock";
         if ( this.status === "Completed" ) {
@@ -137,6 +203,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         }
         return result;
     }
+
     get statusIconVariant() {
         let result;
         if ( this.status === "Completed" ) {
@@ -149,143 +216,75 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return result;
     }
 
+    //
+    // Variant
+    //
+
     @api variant;
+
     get isParent() {
         return ( !this.isChild );
     }
+
     get isChild() {
         return ( this.variant === "child" );
     }
+
+    //
+    // Column Attributes
+    //
+
     get titleSize() {
-        return ( this.isChild ? "7" : "5" );
+        let value = "5";
+        if ( this.isChild ) {
+            value = "7";
+        }
+        if ( this.isCompact ) {
+            value = "12";
+        }
+        return value;
+    }
+
+    get titleClass() {
+        return ( this.isCompact ? "slds-m-bottom_medium" : "" );
+    }
+
+    get showDueDate() {
+        return ( this.isParent && this.isComfy );
+    }
+
+    get dueDateSize() {
+        return ( this.isCompact ? "0" : "2" );
+    }
+
+    get actionSize() {
+        return ( this.isCompact ? "8" : "3" );
+    }
+
+    get fileCountSize() {
+        return ( this.isCompact ? "2" : "1" );
+    }
+
+    get statusSize() {
+        return ( this.isCompact ? "2" : "1" );
     }
 
     //
+    // Density
     //
-    //
 
-    handleClickAction( event ) {
-        if ( this.showFileUploadInput || this.showValueInput ) {
-            this.stopPropagation( event );
-        } else {
-            this.handleClickAccordion( event );
-        }
+    @api density;
+
+    get isComfy() {
+        return ( !this.isCompact );
     }
 
-    inputValue;
-    handleChangeInput( event ) {
-        let value = event?.detail?.value;
-        let valueFloored = value;
-        if ( this.showInputInteger && value && !isNaN( value ) ) {
-            // floor all integer inputs...
-            valueFloored = Math.floor( value );
-        }
-        if ( value != ( "" + valueFloored ) ) {
-            // reset to initial value any time the input is not valid...
-            value = this.recordValue;
-        }
-        this.inputValue = value;
+    get isCompact() {
+        return ( this.density === "compact" );
     }
 
-    handleFocusInput( event ) {
-        if ( this.isAutoSaveEnabled ) {
-            // in auto save mode, initialize input value to record value...
-            this.inputValue = this.recordValue;
-        }
-    }
-
-    handleBlurInput( event ) {
-        if ( this.isAutoSaveEnabled ) {
-            this.handleSave(); // start auto save...
-        }
-    }
-
-    handleClickSave( event ) {
-        this.stopPropagation( event );
-        // start manual save...
-        this.handleSave();
-    }
-
-    isSaving;
-    async handleSave() {
-        if ( !this.isSaveDisabled ) {
-            this.recordValue = this.inputValue;
-            this.isSaving = true;
-            try {
-                await updateRecord( this.updateRecordInput )
-                let successMessage = "Record Saved";
-                if ( this.name ) {
-                    successMessage = "Record Saved (" + this.name + ")";
-                }
-                this.showToastSuccess( "Success" , successMessage );
-            } catch ( error ) {
-                let errorLabel = "Error";
-                let errorMessage = "Error Saving Record";
-                if ( this.name ) {
-                    errorMessage = "Error Saving Record (" + this.name + ")";
-                }
-                if ( this.isErrorDebugger ) {
-                    errorLabel = errorMessage;
-                    errorMessage = JSON.stringify( error );
-                }
-                this.showToastError( errorLabel , errorMessage );
-                this.handleLogInfo( 'handleSave' , JSON.stringify( error ) );
-            }
-            this.isSaving = false;
-        }
-    }
-
-    get isInputDisabled() {
-        return ( this.isLoading || !this.isEditable );
-    }
-
-    get saveButtonVariant() {
-        return ( this.isSaveDisabled ? undefined : "brand" );
-    }
-
-    get isSaveDisabled() {
-        return (
-            this.isLoading
-            || ( this.showValueInput && ( this.inputValue == this.recordValue ) )
-        );
-    }
-
-    @api saveVariant; // auto, icon, text...
-    get isAutoSaveEnabled() {
-        return ( !this.saveVariant || ( this.saveVariant == "auto" ) );
-    }
-
-    get showSaveButtonIcon() {
-        return ( this.showValueInput && !this.isAutoSaveEnabled && ( this.saveVariant == "icon" ) );
-    }
-
-    get showSaveButton() {
-        return ( this.showValueInput && !this.isAutoSaveEnabled && ( this.saveVariant == "text" ) && !this.isSaveDisabled );
-    }
-
-    get showValueInput() {
-        return (
-            this.showInputDate
-            || this.showInputDateTime
-            || this.showInputInteger
-            || this.showInputText
-        );
-    }
-
-    get showInputDate() {
-        return ( this.action == "Date" );
-    }
-
-    get showInputDateTime() {
-        return ( this.action == "DateTime" );
-    }
-
-    get showInputInteger() {
-        return ( this.action == "Integer" );
-    }
-
-    get showInputText() {
-        return ( this.action == "Text" );
+    get isMultipleRows() {
+        return ( this.isCompact );
     }
 
     //
@@ -330,39 +329,29 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( this.recordId ? this.recordId : undefined );
     }
 
-    links;
-    handleLoaded( event ) {
-        if ( event ) {
-            this.links = event?.detail;
-        }
-    }
-
     get isLoading() {
-        return ( !this.links || this.isDeleting || this.isSaving );
+        return (
+            !this.links
+            || this.isDeleting
+        );
     }
 
     get totalRelatedFiles() {
         return ( ( this.links ) ? this.links.length : 0 );
     }
 
-    get action() {
-        return ( this.record?.fields?.Action__c?.value ? this.record.fields.Action__c.value : undefined );
+    get isInputDisabled() {
+        return ( this.isLoading || !this.isEditable );
     }
 
-    handleUploadFinished( event ) {
-        if ( event?.detail?.files?.length ) {
-            this.showToastSuccess( "Success" , "File Uploaded" );
-            this.modified();
-            let requiresSave = false;
-            if ( this.isAutoSaveEnabled ) {
-                requiresSave = !this.hasProjectTask; // always save orphaned Portal Tasks...
-                if ( this.hasProjectTask && ( this.status !== "Pending - Insperity" ) ) {
-                    requiresSave = true; // conditionally save regular Portal Tasks...
-                }
-            }
-            if ( requiresSave ) {
-                this.handleSave();
-            }
+    //
+    // Event Handlers
+    //
+
+    links;
+    handleLoaded( event ) {
+        if ( event ) {
+            this.links = event?.detail;
         }
     }
 
@@ -371,8 +360,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         this.modstamp = Date.now();
     }
 
-    get name() {
-        return ( this.record?.fields?.Name?.value ? this.record.fields.Name.value : undefined );
+    handleModified( event ) {
+        this.stopPropagation( event );
+        this.modified();
     }
 
     async handleClickFiles( event ) {
@@ -479,6 +469,18 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     //
     // Toasters
     //
+
+    handleToasted( event ) {
+        this.stopPropagation( event );
+        if ( event?.detail ) {
+            const detail = event?.detail;
+            this.showToastVariant(
+                detail?.label ,
+                detail?.message ,
+                detail?.variant
+            );
+        }
+    }
 
     showToastSuccess( label , message ) {
         if ( label && message ) {

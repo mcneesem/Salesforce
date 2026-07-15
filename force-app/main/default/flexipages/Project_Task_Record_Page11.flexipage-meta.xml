@@ -7,6 +7,22 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>pse__Project_Task__c.Portal_Task_Files</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Use_Portal_Task_Files}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.pse__Project__r.NSP_Visible_to_Client__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>pse__Project_Task__c.New_Termination_Form</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
@@ -579,6 +595,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Long_Description__c</fieldItem>
                 <identifier>Recordpse_Long_Description_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Associated_RSAP_Name__c</fieldItem>
+                <identifier>RecordAssociated_RSAP_Name__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Name}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>Completion of Termination Analysis</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
