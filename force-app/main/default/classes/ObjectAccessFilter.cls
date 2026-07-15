@@ -7,7 +7,7 @@ public with sharing class ObjectAccessFilter {
     private static final Integer USER_RECORD_ACCESS_BATCH_SIZE = 200;
     private static final Integer DEFAULT_MAX_RECORDS = 2000;
 
-    @InvocableMethod(label='Filter Editable Records')
+    @InvocableMethod(label='Filter Editable Records' description='Filter out records running User is not allowed to update')
     public static List<FilterResult> filterEditableRecords( List<FilterInput> inputs ) {
         List<FilterResult> results = new List<FilterResult>();
         if ( inputs != null && !inputs.isEmpty() ) {
