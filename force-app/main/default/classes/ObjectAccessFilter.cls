@@ -68,7 +68,7 @@ public with sharing class ObjectAccessFilter {
         List<Id> candidateIds = new List<Id>( new Map<Id, SObject>( candidates ).keySet() );
         List<List<Id>> batches = batchIds( candidateIds, USER_RECORD_ACCESS_BATCH_SIZE );
         for ( List<Id> batch : batches ) {
-            for ( UserRecordAccess access : [
+            for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
                 SELECT RecordId
                 FROM UserRecordAccess
                 WHERE UserId = :UserInfo.getUserId()
