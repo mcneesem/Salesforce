@@ -1291,7 +1291,7 @@
         <name>currentMembers</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Account_Group_Member__c</objectType>
     </variables>

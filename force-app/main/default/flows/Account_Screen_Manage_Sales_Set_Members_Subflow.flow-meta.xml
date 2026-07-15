@@ -75,7 +75,7 @@
             <assignToReference>inactiveMemberIDs</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Find_Active_Members.NSP_Member_Account__c</elementReference>
+                <elementReference>Find_Active_Members.NSP_Member_Account__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1151,6 +1151,12 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <flowName>Account_Screen_Add_Sales_Set_Members_Subflow</flowName>
+        <inputAssignments>
+            <name>currentMembers</name>
+            <value>
+                <elementReference>currentMembers</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>inactiveMemberIDs</name>
             <value>
