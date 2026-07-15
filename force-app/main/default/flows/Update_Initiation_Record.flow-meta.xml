@@ -153,6 +153,7 @@
             <label>RSAP Valid</label>
         </rules>
     </decisions>
+    <description>Updated with fault paths and removed triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>Update Initiation Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Initiation Record</label>
