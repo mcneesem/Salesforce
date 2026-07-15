@@ -4,8 +4,8 @@
         <description>Action for Qc Rep Assignment Email Alert</description>
         <name>Qc_Rep_Assignment_Email_Alert</name>
         <label>Qc Rep Assignment Email Alert</label>
-        <locationX>110</locationX>
-        <locationY>350</locationY>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -46,8 +46,8 @@
         <description>Action for Qc Rep Trailing Email Alert</description>
         <name>Qc_Rep_Trailing_Email_Alert</name>
         <label>Qc Rep Trailing Email Alert</label>
-        <locationX>110</locationX>
-        <locationY>998</locationY>
+        <locationX>50</locationX>
+        <locationY>1106</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -89,8 +89,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Rec</name>
         <label>Assign varFaultElement - Create_Email_Message_Rec</label>
-        <locationX>374</locationX>
-        <locationY>566</locationY>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -106,8 +106,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Email_Message_Record</name>
         <label>Assign varFaultElement - Create_Email_Message_Record</label>
-        <locationX>374</locationX>
-        <locationY>1214</locationY>
+        <locationX>314</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -123,8 +123,8 @@
     <assignments>
         <name>Assign_varFaultElement_Qc_Rep_Assignment_Email_Alert</name>
         <label>Assign varFaultElement - Qc_Rep_Assignment_Email_Alert</label>
-        <locationX>638</locationX>
-        <locationY>458</locationY>
+        <locationX>578</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -139,13 +139,13 @@
     <assignments>
         <name>Assign_varFaultElement_Qc_Rep_Trailing_Email_Alert</name>
         <label>Assign varFaultElement - Qc_Rep_Trailing_Email_Alert</label>
-        <locationX>638</locationX>
-        <locationY>1106</locationY>
+        <locationX>578</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Qc_Rep_Trailing_Email_Alert</stringValue>
+                <elementReference>Qc_Rep_Trailing_Email_Alert</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -169,11 +169,33 @@
         </value>
     </constants>
     <decisions>
+        <name>Check_if_QC_Rep_Email_Exists</name>
+        <label>Check if QC Rep Email Exists</label>
+        <locationX>776</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>QC_Rep_Email_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>record.NSP_QC_Rep__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+            </connector>
+            <label>QC Rep Email Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if QC Rep is updated or populated</description>
         <name>Check_if_QC_Rep_is_updated</name>
         <label>Check if QC Rep is updated</label>
-        <locationX>506</locationX>
-        <locationY>242</locationY>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </defaultConnector>
@@ -195,6 +217,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_QC_Rep__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Qc_Rep_Assignment_Email_Alert</targetReference>
             </connector>
@@ -205,10 +234,10 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>176</locationX>
+        <locationX>281</locationX>
         <locationY>134</locationY>
         <defaultConnector>
-            <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+            <targetReference>Check_if_QC_Rep_Email_Exists</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -228,8 +257,8 @@
         <description>Check if QC Rep Trailing is updated or populated</description>
         <name>QcRepTrailingUpdated</name>
         <label>QcRepTrailingUpdated</label>
-        <locationX>506</locationX>
-        <locationY>890</locationY>
+        <locationX>446</locationX>
+        <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isQcRepTrailingUpdated</name>
@@ -248,6 +277,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>record.NSP_QC_Rep_Trailing__r.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Qc_Rep_Trailing_Email_Alert</targetReference>
             </connector>
@@ -257,9 +293,9 @@
     <environments>Default</environments>
     <formulas>
         <description>Deconversion Record Url</description>
-        <name>DeconversionRecordsUrl</name>
+        <name>deconversionRecordsUrl</name>
         <dataType>String</dataType>
-        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260})) + &quot;/lightning/r/NSP_Deconversion__c/&quot; + {!record.Id} + &quot;/view&quot;</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!record.Id}</expression>
     </formulas>
     <interviewLabel>RET-Deconversion- Subflow - Email Notifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET-Deconversion- Subflow - Email Notifications</label>
@@ -286,8 +322,8 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Rec</name>
         <label>Create Email Message Rec</label>
-        <locationX>110</locationX>
-        <locationY>458</locationY>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
         <connector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </connector>
@@ -343,8 +379,8 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Record</name>
         <label>Create Email Message Record</label>
-        <locationX>110</locationX>
-        <locationY>1106</locationY>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Email_Message_Record</targetReference>
         </faultConnector>
@@ -394,7 +430,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>50</locationX>
+        <locationX>155</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
@@ -404,8 +440,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>638</locationX>
-        <locationY>566</locationY>
+        <locationX>578</locationX>
+        <locationY>674</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -416,7 +452,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>NSP_Deconversion_Email_Alert_Automation</stringValue>
+                <stringValue>RET_Deconversion_Subflow_Email_Notifications</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -430,12 +466,12 @@
         <description>Email body for Qc Rep Assignment Alert</description>
         <name>emailBodyQcRepAssignment</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to QC a Deconversion record.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!DeconversionRecordsUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to QC a Deconversion record.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!deconversionRecordsUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>emailBodyQcRepTrailing</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to QC the Trailing assets for a Deconversion record.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!DeconversionRecordsUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 0, 0);&quot;&gt;View Record&lt;/a&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to QC the Trailing assets for a Deconversion record.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!deconversionRecordsUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 0, 0);&quot;&gt;View Record&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>isChangedQCRep</name>
