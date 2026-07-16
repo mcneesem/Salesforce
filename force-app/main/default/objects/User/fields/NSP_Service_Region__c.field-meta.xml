@@ -38,9 +38,9 @@
                 <label>MMSO - Central</label>
             </value>
             <value>
-                <fullName>MMSO - Enterprise</fullName>
+                <fullName>MMSO - Enterprise</fullName>
                 <default>false</default>
-                <label>MMSO - Enterprise</label>
+                <label>MMSO - Enterprise</label>
             </value>
             <value>
                 <fullName>MMSO - National Accounts</fullName>
