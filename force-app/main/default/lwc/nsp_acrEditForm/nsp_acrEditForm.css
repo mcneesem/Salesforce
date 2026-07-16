@@ -1,12 +1,7 @@
-.slds-section-title_divider {
-    color: gray;
+:host {
+    --section-spacing-margin: 150px;
 }
-.section-name {
-    background-color: rgb(98, 96, 96);
-}
+
 .section-spacing {
-    margin-left: 150px;
-}
-.slds-size_1-of-2 {
-    width: 52rem;
+    margin-left: var(--section-spacing-margin);
 }

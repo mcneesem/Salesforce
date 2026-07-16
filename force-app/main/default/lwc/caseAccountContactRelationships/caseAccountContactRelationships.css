@@ -3,7 +3,7 @@
 }
 
 :host .card-footer-background {
-    background-color: rgb(255, 255, 255);
+    background-color: var(--slds-g-color-surface-1, #ffffff);
     border-bottom-left-radius: var(--slds-g-radius-border-1, 4px);
     border-bottom-right-radius: var(--slds-g-radius-border-1, 4px);
 }
@@ -23,14 +23,14 @@
 }
 
 :host .container-border {
-    border-color: rgb(201, 201, 201);
+    border-color: var(--slds-g-color-border-1, #e5e5e5);
     border-radius: var(--slds-g-radius-border-1, 4px);
     border-style: solid;
     border-width: var(--slds-g-sizing-border-1, 1px);
 }
 
 :host .datatable-border-top {
-    border-top-color: rgb(201, 201, 201);
+    border-top-color: var(--slds-g-color-border-1, #e5e5e5);
     border-top-style: solid;
     border-top-width: var(--slds-g-sizing-border-1, 1px);
 }

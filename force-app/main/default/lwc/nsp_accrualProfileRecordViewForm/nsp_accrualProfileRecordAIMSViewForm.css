@@ -1,8 +1,14 @@
+:host {
+    --nsp-accrual-input-border-width: 1px;
+    --nsp-accrual-input-border-color: #1890ff;
+    --nsp-accrual-input-width: 50px;
+}
+
 .input-place-holder {
     border: none;
-    border-bottom: 1px solid #1890ff;
+    border-bottom: var(--nsp-accrual-input-border-width) solid var(--nsp-accrual-input-border-color);
     outline: none;
-    width: 50px;
+    width: var(--nsp-accrual-input-width);
  }
 
 [placeholder]:focus::-webkit-input-placeholder {

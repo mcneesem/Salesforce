@@ -1,8 +1,14 @@
+:host {
+    --input-border-width: 1px;
+    --input-border-color: #1890ff;
+    --input-width: 50px;
+}
+
 .input-place-holder {
     border: none;
-    border-bottom: 1px solid #1890ff;
+    border-bottom: var(--input-border-width) solid var(--input-border-color);
     outline: none;
-    width: 50px;
+    width: var(--input-width);
  }
 
 [placeholder]:focus::-webkit-input-placeholder {
