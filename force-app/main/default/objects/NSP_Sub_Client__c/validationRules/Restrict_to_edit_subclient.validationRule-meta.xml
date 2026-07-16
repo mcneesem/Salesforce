@@ -5,6 +5,7 @@
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.SubClientTrigger__c ) ,
   NOT( ISNEW() ) ,
+  NOT( ISCHANGED( Renewal_Created__c ) ) ,
   NOT( $Permission.Bypass_Restrict_To_Edit_Subclient)
 )</errorConditionFormula>
     <errorMessage>You dont have permission to edit on this record.</errorMessage>
