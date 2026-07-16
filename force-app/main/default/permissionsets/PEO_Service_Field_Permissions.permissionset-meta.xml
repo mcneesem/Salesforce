@@ -13128,6 +13128,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Note__c.Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Office_Assignment__c.NSP_Channel_Program_Manager__c</field>
         <readable>true</readable>
     </fieldPermissions>
