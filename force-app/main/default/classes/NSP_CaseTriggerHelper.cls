@@ -25,10 +25,10 @@ public class NSP_CaseTriggerHelper {
     public static List<String> orgPlusSupportRoles = System.Label.NSP_OrgPlus_Support_Roles.split(',');
     public static List<String> performSmartSupportRoles = System.Label.NSP_PerformSmart_Support_Roles.split(',');
     public static List<String> tesSupportRoles = System.Label.NSP_TES_Support_Role.split(',');
-    private static final Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', 'PEO');
-    private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
-    private static final Id dolAuditsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.DO_AUDITS_RECORDTYPE);
-    private static final Id wageClaimsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE);
+    private static Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
+    private static Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'NSP_ITA_CQA' );
+    private static Id dolAuditsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'NSP_DOLAudits' );
+    private static Id wageClaimsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'NSP_WageClaims' );
     private static final String CASE_SUB_STATUS_IN_PROGRESS = 'In Progress';
     public static final String CASE_REASON_COMPLETE = 'Complete';
 
@@ -50,8 +50,7 @@ public class NSP_CaseTriggerHelper {
         salesOfficePicklistValues = retreiveSalesOfficePicklistValues();
 
         List<Case> supportRoleCases = new List<Case>();
-        Map<String,Schema.RecordTypeInfo> mCaseRecordTypes =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName();
-        Id bpsRecordTypeId = mCaseRecordTypes.get(BPSRECORDTYPE)?.getRecordTypeId();
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         Set<Id> acrAccIdSet = new Set<Id>();
         Set<Id> acrConIdSet = new Set<Id>();
         List<Case> itaCaseList = new List<Case>();
@@ -218,7 +217,7 @@ public class NSP_CaseTriggerHelper {
     }
 
 
-    // when a new case is created with Owner and code will assign date & time.
+    // when a new case is created with Owner and code will assign date / time.
     public case recordOwnerAssingedDateTime(Case eachCase , Map<Id, Case> caseOldMap){
         //DF-05853 - Update the "Owner Assign Date" whenever there is change in Owner
         if( eachCase.OwnerId != null && ( caseOldMap == null || caseOldMap.get(eachCase.Id).OwnerId != eachCase.OwnerId )){
@@ -341,8 +340,7 @@ Date        : 30/09/2021
         caseAccountIdStatus = new Map<String,String>();
         List<Case> privateCaseList = new List<Case>();
         List<Case> nonInsperityEmplCaseList = new List<Case>();
-        Map<String,Schema.RecordTypeInfo> mCaseRecordTypes =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName();
-        Id bpsRecordTypeId = mCaseRecordTypes.get(BPSRECORDTYPE)?.getRecordTypeId();
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         List<case> itaCaseList = new List<case>();
         salesOfficePicklistValues = retreiveSalesOfficePicklistValues();
         Set<Id> assetpopulationAccIdSet = new Set<Id>();
@@ -361,7 +359,7 @@ Date        : 30/09/2021
             eachCase = enableEmailNotificationCaseCreation(eachCase,caseOldMap );
             eachCase = updateEmailSentinfo(eachCase);
             eachCase = autoResolvePEOCaseOnClosure(eachCase,caseOldMap);
-            // when a case is update with Owner and code will assign date & time.
+            // when a case is update with Owner and code will assign date / time.
             eachCase = recordOwnerAssingedDateTime(eachCase,caseOldMap);
             // enable Juck checkbox will change the case status to Cancelled
             eachCase = markJunkCase(eachCase);
@@ -642,8 +640,8 @@ Date        : 30/09/2021
     public Case autoResolvePEOCaseOnClosure(Case eachCase, Map<Id, Case> caseOldMap){
         // Upon Closing the case trigger will Chane the Sub Status to Resoloved for PEO record type
         if( eachCase.Status == 'Closed' && caseOldMap.get(eachCase.Id).Status != eachCase.Status ){
-            Id recordTypePEOID = SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
-            if(recordTypePEOID!=null & eachCase.RecordTypeId == recordTypePEOID ){
+            Id recordTypePeoId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
+            if ( ( recordTypePeoId != null ) && ( eachCase.RecordTypeId == recordTypePeoId ) ) {
                 eachCase.NSP_Case_Sub_Status__c = 'Resolved';
             }
             closedCaseLst.add(eachCase);
@@ -701,10 +699,10 @@ Date        : 30/09/2021
 */
     public void afterInsertCaseFilters(List<Case> lCases, Map<Id, Case> mCases){
 
-        Map<String,Schema.RecordTypeInfo> mCaseRecordTypes =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName();
+
         Id healthAndProductsGrpId = [SELECT Id, Name,Type FROM Group WHERE Type='Queue' AND Name =: NSP_ServiceConstants.HEALTH_WELFARE_PRODUCT].Id;
         Set<Id> iPIdSet = new Set<Id>();
-        Id bpsRecordTypeId = mCaseRecordTypes.get(BPSRECORDTYPE)?.getRecordTypeId();
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         /* Added as part of STY-02137 */
         List<Case> casesToShare = new List<Case>();
         Set<String> categorySet = new Set<String>();
@@ -938,7 +936,7 @@ Date        : 30/09/2021
         List<Case> privateCaseList = new List<Case>();
         List<Case> privateCaseRemoveShareList = new List<Case>();
         //Added as part of STY-03638
-        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME, BPSRECORDTYPE);
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         Set<Id> itaParentCaseIdSet = new Set<Id>();
         List<String> openReOpenedStatus = new List<string>{NSP_ServiceConstants.CASE_OPEN_STATUS, NSP_ServiceConstants.REOPENED};
             Set<Id> itqCqaPrjctIdSet = new Set<Id>();
@@ -1329,7 +1327,7 @@ Date        : 30/09/2021
 *
 */
     public Case isBPSSupportAccountGroup(Case eachCase){
-        Id bpsRecordTypeId =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.BPS)?.getRecordTypeId();
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         if(eachCase.RecordTypeId == bpsRecordTypeId && !String.isBlank(eachCase.AccountId)){
             if(eachCase.NSP_Category__c == NSP_ServiceConstants.CASE_TIME_ATTENDENCE){
                 caseAccountIdStatus.put(eachCase.AccountId, NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
@@ -1369,10 +1367,10 @@ Date        : 30/09/2021
     }
 
     public void updateCreatedByDivision(List<Case> insertedCaseList){
-        Id PEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('PEO').getRecordTypeId();
+        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
         List<Id> UserIds = New List<Id>();
         for(Case cse: insertedCaseList){
-            if(cse.RecordTypeId == PEORecordTypeId){
+            if ( cse.RecordTypeId == peoRecordTypeId ) {
                 UserIds.add(cse.OwnerId);
             }
         }
@@ -1391,7 +1389,7 @@ Date        : 30/09/2021
     }
     /**
 * @MethodName: cancelPreviouslyCreatedCase
-* @Description: When Does client have their code & group ID? = Yes and previously it was No on NSP_Implementation_Profile__c, then the previously
+* @Description: When Does client have their code / group ID? = Yes and previously it was No on NSP_Implementation_Profile__c, then the previously
 created case will be updated to cancelled.
 * @param : Set<Id> ipSet
 * @createdDate : 9/5/2022

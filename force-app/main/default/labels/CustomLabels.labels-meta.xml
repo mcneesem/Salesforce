@@ -1469,18 +1469,17 @@
     </labels>
     <labels>
         <fullName>NSP_CANNOT_MOVE_TO_CLOSEDLOST</fullName>
-        <categories>closed lost, roles eligible</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
-        <value>You do not have access to move opportunity to Closed Lost</value>
+        <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDLOST</shortDescription>
+        <value>You do not have access to move this Opportunity to Closed Lost</value>
     </labels>
     <labels>
         <fullName>NSP_CANNOT_MOVE_TO_CLOSEDWON</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_CANNOT_MOVE_TO_CLOSEDWON</shortDescription>
-        <value>You do not have access to move opportunity to Closed Won</value>
+        <value>You do not have access to move this Opportunity to Closed Won</value>
     </labels>
     <labels>
         <fullName>NSP_CPM_USER</fullName>

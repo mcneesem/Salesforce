@@ -88,7 +88,7 @@ global with sharing class CLMDocumentRequest {
     private CLMDocument result() {
         try {
             if ( this.pdocument == null ) {
-                if ( !String.isEmpty( this.ppath ) ) {
+                if ( String.isNotBlank( this.ppath ) ) {
                     String js = this.scmsvc.requestor.Get(
                         this.aURL + '/documents?path=' + EncodingUtil.urlEncode( this.ppath , 'UTF-8' ) + '&' + this.expandDocument() ,
                         new Map<String,String>()
