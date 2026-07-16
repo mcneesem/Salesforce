@@ -487,17 +487,37 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
 
     public static void nullifySalesSetLookup( List<NSP_Account_Group_Member__c> oldList  ) {
         try {
-            List<Account> lstOfAcctsToUpdate = new List<Account>();
+            Set<Id> acctIdsToUpdate = new Set<Id>();
             if ( ( oldList != null ) && !oldList.isEmpty() ) {
                 for( NSP_Account_Group_Member__c accGrpM : oldList ){
-                    if( accGrpM.NSP_Type__c != NSP_SalesConstants.SALES_SET ){
-                        Account acctToUpdate = new Account(
-                            Id = accGrpM.NSP_Member_Account__c ,
-                            Sales_Set__c = null
-                        );
-                        lstOfAcctsToUpdate.add( acctToUpdate );
+                    if( accGrpM.NSP_Type__c != NSP_SalesConstants.SALES_SET && accGrpM.NSP_Member_Account__c != null ){
+                        acctIdsToUpdate.add( accGrpM.NSP_Member_Account__c );
                     }
                 }
+            }
+            // move the Account update off the synchronous trigger path
+            if ( !acctIdsToUpdate.isEmpty() ) {
+                NSP_AccountGroupMemberTriggerHelper.nullifySalesSetLookupAsync( JSON.serialize( new List<Id>( acctIdsToUpdate ) ) );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'nullifySalesSetLookup' ,
+                e
+            );
+        }
+    }
+
+    @future
+    private static void nullifySalesSetLookupAsync( String strAcctIds ) {
+        try {
+            List<Id> acctIds = (List<Id>) JSON.deserialize( strAcctIds , List<Id>.class );
+            List<Account> lstOfAcctsToUpdate = new List<Account>();
+            for ( Id acctId : acctIds ) {
+                lstOfAcctsToUpdate.add( new Account(
+                    Id = acctId ,
+                    Sales_Set__c = null
+                ) );
             }
             if ( !lstOfAcctsToUpdate.isEmpty() ) {
                 Database.SaveResult[] results = Database.update( lstOfAcctsToUpdate , false );
@@ -510,7 +530,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AccountGroupMemberTriggerHelper.class.getName() ,
-                'nullifySalesSetLookup' ,
+                'nullifySalesSetLookupAsync' ,
                 e
             );
         }

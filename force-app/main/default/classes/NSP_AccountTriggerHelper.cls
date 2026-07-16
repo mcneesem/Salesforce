@@ -1520,7 +1520,6 @@ public class NSP_AccountTriggerHelper {
     // update field NumberOfEmployees_Sales on Account Group Member from NumberOfEmployees of Account
     public static void updateAGMNumberOfEmployees( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
         try {
-            List<NSP_Account_Group_Member__c> accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
             Map<Id,Integer> accEmployeesByIds = new Map<Id,Integer>();
             // put accountId By NumberOfEmployees in Map - only when value changes
             for ( Account accList : newMap.values() ) {
@@ -1529,7 +1528,21 @@ public class NSP_AccountTriggerHelper {
                     accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
                 }
             }
-            // update Account Group Member field NumberOfEmployees_Sales from Account field NumberOfEmployees
+            // move the Account Group Member update off the synchronous trigger path
+            if ( !accEmployeesByIds.isEmpty() ) {
+                NSP_AccountTriggerHelper.updateAGMNumberOfEmployeesAsync( JSON.serialize( accEmployeesByIds ) );
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployees' );
+        }
+    }
+
+    // update Account Group Member field NumberOfEmployees_Sales from Account field NumberOfEmployees
+    @future
+    private static void updateAGMNumberOfEmployeesAsync( String strAccEmployeesByIds ) {
+        try {
+            Map<Id,Integer> accEmployeesByIds = (Map<Id,Integer>) JSON.deserialize( strAccEmployeesByIds , Map<Id,Integer>.class );
+            List<NSP_Account_Group_Member__c> accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
             if ( !accEmployeesByIds.isEmpty() ) {
                 for ( NSP_Account_Group_Member__c accGroMember : [
                             SELECT Id , NSP_Member_Account__c , NumberOfEmployees_Sales__c
@@ -1553,7 +1566,7 @@ public class NSP_AccountTriggerHelper {
                 );
             }
         } catch ( Exception e ) {
-            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployees' );
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployeesAsync' );
         }
     }
 
