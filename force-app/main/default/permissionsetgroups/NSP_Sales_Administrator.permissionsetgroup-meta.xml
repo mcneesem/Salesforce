@@ -9,7 +9,6 @@
     <permissionSets>Basic_Report_Builder</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
-    <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
     <permissionSets>Checklist_Edit</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>

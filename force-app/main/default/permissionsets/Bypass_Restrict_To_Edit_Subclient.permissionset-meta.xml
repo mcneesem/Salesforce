@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Grant to Bypass Restrict to Edit Subclient</description>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_To_Edit_Subclient</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to bypass the Restrict_To_Edit_Subclient Validation Rule.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Bypass Restrict To Edit Subclient</label>
 </PermissionSet>
