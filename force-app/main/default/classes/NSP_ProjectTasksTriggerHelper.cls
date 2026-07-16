@@ -2271,7 +2271,6 @@ public class NSP_ProjectTasksTriggerHelper {
     // MethodName: assignQueueTasks
     // Description : This Method will update Queue as the Owner of MM and FSO projects
     // Params:      List<pse__Project_Task__c> projectTaskList
-    // Author :Nischay
     //
     public static void assignQueueTasks(List<pse__Project_Task__c> projectTaskList){
         try{
