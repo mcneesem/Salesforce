@@ -137,7 +137,7 @@
             <assignToReference>recordPortalClient.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Project_Record.pse__Account__r.Name</elementReference>
+                <elementReference>f_portalclientname</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -347,23 +347,31 @@ Create if not exist and if exists create project to support multiple project to 
     <description>New Client Portal: Portal Project Creation</description>
     <environments>Default</environments>
     <formulas>
+        <name>f_portalclientname</name>
+        <dataType>String</dataType>
+        <expression>LEFT(
+    TRIM({!Get_Project_Record.pse__Account__r.Name}),
+    80
+)</expression>
+    </formulas>
+    <formulas>
         <name>f_portalProjectName</name>
         <dataType>String</dataType>
         <expression>IF(
-  NOT( ISBLANK( {!Get_Project_Record.Id} ) ) ,
-  LEFT(
-    &quot;New Client&quot;
-    &amp; &quot; - &quot;
-    &amp; TEXT( MONTH( {!Get_Project_Record.pse__Start_Date__c} ) )
-    &amp; &quot;.&quot;
-    &amp; TEXT( DAY( {!Get_Project_Record.pse__Start_Date__c} ) )
-    &amp; &quot;.&quot;
-    &amp; TEXT( YEAR( {!Get_Project_Record.pse__Start_Date__c} ) )
-    &amp; &quot; - &quot;
-    &amp; {!Get_Project_Record.pse__Account__r.Name} ,
-    80
-  ) ,
-  &quot;&quot;
+    NOT(ISBLANK({!Get_Project_Record.Id})),
+    LEFT(
+        &quot;New Client&quot;
+        &amp; &quot; - &quot;
+        &amp; TEXT(MONTH({!Get_Project_Record.pse__Start_Date__c}))
+        &amp; &quot;.&quot;
+        &amp; TEXT(DAY({!Get_Project_Record.pse__Start_Date__c}))
+        &amp; &quot;.&quot;
+        &amp; TEXT(YEAR({!Get_Project_Record.pse__Start_Date__c}))
+        &amp; &quot; - &quot;
+        &amp; {!Get_Project_Record.pse__Account__r.Name},
+        80
+    ),
+    &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
