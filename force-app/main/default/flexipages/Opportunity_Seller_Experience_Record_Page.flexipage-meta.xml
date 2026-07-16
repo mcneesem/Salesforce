@@ -1111,6 +1111,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TransitionType__c</fieldItem>
+                <identifier>RecordNSP_TransitionType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Exception_Credit_Amount__c</fieldItem>
                 <identifier>RecordNSP_Exception_Credit_Amount_cField</identifier>
                 <visibilityRule>
@@ -1328,6 +1338,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.STP_Requested_First_Pay_Date__c</fieldItem>
                 <identifier>RecordSTP_Requested_First_Pay_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f3f60a66-2935-46fa-8d51-33556b684a93</name>
