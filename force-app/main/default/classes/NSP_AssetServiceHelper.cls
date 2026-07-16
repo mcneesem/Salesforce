@@ -220,7 +220,6 @@ public class NSP_AssetServiceHelper {
 
     // This method will update the asset termination information section
     public static void updateTerminationInformation( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
-        User userRecord=[SELECT Id, Name FROM User WHERE Id=:UserInfo.getUserId()];
         try{
             for(Asset asset: newList){
                 //when the verbal termination received is checked
@@ -238,7 +237,7 @@ public class NSP_AssetServiceHelper {
                     )
                 {
                     asset.NSP_Written_Term_Date__c= asset.NSP_Written_Term_Date__c == null ? System.Today(): asset.NSP_Written_Term_Date__c;
-                    asset.NSP_Written_Termination_Updated_By__c = userRecord.Id;
+                    asset.NSP_Written_Termination_Updated_By__c = UserInfo.getUserId();
                     asset.NSP_Pending_Termination__c = true;
                 }
             }
