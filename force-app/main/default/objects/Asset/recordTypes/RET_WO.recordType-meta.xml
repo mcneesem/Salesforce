@@ -2247,11 +2247,35 @@
     <picklistValues>
         <picklist>NSP_Service_Region__c</picklist>
         <values>
+            <fullName>FSO - Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FSO - East</fullName>
             <default>false</default>
         </values>
         <values>
+             <fullName>FSO - Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSO - Western</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MMSO - Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Southeast</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2260,6 +2284,10 @@
         </values>
         <values>
             <fullName>MMSO - West</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO -%C2%A0Enterprise</fullName>
             <default>false</default>
         </values>
     </picklistValues>

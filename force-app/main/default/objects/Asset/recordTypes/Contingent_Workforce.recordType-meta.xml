@@ -2347,6 +2347,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FSO - East</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FSO - Northeast</fullName>
             <default>false</default>
         </values>
