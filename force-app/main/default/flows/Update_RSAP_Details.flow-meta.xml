@@ -113,14 +113,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Initiative_Records</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Engagement_Path_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -132,14 +132,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Engagement_Path_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Initiative_Records</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -154,14 +154,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Engagement_Path_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Initiative_Records</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -183,7 +183,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Project_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Project_Record.pse__Account__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -212,7 +219,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_RSAP_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -340,6 +347,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.pse__Project__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
