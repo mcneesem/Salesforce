@@ -250,10 +250,20 @@ public without sharing class PortalProvisionAction {
             // ~ append .invalid when creating users in sandboxes with emails outside of the @insperity.com domain...
             String email = relation.NSP_Work_email__c;
             if ( String.isNotBlank( SetupAuditTrailQueueable.sandboxName )
-                && !email.toLowerCase().endsWith( '@insperity.com' )
+                && ( PortalProvisionAction.trustedEmailDomains != null )
+                && !PortalProvisionAction.trustedEmailDomains.isEmpty()
+                && String.isNotBlank( email )
                 )
             {
-                email = email + '.invalid';
+                Boolean isValid = false;
+                for ( String trustedEmailDomain : PortalProvisionAction.trustedEmailDomains ) {
+                    if ( email.toLowerCase().endsWith( '@' + trustedEmailDomain ) ) {
+                        isValid = true;
+                    }
+                }
+                if ( !isValid ) {
+                    email = email + '.invalid';
+                }
             }
             //
             portalUser = new User();
@@ -470,6 +480,26 @@ public without sharing class PortalProvisionAction {
                 portalSiteAccessId = local;
             }
             return portalSiteAccessId;
+        }
+        private set;
+    }
+
+    private static List<String> trustedEmailDomains  {
+        private get {
+            if ( trustedEmailDomains == null ) {
+                List<String> local = new List<String>();
+                if ( PortalProvisionAction.settings != null ) {
+                    String rawTrustedEmailDomains = PortalProvisionAction.settings.TrustedEmailDomains__c;
+                    if ( String.isNotBlank( rawTrustedEmailDomains ) ) {
+                        List<String> splitTrustedEmailDomains = rawTrustedEmailDomains.split( '\r\n' );
+                        if ( ( splitTrustedEmailDomains != null ) && ( splitTrustedEmailDomains.size() > 0 ) ) {
+                            local = splitTrustedEmailDomains;
+                        }
+                    }
+                }
+                trustedEmailDomains = local;
+            }
+            return trustedEmailDomains;
         }
         private set;
     }

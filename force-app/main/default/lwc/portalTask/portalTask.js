@@ -201,8 +201,12 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     // Status Icon
     //
 
-    get iconSize() {
+    get chevronSize() {
         return "xx-small";
+    }
+
+    get iconSize() {
+        return "x-small";
     }
 
     get statusIconTitle() {
