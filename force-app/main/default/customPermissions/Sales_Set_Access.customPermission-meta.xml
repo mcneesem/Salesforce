@@ -2,5 +2,5 @@
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Controls visibility of the Manage Sales Set quick action button on the Account Seller Experience Record Page.</description>
     <isLicensed>false</isLicensed>
-    <label>Account - Screen - Manage Sales Set</label>
+    <label>Sales Set Access</label>
 </CustomPermission>

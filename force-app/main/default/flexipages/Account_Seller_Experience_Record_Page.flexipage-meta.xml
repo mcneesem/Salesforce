@@ -264,10 +264,16 @@
                         <valueListItems>
                             <value>Account.Manage_Sales_Set</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Sales_Set_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Owner.LastName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Available</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
