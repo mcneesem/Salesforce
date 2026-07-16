@@ -1599,12 +1599,9 @@ Implementation profile related to the account of the created asset
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.INTEGRA_ASSET,NSP_ServiceConstants.INTEGRA_IMPLEMENTATION);
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.XML_ASSET,NSP_ServiceConstants.XMLProject);
 
-            // retreiving BPS Permission Set
-            PermissionSet bpsPermissionSet = [SELECT Id FROM PermissionSet WHERE Name =: NSP_ServiceConstants.bpsAssetPermSet];
-
             // checking if the current user has BPS perm Set Assigned
-            List<PermissionSetAssignment> bpsAssignments = [Select Id,AssigneeId FROM PermissionSetAssignment WHERE
-                                                            PermissionSetId =:bpsPermissionSet.Id AND AssigneeId =:userInfo.getUserId() ];
+            List<PermissionSetAssignment> bpsAssignments = [Select Id,AssigneeId, PermissionSet.Id FROM PermissionSetAssignment WHERE
+                                                            PermissionSet.Name =:  NSP_ServiceConstants.bpsAssetPermSet AND AssigneeId =:userInfo.getUserId() ];
             // creating a map of user and PSA
             for(PermissionSetAssignment psa :bpsAssignments){
                 if(!mapUserIdSetPSA.containsKey(psa.AssigneeId)){
@@ -2094,18 +2091,17 @@ Implementation profile related to the account of the created asset
     // Story : DF-04328
     //
     public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
-        List<Profile> profiles = [ SELECT Id , Name FROM Profile WHERE Id = :UserInfo.getProfileId() LIMIT 1 ];
-        String profileName = null;
-        if ( ( profiles != null ) && !profiles.isEmpty() ) {
-            profileName = profiles[0].Name;
-        }
+        Map<Id, String> profileLableMap = new Map<Id, String>{
+            '00e4x000001dkv2AAA' => NSP_ServiceConstants.BPSSERVICE,
+            '00e4x000001dkv7AAA' => NSP_ServiceConstants.RT
+        };
         Boolean isBPSUserFields = false ;
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
         List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
         //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
         List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
-        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE ) ? nonEditableBPSAssetFields :
-                                            ( !isBPSAssetFields && profileName == NSP_ServiceConstants.RT ) ? nonEditableRETFields : null;
+        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileLableMap.get( UserInfo.getProfileId() ) == NSP_ServiceConstants.BPSSERVICE )  ? nonEditableBPSAssetFields :
+                                            ( !isBPSAssetFields && profileLableMap.get( UserInfo.getProfileId() ) == NSP_ServiceConstants.RT )  ? nonEditableRETFields : null;
         if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
             isBPSUserFields = true;
         }
