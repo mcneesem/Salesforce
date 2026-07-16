@@ -2089,19 +2089,17 @@ Implementation profile related to the account of the created asset
     // MethodName: throwErrorMessageForNonEditFields
     // Description : Throw error message if user tries to edit fields for which perm set is not assigned
     // Story : DF-04328
-    //
+    // "BPS Service" Profile (Id=00e4x000001dkv2AAA )
+    // "Retirement Services" Profile (Id=00e4x000001dkv7AAA)
     public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
-        Map<Id, String> profileLableMap = new Map<Id, String>{
-            '00e4x000001dkv2AAA' => NSP_ServiceConstants.BPSSERVICE,
-            '00e4x000001dkv7AAA' => NSP_ServiceConstants.RT
-        };
         Boolean isBPSUserFields = false ;
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
         List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
         //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
         List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
-        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileLableMap.get( UserInfo.getProfileId() ) == NSP_ServiceConstants.BPSSERVICE )  ? nonEditableBPSAssetFields :
-                                            ( !isBPSAssetFields && profileLableMap.get( UserInfo.getProfileId() ) == NSP_ServiceConstants.RT )  ? nonEditableRETFields : null;
+
+        List<String> nonEditableAssetFields = ( isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv2AAA' )  ? nonEditableBPSAssetFields :
+                                            ( !isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv7AAA' )  ? nonEditableRETFields : null;
         if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
             isBPSUserFields = true;
         }
