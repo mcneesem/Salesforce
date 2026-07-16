@@ -1,11 +1,11 @@
 public class NSP_ProjectTaskTriggerEmailNotification {
     // test w/ NSP_ProjectTaskTriggerEmailTest (90%)
 
-    /***********************************************************************************************
-    * MethodName: updateImplementationProfile
-    * Description : This Method will update implementation profile and send email notification to project OS
-    * Params:      List<pse__Project_Task__c> projectTaskList
-    * ********************************************************************************************/
+    //
+    // MethodName: updateImplementationProfile
+    // Description : This Method will update implementation profile and send email notification to project OS
+    // Params:      List<pse__Project_Task__c> projectTaskList
+    //
     private static final List<String> EMAIL_TEMPLATES = new List<String>{NSP_ServiceConstants.COBRA_FOLLOWUP};
     private static Map<String, EmailTemplate> mapOfEmailTempaltes = new Map<String, EmailTemplate>();
 
@@ -19,14 +19,12 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     public static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     public static List<String> listOfProjectStatus = new List<String>{NSP_ServiceConstants.TASKCOMPLETE,NSP_ServiceConstants.PROJECTSTATUSCANCELLED};
 
-    /***********************************************************************************************
-    * MethodName: emailNotifyforFundingDocuments
-    * Description : This Method send email notification when Funding Documents project task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-
-    public static void emailNotifyforFundingDocuments(Set<Id> projectTaskIdSet, Map<Id,Id> mapofProjecttasks ){
+    //
+    // MethodName: emailNotifyforFundingDocuments
+    // Description : This Method send email notification when Funding Documents project task completed
+    // Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
+    //
+    public static void emailNotifyforFundingDocuments( Set<Id> projectTaskIdSet , Map<Id,Id> mapofProjecttasks ) {
         //as part of STY-02170
         Map <Id, List<Messaging.EmailFileAttachment>> mapPrjIdListAttachment = new Map <Id, List<Messaging.EmailFileAttachment>>();
         try{
@@ -74,15 +72,12 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: emailNotifyforFirstPayrollFSO
-    * Description : This Method send email notification when First payroll approved subtask project task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-
-    public static void emailNotifyforFirstPayrollFSO(Set<Id> projectIds, Map<Id, Id> accountIdProjectTaskMap ){
-
+    //
+    // MethodName: emailNotifyforFirstPayrollFSO
+    // Description : This Method send email notification when First payroll approved subtask project task completed
+    // Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
+    //
+    public static void emailNotifyforFirstPayrollFSO( Set<Id> projectIds , Map<Id,Id> accountIdProjectTaskMap ) {
         Set<Id> accountIds =new Set<Id>();
         Map<Id, pse__Proj__c> mapofAccountIds = new Map<Id,pse__Proj__c>();
         Set<Id> subclientIds =new Set<Id>();
@@ -265,14 +260,12 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: emailNotifyforFirstPayrollMM
-    * Description : This Method send email notification when first payroll approved subtask  task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-    public static void emailNotifyforFirstPayrollMM(Set<Id> projectIds, Map<Id, Id> accountIdProjectTaskMap ){
-
+    //
+    // MethodName: emailNotifyforFirstPayrollMM
+    // Description : This Method send email notification when first payroll approved subtask  task completed
+    // Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
+    //
+    public static void emailNotifyforFirstPayrollMM( Set<Id> projectIds , Map<Id,Id> accountIdProjectTaskMap ) {
         Set<Id> accountIds =new Set<Id>();
         Map<Id, pse__Proj__c> mapofAccountIds = new Map<Id,pse__Proj__c>();
         Set<Id> subclientIds =new Set<Id>();
@@ -553,15 +546,13 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
         return email;
     }
-    /***********************************************************************************************
-    * MethodName: emailNotifyClientTransition
-    * Description : This Method send email notification when project task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
 
-    public static void emailNotifyClientTransition(Map<Id,Id> mapofProjectTask,  Map<Id,Id> mapOfProjectTaskOwner ){
-
+    //
+    // MethodName: emailNotifyClientTransition
+    // Description : This Method send email notification when project task completed
+    // Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
+    //
+    public static void emailNotifyClientTransition( Map<Id,Id> mapofProjectTask ,  Map<Id,Id> mapOfProjectTaskOwner ) {
         Map<Id, User> mapOfUser = new Map<Id, User>();
 
         //fetch project owner details like name, title
@@ -588,12 +579,19 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: sendClientTransitionMail
-    * Description : This Method prepare email template
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-    public static void sendClientTransitionMail(String projectId, String aimsClientName, String aimsClient, String projectTaskOwner, String jobTitle, String projectTaskId ){
+    //
+    // MethodName: sendClientTransitionMail
+    // Description : This Method prepare email template
+    //
+    public static void sendClientTransitionMail(
+        String projectId ,
+        String aimsClientName ,
+        String aimsClient ,
+        String projectTaskOwner ,
+        String jobTitle ,
+        String projectTaskId
+        )
+    {
         //email template for Client Transition
         NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(INTERNAL_DISCOVERY_FN);
         NSP_PEO_Implementations__mdt pf1 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ALLOSCOORDINATOR);
@@ -658,15 +656,12 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: emailNotifyOnsiteDiscovery
-    * Description : This Method send email notification when  On-Site Discovery Meeting  project task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-
-    public static void emailNotifyOnsiteDiscovery(Map<Id,Id> mapofProjectTask,  Map<Id,Id> mapOfProjectTaskOwner ){
-
+    //
+    // MethodName: emailNotifyOnsiteDiscovery
+    // Description : This Method send email notification when  On-Site Discovery Meeting  project task completed
+    // Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
+    //
+    public static void emailNotifyOnsiteDiscovery( Map<Id,Id> mapofProjectTask , Map<Id,Id> mapOfProjectTaskOwner ) {
         Map<Id, User> mapOfUser = new Map<Id, User>();
         //fetch all the project where On-Site Discovery Meeting  project task is completed
         NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(ONSITE_DISCOVERY_FN);
@@ -721,7 +716,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     //
     // MethodName : sendOnsiteDiscoveryMail
     // Description : This Method prepare email template
-    // Author : Bindushree R
     //
     public static void sendOnsiteDiscoveryMail(
         String projectId ,
@@ -766,15 +760,19 @@ public class NSP_ProjectTaskTriggerEmailNotification {
 
     }
 
-   /***********************************************************************************************
-    * MethodName: emailNotifyforTasksOnRetProjectType
-    * Description : This Method send email notification when submit Coversheet project task completed
-    * Params: List<pse__Project_Task__c> retProjectTasks
-    * Params: String emailTemplateName
-    * Params: List<String> sendToList
-    * Author: Abhishek Kumar
-    * ********************************************************************************************/
-    public static void emailNotifyforTasksOnRetProjectType(List<pse__Project_Task__c> retProjectTasks , String emailTemplateName, List<String> sendToList ){
+    //
+    // MethodName: emailNotifyforTasksOnRetProjectType
+    // Description : This Method send email notification when submit Coversheet project task completed
+    // Params: List<pse__Project_Task__c> retProjectTasks
+    // Params: String emailTemplateName
+    // Params: List<String> sendToList
+    //
+    public static void emailNotifyforTasksOnRetProjectType(
+        List<pse__Project_Task__c> retProjectTasks ,
+        String emailTemplateName ,
+        List<String> sendToList
+        )
+    {
         Map<Id,boolean> completionEmailAlreadySent= new Map<Id,boolean>();
         List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
         Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
@@ -831,13 +829,12 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         }
     }
 
-   /***********************************************************************************************
-    * MethodName: createEmailMessageRec
-    * Description : Create email message record for tracebility
-    * Params: Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap
-    * Author : Abhishek Kumar
-    * ********************************************************************************************/
-    public static void createEmailMessageRec( Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap ){
+    //
+    // MethodName: createEmailMessageRec
+    // Description : Create email message record for tracebility
+    // Params: Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap
+    //
+    public static void createEmailMessageRec( Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap ) {
         List<EmailMessage> listEmailMessageRec = new List<EmailMessage>();
         try{
             //iterate over single email messages to create email message
