@@ -4,46 +4,13 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>false</value>
+                    <name>parentFieldApiName</name>
+                    <value>NSP_Account_Group__c.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <name>relatedListApiName</name>
+                    <value>Histories</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideSlackAction</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
-        <name>header</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>runtime_track_field_history:fieldHistoryExplorerRecordHome</componentName>
-                <identifier>runtime_track_field_history_fieldHistoryExplorerRecordHome</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>NONE</value>
@@ -56,8 +23,8 @@
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListContainer</componentName>
-                <identifier>force_relatedListContainer</identifier>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -69,43 +36,13 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Group__c</fieldItem>
-                <identifier>RecordNSP_Group_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Sales_Set_Status__c</fieldItem>
-                <identifier>RecordStatus_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NumberOfEmployees_Sales__c</fieldItem>
-                <identifier>RecordNumberOfEmployees_Sales__cField</identifier>
+                <fieldItem>Record.NSP_Account__c</fieldItem>
+                <identifier>RecordNSP_Account_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Main__c</fieldItem>
-                <identifier>RecordMain__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-8a755aff-adab-4f26-a1da-cc7f67022ba6</name>
+        <name>Facet-e79f0619-f01a-4b2f-83ef-5263b1a15427</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -115,31 +52,21 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Name__c</fieldItem>
-                <identifier>RecordNSP_Account_Name_cField</identifier>
+                <fieldItem>Record.Active_Member_Count__c</fieldItem>
+                <identifier>RecordActive_Member_Count_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Enter_Date_Sales__c</fieldItem>
-                <identifier>RecordEnter_Date_Sales_cField</identifier>
+                <fieldItem>Record.Total_Employees_Sales__c</fieldItem>
+                <identifier>RecordTotal_Employees_Sales__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Exit_Date__c</fieldItem>
-                <identifier>RecordExit_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-0fe4aef9-fe56-415f-99e6-c1d34a2caa84</name>
+        <name>Facet-e012d725-e3ab-4094-8dbb-fd4aed4b9643</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -147,7 +74,59 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8a755aff-adab-4f26-a1da-cc7f67022ba6</value>
+                    <value>Facet-e79f0619-f01a-4b2f-83ef-5263b1a15427</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e012d725-e3ab-4094-8dbb-fd4aed4b9643</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-010d7e86-09e3-4318-9af9-c0f9185e703c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2d0da3ca-322e-4bd2-a4b2-9ef438ccf621</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-846f832c-c16d-44ae-ba24-1a4b418faeb4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2d0da3ca-322e-4bd2-a4b2-9ef438ccf621</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column</identifier>
@@ -157,65 +136,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-0fe4aef9-fe56-415f-99e6-c1d34a2caa84</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-633d157a-950f-48b1-915b-57d0a594be4e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CreatedById</fieldItem>
-                <identifier>RecordCreatedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-3ea02917-dc22-4ff4-beff-c7e3fabb488b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-0b107183-59d6-4ab4-abc4-be74aa74159a</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-3ea02917-dc22-4ff4-beff-c7e3fabb488b</value>
+                    <value>Facet-846f832c-c16d-44ae-ba24-1a4b418faeb4</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-0b107183-59d6-4ab4-abc4-be74aa74159a</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-67cd0044-725d-43a8-a971-d784e8dd4e29</name>
+        <name>Facet-2ec2d52e-1cba-4dec-adf7-04052922094d</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -223,7 +150,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-633d157a-950f-48b1-915b-57d0a594be4e</value>
+                    <value>Facet-010d7e86-09e3-4318-9af9-c0f9185e703c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>horizontalAlignment</name>
@@ -234,14 +161,14 @@
                     <value>Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection</identifier>
+                <identifier>flexipage_fieldSection1</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-67cd0044-725d-43a8-a971-d784e8dd4e29</value>
+                    <value>Facet-2ec2d52e-1cba-4dec-adf7-04052922094d</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>horizontalAlignment</name>
@@ -252,13 +179,74 @@
                     <value>System Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>force:recordDetailPanelMobile</componentName>
-                <identifier>force_recordDetailPanelMobile</identifier>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>NSP_Account_Group__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Account_Group_Members__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Main__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Sales_Set_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Enter_Date_Sales__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Exit_Date__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Sales Set Members</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList4</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -306,6 +294,39 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>collapsed</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsConfiguration</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideChatterActions</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideSlackAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Tabs</value>
                 </componentInstanceProperties>
@@ -318,6 +339,11 @@
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -326,9 +352,9 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Account Group Member Record Sales</masterLabel>
+    <masterLabel>Account Group Seller Experience Record Page</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
-    <sobjectType>NSP_Account_Group_Member__c</sobjectType>
+    <sobjectType>NSP_Account_Group__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
     </template>
