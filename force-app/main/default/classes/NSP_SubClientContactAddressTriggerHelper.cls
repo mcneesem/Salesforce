@@ -99,7 +99,7 @@ public class NSP_SubClientContactAddressTriggerHelper {
         
         for(NSP_Sub_Client_Contact_Address__c subClientConAddress : newList) {
             if((subClientConAddress.NSP_Address__c != null && oldMap == null) || 
-               (oldMap != null && subClientConAddress.NSP_Address__c != null && subClientConAddress.NSP_Address__c != oldMap.get(subClientConAddress.Id).NSP_Address__c))
+               (oldMap != null && oldMap.get(subClientConAddress.Id) != null && subClientConAddress.NSP_Address__c != oldMap.get(subClientConAddress.Id).NSP_Address__c))
             subClientConAddress.NSP_Address_State_Changed_Date__c = System.today();
         }
     }
