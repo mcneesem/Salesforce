@@ -1554,12 +1554,11 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-* MethodName: updateTerminationDate
-* Description :  This method updates the Termination Dates on Asset
-* Added as part of STY-03212
-* Author: Nischay Jindal
-* ********************************************************************************************/
+    //
+    // MethodName: updateTerminationDate
+    // Description :  This method updates the Termination Dates on Asset
+    // Added as part of STY-03212
+    //
     public static void updateTerminationDate(Asset ast, Map<Id, Asset> oldAssetMap){
         Id woassetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         // checking if the status is terminated
@@ -1577,18 +1576,17 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: restrictProductSegupdate
-    * Description :  This method restricts the Product Segment Update on Asset
-    * Added as part of STY-03551
-    * Author: Nischay Jindal
-    * ********************************************************************************************/
-    public static void restrictProductSegupdate(List<Asset> assetList , Map<Id,Asset> oldAssetMap){
-        Map<String,String> projectAssetRecordTypeMap = new Map<String,String>();
-        Set<Id> assetIdSet = new Set<Id>();
-        Set<Id>assetRecordTypeIdSet = new Set<Id>();
-        Set<Id> eligibleAssets = new Set<Id>();
-        try{
+    //
+    // MethodName: restrictProductSegupdate
+    // Description :  This method restricts the Product Segment Update on Asset
+    // Added as part of STY-03551
+    //
+    public static void restrictProductSegupdate( List<Asset> assetList , Map<Id,Asset> oldAssetMap ) {
+        try {
+            Map<String,String> projectAssetRecordTypeMap = new Map<String,String>();
+            Set<Id> assetIdSet = new Set<Id>();
+            Set<Id> assetRecordTypeIdSet = new Set<Id>();
+            Set<Id> eligibleAssets = new Set<Id>();
             // creating a map of Asset recordtype and Project Tempaltes
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.WX_WA,NSP_ServiceConstants.HCM_PROJECT_NAME);
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.ASSET_TT_RECORDTYPE,NSP_ServiceConstants.ITA_IMPLEMENTATION);
@@ -1792,7 +1790,6 @@ Implementation profile related to the account of the created asset
 * MethodName: updateEarliestProductFirstPayDateOnAccount
 * Description : update related account with earliest first pay date
 * Story : STY-03597
-* Author :Abhishek Kumar
 * Params: List<Asset> assetList
 * ********************************************************************************************/
     public void updateEarliestProductFirstPayDateOnAccount(Set<Id> accountsId ){
@@ -1833,13 +1830,12 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateAssetTerminationDate
-* Description : update termination date on Asset
-* Story : STY-03479
-* Author :Nischay Jindal
-* Params: List<Asset> assetList , Map<Id,Asset> oldAssetMap
-* ********************************************************************************************/
+    //
+    // MethodName: updateAssetTerminationDate
+    // Description : update termination date on Asset
+    // Story : STY-03479
+    // Params: List<Asset> assetList , Map<Id,Asset> oldAssetMap
+    //
     public static void updateAssetTerminationDate(List<Asset> assetList , Map<Id,Asset> oldAssetMap ){
         Set<Id> assetIdSet = new Set<Id>();
         Map<Id,Project_Asset__c> assetProjectAssetMap = new Map<Id,Project_Asset__c>();
