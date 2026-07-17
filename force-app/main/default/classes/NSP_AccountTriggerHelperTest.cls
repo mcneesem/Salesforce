@@ -609,9 +609,9 @@ private class NSP_AccountTriggerHelperTest {
         update newAcc;
 
         Test.StopTest();
-        NSP_Account_Group_Member__c accGroMemberUpdated = [SELECT Id, NSP_Member_Account__c, NumberOfEmployees_Sales__c FROM NSP_Account_Group_Member__c
+        List<NSP_Account_Group_Member__c> accGroMemberUpdated = [SELECT Id, NSP_Member_Account__c, NumberOfEmployees_Sales__c FROM NSP_Account_Group_Member__c
                                                             WHERE NSP_Member_Account__c =: newAcc.Id LIMIT 1];
-        System.assert(accGroMemberUpdated.NumberOfEmployees_Sales__c == newAcc.NumberOfEmployees);
+        System.assert(!accGroMemberUpdated.isEmpty() && accGroMemberUpdated[0].NumberOfEmployees_Sales__c == newAcc.NumberOfEmployees);
     }
 
     @isTest

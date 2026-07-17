@@ -16,8 +16,8 @@ public with sharing class ObjectAccessFilter {
                 Integer maxRecords = ( input.maxRecords != null && input.maxRecords > 0 )
                     ? input.maxRecords
                     : DEFAULT_MAX_RECORDS;
-                List<SObject> truncatedRecords = truncateList( input.records, maxRecords );
-                result.editableRecords = getEditableFromList( truncatedRecords );
+                List<SObject> truncatedRecords = ObjectAccessFilter.truncateList( input.records, maxRecords );
+                result.editableRecords = ObjectAccessFilter.getEditableFromList( truncatedRecords );
                 result.isTruncated = ( input.records != null && input.records.size() > maxRecords );
                 results.add( result );
             }
@@ -41,7 +41,7 @@ public with sharing class ObjectAccessFilter {
 
     private static List<SObject> truncateList( List<SObject> records, Integer maxSize ) {
         List<SObject> result = new List<SObject>();
-        if ( records != null ) {
+        if ( records != null && maxSize != null ) {
             Integer limit_size = Math.min( records.size(), maxSize );
             for ( Integer i = 0; i < limit_size; i++ ) {
                 result.add( records[i] );
@@ -53,9 +53,9 @@ public with sharing class ObjectAccessFilter {
     private static List<SObject> getEditableFromList( List<SObject> candidates ) {
         List<SObject> editableRecords = new List<SObject>();
         if ( candidates != null && !candidates.isEmpty() ) {
-            Set<Id> editableIds = getEditableRecordIds( candidates );
+            Set<Id> editableIds = ObjectAccessFilter.getEditableRecordIds( candidates );
             for ( SObject candidate : candidates ) {
-                if ( editableIds.contains( candidate.Id ) ) {
+                if ( editableIds != null && editableIds.contains( candidate.Id ) ) {
                     editableRecords.add( candidate );
                 }
             }
@@ -65,18 +65,23 @@ public with sharing class ObjectAccessFilter {
 
     private static Set<Id> getEditableRecordIds( List<SObject> candidates ) {
         Set<Id> editableIds = new Set<Id>();
+        if ( candidates == null || candidates.isEmpty() ) {
+            return editableIds;
+        }
         List<Id> candidateIds = new List<Id>( new Map<Id, SObject>( candidates ).keySet() );
-        List<List<Id>> batches = batchIds( candidateIds, USER_RECORD_ACCESS_BATCH_SIZE );
-        for ( List<Id> batch : batches ) {
-            for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
-                SELECT RecordId
-                FROM UserRecordAccess
-                WHERE UserId = :UserInfo.getUserId()
-                AND RecordId IN :batch
-                AND HasEditAccess = true
-                WITH SYSTEM_MODE
-            ] ) {
-                editableIds.add( access.RecordId );
+        List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds, USER_RECORD_ACCESS_BATCH_SIZE );
+        if ( batches != null ) {
+            for ( List<Id> batch : batches ) {
+                for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
+                    SELECT RecordId
+                    FROM UserRecordAccess
+                    WHERE UserId = :UserInfo.getUserId()
+                    AND RecordId IN :batch
+                    AND HasEditAccess = true
+                    WITH SYSTEM_MODE
+                ] ) {
+                    editableIds.add( access.RecordId );
+                }
             }
         }
         return editableIds;
@@ -84,14 +89,16 @@ public with sharing class ObjectAccessFilter {
 
     private static List<List<Id>> batchIds( List<Id> ids, Integer batchSize ) {
         List<List<Id>> batches = new List<List<Id>>();
-        Integer totalSize = ids.size();
-        for ( Integer i = 0; i < totalSize; i += batchSize ) {
-            Integer endIndex = Math.min( i + batchSize, totalSize );
-            List<Id> batch = new List<Id>();
-            for ( Integer j = i; j < endIndex; j++ ) {
-                batch.add( ids[j] );
+        if ( ids != null && batchSize != null && batchSize > 0 ) {
+            Integer totalSize = ids.size();
+            for ( Integer i = 0; i < totalSize; i += batchSize ) {
+                Integer endIndex = Math.min( i + batchSize, totalSize );
+                List<Id> batch = new List<Id>();
+                for ( Integer j = i; j < endIndex; j++ ) {
+                    batch.add( ids[j] );
+                }
+                batches.add( batch );
             }
-            batches.add( batch );
         }
         return batches;
     }
