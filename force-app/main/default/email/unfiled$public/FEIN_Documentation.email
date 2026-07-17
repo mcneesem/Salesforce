@@ -1,0 +1,27 @@
+<messaging:emailTemplate subject="{!relatedTo.NSP_AIMS_Client_Name__c} {!
+    IF(
+      NOT( ISBLANK( relatedTo.NSP_AIMS_ClientNo__c ) ) ,
+      ' (' & relatedTo.NSP_AIMS_ClientNo__c & ') –' ,
+      ''
+    )} IRS Documentation collected" recipientType="User" relatedToType="Implementation_Profile__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <p>
+                    The IRS Documentation for  {!relatedTo.NSP_AIMS_Client_Name__c}
+                    <apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.NSP_AIMS_ClientNo__c))}">
+                        ({!relatedTo.NSP_AIMS_ClientNo__c})
+                    </apex:outputPanel>
+                    has been collected and is attached.
+                </p>
+                <p>
+                    Regards,
+                    <br/>
+                    {!relatedTo.NSP_Project_Manager__r.Name}
+                    <br/>
+                    {!relatedTo.NSP_Project_Manager__r.NSP_Job_Title__c}
+                </p>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

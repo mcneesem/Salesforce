@@ -1622,12 +1622,6 @@ public class NSP_ProjectTasksTriggerHelper {
         if ( !sProjectTasksIds.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
-        if ( !projectTaskIdSet.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(
-                projectTaskIdSet ,
-                mapofProjecttasks
-            );
-        }
         if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset
             && !accountIdList.isEmpty()
             )
@@ -2291,7 +2285,6 @@ public class NSP_ProjectTasksTriggerHelper {
     // MethodName: assignQueueTasks
     // Description : This Method will update Queue as the Owner of MM and FSO projects
     // Params:      List<pse__Project_Task__c> projectTaskList
-    // Author :Nischay
     //
     public static void assignQueueTasks(List<pse__Project_Task__c> projectTaskList){
         try{
