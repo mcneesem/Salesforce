@@ -6,6 +6,7 @@
 * Name : NSP_SubClientContactAddressTriggerHelper
 */
 public class NSP_SubClientContactAddressTriggerHelper {   
+    // test w/ NSP_SubClientContactAddressHelperTest (86%)
     /***********************************************************************************************
 * MethodName: syncSPHistoryOnSubplan
 * Description : This method is used to sync NSP_SubClientContactAddress related fields on to Sub Plan.
