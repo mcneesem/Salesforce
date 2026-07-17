@@ -693,7 +693,7 @@
         <expression>IF(AND(NOT(ISNULL( {!Get_IP_Record.Id}  )), NOT(ISBLANK({!Get_IP_Record.Id})) ,
 NOT(ISNULL( {!Get_IP_Record.NSP_Project_Manager__c})) ,
 NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
- ),{!Get_IP_Record.NSP_Project_Manager__r.FirstName}+&quot; &quot;+ {!Get_IP_Record.NSP_Project_Manager__r.LastName} , {!Retrieve_Project.Owner:User.FirstName}+&quot; &quot; + {!Retrieve_Project.Owner:User.LastName})</expression>
+),{!Get_IP_Record.NSP_Project_Manager__r.FirstName}+&quot; &quot;+ {!Get_IP_Record.NSP_Project_Manager__r.LastName} , {!Retrieve_Project.Owner:User.FirstName}+&quot; &quot; + {!Retrieve_Project.Owner:User.LastName})</expression>
     </formulas>
     <formulas>
         <name>f_PM_JobTitle</name>
