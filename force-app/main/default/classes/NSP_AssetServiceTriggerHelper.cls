@@ -2096,7 +2096,8 @@ Implementation profile related to the account of the created asset
     // "BPS Service" Profile (Id=00e4x000001dkv2AAA )
     // "Retirement Services" Profile (Id=00e4x000001dkv7AAA)
     public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
-        Boolean isBPSUserFields = false ;
+
+        try {
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
         List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
         //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
@@ -2104,20 +2105,17 @@ Implementation profile related to the account of the created asset
 
         List<String> nonEditableAssetFields = ( isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv2AAA' )  ? nonEditableBPSAssetFields :
                                             ( !isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv7AAA' )  ? nonEditableRETFields : null;
-        if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
-            isBPSUserFields = true;
-        }
-        try {
+
             if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
                 for ( Asset assetRec : assetList ) {
-                    Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
+                    Asset oldAsset = oldMap?.get( assetRec.Id );
                     for ( String nonEditableField : nonEditableAssetFields ) {
                         //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
                         if ( ( oldAsset != null && assetRec.get( nonEditableField ) != oldAsset.get( nonEditableField ) )
                             || ( assetRec.get( nonEditableField ) != null && onCreate == true )
                             )
                         {
-                            if ( isBPSUserFields ) {
+                            if (  nonEditableAssetFields == nonEditableBPSAssetFields ) {
                                 throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
                             }else{
                                 assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
