@@ -1587,7 +1587,6 @@ Implementation profile related to the account of the created asset
         Map<String,String> projectAssetRecordTypeMap = new Map<String,String>();
         Set<Id> assetIdSet = new Set<Id>();
         Set<Id>assetRecordTypeIdSet = new Set<Id>();
-        Map<Id,List<PermissionSetAssignment>> mapUserIdSetPSA = new Map<Id,List<PermissionSetAssignment>>();
         Set<Id> eligibleAssets = new Set<Id>();
         try{
             // creating a map of Asset recordtype and Project Tempaltes
@@ -1599,36 +1598,41 @@ Implementation profile related to the account of the created asset
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.INTEGRA_ASSET,NSP_ServiceConstants.INTEGRA_IMPLEMENTATION);
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.XML_ASSET,NSP_ServiceConstants.XMLProject);
 
-            // checking if the current user has BPS perm Set Assigned
-            List<PermissionSetAssignment> bpsAssignments = [Select Id,AssigneeId, PermissionSet.Id FROM PermissionSetAssignment WHERE
-                                                            PermissionSet.Name =:  NSP_ServiceConstants.bpsAssetPermSet AND AssigneeId =:userInfo.getUserId() ];
-            // creating a map of user and PSA
-            for(PermissionSetAssignment psa :bpsAssignments){
-                if(!mapUserIdSetPSA.containsKey(psa.AssigneeId)){
-                    mapUserIdSetPSA.put(psa.AssigneeId , new List<PermissionSetAssignment>());
-                }
-                mapUserIdSetPSA.get(psa.AssigneeId).add(psa);
-            }
+            Map<Id,User> permittedUsersMap = CustomPermissionController.getPermittedUsersMap( 'NSP_BPS_Create_Assets_Access' );
+
             // retreiving the asset recordtype ID
             for(String AstRecordType : projectAssetRecordTypeMap.keySet()){
                 assetRecordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,AstRecordType));
             }
             // creating AssetId set to retrieve the Project Assets
             for(Asset asset:assetList){
-                if(mapUserIdSetPSA.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)){
+                if(permittedUsersMap.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)){
                     assetIdSet.add(asset.Id);
                 }
             }
-            // fetching Project Asset List
-            List<String> FIELDS = new List<String>{'Id','Asset__c', 'Asset__r.RecordType.DeveloperName', 'Project__r.pse__Project_Status__c', 'Asset__r.NSP_Product_Segment__c',
-                'Project__c', 'Project__r.TemplateName__c', 'Project__r.NSP_Client_Size__c'};
 
-                    NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder('Project_Asset__c', FIELDS);
-            queryBuilder.setSecurityEnforce(false);
-            String queryPrjAsset = queryBuilder.build();
-            queryPrjAsset += ' WHERE Asset__c IN:assetIdSet  AND  (Project__r.pse__Project_Status__c != ' + '\''+ NSP_ServiceConstants.ASSET_ONBOARDING_STATUS +'\''+ ' OR Project__r.pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.INTAKE+'\''+ ')';
-
-            List<Project_Asset__c> prjAssetList = Database.Query(queryPrjAsset);
+            List<Project_Asset__c> prjAssetList = [
+                SELECT
+                Id ,
+                Asset__c ,
+                Asset__r.RecordType.DeveloperName ,
+                Project__r.pse__Project_Status__c ,
+                Asset__r.NSP_Product_Segment__c ,
+                Project__c ,
+                Project__r.TemplateName__c ,
+                Project__r.NSP_Client_Size__c
+                FROM
+                Project_Asset__c
+                WHERE (
+                    ( Asset__c IN :assetIdSet )
+                    AND (
+                        Project__r.pse__Project_Status__c NOT IN (
+                            'Onboarding' ,
+                            'Intake'
+                            )
+                        )
+                )
+            ];
 
             // creating set of eligible Assets
             for(Project_Asset__c prjAsset :prjAssetList){
@@ -1640,7 +1644,7 @@ Implementation profile related to the account of the created asset
             // validating the Assets  records
             for(Asset asset:assetList){
                 if(asset.NSP_Product_Segment__c!=oldAssetMap.get(asset.Id).NSP_Product_Segment__c
-                   && mapUserIdSetPSA.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)
+                   && permittedUsersMap.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)
                    && !eligibleAssets.contains(asset.Id)){
                        asset.addError(label.NSP_BPSPermisisonAssetValidation);
                    }
