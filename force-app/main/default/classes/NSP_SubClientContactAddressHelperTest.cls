@@ -30,7 +30,7 @@ public class NSP_SubClientContactAddressHelperTest {
         
         
         NSP_Address__c address = New NSP_Address__c();
-        address.Name = TEST1 ;
+        address.Name = TEST1;
         address.NSP_Street__c = 'Test Street';
         address.NSP_Label_Code__c = 'TesT';
         Insert address;
