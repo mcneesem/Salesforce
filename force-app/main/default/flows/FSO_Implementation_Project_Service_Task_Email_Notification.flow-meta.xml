@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Send_Email</name>
         <label>Send Email</label>
-        <locationX>385</locationX>
+        <locationX>374</locationX>
         <locationY>1116</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -61,7 +61,7 @@
     <assignments>
         <name>Assign_Collection_Filtered_List</name>
         <label>Assign Collection (Filtered List)</label>
-        <locationX>737</locationX>
+        <locationX>726</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>Get_IP_Email_List.c_ToAddressList_IP_OT_Rep_Final_List</assignToReference>
@@ -78,7 +78,7 @@
         <name>Filter_Static_List</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter Static List (Custom Mtd)</label>
-        <locationX>649</locationX>
+        <locationX>638</locationX>
         <locationY>600</locationY>
         <assignNextValueToReference>currentItem_Filter_Static_List</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -119,7 +119,7 @@
     <decisions>
         <name>Check_For_Null_Static_Recipient</name>
         <label>Check For Null (Custom Metadata) Static Recipient</label>
-        <locationX>869</locationX>
+        <locationX>902</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -148,21 +148,21 @@
     <decisions>
         <name>Check_if_Email_Params_are_present</name>
         <label>Check if Email Params are present</label>
-        <locationX>649</locationX>
+        <locationX>638</locationX>
         <locationY>1008</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Present</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_IP_Email_List.rc_ToAddress_IP_Static_List</leftValueReference>
+                <leftValueReference>Get_IP_Email_List.c_ToAddressList_IP_OT_Rep_Final_List</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_IP_Email_List.rc_ToAddress_IP_Static_List</leftValueReference>
+                <leftValueReference>Get_IP_Email_List.c_ToAddressList_IP_OT_Rep_Final_List</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -192,7 +192,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>495</locationX>
+        <locationX>506</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Get_IP_Email_List</targetReference>
@@ -232,7 +232,7 @@
     <loops>
         <name>Add_Static_List_to_Collection</name>
         <label>Add Static List to Collection</label>
-        <locationX>649</locationX>
+        <locationX>638</locationX>
         <locationY>708</locationY>
         <collectionReference>Filter_Static_List</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -308,7 +308,7 @@
     <subflows>
         <name>Get_IP_Email_List</name>
         <label>Get IP Email List</label>
-        <locationX>869</locationX>
+        <locationX>902</locationX>
         <locationY>384</locationY>
         <connector>
             <targetReference>Check_For_Null_Static_Recipient</targetReference>
@@ -367,8 +367,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Fault Handler</label>
-        <locationX>649</locationX>
-        <locationY>1224</locationY>
+        <locationX>638</locationX>
+j        <locationY>1224</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
