@@ -220,23 +220,28 @@ public class NSP_AssetServiceHelper {
 
     // This method will update the asset termination information section
     public static void updateTerminationInformation( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
-        try{
-            for(Asset asset: newList){
+        try {
+            for ( Asset asset : newList ) {
                 //when the verbal termination received is checked
-                if( asset.recordTypeId == WO_ASSET &&
-                    asset.NSP_Verbal_Term_recd__c ==true && (oldMapAsset==null || (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Verbal_Term_recd__c!=true))
+                if ( ( asset.recordTypeId == WO_ASSET )
+                    && ( asset.NSP_Verbal_Term_recd__c == true )
+                    && ( ( oldMapAsset == null )
+                        || ( ( oldMapAsset != null ) && ( oldMapAsset.get( asset.Id ).NSP_Verbal_Term_recd__c != true ) )
+                        )
                     )
                 {
-                    asset.NSP_Verbal_Term_Date__c= asset.NSP_Verbal_Term_Date__c == null ? System.Today() : asset.NSP_Verbal_Term_Date__c;
-                    asset.NSP_Verbal_Term_Updatedby__c=UserInfo.getUserId();
+                    asset.NSP_Verbal_Term_Date__c = ( ( asset.NSP_Verbal_Term_Date__c == null ) ? System.today() : asset.NSP_Verbal_Term_Date__c );
+                    asset.NSP_Verbal_Term_Updatedby__c = UserInfo.getUserId();
                 }
                 //when Written Termination Notice Received is checked
-                if( asset.recordTypeId == WO_ASSET &&
-                    asset.NSP_Written_Term_recd__c ==true && (oldMapAsset==null ||
-                    (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Written_Term_recd__c!=true))
+                if ( ( asset.recordTypeId == WO_ASSET )
+                    && ( asset.NSP_Written_Term_recd__c == true )
+                    && ( ( oldMapAsset == null )
+                        || ( ( oldMapAsset != null ) && ( oldMapAsset.get( asset.Id ).NSP_Written_Term_recd__c != true ) )
+                        )
                     )
                 {
-                    asset.NSP_Written_Term_Date__c= asset.NSP_Written_Term_Date__c == null ? System.Today(): asset.NSP_Written_Term_Date__c;
+                    asset.NSP_Written_Term_Date__c = ( ( asset.NSP_Written_Term_Date__c == null ) ? System.today() : asset.NSP_Written_Term_Date__c );
                     asset.NSP_Written_Termination_Updated_By__c = UserInfo.getUserId();
                     asset.NSP_Pending_Termination__c = true;
                 }
