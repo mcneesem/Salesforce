@@ -2,10 +2,6 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Restrict_To_Edit_Subclient</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
         <name>Generate_Renewal_Opportunities</name>
     </customPermissions>
     <description>Grants the Custom Permission to access &quot;Generate Renewal Opportunities&quot; Screen Flow</description>
