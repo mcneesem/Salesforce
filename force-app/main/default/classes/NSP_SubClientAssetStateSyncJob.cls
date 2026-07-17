@@ -67,6 +67,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         Set<Id> assetIds = new Set<Id>();
         DateTime last4Hours = System.now().addHours( -4 );
+        // collect all Assets with modififed related NSP_Sub_Client_Contact_Address__c records...
         List<NSP_Sub_Client_Contact_Address__History> addressChanges = [
             SELECT
                 Id ,
@@ -86,11 +87,10 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
         ];
-        // collect all Assets with modififed related NSP_Sub_Client_Contact_Address__c records...
         for ( NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : addressChanges ) {
             assetIds.add( existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c );
         }
-
+        // collect all Assets with modififed related NSP_Sub_Client_Contact__c records...
         List<NSP_Sub_Client_Contact__History> contactChanges = [
             SELECT
                 Id ,
@@ -103,14 +103,18 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
             FROM NSP_Sub_Client_Contact__History
             WHERE (
                 ( CreatedDate >= :last4Hours )
-                AND ( Field IN ( 'NSP_Employee_Status__c' , 'NSP_Paid_Non_Paid__c' ) )
+                AND (
+                    Field IN (
+                        'NSP_Employee_Status__c' ,
+                        'NSP_Paid_Non_Paid__c'
+                    )
+                )
                 AND ( ParentId != null )
                 AND ( Parent.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
         ];
-        // collect all Assets with modififed related NSP_Sub_Client_Contact__c records...
-        if(!contactChanges.isEmpty()){
+        if ( !contactChanges.isEmpty() ) {
             for ( NSP_Sub_Client_Contact__History existingSubClientContacts : contactChanges ) {
                 assetIds.add( existingSubClientContacts.Parent.NSP_Sub_Client__r.NSP_Asset__c );
             }
