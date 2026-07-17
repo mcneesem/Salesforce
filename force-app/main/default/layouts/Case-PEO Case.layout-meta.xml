@@ -547,6 +547,9 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>NewEvent</excludeButtons>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.STATUS</fields>
