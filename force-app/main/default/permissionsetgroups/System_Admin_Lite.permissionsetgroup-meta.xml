@@ -20,6 +20,7 @@
     <permissionSets>Bypass_Required_Compensation_Services_Closure</permissionSets>
     <permissionSets>Bypass_Restrict_Compensation_Services_Closure</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
+    <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Case_Send_SSNVS_Team_Email</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
