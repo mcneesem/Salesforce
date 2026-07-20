@@ -469,8 +469,8 @@ private class NSP_OrderItemTriggerHelperTest{
 
         orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
         orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
-        orderItemList[0].NSP_ServiceAssetCategory__c = 'XML';
-        orderItemList[1].NSP_ServiceAssetCategory__c = 'XML';
+        orderItemList[0].NSP_ServiceAssetCategory__c = 'Time Wage Import';
+        orderItemList[1].NSP_ServiceAssetCategory__c = 'Time Wage Import';
         orderItemList[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
         orderItemList[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
         orderItemList[0].SBQQ__Asset__c = objAsset.Id;
