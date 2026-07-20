@@ -264,16 +264,10 @@
                         <valueListItems>
                             <value>Account.Manage_Sales_Set</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Sales_Set_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Owner.LastName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Available</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -428,8 +422,8 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sales_Set__c</fieldItem>
-                <identifier>RecordSales_Set_cField</identifier>
+                <fieldItem>Record.Sales_Set_Link__c</fieldItem>
+                <identifier>RecordSales_Set_Link__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Sales_Set_Status__c}</leftValue>
@@ -835,6 +829,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_FEIN__c</fieldItem>
                 <identifier>RecordNSP_FEIN_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Count_of_Pending_Oppty__c</fieldItem>
+                <identifier>RecordCount_of_Pending_Oppty_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6cb8d459-3e9a-483d-8f83-dcf1996e4eff</name>
@@ -2351,16 +2355,19 @@
                             <value>OPPORTUNITY.NAME</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>ACCOUNT.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>OPPORTUNITY.STAGE_NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_PrimaryProduct__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>OPPORTUNITY.TYPE</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>OPPORTUNITY.CLOSE_DATE</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CORE.USERS.FULL_NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Sales_Office__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2942,7 +2949,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>ZoomInfo</value>
+                    <value>Zoom Info</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab18</identifier>
@@ -2963,52 +2970,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-1e15ed39-0ca6-44bf-80cf-5d979ed3e931</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>daysToShow</name>
-                    <value>30</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>earliestRange</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconStyle</name>
-                    <value>Square</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>latestRange</name>
-                    <value>0.25</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>preferredHeight</name>
-                    <value>1 - Smallest</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showToday</name>
-                    <value>Green</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>timelineParent</name>
-                    <value>Default_Picklist_Value</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>timelineTitle</name>
-                    <value>Timeline</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>zoomTo</name>
-                    <value>Current Date</value>
-                </componentInstanceProperties>
-                <componentName>bmpyrckt:timeline</componentName>
-                <identifier>bmpyrckt_timeline2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-64330399-b713-43a7-bd5e-850eb3ccf7f5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3045,20 +3006,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-64330399-b713-43a7-bd5e-850eb3ccf7f5</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Timeline</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab9</identifier>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

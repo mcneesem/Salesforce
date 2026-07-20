@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <UiFormatSpecificationSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <field>Account.Sales_Set__c</field>
+    <field>Account.Sales_Set_Link__c</field>
     <formatType>ICON</formatType>
     <masterLabel>Sales Set Main Account</masterLabel>
     <sobjectType>Account</sobjectType>
