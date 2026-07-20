@@ -429,6 +429,7 @@ public with sharing class NSP_ContactTriggerHelper {
             {
                 conIdcontactMap.put(con.Id, con);
             }
+            Set<Id> seenPrimaryAccountIds = new Set<Id>();
             for ( AccountContactRelation acr : [
                         SELECT
                             Id ,
@@ -437,6 +438,7 @@ public with sharing class NSP_ContactTriggerHelper {
                             Contact.NSP_isContactInsertion__c ,
                             NSP_Work_Email__c ,
                             NSP_Work_Phone__c ,
+                            NSP_Is_Primary__c ,
                             IsDirect ,
                             CreatedById ,
                             CreatedBy.ProfileId
@@ -450,7 +452,7 @@ public with sharing class NSP_ContactTriggerHelper {
                     ]
                 )
             {
-                if ( conIdcontactMap.containsKey(acr.ContactId ) ) {
+                if ( conIdcontactMap.containsKey(acr.ContactId ) && ( !acr.NSP_Is_Primary__c || seenPrimaryAccountIds.add( acr.AccountId ) ) ) {
                     cont = conIdcontactMap.get(acr.ContactId);
                     cont.NSP_isContactInsertion__c = false;
                     conUpdateList.add(cont);
