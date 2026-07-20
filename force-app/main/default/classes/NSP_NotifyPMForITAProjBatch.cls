@@ -70,6 +70,7 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
                 ( pse__Is_Template__c = false )
                     AND ( NSP_Is_ITA_Mail_Sent__c = false )
                     AND ( TemplateName__c LIKE '%ITA%Implementation%' )
+                    AND ( pse__End_Date__c != null)
                 )
             ]
         );
