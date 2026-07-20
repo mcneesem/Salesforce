@@ -3,6 +3,22 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Add_Filtered_Content_Documents</name>
+        <label>Add Filtered Content Documents</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>filteredContentDocuments</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Iterate_Library_Content_Documents</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Content_Document</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_Remove_Portal_Resource</name>
         <label>Add Remove Portal Resource</label>
         <locationX>0</locationX>
@@ -475,6 +491,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Library_Content_Documents</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Library_Content_Documents</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -680,6 +703,32 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Title Length &gt;= 80 Char</description>
+        <name>isValidTitle</name>
+        <label>isValidTitle?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Content_Document</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Title</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>b_isValidTitle</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Filtered_Content_Documents</targetReference>
+            </connector>
+            <label>Yes : Valid Title</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_PR_Content_Document_Links</name>
         <label>Validate PR Content Document Links</label>
         <locationX>0</locationX>
@@ -702,6 +751,11 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>b_isValidTitle</name>
+        <dataType>Boolean</dataType>
+        <expression>LEN({!Iterate_Library_Content_Documents.Title}) &lt;=80</expression>
+    </formulas>
     <interviewLabel>Portal Resources {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Portal Resources</label>
@@ -727,7 +781,7 @@
         <collectionReference>Get_Library_Content_Documents</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Check_Content_Document</targetReference>
+            <targetReference>isValidTitle</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Portal_Resources</targetReference>
@@ -1218,7 +1272,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>Get_Library_Content_Documents</elementReference>
+                    <elementReference>filteredContentDocuments</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1230,14 +1284,14 @@
             <inputParameters>
                 <name>keyField</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;Get_Library_Content_Documents&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;filteredContentDocuments&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>columnReferences</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Title&quot;,&quot;LastModifiedDate&quot;,&quot;ContentSize&quot;],&quot;elementReference&quot;:&quot;Get_Library_Content_Documents&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Title&quot;,&quot;LastModifiedDate&quot;,&quot;ContentSize&quot;],&quot;elementReference&quot;:&quot;filteredContentDocuments&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
@@ -1404,7 +1458,7 @@
             <transformValueActions>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>Get_Library_Content_Documents[$EachItem].Title</elementReference>
+                    <elementReference>filteredContentDocuments[$EachItem].Title</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -1511,6 +1565,15 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <description>Where Title less than 80 char</description>
+        <name>filteredContentDocuments</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocument</objectType>
     </variables>
     <variables>
         <name>newContentDocumentLinks</name>
