@@ -347,7 +347,7 @@
         <inputAssignments>
             <name>v_ProjectRecordId</name>
             <value>
-                <elementReference>$Record.pse__Project__r.Id</elementReference>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -368,7 +368,7 @@
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Fault Handler</label>
         <locationX>638</locationX>
-j        <locationY>1224</locationY>
+        <locationY>1224</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
