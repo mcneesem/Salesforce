@@ -74,7 +74,7 @@
         <faultConnector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <filterLogic>( 1 AND ( 2 OR 3 ) )</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 OR 4 ) )</filterLogic>
         <filters>
             <field>NSP_Lock_Opportunity__c</field>
             <operator>EqualTo</operator>
@@ -94,6 +94,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>WA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRScale</stringValue>
             </value>
         </filters>
         <inputAssignments>
