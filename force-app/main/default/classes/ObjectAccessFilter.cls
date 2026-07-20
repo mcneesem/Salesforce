@@ -65,22 +65,21 @@ public with sharing class ObjectAccessFilter {
 
     private static Set<Id> getEditableRecordIds( List<SObject> candidates ) {
         Set<Id> editableIds = new Set<Id>();
-        if ( candidates == null || candidates.isEmpty() ) {
-            return editableIds;
-        }
-        List<Id> candidateIds = new List<Id>( new Map<Id, SObject>( candidates ).keySet() );
-        List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds, USER_RECORD_ACCESS_BATCH_SIZE );
-        if ( batches != null ) {
-            for ( List<Id> batch : batches ) {
-                for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
-                    SELECT RecordId
-                    FROM UserRecordAccess
-                    WHERE UserId = :UserInfo.getUserId()
-                    AND RecordId IN :batch
-                    AND HasEditAccess = true
-                    WITH SYSTEM_MODE
-                ] ) {
-                    editableIds.add( access.RecordId );
+        if ( candidates != null ) {
+            List<Id> candidateIds = new List<Id>( new Map<Id, SObject>( candidates ).keySet() );
+            List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds , USER_RECORD_ACCESS_BATCH_SIZE );
+            if ( batches != null ) {
+                for ( List<Id> batch : batches ) {
+                    for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
+                        SELECT RecordId
+                        FROM UserRecordAccess
+                        WHERE UserId = :UserInfo.getUserId()
+                        AND RecordId IN :batch
+                        AND HasEditAccess = true
+                        WITH SYSTEM_MODE
+                    ] ) {
+                        editableIds.add( access.RecordId );
+                    }
                 }
             }
         }
