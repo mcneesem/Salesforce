@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sales_Set_Total_Employees__c</fullName>
     <externalId>false</externalId>
-    <formula>Sales_Set__r.Total_Employees_Sales__c</formula>
+    <formula>Sales_Set_Membership__r.NSP_Group__r.Total_Employees_Sales__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Sales Set Total Employees</label>
     <precision>18</precision>
