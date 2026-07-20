@@ -137,7 +137,7 @@
             <assignToReference>recordPortalClient.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Project_Record.pse__Account__r.Name</elementReference>
+                <elementReference>f_portalclientname</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -346,6 +346,14 @@ Create if not exist and if exists create project to support multiple project to 
     </decisions>
     <description>New Client Portal: Portal Project Creation</description>
     <environments>Default</environments>
+    <formulas>
+        <name>f_portalclientname</name>
+        <dataType>String</dataType>
+        <expression>LEFT(
+  TRIM( {!Get_Project_Record.pse__Account__r.Name} ) ,
+  80
+)</expression>
+    </formulas>
     <formulas>
         <name>f_portalProjectName</name>
         <dataType>String</dataType>
