@@ -380,6 +380,13 @@
                 <elementReference>varSalesSetId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateAccount.Sales_Set_Membership__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Find_Inactive_Member_record.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_to_Account_collection_reactivate_member</targetReference>
         </connector>
@@ -848,7 +855,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Sales_Set__c</field>
+            <field>Sales_Set_Membership__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -892,7 +899,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Sales_Set__c</field>
+            <field>Sales_Set_Membership__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>

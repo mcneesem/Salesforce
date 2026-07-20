@@ -167,6 +167,13 @@
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateAccount.Sales_Set_Membership__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_to_Account_collection_Remove</targetReference>
         </connector>

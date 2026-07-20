@@ -249,17 +249,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>updateAccount.Sales_Set__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varSalesSetId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>updateAccount.Sales_Set_Membership__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>dmlMember.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateAccount.Sales_Set__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSalesSetId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -302,7 +302,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Current_Sales_Set_Member</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
