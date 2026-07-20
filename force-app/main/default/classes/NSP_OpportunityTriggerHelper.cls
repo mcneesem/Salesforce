@@ -1293,7 +1293,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @return: void
     //
     public void creteRewardForContactRole( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
-        set<String> primaryProductSet = new set<String>{'WX','WA','WO'};
+        set<String> primaryProductSet = new set<String>{'WX','WA','WO','HRScale'};
+        set<String> hrScaleRewardRoles = new set<String>{'COI','Client','Corporate Employee','Agency'};
         map<Id,String> opportunityIdToRewardTypeMap = new map<Id,String>();
         for(Opportunity newOpportunity: opportunityNewMap.Values()){
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
@@ -1341,6 +1342,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
                 opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
                 if(rewardType == 'Discovery'){
+                    if(currentOppty.NSP_PrimaryProduct__c == 'HRScale'
+                        && !hrScaleRewardRoles.contains(eachOCR.Role)){
+                        continue;
+                    }
                     NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
                     if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
                         && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'
