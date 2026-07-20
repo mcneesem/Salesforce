@@ -30,7 +30,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     public static void afterDeleteDirector( List<NSP_Account_Group_Member__c> oldList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
         try {
             NSP_AccountGroupMemberTriggerHelper.updatePrimaryForLastGroupMember( oldList , oldMap );
-            NSP_AccountGroupMemberTriggerHelper.nullifySalesSetLookup( oldList );
             NSP_AccountGroupMemberTriggerHelper.createSelfGroupForAccount( oldList );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -482,57 +481,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                     accGroMember.NSP_Payroll_Employees__c = null;
                 }
             }
-        }
-    }
-
-    public static void nullifySalesSetLookup( List<NSP_Account_Group_Member__c> oldList  ) {
-        try {
-            Set<Id> acctIdsToUpdate = new Set<Id>();
-            if ( ( oldList != null ) && !oldList.isEmpty() ) {
-                for( NSP_Account_Group_Member__c accGrpM : oldList ){
-                    if( accGrpM.NSP_Type__c != NSP_SalesConstants.SALES_SET && accGrpM.NSP_Member_Account__c != null ){
-                        acctIdsToUpdate.add( accGrpM.NSP_Member_Account__c );
-                    }
-                }
-            }
-            // move the Account update off the synchronous trigger path
-            if ( !acctIdsToUpdate.isEmpty() ) {
-                NSP_AccountGroupMemberTriggerHelper.nullifySalesSetLookupAsync( JSON.serialize( new List<Id>( acctIdsToUpdate ) ) );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
-                'nullifySalesSetLookup' ,
-                e
-            );
-        }
-    }
-
-    @future
-    private static void nullifySalesSetLookupAsync( String strAcctIds ) {
-        try {
-            List<Id> acctIds = (List<Id>) JSON.deserialize( strAcctIds , List<Id>.class );
-            List<Account> lstOfAcctsToUpdate = new List<Account>();
-            for ( Id acctId : acctIds ) {
-                lstOfAcctsToUpdate.add( new Account(
-                    Id = acctId ,
-                    Sales_Set__c = null
-                ) );
-            }
-            if ( !lstOfAcctsToUpdate.isEmpty() ) {
-                Database.SaveResult[] results = Database.update( lstOfAcctsToUpdate , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
-                    'nullifySalesSetLookup:Account' ,
-                    results
-                );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
-                'nullifySalesSetLookupAsync' ,
-                e
-            );
         }
     }
 

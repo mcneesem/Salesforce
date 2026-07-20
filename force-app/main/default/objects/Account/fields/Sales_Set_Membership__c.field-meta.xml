@@ -10,7 +10,7 @@
             <operation>equals</operation>
             <value>Sales Set</value>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>NSP_Account_Group_Member__c</referenceTo>
     <relationshipLabel>Sales Set Members</relationshipLabel>
