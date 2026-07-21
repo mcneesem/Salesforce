@@ -83,9 +83,6 @@ public class NSP_AccountTriggerHandler extends NSP_TriggerAction implements NSP_
             NSP_salesOfficeRecordSharing.shareAccountonUpdate((Map < Id, Account > ) newMap, (Map < Id, Account > ) oldMap);
 
         }
-        //added as part of STY-02846 changes
-        NSP_AccountTriggerHelper.updateAGMPayrollEmployees((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
-        NSP_AccountTriggerHelper.updateAGMNumberOfEmployees((Map<Id, Account>)newMap, (Map<Id, Account>)oldMap);
     }
 
 /**

@@ -281,6 +281,8 @@ public class NSP_AccountTriggerHelper {
             if ( !updateAddressAccountList.isEmpty() ) {
                 NSP_AccountTriggerHelper.updateAddressOnCheckList( updateAddressAccountList , newMap );
             }
+            NSP_AccountTriggerHelper.updateAGMPayrollEmployees( newMap , oldMap );
+            NSP_AccountTriggerHelper.updateAGMNumberOfEmployees( newMap , oldMap );
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
@@ -1522,10 +1524,14 @@ public class NSP_AccountTriggerHelper {
         try {
             Map<Id,Integer> accEmployeesByIds = new Map<Id,Integer>();
             // put accountId By NumberOfEmployees in Map - only when value changes
-            for ( Account accList : newMap.values() ) {
-                if ( ( accList.NumberOfEmployees != oldMap.get( accList.Id ).NumberOfEmployees )
-                  || ( accList.Sales_Set_Membership__c != oldMap.get( accList.Id ).Sales_Set_Membership__c ) ) {
-                    accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
+            if ( ( newMap != null ) && ( oldMap != null ) ) {
+                for ( Account accList : newMap.values() ) {
+                    Account oldAccount = oldMap.containsKey( accList.Id ) ? oldMap.get( accList.Id ) : null;
+                    if ( ( oldAccount != null )
+                        && ( ( accList.NumberOfEmployees != oldAccount.NumberOfEmployees )
+                          || ( accList.Sales_Set_Membership__c != oldAccount.Sales_Set_Membership__c ) ) ) {
+                        accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
+                    }
                 }
             }
             // move the Account Group Member update off the synchronous trigger path
