@@ -1554,12 +1554,11 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-* MethodName: updateTerminationDate
-* Description :  This method updates the Termination Dates on Asset
-* Added as part of STY-03212
-* Author: Nischay Jindal
-* ********************************************************************************************/
+    //
+    // MethodName: updateTerminationDate
+    // Description :  This method updates the Termination Dates on Asset
+    // Added as part of STY-03212
+    //
     public static void updateTerminationDate(Asset ast, Map<Id, Asset> oldAssetMap){
         Id woassetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         // checking if the status is terminated
@@ -1577,19 +1576,17 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: restrictProductSegupdate
-    * Description :  This method restricts the Product Segment Update on Asset
-    * Added as part of STY-03551
-    * Author: Nischay Jindal
-    * ********************************************************************************************/
-    public static void restrictProductSegupdate(List<Asset> assetList , Map<Id,Asset> oldAssetMap){
-        Map<String,String> projectAssetRecordTypeMap = new Map<String,String>();
-        Set<Id> assetIdSet = new Set<Id>();
-        Set<Id>assetRecordTypeIdSet = new Set<Id>();
-        Map<Id,List<PermissionSetAssignment>> mapUserIdSetPSA = new Map<Id,List<PermissionSetAssignment>>();
-        Set<Id> eligibleAssets = new Set<Id>();
-        try{
+    //
+    // MethodName: restrictProductSegupdate
+    // Description :  This method restricts the Product Segment Update on Asset
+    // Added as part of STY-03551
+    //
+    public static void restrictProductSegupdate( List<Asset> assetList , Map<Id,Asset> oldAssetMap ) {
+        try {
+            Map<String,String> projectAssetRecordTypeMap = new Map<String,String>();
+            Set<Id> assetIdSet = new Set<Id>();
+            Set<Id> assetRecordTypeIdSet = new Set<Id>();
+            Set<Id> eligibleAssets = new Set<Id>();
             // creating a map of Asset recordtype and Project Tempaltes
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.WX_WA,NSP_ServiceConstants.HCM_PROJECT_NAME);
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.ASSET_TT_RECORDTYPE,NSP_ServiceConstants.ITA_IMPLEMENTATION);
@@ -1599,39 +1596,41 @@ Implementation profile related to the account of the created asset
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.INTEGRA_ASSET,NSP_ServiceConstants.INTEGRA_IMPLEMENTATION);
             projectAssetRecordTypeMap.put(NSP_ServiceConstants.XML_ASSET,NSP_ServiceConstants.XMLProject);
 
-            // retreiving BPS Permission Set
-            PermissionSet bpsPermissionSet = [SELECT Id FROM PermissionSet WHERE Name =: NSP_ServiceConstants.bpsAssetPermSet];
+            Map<Id,User> permittedUsersMap = CustomPermissionController.getPermittedUsersMap( 'NSP_BPS_Create_Assets_Access' );
 
-            // checking if the current user has BPS perm Set Assigned
-            List<PermissionSetAssignment> bpsAssignments = [Select Id,AssigneeId FROM PermissionSetAssignment WHERE
-                                                            PermissionSetId =:bpsPermissionSet.Id AND AssigneeId =:userInfo.getUserId() ];
-            // creating a map of user and PSA
-            for(PermissionSetAssignment psa :bpsAssignments){
-                if(!mapUserIdSetPSA.containsKey(psa.AssigneeId)){
-                    mapUserIdSetPSA.put(psa.AssigneeId , new List<PermissionSetAssignment>());
-                }
-                mapUserIdSetPSA.get(psa.AssigneeId).add(psa);
-            }
             // retreiving the asset recordtype ID
             for(String AstRecordType : projectAssetRecordTypeMap.keySet()){
                 assetRecordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,AstRecordType));
             }
             // creating AssetId set to retrieve the Project Assets
             for(Asset asset:assetList){
-                if(mapUserIdSetPSA.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)){
+                if(permittedUsersMap.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)){
                     assetIdSet.add(asset.Id);
                 }
             }
-            // fetching Project Asset List
-            List<String> FIELDS = new List<String>{'Id','Asset__c', 'Asset__r.RecordType.DeveloperName', 'Project__r.pse__Project_Status__c', 'Asset__r.NSP_Product_Segment__c',
-                'Project__c', 'Project__r.TemplateName__c', 'Project__r.NSP_Client_Size__c'};
 
-                    NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder('Project_Asset__c', FIELDS);
-            queryBuilder.setSecurityEnforce(false);
-            String queryPrjAsset = queryBuilder.build();
-            queryPrjAsset += ' WHERE Asset__c IN:assetIdSet  AND  (Project__r.pse__Project_Status__c != ' + '\''+ NSP_ServiceConstants.ASSET_ONBOARDING_STATUS +'\''+ ' OR Project__r.pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.INTAKE+'\''+ ')';
-
-            List<Project_Asset__c> prjAssetList = Database.Query(queryPrjAsset);
+            List<Project_Asset__c> prjAssetList = [
+                SELECT
+                Id ,
+                Asset__c ,
+                Asset__r.RecordType.DeveloperName ,
+                Project__r.pse__Project_Status__c ,
+                Asset__r.NSP_Product_Segment__c ,
+                Project__c ,
+                Project__r.TemplateName__c ,
+                Project__r.NSP_Client_Size__c
+                FROM
+                Project_Asset__c
+                WHERE (
+                    ( Asset__c IN :assetIdSet )
+                    AND (
+                        Project__r.pse__Project_Status__c NOT IN (
+                            'Onboarding' ,
+                            'Intake'
+                            )
+                        )
+                )
+            ];
 
             // creating set of eligible Assets
             for(Project_Asset__c prjAsset :prjAssetList){
@@ -1643,7 +1642,7 @@ Implementation profile related to the account of the created asset
             // validating the Assets  records
             for(Asset asset:assetList){
                 if(asset.NSP_Product_Segment__c!=oldAssetMap.get(asset.Id).NSP_Product_Segment__c
-                   && mapUserIdSetPSA.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)
+                   && permittedUsersMap.containsKey(userInfo.getUserId()) && assetRecordTypeIdSet.contains(asset.RecordTypeId)
                    && !eligibleAssets.contains(asset.Id)){
                        asset.addError(label.NSP_BPSPermisisonAssetValidation);
                    }
@@ -1791,7 +1790,6 @@ Implementation profile related to the account of the created asset
 * MethodName: updateEarliestProductFirstPayDateOnAccount
 * Description : update related account with earliest first pay date
 * Story : STY-03597
-* Author :Abhishek Kumar
 * Params: List<Asset> assetList
 * ********************************************************************************************/
     public void updateEarliestProductFirstPayDateOnAccount(Set<Id> accountsId ){
@@ -1832,13 +1830,12 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateAssetTerminationDate
-* Description : update termination date on Asset
-* Story : STY-03479
-* Author :Nischay Jindal
-* Params: List<Asset> assetList , Map<Id,Asset> oldAssetMap
-* ********************************************************************************************/
+    //
+    // MethodName: updateAssetTerminationDate
+    // Description : update termination date on Asset
+    // Story : STY-03479
+    // Params: List<Asset> assetList , Map<Id,Asset> oldAssetMap
+    //
     public static void updateAssetTerminationDate(List<Asset> assetList , Map<Id,Asset> oldAssetMap ){
         Set<Id> assetIdSet = new Set<Id>();
         Map<Id,Project_Asset__c> assetProjectAssetMap = new Map<Id,Project_Asset__c>();
@@ -2092,34 +2089,29 @@ Implementation profile related to the account of the created asset
     // MethodName: throwErrorMessageForNonEditFields
     // Description : Throw error message if user tries to edit fields for which perm set is not assigned
     // Story : DF-04328
-    //
+    // "BPS Service" Profile (Id=00e4x000001dkv2AAA )
+    // "Retirement Services" Profile (Id=00e4x000001dkv7AAA)
     public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
-        List<Profile> profiles = [ SELECT Id , Name FROM Profile WHERE Id = :UserInfo.getProfileId() LIMIT 1 ];
-        String profileName = null;
-        if ( ( profiles != null ) && !profiles.isEmpty() ) {
-            profileName = profiles[0].Name;
-        }
-        Boolean isBPSUserFields = false ;
+
+        try {
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
         List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
         //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
         List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
-        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE ) ? nonEditableBPSAssetFields :
-                                            ( !isBPSAssetFields && profileName == NSP_ServiceConstants.RT ) ? nonEditableRETFields : null;
-        if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
-            isBPSUserFields = true;
-        }
-        try {
+
+        List<String> nonEditableAssetFields = ( isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv2AAA' )  ? nonEditableBPSAssetFields :
+                                            ( !isBPSAssetFields && UserInfo.getProfileId() == '00e4x000001dkv7AAA' )  ? nonEditableRETFields : null;
+
             if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
                 for ( Asset assetRec : assetList ) {
-                    Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
+                    Asset oldAsset = oldMap?.get( assetRec.Id );
                     for ( String nonEditableField : nonEditableAssetFields ) {
                         //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
                         if ( ( oldAsset != null && assetRec.get( nonEditableField ) != oldAsset.get( nonEditableField ) )
                             || ( assetRec.get( nonEditableField ) != null && onCreate == true )
                             )
                         {
-                            if ( isBPSUserFields ) {
+                            if (  nonEditableAssetFields == nonEditableBPSAssetFields ) {
                                 throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
                             }else{
                                 assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
