@@ -24,14 +24,15 @@ export default class CaseGuidance extends LightningElement {
             refreshApex( this.wiredCaseGuidance );
         } else if ( error ) {
             this.error = error;
-            this.clearGuidance();
+            this.showCaseGuidance = false;
+            this.guidance = '';
         }
     }
 
     @wire( getCaseGuidanceSetting , {} )
     getCaseGuidanceSetting( { data , error } ) {
         if ( data ) {
-            this.caseGuidanceCustomSettingData = data;  
+            this.caseGuidanceCustomSettingData = data;
         } else if ( error ) {
             this.error = error;
         }
