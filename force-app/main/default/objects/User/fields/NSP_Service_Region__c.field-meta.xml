@@ -6,20 +6,41 @@
     <label>Service Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>FSO - Central</fullName>
+                <default>false</default>
+                <label>FSO - Central</label>
+            </value>
+            <value>
+                <fullName>FSO - East</fullName>
+                <default>false</default>
+                <label>FSO - East</label>
+            </value>
+            <value>
+                <fullName>FSO - Northeast</fullName>
+                <default>false</default>
+                <label>FSO - Northeast</label>
+            </value>
+            <value>
+                <fullName>FSO - Western</fullName>
+                <default>false</default>
+                <label>FSO - Western</label>
+            </value>
+            <value>
                 <fullName>MMSO - Central</fullName>
                 <default>false</default>
                 <label>MMSO - Central</label>
             </value>
             <value>
-                <fullName>MMSO - Enterprise</fullName>
+                <fullName>MMSO - Enterprise</fullName>
                 <default>false</default>
-                <label>MMSO - Enterprise</label>
+                <label>MMSO - Enterprise</label>
             </value>
             <value>
                 <fullName>MMSO - National Accounts</fullName>
@@ -47,29 +68,22 @@
                 <label>MMSO - West</label>
             </value>
             <value>
-                <fullName>FSO - Central</fullName>
-                <default>false</default>
-                <label>FSO - Central</label>
-            </value>
-            <value>
-                <fullName>FSO - Northeast</fullName>
-                <default>false</default>
-                <label>FSO - Northeast</label>
-            </value>
-            <value>
                 <fullName>FSO - Southeast</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>FSO - Southeast</label>
-            </value>
-            <value>
-                <fullName>FSO - Western</fullName>
-                <default>false</default>
-                <label>FSO - Western</label>
             </value>
             <value>
                 <fullName>FSO - Southwest</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>FSO - Southwest</label>
+            </value>
+            <value>
+                <fullName>MMSO - MidMarket</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MMSO - MidMarket</label>
             </value>
         </valueSetDefinition>
     </valueSet>
