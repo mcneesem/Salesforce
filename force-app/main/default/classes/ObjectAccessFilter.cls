@@ -4,9 +4,6 @@
 public with sharing class ObjectAccessFilter {
     // test w/ ObjectAccessFilterTest (100%)
 
-    private static final Integer USER_RECORD_ACCESS_BATCH_SIZE = 200;
-    private static final Integer DEFAULT_MAX_RECORDS = 2000;
-
     @InvocableMethod(label='Filter Editable Records' description='Filter out records running User is not allowed to update')
     public static List<FilterResult> filterEditableRecords( List<FilterInput> inputs ) {
         List<FilterResult> results = new List<FilterResult>();
@@ -15,7 +12,7 @@ public with sharing class ObjectAccessFilter {
                 FilterResult result = new FilterResult();
                 Integer maxRecords = ( input.maxRecords != null && input.maxRecords > 0 )
                     ? input.maxRecords
-                    : DEFAULT_MAX_RECORDS;
+                    : 2000;
                 List<SObject> truncatedRecords = ObjectAccessFilter.truncateList( input.records, maxRecords );
                 result.editableRecords = ObjectAccessFilter.getEditableFromList( truncatedRecords );
                 result.isTruncated = ( input.records != null && input.records.size() > maxRecords );
@@ -67,17 +64,22 @@ public with sharing class ObjectAccessFilter {
         Set<Id> editableIds = new Set<Id>();
         if ( candidates != null ) {
             List<Id> candidateIds = new List<Id>( new Map<Id, SObject>( candidates ).keySet() );
-            List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds , USER_RECORD_ACCESS_BATCH_SIZE );
+            List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds , 200 );
             if ( batches != null ) {
                 for ( List<Id> batch : batches ) {
-                    for ( UserRecordAccess access : [ // NOSONAR - UserRecordAccess has a 200-record platform limit per query
-                        SELECT RecordId
-                        FROM UserRecordAccess
-                        WHERE UserId = :UserInfo.getUserId()
-                        AND RecordId IN :batch
-                        AND HasEditAccess = true
-                        WITH SYSTEM_MODE
-                    ] ) {
+                    List<UserRecordAccess> accesses = new List<UserRecordAccess>(
+                        [
+                            SELECT RecordId
+                            FROM UserRecordAccess
+                            WHERE (
+                                ( UserId = :UserInfo.getUserId() )
+                                AND ( RecordId IN :batch )
+                                AND ( HasEditAccess = true )
+                            )
+                            WITH SYSTEM_MODE
+                        ]
+                    );
+                    for ( UserRecordAccess access : accesses ) {
                         editableIds.add( access.RecordId );
                     }
                 }
