@@ -1141,7 +1141,8 @@ private class NSP_OpportunityTriggerHelperTest {
 
     @isTest
     private static void hrScaleSoldRewardTest() {
-        Account acc = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        Account acc = accList.isEmpty() ? null : accList[0];
 
         Opportunity hrScaleOpp = new Opportunity();
         hrScaleOpp.Name = 'HRScale Sold Oppty';
