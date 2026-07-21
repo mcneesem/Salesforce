@@ -73,12 +73,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     @AuraEnabled
     public static void runManualSteps() {
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        // callouts — must complete before any DML
         doCMetadata(sandbox);
         doCLabels(sandbox);
         doEmailCLabels();
         doEmailAlerts();
         doImageDocs();
         doTrustedURLs();
+        // DMLs
         doCSettings(sandbox);
         doCSettings2(sandbox);
         doAvaTaxSettings();
@@ -93,8 +95,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     @AuraEnabled
     public static void runManualSteps2() {
+        // callouts — must complete before any DML
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
-        runPostSeeding();
+        runPostSeedingCallouts();
+        // DMLs
+        runPostSeedingDML();
         setPostRefreshRunFlag(3);
     }
 
@@ -107,8 +112,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     @AuraEnabled
     public static Boolean isCurrentUserAllowedE2C() {
         String allowedUserEmail = 'paul.mccluskey@insperity.com';
-        User currentUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId() AND Email = :allowedUserEmail LIMIT 1];
-        return currentUser != null;
+        List<User> matchingUsers = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId() AND Email = :allowedUserEmail LIMIT 1];
+        return !matchingUsers.isEmpty();
     }
 
     public static void doUserImport(String sandboxName) {
@@ -674,7 +679,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         try {
             Contract_Termination_Settings__c cS7 = Contract_Termination_Settings__c.getOrgDefaults();
-            cS7.AutoTerminationEmailAddresses__c = null;
+            cS7.AutoTerminationEmailAddresses__c = invalidateEmailString( cS7.AutoTerminationEmailAddresses__c );
             upsert cS7;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:Contract_Termination_Settings__c' );
@@ -863,31 +868,39 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
         service.SessionHeader = new MetadataService.SessionHeader_element();
         service.SessionHeader.sessionId = NSP_PrepSandbox.apiEnabledSessionId();
+        service.timeout_x = 120000;
         return service;
     }
 
-    private static void runPostSeeding(){
+    // Callout-only portion: updates the NSP_Insperity_Account custom label via Metadata API.
+    // Must be called before any DML in the same transaction.
+    @TestVisible
+    private static void runPostSeedingCallouts() {
         try {
-            //  Upadate labels
-            //  Get Insperity Account by AIMS 001bf00000VQF4oAAH
             List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
-            if(accountRecord != null && accountRecord.size() == 1){
+            if (accountRecord != null && accountRecord.size() == 1) {
                 Map<String, String> refreshValMap = new Map<String, String>();
                 refreshValMap.put('NSP_Insperity_Account', accountRecord[0].id);
                 updateLabelsValues(refreshValMap);
             }
+        } catch (Exception e) {
+            NSP_PrepSandbox.handleException(e, 'runPostSeedingCallouts');
+        }
+    }
 
-            //  Update custom settings
-            //  Get "United States" region ID a3Fbf000000YLhxEAG
+    // DML-only portion: updates the DefaultRegionId custom setting.
+    // Must be called after all callouts in the transaction are complete.
+    @TestVisible
+    private static void runPostSeedingDML() {
+        try {
             List<pse__Region__c> regionRecord = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
-            if(regionRecord != null && regionRecord.size() == 1){
+            if (regionRecord != null && regionRecord.size() == 1) {
                 ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
                 projectCreationSettings.DefaultRegionId__c = regionRecord[0].id;
                 update projectCreationSettings;
             }
-        }
-        catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'runPostSeeding' );
+        } catch (Exception e) {
+            NSP_PrepSandbox.handleException(e, 'runPostSeedingDML');
         }
     }
 
@@ -967,7 +980,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private static string invalidateEmailString(String origES) {
-        string[] origEmails = origES.split(',');
+        string[] origEmails = origES.split('[,;\r\n]+');
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
             newES = (origEmails[i].indexOf(STRING_INVALID) == -1) ? newES + ',' + origEmails[i] + STRING_INVALID : newES + ',' + origEmails[i];
