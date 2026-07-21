@@ -751,10 +751,16 @@
                         <valueListItems>
                             <value>Opportunity.Schedule_Seller</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Use_Schedule_Seller}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Renewal</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -2669,16 +2675,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_AddonType__c</fieldItem>
                 <identifier>RecordNSP_AddonType_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Current_Renewal_Date__c</fieldItem>
-                <identifier>RecordCurrent_Renewal_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9021a0be-5c54-4f63-9367-1e4844380ed5</name>
@@ -5648,6 +5644,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
