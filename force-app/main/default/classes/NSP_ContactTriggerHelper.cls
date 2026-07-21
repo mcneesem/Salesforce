@@ -407,12 +407,8 @@ public with sharing class NSP_ContactTriggerHelper {
     //
     @future
     private static void updateWorkPhoneEmailOnACR( Set<Id> contactIdSet ) {
-        List<AccountContactRelation> acrList = new List<AccountContactRelation>();
-        List<Contact> conUpdateList = new List<Contact>();
-        Map<Id, Contact> conIdcontactMap = new Map<Id, Contact> ();
-        Contact cont;
-        List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
         try {
+            Map<Id,Contact> conIdcontactMap = new Map<Id,Contact>();
             for ( Contact con : [
                         SELECT
                             Id ,
@@ -427,8 +423,11 @@ public with sharing class NSP_ContactTriggerHelper {
                     ]
                 )
             {
-                conIdcontactMap.put(con.Id, con);
+                conIdcontactMap.put( con.Id , con );
             }
+            List<AccountContactRelation> acrList = new List<AccountContactRelation>();
+            List<Contact> conUpdateList = new List<Contact>();
+            Id integrationProfileId = '00e4x0000012vOHAAY'; // Profile: Integration User
             Set<Id> seenPrimaryAccountIds = new Set<Id>();
             for ( AccountContactRelation acr : [
                         SELECT
@@ -444,32 +443,33 @@ public with sharing class NSP_ContactTriggerHelper {
                             CreatedBy.ProfileId
                         FROM AccountContactRelation
                         WHERE (
-                            ContactId IN :contactIdSet
-                            AND isDirect = true
-                            AND CreatedBy.ProfileId != :integrationUser[0].Id
-                            AND LastModifiedBy.ProfileId != :integrationUser[0].Id
+                            ( ContactId IN :contactIdSet )
+                            AND ( isDirect = true )
+                            AND ( CreatedBy.ProfileId != :integrationProfileId )
+                            AND ( LastModifiedBy.ProfileId != :integrationProfileId )
                         )
                     ]
                 )
             {
-                if ( conIdcontactMap.containsKey(acr.ContactId ) && ( !acr.NSP_Is_Primary__c || seenPrimaryAccountIds.add( acr.AccountId ) ) ) {
-                    cont = conIdcontactMap.get(acr.ContactId);
+                if ( conIdcontactMap.containsKey( acr.ContactId )
+                    && ( !acr.NSP_Is_Primary__c || seenPrimaryAccountIds.add( acr.AccountId ) )
+                    )
+                {
+                    Contact cont = conIdcontactMap.get( acr.ContactId );
                     cont.NSP_isContactInsertion__c = false;
-                    conUpdateList.add(cont);
+                    conUpdateList.add( cont );
                     acr.NSP_Work_Email__c = cont.NSP_Work_email__c;
                     acr.NSP_Work_Phone__c = cont.NSP_Work_Phone__c;
                     acr.NSP_Employee_Status__c = cont.NSP_Employee_Status__c;
                     acr.NSP_Status_Date__c = cont.NSP_Status_Date__c;
                     acr.NSP_Job_Title__c = cont.NSP_Job_Title__c;
-                    acrList.add(acr);
+                    acrList.add( acr );
                 }
             }
-
-            if(!acrList.isEmpty()){
+            if ( !acrList.isEmpty() ) {
                 update acrList ; // Don't change to Database.update
             }
-
-            if(!conIdcontactMap.isEmpty()){
+            if ( !conIdcontactMap.isEmpty() ) {
                 update conUpdateList; // Don't change to Database.update
             }
         } catch ( Exception e ) {
