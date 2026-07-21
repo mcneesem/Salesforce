@@ -40,6 +40,7 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <description>This action will filter up to 2000 records by default. If more than 2000 (or optional Max Records value) are sent, isTruncated will be returned as True. Be aware that this action can only query 200 records at a time, so 2000 records will consume 10 SOQL queries for this one step.</description>
         <name>Filter_Editable_Records_Search</name>
         <label>Filter Editable Records - Search</label>
         <locationX>0</locationX>
