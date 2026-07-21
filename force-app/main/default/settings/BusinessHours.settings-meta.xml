@@ -33,6 +33,70 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller Pacific</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Los_Angeles</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller Mountain</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Denver</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller Eastern</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/New_York</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller Central</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
         <active>false</active>
         <default>false</default>
         <fridayEndTime>19:00:00.000Z</fridayEndTime>
