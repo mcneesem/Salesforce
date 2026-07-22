@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_ACR_Work_Email</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_ACR_Work_Email ) ,
+  OR(
+    ( CreatedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ) ,
+    ( LastModifiedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ) ,
+    NOT( ISBLANK( Contact.NSP_Per_ID__c ) )
+  ) ,
+  NOT( ISBLANK( NSP_Work_Email__c ) ) ,
+  ISCHANGED( NSP_Work_Email__c )
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Work_Email__c</errorDisplayField>
+    <errorMessage>Work Email is not Editable</errorMessage>
+</ValidationRule>

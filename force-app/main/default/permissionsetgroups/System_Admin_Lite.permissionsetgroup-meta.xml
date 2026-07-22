@@ -13,11 +13,13 @@
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Asset_Contact_Edit_Access</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
+    <permissionSets>Bypass_ACR_Integration_Field_Not_Editable</permissionSets>
     <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
     <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Required_Compensation_Services_Closure</permissionSets>
+    <permissionSets>Bypass_Restrict_ACR_Work_Email</permissionSets>
     <permissionSets>Bypass_Restrict_Compensation_Services_Closure</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
