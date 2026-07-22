@@ -468,24 +468,24 @@ private class NSP_LeadTriggerHelperTest {
 
     @isTest
     private static void testAllowStatusChangedToWorking() {
-            Test.startTest();
-            List<Lead> employees = [
-                SELECT Id
-                FROM Lead
-                WHERE ( LastName='Employee' )
-                LIMIT 1
-            ];
-            Assert.isNotNull( employees , 'Null Lead query results.' );
-            Assert.isTrue( ( employees.size() > 0 ) , 'No Lead query results.' );
-            Lead employee = employees[0];
-            employee.Status = 'Working';
-            try {
-                update employee;
-            } catch ( Exception e ) {
-                System.debug( ' ~ CATCH ~ e=' + e );
-            }
-            Test.stopTest();
+        Test.startTest();
+        List<Lead> employees = [
+            SELECT Id
+            FROM Lead
+            WHERE ( LastName='Employee' )
+            LIMIT 1
+        ];
+        Assert.isNotNull( employees , 'Null Lead query results.' );
+        Assert.isTrue( ( employees.size() > 0 ) , 'No Lead query results.' );
+        Lead employee = employees[0];
+        employee.Status = 'Working';
+        try {
+            update employee;
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
+        Test.stopTest();
+    }
 
     @isTest
     private static void testEloquaLeadInboundSolutions() {
