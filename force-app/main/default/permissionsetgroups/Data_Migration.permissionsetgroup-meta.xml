@@ -11,6 +11,7 @@
     <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
+    <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>
