@@ -468,24 +468,6 @@ private class NSP_LeadTriggerHelperTest {
 
     @isTest
     private static void testAllowStatusChangedToWorking() {
-       /* List<String> allowedUserRoleNames = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
-        List<User> records = [
-            SELECT Id
-            FROM User
-            WHERE (
-                ( IsActive = true )
-                AND ( ProfileId != null )
-                AND ( NOT Profile.Name LIKE 'System Admin%' )
-                AND ( Profile.Name != 'Integration User' )
-                AND ( UserRoleId != null )
-                AND ( UserRole.Name NOT IN :allowedUserRoleNames )
-            )
-            ORDER BY CreatedDate ASC
-            LIMIT 1
-        ];
-        Assert.isNotNull( records , 'Null User query results.' );
-        Assert.isTrue( ( records.size() > 0 ) , 'No User query results.' );
-        System.runAs( records[0] ) { */
             Test.startTest();
             List<Lead> employees = [
                 SELECT Id
@@ -504,7 +486,6 @@ private class NSP_LeadTriggerHelperTest {
             }
             Test.stopTest();
         }
-    //}
 
     @isTest
     private static void testEloquaLeadInboundSolutions() {
