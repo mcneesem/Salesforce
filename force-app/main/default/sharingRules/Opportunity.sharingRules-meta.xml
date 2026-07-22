@@ -60,6 +60,8 @@
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>Renewal</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Sales_Enablement_Analyst</fullName>
