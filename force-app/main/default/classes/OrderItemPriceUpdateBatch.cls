@@ -251,14 +251,9 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
             )
         {
             for ( Database.SaveResult res : results ) {
-                //construct key using constants
-                String key = sObjectAPIName;
-                key = ( res.isSuccess() ) ? key + SUCCESS : key + FAIL;
-                //update map values
-                this.DML_COUNTS.put(
-                    key ,
-                    this.DML_COUNTS.get( key ) + 1
-                );
+                String key = sObjectAPIName + ( res.isSuccess() ? SUCCESS : FAIL );
+                Integer dmlCount = ( ( this.DML_COUNTS?.get( key ) != null ) ? this.DML_COUNTS.get( key ) : 0 );
+                this.DML_COUNTS.put( key , ( dmlCount + 1 ) );
             }
         }
     }
