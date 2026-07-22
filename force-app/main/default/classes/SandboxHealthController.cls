@@ -573,7 +573,7 @@ public with sharing class SandboxHealthController {
                     String label = record.Label;
                     String actual = record.NSP_Email_Address__c;
                     switch on sandboxName {
-                        when 'merge','test','stage','devserva','devservb','devservx' {
+                        when 'merge','test','stage','devserva','devservb','devservx','devaesa','devaesb','devaesx' {
                             s.checks.add( checkExact( key , label , expected , actual ) );
                         }
                         when else {
