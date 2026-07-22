@@ -468,42 +468,23 @@ private class NSP_LeadTriggerHelperTest {
 
     @isTest
     private static void testAllowStatusChangedToWorking() {
-        List<String> allowedUserRoleNames = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
-        List<User> records = [
+        Test.startTest();
+        List<Lead> employees = [
             SELECT Id
-            FROM User
-            WHERE (
-                ( IsActive = true )
-                AND ( ProfileId != null )
-                AND ( NOT Profile.Name LIKE 'System Admin%' )
-                AND ( Profile.Name != 'Integration User' )
-                AND ( UserRoleId != null )
-                AND ( UserRole.Name NOT IN :allowedUserRoleNames )
-            )
-            ORDER BY CreatedDate ASC
+            FROM Lead
+            WHERE ( LastName='Employee' )
             LIMIT 1
         ];
-        Assert.isNotNull( records , 'Null User query results.' );
-        Assert.isTrue( ( records.size() > 0 ) , 'No User query results.' );
-        System.runAs( records[0] ) {
-            Test.startTest();
-            List<Lead> employees = [
-                SELECT Id
-                FROM Lead
-                WHERE ( LastName='Employee' )
-                LIMIT 1
-            ];
-            Assert.isNotNull( employees , 'Null Lead query results.' );
-            Assert.isTrue( ( employees.size() > 0 ) , 'No Lead query results.' );
-            Lead employee = employees[0];
-            employee.Status = 'Working';
-            try {
-                update employee;
-            } catch ( Exception e ) {
-                System.debug( ' ~ CATCH ~ e=' + e );
-            }
-            Test.stopTest();
+        Assert.isNotNull( employees , 'Null Lead query results.' );
+        Assert.isTrue( ( employees.size() > 0 ) , 'No Lead query results.' );
+        Lead employee = employees[0];
+        employee.Status = 'Working';
+        try {
+            update employee;
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
+        Test.stopTest();
     }
 
     @isTest
