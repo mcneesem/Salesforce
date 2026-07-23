@@ -227,12 +227,19 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2</filterLogic>
+        <filterLogic>1 AND 2 AND 3</filterLogic>
         <filters>
             <field>Subject</field>
             <operator>StartsWith</operator>
             <value>
                 <stringValue>Amendment Checklist - Quality Control Issue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
