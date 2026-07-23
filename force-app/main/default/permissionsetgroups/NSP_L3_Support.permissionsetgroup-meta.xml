@@ -5,6 +5,7 @@
     <label>L3 Support</label>
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
+    <permissionSets>Bypass_Restrict_Opportunity_Backward_Stage</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Corp_Employee_Field_Edit</permissionSets>
