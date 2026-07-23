@@ -605,7 +605,7 @@
   &quot;Garnishments&quot; , &quot;File&quot; ,
   &quot;COBRA Takeover&quot; , &quot;File&quot; ,
   &quot;LOA Information&quot; , &quot;File&quot; ,
-  &quot;Regular Rate of Pay&quot; , &quot;View Information&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;View Information&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
@@ -632,7 +632,7 @@
   &quot;COBRA Takeover Form(s) received and submitted to COBRA Team&quot; , &quot;COBRA Takeover&quot; ,
   &quot;Employees Currently on LOA&quot; , &quot;LOA Information&quot; ,
   &quot;CSP Client Authorization/Cafeteria Plan documentation collected&quot; , &quot;Cafeteria Plan Documentation&quot; ,
-  &quot;Review and Provide RRP Education&quot; , &quot;Regular Rate of Pay&quot; ,
+  &quot;Review and Provide RRP Education&quot; , &quot;Regular Rate Of Pay&quot; ,
   {!recordProjectTask.Name}
 )</expression>
     </formulas>
@@ -644,7 +644,7 @@
   &quot;Complete&quot; , &quot;Completed&quot; ,
   &quot;Pending - Insperity&quot; , &quot;Pending - Insperity&quot; ,
   &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
-  &quot;Canceled&quot; , &quot;Hidden&quot; ,
+ &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
@@ -671,7 +671,7 @@
   &quot;COBRA Takeover&quot; , &quot;Employee Setup&quot; ,
   &quot;LOA Information&quot; , &quot;Employee Setup&quot; ,
   &quot;Cafeteria Plan Documentation&quot; , &quot;Company Setup&quot; ,
-  &quot;Regular Rate of Pay&quot; , &quot;Employee Setup&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;Employee Setup&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
