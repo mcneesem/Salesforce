@@ -27501,7 +27501,7 @@
   {
     "id": "01p4x00000VMCUsAAP",
     "name": "NSP_ProjectTaskTriggerEmailNotification",
-    "totalLines": 455,
+    "totalLines": 454,
     "lines": {
       "9": 1,
       "10": 1,
@@ -27956,10 +27956,9 @@
       "854": 1,
       "855": 1,
       "856": 1,
-      "857": 1,
-      "863": 1
+      "857": 1
     },
-    "totalCovered": 416,
+    "totalCovered": 415,
     "coveredPercent": 91
   },
   {
@@ -52266,7 +52265,7 @@
   {
     "id": "01p4x00000VMCWFAA5",
     "name": "NSP_SubClientContactAddressTriggerHelper",
-    "totalLines": 45,
+    "totalLines": 32,
     "lines": {
       "14": 1,
       "16": 1,
@@ -52299,22 +52298,9 @@
       "61": 1,
       "62": 1,
       "66": 1,
-      "67": 1,
-      "80": 1,
-      "81": 1,
-      "82": 1,
-      "83": 1,
-      "86": 1,
-      "87": 1,
-      "88": 1,
-      "89": 1,
-      "98": 1,
-      "100": 1,
-      "101": 1,
-      "102": 1,
-      "103": 1
+      "67": 1
     },
-    "totalCovered": 45,
+    "totalCovered": 32,
     "coveredPercent": 100
   },
   {
