@@ -74,6 +74,64 @@
             <default>false</default>
         </values>
     </picklistValues>
+        <picklist>Employee_Status__c</picklist>
+        <values>
+            <fullName>FMLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FMLA - WORKERS COMP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURE HIRED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HIRED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intermittent Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L%2EO%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L%2EO%2EA%2E - EDUCATION</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L%2EO%2EA%2E - MILITARY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PRIMED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>REHIRED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>State Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TERMINATED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TLO Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WORKER%27S COMP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>GenderIdentity</picklist>
         <values>
@@ -1313,7 +1371,43 @@
     <picklistValues>
         <picklist>pse__Resource_Role__c</picklist>
         <values>
+            <fullName>Architect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bus%2E Team-HRSp%2FCL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Liaison</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1321,7 +1415,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Success Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Data Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Executive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Consultant Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Consultant Talent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Payroll Analyst</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1329,7 +1447,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HR Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HRCore Acct%2E Mgmt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA Analyst</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1341,7 +1467,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Manager%2C HR Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket Account Exec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OS Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OT Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OT Planner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orientation Rep</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Payroll Implementer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Project Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Supervisor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Specialist</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1429,7 +1595,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Renewal Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Senior Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Software Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sr Benefit Rep</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1438,6 +1620,22 @@
         </values>
         <values>
             <fullName>Time Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trainer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transition Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA%2FWX Payroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX%2FWA Benefits Specialist</fullName>
             <default>false</default>
         </values>
     </picklistValues>
