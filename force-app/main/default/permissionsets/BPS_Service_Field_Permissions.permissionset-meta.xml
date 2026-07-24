@@ -27202,5 +27202,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>BPS Service Field Permissions</label>  
+    <label>BPS Service Field Permissions</label>
 </PermissionSet>
