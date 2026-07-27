@@ -1,8 +1,7 @@
 ul > li:first-child {
-  border-top: 0.0625rem solid rgb(201, 201, 201);
-  margin-top: 0.125rem;
+  border-top: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #e5e5e5);
 }
 
 ul > li {
-  border-bottom: 0.0625rem solid rgb(201, 201, 201);
+  border-bottom: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #e5e5e5);
 }

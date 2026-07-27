@@ -1,4 +1,4 @@
 .addBlackColor{
-    color: var(--slds-g-color-neutral-base-0, black);
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }

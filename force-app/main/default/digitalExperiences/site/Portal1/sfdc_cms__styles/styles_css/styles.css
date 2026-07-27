@@ -3,11 +3,11 @@
  */
 html,
 body {
-    height: 100%;
+    height: inherit;
 }
 
 html {
-    background: white;
+    background: var(--slds-g-color-surface-1, #ffffff);
 }
 
 body {

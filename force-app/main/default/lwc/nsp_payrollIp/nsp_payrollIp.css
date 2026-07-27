@@ -1,5 +1,5 @@
 .payPeriodBox{
     position: relative;
-    background-color: var(--slds-g-color-surface-2, #f3f3f3);
-    border: solid var(--slds-g-sizing-border-3, 0.2rem) var(--slds-g-color-neutral-base-100);
+    background-color: var(--slds-g-color-surface-2);
+    border: solid var(--slds-g-sizing-border-3) var(--slds-g-color-neutral-base-100);
 }

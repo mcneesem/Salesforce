@@ -5,13 +5,13 @@
 
 .custom-box {
     text-align: left;
-    background-color: var(--slds-g-color-neutral-base-65, #a0a0a02f);
+    background-color: var(--slds-g-color-neutral-base-65);
     padding: var(--custom-box-padding);
-    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #d8dde6);
+    border: var(--slds-g-sizing-border-1) solid var(--slds-g-color-border-1);
 }
 .typebox {
     padding-bottom: var(--typebox-padding-bottom);
 }
 .redFont {
-    color: var(--slds-g-color-palette-red-50, red);
+    color: var(--slds-g-color-palette-red-50);
 }

@@ -4,18 +4,16 @@
 }
 
 .scroller-wrapper {
-    height: 100%;
+    overflow-y: auto;
 }
 
 .page {
     border: var(--slds-g-sizing-border-3, 3px) dashed transparent;
-    margin: 30px auto;
-    max-width: 800px;
+    margin: var(--slds-g-spacing-8, 3rem) auto;
 }
 
 img {
     background-color: var(--slds-g-color-neutral-base-100, white);
     display: block;
     height: auto;
-    width: 100%;
 }
