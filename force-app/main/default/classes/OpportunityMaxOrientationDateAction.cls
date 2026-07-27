@@ -18,7 +18,7 @@ public with sharing class OpportunityMaxOrientationDateAction {
         catch(Exception e){
             NSP_ErrorLogHandler.logException(
                 NSP_ValidateOpportunityStage.class.getName() ,
-                'OpportunityUpdateMaxOrientationDate.invoke' ,
+                'OpportunityMaxOrientationDateAction.invoke' ,
                 e
                 );
         }
@@ -52,7 +52,7 @@ public with sharing class OpportunityMaxOrientationDateAction {
             if(!opportunityUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update( opportunityList, false );
                 NSP_ErrorLogHandler.logResults(
-                    OpportunityUpdateMaxOrientationDate.class.getName() ,
+                    OpportunityMaxOrientationDateAction.class.getName() ,
                    'updateMaxOrientationDate' ,
                     results
                     );
