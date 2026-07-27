@@ -961,10 +961,6 @@
     <picklistValues>
         <picklist>NSP_Survey_Type__c</picklist>
         <values>
-            <fullName>Climate</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Climate Plus</fullName>
             <default>false</default>
         </values>
