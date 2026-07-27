@@ -541,7 +541,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Taylor Queen</fullName>
+            <fullName>Samantha Pellerin</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -960,10 +960,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Survey_Type__c</picklist>
-        <values>
-            <fullName>COVID-19 Well-Being %26 Support</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Climate</fullName>
             <default>false</default>
