@@ -2,7 +2,7 @@
 private class OpportunityMaxOrientationDateActionTest {
 
     @isTest
-    static void maxOrientationDateTest() {
+    private static void maxOrientationDateTest() {
 
         Date today = Date.today();
 
