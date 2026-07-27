@@ -280,14 +280,14 @@
             <name>Has_Content_Documents</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>filteredContentDocuments</leftValueReference>
+                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>filteredContentDocuments</leftValueReference>
+                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -668,7 +668,7 @@
         <label>Iterate Content Documents</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>filteredContentDocuments</collectionReference>
+        <collectionReference>Get_Manageable_Content_Documents</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>isValidTitle</targetReference>
