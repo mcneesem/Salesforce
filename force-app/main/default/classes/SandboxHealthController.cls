@@ -29,15 +29,9 @@ public with sharing class SandboxHealthController {
         @AuraEnabled public String category; // e.g., CUSTOM_SETTINGS, LABELS, SECURITY, OTHER
     }
 
-    // Store DS account and CLM base URL as locals in the DocuSign verification scope,
-    // then pass those expected values into the Account Details verification method.
-    // This avoids non-static state on a controller used by cacheable wire methods.
-
-    /**
-     * Calculates the overall status for a section based on individual check statuses
-     * Logic: If ALL checks are PASS -> Section PASS, If ANY check is FAIL -> Section FAIL,
-     * If NO checks are FAIL but some are WARN -> Section WARN, Else Section WARN (empty or all warn)
-     */
+    // Calculates the overall status for a section based on individual check statuses
+    // Logic: If ALL checks are PASS -> Section PASS, If ANY check is FAIL -> Section FAIL,
+    // If NO checks are FAIL but some are WARN -> Section WARN, Else Section WARN (empty or all warn)
     private static String calculateSectionStatus( List<Check> checks ) {
         Boolean hasFail = false;
         Boolean hasWarn = false;

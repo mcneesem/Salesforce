@@ -420,7 +420,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
-                    cLUpd.value = invalidateEmailString(cL.value);
+                    cLUpd.value = NSP_PrepSandbox.invalidateEmailString(cL.value);
                     cLUpd.shortDescription = cL.shortDescription;
                     cLUpd.language = cL.language;
                     cLUpd.protected_x = cL.protected_x;
@@ -560,7 +560,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 allMetadataList.add(new List<MetadataService.Metadata>());
                 for (MetadataService.Metadata wfaMeta : readResult.records) {
                     MetadataService.WorkflowAlert wfa = (MetadataService.WorkflowAlert) wfaMeta;
-                    wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split('[,;\r\n]+') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
+                    wfa.ccEmails = (!Test.isRunningTest()) ? NSP_PrepSandbox.invalidateEmailArray(wfa.ccEmails).split('[,;\r\n]+') : NSP_PrepSandbox.invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
                     allMetadataList[i].add(wfa);
                 }
             }
@@ -679,7 +679,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         try {
             Contract_Termination_Settings__c cS7 = Contract_Termination_Settings__c.getOrgDefaults();
-            cS7.AutoTerminationEmailAddresses__c = invalidateEmailString( cS7.AutoTerminationEmailAddresses__c );
+            cS7.AutoTerminationEmailAddresses__c = NSP_PrepSandbox.invalidateEmailString( cS7.AutoTerminationEmailAddresses__c );
             upsert cS7;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:Contract_Termination_Settings__c' );
