@@ -18,8 +18,8 @@ public with sharing class OpportunityMaxOrientationDateAction {
         catch(Exception e){
             NSP_ErrorLogHandler.logException(
                 OpportunityMaxOrientationDateAction.class.getName() ,
-                'invoke' ,
-                e
+            'invoke' ,
+            e
                 );
         }
     }
@@ -32,33 +32,32 @@ public with sharing class OpportunityMaxOrientationDateAction {
     }
 
     private static void updateMaxOrientationDate(Map<Id, Date> opportunityMap){
+        List<Opportunity> opportunityList = null;
         if( opportunityMap != null ){
-            List<Opportunity> opportunityList = [SELECT Id, Max_Orientation_Date__c
+            opportunityList = [SELECT Id, Max_Orientation_Date__c
                                             FROM Opportunity
                                             WHERE Id IN :opportunityMap.keySet()];
+        }
+        if(opportunityList !=null && !opportunityList.isEmpty()){
 
-            if(opportunityList !=null && !opportunityList.isEmpty()){
-
-                List<Opportunity> opportunityUpdate = new List<Opportunity>();
-                for(Opportunity opportunityRecord : opportunityList){
-                    if ( opportunityMap.containsKey( opportunityRecord.Id ) ) {
-                        Date max = opportunityMap.get( opportunityRecord.Id );
-                        if ( opportunityRecord.Max_Orientation_Date__c != max ) {
-                            opportunityRecord.Max_Orientation_Date__c = max;
-                            opportunityUpdate.add( opportunityRecord );
-                        }
+            List<Opportunity> opportunityUpdate = new List<Opportunity>();
+            for(Opportunity opportunityRecord : opportunityList){
+                if ( opportunityMap.containsKey( opportunityRecord.Id ) ) {
+                    Date max = opportunityMap.get( opportunityRecord.Id );
+                    if ( opportunityRecord.Max_Orientation_Date__c != max ) {
+                        opportunityRecord.Max_Orientation_Date__c = max;
+                        opportunityUpdate.add( opportunityRecord );
                     }
                 }
-                if(!opportunityUpdate.isEmpty()){
-                    List<Database.SaveResult> results = Database.update( opportunityUpdate, false );
-                    NSP_ErrorLogHandler.logResults(
-                        OpportunityMaxOrientationDateAction.class.getName() ,
-                        'updateMaxOrientationDate' ,
-                        results
-                        );
-                }
             }
-
+            if(!opportunityUpdate.isEmpty()){
+                List<Database.SaveResult> results = Database.update( opportunityUpdate, false );
+                NSP_ErrorLogHandler.logResults(
+                    OpportunityMaxOrientationDateAction.class.getName() ,
+                'updateMaxOrientationDate' ,
+                results
+                    );
+            }
         }
     }
 }
