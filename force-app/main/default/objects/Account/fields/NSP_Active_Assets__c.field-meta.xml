@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Active_Assets__c</fullName>
-    <externalId>false</externalId>
     <label>Active Assets</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -25,6 +24,11 @@
                 <fullName>Contingent Workforce</fullName>
                 <default>false</default>
                 <label>Contingent Workforce</label>
+            </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
             </value>
             <value>
                 <fullName>CPQ Asset</fullName>
@@ -92,6 +96,11 @@
                 <label>Time &amp; Attendance</label>
             </value>
             <value>
+                <fullName>Time Wage Import</fullName>
+                <default>false</default>
+                <label>Time Wage Import</label>
+            </value>
+            <value>
                 <fullName>WO</fullName>
                 <default>false</default>
                 <label>WO</label>
@@ -105,11 +114,6 @@
                 <fullName>XML</fullName>
                 <default>false</default>
                 <label>XML</label>
-            </value>
-            <value>
-                <fullName>Contractor Management</fullName>
-                <default>false</default>
-                <label>Contractor Management</label>
             </value>
         </valueSetDefinition>
     </valueSet>
