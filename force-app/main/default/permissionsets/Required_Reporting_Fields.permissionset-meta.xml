@@ -2478,6 +2478,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.NSP_Parent_Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_PrimaryCompetitor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2604,6 +2609,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Product_Solution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Profitability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -113,10 +113,16 @@
                 <fieldItem>Record.Next_Action_Due_Date__c</fieldItem>
                 <identifier>RecordNext_Action_Due_Date_cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Renewal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Renewal_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
