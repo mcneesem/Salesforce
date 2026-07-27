@@ -961,10 +961,6 @@
     <picklistValues>
         <picklist>NSP_Survey_Type__c</picklist>
         <values>
-            <fullName>Climate Plus</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Custom</fullName>
             <default>false</default>
         </values>
@@ -978,10 +974,6 @@
         </values>
         <values>
             <fullName>General Well-Being</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Return to Work Readiness</fullName>
             <default>false</default>
         </values>
     </picklistValues>
