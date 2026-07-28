@@ -586,6 +586,8 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>NumberOfEmployees</queriedFields>
         <queriedFields>Named_Account_Group__c</queriedFields>
+        <queriedFields>Sales_Set__c</queriedFields>
+        <queriedFields>Sales_Set_Membership__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>

@@ -970,6 +970,8 @@
         <queriedFields>NSP_Sales_Office__c</queriedFields>
         <queriedFields>NSP_Account_Status__c</queriedFields>
         <queriedFields>NSP_Sales_Service_Account_Status__c</queriedFields>
+        <queriedFields>Sales_Set__c</queriedFields>
+        <queriedFields>Sales_Set_Membership__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Eligible_Members_Search</name>
@@ -1014,6 +1016,8 @@
         <queriedFields>NSP_Account_Status__c</queriedFields>
         <queriedFields>NSP_Sales_Service_Account_Status__c</queriedFields>
         <queriedFields>NSP_Sales_Office__c</queriedFields>
+        <queriedFields>Sales_Set__c</queriedFields>
+        <queriedFields>Sales_Set_Membership__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Accounts</name>
