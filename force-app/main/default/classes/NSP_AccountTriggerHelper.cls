@@ -1567,7 +1567,7 @@ public class NSP_AccountTriggerHelper {
                 List<Database.SaveResult> results = Database.update( accGroupMemberToBeUpdated , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_AccountTriggerHelper.class.getName() ,
-                    'updateAGMNumberOfEmployees:update' ,
+                    'updateAGMNumberOfEmployeesAsync:update' ,
                     results
                 );
             }

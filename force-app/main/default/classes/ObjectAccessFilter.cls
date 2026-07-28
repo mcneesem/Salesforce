@@ -13,7 +13,7 @@ public with sharing class ObjectAccessFilter {
                 Integer maxRecords = ( input.maxRecords != null && input.maxRecords > 0 )
                     ? input.maxRecords
                     : 2000;
-                List<SObject> truncatedRecords = ObjectAccessFilter.truncateList( input.records, maxRecords );
+                List<SObject> truncatedRecords = ObjectAccessFilter.truncateList( input.records , maxRecords );
                 result.editableRecords = ObjectAccessFilter.getEditableFromList( truncatedRecords );
                 result.isTruncated = ( input.records != null && input.records.size() > maxRecords );
                 results.add( result );
@@ -36,7 +36,7 @@ public with sharing class ObjectAccessFilter {
         public Boolean isTruncated;
     }
 
-    private static List<SObject> truncateList( List<SObject> records, Integer maxSize ) {
+    private static List<SObject> truncateList( List<SObject> records , Integer maxSize ) {
         List<SObject> result = new List<SObject>();
         if ( records != null && maxSize != null ) {
             Integer limit_size = Math.min( records.size(), maxSize );
@@ -67,20 +67,9 @@ public with sharing class ObjectAccessFilter {
             List<List<Id>> batches = ObjectAccessFilter.batchIds( candidateIds , 200 );
             if ( batches != null ) {
                 for ( List<Id> batch : batches ) {
-                    List<UserRecordAccess> accesses = new List<UserRecordAccess>(
-                        [
-                            SELECT RecordId
-                            FROM UserRecordAccess
-                            WHERE (
-                                ( UserId = :UserInfo.getUserId() )
-                                AND ( RecordId IN :batch )
-                                AND ( HasEditAccess = true )
-                            )
-                            WITH SYSTEM_MODE
-                        ]
-                    );
-                    for ( UserRecordAccess access : accesses ) {
-                        editableIds.add( access.RecordId );
+                    Set<Id> batchEditableIds = ObjectAccessFilter.getEditableRecordIds( batch );
+                    if ( ( batchEditableIds != null ) && !batchEditableIds.isEmpty() ) {
+                        editableIds.addAll( batchEditableIds );
                     }
                 }
             }
@@ -102,6 +91,28 @@ public with sharing class ObjectAccessFilter {
             }
         }
         return batches;
+    }
+
+    private static Set<Id> getEditableRecordIds( List<Id> batch ) {
+        Set<Id> editableIds = new Set<Id>();
+        if ( ( batch != null ) && !batch.isEmpty() ) {
+            List<UserRecordAccess> accesses = new List<UserRecordAccess>(
+                [
+                    SELECT RecordId
+                    FROM UserRecordAccess
+                    WHERE (
+                        ( UserId = :UserInfo.getUserId() )
+                        AND ( RecordId IN :batch )
+                        AND ( HasEditAccess = true )
+                    )
+                    WITH SYSTEM_MODE
+                ]
+            );
+            for ( UserRecordAccess access : accesses ) {
+                editableIds.add( access.RecordId );
+            }
+        }
+        return editableIds;
     }
 
 }
