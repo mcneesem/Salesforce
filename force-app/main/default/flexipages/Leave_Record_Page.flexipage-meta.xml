@@ -368,6 +368,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Leave_Status__c</fieldItem>
+                <identifier>RecordLeave_Status_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Leave_Reason__c</fieldItem>
                 <identifier>RecordLeave_Reason_cField</identifier>
             </fieldInstance>
@@ -442,8 +452,48 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Processed_Date__c</fieldItem>
+                <identifier>RecordProcessed_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Last_Pay_Date__c</fieldItem>
                 <identifier>RecordLast_Pay_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Medical_Contributions_Paid_By__c</fieldItem>
+                <identifier>RecordMedical_Contributions_Paid_By_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Benefits_Terminated_For_Non_Payment__c</fieldItem>
+                <identifier>RecordBenefits_Terminated_For_Non_Payment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Benefits_Terminated_For_Exhaustion__c</fieldItem>
+                <identifier>RecordBenefits_Terminated_For_Exhaustion_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -504,6 +554,16 @@
                 <identifier>RecordNSP_Disability_Submission_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Other_Submission_Date__c</fieldItem>
+                <identifier>RecordOther_Submission_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-de0514d4-0888-4f21-8581-6907521d8309</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -516,6 +576,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.State_Disability_Submission_Date__c</fieldItem>
                 <identifier>RecordState_Disability_Submission_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.State_Baby_Bonding_Submission_Date__c</fieldItem>
+                <identifier>RecordState_Baby_Bonding_Submission_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.State_Family_Leave_Submission_Date__c</fieldItem>
+                <identifier>RecordState_Family_Leave_Submission_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-819e8146-e407-4044-a0cd-10e1006a3b96</name>
