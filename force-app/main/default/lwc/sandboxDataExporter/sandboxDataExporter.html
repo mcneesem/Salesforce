@@ -1,0 +1,148 @@
+<template>
+    <template lwc:if={isVisible}>
+        <lightning-card title="Sandbox Data Export" icon-name="utility:download">
+
+            <!-- Health wire error -->
+            <template lwc:if={healthError}>
+                <c-error-panel error={healthError} parent="Sandbox Data Export Tool"></c-error-panel>
+            </template>
+
+            <!-- Definitions wire error -->
+            <template lwc:if={defsError}>
+                <c-error-panel error={defsError} parent="Sandbox Data Export Tool"></c-error-panel>
+            </template>
+
+            <!-- Loading spinner -->
+            <template lwc:if={isLoading}>
+                <div class="slds-p-around_medium slds-align_absolute-center">
+                    <lightning-spinner size="small" alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Main content -->
+            <template lwc:if={isContentVisible}>
+
+                <template lwc:if={isGateLocked}>
+                    <output class="slds-box slds-theme_warning slds-m-around_small slds-grid slds-grid_vertical-align-center">
+                        <lightning-icon
+                            icon-name="utility:warning"
+                            alternative-text="Warning"
+                            size="x-small"
+                            class="slds-m-right_x-small">
+                        </lightning-icon>
+                        <span><strong>Export</strong> is disabled until the <strong>ExternalId Objects</strong> health check shows <strong>PASS</strong>.</span>
+                    </output>
+                </template>
+
+                <div class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <template if:false={isExporting}>
+                        <p class="slds-text-body_small">
+                            <template lwc:if={isPreExport}>
+                                {selectedCount} of {definitions.length} export{definitionCountSuffix} selected.
+                            </template>
+                            <template lwc:if={hasResults}>
+                                {exportResults.length} export{exportResultsCountSuffix} performed.
+                            </template>
+                        </p>
+                        <lightning-button
+                            label="Refresh"
+                            icon-name="utility:refresh"
+                            variant="neutral"
+                            onclick={handleRefreshDefinitions}>
+                        </lightning-button>
+                    </template>
+                </div>
+
+                <template lwc:if={hasDefinitions}>
+                    <!-- Pre-export definition list -->
+                    <template lwc:if={isPreExport}>
+                        <lightning-accordion allow-multiple-sections-open class="slds-m-horizontal_small slds-m-bottom_small">
+                            <lightning-accordion-section name="exports" label="Configured Exports">
+                                <div slot="actions" class="slds-grid slds-grid_vertical-align-center slds-m-right_small">
+                                    <lightning-button-icon lwc:if={isAllSelected} icon-name="utility:check" alternative-text="Deselect all" title="Deselect all" variant="bare" size="small" onclick={handleDeselectAll}></lightning-button-icon>
+                                    <lightning-button-icon lwc:else icon-name="utility:add" alternative-text="Select all" title="Select all" variant="bare" size="small" onclick={handleSelectAll}></lightning-button-icon>
+                                </div>
+                                <ul class="slds-has-dividers_around-space">
+                                    <template for:each={selectableDefinitions} for:item="def">
+                                        <li key={def.developerName} class="slds-item slds-p-vertical_xx-small slds-p-horizontal_small">
+                                            <lightning-input
+                                                type="checkbox"
+                                                label={def.label}
+                                                checked={def.isSelected}
+                                                data-developer-name={def.developerName}
+                                                onchange={handleDefinitionToggle}>
+                                            </lightning-input>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </template>
+
+                    <!-- Export progress text -->
+                    <template lwc:if={isExporting}>
+                        <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small slds-text-body_small slds-text-color_weak">
+                            {exportStatusText}
+                        </p>
+                    </template>
+
+                    <!-- Per-export results (pass/fail rows) -->
+                    <template if:true={hasResults}>
+                        <lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
+                            <lightning-accordion-section name="exports" label="Exports">
+                                <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
+                                    <lightning-icon lwc:if={isAllExportsPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                    <lightning-icon lwc:if={hasExportFailures} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                </lightning-layout>
+                                <ul class="slds-has-dividers_around-space">
+                                    <template for:each={sortedExportResults} for:item="result">
+                                        <li key={result.key} class="slds-item">
+                                            <lightning-layout class="slds-no-wrap" vertical-align="start">
+                                                <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_x-small">
+                                                    <lightning-icon if:true={result.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                                    <lightning-icon if:true={result.isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item class="slds-has-flexi-truncate">
+                                                    <span class="slds-text-title">{result.label}</span>
+                                                    <div class="slds-text-body_small slds-m-top_xx-small slds-truncate" title={result.message}>{result.message}</div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </template>
+
+                </template>
+
+                <!-- No definitions configured -->
+                <template lwc:else>
+                    <p class="slds-p-around_medium slds-text-body_small slds-text-color_weak">
+                        No active export definitions are configured.
+                        Add records to the <em>Sandbox Data Export Query</em> custom metadata type.
+                    </p>
+                </template>
+
+            </template>
+
+            <!-- Footer: Export All button -->
+            <template lwc:if={isContentVisible}>
+                <div slot="footer">
+                    <lightning-button
+                        label={exportButtonLabel}
+                        variant="brand"
+                        icon-name="utility:download"
+                        disabled={isExportAllDisabled}
+                        title={exportButtonTitle}
+                        onclick={handleExport}>
+                    </lightning-button>
+                </div>
+            </template>
+
+        </lightning-card>
+    </template>
+
+    <!-- Hidden container for download anchors (inside shadow DOM) -->
+    <div data-id="download-container" class="slds-hide"></div>
+</template>

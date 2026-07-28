@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SBQQ__LookupQuery__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__PriceRule2__r.NSP_External_Id__c,SBQQ__ProductRule__r.NSP_External_Id__c,SBQQ__LookupField__c, SBQQ__MatchType__c, SBQQ__Operator__c,  SBQQ__TestedConfigurationAttribute__c, SBQQ__TestedField__c, SBQQ__TestedObject__c, SBQQ__TestedValue__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__LookupQuery__c</value>
+    </values>
+</CustomMetadata>
