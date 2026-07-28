@@ -1,63 +1,66 @@
 public with sharing class OpportunityMaxOrientationDateAction {
     // test w/ OpportunityMaxOrientationDateActionTest (83%)
-    @InvocableMethod(label='Update Opportunity max orientation date' description='This method updates the max orientation date in any Opportunity')
-    public static void invoke(List<FlowInput> inputs ) {
-        try{
-            Map<Id, Date> opportunityMap = new Map<Id, Date>();
-            if ( inputs != null  && !inputs.isEmpty()){
-                for(FlowInput input : inputs){
-                    if(input != null && input.opportunitytId != null && input.maxOrientationDate != null){
-                        opportunityMap.put(input.opportunitytId, input.maxOrientationDate);
+
+    @InvocableMethod(label='Opportunity Max Orientation Date' description='This method populates the max orientation date on the given Opportunity')
+    public static void invoke( List<FlowInput> inputs ) {
+        try {
+            Map<Id,Date> opportunityMap = new Map<Id,Date>();
+            if ( ( inputs != null ) && !inputs.isEmpty() ) {
+                for ( FlowInput input : inputs ) {
+                    if ( ( input != null ) && ( input.opportunitytId != null ) ) {
+                        opportunityMap.put( input.opportunitytId , input.maxOrientationDate );
                     }
                 }
             }
-            if(!opportunityMap.isEmpty()){
-                OpportunityMaxOrientationDateAction.updateMaxOrientationDate(opportunityMap);
+            if ( !opportunityMap.isEmpty() ) {
+                OpportunityMaxOrientationDateAction.populateMaxOrientationDate( opportunityMap );
             }
-        }
-        catch(Exception e){
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 OpportunityMaxOrientationDateAction.class.getName() ,
-            'invoke' ,
-            e
-                );
+                'invoke' ,
+                e
+            );
         }
     }
 
     public class FlowInput {
         @InvocableVariable(label='Opprtunity Id' required=true)
         public String opportunitytId;
-        @InvocableVariable(label='Max Orientation Date' required=true)
+        @InvocableVariable(label='Max Orientation Date')
         public Date maxOrientationDate;
     }
 
-    private static void updateMaxOrientationDate(Map<Id, Date> opportunityMap){
-        List<Opportunity> opportunityList = null;
-        if( opportunityMap != null ){
-            opportunityList = [SELECT Id, Max_Orientation_Date__c
-                                            FROM Opportunity
-                                            WHERE Id IN :opportunityMap.keySet()];
+    private static void populateMaxOrientationDate( Map<Id,Date> opportunityMaxOrientationDateMap ) {
+        List<Opportunity> records = null;
+        if ( opportunityMaxOrientationDateMap != null ) {
+            records = [
+                SELECT Id , Max_Orientation_Date__c
+                FROM Opportunity
+                WHERE ( Id IN :opportunityMaxOrientationDateMap.keySet() )
+            ];
         }
-        if(opportunityList !=null && !opportunityList.isEmpty()){
-
-            List<Opportunity> opportunityUpdate = new List<Opportunity>();
-            for(Opportunity opportunityRecord : opportunityList){
-                if ( opportunityMap.containsKey( opportunityRecord.Id ) ) {
-                    Date max = opportunityMap.get( opportunityRecord.Id );
-                    if ( opportunityRecord.Max_Orientation_Date__c != max ) {
-                        opportunityRecord.Max_Orientation_Date__c = max;
-                        opportunityUpdate.add( opportunityRecord );
+        List<Opportunity> dmlRecords = new List<Opportunity>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( Opportunity record : records ) {
+                if ( opportunityMaxOrientationDateMap.containsKey( record.Id ) ) {
+                    Date max = opportunityMaxOrientationDateMap.get( record.Id );
+                    if ( record.Max_Orientation_Date__c != max ) {
+                        record.Max_Orientation_Date__c = max;
+                        dmlRecords.add( record );
                     }
                 }
             }
-            if(!opportunityUpdate.isEmpty()){
-                List<Database.SaveResult> results = Database.update( opportunityUpdate, false );
-                NSP_ErrorLogHandler.logResults(
-                    OpportunityMaxOrientationDateAction.class.getName() ,
-                'updateMaxOrientationDate' ,
+        }
+        if ( !dmlRecords.isEmpty() ) {
+            List<Database.SaveResult> results = Database.update( dmlRecords , false );
+            NSP_ErrorLogHandler.logResults(
+                OpportunityMaxOrientationDateAction.class.getName() ,
+                'populateMaxOrientationDate' ,
                 results
-                    );
-            }
+            );
         }
     }
+
 }
+//
