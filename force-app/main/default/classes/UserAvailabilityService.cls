@@ -839,5 +839,6 @@ public with sharing class UserAvailabilityService {
         }
         private set;
     }
+
 }
 //

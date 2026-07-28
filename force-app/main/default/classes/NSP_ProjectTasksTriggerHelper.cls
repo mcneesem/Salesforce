@@ -2515,7 +2515,7 @@ public class NSP_ProjectTasksTriggerHelper {
     // Description: Retrieves the email address of the responsible party for the next sequential
     //              project task. Returns the email only when the next task (projTask) immediately
     //              follows the current task in both Order and Task_Order, AND has a different
-    //              Responsible Party — indicating a handoff to a new resource.
+    //              Responsible Party - indicating a handoff to a new resource.
     // Params: pse__Project_Task__c currentProjTask - The current project task being processed
     //         pse__Project_Task__c projTask - The next project task to check for handoff
     //         Map<Id, Map<String, String>> mapOfProjAndResourceEmail - Map of Project Id to
