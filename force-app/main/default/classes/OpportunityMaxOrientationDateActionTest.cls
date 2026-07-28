@@ -3,7 +3,6 @@ private class OpportunityMaxOrientationDateActionTest {
 
     @isTest
     private static void maxOrientationDateTest() {
-
         Date today = Date.today();
 
         Account acct = new Account();
@@ -29,4 +28,6 @@ private class OpportunityMaxOrientationDateActionTest {
         System.assertEquals(records.isEmpty(), false );
         System.assertEquals(today, records[0].Max_Orientation_Date__c);
     }
+
 }
+//
