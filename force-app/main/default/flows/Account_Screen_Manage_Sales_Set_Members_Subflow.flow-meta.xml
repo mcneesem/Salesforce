@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_single_update_Account_Remove</targetReference>
+            <targetReference>Account_update_needed</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -253,7 +253,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_update_Members_collection</targetReference>
+            <targetReference>Any_Edited_Rows</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -327,6 +327,38 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Account_update_needed</name>
+        <label>Account update needed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Build_Members_collection_Remove</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_update_needed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Build_Members_collection_Remove.NSP_Member_Account__r.Sales_Set_Membership__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Build_Members_collection_Remove.NSP_Member_Account__r.Sales_Set__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_single_update_Account_Remove</targetReference>
+            </connector>
+            <label>Yes, update needed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Any_Account_updates</name>
         <label>Any Account updates?</label>
         <locationX>0</locationX>
@@ -346,6 +378,38 @@
                 <targetReference>Update_Accounts</targetReference>
             </connector>
             <label>Yes Account updates</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Any_Edited_Rows</name>
+        <label>Any Edited Rows?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Primary_Count_Correct</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_edited_rows</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdateSalesSetMembers.editedRows</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>UpdateSalesSetMembers.editedRows</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_update_Members_collection</targetReference>
+            </connector>
+            <label>Yes, edited rows</label>
         </rules>
     </decisions>
     <decisions>
@@ -371,6 +435,38 @@
                 <targetReference>Update_Renew_Members</targetReference>
             </connector>
             <label>Yes updates</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Any_removed_rows</name>
+        <label>Any removed rows?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Any_Member_updates</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_removed_rows</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RemoveSalesSetMembers.selectedRows</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RemoveSalesSetMembers.selectedRows</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_Members_collection_Remove</targetReference>
+            </connector>
+            <label>Yes, removed rows</label>
         </rules>
     </decisions>
     <decisions>
@@ -413,6 +509,13 @@
             <conditions>
                 <leftValueReference>currentMembers</leftValueReference>
                 <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>currentMembers</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -609,7 +712,7 @@
         <label>Build Members collection - Remove</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>DivestSalesSetMembers.selectedRows</collectionReference>
+        <collectionReference>RemoveSalesSetMembers.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Build_single_update_Member</targetReference>
@@ -901,7 +1004,7 @@
         <allowPause>false</allowPause>
         <backButtonLabel>Cancel</backButtonLabel>
         <connector>
-            <targetReference>Build_Members_collection_Remove</targetReference>
+            <targetReference>Any_removed_rows</targetReference>
         </connector>
         <fields>
             <name>Manage_Sales_Set_Remove</name>
@@ -917,7 +1020,7 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>DivestSalesSetMembers</name>
+            <name>RemoveSalesSetMembers</name>
             <dataTypeMappings>
                 <typeName>T</typeName>
                 <typeValue>NSP_Account_Group_Member__c</typeValue>
@@ -987,7 +1090,7 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>Divest_Text</name>
+            <name>Remove_Text</name>
             <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Select Accounts to remove from this Sales Set.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>

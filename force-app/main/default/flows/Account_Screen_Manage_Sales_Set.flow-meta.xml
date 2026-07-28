@@ -296,7 +296,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>No_access_message</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;You do not have access to update this Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have access to update this Account (Id={!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -320,7 +320,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>No_SS_access_message</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;You do not have access to add this Account to a Sales Set.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have access to add this Account (Id={!recordId}) to a Sales Set.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>

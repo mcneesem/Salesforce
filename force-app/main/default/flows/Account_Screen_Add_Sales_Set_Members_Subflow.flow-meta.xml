@@ -110,7 +110,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Build_single_update_Account_reactivate_member</targetReference>
+            <targetReference>Account_update_needed_for_reactivation</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -422,6 +422,70 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Account_update_needed_for_new_member</name>
+        <label>Account update needed for new member?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Build_Account_updates_for_new_members</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_update_needed_for_new_member</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Build_Account_updates_for_new_members.NSP_Member_Account__r.Sales_Set_Membership__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Build_Account_updates_for_new_members.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Build_Account_updates_for_new_members.NSP_Member_Account__r.Sales_Set_Link__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>varSalesSetId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_single_update_Account_add_member</targetReference>
+            </connector>
+            <label>Yes, update needed for new member</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Account_update_needed_for_reactivation</name>
+        <label>Account update needed for reactivation?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Find_Inactive_Member_record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_update_needed_for_reactivation</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Build_new_Members_collection.Sales_Set_Membership__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Find_Inactive_Member_record.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Build_new_Members_collection.Sales_Set_Link__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>varSalesSetId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_single_update_Account_reactivate_member</targetReference>
+            </connector>
+            <label>Yes, update needed for reactivation</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Any_Account_updates</name>
         <label>Any Account updates?</label>
         <locationX>0</locationX>
@@ -552,6 +616,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>eligibleMembers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>eligibleMembers</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -628,6 +699,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>searchMembers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>searchMembers</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -698,6 +776,13 @@
         <rules>
             <name>Yes_Search_Members_Found</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>searchMembers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>searchMembers</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -776,7 +861,7 @@
         <collectionReference>createMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Build_single_update_Account_add_member</targetReference>
+            <targetReference>Account_update_needed_for_new_member</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Any_Member_updates</targetReference>
