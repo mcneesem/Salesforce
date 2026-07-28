@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Lock_Opportunity_for_Edits</fullName>
     <active>false</active>
-    <description>Opportunity is Locked for edits once the Opportunity is closed won.</description>
+    <description>DEPRECATED - Opportunity is Locked for edits once the Opportunity is closed won.</description>
     <errorConditionFormula>AND(
   NOT( $Permission.Bypass_Lock_Opportunity_Edits ) ,
   NOT(

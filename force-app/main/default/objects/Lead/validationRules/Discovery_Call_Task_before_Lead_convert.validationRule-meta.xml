@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Discovery_Call_Task_before_Lead_convert</fullName>
     <active>false</active>
-    <description>deactivated as part of DF-01164. Discovery call validation needs to be on assign lead checkbox only and not on lead conversion</description>
+    <description>DEPRECATED - deactivated as part of DF-01164. Discovery call validation needs to be on assign lead checkbox only and not on lead conversion</description>
     <errorConditionFormula>AND(AND( IsConverted,  
 OR(ISBLANK(NSP_DC_SetDate__c), ISBLANK( NSP_DC_SetTime__c ))),NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c))</errorConditionFormula>
     <errorMessage>Please enter the Proposed Discovery call Date and Time within the Lead Details section.</errorMessage>

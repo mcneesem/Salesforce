@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Only_NCS_can_mark_opportunity_as_C_Won</fullName>
     <active>false</active>
-    <description>Deactivating this - scenario will be handled in NSP_ValidateOpportunityStage class - Only Users with NCS role or System Administrator can change the opportunity stage to Closed Won</description>
+    <description>DEPRECATED - Deactivating this - scenario will be handled in NSP_ValidateOpportunityStage class - Only Users with NCS role or System Administrator can change the opportunity stage to Closed Won</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c ) ,
   ISCHANGED(StageName),

@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Restrict_to_edit_the_comments</fullName>
     <active>false</active>
-    <description>Not allow Comments field to be updated if logged in user is not DA</description>
+    <description>DEPRECATED - Not allow Comments field to be updated if logged in user is not DA</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,
   ISCHANGED( NSP_Pending_Report_Comments__c ) ,
