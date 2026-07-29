@@ -20,15 +20,19 @@
 }
 
 .background-color-white {
-    background-color: var(--slds-g-color-surface-1, #ffffff);
+    background-color: white;
 }
 
 .background-color-brand-insperity-blue {
-    background-color: var(--slds-g-color-accent-2, #0b5cab);
+    background-color: #004C97;
 }
 
 .background-color-secondary {
-    background-color: var(--slds-g-color-surface-2, #f3f3f3);
+    background-color: #F5F7FA;
+}
+
+.background-color-tertiary {
+    background-color: #E4E7EB;
 }
 
 .text-transform-uppercase {
@@ -36,13 +40,13 @@
 }
 
 .color-white {
-    color: var(--slds-g-color-surface-1, #ffffff);
+    color: white;
 }
 
 .height-4 {
-    height: var(--slds-g-sizing-11, 4rem);
+    height: 4rem;
 }
 
 .height-2 {
-    height: var(--slds-g-sizing-9, 2rem);
+    height: 2rem;
 }
