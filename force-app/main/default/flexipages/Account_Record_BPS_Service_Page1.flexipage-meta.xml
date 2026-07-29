@@ -189,6 +189,12 @@
                 <identifier>c_nsp_implementationGetParentRecord</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
