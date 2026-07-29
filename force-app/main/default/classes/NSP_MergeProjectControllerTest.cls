@@ -1,11 +1,8 @@
 @isTest
 private class NSP_MergeProjectControllerTest {
-    /**
-    * Does test data setup 
-    * @return void                          
-    */
-    @TestSetup
-    static void setupProjectData(){
+
+    @testSetup
+    private static void setupProjectData() {
         // Create Acc records with external id
         Account charlieAcc = new Account(Name = 'Charlie', NSP_OneVoice_External_ID__c = 'charlieAcc');
         Account charlieAccRef = new Account(NSP_OneVoice_External_ID__c = 'charlieAcc');
@@ -46,10 +43,10 @@ private class NSP_MergeProjectControllerTest {
         // Create Project Account records
         Project_Account__c hrSystem_rogerMapping = new Project_Account__c(Project__r = hrSystemProjRef, Account__r = rogerAccRef);
 
-		// Create Project Asset records
-		Project_Asset__c hrSystem_woMapping = new Project_Asset__c(Project__r = hrSystemProjRef, Asset__r = woAssetRef);
-		Project_Asset__c hrSystem_wxMapping = new Project_Asset__c(Project__r = hrSystemProjRef, Asset__r = wxAssetRef);
-        
+        // Create Project Asset records
+        Project_Asset__c hrSystem_woMapping = new Project_Asset__c(Project__r = hrSystemProjRef, Asset__r = woAssetRef);
+        Project_Asset__c hrSystem_wxMapping = new Project_Asset__c(Project__r = hrSystemProjRef, Asset__r = wxAssetRef);
+
         // Create Order
         Order orderObj = (Order)NSP_TestExtendedDataFactory.createSObject(new Order(), false);
         orderObj.NSP_Project__r = hrSystemProjRef;
@@ -60,21 +57,21 @@ private class NSP_MergeProjectControllerTest {
         Test.startTest();
         Database.SaveResult[] results = Database.insert(new SObject[] {
             charlieAcc, rogerAcc, hrSystemProj, financeProj, hrSystem_rogerMapping,
-			milestoneRec, configurationProjTask, dataCreationProjTask, woAsset,
-			wxAsset, hrSystem_woMapping, hrSystem_wxMapping,orderObj
-		});
+            milestoneRec, configurationProjTask, dataCreationProjTask, woAsset,
+            wxAsset, hrSystem_woMapping, hrSystem_wxMapping,orderObj
+        });
         Test.stopTest();
     }
 
-    // Verify the related records of child project are getting deleted or not 
-    @IsTest
-    static void mergeProjectMethodDeletesAllRelatedRecords(){
+    // Verify the related records of child project are getting deleted or not
+    @isTest
+    private static void mergeProjectMethodDeletesAllRelatedRecords() {
         // GIVEN
-		pse__Proj__c parentProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'financeProj' AND pse__Account__c != null LIMIT 1];
-		pse__Proj__c childProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'hrSystemProj' AND pse__Account__c != null LIMIT 1];
+        pse__Proj__c parentProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'financeProj' AND pse__Account__c != null LIMIT 1];
+        pse__Proj__c childProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'hrSystemProj' AND pse__Account__c != null LIMIT 1];
         String childProjId = childProj.Id;
         List<String> projectIdsToMerge = new List<String>{ parentProj.Id, childProjId };
-		List<SObject> emptyList = new List<SObject>();
+        List<SObject> emptyList = new List<SObject>();
 
         // Fetch existing records
         List<pse__Milestone__c> existingMilestones = [SELECT Id FROM pse__Milestone__c WHERE pse__Project__c = :childProjId];
@@ -94,16 +91,16 @@ private class NSP_MergeProjectControllerTest {
         Test.stopTest();
 
         // THEN
-		pse__Proj__c childProj1 = [SELECT Id, NSP_Queued_for_Delete__c FROM pse__Proj__c WHERE Id = :childProjId];
+        pse__Proj__c childProj1 = [SELECT Id, NSP_Queued_for_Delete__c FROM pse__Proj__c WHERE Id = :childProjId];
         System.assert(childProj1.NSP_Queued_for_Delete__c);
     }
 
     // Verify mapping records are moving to parent project or not
-    @IsTest
-    static void mergeProjectMethodCreateMappingRecordsOnParentProject(){
+    @isTest
+    private static void mergeProjectMethodCreateMappingRecordsOnParentProject() {
         // GIVEN
-		pse__Proj__c parentProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'financeProj' AND pse__Account__c != null LIMIT 1];
-		pse__Proj__c childProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'hrSystemProj' AND pse__Account__c != null LIMIT 1];
+        pse__Proj__c parentProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'financeProj' AND pse__Account__c != null LIMIT 1];
+        pse__Proj__c childProj = [SELECT Id FROM pse__Proj__c WHERE NSP_OneVoice_External_ID__c = 'hrSystemProj' AND pse__Account__c != null LIMIT 1];
 
         String childProjId = childProj.Id;
         List<String> projectIdsToMerge = new List<String>{ parentProj.Id, childProjId };
@@ -114,13 +111,15 @@ private class NSP_MergeProjectControllerTest {
         Test.stopTest();
 
         // THEN
-		pse__Proj__c parentProjRec = [SELECT Id, (SELECT Id FROM Project_Accounts__r), (SELECT Id FROM Project_Assets__r) FROM pse__Proj__c WHERE Id = :parentProj.Id LIMIT 1];
-		System.assertEquals(1, parentProjRec.Project_Accounts__r.size());
-		System.assertEquals(2, parentProjRec.Project_Assets__r.size());
+        pse__Proj__c parentProjRec = [SELECT Id, (SELECT Id FROM Project_Accounts__r), (SELECT Id FROM Project_Assets__r) FROM pse__Proj__c WHERE Id = :parentProj.Id LIMIT 1];
+        System.assertEquals(1, parentProjRec.Project_Accounts__r.size());
+        System.assertEquals(2, parentProjRec.Project_Assets__r.size());
     }
 
     // Prepare set of ids by list of records
-    private static Set<Id> getIdSetByRecordList(List<SObject> records){
+    private static Set<Id> getIdSetByRecordList( List<SObject> records ) {
         return new Map<Id, SObject>(records).keyset();
     }
+
 }
+//

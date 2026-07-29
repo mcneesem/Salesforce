@@ -4,39 +4,33 @@
     <active>true</active>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.AccountContactRelationTrigger__c ) ,
-  NOT( CONTAINS( $User.NSP_User_Profile_Name__c , &apos;System Admin&apos; ) ) ,
-  $User.NSP_User_Profile_Name__c &lt;&gt; &apos;Integration User&apos; ,
-  $User.NSP_User_Profile_Name__c &lt;&gt;&apos;Data Migration&apos; ,
+  NOT( $Permission.Bypass_ACR_Integration_Field_Not_Editable ) ,
   OR(
-    CreatedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ,
-    LastModifiedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ,
+    ( CreatedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ) ,
+    ( LastModifiedBy.NSP_User_Profile_Name__c = &apos;Integration User&apos; ) ,
     NOT( ISBLANK( Contact.NSP_Per_ID__c ) )
   ) ,
   OR(
     AND(
       NOT( ISBLANK( NSP_Status_Date__c ) ) ,
       ISCHANGED( NSP_Status_Date__c )
-    ),
+    ) ,
     AND(
       NOT( ISPICKVAL( NSP_Employee_Status__c , &apos;&apos; ) ) ,
       ISCHANGED( NSP_Employee_Status__c )
-    ),
+    ) ,
     AND(
       NOT( ISBLANK( NSP_Job_Title__c ) ) ,
       ISCHANGED( NSP_Job_Title__c )
-    ),
+    ) ,
     AND(
       NOT( ISBLANK( ContactId ) ) ,
       ISCHANGED( ContactId )
-    ),
+    ) ,
     AND(
       NOT( ISBLANK( AccountId ) ) ,
       ISCHANGED( AccountId )
-    ),
-    AND(
-      NOT( ISBLANK( NSP_Work_Email__c ) ) ,
-      ISCHANGED( NSP_Work_Email__c )
-    ),
+    ) ,
     AND(
       NOT( ISBLANK( NSP_Work_Phone__c) ) ,
       ISCHANGED( NSP_Work_Phone__c )

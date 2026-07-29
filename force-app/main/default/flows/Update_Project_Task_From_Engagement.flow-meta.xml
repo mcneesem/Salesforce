@@ -63,14 +63,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>engagementRecord</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>engagementRecord.Relationship_Strategy_Action_Plan__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -92,7 +92,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Project_Task_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -128,14 +128,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_RSAP_Record</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_RSAP_Record.NSP_Account__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -203,6 +203,13 @@
                 <stringValue>Complete</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>pse__Project_Task__c</object>
         <queriedFields>Id</queriedFields>
@@ -232,6 +239,13 @@
                 <elementReference>engagementRecord.Relationship_Strategy_Action_Plan__c</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Relationship_Strategy_Action_Plan__c</object>
         <queriedFields>Id</queriedFields>
@@ -256,12 +270,6 @@
                 <elementReference>Get_Project_Task_Record.Id</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Associated_RSAP__c</field>
-            <value>
-                <elementReference>Get_RSAP_Record.Id</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>NSP_Efforts_To_Retain__c</field>
             <value>

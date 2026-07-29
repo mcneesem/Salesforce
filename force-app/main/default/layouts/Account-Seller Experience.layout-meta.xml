@@ -474,6 +474,7 @@
         <excludeButtons>NewContact</excludeButtons>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.ACCOUNT_NAME</fields>
+        <fields>CONTACT.TITLE</fields>
         <fields>ACCCONRELATION.ROLES</fields>
         <fields>NSP_Is_Primary__c</fields>
         <fields>NSP_isReferral__c</fields>
@@ -716,3 +717,4 @@
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>
 </Layout>
+

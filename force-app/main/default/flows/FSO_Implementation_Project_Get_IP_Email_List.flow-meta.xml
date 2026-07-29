@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_Final_Collection</name>
         <label>Add Final Collection</label>
-        <locationX>292</locationX>
-        <locationY>4190</locationY>
+        <locationX>820</locationX>
+        <locationY>4388</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep_Final_List</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Assign_CL_Email</name>
         <label>Assign CL Email</label>
-        <locationX>50</locationX>
-        <locationY>1190</locationY>
+        <locationX>314</locationX>
+        <locationY>1388</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -36,8 +36,8 @@
     <assignments>
         <name>Assign_CT_OTRep_Email</name>
         <label>Assign CT_OTRep_ Email</label>
-        <locationX>50</locationX>
-        <locationY>1490</locationY>
+        <locationX>314</locationX>
+        <locationY>1688</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Assign_Current_Item</name>
         <label>Assign Current Item</label>
-        <locationX>424</locationX>
-        <locationY>4382</locationY>
+        <locationX>952</locationX>
+        <locationY>4580</locationY>
         <assignmentItems>
             <assignToReference>v_LastItem</assignToReference>
             <operator>Assign</operator>
@@ -68,8 +68,8 @@
     <assignments>
         <name>Assign_EOT_Meeting_Rep</name>
         <label>Assign EOT Meeting Rep</label>
-        <locationX>206</locationX>
-        <locationY>3314</locationY>
+        <locationX>470</locationX>
+        <locationY>3512</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -84,8 +84,8 @@
     <assignments>
         <name>Assign_HR_Email</name>
         <label>Assign HR Email</label>
-        <locationX>50</locationX>
-        <locationY>2090</locationY>
+        <locationX>314</locationX>
+        <locationY>2288</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -100,8 +100,8 @@
     <assignments>
         <name>Assign_Mgr_HR_Services_Email</name>
         <label>Assign Mgr HR Services Email</label>
-        <locationX>50</locationX>
-        <locationY>2690</locationY>
+        <locationX>314</locationX>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -116,8 +116,8 @@
     <assignments>
         <name>Assign_O_P_Param</name>
         <label>Assign O/P Param</label>
-        <locationX>204</locationX>
-        <locationY>4574</locationY>
+        <locationX>732</locationX>
+        <locationY>4772</locationY>
         <assignmentItems>
             <assignToReference>v_AccountName</assignToReference>
             <operator>Assign</operator>
@@ -157,7 +157,7 @@
     <assignments>
         <name>Assign_Project_Id</name>
         <label>Assign Project Id</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentRecord</assignToReference>
@@ -173,8 +173,8 @@
     <assignments>
         <name>Assign_PS_Email</name>
         <label>Assign PS Email</label>
-        <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationX>314</locationX>
+        <locationY>1988</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -189,8 +189,8 @@
     <assignments>
         <name>Assign_QS_Email</name>
         <label>Assign QS Email</label>
-        <locationX>50</locationX>
-        <locationY>2390</locationY>
+        <locationX>314</locationX>
+        <locationY>2588</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddressList_IP_OT_Rep</assignToReference>
             <operator>Add</operator>
@@ -202,12 +202,113 @@
             <targetReference>Manager_HR_Services_Is_Valid_Email</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Asset_Field_Def</name>
+        <label>Assign varFaultElement Asset Field Def</label>
+        <locationX>578</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Asset_Field_Def</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_EOT_Meeting_Rep</name>
+        <label>Assign varFaultElement Get EOT Meeting Rep</label>
+        <locationX>1018</locationX>
+        <locationY>3188</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_EOT_Meeting_Rep</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_IP_Record</name>
+        <label>Assign varFaultElement Get IP Record</label>
+        <locationX>1458</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_IP_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Pick_List_Value_Info</name>
+        <label>Assign varFaultElement Pick List Value Info</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pick_List_Value_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Read_PEO_Implementation_Meta_Data</name>
+        <label>Assign varFaultElement Read PEO Implementation Meta Data</label>
+        <locationX>1986</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Read_PEO_Implementation_Meta_Data</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Retrieve_Project</name>
+        <label>Assign varFaultElement Retrieve Project</label>
+        <locationX>1722</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Project</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
     <collectionProcessors>
         <name>Sort_Email_List</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort Email List</label>
-        <locationX>204</locationX>
-        <locationY>3866</locationY>
+        <locationX>732</locationX>
+        <locationY>4064</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>c_ToAddressList_IP_OT_Rep</collectionReference>
         <connector>
@@ -221,7 +322,7 @@
     <decisions>
         <name>Asset_Exists</name>
         <label>Asset Exists</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Client_Liaison_Is_Valid_Email</targetReference>
@@ -253,8 +354,8 @@
     <decisions>
         <name>Check_Duplicate_Email</name>
         <label>Check Duplicate Email</label>
-        <locationX>424</locationX>
-        <locationY>4082</locationY>
+        <locationX>952</locationX>
+        <locationY>4280</locationY>
         <defaultConnector>
             <targetReference>Assign_Current_Item</targetReference>
         </defaultConnector>
@@ -278,8 +379,8 @@
     <decisions>
         <name>Check_for_Null_IP_Rep_ToAddress_List</name>
         <label>Check for Null IP Rep ToAddress List</label>
-        <locationX>336</locationX>
-        <locationY>3758</locationY>
+        <locationX>864</locationX>
+        <locationY>3956</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Null_IP_Rep_ToAddress_List</name>
@@ -307,8 +408,8 @@
     <decisions>
         <name>Client_Liaison_Is_Valid_Email</name>
         <label>Client Liaison (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>1082</locationY>
+        <locationX>446</locationX>
+        <locationY>1280</locationY>
         <defaultConnector>
             <targetReference>CT_Orientation_Rep_Is_Valid_Email</targetReference>
         </defaultConnector>
@@ -353,15 +454,15 @@
     <decisions>
         <name>CT_Orientation_Rep_Is_Valid_Email</name>
         <label>CT Orientation Rep (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationX>446</locationX>
+        <locationY>1580</locationY>
         <defaultConnector>
             <targetReference>Payroll</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_CT_OT_Email</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_IP_Record.NSP_Orientation_Rep__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -399,8 +500,8 @@
     <decisions>
         <name>EOT_Meeting_Has_Records</name>
         <label>EOT Meeting (Has Records)</label>
-        <locationX>182</locationX>
-        <locationY>2990</locationY>
+        <locationX>446</locationX>
+        <locationY>3188</locationY>
         <defaultConnector>
             <targetReference>Check_for_Null_IP_Rep_ToAddress_List</targetReference>
         </defaultConnector>
@@ -438,8 +539,8 @@
     <decisions>
         <name>EOT_Meeting_Rep_Is_Valid_Email</name>
         <label>EOT Meeting Rep (Is Valid Email)</label>
-        <locationX>338</locationX>
-        <locationY>3206</locationY>
+        <locationX>602</locationX>
+        <locationY>3404</locationY>
         <defaultConnector>
             <targetReference>Loop1</targetReference>
         </defaultConnector>
@@ -470,7 +571,7 @@
     <decisions>
         <name>Found_IP</name>
         <label>Found IP</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Check_for_Null_IP_Rep_ToAddress_List</targetReference>
@@ -495,8 +596,8 @@
     <decisions>
         <name>HR_Quality_Support_Is_Valid_Email</name>
         <label>HR Quality Support (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>2282</locationY>
+        <locationX>446</locationX>
+        <locationY>2480</locationY>
         <defaultConnector>
             <targetReference>Manager_HR_Services_Is_Valid_Email</targetReference>
         </defaultConnector>
@@ -541,8 +642,8 @@
     <decisions>
         <name>HR_Specialist_Is_Valid_Email</name>
         <label>HR Specialist (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>1982</locationY>
+        <locationX>446</locationX>
+        <locationY>2180</locationY>
         <defaultConnector>
             <targetReference>HR_Quality_Support_Is_Valid_Email</targetReference>
         </defaultConnector>
@@ -587,8 +688,8 @@
     <decisions>
         <name>Manager_HR_Services_Is_Valid_Email</name>
         <label>Manager HR Services (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>2582</locationY>
+        <locationX>446</locationX>
+        <locationY>2780</locationY>
         <defaultConnector>
             <targetReference>Get_EOT_Meeting_Rep</targetReference>
         </defaultConnector>
@@ -633,8 +734,8 @@
     <decisions>
         <name>Payroll</name>
         <label>Payroll Specialist (Is Valid Email)</label>
-        <locationX>182</locationX>
-        <locationY>1682</locationY>
+        <locationX>446</locationX>
+        <locationY>1880</locationY>
         <defaultConnector>
             <targetReference>HR_Specialist_Is_Valid_Email</targetReference>
         </defaultConnector>
@@ -692,7 +793,7 @@
         <dataType>String</dataType>
         <expression>IF(AND(NOT(ISNULL( {!Get_IP_Record.Id}  )), NOT(ISBLANK({!Get_IP_Record.Id})) ,
 NOT(ISNULL( {!Get_IP_Record.NSP_Project_Manager__c})) ,
-NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c})) 
+NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
  ),{!Get_IP_Record.NSP_Project_Manager__r.FirstName}+&quot; &quot;+ {!Get_IP_Record.NSP_Project_Manager__r.LastName} , {!Retrieve_Project.Owner:User.FirstName}+&quot; &quot; + {!Retrieve_Project.Owner:User.LastName})</expression>
     </formulas>
     <formulas>
@@ -714,8 +815,8 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <loops>
         <name>Duplicate_Email_Check</name>
         <label>Duplicate Email Check</label>
-        <locationX>204</locationX>
-        <locationY>3974</locationY>
+        <locationX>732</locationX>
+        <locationY>4172</locationY>
         <collectionReference>c_ToAddressList_IP_OT_Rep</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -728,8 +829,8 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <loops>
         <name>Loop1</name>
         <label>Loop1</label>
-        <locationX>118</locationX>
-        <locationY>3098</locationY>
+        <locationX>382</locationX>
+        <locationY>3296</locationY>
         <collectionReference>EmployeeOTRep</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -767,6 +868,9 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
         <connector>
             <targetReference>Pick_List_Value_Info</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Asset_Field_Def</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>EntityDefinitionId</field>
@@ -789,12 +893,15 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <recordLookups>
         <name>Get_EOT_Meeting_Rep</name>
         <label>Get EOT Meeting Rep</label>
-        <locationX>182</locationX>
-        <locationY>2882</locationY>
+        <locationX>446</locationX>
+        <locationY>3080</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>EOT_Meeting_Has_Records</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_EOT_Meeting_Rep</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Implementation_Profile__c</field>
@@ -820,12 +927,15 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <recordLookups>
         <name>Get_IP_Record</name>
         <label>Get IP Record</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_IP</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_IP_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Project__c</field>
@@ -849,6 +959,9 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
         <connector>
             <targetReference>Client_Liaison_Is_Valid_Email</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Pick_List_Value_Info</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>EntityParticleId</field>
@@ -873,12 +986,15 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <recordLookups>
         <name>Read_PEO_Implementation_Meta_Data</name>
         <label>Read PEO Implementation Meta Data</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Retrieve_Project</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Read_PEO_Implementation_Meta_Data</targetReference>
+        </faultConnector>
         <object>NSP_PEO_Implementations__mdt</object>
         <outputReference>rc_ToAddress_IP_Static_List</outputReference>
         <queriedFields>Id</queriedFields>
@@ -888,12 +1004,15 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
     <recordLookups>
         <name>Retrieve_Project</name>
         <label>Retrieve Project</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_IP_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Retrieve_Project</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -907,13 +1026,38 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>210</locationX>
+        <locationX>738</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Project_Id</targetReference>
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>1986</locationX>
+        <locationY>458</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>FSO_Implementation_Project_Get_IP_Email_List</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>c_ToAddressList_IP_OT_Rep</name>
         <dataType>String</dataType>
@@ -1062,5 +1206,12 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

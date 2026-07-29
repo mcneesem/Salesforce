@@ -2632,15 +2632,11 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FSO - East</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FSO - Northeast</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FSO - Southeast</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FSO - Southwest</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2672,7 +2668,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO -%C2%A0Enterprise</fullName>
+            <fullName>MMSO - Enterprise</fullName>
             <default>false</default>
         </values>
     </picklistValues>

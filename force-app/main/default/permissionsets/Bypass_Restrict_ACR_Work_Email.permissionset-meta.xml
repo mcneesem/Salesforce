@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_ACR_Work_Email</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Restrict ACR Work Email</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Restrict ACR Work Email</label>
+</PermissionSet>

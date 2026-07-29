@@ -28,6 +28,7 @@ private class NSP_NotifyPMForITAProjTest {
         newProj.pse__Account__c =accoutObject.ID;
         newProj.pse__Project_Type__c = 'Implementation';
         newProj.RecordTypeId = retProjectRecordTypeId;
+        newProj.pse__End_Date__c = Date.Today().addDays(30);
         insert newProj;
 
         //new user record

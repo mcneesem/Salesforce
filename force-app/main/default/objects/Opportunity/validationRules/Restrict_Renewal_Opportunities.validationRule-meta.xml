@@ -5,7 +5,14 @@
     <description>Restricts Edit access for Renewal Opportunities</description>
     <errorConditionFormula>AND(
   NOT( $Permission.Bypass_Restrict_Renewal_Opportunities ) ,
-  ( RecordType.DeveloperName = &quot;Renewal&quot; )
+  ( RecordType.DeveloperName = &quot;Renewal&quot; ) ,
+  OR(
+    ISCHANGED( Name ) ,
+    ISCHANGED( OwnerId ) ,
+    ISCHANGED( StageName ) ,
+    ISCHANGED( NSP_AddonType__c ) ,
+    ISCHANGED( NSP_PrimaryProduct__c )
+  )
 )</errorConditionFormula>
     <errorMessage>Only Renewal Specialists can modify Renewal Opportunities.</errorMessage>
 </ValidationRule>

@@ -178,18 +178,7 @@ public with sharing class NSP_UserTriggerHelper {
     private static String sandboxName {
         private get {
             if ( sandboxName == null ) {
-                String local = '';
-                System.URL orgDomainUrl = System.URL.getOrgDomainUrl();
-                if ( orgDomainUrl != null ) {
-                    System.Domain orgDomain = System.DomainParser.parse( orgDomainUrl );
-                    if ( orgDomain != null ) {
-                        local = orgDomain.getSandboxName();
-                    }
-                }
-                if ( String.isNotBlank( local ) ) {
-                    local = local.toUpperCase();
-                }
-                sandboxName = local;
+                sandboxName = SetupAuditTrailQueueable.sandboxName;
             }
             return sandboxName;
         }

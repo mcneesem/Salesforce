@@ -3,16 +3,9 @@
     <fullName>Restrict_to_edit_subclient</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT( $Setup.NSP_Trigger_Switch__c.SubClientTrigger__c ) ,
+  NOT( $Permission.Bypass_Restrict_To_Edit_Subclient ) ,
   NOT( ISNEW() ) ,
-  NOT(
-    OR(
-      CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
-      $Profile.Name = &quot;Data Migration&quot; ,
-      $Profile.Name = &quot;Sales Administrator&quot; ,
-      $Profile.Name = &quot;Integration User&quot;
-    )
-  )
+  NOT( ISCHANGED( Renewal_Created__c ) )
 )</errorConditionFormula>
     <errorMessage>You dont have permission to edit on this record.</errorMessage>
 </ValidationRule>

@@ -148,10 +148,10 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     }
 
     public void execute( Database.BatchableContext bc, List<NSP_Sub_Client__c> records ) {
-        if ( records != null
+        if ( GenerateRenewalOpportunitiesJob.isEnabled
+            && records != null
             && !records.isEmpty()
-            && GenerateRenewalOpportunitiesJob.isEnabled
-           )
+            )
         {
             try {
                 this.buildSalesOfficeToRenewalManagerMap( records );
@@ -497,7 +497,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 && this.entryOpportunityMap != null
                 && !this.entryOpportunityMap.isEmpty()
                 && this.entryOpportunityMap.containsKey( key )
-               )
+                )
             {
                 NSP_Sub_Client__c mapValue = this.entryOpportunityMap.get( key );
                 if ( ( subClient.NSP_Sub_Client__c == subClient.NSP_Client__c )
@@ -526,7 +526,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             if ( ( scRec != null )
                 && ( scRec.NSP_Client__c == subClient.NSP_Client__c )
                 && ( scRec.NSP_Sub_Client__c == subClient.NSP_Sub_Client__c )
-               )
+                )
             {
                 flag = true;
             }
@@ -539,7 +539,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         if ( ( subClient != null )
             && String.isNotBlank( subClient.NSP_Client__c )
             && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
-           )
+            )
         {
             key = subClient.NSP_Client__c + subClient.NSP_Benefit_Package_Name__c;
         }
@@ -573,7 +573,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     && String.isNotBlank( record.AccountId )
                     && this.accountParentOpportunityMap.containsKey( record.AccountId )
                     && ( this.accountParentOpportunityMap.get( record.AccountId ) != null )
-                   )
+                    )
                 {
                     record.NSP_Parent_Opportunity__c = this.accountParentOpportunityMap.get( record.AccountId );
                 }
@@ -624,7 +624,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && !GenerateRenewalOpportunitiesJob.primaryProductMap.isEmpty()
             && GenerateRenewalOpportunitiesJob.primaryProductMap.containsKey( subClient.NSP_Asset__r.NSP_Service_Package__c )
             && ( GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c ) != null )
-           )
+            )
         {
             primaryProduct = GenerateRenewalOpportunitiesJob.primaryProductMap.get( subClient.NSP_Asset__r.NSP_Service_Package__c );
         }
@@ -639,7 +639,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && ( this.salesOfficeMap != null )
             && !this.salesOfficeMap.isEmpty()
             && this.salesOfficeMap.containsKey( subClient.NSP_Asset__r.NSP_Sales_Office__c )
-           )
+            )
         {
             NSP_Sales_Office_Mapping__c som = this.salesOfficeMap.get( subClient.NSP_Asset__r.NSP_Sales_Office__c );
             if ( ( som != null )
@@ -714,6 +714,49 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     }
 
     //
+    // Custom Permissions
+    //
+
+    private static Boolean hasPermissions {
+        private get {
+            if ( hasPermissions == null ) {
+                hasPermissions = (
+                    GenerateRenewalOpportunitiesJob.hasPermissionGenerateRenewalOpportunities
+                    && GenerateRenewalOpportunitiesJob.hasPermissionBypassRestrictRenewalOpportunities
+                );
+            }
+            return hasPermissions;
+        }
+        private set;
+    }
+
+    private static Boolean hasPermissionGenerateRenewalOpportunities {
+        private get {
+            if ( hasPermissionGenerateRenewalOpportunities == null ) {
+                hasPermissionGenerateRenewalOpportunities = CustomPermissionController.checkUserPermission(
+                    'Generate_Renewal_Opportunities' ,
+                    UserInfo.getUserId()
+                );
+            }
+            return hasPermissionGenerateRenewalOpportunities;
+        }
+        private set;
+    }
+
+    private static Boolean hasPermissionBypassRestrictRenewalOpportunities {
+        private get {
+            if ( hasPermissionBypassRestrictRenewalOpportunities == null ) {
+                hasPermissionBypassRestrictRenewalOpportunities = CustomPermissionController.checkUserPermission(
+                    'Bypass_Restrict_Renewal_Opportunities' ,
+                    UserInfo.getUserId()
+                );
+            }
+            return hasPermissionBypassRestrictRenewalOpportunities;
+        }
+        private set;
+    }
+
+    //
     // attributes controlled by Custom Settings...
     // ~ intentionally static to allow Custom Settings to modify the attributes a running job...
     //
@@ -764,6 +807,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 if ( String.isBlank( GenerateRenewalOpportunitiesJob.renewalRecordTypeId ) ) {
                     local = false;
                 }
+                // required custom permissions...
+                local = ( local && GenerateRenewalOpportunitiesJob.hasPermissions );
                 isEnabled = local;
             }
             return isEnabled;

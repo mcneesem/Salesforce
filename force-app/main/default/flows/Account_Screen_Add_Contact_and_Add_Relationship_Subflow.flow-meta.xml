@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Find_Duplicates</name>
+        <label>Find Duplicates</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>FindDuplicatesAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Were_Duplicate_Records_Found</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__record</typeName>
+            <typeValue>Contact</typeValue>
+        </dataTypeMappings>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Find_Duplicates</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>record</name>
+            <value>
+                <elementReference>varContact</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FindDuplicatesAction</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>collectionDuplicateIds</assignToReference>
+            <name>duplicateIds</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -30,6 +61,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_duplicateContactsExist</name>
+        <label>Assign duplicateContactsExist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>duplicateContactsExist</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Were_Duplicate_Lead_Records_Found</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_duplicateLeadsExist</name>
+        <label>Assign duplicateLeadsExist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>duplicateLeadsExist</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Were_neither_duplicate_Contacts_nor_Leads_found</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -175,7 +238,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Account_Subflow_Create_Contact</targetReference>
+            <targetReference>Find_Duplicates</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -281,6 +344,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varErrorMessageToUser_Looks_like_more_dupe_information_could_not_be_fo</name>
+        <label>Assign varErrorMessageToUser - Looks like more duplicate information could not be found</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessageToUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Looks like more duplicate information could not be found</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Something_Went_Wrong_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varErrorMessageToUser_Looks_like_this_Contact_is_already_related_to_acct</name>
         <label>Assign varErrorMessageToUser - Looks like this Contact is already related to this Account</label>
         <locationX>0</locationX>
@@ -290,23 +370,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Looks like this Contact is already related to this Account.</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Something_Went_Wrong_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varErrorMessageToUser_Looks_like_you_are_creating_a_duplicate</name>
-        <label>Assign varErrorMessageToUser - Looks like you are creating a duplicate</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varErrorMessageToUser</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Looks like you are creating a duplicate Contact.</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -432,6 +495,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Find_Duplicates</name>
+        <label>Assign varFaultElement - Find_Duplicates</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Find_Duplicates</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Account_Info_Return_if_Owned_by_Available</name>
         <label>Assign varFaultElement - Get_Account_Info_Return_if_Owned_by_Available</label>
         <locationX>0</locationX>
@@ -500,15 +580,32 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Get_Potential_Duplicate_Contact</name>
-        <label>Assign varFaultElement - Get_Potential_Duplicate_Contact</label>
+        <name>Assign_varFaultElement_Get_Potential_Duplicate_Contacts_Information</name>
+        <label>Assign varFaultElement - Get_Potential_Duplicate_Contacts_Information</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Potential_Duplicate_Contact</stringValue>
+                <stringValue>Get_Potential_Duplicate_Contacts_Information</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Potential_Duplicate_Leads_Information</name>
+        <label>Assign varFaultElement - Get_Potential_Duplicate_Leads_Information</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Potential_Duplicate_Leads_Information</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -578,31 +675,6 @@
                 <targetReference>Assign_varErrorMessageToUser_Account_owned_by_Available</targetReference>
             </connector>
             <label>Yes - Owned by Available</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_there_a_duplicate_Contact</name>
-        <label>Is there a duplicate Contact?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Assign_inputs_to_varContact</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No potential duplicate</defaultConnectorLabel>
-        <rules>
-            <name>Yes_There_is_a_potential_duplicate_Contact</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varDuplicateContact</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_varErrorMessageToUser_Looks_like_you_are_creating_a_duplicate</targetReference>
-            </connector>
-            <label>Yes - There is a potential duplicate Contact</label>
         </rules>
     </decisions>
     <decisions>
@@ -827,6 +899,127 @@
                 <targetReference>Current_ACR_Data_Table_Screen</targetReference>
             </connector>
             <label>Yes - AccountContactRelation records exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Were_Duplicate_Contact_Records_Found</name>
+        <label>Were Duplicate Contact Records Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Were_Duplicate_Lead_Records_Found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Duplicates not found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Duplicate_Contacts_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>collectionDuplicateContactRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>collectionDuplicateContactRecords</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_duplicateContactsExist</targetReference>
+            </connector>
+            <label>Yes - Duplicate Contacts found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Were_Duplicate_Lead_Records_Found</name>
+        <label>Were Duplicate Lead Records Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Were_neither_duplicate_Contacts_nor_Leads_found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Duplicate Leads found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Duplicate_Leads_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>collectionDuplicateLeadRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_duplicateLeadsExist</targetReference>
+            </connector>
+            <label>Yes - Duplicate Leads found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Were_Duplicate_Records_Found</name>
+        <label>Were Duplicate Records Found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Account_Subflow_Create_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No duplicates found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Potential_Duplicates_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>collectionDuplicateIds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>collectionDuplicateIds</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Potential_Duplicate_Contacts_Information</targetReference>
+            </connector>
+            <label>Yes - Potential Duplicates Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Were_neither_duplicate_Contacts_nor_Leads_found</name>
+        <label>Were neither duplicate Contacts nor Leads found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Display_Potential_Duplicate_Contacts_Information</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Duplicates were found</defaultConnectorLabel>
+        <rules>
+            <name>No_duplicates_Contacts_or_Leads_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>duplicateContactsExist</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>duplicateLeadsExist</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_varErrorMessageToUser_Looks_like_more_dupe_information_could_not_be_fo</targetReference>
+            </connector>
+            <label>No duplicates Contacts or Leads found</label>
         </rules>
     </decisions>
     <decisions>
@@ -1163,42 +1356,61 @@
         <queriedFields>NSP_Work_Email__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_Potential_Duplicate_Contact</name>
-        <label>Get Potential Duplicate Contact</label>
+        <name>Get_Potential_Duplicate_Contacts_Information</name>
+        <label>Get Potential Duplicate Contacts&apos; Information</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_there_a_duplicate_Contact</targetReference>
+            <targetReference>Get_Potential_Duplicate_Leads_Information</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Potential_Duplicate_Contact</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Potential_Duplicate_Contacts_Information</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
-            <field>LastName</field>
-            <operator>EqualTo</operator>
+            <field>Id</field>
+            <operator>In</operator>
             <value>
-                <elementReference>Last_Name</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Email</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>newContact_Email.value</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Work_email__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>newContact_Email.value</elementReference>
+                <elementReference>collectionDuplicateIds</elementReference>
             </value>
         </filters>
         <object>Contact</object>
-        <outputReference>varDuplicateContact</outputReference>
+        <outputReference>collectionDuplicateContactRecords</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <queriedFields>NSP_Work_email__c</queriedFields>
+        <queriedFields>Phone</queriedFields>
+        <queriedFields>NSP_Work_Phone__c</queriedFields>
+        <queriedFields>Company__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Potential_Duplicate_Leads_Information</name>
+        <label>Get Potential Duplicate Leads&apos; Information</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Were_Duplicate_Contact_Records_Found</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Potential_Duplicate_Leads_Information</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>collectionDuplicateIds</elementReference>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <outputReference>collectionDuplicateLeadRecords</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Phone</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <queriedFields>Company</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_AccountContactRelation</name>
@@ -1444,6 +1656,190 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Display_Potential_Duplicate_Contacts_Information</name>
+        <label>Display Potential Duplicate Contacts&apos; Information</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>PotentialDuplicates_DisplayText</name>
+            <fieldText>&lt;p&gt;You have added a potential duplicate per Salesforce system settings.&amp;nbsp;The potential matches are below.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please use the &quot;Add Relationship&quot; button on the Account to perform this action.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>PotentialDuplicateContacts_DataTable</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Contact</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Potential Duplicate Contacts</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>NO_SELECTION</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>collectionDuplicateContactRecords</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>keyField</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Contact&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;collectionDuplicateContactRecords&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-1db6&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Full Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Company__c&quot;,&quot;guid&quot;:&quot;column-25e4&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Account Name&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Email&quot;,&quot;guid&quot;:&quot;column-c474&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;NSP_Work_email__c&quot;,&quot;guid&quot;:&quot;column-7544&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Work Email&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Work email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;Phone&quot;,&quot;guid&quot;:&quot;column-497d&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Phone&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Business Phone&quot;,&quot;type&quot;:&quot;phone&quot;},{&quot;apiName&quot;:&quot;NSP_Work_Phone__c&quot;,&quot;guid&quot;:&quot;column-a7e3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Work Phone&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Work Phone #&quot;,&quot;type&quot;:&quot;phone&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columnReferences</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Contact&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;Company__c&quot;,&quot;Email&quot;,&quot;NSP_Work_email__c&quot;,&quot;Phone&quot;,&quot;NSP_Work_Phone__c&quot;],&quot;elementReference&quot;:&quot;collectionDuplicateContactRecords&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>duplicateContactsExist</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PotentialDuplicateLeads_DataTable</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Lead</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Potential Duplicate Leads</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>MULTI_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>collectionDuplicateLeadRecords</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>keyField</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Lead&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;collectionDuplicateLeadRecords&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-bba8&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Full Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Company&quot;,&quot;guid&quot;:&quot;column-7960&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Email&quot;,&quot;guid&quot;:&quot;column-9a84&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;Phone&quot;,&quot;guid&quot;:&quot;column-fac6&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Phone&quot;,&quot;type&quot;:&quot;phone&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columnReferences</name>
+                <value>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;Lead&quot;,&quot;fieldReferences&quot;:[&quot;Name&quot;,&quot;Company&quot;,&quot;Email&quot;,&quot;Phone&quot;],&quot;elementReference&quot;:&quot;collectionDuplicateLeadRecords&quot;}</complexValue>
+                    <complexValueType>ComplexObjectFieldDetails</complexValueType>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>duplicateLeadsExist</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Enter_Contact_Information_Screen</name>
         <label>Enter Contact Information - Screen</label>
         <locationX>0</locationX>
@@ -1452,7 +1848,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Potential_Duplicate_Contact</targetReference>
+            <targetReference>Assign_inputs_to_varContact</targetReference>
         </connector>
         <fields>
             <name>ContactInfo_DisplayText</name>
@@ -2011,6 +2407,49 @@
         <objectType>AccountContactRelation</objectType>
     </variables>
     <variables>
+        <name>collectionDuplicateContactRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>collectionDuplicateIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>collectionDuplicateLeadRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+    <variables>
+        <name>duplicateContactsExist</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>duplicateLeadsExist</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>varAccount</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -2050,14 +2489,6 @@
     </variables>
     <variables>
         <name>varContact</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Contact</objectType>
-    </variables>
-    <variables>
-        <name>varDuplicateContact</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

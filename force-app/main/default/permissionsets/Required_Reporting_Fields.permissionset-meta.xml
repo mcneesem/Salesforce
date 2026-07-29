@@ -1258,6 +1258,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Leave__c.Benefits_Terminated_For_Exhaustion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leave__c.Benefits_Terminated_For_Non_Payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MessagingSession.Agent_Chat_Duration_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
