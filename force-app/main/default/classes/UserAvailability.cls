@@ -75,6 +75,7 @@ public without sharing class UserAvailability {
                     ( OwnerId IN :ownerIds )
                     AND ( StartDateTime < :window.EndDateTime )
                     AND ( EndDateTime > :window.StartDateTime )
+                    AND ShowAs != 'Free'
                 )
             ];
         }
