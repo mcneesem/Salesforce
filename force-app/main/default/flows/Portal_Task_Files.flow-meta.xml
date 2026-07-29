@@ -3,6 +3,22 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Add_Filtered_Content_Documents</name>
+        <label>Add Filtered Content Documents</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>filteredContentDocuments</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Iterate_Content_Documents</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Content_Document</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_New_Share</name>
         <label>Add New Share</label>
         <locationX>0</locationX>
@@ -59,7 +75,7 @@
             <assignToReference>countManageableShares</assignToReference>
             <operator>AssignCount</operator>
             <value>
-                <elementReference>Get_Manageable_Content_Documents</elementReference>
+                <elementReference>filteredContentDocuments</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -264,14 +280,14 @@
             <name>Has_Content_Documents</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
+                <leftValueReference>filteredContentDocuments</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
+                <leftValueReference>filteredContentDocuments</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -612,7 +628,38 @@
             <label>Should Stay Shared</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>isValidTitle</name>
+        <label>isValidTitle?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Content_Document</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Title</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>b_isValidTitle</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Filtered_Content_Documents</targetReference>
+            </connector>
+            <label>Yes : Valid Title</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>Valid Document if Title is less than 80 char</description>
+        <name>b_isValidTitle</name>
+        <dataType>Boolean</dataType>
+        <expression>LEN({!Iterate_Content_Documents.Title}) &lt;= 80</expression>
+    </formulas>
     <interviewLabel>Portal Task Files {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Portal Task Files</label>
@@ -621,10 +668,10 @@
         <label>Iterate Content Documents</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Get_Manageable_Content_Documents</collectionReference>
+        <collectionReference>filteredContentDocuments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Check_Content_Document</targetReference>
+            <targetReference>isValidTitle</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Count_Manageable_Project_Task_Content_Document_Links</targetReference>
@@ -985,13 +1032,13 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>Get_Manageable_Content_Documents</elementReference>
+                    <elementReference>filteredContentDocuments</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>keyField</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;Get_Manageable_Content_Documents&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Id&quot;],&quot;elementReference&quot;:&quot;filteredContentDocuments&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
@@ -1004,7 +1051,7 @@
             <inputParameters>
                 <name>columnReferences</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Title&quot;,&quot;OwnerId&quot;,&quot;LastModifiedDate&quot;,&quot;ContentSize&quot;],&quot;elementReference&quot;:&quot;Get_Manageable_Content_Documents&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;ContentDocument&quot;,&quot;fieldReferences&quot;:[&quot;Title&quot;,&quot;OwnerId&quot;,&quot;LastModifiedDate&quot;,&quot;ContentSize&quot;],&quot;elementReference&quot;:&quot;filteredContentDocuments&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
@@ -1095,7 +1142,7 @@
             <transformValueActions>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>Get_Manageable_Content_Documents[$EachItem].Id</elementReference>
+                    <elementReference>filteredContentDocuments[$EachItem].Id</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -1183,6 +1230,15 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <description>Filter files if Title &gt; 80 char length</description>
+        <name>filteredContentDocuments</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocument</objectType>
     </variables>
     <variables>
         <name>newShare</name>

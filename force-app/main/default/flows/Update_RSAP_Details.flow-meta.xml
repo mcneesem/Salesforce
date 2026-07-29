@@ -188,8 +188,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Update RSAP Details {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update RSAP Details</label>
+    <interviewLabel>DEPRECATED - Update RSAP Details {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Update RSAP Details</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

@@ -266,7 +266,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             String defaultValue = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
             String value = defaultValue;
             switch on sandboxName {
-                when 'merge','test','stage','devserva','devservb','devservx' {
+                when 'merge','test','stage','devserva','devservb','devservx','devaesa','devaesb','devaesx','devsalesa','devsalesb','devsalesx','devfina','devfinb','devfinx' {
                     value = 'monica.adams@insperity.com';
                 }
                 when else {

@@ -233,35 +233,47 @@ def findParentElements( filepath , searchFullNames , verbose=False ):
             if os.path.isfile( filepath ):
                 namespace = NAMESPACE_SOAP_SFORCE_METADATA
                 xmlns = " xmlns=\"" + namespace + "\""
-                ET.register_namespace( "" , namespace )
-                tree = ET.parse( filepath )
-                root = tree.getroot()
-                # build parentMap
-                parentMap = {c: p for p in root.iter() for c in p}
-                # iterate through all elements in the tree
-                for element in root.iter():
-                    if element.text:
-                        for i , searchFullName in enumerate( searchFullNames ):
-                            if searchFullName in element.text:
-                                # only care about <fullName> element matches...
-                                localTag = element.tag
-                                if '}' in element.tag:
-                                    # extract the local name after the '}'
-                                    localTag = element.tag.split('}', 1)[1]
-                                if ( localTag == "fullName" ):
-                                    # found a critical <fullName> element...
-                                    if verbose:
-                                        print( "found: " + searchFullName )
-                                        print( ET.tostring( element ).decode( "utf-8" ).replace( xmlns , "" ).strip() )
-                                    if element in parentMap:
-                                        # pull the parent element from the parent map for the critical <fullName> element...
-                                        parentElement = parentMap[element]
-                                        if parentElement is not None:
-                                            # store the rendered parent element in the response...
-                                            value = "    " + ET.tostring( parentElement , encoding="utf-8" , short_empty_elements=False ).decode( "utf-8" ).replace( xmlns , "" ).strip()
-                                            response[searchFullName] = value
-                                            if verbose:
-                                                print( value )
+                root = None
+                try:
+                    # attempt to parse xml file into root...
+                    ET.register_namespace( "" , namespace )
+                    root = ET.parse( filepath ).getroot()
+                except Exception as e:
+                    root = None
+                    if "error" not in response:
+                        response["error"] = []
+                    response["error"].append( "Exception occurred during ElementTree.parse in findParentElements" ) # message
+                    response["error"].append( filepath ) # fileName
+                    response["error"].append( str( e ) ) # exception
+                    if verbose:
+                        print( response["error"] )
+                if root:
+                    # build parentMap
+                    parentMap = {c: p for p in root.iter() for c in p}
+                    # iterate through all elements in the root...
+                    for element in root.iter():
+                        if element.text:
+                            for i , searchFullName in enumerate( searchFullNames ):
+                                if searchFullName in element.text:
+                                    # only care about <fullName> element matches...
+                                    localTag = element.tag
+                                    if '}' in element.tag:
+                                        # extract the local name after the '}'
+                                        localTag = element.tag.split('}', 1)[1]
+                                    if ( localTag == "fullName" ):
+                                        # found a critical <fullName> element...
+                                        if verbose:
+                                            print( "found: " + searchFullName )
+                                            print( ET.tostring( element ).decode( "utf-8" ).replace( xmlns , "" ).strip() )
+                                        if element in parentMap:
+                                            # pull the parent element from the parent map for the critical <fullName> element...
+                                            parentElement = parentMap[element]
+                                            if parentElement is not None:
+                                                # store the rendered parent element in the response...
+                                                value = "    " + ET.tostring( parentElement , encoding="utf-8" , short_empty_elements=False ).decode( "utf-8" ).replace( xmlns , "" ).strip()
+                                                response[searchFullName] = value
+                                                if verbose:
+                                                    print( value )
     if verbose:
         print( " ----- " )
     return response
@@ -272,6 +284,7 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
         print( "git-delta.py: writeMetadataFile" )
         print( filepath )
         print( searchFullNames )
+    response = {}
     # extract all modified parent elements...
     modifiedParentElements = None
     if filepath in searchFullNames:
@@ -282,20 +295,25 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
         )
     # concatenate modified parent elements into a reduced xml file...
     if modifiedParentElements:
-        outputFileBody = ""
-        outputFileBody += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-        outputFileBody += "<" + metadataType + " xmlns=\"" + NAMESPACE_SOAP_SFORCE_METADATA + "\">\n"
-        for key in modifiedParentElements:
-            outputFileBody += modifiedParentElements[key]
-            outputFileBody += "\n"
-        outputFileBody += "</" + metadataType + ">\n"
-        if verbose:
-            print( "outputFileBody: " + filepath )
-            print( outputFileBody )
-        with open( filepath , 'w' ) as f:
-            f.write( outputFileBody )
+        if "error" in modifiedParentElements:
+            # bubble up errors thrown in findParentElements...
+            response["error"] = modifiedParentElements["error"]
+        else:
+            outputFileBody = ""
+            outputFileBody += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+            outputFileBody += "<" + metadataType + " xmlns=\"" + NAMESPACE_SOAP_SFORCE_METADATA + "\">\n"
+            for key in modifiedParentElements:
+                outputFileBody += modifiedParentElements[key]
+                outputFileBody += "\n"
+            outputFileBody += "</" + metadataType + ">\n"
+            if verbose:
+                print( "outputFileBody: " + filepath )
+                print( outputFileBody )
+            with open( filepath , 'w' ) as f:
+                f.write( outputFileBody )
     if verbose:
         print( " ----- " )
+    return response
 
 # Trim Diff Line
 def trimDiffLine( line , verbose=False ):
@@ -436,6 +454,7 @@ def scanGitDiffLines( lines , verbose=False ):
 
     if verbose:
         print( searchFullNames )
+    response = {}
     if searchFullNames:
         if verbose:
             print( len( searchFullNames ) )
@@ -452,14 +471,21 @@ def scanGitDiffLines( lines , verbose=False ):
                 print( metadataFolder + ": xmlName: " + str( metadataTypeMap[metadataFolder]["xmlName"] ) )
             if metadataFolder:
                 # re-write metadata file...
-                writeMetadataFile(
+                writeMetadataFileResponse = writeMetadataFile(
                     path ,
                     searchFullNames ,
                     metadataTypeMap[metadataFolder]["xmlName"] ,
                     verbose
                 )
+                if writeMetadataFileResponse:
+                    if "error" in writeMetadataFileResponse:
+                        # bubble up errors thrown in writeMetadataFile...
+                        if "errors" not in response:
+                            response["errors"] = []
+                        response["errors"].append( writeMetadataFileResponse["error"] )
     if verbose:
         print( " ----- " )
+    return response
 
 # Parse Command Response
 def parseCommandResponse( stdout , verbose=False ):
@@ -556,7 +582,7 @@ def main():
             print( len( gitDiffLines ) )
         print( " ----- " )
 
-    scanGitDiffLines( gitDiffLines , args.verbose )
+    scanGitDiffLinesResponse = scanGitDiffLines( gitDiffLines , args.verbose )
 
     gitDiffPaths = parseCommandResponse(
         runCommand(
@@ -593,6 +619,23 @@ def main():
         print( " ----- " )
 
     copyPackageFiles( gitDiffs , args.output , args.verbose )
+
+    # output any errors found before ending the process...
+    if scanGitDiffLinesResponse:
+        if "errors" in scanGitDiffLinesResponse:
+            # bubble up errors thrown in scanGitDiffLines...
+            errorMessages = None
+            for error in scanGitDiffLinesResponse["errors"]:
+                errorMessage = ", ".join( error )
+                if not errorMessages:
+                    errorMessages = []
+                errorMessages.append( errorMessage )
+            if errorMessages:
+                gitDeltaPythonErrors = " | ".join( errorMessages )
+                print( f"##vso[task.setvariable variable=gitDeltaPythonErrors]{gitDeltaPythonErrors}" )
+                if args.verbose:
+                    print( gitDeltaPythonErrors )
+
     if args.verbose:
         print( " ----- " )
 

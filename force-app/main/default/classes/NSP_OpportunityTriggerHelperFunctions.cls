@@ -286,12 +286,7 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
                 }
             }
             if ( !records.isEmpty() ) {
-                List<Database.SaveResult> results = Database.update( records , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_OpportunityTriggerHelperFunctions.class.getName() ,
-                    'getAccountOwnerEmail:update' ,
-                    results
-                );
+                Database.update( records , false );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(

@@ -520,6 +520,77 @@
             <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Clear_out_child_field_values6</name>
+        <label>Clear out child field values6</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_How_many_employees_were_moved__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_New_Client_Name__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Insperity_offering__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Next_Scheduled_Pay_Date__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_New_Client_Number__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_1900_Merger_CSA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_2700_FEIN_Letter_of_Assignment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_HasTheClientAwareOfTheTermination__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_JohnCarney_been_provided_information__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_DateClientInsperityAgreedTermination__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_NoOfEmployeesClientGoingToBring__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_SubTerm_reason__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_value_on_field_Client_moved_to_a_competitor</name>
         <label>Check value on field Client moved to a competitor?</label>
@@ -745,6 +816,28 @@
                 <targetReference>Clear_out_child_field_values5</targetReference>
             </connector>
             <label>Value updated as 2100/22200/2300/3100/3200</label>
+        </rules>
+        <rules>
+            <name>Value_updated_as_5700_5900</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Term_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5700 Alternate Reasons</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Term_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5900 Client Delay CSA Start Date</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_out_child_field_values6</targetReference>
+            </connector>
+            <label>Value updated as 5700/5900</label>
         </rules>
     </decisions>
     <decisions>

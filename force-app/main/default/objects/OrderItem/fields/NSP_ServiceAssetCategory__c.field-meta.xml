@@ -91,6 +91,11 @@
                 <isActive>false</isActive>
                 <label>Contingent Workforce</label>
             </value>
+            <value>
+                <fullName>Time Wage Import</fullName>
+                <default>false</default>
+                <label>Time Wage Import</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
