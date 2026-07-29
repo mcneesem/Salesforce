@@ -789,13 +789,7 @@ public with sharing class UserAvailabilityService {
                     FROM BusinessHours
                     WHERE (
                         ( IsActive = true )
-                        AND ( Name IN (
-                            'Schedule Seller Pacific' ,
-                            'Schedule Seller Mountain' ,
-                            'Schedule Seller Eastern' ,
-                            'Schedule Seller Central'
-                            )
-                        )
+                        AND ( Name LIKE 'Schedule Seller: %' )
                     )
                 ] ) {
                     businessHoursByTimeZone.put( bh.TimeZoneSidKey, bh.Id );
