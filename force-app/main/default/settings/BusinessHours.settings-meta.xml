@@ -39,7 +39,7 @@
         <fridayStartTime>08:00:00.000Z</fridayStartTime>
         <mondayEndTime>17:00:00.000Z</mondayEndTime>
         <mondayStartTime>08:00:00.000Z</mondayStartTime>
-        <name>Schedule Seller Pacific</name>
+        <name>Schedule Seller: America/Los_Angeles</name>
         <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Los_Angeles</timeZoneId>
@@ -55,7 +55,7 @@
         <fridayStartTime>08:00:00.000Z</fridayStartTime>
         <mondayEndTime>17:00:00.000Z</mondayEndTime>
         <mondayStartTime>08:00:00.000Z</mondayStartTime>
-        <name>Schedule Seller Mountain</name>
+        <name>Schedule Seller: America/Denver</name>
         <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Denver</timeZoneId>
@@ -71,7 +71,7 @@
         <fridayStartTime>08:00:00.000Z</fridayStartTime>
         <mondayEndTime>17:00:00.000Z</mondayEndTime>
         <mondayStartTime>08:00:00.000Z</mondayStartTime>
-        <name>Schedule Seller Eastern</name>
+        <name>Schedule Seller: America/New_York</name>
         <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/New_York</timeZoneId>
@@ -87,7 +87,7 @@
         <fridayStartTime>08:00:00.000Z</fridayStartTime>
         <mondayEndTime>17:00:00.000Z</mondayEndTime>
         <mondayStartTime>08:00:00.000Z</mondayStartTime>
-        <name>Schedule Seller Central</name>
+        <name>Schedule Seller: America/Chicago</name>
         <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
