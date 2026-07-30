@@ -286,21 +286,8 @@ public with sharing class UserAvailabilityService {
         {
             Map<Id,String> timeZoneByUser = UserAvailabilityService.getUserTimeZones( userIds );
             for ( Event windowEvt : windows ) {
-                // Determine the calendar date this window slot falls on
-                Date windowDate = null;
-                if ( windowEvt.StartDateTime != null ) {
-                    windowDate = windowEvt.StartDateTime.date();
-                }
                 // Resolve which users are capped on this specific day
-                Set<Id> cappedToday = new Set<Id>();
-                if ( ( cappedUsersByDay != null )
-                    && ( windowDate != null )
-                    && ( cappedUsersByDay.get( windowDate ) != null )
-                    && cappedUsersByDay.containsKey( windowDate )
-                    )
-                {
-                    cappedToday = cappedUsersByDay.get( windowDate );
-                }
+                Set<Id> cappedToday = UserAvailabilityService.buildCappedTodaySet( cappedUsersByDay , windowEvt );
                 List<Id> availableForWindow = new List<Id>();
                 for ( Id uid : userIds ) {
                     // Skip this user for this day if they are capped
@@ -349,6 +336,25 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
+      private static Set<Id> buildCappedTodaySet( Map<Date,Set<Id>> cappedUsersByDay , Event window ) {
+        // Determine the calendar date this window slot falls on
+        Date windowDate = null;
+        if ( ( window != null ) && ( window.StartDateTime != null ) ) {
+            windowDate = window.StartDateTime.date();
+        }
+        // Resolve which users are capped on this specific day
+        Set<Id> cappedToday = new Set<Id>();
+        if ( ( cappedUsersByDay != null )
+            && ( windowDate != null )
+            && cappedUsersByDay.containsKey( windowDate )
+            && ( cappedUsersByDay.get( windowDate ) != null )
+            )
+        {
+            cappedToday = cappedUsersByDay.get( windowDate );
+        }
+        return cappedToday;
+    }
+
     // Helper: convert a flat list of user-ID lists into a matrix of rows with up to N columns
     private static List<List<List<Id>>> convertToMatrix( List<List<Id>> userLists ) {
         List<List<List<Id>>> matrix = new List<List<List<Id>>>();
@@ -389,18 +395,8 @@ public with sharing class UserAvailabilityService {
             List<Event> slots = helper.getAvailableSlots( records , window , UserAvailabilityService.getStepMinutes( skill ) );
             if ( ( slots != null ) && !slots.isEmpty() ) {
                 for ( Event e : slots ) {
-                    if ( ( e.StartDateTime != null ) && ( e.EndDateTime != null ) ) {
-                        Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
-
-                        // Org Business Hours
-                        Boolean withinOrg = UserAvailabilityService.isWithin( orgBhId , e , durationMs );
-
-                        // User Business Hourss
-                        Boolean withinUser = UserAvailabilityService.isWithin( userBusinessHoursId , e , durationMs );
-
-                        if ( withinOrg && withinUser ) {
-                            businessHoursFilter.add( e );
-                        }
+                    if ( UserAvailabilityService.isWithin( orgBhId , userBusinessHoursId , e ) ) {
+                        businessHoursFilter.add( e );
                     }
                 }
             }
@@ -415,11 +411,32 @@ public with sharing class UserAvailabilityService {
             && ( e != null )
             && ( e.StartDateTime != null )
             && ( e.EndDateTime != null )
-            && BusinessHours.isWithin( businessHoursId , e.StartDateTime )
+            && BusinessHours.isWithin( businessHoursId , e.StartDateTime ) 
             && ( BusinessHours.add( businessHoursId , e.StartDateTime , durationMs ) == e.EndDateTime )
             )
         {
             response = true;
+        }
+        return response;
+    }
+
+    private static Boolean isWithin(
+        Id orgBusinessHoursId ,
+        Id userBusinessHoursId ,
+        Event e
+        )
+    {
+        Boolean response = false;
+        if ( ( e != null )
+            && ( e.StartDateTime != null )
+            && ( e.EndDateTime != null )
+            )
+        {
+            Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
+            response = (
+                UserAvailabilityService.isWithin( orgBusinessHoursId , e , durationMs )
+                && UserAvailabilityService.isWithin( userBusinessHoursId , e , durationMs )
+            );
         }
         return response;
     }
