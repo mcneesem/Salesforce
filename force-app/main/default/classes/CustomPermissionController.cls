@@ -12,8 +12,14 @@ public with sharing class CustomPermissionController {
         for ( UserPermRequest request : requestList ) {
             UserPermResponse localResponse = new UserPermResponse();
             localResponse.hasPermission = false;
-            if ( String.isNotBlank( request.customPermissionName ) && String.isNotBlank( request.userId ) ) {
-                localResponse.hasPermission = checkUserPermission( request.customPermissionName , request.userId );
+            if ( String.isNotBlank( request.customPermissionName )
+                && String.isNotBlank( request.userId )
+                )
+            {
+                localResponse.hasPermission = CustomPermissionController.checkUserPermission(
+                    request.customPermissionName ,
+                    request.userId
+                );
             }
             responseList.add( localResponse );
         }
@@ -35,7 +41,7 @@ public with sharing class CustomPermissionController {
     public static Boolean checkUserPermission( String customPermissionName , String userId ) {
         String methodName = 'checkUserPermission';
         String debugPrefix = CLASS_NAME + '.' + methodName;
-        Boolean isUserPermitted = False;
+        Boolean isUserPermitted = false;
         if ( userId == UserInfo.getUserId() ) {
             // 0 SOQL queries required...
             isUserPermitted = FeatureManagement.checkPermission( customPermissionName );
@@ -52,7 +58,7 @@ public with sharing class CustomPermissionController {
                     && ( permittedUsersMap.get( userId ) != null )
                    )
                 {
-                    isUserPermitted = True;
+                    isUserPermitted = true;
                 }
             }
         }
@@ -103,7 +109,7 @@ public with sharing class CustomPermissionController {
                     SELECT Id , UserName
                     FROM User
                     WHERE (
-                        ( IsActive = True )
+                        ( IsActive = true )
                         AND (
                             Id IN (
                                 SELECT AssigneeId
