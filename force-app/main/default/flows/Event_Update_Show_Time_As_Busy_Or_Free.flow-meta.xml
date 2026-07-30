@@ -76,8 +76,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Event - Update - Show Time As Busy Or Free {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Update - Show Time As Busy Or Free</label>
+    <interviewLabel>Event - Before Update - Schedule Seller - Populate Show Time As {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Event - Before Update - Schedule Seller - Populate Show Time As</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
