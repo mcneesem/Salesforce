@@ -33,9 +33,6 @@
         <label>Is Status Cancelled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Make_Event_Busy</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Cancelled</name>
@@ -51,6 +48,28 @@
                 <targetReference>Make_Event_free</targetReference>
             </connector>
             <label>Cancelled</label>
+        </rules>
+        <rules>
+            <name>Not_Cancelled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Make_Event_Busy</targetReference>
+            </connector>
+            <label>Not Cancelled</label>
         </rules>
     </decisions>
     <decisions>
