@@ -4,6 +4,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     private static final Map<Id,Project_Account__c> accIdWithProject = new Map<Id,Project_Account__c>();
     private static final Map<Id,Set<String>> mapAcctIdwithProjTemp = new Map<Id,Set<String>>();
     private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
+    private static final Set<String> existingClientIds = new Set<String>();
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -95,6 +96,8 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         try {
             Map<String,String> mapOfProjTempServiceAsset = new Map<String,String>();
             List<NSP_Asset_Template_Mapping__mdt> assTempMap = NSP_Asset_Template_Mapping__mdt.getAll().values();
+            Set<String> clientIdsToCheck = new Set<String>();
+
             for ( NSP_Asset_Template_Mapping__mdt pT : assTempMap ) {
                 mapOfProjTempServiceAsset.put(
                     pT.NSP_Project_Template__c ,
@@ -109,12 +112,18 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                         new Set<String>()
                     );
                 }
+                if ( prjAcc1.Account__r.NSP_AIMS_Client__c != null ) {
+                    clientIdsToCheck.add( prjAcc1.Account__r.NSP_AIMS_Client__c );
+                }
+
                 mapAcctIdwithProjTemp.get( prjAcc1.Account__c ).add( mapOfProjTempServiceAsset.get( prjAcc1.Project__r.TemplateName__c ) );
             }
+
             for ( Asset ast : [
-                        SELECT Id , RecordType.DeveloperName , AccountId
+                        SELECT Id , RecordType.DeveloperName , AccountId , NSP_Client__c
                         FROM Asset
                         WHERE ( AccountId IN :mapAcctIdwithProjTemp.keySet() )
+                            OR ( NSP_Client__c IN :clientIdsToCheck )
                     ]
                 )
             {
@@ -125,6 +134,9 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                     );
                 }
                 mapAcctIdwithAssetRecType.get( ast.AccountId ).add( ast.RecordType.DeveloperName );
+                if ( ast.NSP_Client__c != null ) {
+                    existingClientIds.add( ast.NSP_Client__c );
+                }
             }
             this.creatingAssetRecords();
         } catch ( Exception e ) {
@@ -151,25 +163,24 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         for ( String accountId : mapAcctIdwithProjTemp.keySet() )   {
             for ( String assetRecordType : mapAcctIdwithProjTemp.get( accountId ) ) {
                 if ( !mapAcctIdwithAssetRecType.containsKey( accountId )
-                    || ( mapAcctIdwithAssetRecType.containsKey( accountId )
-                        && !mapAcctIdwithAssetRecType.get( accountId ).isEmpty()
-                        && !mapAcctIdwithAssetRecType.get( accountId ).contains( assetRecordType )
-                        )
-                    || mapAcctIdwithAssetRecType.isEmpty()
+                    || !mapAcctIdwithAssetRecType.get( accountId ).contains( assetRecordType )
                     )
                 {
-                    Asset newAsset = new Asset();
-                    newAsset.Name = accIdWithProject.get( accountId ).Account__r.name;
-                    newAsset.AccountId = accountId;
-                    newAsset.Status = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
-                    newAsset.NSP_Client__c = accIdWithProject.get( accountId ).Account__r.NSP_AIMS_Client__c;
-                    newAsset.NSP_Signature_Date__c = System.today();
-                    newAsset.recordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , assetRecordType );
-                    mapOfAcctIdRecordType.put(
-                        accountId + '_' + newAsset.RecordTypeId ,
-                        accIdWithProject.get( accountId ).Project__c
-                    );
-                    lstAssetToInsert.add( newAsset );
+                    String clientId = accIdWithProject.get( accountId ).Account__r.NSP_AIMS_Client__c;
+                    if ( !existingClientIds.contains( clientId ) ) {
+                        Asset newAsset = new Asset();
+                        newAsset.Name = accIdWithProject.get( accountId ).Account__r.name;
+                        newAsset.AccountId = accountId;
+                        newAsset.Status = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
+                        newAsset.NSP_Client__c = clientId;
+                        newAsset.NSP_Signature_Date__c = System.today();
+                        newAsset.recordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , assetRecordType );
+                        mapOfAcctIdRecordType.put(
+                            accountId + '_' + newAsset.RecordTypeId ,
+                            accIdWithProject.get( accountId ).Project__c
+                        );
+                        lstAssetToInsert.add( newAsset );
+                    }
                 }
             }
         }
@@ -184,7 +195,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             && !lstAssetToInsert.isEmpty()
             )
         {
-            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false ); // throws ~ DUPLICATE_VALUE, duplicate value found: NSP_Client__c duplicates value on record with id: 02iXXXXXXXXXXXXXXX
+            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
                 'handleDmlOperations:Asset' ,
