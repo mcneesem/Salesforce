@@ -97,7 +97,6 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             Map<String,String> mapOfProjTempServiceAsset = new Map<String,String>();
             List<NSP_Asset_Template_Mapping__mdt> assTempMap = NSP_Asset_Template_Mapping__mdt.getAll().values();
             Set<String> clientIdsToCheck = new Set<String>();
-
             for ( NSP_Asset_Template_Mapping__mdt pT : assTempMap ) {
                 mapOfProjTempServiceAsset.put(
                     pT.NSP_Project_Template__c ,
@@ -112,18 +111,27 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                         new Set<String>()
                     );
                 }
-                if ( prjAcc1.Account__r.NSP_AIMS_Client__c != null ) {
+                this.mapAcctIdwithProjTemp.get( prjAcc1.Account__c ).add(
+                    mapOfProjTempServiceAsset.get( prjAcc1.Project__r.TemplateName__c )
+                );
+                if ( ( prjAcc1.Account__c != null )
+                    && ( prjAcc1.Account__r.NSP_AIMS_Client__c != null )
+                    )
+                {
                     clientIdsToCheck.add( prjAcc1.Account__r.NSP_AIMS_Client__c );
                 }
-
-                this.mapAcctIdwithProjTemp.get( prjAcc1.Account__c ).add( mapOfProjTempServiceAsset.get( prjAcc1.Project__r.TemplateName__c ) );
             }
-
             for ( Asset ast : [
-                        SELECT Id , RecordType.DeveloperName , AccountId , NSP_Client__c
+                        SELECT
+                            Id ,
+                            RecordType.DeveloperName ,
+                            AccountId ,
+                            NSP_Client__c
                         FROM Asset
-                        WHERE ( AccountId IN :this.mapAcctIdwithProjTemp.keySet() )
+                        WHERE (
+                            ( AccountId IN :this.mapAcctIdwithProjTemp.keySet() )
                             OR ( NSP_Client__c IN :clientIdsToCheck )
+                        )
                     ]
                 )
             {
@@ -158,9 +166,9 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     // insert Asset Records and ProjectAsset into the database
     private void creatingAssetRecords() {
         Map<String,String> mapOfAcctIdRecordType = new Map<String,String>();
-        NSP_AssetTriggerHandler.TriggerDisabled = true;
+        NSP_AssetTriggerHandler.TriggerDisabled = true; // this is a questionable choice from phase-2 go-live...
         List<Asset> lstAssetToInsert = new List<Asset>();
-        for ( String accountId : this.mapAcctIdwithProjTemp.keySet() )   {
+        for ( String accountId : this.mapAcctIdwithProjTemp.keySet() ) {
             for ( String assetRecordType : this.mapAcctIdwithProjTemp.get( accountId ) ) {
                 if ( !this.mapAcctIdwithAssetRecType.containsKey( accountId )
                     || !this.mapAcctIdwithAssetRecType.get( accountId ).contains( assetRecordType )
