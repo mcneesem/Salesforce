@@ -86,10 +86,11 @@ public with sharing class SandboxHealthController {
         String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
+        OrgSettings__c orgSettings = NSP_PrepSandbox.getOrgSettings();
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
         res.isPipeline = pipelineOrgs.contains( sandbox );
-        res.isSandbox = ( ( isMockSandbox ) ? isMockSandbox : orgInfo.IsSandbox );
+        res.isSandbox = ( ( isMockSandbox ) ? isMockSandbox : orgSettings.IsSandbox__c );
 
         if ( !res.isSandbox ) {
             res.sections.add( verifyExternalIdObjects() );
@@ -317,6 +318,7 @@ public with sharing class SandboxHealthController {
     }
 
     // 8) UserTriggerSettings__c (org defaults cleared to nulls)
+    @TestVisible
     private static Section verifyUserTriggerSettings() {
         Section s = new Section();
         s.key = 'UserTriggerSettings__c';

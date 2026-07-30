@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SBQQ__SearchFilter__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__Action__r.NSP_External_Id__c, Name, SBQQ__DisplayOrder__c, SBQQ__FilterSourceField__c, SBQQ__FilterSourceObject__c, SBQQ__FilterValue__c, SBQQ__HiddenSourceField__c, SBQQ__HiddenSourceObject__c, SBQQ__Hidden__c, SBQQ__Operator__c, SBQQ__TargetField__c, SBQQ__TargetObject__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__SearchFilter__c</value>
+    </values>
+</CustomMetadata>
