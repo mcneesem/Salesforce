@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Enter_Partner_Account_When_Type_Partner</fullName>
     <active>false</active>
-    <description>When the Account Type is set as Partner, populate the partner account lookup field</description>
+    <description>DEPRECATED - When the Account Type is set as Partner, populate the partner account lookup field</description>
     <errorConditionFormula>AND(
   ISPICKVAL( Type , &quot;Partner&quot; ) ,
   ISBLANK( NSP_Partner__c ) ,

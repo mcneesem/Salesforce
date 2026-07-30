@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Prevent_Assign_To_Available_With_Open_op</fullName>
     <active>false</active>
-    <description>243758 - No Open Opportunity when manually changing Account to &quot;Available&quot;  Validation</description>
+    <description>DEPRECATED - 243758 - No Open Opportunity when manually changing Account to &quot;Available&quot;  Validation</description>
     <errorConditionFormula>AND(
   NOT( $Permission.Bypass_Prevent_Assign_To_Available_With_Open_Opportunities ) ,
   ISCHANGED( OwnerId ) ,

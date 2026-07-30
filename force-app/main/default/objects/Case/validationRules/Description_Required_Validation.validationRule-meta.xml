@@ -2,6 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Description_Required_Validation</fullName>
     <active>false</active>
+    <description>DEPRECATED - </description>
     <errorConditionFormula>AND(NSP_Category__c = &apos;Compensation Services&apos;,  ISBLANK(Description))</errorConditionFormula>
     <errorDisplayField>Description</errorDisplayField>
     <errorMessage>Description is required for compensation services category</errorMessage>

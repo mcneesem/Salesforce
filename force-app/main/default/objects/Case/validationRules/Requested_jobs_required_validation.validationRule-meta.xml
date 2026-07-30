@@ -2,6 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Requested_jobs_required_validation</fullName>
     <active>false</active>
+    <description>DEPRECATED - </description>
     <errorConditionFormula>AND( NSP_SubCategory__c =&apos;Salary Survey&apos;, ISNULL( Requested_Jobs__c ) )</errorConditionFormula>
     <errorDisplayField>Requested_Jobs__c</errorDisplayField>
     <errorMessage>Requested jobs is required for salary survey</errorMessage>
