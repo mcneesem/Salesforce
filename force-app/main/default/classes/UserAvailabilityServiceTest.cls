@@ -221,7 +221,7 @@ private class UserAvailabilityServiceTest {
         System.assertNotEquals( null, sorted, 'Sorted list should not be null' );
         System.assertEquals( 2, sorted.size(), 'Both users should be returned' );
 
-        // Identify the busier user (2 events) — must rank LAST
+        // Identify the busier user (2 events) - must rank LAST
         Map<Id, Integer> eventCountByUser = new Map<Id, Integer>();
         for ( AggregateResult ar : [
             SELECT OwnerId, COUNT(Id) cnt
