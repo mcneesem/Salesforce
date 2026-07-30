@@ -336,7 +336,7 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
-      private static Set<Id> buildCappedTodaySet( Map<Date,Set<Id>> cappedUsersByDay , Event window ) {
+    private static Set<Id> buildCappedTodaySet( Map<Date,Set<Id>> cappedUsersByDay , Event window ) {
         // Determine the calendar date this window slot falls on
         Date windowDate = null;
         if ( ( window != null ) && ( window.StartDateTime != null ) ) {
@@ -375,7 +375,13 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static Integer countAvailableSlots( List<Event> records , Event window , String skill, Id userBusinessHoursId ) {
+    private static Integer countAvailableSlots(
+        List<Event> records ,
+        Event window ,
+        String skill ,
+        Id userBusinessHoursId
+        )
+    {
         List<Event> available = UserAvailabilityService.getAvailableSlots(
             records ,
             window ,
@@ -386,13 +392,23 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static List<Event> getAvailableSlots( List<Event> records , Event window , String skill , Id userBusinessHoursId ) {
+    private static List<Event> getAvailableSlots(
+        List<Event> records ,
+        Event window ,
+        String skill ,
+        Id userBusinessHoursId
+        )
+    {
         List<Event> businessHoursFilter = new List<Event>();
         Id orgBhId = UserAvailabilityService.defaultBusinessHoursId;
         //Checking default and time zone business hours
         if ( ( userBusinessHoursId != null ) && ( orgBhId != null ) ) {
             UserAvailability helper = new UserAvailability();
-            List<Event> slots = helper.getAvailableSlots( records , window , UserAvailabilityService.getStepMinutes( skill ) );
+            List<Event> slots = helper.getAvailableSlots(
+                records ,
+                window ,
+                UserAvailabilityService.getStepMinutes( skill )
+            );
             if ( ( slots != null ) && !slots.isEmpty() ) {
                 for ( Event e : slots ) {
                     if ( UserAvailabilityService.isWithin( orgBhId , userBusinessHoursId , e ) ) {
@@ -404,7 +420,12 @@ public with sharing class UserAvailabilityService {
         return businessHoursFilter;
     }
 
-    private static Boolean isWithin( Id businessHoursId , Event e , Long durationMs ) {
+    private static Boolean isWithin(
+        Id businessHoursId ,
+        Event e ,
+        Long durationMs
+        )
+    {
         Boolean response = false;
         if ( ( businessHoursId != null )
             && ( durationMs != null )
@@ -797,19 +818,19 @@ public with sharing class UserAvailabilityService {
         }
         private set;
     }
-    private static Map<String, Id> businessHoursByTimeZone {
+    private static Map<String,Id> businessHoursByTimeZone {
         private get {
             if ( businessHoursByTimeZone == null ) {
-                businessHoursByTimeZone = new Map<String, Id>();
+                businessHoursByTimeZone = new Map<String,Id>();
                 for ( BusinessHours bh : [
-                    SELECT Id, TimeZoneSidKey
+                    SELECT Id , TimeZoneSidKey
                     FROM BusinessHours
                     WHERE (
                         ( IsActive = true )
                         AND ( Name LIKE 'Schedule Seller: %' )
                     )
                 ] ) {
-                    businessHoursByTimeZone.put( bh.TimeZoneSidKey, bh.Id );
+                    businessHoursByTimeZone.put( bh.TimeZoneSidKey , bh.Id );
                 }
             }
             return businessHoursByTimeZone;
@@ -817,11 +838,17 @@ public with sharing class UserAvailabilityService {
         private set;
     }
 
-    private static Map<Id, String> getUserTimeZones( Set<Id> userIds ) {
-        Map<Id, String> timeZoneByUser = new Map<Id, String>();
+    private static Map<Id,String> getUserTimeZones( Set<Id> userIds ) {
+        Map<Id,String> timeZoneByUser = new Map<Id,String>();
         if ( ( userIds != null ) && !userIds.isEmpty() ) {
-            for ( User u : [SELECT Id, TimeZoneSidKey FROM User WHERE Id IN :userIds] ) {
-                timeZoneByUser.put( u.Id, u.TimeZoneSidKey );
+            for ( User u : [
+                        SELECT Id , TimeZoneSidKey
+                        FROM User
+                        WHERE ( Id IN :userIds )
+                    ]
+                )
+            {
+                timeZoneByUser.put( u.Id , u.TimeZoneSidKey );
             }
         }
         return timeZoneByUser;
