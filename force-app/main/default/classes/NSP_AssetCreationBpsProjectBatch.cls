@@ -4,7 +4,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     private static final Map<Id,Project_Account__c> accIdWithProject = new Map<Id,Project_Account__c>();
     private static final Map<Id,Set<String>> mapAcctIdwithProjTemp = new Map<Id,Set<String>>();
     private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
-    private static final Set<String> existingClientIds = new Set<String>();
+    private static final Set<String> EXISTING_CLIENT_IDS = new Set<String>();
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -135,7 +135,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 }
                 mapAcctIdwithAssetRecType.get( ast.AccountId ).add( ast.RecordType.DeveloperName );
                 if ( ast.NSP_Client__c != null ) {
-                    existingClientIds.add( ast.NSP_Client__c );
+                    EXISTING_CLIENT_IDS.add( ast.NSP_Client__c );
                 }
             }
             this.creatingAssetRecords();
@@ -167,7 +167,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                     )
                 {
                     String clientId = accIdWithProject.get( accountId ).Account__r.NSP_AIMS_Client__c;
-                    if ( !existingClientIds.contains( clientId ) ) {
+                    if ( !EXISTING_CLIENT_IDS.contains( clientId ) ) {
                         Asset newAsset = new Asset();
                         newAsset.Name = accIdWithProject.get( accountId ).Account__r.name;
                         newAsset.AccountId = accountId;
