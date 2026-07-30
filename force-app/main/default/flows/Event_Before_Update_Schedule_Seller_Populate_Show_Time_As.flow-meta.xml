@@ -49,6 +49,16 @@
             </connector>
             <label>Cancelled</label>
         </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Status_Not_Cancelled</name>
+        <label>Is Status Not Cancelled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Status_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Cancelled</name>
             <conditionLogic>and</conditionLogic>
@@ -89,7 +99,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Status_Cancelled</targetReference>
+                <targetReference>Is_Status_Not_Cancelled</targetReference>
             </connector>
             <label>Is Schedule Seller Record Type</label>
         </rules>
