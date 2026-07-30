@@ -3833,11 +3833,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Project_Task__c.Associated_RSAP__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Project_Task__c.Is_Completed__c</field>
         <readable>true</readable>
     </fieldPermissions>
