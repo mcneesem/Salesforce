@@ -105,7 +105,7 @@
             <assignToReference>newShare.ShareType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>I</stringValue>
+                <stringValue>V</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -668,7 +668,7 @@
         <label>Iterate Content Documents</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Get_Manageable_Content_Documents</collectionReference>
+        <collectionReference>filteredContentDocuments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Check_Content_Document</targetReference>
@@ -848,7 +848,7 @@
             <field>ShareType</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>I</stringValue>
+                <stringValue>V</stringValue>
             </value>
         </filters>
         <filters>
