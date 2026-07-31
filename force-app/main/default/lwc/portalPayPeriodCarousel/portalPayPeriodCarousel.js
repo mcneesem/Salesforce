@@ -12,9 +12,9 @@ export default class PortalPayPeriodCarousel extends LightningElement {
         fields: [
             'Portal_Pay_Period__c.Id' ,
             'Portal_Pay_Period__c.Name' ,
-            'Portal_Pay_Period__c.First_Pay_Period_Start__c' ,
-            'Portal_Pay_Period__c.First_Pay_Period_End__c' ,
             'Portal_Pay_Period__c.First_Pay_Date__c' ,
+            'Portal_Pay_Period__c.First_Pay_Period_End__c' ,
+            'Portal_Pay_Period__c.First_Pay_Period_Start__c' ,
             'Portal_Pay_Period__c.Pay_Frequency__c' ,
         ] ,
         sortBy: [ 'Portal_Pay_Period__c.Id' ]
