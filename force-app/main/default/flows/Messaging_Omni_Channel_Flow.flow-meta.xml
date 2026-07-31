@@ -50,7 +50,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00G4x000001fXXPEA2</stringValue>
+                <stringValue>00GOy00000IpXlxMAF</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -62,7 +62,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>Contact Center 401k</stringValue>
+                <stringValue>Contact Center 401k Chat</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -94,6 +94,12 @@
         </inputParameters>
         <inputParameters>
             <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
         <offset>0</offset>
@@ -148,7 +154,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00G4x000001fXXQEA2</stringValue>
+                <stringValue>00GOy00000IpSJSMA3</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -160,7 +166,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>Contact Center Benefits</stringValue>
+                <stringValue>Contact Center Benefits Chat</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -192,6 +198,12 @@
         </inputParameters>
         <inputParameters>
             <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
         <offset>0</offset>
@@ -246,7 +258,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00G4x000001fyMOEAY</stringValue>
+                <stringValue>00GOy00000IpXvdMAF</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -258,7 +270,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>Messaging Chat Queue</stringValue>
+                <stringValue>Premier Chat</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -290,6 +302,12 @@
         </inputParameters>
         <inputParameters>
             <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
         <offset>0</offset>
@@ -344,7 +362,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00GPb00000VFSBqMAP</stringValue>
+                <stringValue>00GOy00000IpS9bMAF</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -356,7 +374,7 @@
         <inputParameters>
             <name>queueLabel</name>
             <value>
-                <stringValue>Workday Chat</stringValue>
+                <stringValue>Contact Center HRScale Chat</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -388,6 +406,12 @@
         </inputParameters>
         <inputParameters>
             <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>digitalWorkerLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
         <offset>0</offset>
@@ -806,12 +830,28 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Translate_Rollover</name>
-        <label>Translate: Rollover</label>
-        <locationX>622</locationX>
+        <name>Translate_Hardship</name>
+        <label>Translate: Hardship</label>
+        <locationX>754</locationX>
         <locationY>3092</locationY>
         <assignmentItems>
-            <assignToReference>input_Topic</assignToReference>
+            <assignToReference>input_SubTopic</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Hardship</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Translate_Rollover</name>
+        <label>Translate: Rollover</label>
+        <locationX>490</locationX>
+        <locationY>3092</locationY>
+        <assignmentItems>
+            <assignToReference>input_SubTopic</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Rollover</stringValue>
@@ -1362,7 +1402,7 @@
             <name>Dese_la_vuelta</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>input_Topic</leftValueReference>
+                <leftValueReference>input_SubTopic</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Dese la vuelta</stringValue>
@@ -1372,6 +1412,21 @@
                 <targetReference>Translate_Rollover</targetReference>
             </connector>
             <label>Dese la vuelta</label>
+        </rules>
+        <rules>
+            <name>Privaci_n</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_SubTopic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Privación</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Translate_Hardship</targetReference>
+            </connector>
+            <label>Privación</label>
         </rules>
     </decisions>
     <decisions>
