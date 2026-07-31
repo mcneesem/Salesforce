@@ -4,6 +4,7 @@ public class OrderTriggerCreateInvoice {
     public static void createInvoice( List<Order> newList , Map<Id,Order> orderOldMap ) {
         Set<Id> orderIdSet = new Set<Id>();
         Set<Id> projCompletedIdSet = new Set<Id>();
+        Set<Id> revisedOrderStartDateIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
         List<OrderItem> orderItemListToUpdate = new List<OrderItem>();
         List<OrderItem> milestoneOpList = new List<OrderItem>();
@@ -29,6 +30,14 @@ public class OrderTriggerCreateInvoice {
                     if(oldOrder.NSP_Project_Go_Live_Date__c != null && oldOrder.NSP_Project_Go_Live_Approved__c == true){
                         projectLiveBeforeReviewIds.add(newOrder.Id);
                     }
+                }
+                if ( ( newOrder.NSP_Project_Go_Live_Date__c == null )
+                    && !newOrder.NSP_Project_Go_Live_Approved__c
+                    && ( newOrder.Revised_Amendment_Start_Date__c != null )
+                    && ( oldOrder.Revised_Amendment_Start_Date__c != newOrder.Revised_Amendment_Start_Date__c )
+                    )
+                {
+                    revisedOrderStartDateIdSet.add( newOrder.Id );
                 }
                 //When the Invoice Ready is checked on Project, Project Go Live checkbox will be set to true on Order and activates all the order products where Order Activation trigger is Project Go Live
                 if(oldOrder.NSP_Project_Go_Live_Approved__c == false
@@ -182,6 +191,9 @@ public class OrderTriggerCreateInvoice {
             }
             if(projectLiveBeforeReviewIds !=null && projectLiveBeforeReviewIds.size()>0){
                 OrderTriggerActivateOrderProduct.activateOrderProduct(newList,projectLiveBeforeReviewIds);
+            }
+            if ( ( revisedOrderStartDateIdSet != null ) && !revisedOrderStartDateIdSet.isEmpty() ){
+                OrderTriggerActivateOrderProduct.activateOrderProduct( newList , revisedOrderStartDateIdSet );
             }
             if(projGoLiveIdSet != null && projGoLiveIdSet.size() > 0){
                 NSP_OrderTriggerHelper.updateSubStartDate( projGoLiveIdSet );
