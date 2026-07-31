@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Member</label>
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
+    <permissionSets>Label_Access</permissionSets>
     <permissionSets>Sales_Member_Apex_Access</permissionSets>
     <permissionSets>Sales_Member_Assigned_Apps</permissionSets>
     <permissionSets>Sales_Member_Custom_Metadata_Types</permissionSets>
