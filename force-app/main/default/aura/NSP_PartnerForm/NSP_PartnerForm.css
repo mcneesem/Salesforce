@@ -2,15 +2,3 @@
       --slds-c-button-brand-color-background: #004C97;  
 }
     
-.THIS .slds-form-element .slds-form-element__label {
-        font-weight: var(--slds-g-font-weight-bold, bold) !important;
-        font-family:'Arial Bold', sans-serif  !important; 
-        color: black  !important; 
-        
-}
-
-.THIS .center {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}
