@@ -302,12 +302,6 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>fraudAlertBanner</componentName>
-                <identifier>c_fraudAlertBanner</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
@@ -1657,6 +1651,34 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-9ec311ef-db6b-4329-a346-83d9b08c573d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.HRScale_Docusign_Form_to_Send__c</fieldItem>
+                <identifier>RecordHRScale_Docusign_Form_to_Send_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-7aed68bd-8dc7-4ff6-99cb-b1e245a6583e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-7aed68bd-8dc7-4ff6-99cb-b1e245a6583e</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column27</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-ccd17069-f3f6-4752-8f9f-b3d79921173d</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3339,6 +3361,37 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-ccd17069-f3f6-4752-8f9f-b3d79921173d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Docusign Forms</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection15</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>HRScale Docusign</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-039e2b71-b1dc-48f5-afe5-4a3a0a481fd8</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -4170,19 +4223,6 @@
             <componentInstance>
                 <componentName>nsp_casecategorycmp</componentName>
                 <identifier>nsp_casecategorycmp</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>support:emailSummaries</componentName>
-                <identifier>support_emailSummaries</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.StandardPermission.SummarizationUser}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

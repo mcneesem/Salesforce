@@ -62,6 +62,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.HRScale_Docusign_Form_to_Send__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Intro_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
