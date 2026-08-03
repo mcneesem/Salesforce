@@ -42,9 +42,9 @@
                 <label>Compensation Deduction Authorization for Union Dues</label>
             </value>
             <value>
-                <fullName>Deduction Authorization – Vacation Advance Notice</fullName>
+                <fullName>Deduction Authorization - Vacation Advance Notice</fullName>
                 <default>false</default>
-                <label>Deduction Authorization – Vacation Advance Notice</label>
+                <label>Deduction Authorization - Vacation Advance Notice</label>
             </value>
             <value>
                 <fullName>Deduction Authorization</fullName>
@@ -52,24 +52,24 @@
                 <label>Deduction Authorization</label>
             </value>
             <value>
-                <fullName>Deduction Authorization New York – Notice of Intent to Recover Wage Overpayment</fullName>
+                <fullName>Deduction Authorization New York - Notice of Intent to Recover Wage Overpayment</fullName>
                 <default>false</default>
-                <label>Deduction Authorization New York – Notice of Intent to Recover Wage Overpayment</label>
+                <label>Deduction Authorization New York - Notice of Intent to Recover Wage Overpayment</label>
             </value>
             <value>
-                <fullName>Deduction Authorization New York – Vacation Advance Notice</fullName>
+                <fullName>Deduction Authorization New York - Vacation Advance Notice</fullName>
                 <default>false</default>
-                <label>Deduction Authorization New York – Vacation Advance Notice</label>
+                <label>Deduction Authorization New York - Vacation Advance Notice</label>
             </value>
             <value>
-                <fullName>Deduction Authorization New York – Voluntary Deductions</fullName>
+                <fullName>Deduction Authorization New York - Voluntary Deductions</fullName>
                 <default>false</default>
-                <label>Deduction Authorization New York – Voluntary Deductions</label>
+                <label>Deduction Authorization New York - Voluntary Deductions</label>
             </value>
             <value>
-                <fullName>Deduction Authorization New York – Wage Advance</fullName>
+                <fullName>Deduction Authorization New York - Wage Advance</fullName>
                 <default>false</default>
-                <label>Deduction Authorization New York – Wage Advance</label>
+                <label>Deduction Authorization New York - Wage Advance</label>
             </value>
             <value>
                 <fullName>Employee Deduction Authorization for Client Sponsored Plans</fullName>

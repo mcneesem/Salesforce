@@ -563,23 +563,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deduction Authorization %E2%80%93 Vacation Advance Notice</fullName>
+            <fullName>Deduction Authorization - Vacation Advance Notice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deduction Authorization New York %E2%80%93 Notice of Intent to Recover Wage Overpayment</fullName>
+            <fullName>Deduction Authorization New York - Notice of Intent to Recover Wage Overpayment</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deduction Authorization New York %E2%80%93 Vacation Advance Notice</fullName>
+            <fullName>Deduction Authorization New York - Vacation Advance Notice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deduction Authorization New York %E2%80%93 Voluntary Deductions</fullName>
+            <fullName>Deduction Authorization New York - Voluntary Deductions</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deduction Authorization New York %E2%80%93 Wage Advance</fullName>
+            <fullName>Deduction Authorization New York - Wage Advance</fullName>
             <default>false</default>
         </values>
         <values>
