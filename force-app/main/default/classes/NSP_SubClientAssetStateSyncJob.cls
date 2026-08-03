@@ -147,7 +147,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         }
     }
 
-    private void handleAssets( Set<Id> assetIds ) {
+    public void handleAssets( Set<Id> assetIds ) {
         if ( ( assetIds != null ) && !assetIds.isEmpty() ) {
             Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
                 [
