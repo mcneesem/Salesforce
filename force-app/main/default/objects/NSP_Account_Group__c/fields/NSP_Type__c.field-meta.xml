@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Type__c</fullName>
-    <externalId>false</externalId>
     <label>Type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -90,6 +90,11 @@
                 <fullName>WX Account Group</fullName>
                 <default>false</default>
                 <label>WX Account Group</label>
+            </value>
+            <value>
+                <fullName>Sales Set</fullName>
+                <default>false</default>
+                <label>Sales Set</label>
             </value>
             <value>
                 <fullName>Ownership</fullName>
