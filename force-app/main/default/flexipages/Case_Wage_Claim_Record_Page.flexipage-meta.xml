@@ -54,6 +54,10 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideSlackAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>numVisibleActions</name>
                     <value>4</value>
                 </componentInstanceProperties>
@@ -96,6 +100,12 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
