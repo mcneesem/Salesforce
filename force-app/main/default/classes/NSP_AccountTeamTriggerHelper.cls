@@ -1,16 +1,9 @@
 public with sharing class NSP_AccountTeamTriggerHelper {
     // test w/ NSP_AccountTeamTriggerTest (79%)
 
-    /**
-* Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
-* @param newList List of New NSP_Account_Team__c.
-*
-* @return void
-*
-*/
-
-    public void beforeInsertDirector(List<NSP_Account_Team__c> newList) {
-        try{
+    // Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
+    public void beforeInsertDirector( List<NSP_Account_Team__c> newList ) {
+        try {
             List<NSP_Account_Team__c> newAccountTeamList = new List<NSP_Account_Team__c>();
             Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>();
             Set<String> accountTeamMemberUserIdSet = new Set<String>();
@@ -163,15 +156,9 @@ public with sharing class NSP_AccountTeamTriggerHelper {
         }
     }
 
-    /*STY-03187:
-* Description: update the account team userId to asset to respective NSP_WX_WA_Benefits_Specialist__c
-NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field based on AccountTeam record role
-* When: 13/10/2022
-* @param: mapAccountTeamId map of AccountId and AccountTeamObject
-* @return void
-*/
-
-    public void updateAccountTeamNameToAssetName(Map < Id, NSP_Account_Team__c > mapAccountIdtoAccountTeam) {
+    // update the account team userId to asset to respective NSP_WX_WA_Benefits_Specialist__c
+    // NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field based on AccountTeam record role
+    public void updateAccountTeamNameToAssetName( Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam ) {
         Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsRetServiceNameChangeEnabled__c;
         List < Asset > listAssetObject = new List < Asset > ();
 
@@ -209,16 +196,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-    /**
-* Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
-* @param newMap Map of NSP_Account_Team__c.
-* @param oldMap Map of NSP_Account_Team__c.
-* @return void
-*
-*/
-
-    public void beforeUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
-        try{
+    // Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
+    public void beforeUpdateDirector( Map<Id,NSP_Account_Team__c> newMap , Map<Id,NSP_Account_Team__c> oldMap ) {
+        try {
             //Added as part of STY-03667
             Set<Id> accountIdSet = new Set<Id>();
             List<NSP_Account_Team__c> newAcctTeamList=new  List<NSP_Account_Team__c>();
@@ -283,15 +263,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-/**
-* MethodName  : populateUserIdOnATMBasedOnPerId
-* Description : This Method populates NSP User if there is a change on the PER Id.
-* Params      : List<NSP_Account_Team__c> acctTeamList
-* Params      : Set<String> perIdSet
-* Story       : AZD-235320
-* createdDate : 11/7/2023
-* */
-    public void populateUserIdOnATMBasedOnPerId(List<NSP_Account_Team__c> acctTeamList,Set<String> perIdSet){
+    // This Method populates NSP User if there is a change on the PER Id.
+    public void populateUserIdOnATMBasedOnPerId( List<NSP_Account_Team__c> acctTeamList , Set<String> perIdSet ) {
         Map<String,User> employeeIdMap = new Map<String,User>();
         Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber FROM User WHERE EmployeeNumber IN: perIdSet]);
 
@@ -439,13 +412,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-    /***********************************************************************************************
-    * MethodName  : getCCAccountTeams
-    * Description : Method to get CC account team
-    * Params  : List<NSP_Account_Team__c> accTeamRecords
-    *
-    * ********************************************************************************************/
-    private static Map<String,Set<String>> getCCAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
+    private static Map<String,Set<String>> getCCAccountTeams( List<NSP_Account_Team__c> accTeamRecords ) {
         Map<String,Set<String>> mapAccTeamEmails = new Map<String,Set<String>>();
         for(NSP_Account_Team__c accTeam: accTeamRecords){
             if(mapAccTeamEmails.containsKey(accTeam.NSP_Account__c)){
@@ -457,13 +424,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         return mapAccTeamEmails;
     }
 
-    /***********************************************************************************************
-    * MethodName  : getAccountTeamRecords
-    * Description : Method to get account team records
-    * Params  : Set<Id> setAccountIds
-    *
-    * ********************************************************************************************/
-    private static List<NSP_Account_Team__c> getAccountTeamRecords(Set<Id> setAccountIds){
+    private static List<NSP_Account_Team__c> getAccountTeamRecords( Set<Id> setAccountIds ) {
         List<String> lstAccTeamRoles = new List<String>{NSP_ServiceConstants.MANAGER_HRSERVICES,NSP_ServiceConstants.PAYROLL_SUPERVISOR,
             NSP_ServiceConstants.CLIENT_LIAISION,NSP_ServiceConstants.HRSpecialist,NSP_ServiceConstants.PayrollSpecialist,
             NSP_ServiceConstants.PERFOMANCE_SPECIALIST,NSP_ServiceConstants.SAFETY_CONSULTANT,NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
@@ -488,17 +449,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         return mapAccTeamCLHR;
     }
 
-    /***********************************************************************************************
-* MethodName: showErrorOnPrimaryCheckRole
-* Description : Method for showing error on Account Team when primary checkbox is checked for same role
-* Params:       List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap
-*
-* ********************************************************************************************/
-    public void showErrorOnPrimaryCheckRole(Set<Id> accountIdSet, List<NSP_Account_Team__c> newList) {
-
-
-
-        try{
+    // shows error on Account Team when primary checkbox is checked for same role
+    public void showErrorOnPrimaryCheckRole( Set<Id> accountIdSet , List<NSP_Account_Team__c> newList ) {
+        try {
             if(!accountIdSet.isEmpty()){
                 //list all existing primary checked account teams for the set of account id passed
                 List<NSP_Account_Team__c> acctTeamList=[SELECT  NSP_Role__c,NSP_Account__c
@@ -531,15 +484,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-    /**
-    * @MethodName: updateAssetServiceRegion
-    * @Description: This method is used to update Asset Fields on after Insert
-    * @param : List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap
-    * @createdDate : 11/30/2022
-    * @Defect : STY-02108
-    * @return void
-    */
-    public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
+    // used to update Asset Fields on after Insert
+    public static void updateAssetServiceRegion( List<NSP_Account_Team__c> newAccTeam , Map<Id,NSP_Account_Team__c> oldMap ) {
         //Get Record Type Id
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
         Set<Id> accIds = new Set<Id>();
@@ -577,49 +523,62 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         }
         //Update Asset on Insert Or Update based on AccountTeams Map
-        updateAssetRegion(accIds, woRecordTypeId, accountTeams);
+        NSP_AccountTeamTriggerHelper.updateAssetRegion( accIds , accountTeams );
     }
 
-    /**
-    * @MethodName: updateAssetRegion
-    * @Description: This method is used to update Asset Fields on after Insert
-    * @param : Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams
-    * @createdDate : 11/30/2022
-    * @Defect : STY-02108
-    * @return void
-    */
-    private static void updateAssetRegion(Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams) {
-        Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsServiceRegionChangeEnabled__c;
-        List<Asset> assetToBeUpdated = new List<Asset>();
-        //Get All Active asset for the account
-        for(Asset asset : [SELECT Id, RecordTypeId, NSP_Service_Region__c, AccountId From Asset WHERE RecordTypeId =:woRecordTypeId AND AccountId =:accIds AND NSP_Account_Status__c = 'Active']){
-            //When new Role is equal to Manager, HR Services
-            if(accountTeams.containsKey(asset.AccountId) && accountTeams.get(asset.AccountId).NSP_Role__c == 'Manager, HR Services') {
-                asset.NSP_Service_Region__c = accountTeams.get(asset.AccountId).NSP_User__r.NSP_Service_Region__c;
-                assetToBeUpdated.add(asset);
-            }else if(switchEnabled){
-                //When new Role is not equal to Manager, HR Services
-                asset.NSP_Service_Region__c = null;
-                assetToBeUpdated.add(asset);
+    private static void updateAssetRegion( Set<Id> accIds , Map<Id,NSP_Account_Team__c> accountTeams ) {
+        try {
+            accIds = ( ( accIds == null ) ? new Set<Id>() : accIds );
+            Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+            List<Asset> assetToBeUpdated = new List<Asset>();
+            //Get All Active asset for the account
+            for ( Asset asset : [
+                        SELECT Id, RecordTypeId, NSP_Service_Region__c, AccountId
+                        FROM Asset
+                        WHERE (
+                            ( RecordTypeId = :woRecordTypeId )
+                            AND ( AccountId = :accIds )
+                            AND ( NSP_Account_Status__c = 'Active' )
+                        )
+                    ]
+                )
+            {
+                NSP_Account_Team__c accountTeam = null;
+                if ( ( accountTeams != null )
+                    && accountTeams.containsKey( asset.AccountId )
+                    )
+                {
+                    accountTeam = accountTeams.get( asset.AccountId );
+                }
+                //When new Role is equal to Manager, HR Services
+                if ( ( accountTeam != null )
+                    && ( accountTeam.NSP_Role__c == 'Manager, HR Services' )
+                    )
+                {
+                    asset.NSP_Service_Region__c = accountTeam.NSP_User__r.NSP_Service_Region__c;
+                    assetToBeUpdated.add( asset );
+                }
             }
-        }
-
-        if(!assetToBeUpdated.isEmpty()) {
-            update assetToBeUpdated;
+            if ( !assetToBeUpdated.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( assetToBeUpdated , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountTeamTriggerHelper.class.getName() ,
+                    'updateAssetRegion:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamTriggerHelper.class.getName() ,
+                'updateAssetRegion' ,
+                e
+            );
         }
     }
 
-    /**
-    * @MethodName: updatePerIdonUserUpdate
-    * @Description: This method is used to update per Id on user Update
-    * @param : List<NSP_Account_Team__c> newList, Set<String> accountTeamMemberUserIdSet
-    * @createdDate : 04/27/2023
-    * @Defect : DF-03716
-    * @return void
-    */
-    public void updatePerIdonUserUpdate(List<NSP_Account_Team__c> newList, Set<String> accountTeamMemberUserIdSet){
-
-        Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber,NSP_sales_Office__c FROM User WHERE Id IN: accountTeamMemberUserIdSet]);
+    // used to update per Id on user Update
+    public void updatePerIdonUserUpdate( List<NSP_Account_Team__c> newList , Set<String> accountTeamMemberUserIdSet ) {
+        Map<Id,User> userMap = new Map<Id,User>([SELECT Id, EmployeeNumber,NSP_sales_Office__c FROM User WHERE Id IN: accountTeamMemberUserIdSet]);
         for(NSP_Account_Team__c accountTeamMemberObj : newList) {
             if(userMap.containsKey(accountTeamMemberObj.NSP_User__c) && accountTeamMemberObj.NSP_User__c != null) {
                 accountTeamMemberObj.NSP_PER_ID__c = userMap.get(accountTeamMemberObj.NSP_User__c).EmployeeNumber;
@@ -627,15 +586,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-        /***********************************************************************************************
-    * MethodName  : validationOnDeletionOfAccountTeam
-    * Description : This Method describes about the adding validation on deletion of Account Team Members created by Integration users
-    * Params      : List<NSP_Account_Team__c> accTeamOldList
-    * Story       : DF-03948
-    * createdDate : 5/6/2023
-    * ********************************************************************************************/
-    public static void validationOnDeletionOfAccountTeam(Map<Id, NSP_Account_Team__c> oldMap){
-        try{
+    // describes about the adding validation on deletion of Account Team Members created by Integration users
+    public static void validationOnDeletionOfAccountTeam( Map<Id,NSP_Account_Team__c> oldMap ) {
+        try {
             List<String> profileFields = new List<String>{'Id','Name'};
             List<String> userProfileNames = new List<String>{NSP_ServiceConstants.SYSTEM_ADMINISTRATOR, NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
             List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
@@ -724,5 +677,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         }
     }
+
 }
 //
