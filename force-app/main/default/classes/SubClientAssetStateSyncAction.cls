@@ -30,7 +30,7 @@ public class SubClientAssetStateSyncAction {
             success = true;
         } catch ( Exception exceptionRecord ) {
             NSP_ErrorLogHandler.logException(
-                NSP_SubClientAssetStateSyncAction.class.getName(),
+                SubClientAssetStateSyncAction.class.getName(),
                 'processAssets',
                 exceptionRecord
             );
