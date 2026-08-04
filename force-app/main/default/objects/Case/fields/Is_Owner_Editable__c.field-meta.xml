@@ -88,7 +88,7 @@
   AND(
     ( NSP_Category__c = &quot;Client Management&quot; ) ,
     ( NSP_SubCategory__c = &quot;HRScale Docusign&quot; ) ,
-    NOT( ISBLANK ( HRScale_Docusign_Form_to_Send__c ) )
+    NOT( ISBLANK ( HRScale_Docusign_Form_To_Send__c ) )
   )
 )</formula>
     <label>Is Owner Editable</label>

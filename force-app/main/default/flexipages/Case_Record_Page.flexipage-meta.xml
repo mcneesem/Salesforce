@@ -1666,8 +1666,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.HRScale_Docusign_Form_to_Send__c</fieldItem>
-                <identifier>RecordHRScale_Docusign_Form_to_Send_cField</identifier>
+                <fieldItem>Record.HRScale_Docusign_Form_To_Send__c</fieldItem>
+                <identifier>RecordHRScale_Docusign_Form_To_Send_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7aed68bd-8dc7-4ff6-99cb-b1e245a6583e</name>

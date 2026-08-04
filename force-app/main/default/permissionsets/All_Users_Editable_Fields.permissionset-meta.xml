@@ -62,7 +62,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.HRScale_Docusign_Form_to_Send__c</field>
+        <field>Case.HRScale_Docusign_Form_To_Send__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
