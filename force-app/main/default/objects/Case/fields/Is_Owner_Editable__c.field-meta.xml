@@ -4,13 +4,23 @@
     <formula>OR(
   /* Handle Unsupported Categories */
   AND(
+    ( NSP_Category__c != &quot;Client Management&quot; ) ,
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
     ( NSP_Category__c != &quot;Contractor Management&quot; ) ,
     ( NSP_Category__c != &quot;Credit Services&quot; ) ,
     ( NSP_Category__c != &quot;HR COE Escalation&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Services&quot; ) ,
-    ( NSP_Category__c != &quot;Payroll Shared Services&quot; ) ,
-    ( NSP_Category__c != &quot;Client Management&quot; )
+    ( NSP_Category__c != &quot;Payroll Shared Services&quot; )
+  ) ,
+  /* Category: Client Management */
+  AND(
+    ( NSP_Category__c = &quot;Client Management&quot; ) ,
+    ( NSP_SubCategory__c != &quot;HRScale Docusign&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Client Management&quot; ) ,
+    ( NSP_SubCategory__c = &quot;HRScale Docusign&quot; ) ,
+    NOT( ISBLANK ( HRScale_Docusign_Form_To_Send__c ) )
   ) ,
   /* Category: Compensation Services */
   AND(
@@ -79,16 +89,6 @@
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
     NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
-  ) ,
-  /* Category: Client Management */
-  AND(
-    ( NSP_Category__c = &quot;Client Management&quot; ) ,
-    ( NSP_SubCategory__c != &quot;HRScale Docusign&quot; )
-  ) ,
-  AND(
-    ( NSP_Category__c = &quot;Client Management&quot; ) ,
-    ( NSP_SubCategory__c = &quot;HRScale Docusign&quot; ) ,
-    NOT( ISBLANK ( HRScale_Docusign_Form_To_Send__c ) )
   )
 )</formula>
     <label>Is Owner Editable</label>
