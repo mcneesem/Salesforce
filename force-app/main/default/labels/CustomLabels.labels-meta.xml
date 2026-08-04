@@ -6408,7 +6408,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OrderItemRecalcTypes</shortDescription>
-        <value>Upsell;Downgrade;Amend/Upsell;Amend/Downgrade</value>
+        <value>Upsell;Downgrade;Amend/Upsell;Amend/Downgrade;Amend</value>
     </labels>
     <labels>
         <fullName>Organizational_Planning_Imp_Timeline</fullName>
