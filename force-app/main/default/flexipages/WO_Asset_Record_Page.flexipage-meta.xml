@@ -60,7 +60,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Asset.Resync_States_of_Operations</value>
+                            <value>Asset.Sync_States_Of_Operations</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
@@ -74,7 +74,7 @@
                                     <rightValue>WO</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.One_Time_Sync_Single_Record}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Sync_States_Of_Operations}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
