@@ -8,6 +8,7 @@
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
+    <permissionSets>Bypass_Restrict_Opportunity_Backward_Stage</permissionSets>    
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
