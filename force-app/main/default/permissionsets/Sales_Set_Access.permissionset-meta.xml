@@ -105,6 +105,10 @@
         <field>NSP_Account_Group__c.Total_Employees_Sales__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Account_Screen_Manage_Sales_Set</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Set Access</label>
     <objectPermissions>
