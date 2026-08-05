@@ -1,4 +1,5 @@
-public with sharing class FindDuplicatesAction {
+// intentionally `without sharing` to prevent ~ DUPLICATES_DETECTED: You're creating a duplicate record.
+public without sharing class FindDuplicatesAction {
     // test w/ FindDuplicatesActionTest (82%)
 
     @InvocableMethod(label='Find Duplicates' description='Find records that duplicate the given record.')
