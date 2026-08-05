@@ -884,6 +884,7 @@ public class NSP_AccountTriggerHelper {
                 || ( newRecord.Count_of_Pending_Oppty__c != oldRecord.Count_of_Pending_Oppty__c ) // ignore changes to Roll-Up Summary...
                 || ( newRecord.Count_of_Closed_Won_Oppty__c != oldRecord.Count_of_Closed_Won_Oppty__c ) // ignore changes to Roll-Up Summary...
                 || ( newRecord.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c )
+                || ( newRecord.dnb_exclude_company__c != oldRecord.dnb_exclude_company__c )
                 || ( ( newRecord.NSP_Sales_Service_Account_Status__c != oldRecord.NSP_Sales_Service_Account_Status__c )
                     && ( newRecord.NSP_Sales_Service_Account_Status__c == 'Prospecting' )
                     )
