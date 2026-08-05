@@ -129,8 +129,6 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -151,8 +149,6 @@
     </holidays>
     <holidays>
         <activityDate>2026-04-03</activityDate>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -160,8 +156,6 @@
         <name>Good Friday 2026</name>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -174,8 +168,6 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -189,8 +181,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -204,8 +194,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -219,8 +207,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -233,8 +219,6 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -248,8 +232,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
