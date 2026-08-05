@@ -623,6 +623,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Time Wage Import</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO</fullName>
             <default>false</default>
         </values>
