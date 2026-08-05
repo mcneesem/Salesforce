@@ -683,9 +683,10 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         oldAccountTeam = oldMap.get( accountTeam.Id );
                     }
                     if ( ( accountTeam.NSP_Role__c == NSP_ServiceConstants.PayrollSpecialist )
-                        || ( ( oldAccountTeam != null )
-                            && ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
+                        && ( ( oldAccountTeam == null )
+                            || ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
                                 || ( oldAccountTeam.NSP_Account__c != accountTeam.NSP_Account__c )
+                                || ( oldAccountTeam.NSP_User__c != accountTeam.NSP_User__c )
                                 )
                             )
                         )
