@@ -17,45 +17,77 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>false</active>
+        <active>true</active>
         <default>false</default>
-        <fridayEndTime>19:00:00.000Z</fridayEndTime>
-        <fridayStartTime>07:00:00.000Z</fridayStartTime>
-        <mondayEndTime>19:00:00.000Z</mondayEndTime>
-        <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center</name>
-        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
-        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
-        <timeZoneId>America/Chicago</timeZoneId>
-        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
-        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
-        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
-        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller: America/Los_Angeles</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Los_Angeles</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>false</active>
+        <active>true</active>
         <default>false</default>
-        <fridayEndTime>19:00:00.000Z</fridayEndTime>
-        <fridayStartTime>07:00:00.000Z</fridayStartTime>
-        <mondayEndTime>19:00:00.000Z</mondayEndTime>
-        <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center Chat</name>
-        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
-        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
-        <timeZoneId>America/Chicago</timeZoneId>
-        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
-        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
-        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
-        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller: America/Denver</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Denver</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>false</active>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller: America/New_York</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/New_York</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>17:00:00.000Z</fridayEndTime>
+        <fridayStartTime>08:00:00.000Z</fridayStartTime>
+        <mondayEndTime>17:00:00.000Z</mondayEndTime>
+        <mondayStartTime>08:00:00.000Z</mondayStartTime>
+        <name>Schedule Seller: America/Chicago</name>
+        <thursdayEndTime>17:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>08:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>17:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>08:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>17:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>08:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
         <default>false</default>
         <fridayEndTime>19:00:00.000Z</fridayEndTime>
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
         <mondayEndTime>19:00:00.000Z</mondayEndTime>
         <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center Phone</name>
+        <name>Workday Chat</name>
         <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
@@ -96,25 +128,7 @@
         <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
-    <businessHours>
-        <active>true</active>
-        <default>false</default>
-        <fridayEndTime>19:00:00.000Z</fridayEndTime>
-        <fridayStartTime>07:00:00.000Z</fridayStartTime>
-        <mondayEndTime>19:00:00.000Z</mondayEndTime>
-        <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Workday Chat</name>
-        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
-        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
-        <timeZoneId>America/Chicago</timeZoneId>
-        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
-        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
-        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
-        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
-    </businessHours>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -127,26 +141,14 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2026-04-02</activityDate>
+        <activityDate>2026-07-02</activityDate>
         <endTime>19:00:00.000Z</endTime>
         <isRecurring>false</isRecurring>
         <name>Early Release</name>
         <startTime>15:00:00.000Z</startTime>
     </holidays>
     <holidays>
-        <activityDate>2024-03-29</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Good Friday 2024</name>
-    </holidays>
-    <holidays>
-        <activityDate>2025-04-18</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Good Friday 2025</name>
-    </holidays>
-    <holidays>
         <activityDate>2026-04-03</activityDate>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -154,8 +156,6 @@
         <name>Good Friday 2026</name>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -168,8 +168,6 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -183,8 +181,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -198,8 +194,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -213,8 +207,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -227,8 +219,6 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
@@ -242,8 +232,6 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
         <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
