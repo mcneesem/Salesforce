@@ -281,6 +281,8 @@ public class NSP_AccountTriggerHelper {
             if ( !updateAddressAccountList.isEmpty() ) {
                 NSP_AccountTriggerHelper.updateAddressOnCheckList( updateAddressAccountList , newMap );
             }
+            NSP_AccountTriggerHelper.updateAGMPayrollEmployees( newMap , oldMap );
+            NSP_AccountTriggerHelper.updateAGMNumberOfEmployees( newMap , oldMap );
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
@@ -1514,6 +1516,63 @@ public class NSP_AccountTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'updateAGMPayrollEmployees' );
+        }
+    }
+
+    // update field NumberOfEmployees_Sales on Account Group Member from NumberOfEmployees of Account
+    public static void updateAGMNumberOfEmployees( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
+        try {
+            Map<Id,Integer> accEmployeesByIds = new Map<Id,Integer>();
+            // put accountId By NumberOfEmployees in Map - only when value changes
+            if ( ( newMap != null ) && ( oldMap != null ) ) {
+                for ( Account accList : newMap.values() ) {
+                    Account oldAccount = oldMap.containsKey( accList.Id ) ? oldMap.get( accList.Id ) : null;
+                    if ( ( oldAccount != null )
+                        && ( ( accList.NumberOfEmployees != oldAccount.NumberOfEmployees )
+                          || ( accList.Sales_Set_Membership__c != oldAccount.Sales_Set_Membership__c ) ) ) {
+                        accEmployeesByIds.put( accList.Id , accList.NumberOfEmployees );
+                    }
+                }
+            }
+            // move the Account Group Member update off the synchronous trigger path
+            if ( !accEmployeesByIds.isEmpty() ) {
+                NSP_AccountTriggerHelper.updateAGMNumberOfEmployeesAsync( JSON.serialize( accEmployeesByIds ) );
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployees' );
+        }
+    }
+
+    // update Account Group Member field NumberOfEmployees_Sales from Account field NumberOfEmployees
+    @future
+    private static void updateAGMNumberOfEmployeesAsync( String strAccEmployeesByIds ) {
+        try {
+            Map<Id,Integer> accEmployeesByIds = (Map<Id,Integer>) JSON.deserialize( strAccEmployeesByIds , Map<Id,Integer>.class );
+            List<NSP_Account_Group_Member__c> accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
+            if ( !accEmployeesByIds.isEmpty() ) {
+                for ( NSP_Account_Group_Member__c accGroMember : [
+                            SELECT Id , NSP_Member_Account__c , NumberOfEmployees_Sales__c
+                            FROM NSP_Account_Group_Member__c
+                            WHERE ( NSP_Member_Account__c = :accEmployeesByIds.keySet() )
+                        ]
+                    )
+                {
+                    if ( accGroMember.NumberOfEmployees_Sales__c != accEmployeesByIds.get( accGroMember.NSP_Member_Account__c ) ) {
+                        accGroMember.NumberOfEmployees_Sales__c = accEmployeesByIds.get( accGroMember.NSP_Member_Account__c );
+                        accGroupMemberToBeUpdated.add( accGroMember );
+                    }
+                }
+            }
+            if ( !accGroupMemberToBeUpdated.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( accGroupMemberToBeUpdated , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountTriggerHelper.class.getName() ,
+                    'updateAGMNumberOfEmployeesAsync:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMNumberOfEmployeesAsync' );
         }
     }
 
