@@ -1398,19 +1398,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Parent_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Parent_Opportunity_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Insurance Services</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3520,40 +3507,21 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
                 <visibilityRule>
-                    <booleanFilter>(1 OR 2 ) AND (3  OR 4 OR 5 OR 6) AND 7</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Opportunity</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Opportunity_Locked</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Time &amp; Attendance</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Performance Management</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
-                        <operator>EQUAL</operator>
-                    </criteria>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Outgoing</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4446,6 +4414,16 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Parent_Opportunity__c</fieldItem>
+                <identifier>RecordNSP_Parent_Opportunity_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
