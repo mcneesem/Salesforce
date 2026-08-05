@@ -47,6 +47,21 @@
                 <label>Handbook</label>
             </value>
             <value>
+                <fullName>HRCore Advanced Scheduling</fullName>
+                <default>false</default>
+                <label>HRCore Advanced Scheduling</label>
+            </value>
+            <value>
+                <fullName>HRCore Amendment Parent</fullName>
+                <default>false</default>
+                <label>HRCore Amendment Parent</label>
+            </value>
+            <value>
+                <fullName>HRCore Applicant Tracking</fullName>
+                <default>false</default>
+                <label>HRCore Applicant Tracking</label>
+            </value>
+            <value>
                 <fullName>HRCore Client Engagement Y1</fullName>
                 <default>false</default>
                 <label>HRCore Client Engagement Y1</label>
@@ -55,6 +70,46 @@
                 <fullName>HRCore Client Engagement Y2+</fullName>
                 <default>false</default>
                 <label>HRCore Client Engagement Y2+</label>
+            </value>
+            <value>
+                <fullName>HRCore Cobra</fullName>
+                <default>false</default>
+                <label>HRCore Cobra</label>
+            </value>
+            <value>
+                <fullName>HRCore EE Nav Integration</fullName>
+                <default>false</default>
+                <label>HRCore EE Nav Integration</label>
+            </value>
+            <value>
+                <fullName>HRCore E-Verify Integration</fullName>
+                <default>false</default>
+                <label>HRCore E-Verify Integration</label>
+            </value>
+            <value>
+                <fullName>HRCore HRRC User License</fullName>
+                <default>false</default>
+                <label>HRCore HRRC User License</label>
+            </value>
+            <value>
+                <fullName>HRCore - Module Termination</fullName>
+                <default>false</default>
+                <label>HRCore - Module Termination</label>
+            </value>
+            <value>
+                <fullName>HRCore NoahFace</fullName>
+                <default>false</default>
+                <label>HRCore NoahFace</label>
+            </value>
+            <value>
+                <fullName>HRCore Performance Management - Small Business</fullName>
+                <default>false</default>
+                <label>HRCore Performance Management - Small Business</label>
+            </value>
+            <value>
+                <fullName>HRCore Vendor File Feeds</fullName>
+                <default>false</default>
+                <label>HRCore Vendor File Feeds</label>
             </value>
             <value>
                 <fullName>HR Process Mapping</fullName>
@@ -70,6 +125,11 @@
                 <fullName>ibs COBRA Sync</fullName>
                 <default>false</default>
                 <label>ibs COBRA Sync</label>
+            </value>
+            <value>
+                <fullName>IIS Revolution Benefits IMPL</fullName>
+                <default>false</default>
+                <label>IIS Revolution Benefits IMPL</label>
             </value>
             <value>
                 <fullName>Integra - Implementation</fullName>
@@ -105,6 +165,11 @@
                 <fullName>iSolved – Hardware</fullName>
                 <default>false</default>
                 <label>iSolved – Hardware</label>
+            </value>
+            <value>
+                <fullName>iSolved HCM Historical Data</fullName>
+                <default>false</default>
+                <label>iSolved HCM Historical Data</label>
             </value>
             <value>
                 <fullName>ISolved HCM Implementation</fullName>
@@ -207,9 +272,94 @@
                 <label>QA - PerformSmart</label>
             </value>
             <value>
+                <fullName>Remove HRCore ACA</fullName>
+                <default>false</default>
+                <label>Remove HRCore ACA</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Advanced Scheduling</fullName>
+                <default>false</default>
+                <label>Remove HRCore Advanced Scheduling</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Remove HRCore Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Benefits</fullName>
+                <default>false</default>
+                <label>Remove HRCore Benefits</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore COBRA</fullName>
+                <default>false</default>
+                <label>Remove HRCore COBRA</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore EE Nav Integration</fullName>
+                <default>false</default>
+                <label>Remove HRCore EE Nav Integration</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore E-Verify Integration</fullName>
+                <default>false</default>
+                <label>Remove HRCore E-Verify Integration</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Flexible Benefits</fullName>
+                <default>false</default>
+                <label>Remove HRCore Flexible Benefits</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore HRRC User License</fullName>
+                <default>false</default>
+                <label>Remove HRCore HRRC User License</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore NoahFace</fullName>
+                <default>false</default>
+                <label>Remove HRCore NoahFace</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Performance Small Business</fullName>
+                <default>false</default>
+                <label>Remove HRCore Performance Small Business</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Reporting</fullName>
+                <default>false</default>
+                <label>Remove HRCore Reporting</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Time</fullName>
+                <default>false</default>
+                <label>Remove HRCore Time</label>
+            </value>
+            <value>
+                <fullName>Remove HRCore Vendor File Feeds</fullName>
+                <default>false</default>
+                <label>Remove HRCore Vendor File Feeds</label>
+            </value>
+            <value>
+                <fullName>Remove TES 360 Performance Management</fullName>
+                <default>false</default>
+                <label>Remove TES 360 Performance Management</label>
+            </value>
+            <value>
+                <fullName>Remove TES 360 Retirement Integration</fullName>
+                <default>false</default>
+                <label>Remove TES 360 Retirement Integration</label>
+            </value>
+            <value>
                 <fullName>RS TalentConnect Implementation</fullName>
                 <default>false</default>
                 <label>RS TalentConnect Implementation</label>
+            </value>
+            <value>
+                <fullName>RS TalentConnect SMS Implementation</fullName>
+                <default>false</default>
+                <label>RS TalentConnect SMS Implementation</label>
             </value>
             <value>
                 <fullName>Sage Support</fullName>
@@ -325,21 +475,6 @@
                 <fullName>XML Utility Rework</fullName>
                 <default>false</default>
                 <label>XML Utility Rework</label>
-            </value>
-            <value>
-                <fullName>HRCore - Module Termination</fullName>
-                <default>false</default>
-                <label>HRCore - Module Termination</label>
-            </value>
-            <value>
-                <fullName>HRCore Amendment Parent</fullName>
-                <default>false</default>
-                <label>HRCore Amendment Parent</label>
-            </value>
-            <value>
-                <fullName>HRCore Performance Management - Small Business</fullName>
-                <default>false</default>
-                <label>HRCore Performance Management - Small Business</label>
             </value>
             <value>
                 <fullName>iSolve – Hardware</fullName>
