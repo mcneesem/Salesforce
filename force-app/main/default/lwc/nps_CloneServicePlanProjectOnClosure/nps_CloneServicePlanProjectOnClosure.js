@@ -48,7 +48,7 @@ export default class Nps_CloneServicePlanProjectOnClosure extends NavigationMixi
   taskItems = [];
   taskVisalbleData = [];
   taskRowpreSelectedRows = [];
-  taskTableHight = 'max-height: 350px;';
+  taskTableHight = 'task-table-default';
 
   taskDataTable;
   projectTemplates = null;
@@ -155,7 +155,7 @@ export default class Nps_CloneServicePlanProjectOnClosure extends NavigationMixi
       .then((result) => {
         this.taskItems = result;
         if (result.length > 20) {
-          this.taskTableHight = 'height : 800px';
+          this.taskTableHight = 'task-table-expanded';
         }
         this.error = undefined;
       })

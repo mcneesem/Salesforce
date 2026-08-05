@@ -1,6 +1,10 @@
-.graycolor{  
+:host {
+    --card-border-radius: 0.2rem;
+}
+
+.graycolor{
     position: relative;
-    background-color: #f4f4f4;
-    border: solid var(--slds-g-sizing-border-3, 0.2rem) white;
-    border-radius: 0.2rem;
+    background-color: var(--slds-g-color-surface-2, #f4f4f4);
+    border: solid var(--slds-g-sizing-border-3, var(--card-border-radius)) var(--slds-g-color-neutral-base-100, white);
+    border-radius: var(--card-border-radius);
 }

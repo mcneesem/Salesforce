@@ -48,7 +48,7 @@
                               value={field.label}
                               class={field.className}>
                             </lightning-formatted-text>
-                            <div class="slds-var-m-bottom_medium nsp_margin">
+                            <div class="slds-var-m-bottom_medium">
                               <lightning-input-field
                               field-name={field.name}
                               data-name={field.name}
@@ -68,7 +68,7 @@
                               value={field.label}
                               class={field.className}>
                             </lightning-formatted-text>
-                            <div class="slds-scrollable_y nsp_richTextBox">
+                            <div class="slds-scrollable_y slds-col nsp_richTextBox">
                             <lightning-formatted-rich-text
                                if:true={field.isRichText}
                                 label={field.label}
@@ -86,7 +86,7 @@
                               value={field.label}
                               class={field.className}>
                             </lightning-formatted-text>
-                            <div class="nsp_richTextBox">
+                            <div class="slds-col nsp_richTextBox">
                             <lightning-formatted-url 
                               type={field.type}
                               label={field.urlLabel}

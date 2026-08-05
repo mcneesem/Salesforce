@@ -2,7 +2,3 @@
     height : var(--availableHeight, 450px);
     overflow-y: auto;
 }
-
-.nsp_empty-block{
-    height: 300px;
-}

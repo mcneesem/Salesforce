@@ -1,7 +1,11 @@
+:host {
+    --loader-width: 100%;
+}
+
 .loader::after {
     position:absolute;
     content:attr(data-text);
-    width:100%;
+    width: var(--loader-width);
     text-align:center;
     top: calc(50% + 1.5rem);
     font-weight:var(--slds-g-font-weight-bold, bold);
