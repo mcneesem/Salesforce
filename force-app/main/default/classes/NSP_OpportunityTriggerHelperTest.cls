@@ -1042,5 +1042,145 @@ private class NSP_OpportunityTriggerHelperTest {
         System.assertEquals(users[1].Id, eventCheck[0].OwnerId);
     }
 
+    @isTest
+    private static void hrScaleDiscoveryRewardEligibleRoleTest() {
+        List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        Account acc = accList.isEmpty() ? null : accList[0];
+
+        Opportunity hrScaleOpp = new Opportunity();
+        hrScaleOpp.Name = 'HRScale Reward Oppty';
+        hrScaleOpp.Type = 'New Product';
+        hrScaleOpp.AccountId = acc.Id;
+        hrScaleOpp.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        hrScaleOpp.CloseDate = Date.today();
+        hrScaleOpp.CurrencyIsoCode = CURRENCY_USD;
+        hrScaleOpp.NSP_PrimaryProduct__c = 'HRScale';
+        hrScaleOpp.NSP_Number_of_Employees__c = 25;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert hrScaleOpp;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
+
+        Contact con = new Contact(FirstName = 'HR', LastName = 'Scale COI', Email = 'hrscalecoi@nsp.com', AccountId = acc.Id);
+        insert con;
+
+        OpportunityContactRole ocr = new OpportunityContactRole();
+        ocr.OpportunityId = hrScaleOpp.Id;
+        ocr.ContactId = con.Id;
+        ocr.NSP_isReferral__c = true;
+        ocr.Role = 'COI';
+        insert ocr;
+
+        DateTime t = System.now();
+        Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+        insert new Event(
+            Subject = 'Discovery Call',
+            WhatId = hrScaleOpp.Id,
+            RecordTypeId = eventRecTypeId,
+            NSP_Task_Type__c = 'Core Sales',
+            NSP_Event_Subtype__c = 'Discovery Call',
+            NSP_Status__c = 'Completed',
+            ActivityDateTime = t,
+            StartDateTime = t,
+            EndDateTime = t,
+            ActivityDate = System.today()
+        );
+
+        Test.startTest();
+        NSP_OpportunityTriggerHelper.createRewardsOnce = false;
+        hrScaleOpp.Discovery_Completed__c = true;
+        update hrScaleOpp;
+        Test.stopTest();
+
+        List<NSP_Reward__c> rewards = [
+            SELECT Id, NSP_Reward_Type__c, NSP_Contact_Role__c, NSP_Reward_Amount__c
+            FROM NSP_Reward__c WHERE Opportunity__c = :hrScaleOpp.Id
+        ];
+        System.assertEquals(1, rewards.size(), 'HRScale eligible referral role should create one Discovery reward');
+        System.assertEquals('Discovery', rewards[0].NSP_Reward_Type__c, 'Reward type should be Discovery');
+        System.assertEquals('COI', rewards[0].NSP_Contact_Role__c, 'Reward should capture the contact role');
+        System.assertEquals(200, rewards[0].NSP_Reward_Amount__c, 'Standard (non-nonprofit) Discovery reward amount is 200');
+    }
+
+    @isTest
+    private static void hrScaleDiscoveryRewardIneligibleRoleTest() {
+        List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        Account acc = accList.isEmpty() ? null : accList[0];
+
+        Opportunity hrScaleOpp = new Opportunity();
+        hrScaleOpp.Name = 'HRScale No Reward Oppty';
+        hrScaleOpp.Type = 'New Product';
+        hrScaleOpp.AccountId = acc.Id;
+        hrScaleOpp.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        hrScaleOpp.CloseDate = Date.today();
+        hrScaleOpp.CurrencyIsoCode = CURRENCY_USD;
+        hrScaleOpp.NSP_PrimaryProduct__c = 'HRScale';
+        hrScaleOpp.NSP_Number_of_Employees__c = 25;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert hrScaleOpp;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
+
+        Contact con = new Contact(FirstName = 'HR', LastName = 'Scale Inf', Email = 'hrscaleinf@nsp.com', AccountId = acc.Id);
+        insert con;
+
+        OpportunityContactRole ocr = new OpportunityContactRole();
+        ocr.OpportunityId = hrScaleOpp.Id;
+        ocr.ContactId = con.Id;
+        ocr.NSP_isReferral__c = true;
+        ocr.Role = 'Influencer';
+        insert ocr;
+
+        Test.startTest();
+        NSP_OpportunityTriggerHelper.createRewardsOnce = false;
+        hrScaleOpp.Discovery_Completed__c = true;
+        update hrScaleOpp;
+        Test.stopTest();
+
+        List<NSP_Reward__c> rewards = [SELECT Id FROM NSP_Reward__c WHERE Opportunity__c = :hrScaleOpp.Id];
+        System.assertEquals(0, rewards.size(), 'Ineligible contact role should not create an HRScale Discovery reward');
+    }
+
+    @isTest
+    private static void hrScaleSoldRewardTest() {
+        List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        Account acc = accList.isEmpty() ? null : accList[0];
+
+        Opportunity hrScaleOpp = new Opportunity();
+        hrScaleOpp.Name = 'HRScale Sold Oppty';
+        hrScaleOpp.Type = 'New Product';
+        hrScaleOpp.AccountId = acc.Id;
+        hrScaleOpp.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        hrScaleOpp.CloseDate = Date.today();
+        hrScaleOpp.CurrencyIsoCode = CURRENCY_USD;
+        hrScaleOpp.NSP_PrimaryProduct__c = 'HRScale';
+        hrScaleOpp.NSP_Number_of_Employees__c = 25;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        insert hrScaleOpp;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
+
+        Contact con = new Contact(FirstName = 'HR', LastName = 'Scale Sold', Email = 'hrscalesold@nsp.com', AccountId = acc.Id);
+        insert con;
+
+        OpportunityContactRole ocr = new OpportunityContactRole();
+        ocr.OpportunityId = hrScaleOpp.Id;
+        ocr.ContactId = con.Id;
+        ocr.NSP_isReferral__c = true;
+        ocr.Role = 'Agency';
+        insert ocr;
+
+        Test.startTest();
+        NSP_OpportunityTriggerHelper.createRewardsOnce = false;
+        hrScaleOpp.Nsp_1st_Pay_Invoice_Date_Reporting__c = Date.today();
+        update hrScaleOpp;
+        Test.stopTest();
+
+        List<NSP_Reward__c> rewards = [
+            SELECT Id, NSP_Reward_Type__c, NSP_Reward_Amount__c
+            FROM NSP_Reward__c WHERE Opportunity__c = :hrScaleOpp.Id
+        ];
+        System.assertEquals(1, rewards.size(), 'HRScale should create a Sold reward like the other products');
+        System.assertEquals('Sold', rewards[0].NSP_Reward_Type__c, 'Reward type should be Sold');
+        System.assertEquals(1000, rewards[0].NSP_Reward_Amount__c, 'Standard (non-nonprofit) Sold reward amount is 1000');
+    }
+
 }
 //
