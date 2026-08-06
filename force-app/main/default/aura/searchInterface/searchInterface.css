@@ -1,16 +1,9 @@
 .THIS .search {
-    width:22%;
-}
-.THIS .material-icons.md-18 {
-    font-size: 18px;
 }
 .THIS .search-input {
-    width:100%;
 }
 .THIS .icon_white_bg {
-   --slds-c-icon-color-foreground-default: white; 
+   --slds-c-icon-color-foreground-default: white;
      float: right;
      position: relative;
-     right: 7px;
-     bottom:25px;
  }

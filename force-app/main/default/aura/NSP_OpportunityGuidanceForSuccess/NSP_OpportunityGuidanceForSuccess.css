@@ -10,9 +10,7 @@
 
 .THIS .guidance-title{
     text-align: center;
-    padding-bottom: 10px;
-    font-weight: 600;
-    font-size: 1.3em;
+    font-weight: var(--slds-g-font-weight-6, 600);
 }
 
 .THIS .guidance-text{
