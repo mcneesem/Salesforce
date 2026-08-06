@@ -2499,7 +2499,7 @@
         </fields>
         <fields>
             <name>CloseScreen_DisplayText</name>
-            <fieldText>&lt;p&gt;Please close out of this screen and go back to the Account record to try again.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Please submit a request for assistance with this Contact creation to salestechnology@insperity.com.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
