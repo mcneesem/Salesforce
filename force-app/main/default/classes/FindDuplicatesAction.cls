@@ -50,7 +50,7 @@ public without sharing class FindDuplicatesAction {
                 matchIds.add( match.Id );
             }
         }
-        return matchIds;
+        return new List<Id>( matchIds );
     }
 
     public class FindDuplicatesRequest {
