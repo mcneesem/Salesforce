@@ -11,39 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Insperity</fullName>
+                <fullName>Architect</fullName>
                 <default>false</default>
-                <label>Insperity</label>
+                <label>Architect</label>
             </value>
             <value>
-                <fullName>Customer</fullName>
+                <fullName>Benefit Analyst</fullName>
                 <default>false</default>
-                <label>Customer</label>
-            </value>
-            <value>
-                <fullName>HR Specialist</fullName>
-                <default>false</default>
-                <label>HR Specialist</label>
-            </value>
-            <value>
-                <fullName>Payroll Specialist</fullName>
-                <default>false</default>
-                <label>Payroll Specialist</label>
-            </value>
-            <value>
-                <fullName>Payroll Supervisor</fullName>
-                <default>false</default>
-                <label>Payroll Supervisor</label>
-            </value>
-            <value>
-                <fullName>Manager, HR Services</fullName>
-                <default>false</default>
-                <label>Manager, HR Services</label>
-            </value>
-            <value>
-                <fullName>Customer Success Specialist</fullName>
-                <default>false</default>
-                <label>Customer Success Specialist</label>
+                <label>Benefit Analyst</label>
             </value>
             <value>
                 <fullName>BPA</fullName>
@@ -51,34 +26,119 @@
                 <label>BPA</label>
             </value>
             <value>
-                <fullName>Client Liaison</fullName>
-                <default>false</default>
-                <label>Client Liaison</label>
-            </value>
-            <value>
-                <fullName>Renewal Coordinator</fullName>
-                <default>false</default>
-                <label>Renewal Coordinator</label>
-            </value>
-            <value>
                 <fullName>Bus. Team-HRSp/CL</fullName>
                 <default>false</default>
                 <label>Bus. Team-HRSp/CL</label>
             </value>
             <value>
+                <fullName>Business Analyst</fullName>
+                <default>false</default>
+                <label>Business Analyst</label>
+            </value>
+            <value>
+                <fullName>Client Liaison</fullName>
+                <default>false</default>
+                <label>Client Liaison</label>
+            </value>
+            <value>
+                <fullName>Client Manager</fullName>
+                <default>false</default>
+                <label>Client Manager</label>
+            </value>
+            <value>
+                <fullName>Compensation Analyst</fullName>
+                <default>false</default>
+                <label>Compensation Analyst</label>
+            </value>
+            <value>
+                <fullName>Consultant</fullName>
+                <default>false</default>
+                <label>Consultant</label>
+            </value>
+            <value>
+                <fullName>Contractor</fullName>
+                <default>false</default>
+                <label>Contractor</label>
+            </value>
+            <value>
+                <fullName>Customer</fullName>
+                <default>false</default>
+                <label>Customer</label>
+            </value>
+            <value>
+                <fullName>Customer Success Specialist</fullName>
+                <default>false</default>
+                <label>Customer Success Specialist</label>
+            </value>
+            <value>
+                <fullName>Data Analyst</fullName>
+                <default>false</default>
+                <label>Data Analyst</label>
+            </value>
+            <value>
+                <fullName>Executive</fullName>
+                <default>false</default>
+                <label>Executive</label>
+            </value>
+            <value>
+                <fullName>Functional Consultant Payroll</fullName>
+                <default>false</default>
+                <label>Functional Consultant Payroll</label>
+            </value>
+            <value>
+                <fullName>Functional Consultant Talent</fullName>
+                <default>false</default>
+                <label>Functional Consultant Talent</label>
+            </value>
+            <value>
+                <fullName>HCM Analyst</fullName>
+                <default>false</default>
+                <label>HCM Analyst</label>
+            </value>
+            <value>
+                <fullName>HCM Payroll Analyst</fullName>
+                <default>false</default>
+                <label>HCM Payroll Analyst</label>
+            </value>
+            <value>
+                <fullName>HR Client Implementation Team Member</fullName>
+                <default>false</default>
+                <label>HR Client Implementation Team Member</label>
+            </value>
+            <value>
+                <fullName>HRCore Acct. Mgmt</fullName>
+                <default>false</default>
+                <label>HRCore Acct. Mgmt</label>
+            </value>
+            <value>
+                <fullName>HR Specialist</fullName>
+                <default>false</default>
+                <label>HR Specialist</label>
+            </value>
+            <value>
+                <fullName>Insperity</fullName>
+                <default>false</default>
+                <label>Insperity</label>
+            </value>
+            <value>
+                <fullName>Intake Specialist</fullName>
+                <default>false</default>
+                <label>Intake Specialist</label>
+            </value>
+            <value>
+                <fullName>ITA Analyst</fullName>
+                <default>false</default>
+                <label>ITA Analyst</label>
+            </value>
+            <value>
+                <fullName>Manager, HR Services</fullName>
+                <default>false</default>
+                <label>Manager, HR Services</label>
+            </value>
+            <value>
                 <fullName>MidMarket Account Exec</fullName>
                 <default>false</default>
                 <label>MidMarket Account Exec</label>
-            </value>
-            <value>
-                <fullName>Safety Consultant</fullName>
-                <default>false</default>
-                <label>Safety Consultant</label>
-            </value>
-            <value>
-                <fullName>Performance Specialist</fullName>
-                <default>false</default>
-                <label>Performance Specialist</label>
             </value>
             <value>
                 <fullName>Orientation Rep</fullName>
@@ -101,44 +161,29 @@
                 <label>OT Planner</label>
             </value>
             <value>
+                <fullName>Payroll Implementer</fullName>
+                <default>false</default>
+                <label>Payroll Implementer</label>
+            </value>
+            <value>
                 <fullName>Payroll Project Manager</fullName>
                 <default>false</default>
                 <label>Payroll Project Manager</label>
             </value>
             <value>
-                <fullName>Project Manager</fullName>
+                <fullName>Payroll Specialist</fullName>
                 <default>false</default>
-                <label>Project Manager</label>
+                <label>Payroll Specialist</label>
             </value>
             <value>
-                <fullName>Sr Benefit Rep</fullName>
+                <fullName>Payroll Supervisor</fullName>
                 <default>false</default>
-                <label>Sr Benefit Rep</label>
+                <label>Payroll Supervisor</label>
             </value>
             <value>
-                <fullName>Transition Specialist</fullName>
+                <fullName>Performance Specialist</fullName>
                 <default>false</default>
-                <label>Transition Specialist</label>
-            </value>
-            <value>
-                <fullName>WX/WA Benefits Specialist</fullName>
-                <default>false</default>
-                <label>WX/WA Benefits Specialist</label>
-            </value>
-            <value>
-                <fullName>WA/WX Payroll Specialist</fullName>
-                <default>false</default>
-                <label>WA/WX Payroll Specialist</label>
-            </value>
-            <value>
-                <fullName>RET Plan Consulting</fullName>
-                <default>false</default>
-                <label>RET Plan Consulting</label>
-            </value>
-            <value>
-                <fullName>Project Implementer</fullName>
-                <default>false</default>
-                <label>Project Implementer</label>
+                <label>Performance Specialist</label>
             </value>
             <value>
                 <fullName>Project Coordinator</fullName>
@@ -146,39 +191,119 @@
                 <label>Project Coordinator</label>
             </value>
             <value>
-                <fullName>Intake Specialist</fullName>
+                <fullName>Project Implementer</fullName>
                 <default>false</default>
-                <label>Intake Specialist</label>
+                <label>Project Implementer</label>
             </value>
             <value>
-                <fullName>Time Analyst</fullName>
+                <fullName>Project Manager</fullName>
                 <default>false</default>
-                <label>Time Analyst</label>
+                <label>Project Manager</label>
             </value>
             <value>
-                <fullName>Benefit Analyst</fullName>
+                <fullName>Renewal Coordinator</fullName>
                 <default>false</default>
-                <label>Benefit Analyst</label>
+                <label>Renewal Coordinator</label>
             </value>
             <value>
-                <fullName>Data Analyst</fullName>
+                <fullName>RET Compliance</fullName>
                 <default>false</default>
-                <label>Data Analyst</label>
+                <label>RET Compliance</label>
             </value>
             <value>
-                <fullName>ITA Analyst</fullName>
+                <fullName>RET CSP Compliance</fullName>
                 <default>false</default>
-                <label>ITA Analyst</label>
+                <label>RET CSP Compliance</label>
             </value>
             <value>
-                <fullName>TES Integration Specialist</fullName>
+                <fullName>RET CSP Conversion</fullName>
                 <default>false</default>
-                <label>TES Integration Specialist</label>
+                <label>RET CSP Conversion</label>
             </value>
             <value>
-                <fullName>Payroll Implementer</fullName>
+                <fullName>RET CSP Implementation</fullName>
                 <default>false</default>
-                <label>Payroll Implementer</label>
+                <label>RET CSP Implementation</label>
+            </value>
+            <value>
+                <fullName>RET CSP Plan Consulting</fullName>
+                <default>false</default>
+                <label>RET CSP Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>RET CSP Processing</fullName>
+                <default>false</default>
+                <label>RET CSP Processing</label>
+            </value>
+            <value>
+                <fullName>RET Executive &amp; Project</fullName>
+                <default>false</default>
+                <label>RET Executive &amp; Project</label>
+            </value>
+            <value>
+                <fullName>RET Finance</fullName>
+                <default>false</default>
+                <label>RET Finance</label>
+            </value>
+            <value>
+                <fullName>RET NBI - Conversion &amp; Ork</fullName>
+                <default>false</default>
+                <label>RET NBI - Conversion &amp; Ork</label>
+            </value>
+            <value>
+                <fullName>RET NBI - Implementation</fullName>
+                <default>false</default>
+                <label>RET NBI - Implementation</label>
+            </value>
+            <value>
+                <fullName>RET NBI - QC Analyst</fullName>
+                <default>false</default>
+                <label>RET NBI - QC Analyst</label>
+            </value>
+            <value>
+                <fullName>RET Ops - OMNI</fullName>
+                <default>false</default>
+                <label>RET Ops - OMNI</label>
+            </value>
+            <value>
+                <fullName>RET Ops - Processing</fullName>
+                <default>false</default>
+                <label>RET Ops - Processing</label>
+            </value>
+            <value>
+                <fullName>RET ORK</fullName>
+                <default>false</default>
+                <label>RET ORK</label>
+            </value>
+            <value>
+                <fullName>RET Plan Consulting</fullName>
+                <default>false</default>
+                <label>RET Plan Consulting</label>
+            </value>
+            <value>
+                <fullName>RET Sales</fullName>
+                <default>false</default>
+                <label>RET Sales</label>
+            </value>
+            <value>
+                <fullName>RET Sec 125</fullName>
+                <default>false</default>
+                <label>RET Sec 125</label>
+            </value>
+            <value>
+                <fullName>RET SRP</fullName>
+                <default>false</default>
+                <label>RET SRP</label>
+            </value>
+            <value>
+                <fullName>Safety Consultant</fullName>
+                <default>false</default>
+                <label>Safety Consultant</label>
+            </value>
+            <value>
+                <fullName>Senior Consultant</fullName>
+                <default>false</default>
+                <label>Senior Consultant</label>
             </value>
             <value>
                 <fullName>Software Analyst</fullName>
@@ -186,39 +311,39 @@
                 <label>Software Analyst</label>
             </value>
             <value>
-                <fullName>HR Client Implementation Team Member</fullName>
+                <fullName>Sr Benefit Rep</fullName>
                 <default>false</default>
-                <label>HR Client Implementation Team Member</label>
+                <label>Sr Benefit Rep</label>
             </value>
             <value>
-                <fullName>HRCore Acct. Mgmt</fullName>
+                <fullName>TES Integration Specialist</fullName>
                 <default>false</default>
-                <label>HRCore Acct. Mgmt</label>
+                <label>TES Integration Specialist</label>
             </value>
             <value>
-                <fullName>HCM Analyst</fullName>
+                <fullName>Time Analyst</fullName>
                 <default>false</default>
-                <label>HCM Analyst</label>
+                <label>Time Analyst</label>
             </value>
             <value>
-                <fullName>Functional Consultant Payroll</fullName>
+                <fullName>Trainer</fullName>
                 <default>false</default>
-                <label>Functional Consultant Payroll</label>
+                <label>Trainer</label>
             </value>
             <value>
-                <fullName>HCM Payroll Analyst</fullName>
+                <fullName>Transition Specialist</fullName>
                 <default>false</default>
-                <label>HCM Payroll Analyst</label>
+                <label>Transition Specialist</label>
             </value>
             <value>
-                <fullName>Functional Consultant Talent</fullName>
+                <fullName>WA/WX Payroll Specialist</fullName>
                 <default>false</default>
-                <label>Functional Consultant Talent</label>
+                <label>WA/WX Payroll Specialist</label>
             </value>
             <value>
-                <fullName>Compensation Analyst</fullName>
+                <fullName>WX/WA Benefits Specialist</fullName>
                 <default>false</default>
-                <label>Compensation Analyst</label>
+                <label>WX/WA Benefits Specialist</label>
             </value>
         </valueSetDefinition>
     </valueSet>
