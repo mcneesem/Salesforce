@@ -44,8 +44,13 @@ public without sharing class FindDuplicatesAction {
                 }
             }
         }
-        Map<Id,sObject> matchesMap = new Map<Id,sObject>( matches );
-        return new List<Id>( matchesMap.keySet() );
+        Set<Id> matchIds = new Set<Id>();
+        if ( !matches.isEmpty() ) {
+            for ( sObject match : matches ) {
+                matchIds.add( match.Id );
+            }
+        }
+        return new List<Id>( matchIds );
     }
 
     public class FindDuplicatesRequest {
