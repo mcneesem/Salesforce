@@ -649,9 +649,9 @@
             </conditions>
             <conditions>
                 <leftValueReference>userLicense</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Customer Community Plus</stringValue>
+                    <stringValue>Salesforce</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1117,7 +1117,7 @@
             <targetReference>Check_Permission</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
