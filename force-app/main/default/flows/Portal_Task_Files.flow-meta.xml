@@ -629,8 +629,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>isValidTitle</name>
-        <label>isValidTitle?</label>
+        <name>isValidDocument</name>
+        <label>isValidDocument?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -638,7 +638,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Valid_Title</name>
+            <name>Yes_Valid_Document</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>b_isValidTitle</leftValueReference>
@@ -647,10 +647,17 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>userLicense</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Community Plus</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Add_Filtered_Content_Documents</targetReference>
             </connector>
-            <label>Yes : Valid Title</label>
+            <label>Yes : Valid Document</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -659,6 +666,12 @@
         <name>b_isValidTitle</name>
         <dataType>Boolean</dataType>
         <expression>LEN( {!Loop_For_Each_Valid_Document.Title} ) &lt;= 80</expression>
+    </formulas>
+    <formulas>
+        <description>Added to Filter Document if uploaded by &quot;Customer Community Plus&quot;</description>
+        <name>userLicense</name>
+        <dataType>String</dataType>
+        <expression>{!Loop_For_Each_Valid_Document.Owner.Profile.UserLicense.Name}</expression>
     </formulas>
     <interviewLabel>Portal Task Files {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -713,7 +726,7 @@
         <collectionReference>Get_Manageable_Content_Documents</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>isValidTitle</targetReference>
+            <targetReference>isValidDocument</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Get_Portal_Task_Content_Document_Links</targetReference>
@@ -780,13 +793,6 @@
             <operator>In</operator>
             <value>
                 <elementReference>Project_Task_Content_Document_Ids</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
