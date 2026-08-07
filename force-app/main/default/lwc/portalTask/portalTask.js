@@ -214,7 +214,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         if ( this.status === "Pending - Insperity" ) {
             result = "Pending Review by Insperity";
         } else if ( this.status === "Pending - Client" ) {
-            result = "Action Required - Resubmit";
+            result = "Action Required";
         }
         return result;
     }
