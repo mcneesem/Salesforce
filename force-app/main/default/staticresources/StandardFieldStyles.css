@@ -1,90 +1,77 @@
-c-nsp_implementation-profile lightning-input-field .slds-form-element__label{
+c-nsp_implementation-profile lightning-input-field{
     font-weight: var(--slds-g-font-weight-5, 500);
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
 }
-c-nsp_accrual-profile-record-form lightning-input-field .slds-form-element__label{
+c-nsp_accrual-profile-record-form lightning-input-field{
     font-weight: var(--slds-g-font-weight-5, 500);
-    color: #0000FF;
-}
-
-c-nsp_implementation-profile lightning-input .slds-form-element__label{
-    font-weight: var(--slds-g-font-weight-5, 500);
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
 }
 
-c-nsp_accrual-profile-record-form lightning-input .slds-form-element__label{
+c-nsp_implementation-profile lightning-input{
     font-weight: var(--slds-g-font-weight-5, 500);
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
+}
+
+c-nsp_accrual-profile-record-form lightning-input{
+    font-weight: var(--slds-g-font-weight-5, 500);
+    color: var(--slds-g-color-accent-3, #014486);
 }
 
 c-nsp_implementation-profile .answered lightning-formatted-text{
-    color: #000000;
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form .answered lightning-formatted-text{
-    color: #000000;
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_implementation-profile lightning-formatted-text.answered{
-    color: #000000;
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 c-nsp_accrual-profile-record-form lightning-formatted-text.answered{
-    color: #000000;
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
-c-nsp_accrual-profile-record-form lightning-combobox .slds-form-element__label{
+c-nsp_accrual-profile-record-form lightning-combobox{
     font-weight: var(--slds-g-font-weight-5, 500);
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
 }
 
 c-nsp_accrual-profile-record-form  lightning-combobox.answered{
-    color: #000000;
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
-c-nsp_implementation-profile lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
-    color: #0000FF;
+c-nsp_implementation-profile lightning-formatted-text:not(.answered):not(.redAnswered){
+    color: var(--slds-g-color-accent-3, #014486);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
-c-nsp_accrual-profile-record-form lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
-    color: #0000FF;
+c-nsp_accrual-profile-record-form lightning-formatted-text:not(.answered):not(.redAnswered){
+    color: var(--slds-g-color-accent-3, #014486);
     font-weight: var(--slds-g-font-weight-5, 500);
-} 
+}
 c-nsp_implementation-profile .question{
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 c-nsp_accrual-profile-record-form .question{
-    color: #0000FF;
+    color: var(--slds-g-color-accent-3, #014486);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
-c-nsp_implementation-profile .question .slds-form-element__label{
-    color: #0000FF;
-    font-weight: var(--slds-g-font-weight-5, 500);
-}
-c-nsp_accrual-profile-record-form .question .slds-form-element__label{
-    color: #0000FF;
+c-nsp_implementation-profile .answered{
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
-c-nsp_implementation-profile .answered .slds-form-element__label{
-    color: #000000;
+c-nsp_accrual-profile-record-form .answered{
+    color: var(--slds-g-color-neutral-base-0);
     font-weight: var(--slds-g-font-weight-5, 500);
-}
-
-c-nsp_accrual-profile-record-form .answered .slds-form-element__label{
-    color: #000000;
-    font-weight: var(--slds-g-font-weight-5, 500);
-}
-
-c-nsp_implementation-profile .slds-checkbox .slds-checkbox__label .slds-form-element__label{
-    font-size: var(--slds-g-font-scale-neg-1, 12px);
 }
 
 c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
@@ -94,29 +81,27 @@ c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
 }
 
 c-nsp_implementation-profile lightning-formatted-text.redAnswered{
-    color: red;
+    color: var(--slds-g-color-palette-red-50);
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
-c-nsp_implementation-profile .redAnswered lightning-formatted-text .slds-form-element__label{
-    color: red;
+c-nsp_implementation-profile .redAnswered lightning-formatted-text{
+    color: var(--slds-g-color-palette-red-50);
 }
 
-c-nsp_implementation-profile .redAnswered lightning-combobox .slds-form-element__label{
-    color: red !important;
+c-nsp_implementation-profile .redAnswered lightning-combobox{
+    color: var(--slds-g-color-palette-red-50) !important;
 }
 
-c-nsp_implementation-profile lightning-timepicker label.slds-form-element__label{
+c-nsp_implementation-profile lightning-timepicker label{
     display: none !important;
 }
 
-c-nsp_record-form lightning-datepicker label.slds-form-element__label{
+c-nsp_record-form lightning-datepicker label{
     display: none !important;
 }
 
 c-nsp_implementation-profile .level-1{
-    margin-left: 20px;
-    margin-right: 20px;
     display: block;
 }
 
@@ -127,8 +112,6 @@ c-nsp_implementation-profile .level-2{
 }
 
 c-nsp_implementation-profile .level-3{
-    margin-left: 60px;
-    margin-right: 60px;
     display: block;
 }
 
@@ -142,17 +125,10 @@ c-nsp_implementation-profile .nsp_form-element{
     padding: 0 var(--slds-g-spacing-1, var(--lwc-spacingXxSmall, 0.25rem));
 }
 
-.nsp-highlight label.slds-form-element__label{
-    background-color: yellow;
-    font-weight: var(--slds-g-font-weight-5, 500);
-}
-
-.nsp-highlight label.slds-checkbox__label{
-    background-color: yellow;
+.nsp-highlight label{
     font-weight: var(--slds-g-font-weight-5, 500);
 }
 
 lightning-formatted-text.nsp-highlight{
-    background-color: yellow;
     font-weight: var(--slds-g-font-weight-5, 500);
 }
