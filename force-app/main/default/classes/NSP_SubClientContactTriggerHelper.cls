@@ -113,7 +113,6 @@ public with sharing class NSP_SubClientContactTriggerHelper {
     public static void updatePDSContactRelatedFieldsBasedOnSCC( Map<Id,NSP_Sub_Client_Contact__c> newMap , Map<Id, NSP_Sub_Client_Contact__c> oldMap ) {
         try {
             Map<Id , List<NSP_Sub_Client_Contact__c>> subClientConBySubClientIds = new Map<Id , List<NSP_Sub_Client_Contact__c>>();
-            List<NSP_Payroll__c> pdsToBeUpdated = new List<NSP_Payroll__c>();
             Map<Id, String> conIdEmpStatusMap = new Map<Id, String>();
             Map<Id, Date> conIdStatusDate = new Map<Id, Date>();
 
@@ -132,7 +131,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 {
                     //Map to store subclient with its related sub client contacts
                     if(subClientConBySubClientIds.Containskey(newSubClientCon.NSP_Sub_Client__c)) {
-                        subClientConBySubClientIds.get(newSubClientCon.NSP_Sub_Client__c).Add(newSubClientCon);
+                        subClientConBySubClientIds.get(newSubClientCon.NSP_Sub_Client__c).add(newSubClientCon);
                     } else {
                         subClientConBySubClientIds.put(newSubClientCon.NSP_Sub_Client__c , new list<NSP_Sub_Client_Contact__c> {newSubClientCon});
                     }
@@ -143,6 +142,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 }
             }
 
+            Map<Id,NSP_Payroll__c> pdsToBeUpdatedMap = new Map<Id,NSP_Payroll__c>();
             // Update Payroll field logic based on respective confirmation checkbox
             for(NSP_Payroll__c pds : [
                         SELECT
@@ -180,12 +180,12 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                         pds.NSP_HR_Contact_SCC__c = subClientCon.Id;
                     }
                     // add PDS in list to be updated
-                    pdsToBeUpdated.add(pds);
+                    pdsToBeUpdatedMap.put( pds.Id , pds ); // prevent System.ListException: Duplicate id in list
                 }
             }
             // PDS ready to be updated
-            if(!pdsToBeUpdated.isEmpty()){
-                List<Database.SaveResult> results = Database.update( pdsToBeUpdated , false );
+            if(!pdsToBeUpdatedMap.isEmpty()){
+                List<Database.SaveResult> results = Database.update( pdsToBeUpdatedMap.values() , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_SubClientContactTriggerHelper.class.getName() ,
                     'updatePDSContactRelatedFieldsBasedOnSCC' ,
