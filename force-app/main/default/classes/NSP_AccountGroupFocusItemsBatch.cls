@@ -314,21 +314,18 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
         }
     }
 
-    private Boolean isEligibleForNoInsperity401kFocusItem(Asset asst){
-        Boolean local = False;
-        if ( asst != null
-            && (
-                ( asst.NSP_Retirement_Service_Plan_Name__c != null 
-                 && asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
+    private Boolean isEligibleForNoInsperity401kFocusItem( Asset asst ) {
+        Boolean local = false;
+        if ( ( asst != null )
+            && ( ( asst.NSP_Retirement_Service_Plan_Name__c == null )
+                || asst.NSP_Retirement_Service_Plan_Name__c.contains( NSP_ServiceConstants.ORK )
                 )
-                || ( asst.NSP_Retirement_Service_Plan_Name__c == null )
-           )
-            && ( asst.Status == 'Active'
-                || asst.Status == 'Onboarding'
-               )
-           )
+            && ( ( asst.Status == 'Active' )
+                || ( asst.Status == 'Onboarding' )
+                )
+            )
         {
-            local = True;
+            local = true;
         }
         return local;
     }
@@ -486,10 +483,10 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 assets = [
                     SELECT
                         Id ,
-                        NSP_AIMS_Original_First_Pay_Date__c ,
-                        NSP_Retirement_Service_Plan_Name__c ,
                         AccountId ,
-                        NSP_Client__c,
+                        NSP_AIMS_Original_First_Pay_Date__c ,
+                        NSP_Client__c ,
+                        NSP_Retirement_Service_Plan_Name__c ,
                         Status
                     FROM Asset
                     WHERE (
