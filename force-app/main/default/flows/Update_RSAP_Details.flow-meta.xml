@@ -5,7 +5,7 @@
         <name>Assign_Business_Drivers</name>
         <label>Assign Business Drivers</label>
         <locationX>50</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Situation_Termination_Drivers__c</assignToReference>
             <operator>Assign</operator>
@@ -18,7 +18,7 @@
         <name>Assign_Business_Drivers_and_Efforts_to_retain</name>
         <label>Assign Business Drivers and Efforts to retain</label>
         <locationX>578</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Situation_Termination_Drivers__c</assignToReference>
             <operator>Assign</operator>
@@ -38,7 +38,7 @@
         <name>Assign_efforts_to_retain</name>
         <label>Assign efforts to retain</label>
         <locationX>314</locationX>
-        <locationY>1151</locationY>
+        <locationY>1043</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Efforts_To_Retain__c</assignToReference>
             <operator>Assign</operator>
@@ -47,27 +47,11 @@
             </value>
         </assignmentItems>
     </assignments>
-    <assignments>
-        <name>Assign_RSAP</name>
-        <label>Assign RSAP</label>
-        <locationX>182</locationX>
-        <locationY>719</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.Associated_RSAP__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_RSAP_Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Initiative_Records</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Check_for_Initiative_and_Engagement_path</name>
         <label>Check for Initiative and Engagement path</label>
         <locationX>182</locationX>
-        <locationY>1043</locationY>
+        <locationY>935</locationY>
         <defaultConnector>
             <targetReference>Assign_Business_Drivers_and_Efforts_to_retain</targetReference>
         </defaultConnector>
@@ -182,7 +166,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_RSAP</targetReference>
+                <targetReference>Get_Initiative_Records</targetReference>
             </connector>
             <label>RSAP available</label>
         </rules>
@@ -213,7 +197,7 @@
         <name>Get_Engagement_Path_Record</name>
         <label>Get Engagement Path Record</label>
         <locationX>182</locationX>
-        <locationY>935</locationY>
+        <locationY>827</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_for_Initiative_and_Engagement_path</targetReference>
@@ -245,7 +229,7 @@
         <name>Get_Initiative_Records</name>
         <label>Get Initiative Records</label>
         <locationX>182</locationX>
-        <locationY>827</locationY>
+        <locationY>719</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Engagement_Path_Record</targetReference>
