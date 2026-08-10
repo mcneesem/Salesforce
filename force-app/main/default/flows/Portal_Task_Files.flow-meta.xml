@@ -775,7 +775,7 @@
         <inputReference>removeShares</inputReference>
     </recordDeletes>
     <recordLookups>
-        <description>&quot;Manageable&quot; is currently defined as being the Owner of the File (Content Document).  Definition of &quot;Manageable&quot; could be expanded in future stories.</description>
+        <description>&quot;Manageable&quot; is currently defined as Files (ContentDocuments) owned by an internal User (Salesforce Licensed).  Definition of &quot;Manageable&quot; could be expanded in future stories.</description>
         <name>Get_Manageable_Content_Documents</name>
         <label>Get Manageable Content Documents</label>
         <locationX>0</locationX>
@@ -1002,7 +1002,7 @@
         </connector>
         <fields>
             <name>Missing_Manageable_Shares_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;You must be the Owner of at least one related File on this Project Task to be able to share those Files with the related Portal Task record ({!recordId}). &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Only Files related to this Project Task, which are owned by an internal User, are able to be shared with the related Portal Task record ({!recordId}).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
