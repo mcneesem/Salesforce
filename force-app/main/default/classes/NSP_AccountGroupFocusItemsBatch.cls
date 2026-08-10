@@ -1,5 +1,5 @@
 public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ NSP_AccountGroupFocusItemsBatch_Test (80%)
+    // test w/ NSP_AccountGroupFocusItemsBatch_Test (84%)
 
     private Map<String,Integer> accGrpWithFocusItem = new Map<String,Integer>();
     private Map<String,NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String,NSP_Focus_Item__c>();
@@ -328,9 +328,9 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                )
            )
         {
-            local = True;       
+            local = True;
         }
-        return local;    
+        return local;
     }
 
     // check for Account Groups and Focus Items
