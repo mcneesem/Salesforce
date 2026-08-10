@@ -1367,11 +1367,9 @@ public class NSP_AssetServiceTriggerHelper {
     }
 
     public static void updatePaperlessBatchDateBeforeInsertOrUpdate(List<Asset> NewList , Map<Id, Asset> OldMap){
-        Id WORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
-            //Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
-
+        Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
         For(Asset assetObj : NewList){
-            If(assetObj.RecordTypeId == WORecordTypeId &&
+            If(assetObj.RecordTypeId == woRecordTypeId &&
                ((assetObj.NSP_Account_Status__c != null && OldMap == null) ||
                 (OldMap != null && OldMap.containskey(assetObj.Id) &&
                  assetObj.NSP_Account_Status__c != OldMap.get(assetObj.Id).NSP_Account_Status__c))){
