@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Root_Cause_For_WX_WA_Closure</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+   NOT($Permission.Bypass_Require_Root_Cause_For_WX_WA_Closure),
+   NSP_Category__c = &quot;WX/WA&quot;,
+   ISPICKVAL(Status, &quot;Closed&quot;),
+   ISBLANK(TEXT(NSP_Root_Cause__c))
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Root_Cause__c</errorDisplayField>
+    <errorMessage>You must select a Root Cause value to close this Case.</errorMessage>
+</ValidationRule>
