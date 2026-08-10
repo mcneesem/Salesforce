@@ -1,5 +1,5 @@
 public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ NSP_AccountGroupFocusItemsBatch_Test (87%)
+    // test w/ NSP_AccountGroupFocusItemsBatch_Test (80%)
 
     private Map<String,Integer> accGrpWithFocusItem = new Map<String,Integer>();
     private Map<String,NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String,NSP_Focus_Item__c>();
@@ -298,23 +298,13 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 );
             }
             for ( Asset asst : new Selector().getNoInsperityAssets( new List<Id>( accountIds ) ) ) {
-                if ( ( ( asst.NSP_Retirement_Service_Plan_Name__c != null )
-                        && asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
-                        )
-                    || ( asst.NSP_Retirement_Service_Plan_Name__c == null )
-                    )
-                {
+                if ( this.isEligibleForNoInsperity401kFocusItem( asst ) ) {
                     this.noInsperityAccIdWithAimsClient.put(
                         asst.AccountId ,
                         asst.NSP_Client__c
                     );
                 }
-                if ( ( ( asst.NSP_Retirement_Service_Plan_Name__c != null )
-                        && !asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
-                        )
-                    || ( asst.NSP_Retirement_Service_Plan_Name__c != null )
-                    )
-                {
+                if ( asst.Status != 'Active' && asst.Status != 'Onboarding' ) {
                     this.noNSPAccIdWithAimsClient.put(
                         asst.AccountId ,
                         asst.NSP_Client__c
@@ -322,6 +312,25 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 }
             }
         }
+    }
+
+    private Boolean isEligibleForNoInsperity401kFocusItem(Asset asst){
+        Boolean local = False;
+        if ( asst != null
+            && (
+                ( asst.NSP_Retirement_Service_Plan_Name__c != null 
+                 && asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
+                )
+                || ( asst.NSP_Retirement_Service_Plan_Name__c == null )
+           )
+            && ( asst.Status == 'Active'
+                || asst.Status == 'Onboarding'
+               )
+           )
+        {
+            local = True;       
+        }
+        return local;    
     }
 
     // check for Account Groups and Focus Items
@@ -480,7 +489,8 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                         NSP_AIMS_Original_First_Pay_Date__c ,
                         NSP_Retirement_Service_Plan_Name__c ,
                         AccountId ,
-                        NSP_Client__c
+                        NSP_Client__c,
+                        Status
                     FROM Asset
                     WHERE (
                         ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE ) )
