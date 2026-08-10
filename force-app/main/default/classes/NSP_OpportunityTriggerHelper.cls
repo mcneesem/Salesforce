@@ -1005,7 +1005,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
             productIds.add(oppItem.Product2Id);
             accountIds.add(oppItem.Opportunity.accountId);
             if(oppItem.Product2.NSP_ServiceAssetCategory__c != null){
-                String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(oppItem.Product2.NSP_ServiceAssetCategory__c).getRecordTypeId();
+
+                String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', oppItem.Product2.NSP_ServiceAssetCategory__c);
                 recordTypeMap.put(oppItem.Product2Id,rectype);
                 if( !retProducts.contains(oppItem.Product2.NSP_ServiceAssetCategory__c)){
                     recordIdSet.add(rectype);
@@ -1471,13 +1472,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 }
             }
             if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE){
-                assetMap.get(draftAsset).RecordTypeId = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_INSURANCE).getRecordTypeId();
+                assetMap.get(draftAsset).RecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_SalesConstants.ASSETRECTYPE_INSURANCE);
             }
             else if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT){
-                String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_CERTIFY).getRecordTypeId();
+                String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_SalesConstants.ASSETRECTYPE_CERTIFY);
                 assetMap.get(draftAsset).RecordTypeId = rectype;
             } else {
-                assetMap.get(draftAsset).RecordTypeId = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(assetMap.get(draftAsset).NSP_Product_Line__c).getRecordTypeId();
+                assetMap.get(draftAsset).RecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', assetMap.get(draftAsset).NSP_Product_Line__c);
             }
             String prodLine = assetMap.get(draftAsset).NSP_Product_Line__c;
             if( prodLine== NSP_SalesConstants.PROD_RECRUITING || prodLine == NSP_SalesConstants.PROD_EMPSCREENING || prodLine == NSP_SalesConstants.PROD_INSURANCE){
@@ -1645,7 +1646,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     //
     private void createHardwareAssets( List<Opportunity> closedWonOpptyList ) {
         List<Asset> assetsToCreate= new List<Asset>();
-        String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_CPQConstants.HARDWARE_ASSET).getRecordTypeId();
+        String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_CPQConstants.HARDWARE_ASSET);
         List<OpportunityLineItem> opptyLineItemList=[SELECT Name,Opportunity.accountId,OpportunityId,SBQQ__QuoteLine__r.SBQQ__EndDate__c,Product2Id,Quantity,Product2.NSP_ServiceAssetCategory__c,NSP_AccountName__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c,SBQQ__QuoteLine__r.NSP_Support_ProductCode__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.NSP_Product_Type__c
                                                      FROM OpportunityLineItem
                                                      WHERE Product2.NSP_Convert_to_Asset__c = TRUE
