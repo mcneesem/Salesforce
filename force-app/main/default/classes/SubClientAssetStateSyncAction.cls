@@ -1,52 +1,27 @@
 public class SubClientAssetStateSyncAction {
-    // test w/ SubClientAssetStateSyncActionTest (79%)
+    // test w/ SubClientAssetStateSyncActionTest (85%)
 
-    @InvocableMethod(label='Resync WO Asset States of Operations'
+    @InvocableMethod( label='Resync WO Asset States of Operations'
                      description='Resynchronizes the States of Operations for the specified WO Assets.'
                     )
-    public static List<SubClientAssetStateSyncAction.FlowResult> resyncStatesOfOperations( List<SubClientAssetStateSyncAction.FlowInput> inputs ){
-        List<SubClientAssetStateSyncAction.FlowResult> response = new List<SubClientAssetStateSyncAction.FlowResult>();
+    public static List<Boolean> invoke( List<Id> inputs ) {
+        List<Boolean> response = new List<Boolean>();
         if ( ( inputs != null ) && !inputs.isEmpty() ) {
-            for ( SubClientAssetStateSyncAction.FlowInput input : inputs ) {
-                response.add( SubClientAssetStateSyncAction.processInput( input ) );
+            for ( Id assetId : inputs ) {
+                response.add( SubClientAssetStateSyncAction.processAssets( new Set<Id>{ assetId } ) );
             }
         }
         return response;
-    }
-
-    private static SubClientAssetStateSyncAction.FlowResult processInput( SubClientAssetStateSyncAction.FlowInput input ) {
-        SubClientAssetStateSyncAction.FlowResult result = new SubClientAssetStateSyncAction.FlowResult();
-        result.success = false;
-        if ( ( input != null ) && ( input.assetIds != null ) && !input.assetIds.isEmpty() ) {
-            result.success = SubClientAssetStateSyncAction.processAssets( new Set<Id>( input.assetIds ) );
-        }
-        return result;
     }
 
     private static Boolean processAssets( Set<Id> assetIds ) {
         Boolean success = false;
         try {
             NSP_SubClientAssetStateSyncJob syncJob = new NSP_SubClientAssetStateSyncJob();
-            syncJob.handleAssets( assetIds );
-            success = true;
+            success = syncJob.handleAssets( assetIds );
         } catch ( Exception exceptionRecord ) {
-            NSP_ErrorLogHandler.logException(
-                SubClientAssetStateSyncAction.class.getName(),
-                'processAssets',
-                exceptionRecord
-            );
+            NSP_ErrorLogHandler.logException( SubClientAssetStateSyncAction.class.getName(), 'processAssets', exceptionRecord );
         }
         return success;
     }
-
-    public class FlowInput {
-        @InvocableVariable(required=true)
-        public List<Id> assetIds;
-    }
-
-    public class FlowResult {
-        @InvocableVariable
-        public Boolean success;
-    }
-
 }

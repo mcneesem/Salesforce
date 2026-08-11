@@ -12,36 +12,21 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>assetIds</name>
+            <name>inputs</name>
             <value>
-                <elementReference>AssetIds</elementReference>
+                <elementReference>recordId</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <nameSegment>SubClientAssetStateSyncAction</nameSegment>
         <offset>0</offset>
         <outputParameters>
             <assignToReference>varSuccess</assignToReference>
-            <name>success</name>
+            <name>output</name>
         </outputParameters>
     </actionCalls>
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Add_Current_Asset_Id</name>
-        <label>Add Current Asset Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>AssetIds</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Resync_WO_Asset_States</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Related_Sub_Clients</name>
         <label>Set Fault Element - Get Related Sub Clients</label>
@@ -104,7 +89,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Add_Current_Asset_Id</targetReference>
+                <targetReference>Resync_WO_Asset_States</targetReference>
             </connector>
             <label>Sub Clients Found</label>
         </rules>

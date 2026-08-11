@@ -63,18 +63,15 @@ private class SubClientAssetStateSyncActionTest {
             WHERE Name = 'Test Asset'
             LIMIT 1
         ];
-        SubClientAssetStateSyncAction.FlowInput input = new SubClientAssetStateSyncAction.FlowInput();
-        input.assetIds = new List<Id>{ assetRecord.Id };
-        List<SubClientAssetStateSyncAction.FlowInput> inputs = new List<SubClientAssetStateSyncAction.FlowInput>();
-        inputs.add(input);
-
+        List<Id> inputs = new List<Id>{ assetRecord.Id };
+        
         Test.startTest();
-        List<SubClientAssetStateSyncAction.FlowResult> results = SubClientAssetStateSyncAction.resyncStatesOfOperations(inputs);
+        List<Boolean> results = SubClientAssetStateSyncAction.invoke(inputs);
         Test.stopTest();
-
+        
         Assert.isNotNull( results, 'A response list should be returned.' );
         Assert.areEqual( 1, results.size(), 'One response should be returned for one input.' );
-        Assert.isTrue( results[0].success, 'The resynchronisation should complete successfully.' );
+        Assert.isTrue( results[0], 'The resynchronisation should complete successfully.' );
         Asset updatedAsset = [
             SELECT Id, NSP_States_of_Operations__c
             FROM Asset
@@ -91,26 +88,11 @@ private class SubClientAssetStateSyncActionTest {
     }
 
     @isTest
-    private static void shouldReturnFalseForEmptyAssetIds() {
-        SubClientAssetStateSyncAction.FlowInput input = new SubClientAssetStateSyncAction.FlowInput();
-        input.assetIds = new List<Id>();
-        List<SubClientAssetStateSyncAction.FlowInput> inputs = new List<SubClientAssetStateSyncAction.FlowInput>();
-        inputs.add(input);
-
-        Test.startTest();
-        List<SubClientAssetStateSyncAction.FlowResult> results = SubClientAssetStateSyncAction.resyncStatesOfOperations(inputs);
-        Test.stopTest();
-
-        Assert.areEqual( 1, results.size(), 'One response should be returned for one input.' );
-        Assert.isFalse( results[0].success, 'The action should return false when no Asset IDs are provided.' );
-    }
-
-    @isTest
     private static void shouldReturnEmptyResponseForEmptyInputs() {
-        List<SubClientAssetStateSyncAction.FlowInput> inputs = new List<SubClientAssetStateSyncAction.FlowInput>();
+        List<Id> inputs = new List<Id>();
 
         Test.startTest();
-        List<SubClientAssetStateSyncAction.FlowResult> results = SubClientAssetStateSyncAction.resyncStatesOfOperations(inputs);
+        List<Boolean> results = SubClientAssetStateSyncAction.invoke(inputs);
         Test.stopTest();
 
         Assert.isNotNull( results, 'The response should not be null.' );
@@ -120,7 +102,7 @@ private class SubClientAssetStateSyncActionTest {
     @isTest
     private static void shouldReturnEmptyResponseForNullInputs() {
         Test.startTest();
-        List<SubClientAssetStateSyncAction.FlowResult> results = SubClientAssetStateSyncAction.resyncStatesOfOperations(null);
+        List<Boolean> results = SubClientAssetStateSyncAction.invoke(null);
         Test.stopTest();
 
         Assert.isNotNull( results, 'The response should not be null.' );
