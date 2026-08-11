@@ -1,6 +1,6 @@
 // Represents the OrderItem trigger helper which handles all the logic.
 public class NSP_OrderItemTriggerHelper {
-    // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
+    // test w/ NSP_OrderItemTriggerHelperTest (76%), NSP_OrderTriggerHelperTest (77%)
     // test w/ NSP_OrderItemTriggerHelperTest (77%)
     // test w/ NSP_OrderTriggerHelperTest (22%)
 
