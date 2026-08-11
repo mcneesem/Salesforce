@@ -1472,7 +1472,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 }
             }
             if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE){
-                assetMap.get(draftAsset).RecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'Insurance Service');
+                assetMap.get(draftAsset).RecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'Insurance_Service');
             }
             else if(assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT){
                 String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', 'Certify');
@@ -1646,7 +1646,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     //
     private void createHardwareAssets( List<Opportunity> closedWonOpptyList ) {
         List<Asset> assetsToCreate= new List<Asset>();
-        String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', 'Hardware Asset');
+        String rectype = NSP_GenericRecordType.getRecordTypeId('Asset', 'Hardware_Asset');
         List<OpportunityLineItem> opptyLineItemList=[SELECT Name,Opportunity.accountId,OpportunityId,SBQQ__QuoteLine__r.SBQQ__EndDate__c,Product2Id,Quantity,Product2.NSP_ServiceAssetCategory__c,NSP_AccountName__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c,SBQQ__QuoteLine__r.NSP_Support_ProductCode__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.NSP_Product_Type__c
                                                      FROM OpportunityLineItem
                                                      WHERE Product2.NSP_Convert_to_Asset__c = TRUE
