@@ -456,7 +456,7 @@ public class NSP_OrderItemTriggerHelper {
                 && OrderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED
                 )
             {
-                String rectypeId = NSP_GenericRecordType.getRecordTypeId('Asset', OrderItemNewMap.get(op.Id).NSP_ServiceAssetCategory__c);
+                String rectypeId = NSP_GenericRecordType.getRecordTypeIdBasedOnName('Asset', OrderItemNewMap.get(op.Id).NSP_ServiceAssetCategory__c);
                 opActiveMap.put(rectypeId,op);
                 if(accId == null){
                     accId = op.Order.AccountId;
@@ -638,7 +638,7 @@ public class NSP_OrderItemTriggerHelper {
                 optyId.add(op.Order.OpportunityId);
             }
             if(op.NSP_ServiceAssetCategory__c != null){
-                String recType = NSP_GenericRecordType.getRecordTypeId('Asset', op.NSP_ServiceAssetCategory__c);
+                String recType = NSP_GenericRecordType.getRecordTypeIdBasedOnName('Asset', op.NSP_ServiceAssetCategory__c);
                 if(!retirementRecordTypeName.contains(op.NSP_ServiceAssetCategory__c)){
                     recordTypeId.add(recType);
                 }else{
