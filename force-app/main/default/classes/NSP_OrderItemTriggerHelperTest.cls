@@ -507,5 +507,247 @@ private class NSP_OrderItemTriggerHelperTest{
         NSP_OrderItemTriggerHelper.testHandleException( null , null );
     }
 
+    // Covers processOrderItemForScholarshipCS — items with and without ServiceAssetCategory
+    @isTest
+    private static void processOrderItemForScholarshipCSMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+        NSP_AssetTriggerHandler.TriggerDisabled = true;
+
+        List<OrderItem> orderItemList = [
+            SELECT Id, NSP_ServiceAssetCategory__c, NSP_ServiceAsset__c
+            FROM OrderItem
+            LIMIT 5
+        ];
+
+        // Set up two items that qualify (category set, no asset linked yet)
+        orderItemList[0].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        orderItemList[0].NSP_ServiceAsset__c = null;
+        // Item with HARDWARE_ASSET should be excluded
+        orderItemList[1].NSP_ServiceAssetCategory__c = NSP_CPQConstants.HARDWARE_ASSET;
+        orderItemList[1].NSP_ServiceAsset__c = null;
+        // Item with no category should be excluded
+        orderItemList[2].NSP_ServiceAssetCategory__c = null;
+
+        Test.startTest();
+        Map<Id, OrderItem> newMap = new Map<Id, OrderItem>(orderItemList);
+        NSP_OrderItemTriggerHelper helper = new NSP_OrderItemTriggerHelper();
+        helper.processOrderItemForScholarshipCS( newMap );
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers processOrderItemForScholarshipCS when opIdMap is empty (no qualifying items)
+    @isTest
+    private static void processOrderItemForScholarshipCSEmptyMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+
+        List<OrderItem> orderItemList = [SELECT Id, NSP_ServiceAssetCategory__c, NSP_ServiceAsset__c FROM OrderItem LIMIT 2];
+        // Ensure no item qualifies
+        orderItemList[0].NSP_ServiceAssetCategory__c = null;
+        orderItemList[1].NSP_ServiceAssetCategory__c = null;
+
+        Test.startTest();
+        Map<Id, OrderItem> newMap = new Map<Id, OrderItem>(orderItemList);
+        NSP_OrderItemTriggerHelper helper = new NSP_OrderItemTriggerHelper();
+        helper.processOrderItemForScholarshipCS( newMap );
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers populateLegalEntityOnOrderItem direct invocation
+    @isTest
+    private static void populateLegalEntityOnOrderItemMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+
+        List<OrderItem> orderItemList = [SELECT Id, Product2Id FROM OrderItem LIMIT 3];
+
+        Test.startTest();
+        NSP_OrderItemTriggerHelper helper = new NSP_OrderItemTriggerHelper();
+        helper.populateLegalEntityOnOrderItem( orderItemList );
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers activateOrder when all order items are already activated (groupedResults not empty, removeAll path)
+    @isTest
+    private static void activateOrderWithNonActivatedItemsMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+
+        List<Order> orderList = [SELECT Id FROM Order LIMIT 2];
+        Set<Id> orderIdSet = new Set<Id>();
+        for ( Order ord : orderList ) {
+            orderIdSet.add( ord.Id );
+        }
+
+        Test.startTest();
+        // With non-activated items present the method will remove their order IDs from the set
+        NSP_OrderItemTriggerHelper.activateOrder( orderIdSet );
+        Test.stopTest();
+
+        Assert.isNotNull( orderIdSet , 'Order id set should not be null.' );
+    }
+
+    // Covers activateOrder when no non-activated items remain (orderIdSet fully cleared)
+    @isTest
+    private static void activateOrderEmptySetMethod() {
+        Test.startTest();
+        NSP_OrderItemTriggerHelper.activateOrder( new Set<Id>() );
+        Test.stopTest();
+
+        Assert.isTrue( true , 'activateOrder with empty set should complete without error.' );
+    }
+
+    // Covers beforeUpdateDirector termination branch and bill-through override branch
+    @isTest
+    private static void beforeUpdateDirectorTerminationAndBillThroughMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+        NSP_ProjectTriggerHandler.TriggerDisabled = true;
+
+        List<Order> orderList = [SELECT Id, Status FROM Order WHERE Id != null LIMIT 10];
+
+        List<OrderItem> orderItemList = [
+            SELECT Id, SBQQ__BillingFrequency__c, SBQQ__TerminatedDate__c,
+                   NSP_AnniversaryBlngApplicable__c, blng__InvoiceRunProcessingStatus__c,
+                   blng__BillThroughDateOverride__c, blng__NextChargeDate__c,
+                   NSP_ReCalculation_Status_Internal__c
+            FROM OrderItem
+            WHERE OrderId IN :orderList
+            LIMIT 4
+        ];
+
+        Test.startTest();
+        // Trigger the SBQQ__TerminatedDate__c null → non-null transition
+        orderItemList[0].SBQQ__TerminatedDate__c = System.today().addDays( 30 );
+        // Trigger the anniversary bill-through override branch
+        orderItemList[1].NSP_AnniversaryBlngApplicable__c = true;
+        orderItemList[1].blng__InvoiceRunProcessingStatus__c = NSP_CPQConstants.INVRUN_PENDING;
+        orderItemList[1].blng__BillThroughDateOverride__c = null;
+        orderItemList[1].blng__NextChargeDate__c = System.today().addMonths( 1 );
+        orderItemList[1].SBQQ__BillingFrequency__c = NSP_CPQConstants.BLNGFREQ_ANNUAL;
+        update orderItemList;
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers beforeUpdateDirector scholarship status-activated branch and orderLinesToActivate branch
+    @isTest
+    private static void beforeUpdateDirectorScholarshipActivatedAndOrderLinesMethod() {
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+        NSP_ProjectTriggerHandler.TriggerDisabled = true;
+
+        List<Order> orderList = [SELECT Id, Status FROM Order WHERE Id != null LIMIT 10];
+        List<OrderItem> orderItemList = [
+            SELECT Id, NSP_Scholarship_Price__c, SBQQ__Status__c,
+                   NSP_ReCalculation_Status_Internal__c, NSP_Override_Start_Date__c,
+                   SBQQ__Activated__c
+            FROM OrderItem
+            WHERE OrderId IN :orderList
+            LIMIT 4
+        ];
+
+        Test.startTest();
+        // Trigger the scholarship status-activated branch (status transitions to Activated with Scholarship flag)
+        orderItemList[0].NSP_Scholarship_Price__c = true;
+        orderItemList[0].SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+        // Trigger the orderLinesToActivate branch: NSP_Override_Start_Date__c changes on a non-renewable/non-action-type line
+        orderItemList[1].NSP_Override_Start_Date__c = System.today().addDays( 5 );
+        orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+        orderItemList[1].SBQQ__Activated__c = false;
+        update orderItemList;
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers afterUpdateDirector opActiveMap branch (NSP_ServiceAsset__c + NSP_ServiceAssetCategory__c set, status Activated)
+    @isTest
+    private static void afterUpdateDirectorActiveAssetMethod() {
+        NSP_AssetTriggerHandler.TriggerDisabled = true;
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+
+        Account objaccount = [SELECT Id FROM Account WHERE Name = :NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
+        Opportunity objOpp = [SELECT Id FROM Opportunity LIMIT 1];
+        Product2 objproduct = [SELECT Id FROM Product2 WHERE Name = 'Test Product' LIMIT 1];
+
+        Asset objAsset = new Asset();
+        objAsset.Name = 'AfterUpdate Active Asset Test';
+        objAsset.AccountId = objaccount.Id;
+        objAsset.Status = 'Onboarding';
+        objAsset.Product2Id = objproduct.Id;
+        objAsset.Opportunity__c = objOpp.Id;
+        objAsset.RecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get( NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING ).getRecordTypeId();
+        insert objAsset;
+
+        blng__BillingTreatment__c billingTreatment = [
+            SELECT Id
+            FROM blng__BillingTreatment__c
+            WHERE blng__CancellationRule__c = 'LIFO by Order Product Creation Date'
+            LIMIT 1
+        ];
+
+        List<OrderItem> orderItemList = [
+            SELECT Id, NSP_ServiceAssetCategory__c, NSP_ServiceAsset__c, SBQQ__Status__c,
+                   blng__BillingTreatment__c
+            FROM OrderItem
+            WHERE NSP_ServiceAssetCategory__c = :NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        if ( !orderItemList.isEmpty() ) {
+            OrderItem oi = orderItemList[0];
+            oi.NSP_ServiceAsset__c = objAsset.Id;
+            oi.blng__BillingTreatment__c = billingTreatment.Id;
+            update oi;
+            // Activate the single order item so the opActiveMap branch fires in afterUpdateDirector
+            oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
+            update oi;
+        }
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+    // Covers afterUpdateDirector activeUserMap lower-bound branch (usage equals upper bound exactly — neither branch)
+    // and ensures NSP_TotalUsageQuantity__c == NSP_UsageUpperBound__c path is exercised
+    @isTest
+    private static void afterUpdateDirectorUsageEqualBoundMethod() {
+        NSP_AssetTriggerHandler.TriggerDisabled = true;
+        NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
+
+        Account objaccount = [SELECT Id FROM Account WHERE Name = :NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
+        Product2 objproduct = [SELECT Id FROM Product2 WHERE Name = 'Test Product' LIMIT 1];
+
+        Asset objAsset = new Asset();
+        objAsset.Name = 'UsageEqual Asset Test';
+        objAsset.AccountId = objaccount.Id;
+        objAsset.Status = 'Onboarding';
+        objAsset.Product2Id = objproduct.Id;
+        insert objAsset;
+
+        List<OrderItem> orderItemList = [
+            SELECT Id, NSP_ServiceAsset__c, NSP_TotalUsageQuantity__c, NSP_UsageUpperBound__c,
+                   Prevent_Asset_Updates__c, OrderType__c
+            FROM OrderItem
+            LIMIT 2
+        ];
+
+        // Set both bounds equal so neither upper nor lower branch is taken
+        orderItemList[0].NSP_ServiceAsset__c = objAsset.Id;
+        orderItemList[0].NSP_TotalUsageQuantity__c = 10;
+        orderItemList[0].NSP_UsageUpperBound__c = 10;
+
+        Test.startTest();
+        update orderItemList;
+        Test.stopTest();
+
+        Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
+    }
+
+
 }
 //

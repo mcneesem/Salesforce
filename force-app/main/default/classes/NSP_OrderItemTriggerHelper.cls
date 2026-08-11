@@ -1,7 +1,7 @@
 // Represents the OrderItem trigger helper which handles all the logic.
 public class NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
-    // test w/ NSP_OrderItemTriggerHelperTest (77%)
+    // test w/ NSP_OrderItemTriggerHelperTest (76%)
     // test w/ NSP_OrderTriggerHelperTest (22%)
 
     static final string RENEWABLE = 'Renewable';
@@ -434,10 +434,24 @@ public class NSP_OrderItemTriggerHelper {
 
         for (OrderItem op : [
                     SELECT
-                        Id , OrderItemNumber , Order.Type , ServiceDate , SBQQ__QuoteLine__c , SBQQ__QuoteLine__r.NSP_ActionType__c ,
-                        SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c , Order.NSP_Transaction_Type__c , OrderId , Order.Status ,
-                        Order.NSP_Usage_Products_Count__c , NSP_Project_Completion_Date__c , NSP_ReCalculation_Status_Internal__c ,
-                        NSP_Payment_Method__c , SBQQ__Activated__c , blng__LegalEntity__c , SBQQ__Status__c , NSP_ServiceAssetCategory__c ,
+                        Id ,
+                        OrderItemNumber ,
+                        Order.Type ,
+                        ServiceDate ,
+                        SBQQ__QuoteLine__c ,
+                        SBQQ__QuoteLine__r.NSP_ActionType__c ,
+                        SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c ,
+                        Order.NSP_Transaction_Type__c ,
+                        OrderId ,
+                        Order.Status ,
+                        Order.NSP_Usage_Products_Count__c ,
+                        NSP_Project_Completion_Date__c ,
+                        NSP_ReCalculation_Status_Internal__c ,
+                        NSP_Payment_Method__c ,
+                        SBQQ__Activated__c ,
+                        blng__LegalEntity__c ,
+                        SBQQ__Status__c ,
+                        NSP_ServiceAssetCategory__c ,
                         Order.AccountId
                     FROM OrderItem
                     WHERE ( Id IN :OrderItemNewMap.keyset() )
@@ -456,9 +470,9 @@ public class NSP_OrderItemTriggerHelper {
                 && OrderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED
                 )
             {
-                String rectypeId = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(OrderItemNewMap.get(op.Id).NSP_ServiceAssetCategory__c).getRecordTypeId();
-                opActiveMap.put(rectypeId,op);
-                if(accId == null){
+                String rectypeId = NSP_GenericRecordType.getRecordTypeIdByLabel( 'Asset' , OrderItemNewMap.get( op.Id ).NSP_ServiceAssetCategory__c );
+                opActiveMap.put( rectypeId , op );
+                if ( accId == null ) {
                     accId = op.Order.AccountId;
                 }
             }
@@ -624,21 +638,33 @@ public class NSP_OrderItemTriggerHelper {
         List<OrderItem> ordItemList = new List<OrderItem>();
         for ( OrderItem op : [
                     SELECT
-                        Id , NSP_Action_Type__c,OrderItemNumber , NSP_QL_ActionType__c , SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c , OrderId ,
-                        order.NSP_Transaction_Type__c , Order.Status , SBQQ__QuoteLine__r.NSP_Number_of_Checks__c ,
-                        SBQQ__QuoteLine__r.NSP_TCFullUserLicenseQty__c , Order.OpportunityId , NSP_ServiceAssetCategory__c ,
-                        SBQQ__QuotedQuantity__c , Order.Type , Order.AccountId , SBQQ__QuoteLine__r.NSP_Number_Of_Boxes__c ,
+                        Id ,
+                        NSP_Action_Type__c ,
+                        OrderItemNumber ,
+                        NSP_QL_ActionType__c ,
+                        SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c ,
+                        OrderId ,
+                        Order.NSP_Transaction_Type__c ,
+                        Order.Status ,
+                        SBQQ__QuoteLine__r.NSP_Number_of_Checks__c ,
+                        SBQQ__QuoteLine__r.NSP_TCFullUserLicenseQty__c ,
+                        Order.OpportunityId ,
+                        NSP_ServiceAssetCategory__c ,
+                        SBQQ__QuotedQuantity__c ,
+                        Order.Type ,
+                        Order.AccountId ,
+                        SBQQ__QuoteLine__r.NSP_Number_Of_Boxes__c ,
                         SBQQ__QuoteLine__r.NSP_Number_Of_Users__c
                     FROM OrderItem
                     WHERE ( Id IN :opIdMap.keyset() )
                 ]
             )
         {
-            if(op.Order.OpportunityId != null){
-                optyId.add(op.Order.OpportunityId);
+            if ( op.Order.OpportunityId != null ) {
+                optyId.add( op.Order.OpportunityId );
             }
-            if(op.NSP_ServiceAssetCategory__c != null){
-                String recType = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(op.NSP_ServiceAssetCategory__c).getRecordTypeId();
+            if ( op.NSP_ServiceAssetCategory__c != null ) {
+                String recType = NSP_GenericRecordType.getRecordTypeIdByLabel( 'Asset' , op.NSP_ServiceAssetCategory__c );
                 if(!retirementRecordTypeName.contains(op.NSP_ServiceAssetCategory__c)){
                     recordTypeId.add(recType);
                 }else{
