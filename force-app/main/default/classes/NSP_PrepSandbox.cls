@@ -453,7 +453,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static List<String> getEmailCLabelNames() {
         List<String> cLNames = new List<String>();
         MetadataService.MetadataPort service = createService();
-        MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
+        MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_1' }).getRecords()[0] : new MetadataService.CustomLabel();
         MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
         if(cL.value == null) {
             cL.value = 'dummy';
