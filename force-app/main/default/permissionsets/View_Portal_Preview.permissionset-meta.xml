@@ -7,4 +7,8 @@
     <description>Grants the Custom Permission to control visibility of Portal-related LWCs within the internal Record Pages.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>View Portal Preview</label>
+    <tabSettings>
+        <tab>Portal_Preview</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
