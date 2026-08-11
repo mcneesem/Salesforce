@@ -7,17 +7,22 @@
   ( TEXT( CallType ) = &apos;Inbound&apos; ) ,
   CASE(
     Contact_Center_Queue__c ,
+    &apos;401k&apos; , &apos;Contact Center 401k Voice&apos; ,
+    &apos;401k Escalations&apos; , &apos;Contact Center 401k Escalations Voice&apos; ,
+    &apos;Benefits&apos; , &apos;Contact Center Benefits Voice&apos; ,
+    &apos;Escalations&apos; , &apos;Contact Center Escalations Voice&apos; ,
+    &apos;HRScale&apos; , &apos;Contact Center HRScale Voice&apos; ,
+    &apos;HRScale Escalations&apos; , &apos;Contact Center HRScale Escalations Voice&apos; ,
+    &apos;Section 125&apos; , &apos;Contact Center Section 125 Voice&apos; ,
+    &apos;Spanish&apos; , &apos;Contact Center Spanish Voice&apos; ,
+    &apos;W2&apos; , &apos;Contact Center W-2 Voice&apos; ,
+    &apos;Web Support&apos; , &apos;Contact Center Web Support Voice&apos; ,
+    /* Legacy */
     &apos;401K&apos; , &apos;Contact Center 401K&apos; ,
     &apos;1 Benefit Option&apos; , &apos;Contact Center Benefits&apos; ,
-    &apos;Benefits&apos; , &apos;Contact Center Benefits&apos; ,
-    &apos;Web Support&apos; , &apos;Contact Center Web Support&apos; ,
     &apos;5 Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
     &apos;Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
-    &apos;Section 125&apos; , &apos;Contact Center Section 125&apos; ,
     &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
-    &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
-    &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
-    &apos;W2&apos; , &apos;W2&apos; ,
     &apos;Card ID&apos; , &apos;Card ID&apos; ,
     &apos;Employment Screening&apos; , &apos;Employment Screening&apos; ,
     &apos;Recruiting/Careers&apos; , &apos;Recruiting/Careers&apos; ,
@@ -41,17 +46,22 @@
     ) ,
     CASE(
       PreviousCall.Contact_Center_Queue__c ,
+      &apos;401k&apos; , &apos;Contact Center 401k Voice&apos; ,
+      &apos;401k Escalations&apos; , &apos;Contact Center 401k Escalations Voice&apos; ,
+      &apos;Benefits&apos; , &apos;Contact Center Benefits Voice&apos; ,
+      &apos;Escalations&apos; , &apos;Contact Center Escalations Voice&apos; ,
+      &apos;HRScale&apos; , &apos;Contact Center HRScale Voice&apos; ,
+      &apos;HRScale Escalations&apos; , &apos;Contact Center HRScale Escalations Voice&apos; ,
+      &apos;Section 125&apos; , &apos;Contact Center Section 125 Voice&apos; ,
+      &apos;Spanish&apos; , &apos;Contact Center Spanish Voice&apos; ,
+      &apos;W2&apos; , &apos;Contact Center W-2 Voice&apos; ,
+      &apos;Web Support&apos; , &apos;Contact Center Web Support Voice&apos; ,
+      /* Legacy */
       &apos;401K&apos; , &apos;Contact Center 401K&apos; ,
       &apos;1 Benefit Option&apos; , &apos;Contact Center Benefits&apos; ,
-      &apos;Benefits&apos; , &apos;Contact Center Benefits&apos; ,
-      &apos;Web Support&apos; , &apos;Contact Center Web Support&apos; ,
       &apos;5 Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
       &apos;Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
-      &apos;Section 125&apos; , &apos;Contact Center Section 125&apos; ,
       &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
-      &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
-      &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
-      &apos;W2&apos; , &apos;W2&apos; ,
       &apos;Card ID&apos; , &apos;Card ID&apos; ,
       &apos;Employment Screening&apos; , &apos;Employment Screening&apos; ,
       &apos;Recruiting/Careers&apos; , &apos;Recruiting/Careers&apos; ,
@@ -73,6 +83,7 @@
 )</formula>
     <label>First Assigned Queue</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
