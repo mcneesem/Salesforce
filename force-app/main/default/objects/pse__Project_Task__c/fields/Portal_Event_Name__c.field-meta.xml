@@ -5,7 +5,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Portal Event Name</label>
-    <length>80</length>
+    <length>50</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
