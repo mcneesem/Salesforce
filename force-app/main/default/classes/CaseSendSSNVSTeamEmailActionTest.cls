@@ -19,6 +19,7 @@ private class CaseSendSSNVSTeamEmailActionTest {
     private static final String contactSetupAssertMessage = 'Expected one Contact from setup';
     private static final String sccSetupAssertMessage = 'Expected one SCC without email';
     private static final String sccSetupEmailAssertMessage = 'Expected seeded SCC with test@test.com';
+    private static final String subClientAssertMessage = 'Expected one Sub client from setup';
 
     @testSetup
     private static void prepareTestData() {
@@ -382,6 +383,126 @@ private class CaseSendSSNVSTeamEmailActionTest {
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
         Assert.areEqual(1, result.subClientContacts?.size(), 'Email should be sent');
+    }
+
+    // Covers getWorkdayRelatedAIMSClientNumbers — sub client sourced from Workday uses
+    // NSP_Client__c (AIMS client number) in the email body instead of NSP_AIMS_Sub_Client__c
+    @isTest
+    private static void testGetSubClientAndSubClientContacts_Positive_WorkdaySource() {
+        List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
+                               FROM Case
+                               WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
+        Assert.areEqual(1, caseList.size(), caseSetupAssertMessage);
+        Case caseObj = caseList[0];
+
+        List<Account> accList = [SELECT Id FROM Account WHERE Id = :caseObj.AccountId LIMIT 1];
+        Assert.areEqual(1, accList.size(), accountSetupAssertMessage);
+        Account accountObj = accList[0];
+
+        List<Contact> contactList = [SELECT Id, NSP_Per_ID__c FROM Contact WHERE AccountId = :accountObj.Id LIMIT 1];
+        Assert.areEqual(1, contactList.size(), contactSetupAssertMessage);
+        Contact contactObj = contactList[0];
+        contactObj.NSP_Per_ID__c = '9999';
+        update contactObj;
+
+        // Mark the existing sub client as Workday-sourced and set an AIMS client number
+        List<NSP_Sub_Client__c> subClients = [SELECT Id FROM NSP_Sub_Client__c WHERE NSP_Account__c = :accountObj.Id LIMIT 1];
+        Assert.areEqual(1, subClients.size(), subClientAssertMessage);
+        NSP_Sub_Client__c subClient = subClients[0];
+        subClient.Source__c = 'Workday';
+        subClient.NSP_Client__c = 'WD-CLIENT-001';
+        update subClient;
+
+        // Ensure the sub client contact that is linked to the case contact has a work email
+        List<NSP_Sub_Client_Contact__c> sccList = [
+            SELECT Id, NSP_Work_Email__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE NSP_Work_Email__c = NULL
+            LIMIT 1
+        ];
+        Assert.areEqual(1, sccList.size(), sccSetupAssertMessage);
+        sccList[0].NSP_Work_Email__c = 'workday@example.com';
+        update sccList[0];
+
+        List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
+        CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
+        actionInputParams.accountId = accountObj.Id;
+        actionInputParams.caseObj = caseObj;
+        actionInputParams.emailSubject = 'TestSubject';
+        actionInputParams.emailBody = emailBodyString;
+        inputParams.add(actionInputParams);
+
+        Test.startTest();
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        Test.stopTest();
+
+        Assert.areNotEqual(null, results, resultMessageString);
+        CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
+            (results != null && !results.isEmpty()) ?
+            results[0] :
+            new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
+        );
+        Assert.areEqual(2, result.subClientContacts?.size(), 'Both eligible contacts should be emailed via Workday source path');
+    }
+
+    // Covers getWorkdayRelatedAIMSClientNumbers — sub client with a non-Workday source
+    // falls back to NSP_AIMS_Sub_Client__c on the contact (Source__c not 'Workday')
+    @isTest
+    private static void testGetSubClientAndSubClientContacts_Positive_NonWorkdaySource() {
+        List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
+                               FROM Case
+                               WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
+        Assert.areEqual(1, caseList.size(), caseSetupAssertMessage);
+        Case caseObj = caseList[0];
+
+        List<Account> accList = [SELECT Id FROM Account WHERE Id = :caseObj.AccountId LIMIT 1];
+        Assert.areEqual(1, accList.size(), accountSetupAssertMessage);
+        Account accountObj = accList[0];
+
+        List<Contact> contactList = [SELECT Id, NSP_Per_ID__c FROM Contact WHERE AccountId = :accountObj.Id LIMIT 1];
+        Assert.areEqual(1, contactList.size(), contactSetupAssertMessage);
+        Contact contactObj = contactList[0];
+        contactObj.NSP_Per_ID__c = '8888';
+        update contactObj;
+
+        // Source__c is not Workday — getWorkdayRelatedAIMSClientNumbers returns an empty map
+        // and deliverEmails falls back to NSP_AIMS_Sub_Client__c on the contact
+        List<NSP_Sub_Client__c> subClients = [SELECT Id FROM NSP_Sub_Client__c WHERE NSP_Account__c = :accountObj.Id LIMIT 1];
+        Assert.areEqual(1, subClients.size(), subClientAssertMessage);
+        NSP_Sub_Client__c subClient = subClients[0];
+        subClient.Source__c = 'AIMS';
+        update subClient;
+
+        // Ensure the contact with no email has one so both contacts qualify
+        List<NSP_Sub_Client_Contact__c> sccList = [
+            SELECT Id, NSP_Work_Email__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE NSP_Work_Email__c = NULL
+            LIMIT 1
+        ];
+        Assert.areEqual(1, sccList.size(), sccSetupAssertMessage);
+        sccList[0].NSP_Work_Email__c = 'aims@example.com';
+        update sccList[0];
+
+        List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
+        CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
+        actionInputParams.accountId = accountObj.Id;
+        actionInputParams.caseObj = caseObj;
+        actionInputParams.emailSubject = 'TestSubject';
+        actionInputParams.emailBody = emailBodyString;
+        inputParams.add(actionInputParams);
+
+        Test.startTest();
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        Test.stopTest();
+
+        Assert.areNotEqual(null, results, resultMessageString);
+        CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
+            (results != null && !results.isEmpty()) ?
+            results[0] :
+            new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
+        );
+        Assert.areEqual(2, result.subClientContacts?.size(), 'Both eligible contacts should be emailed via AIMS fallback path');
     }
 
     @isTest

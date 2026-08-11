@@ -1,6 +1,6 @@
 // Invocable Apex to gather Sub Clients and their Contacts related to a Case's Account and send SSNVS Team notification emails.
 public with sharing class CaseSendSSNVSTeamEmailAction {
-    // test w/ CaseSendSSNVSTeamEmailActionTest (92%)
+    // test w/ CaseSendSSNVSTeamEmailActionTest (93%)
 
     // Error Messages
     private static final String ERR_NO_CONTACT = 'No Contact Found';
@@ -141,14 +141,51 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
                 && ( ( eligibleSubClientContacts != null ) && !eligibleSubClientContacts.isEmpty() )
                 )
             {
+                Map<Id, String> subClientContactMap = CaseSendSSNVSTeamEmailAction.getWorkdayRelatedAIMSClientNumbers(
+                    eligibleSubClientContacts,
+                    subClientMap
+                );
                 response = CaseSendSSNVSTeamEmailAction.deliverEmails(
                     caseContact ,
                     inParams ,
-                    eligibleSubClientContacts
+                    eligibleSubClientContacts ,
+                    subClientContactMap
                 );
             }
         }
         return response;
+    }
+
+    //
+    // For each eligible Sub Client Contact, checks whether its parent Sub Client was sourced
+    // from Workday. When it is, maps the Sub Client Contact Id to the parent Sub Client's
+    // AIMS Client Number (NSP_Client__c) so the email body can use the Workday-sourced
+    // client number instead of the AIMS Sub Client number stored directly on the contact.
+    //
+    // Contacts whose parent Sub Client is not Workday-sourced, or whose NSP_Sub_Client__c
+    // lookup is blank, are excluded from the returned map. The caller falls back to
+    // NSP_AIMS_Sub_Client__c on the contact for those cases.
+    //
+    // @param subClientContacts Eligible Sub Client Contacts to evaluate
+    // @param subClientMap      Map of Sub Client Id -> NSP_Sub_Client__c built by queryActiveSubClients
+    // @return Map of Sub Client Contact Id -> AIMS Client Number for Workday-sourced contacts only
+    //
+    private static Map<Id, String> getWorkdayRelatedAIMSClientNumbers(
+        List<NSP_Sub_Client_Contact__c> subClientContacts ,
+        Map<Id,NSP_Sub_Client__c> subClientMap )
+    {
+        Map<Id, String> returnMap = new Map<Id, String>();
+        if( !subClientContacts?.isEmpty() && !subClientMap?.isEmpty() ) {
+            for(NSP_Sub_Client_Contact__c subClientContact : subClientContacts ) {
+                NSP_Sub_Client__c subClient = subClientMap.get(subClientContact.NSP_Sub_Client__c);
+                if( subClientContact.NSP_Sub_Client__c != null &&
+                subClient != null && 'Workday'.equalsIgnoreCase(subClient.Source__c) ) {
+                       returnMap.put( subClientContact.Id, subClient.NSP_Client__c );
+                   }
+            }
+        }
+
+        return returnMap;
     }
 
     //
@@ -183,7 +220,8 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
     private static Set<NSP_Sub_Client_Contact__c> deliverEmails(
         Contact caseContact ,
         ActionInputParams inParams ,
-        List<NSP_Sub_Client_Contact__c> subClientContacts
+        List<NSP_Sub_Client_Contact__c> subClientContacts ,
+        Map<Id, String> subClientContactMap
         )
     {
         Set<NSP_Sub_Client_Contact__c> sentSubClientContacts = new Set<NSP_Sub_Client_Contact__c>();
@@ -195,10 +233,16 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
         {
             for ( NSP_Sub_Client_Contact__c subClientContact : subClientContacts ) {
                 if ( subClientContact != null ) {
+                     String aimsClientNumber = subClientContact.NSP_AIMS_Sub_Client__c;
+                    if( subClientContactMap != null && subClientContactMap.containsKey(subClientContact.Id) ){
+                        aimsClientNumber = subClientContactMap.get(subClientContact.Id);
+                    }
+
                     String formattedEmailBody = CaseSendSSNVSTeamEmailAction.getFormattedEmailBody(
                         inParams.emailBody ,
                         subClientContact ,
-                        caseContact
+                        caseContact ,
+                        aimsClientNumber
                     );
                     Boolean emailSent = CaseSendSSNVSTeamEmailAction.callEmailAction(
                         inParams.emailSubject ,
@@ -226,7 +270,8 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
     private static String getFormattedEmailBody(
         String emailBody ,
         NSP_Sub_Client_Contact__c subClientContact ,
-        Contact contactObj
+        Contact contactObj ,
+        String aimsClientNumber
         )
     {
         String formatted = '';
@@ -237,7 +282,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
         {
             formatted = '<html><body>';
             formatted += '<b><p>SSN Mismatch Client Notice</p></b><br />';
-            formatted += '<b>SSN Mismatch / ' + subClientContact.NSP_AIMS_Sub_Client__c + ' / ';
+            formatted += '<b>SSN Mismatch / ' + aimsClientNumber + ' / ';
             if ( String.isNotBlank( contactObj.NSP_Per_ID__c ) ) {
                 formatted += contactObj.NSP_Per_ID__c + ' / ';
             } else if ( String.isNotBlank( contactObj.Workday_Employee_ID__c ) ) {
@@ -296,13 +341,16 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
         String caseRecordId
         )
     {
-        Map<String,Object> inputs = new Map<String,Object>();
-        inputs.put( 'recordId' , caseRecordId );
-        inputs.put( 'toEmailAddresses' , listOfToAddresses );
-        inputs.put( 'emailSubject' , emailSubject );
-        inputs.put( 'emailBody' , emailBody );
-        inputs.put( 'logEmail' , true );
-        inputs.put( 'senderEmail' , 'ssnvs@insperity.com' );
+
+        Map<String,Object> inputs = new Map<String,Object> {
+            'recordId' => caseRecordId ,
+            'toEmailAddresses' => listOfToAddresses ,
+            'emailSubject' => emailSubject ,
+            'emailBody' => emailBody ,
+            'logEmail' => true ,
+            'senderEmail' => 'ssnvs@insperity.com'
+        };
+
         return inputs;
     }
 
