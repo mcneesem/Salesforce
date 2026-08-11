@@ -1117,7 +1117,7 @@ public with sharing class SandboxHealthController {
         email.checks = new List<Check>();
 
         List<String> dynamicLabelNames = new List<String>();
-        String list1 = System.Label.Post_Refresh_Email_Labels;
+        String list1 = System.Label.Post_Refresh_Email_Labels_1;
         if (String.isNotBlank( list1 )) {
             dynamicLabelNames.addAll( new List<String>( list1.split(',') ) );
         }

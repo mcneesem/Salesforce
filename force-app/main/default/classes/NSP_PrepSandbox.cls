@@ -349,22 +349,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '48945');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com');
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com.invalid');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com.invalid');
                 }
                 when 'test' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '65500');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com');
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com.invalid');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com.invalid');
                 }
                 when 'merge' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '122677');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com');
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com.invalid');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com.invalid');
                 }
                 when else {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
@@ -453,7 +453,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static List<String> getEmailCLabelNames() {
         List<String> cLNames = new List<String>();
         MetadataService.MetadataPort service = createService();
-        MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
+        MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_1' }).getRecords()[0] : new MetadataService.CustomLabel();
         MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
         if(cL.value == null) {
             cL.value = 'dummy';
