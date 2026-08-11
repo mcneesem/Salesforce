@@ -233,11 +233,10 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
         {
             for ( NSP_Sub_Client_Contact__c subClientContact : subClientContacts ) {
                 if ( subClientContact != null ) {
-                     String aimsClientNumber = subClientContact.NSP_AIMS_Sub_Client__c;
-                    if( subClientContactMap != null && subClientContactMap.containsKey(subClientContact.Id) ){
-                        aimsClientNumber = subClientContactMap.get(subClientContact.Id);
-                    }
-
+                    String aimsClientNumber = CaseSendSSNVSTeamEmailAction.resolveAimsClientNumber(
+                        subClientContact ,
+                        subClientContactMap
+                    );
                     String formattedEmailBody = CaseSendSSNVSTeamEmailAction.getFormattedEmailBody(
                         inParams.emailBody ,
                         subClientContact ,
@@ -257,6 +256,28 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
             }
         }
         return sentSubClientContacts;
+    }
+
+    //
+    // Resolves the AIMS client number for a given Sub Client Contact.
+    // Prefers the override value from subClientContactMap when present,
+    // falling back to the field value on the record itself.
+    //
+    // @param subClientContact The Sub Client Contact whose AIMS number is needed
+    // @param subClientContactMap Optional map of Sub Client Contact Id to overridden AIMS client number
+    // @return The resolved AIMS client number string
+    //
+    private static String resolveAimsClientNumber(
+        NSP_Sub_Client_Contact__c subClientContact ,
+        Map<Id, String> subClientContactMap
+        )
+    {
+        if ( subClientContact != null &&
+        subClientContactMap != null &&
+        subClientContactMap.containsKey( subClientContact.Id ) ) {
+            return subClientContactMap.get( subClientContact.Id );
+        }
+        return subClientContact.NSP_AIMS_Sub_Client__c;
     }
 
     //
