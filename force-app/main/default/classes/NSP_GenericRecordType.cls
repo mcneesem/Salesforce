@@ -71,15 +71,15 @@ public with sharing class NSP_GenericRecordType {
     //              Unlike getRecordTypeId, this matches by record type Name (label) rather than
     //              developer name, iterating all record types on the object.
     // Params: String objectName - the SObject API name (e.g. 'Opportunity')
-    //         String recordTypeName - the record type label to match (case-sensitive, uses ==)
+    //         String label - the record type label to match (case-sensitive, uses ==)
     //
-    public static String getRecordTypeIdByLabel( String objectName, string recordTypeName ) {
+    public static Id getRecordTypeIdByLabel( String objectName, string label ) {
         String returnRecordTypeId = null;
-        if( String.isNotBlank(objectName) && String.isNotBlank(recordTypeName) ) {
+        if( String.isNotBlank(objectName) && String.isNotBlank(label) ) {
             Map<String,Schema.RecordTypeInfo> recordTypeInfoMap = NSP_GenericRecordType.getRecordTypeMap(objectName);
             for( Schema.RecordTypeInfo recordTypeInfo : recordTypeInfoMap.Values() ) {
 
-                if( recordTypeInfo != null && recordTypeInfo.getName() == recordTypeName ) {
+                if( recordTypeInfo != null && recordTypeInfo.getName() == label ) {
                     returnRecordTypeId = recordTypeInfo.getRecordTypeId();
                 }
             }
