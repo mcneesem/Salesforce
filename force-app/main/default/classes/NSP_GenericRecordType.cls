@@ -73,7 +73,7 @@ public with sharing class NSP_GenericRecordType {
     // Params: String objectName - the SObject API name (e.g. 'Opportunity')
     //         String recordTypeName - the record type label to match (case-sensitive, uses ==)
     //
-    public static String getRecordTypeIdBasedOnName( String objectName, string recordTypeName ) {
+    public static String getRecordTypeIdByLabel( String objectName, string recordTypeName ) {
         String returnRecordTypeId = null;
         if( String.isNotBlank(objectName) && String.isNotBlank(recordTypeName) ) {
             Map<String,Schema.RecordTypeInfo> recordTypeInfoMap = NSP_GenericRecordType.getRecordTypeMap(objectName);
