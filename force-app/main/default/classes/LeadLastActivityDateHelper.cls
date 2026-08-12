@@ -7,6 +7,7 @@ public without sharing class LeadLastActivityDateHelper {
 
     public static void updateLeadLastActivityDate( Set<Id> whoIds ) {
         try {
+            Set<String> statusValues = new Set<String>{ 'Nurturing', 'Unqualified'};
             List<Lead> relatedLeads = null;
             if ( ( whoIds != null ) && !whoIds.isEmpty() ) {
                 relatedLeads = [
@@ -16,6 +17,11 @@ public without sharing class LeadLastActivityDateHelper {
                         ( Id IN : whoIds )
                         AND ( DNB_Connect_DUNS_Number__c != null )
                         AND ( LastActivityDate != null )
+                        AND (
+                            (NSP_Reason__c != null)
+                            OR
+                            ( Status NOT IN :statusValues )
+                        )
                     )
                 ];
             }
@@ -42,7 +48,7 @@ public without sharing class LeadLastActivityDateHelper {
         List<Lead> leadsWithDuns = null;
         if ( ( lastActivityDateMap != null ) && !lastActivityDateMap.isEmpty() ) {
             leadsWithDuns = [
-                SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate , NSP_Last_Activity__c 
+                SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate , NSP_Last_Activity__c
                 FROM Lead
                 WHERE ( DNB_Connect_DUNS_Number__c IN :lastActivityDateMap.keySet() )
                 ORDER BY LastActivityDate DESC NULLS LAST
