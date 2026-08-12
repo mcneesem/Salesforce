@@ -579,7 +579,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     accountId.add(leadObject.convertedAccountId);
                 }
             }
-            setContactasCOI(accountLeadMap, opportunityLeadMap);
+            setContactasCOI(JSON.serialize(accountLeadMap), JSON.serialize(opportunityLeadMap));
             // added as a part of story STY-02090
             setContactAsPrimary( accountId );
             if (convertedOpportunityIdsSet.size() > 0) {
@@ -894,8 +894,12 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param leadList List of lead.
     // @return void
     //
-    public void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
+    @future
+    public static void setContactasCOI( String accountLeadString , String opportunityLeadString ) {
         try {
+             Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
+             Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
+
             List<AccountContactRelation> acrList = new List<AccountContactRelation>();
             for ( String accntID : accountLeadMap.keyset() ) {
                 Lead leadObject = accountLeadMap.get( accntID );
