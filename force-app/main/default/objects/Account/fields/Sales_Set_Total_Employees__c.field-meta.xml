@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NSP_Max_Days_Overdue__c</fullName>
-    <description>Shows the maximum days overdue of pending invoices</description>
+    <fullName>Sales_Set_Total_Employees__c</fullName>
     <externalId>false</externalId>
-    <formula>136</formula>
+    <formula>Sales_Set_Membership__r.NSP_Group__r.Total_Employees_Sales__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>DEPRECATED Max Days Overdue</label>
+    <label>Sales Set Total Employees</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

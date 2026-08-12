@@ -38,9 +38,9 @@
                 <label>Lori Sweeney</label>
             </value>
             <value>
-                <fullName>Taylor Queen</fullName>
+                <fullName>Samantha Pellerin</fullName>
                 <default>false</default>
-                <label>Taylor Queen</label>
+                <label>Samantha Pellerin</label>
             </value>
             <value>
                 <fullName>Dawn Motsiff</fullName>
@@ -57,6 +57,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Andrea Cook</label>
+            </value>
+            <value>
+                <fullName>Taylor Queen</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Taylor Queen</label>
             </value>
         </valueSetDefinition>
     </valueSet>

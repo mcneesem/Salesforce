@@ -178,6 +178,16 @@
                 <identifier>RecordMismatch_Asset_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Revised_Amendment_Start_Date__c</fieldItem>
+                <identifier>RecordRevised_Amendment_Start_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-3cdff98e-fada-4720-aec0-d76fe468c6f7</name>
         <type>Facet</type>
     </flexiPageRegions>

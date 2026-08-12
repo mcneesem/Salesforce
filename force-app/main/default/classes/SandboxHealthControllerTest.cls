@@ -438,6 +438,54 @@ private class SandboxHealthControllerTest {
     }
 
     @IsTest
+    private static void testVerifyUserTriggerSettings_passWhenFieldsBlank() {
+        UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
+        uts.AllowedAdmins__c = null;
+        uts.BccAddresses__c = null;
+        upsert uts;
+
+        Test.startTest();
+        SandboxHealthController.Section s = SandboxHealthController.verifyUserTriggerSettings();
+        Test.stopTest();
+
+        System.assertNotEquals(null, s, 'Section should not be null');
+        assertValidSection(s);
+        System.assertEquals(SandboxHealthController.STATUS.PASS.name(), s.status, 'Section should PASS when both fields are blank');
+
+        Map<String, SandboxHealthController.Check> byKey = new Map<String, SandboxHealthController.Check>();
+        for (SandboxHealthController.Check c : s.checks) {
+            byKey.put(c.key, c);
+        }
+        System.assert(byKey.containsKey('uts_admins'), 'Check uts_admins should be present');
+        System.assert(byKey.containsKey('uts_bcc'), 'Check uts_bcc should be present');
+        System.assertEquals(SandboxHealthController.STATUS.PASS.name(), byKey.get('uts_admins').status, 'AllowedAdmins__c blank should PASS');
+        System.assertEquals(SandboxHealthController.STATUS.PASS.name(), byKey.get('uts_bcc').status, 'BccAddresses__c blank should PASS');
+    }
+
+    @IsTest
+    private static void testVerifyUserTriggerSettings_failWhenFieldsPopulated() {
+        UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
+        uts.AllowedAdmins__c = 'admin@example.invalid';
+        uts.BccAddresses__c = 'bcc@example.invalid';
+        upsert uts;
+
+        Test.startTest();
+        SandboxHealthController.Section s = SandboxHealthController.verifyUserTriggerSettings();
+        Test.stopTest();
+
+        System.assertNotEquals(null, s, 'Section should not be null');
+        assertValidSection(s);
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), s.status, 'Section should FAIL when fields are not blank');
+
+        Map<String, SandboxHealthController.Check> byKey = new Map<String, SandboxHealthController.Check>();
+        for (SandboxHealthController.Check c : s.checks) {
+            byKey.put(c.key, c);
+        }
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), byKey.get('uts_admins').status, 'AllowedAdmins__c populated should FAIL');
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), byKey.get('uts_bcc').status, 'BccAddresses__c populated should FAIL');
+    }
+
+    @IsTest
     private static void testVerifyExternalIdObjects_allRecordsValid() {
         // Configure OrgSettings to check Account
         OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
@@ -469,4 +517,6 @@ private class SandboxHealthControllerTest {
         }
         System.assert(foundAccountCheck, 'Should have check for Account object');
     }
+
 }
+//

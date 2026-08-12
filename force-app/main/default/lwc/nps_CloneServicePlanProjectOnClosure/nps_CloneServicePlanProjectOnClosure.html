@@ -62,9 +62,7 @@
             class="slds-section__title-action">
             <span
               class="slds-truncate slds-m-around_x-small"
-              title="Section Title"
-              >Select a Project Template</span
-            >
+              title="Section Title">Select a Project Template</span>
           </div>
           <div class="slds-p-around_medium">
             <lightning-radio-group
@@ -82,9 +80,7 @@
             class="slds-section__title-action">
             <span
               class="slds-truncate slds-m-around_x-small"
-              title="Section Title"
-              >Create Project</span
-            >
+              title="Section Title">Create Project</span>
           </div>
           <div class="slds-m-top_medium slds-p-around_medium">
             <lightning-layout multiple-rows="true">
@@ -124,9 +120,7 @@
               class="slds-section__title-action">
               <span
                 class="slds-truncate slds-m-around_x-small"
-                title="Project Tasks"
-                >Project Tasks</span
-              >
+                title="Project Tasks">Project Tasks</span>
             </div>
             <div class="slds-m-around_medium">
               <c-nsp_alert-message
@@ -135,7 +129,7 @@
                 mode="warning"
                 class="slds-m-bottom_medium slds-show"></c-nsp_alert-message>
 
-              <div style={taskTableHight}>
+              <div class={taskTableHight}>
                 <lightning-datatable
                   class="taskDataTable"
                   key-field="Id"
@@ -178,8 +172,7 @@
             </div>
           </div>
 
-          <div class="slds-align_absolute-center">
-            <div slot="actions">
+          <div slot="actions" class="slds-align_absolute-center">
               <lightning-button
                 type="submit"
                 label="Create Project"
@@ -189,7 +182,6 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               <lightning-button onclick={handleCancelModal} label="Cancel">
               </lightning-button>
-            </div>
           </div>
         </lightning-card>
       </div>

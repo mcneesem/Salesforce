@@ -11,11 +11,11 @@
             <assignToReference>filteredContentDocuments</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_Content_Documents</elementReference>
+                <elementReference>Loop_For_Each_Valid_Document</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Content_Document</targetReference>
+            <targetReference>Loop_For_Each_Valid_Document</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -105,7 +105,7 @@
             <assignToReference>newShare.ShareType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>I</stringValue>
+                <stringValue>V</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -280,14 +280,14 @@
             <name>Has_Content_Documents</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>filteredContentDocuments</leftValueReference>
+                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>filteredContentDocuments</leftValueReference>
+                <leftValueReference>Get_Manageable_Content_Documents</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -634,7 +634,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Check_Content_Document</targetReference>
+            <targetReference>Loop_For_Each_Valid_Document</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -658,7 +658,7 @@
         <description>Valid Document if Title is less than 80 char</description>
         <name>b_isValidTitle</name>
         <dataType>Boolean</dataType>
-        <expression>LEN({!Iterate_Content_Documents.Title}) &lt;= 80</expression>
+        <expression>LEN( {!Loop_For_Each_Valid_Document.Title} ) &lt;= 80</expression>
     </formulas>
     <interviewLabel>Portal Task Files {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -671,7 +671,7 @@
         <collectionReference>filteredContentDocuments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>isValidTitle</targetReference>
+            <targetReference>Check_Content_Document</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Count_Manageable_Project_Task_Content_Document_Links</targetReference>
@@ -703,6 +703,20 @@
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Check_New_Shares</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_For_Each_Valid_Document</name>
+        <label>Loop : For Each Valid Document</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_Manageable_Content_Documents</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>isValidTitle</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Portal_Task_Content_Document_Links</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -755,7 +769,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Portal_Task_Content_Document_Links</targetReference>
+            <targetReference>Loop_For_Each_Valid_Document</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Content_Documents</targetReference>
@@ -834,7 +848,7 @@
             <field>ShareType</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>I</stringValue>
+                <stringValue>V</stringValue>
             </value>
         </filters>
         <filters>

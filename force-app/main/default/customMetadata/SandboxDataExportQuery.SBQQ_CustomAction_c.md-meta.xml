@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SBQQ__CustomAction__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__ParentCustomAction__c,Id,SBQQ__ConditionsMet__c, Name, SBQQ__Action__c, SBQQ__Active__c, SBQQ__BrandButton__c, SBQQ__Class__c,  SBQQ__Default__c, SBQQ__Description__c, SBQQ__DisplayOrder__c, SBQQ__EventHandlerName__c, SBQQ__IconClass__c, SBQQ__Icon__c, SBQQ__Label__c, SBQQ__Location__c, SBQQ__PageHandlerName__c, SBQQ__Page__c, SBQQ__ReturnURL__c, SBQQ__TargetObject__c, SBQQ__Type__c, SBQQ__URLTarget__c, SBQQ__URL__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__CustomAction__c</value>
+    </values>
+</CustomMetadata>

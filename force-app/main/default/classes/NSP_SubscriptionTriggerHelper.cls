@@ -43,48 +43,63 @@ public class NSP_SubscriptionTriggerHelper {
     // @param newList List of New subscriptions.
     // @return void
     //
-    //
-    public void populateFieldValuesOnInsert (List<SBQQ__Subscription__c> newList) {
-
+    public void populateFieldValuesOnInsert ( List<SBQQ__Subscription__c> newList ) {
         Set<String> orderItemIds = new Set<String> ();
         for ( SBQQ__Subscription__c sub : newList ) {
-            if(sub.SBQQ__OrderProduct__c != null) {
-                orderItemIds.add(sub.SBQQ__OrderProduct__c);
+            if ( sub.SBQQ__OrderProduct__c != null ) {
+                orderItemIds.add( sub.SBQQ__OrderProduct__c );
             }
             //This code is used to set the subscription start and end date
-            if(sub.NSP_SubscriptionStartDate__c == NSP_CPQConstants.SUBS_PROJGOLIVE && sub.NSP_ProjectGoLiveDate__c != null && sub.NSP_Quote_Type__c == NSP_CPQConstants.ORDER_TYPE_NEW){
+            if ( ( sub.NSP_SubscriptionStartDate__c == NSP_CPQConstants.SUBS_PROJGOLIVE )
+                && ( sub.NSP_ProjectGoLiveDate__c != null )
+                && ( sub.NSP_Quote_Type__c == NSP_CPQConstants.ORDER_TYPE_NEW )
+                )
+            {
                 sub.SBQQ__SubscriptionStartDate__c = sub.NSP_ProjectGoLiveDate__c;
-                sub.SBQQ__SubscriptionEndDate__c = sub.NSP_ProjectGoLiveDate__c.addMonths(12) - 1;
+                sub.SBQQ__SubscriptionEndDate__c = ( sub.NSP_ProjectGoLiveDate__c.addMonths( 12 ) - 1 );
             }
-            if(sub.NSP_SubscriptionStartDate__c == NSP_CPQConstants.SUBS_ODERACTIVATEPLUS1MONTH && sub.SBQQ__SubscriptionStartDate__c != null && sub.NSP_Quote_Type__c == NSP_CPQConstants.ORDER_TYPE_NEW){
-                sub.SBQQ__SubscriptionStartDate__c = sub.SBQQ__SubscriptionStartDate__c.addMonths(1);
-                sub.SBQQ__SubscriptionEndDate__c = sub.SBQQ__SubscriptionStartDate__c.addMonths(12) - 1;
+            if ( ( sub.NSP_SubscriptionStartDate__c == NSP_CPQConstants.SUBS_ODERACTIVATEPLUS1MONTH )
+                && ( sub.SBQQ__SubscriptionStartDate__c != null )
+                && ( sub.NSP_Quote_Type__c == NSP_CPQConstants.ORDER_TYPE_NEW )
+                )
+            {
+                sub.SBQQ__SubscriptionStartDate__c = sub.SBQQ__SubscriptionStartDate__c.addMonths( 1 );
+                sub.SBQQ__SubscriptionEndDate__c = ( sub.SBQQ__SubscriptionStartDate__c.addMonths( 12 ) - 1 );
             }
-            if(sub.NSP_Remove_Bundle_Details__c){
+            if ( sub.NSP_Remove_Bundle_Details__c ) {
                 sub.SBQQ__RootId__c = null;
                 sub.SBQQ__RequiredByProduct__c = null;
                 sub.SBQQ__RequiredById__c = null;
             }
         }
-
-        if(orderItemIds.size()>0){
-            Map<Id, OrderItem> orderlinesMap = new Map<Id, OrderItem>([SELECT Id, OrderItemNumber, NSP_Override_Start_Date__c,ServiceDate, Order.blng__BillingAccount__c FROM OrderItem WHERE Id IN:orderItemIds]);
+        if ( !orderItemIds.isEmpty() ) {
+            Map<Id,OrderItem> orderlinesMap = new Map<Id,OrderItem>(
+                [
+                    SELECT
+                        Id ,
+                        OrderItemNumber ,
+                        NSP_Override_Start_Date__c ,
+                        ServiceDate ,
+                        Order.blng__BillingAccount__c
+                    FROM OrderItem
+                    WHERE ( Id IN :orderItemIds )
+                ]
+            );
             for ( SBQQ__Subscription__c sub : newList ) {
-                if(orderlinesMap.containsKey(sub.SBQQ__OrderProduct__c)){
-                    OrderItem currOrderLine = orderlinesMap.get(sub.SBQQ__OrderProduct__c);
-                    if(currOrderLine.NSP_Override_Start_Date__c!=null && currOrderLine.NSP_Override_Start_Date__c!=currOrderLine.ServiceDate) {
-
+                if ( orderlinesMap.containsKey( sub.SBQQ__OrderProduct__c ) ) {
+                    OrderItem currOrderLine = orderlinesMap.get( sub.SBQQ__OrderProduct__c );
+                    if ( ( currOrderLine.NSP_Override_Start_Date__c != null )
+                        && ( currOrderLine.NSP_Override_Start_Date__c != currOrderLine.ServiceDate )
+                        )
+                    {
                         sub.SBQQ__SubscriptionStartDate__c = currOrderLine.NSP_Override_Start_Date__c;
                     }
-
-                    if (sub.NSP_Billing_Account__c != currOrderLine.Order.blng__BillingAccount__c) {
+                    if ( sub.NSP_Billing_Account__c != currOrderLine.Order.blng__BillingAccount__c ) {
                         sub.NSP_Billing_Account__c = currOrderLine.Order.blng__BillingAccount__c;
                     }
                 }
             }
-
         }
-
     }
 
     //
@@ -98,23 +113,34 @@ public class NSP_SubscriptionTriggerHelper {
     private void populateOriginalDateAndWaivedAmount(List<SBQQ__Subscription__c> newList){
         Set<Id> quoteLineIds= new Set<Id>();
         Set<Id> revOrderProdIds = new Set<Id>();
+        Set<String> orderItemIds = new Set<String> ();
         List<OrderItem> opUpdateList = new List<OrderItem>();
         Map<Id,SBQQ__Subscription__c> updateSubsMap = new Map<Id,SBQQ__Subscription__c>();
         for ( SBQQ__Subscription__c sub : newList ) {
             if(sub.SBQQ__QuoteLine__c != null) {
                 quoteLineIds.add(sub.SBQQ__QuoteLine__c);
             }
+            if(sub.SBQQ__OrderProduct__c != null) {
+                orderItemIds.add(sub.SBQQ__OrderProduct__c);
+            }
 
-                if(sub.NSP_Remove_Bundle_Details__c && (sub.SBQQ__RootId__c != null || sub.SBQQ__RequiredById__c != null || sub.SBQQ__RequiredByProduct__c != null )){
-                    sub.SBQQ__RootId__c = null;
-                    sub.SBQQ__RequiredByProduct__c = null;
-                    sub.SBQQ__RequiredById__c = null;
+            if(sub.NSP_Remove_Bundle_Details__c && (sub.SBQQ__RootId__c != null || sub.SBQQ__RequiredById__c != null || sub.SBQQ__RequiredByProduct__c != null )){
+                sub.SBQQ__RootId__c = null;
+                sub.SBQQ__RequiredByProduct__c = null;
+                sub.SBQQ__RequiredById__c = null;
+            }
+        }
 
-                }
-                if(sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__TerminatedDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null){
-                    sub.SBQQ__TerminatedDate__c = sub.NSP_ProjectGoLiveDate__c - 1;
+        if( !orderItemIds.isEmpty() ){
+            Map<Id, OrderItem> orderlinesMap = new Map<Id, OrderItem>([SELECT Id, NSP_Override_Start_Date__c FROM OrderItem WHERE Id IN:orderItemIds]);
+            for ( SBQQ__Subscription__c sub : newList ) {
+                if( sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__TerminatedDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null
+                    && sub.SBQQ__OrderProduct__c != null && orderlinesMap != null && !orderlinesMap.isEmpty() ){
+                    OrderItem currOrderLine =  orderlinesMap.get(sub.SBQQ__OrderProduct__c);
+                    sub.SBQQ__TerminatedDate__c = currOrderLine.NSP_Override_Start_Date__c - 1;
                     revOrderProdIds.add(sub.SBQQ__OrderProduct__c);
                 }
+            }
         }
         if(quoteLineIds.size()>0){
             Map<Id,SBQQ__QuoteLine__c> quoteLinesMap= new Map<Id,SBQQ__QuoteLine__c>([SELECT Id,SBQQ__Source__c,SBQQ__Quote__r.SBQQ__Type__c FROM SBQQ__QuoteLine__c WHERE Id IN:quoteLineIds]);

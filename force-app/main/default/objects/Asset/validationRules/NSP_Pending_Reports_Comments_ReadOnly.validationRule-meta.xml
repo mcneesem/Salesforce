@@ -2,6 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Pending_Reports_Comments_ReadOnly</fullName>
     <active>false</active>
+    <description>DEPRECATED -</description>
     <errorConditionFormula>AND(
   ISCHANGED( NSP_Pending_Report_Comments__c ) ,
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_AssetValidations__c ) ,

@@ -1,13 +1,13 @@
+:host {
+    --modal-container-max-width: 80rem;
+    --modal-container-height: 110%;
+}
+
 .modal-hidden {
     display: none;
 }
-.slds-modal__content {
-        /*  height: 59% !important;*/
 
-}
-.slds-modal__container{
-    /* width: 60%!important; */
-    /* max-height: 85rem!important;  */
-    max-width: 80rem!important; 
-    height: 110% !important;
+.modal-container {
+    max-width: var(--modal-container-max-width);
+    height: var(--modal-container-height);
 }

@@ -243,8 +243,8 @@ public class NSP_OrderItemTriggerHelper {
             if(op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE && op.SBQQ__Activated__c == false && op.SBQQ__BillingFrequency__c=='Annual' && op.SBQQ__QuoteLine__r.SBQQ__EndDate__c!=null && op.EndDate!= op.SBQQ__QuoteLine__r.SBQQ__EndDate__c ) {
                 orderItemNewMap.get(op.Id).EndDate = op.SBQQ__QuoteLine__r.SBQQ__EndDate__c;
             }
-            if ( orderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != null
-                && orderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != orderItemOldMap.get(op.id).NSP_Project_Completion_Date__c
+            if ( ( orderItemNewMap.get( op.Id ).NSP_Override_Start_Date__c != null )
+                && ( orderItemNewMap.get( op.Id ).NSP_Override_Start_Date__c != orderItemOldMap.get( op.Id ).NSP_Override_Start_Date__c )
                 )
             {
                 if ( actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c )
@@ -369,15 +369,13 @@ public class NSP_OrderItemTriggerHelper {
         // STY-03095 - logic to handle order line reprocessing that calls CPQ Quote Calculator API
         if ( !statusIdToChange.isEmpty() || !orderLinesToActivate.isEmpty() ) {
             for ( OrderItem oi : orderItemNewMap.values() ) {
-
                 if ( statusIdToChange.contains(oi.Id) ) {
                     oi.NSP_Order_Product_Activated__c = true;
                     oi.NSP_ReCalculation_Status_Internal__c = 'Processing';
-                    oi.NSP_Override_Start_Date__c = oi.NSP_Project_Completion_Date__c;
-                    oi.blng__OverrideInitialRevenueStartDate__c = oi.NSP_Project_Completion_Date__c;
-                    oi.blng__OverrideNextBillingDate__c = oi.NSP_Project_Completion_Date__c;
+                    oi.blng__OverrideInitialRevenueStartDate__c = oi.NSP_Override_Start_Date__c;
+                    oi.blng__OverrideNextBillingDate__c = oi.NSP_Override_Start_Date__c;
+                    oi.blng__NextChargeDate__c = oi.NSP_Override_Start_Date__c;
                 }
-
             }
         }
         // STY-03076 - logic to handle multiple invoice lines grouping

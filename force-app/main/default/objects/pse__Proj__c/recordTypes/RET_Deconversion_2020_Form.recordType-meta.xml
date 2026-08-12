@@ -390,15 +390,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore Advanced Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HRCore Amendment Parent</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HRCore Performance Management - Small Business</fullName>
+            <fullName>HRCore Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Cobra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore E-Verify Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore EE Nav Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore HRRC User License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore NoahFace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Vendor File Feeds</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Handbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IIS Revolution Benefits IMPL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -478,6 +510,74 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RS TalentConnect SMS Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore ACA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Advanced Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore COBRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore E-Verify Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore EE Nav Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Flexible Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore HRRC User License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore NoahFace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Performance Small Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove HRCore Vendor File Feeds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove TES 360 Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remove TES 360 Retirement Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sage Support</fullName>
             <default>false</default>
         </values>
@@ -551,6 +651,10 @@
         </values>
         <values>
             <fullName>iSolved Flexible Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved HCM Historical Data</fullName>
             <default>false</default>
         </values>
         <values>

@@ -1,10 +1,10 @@
 @isTest
 private class NSP_PrepSandboxTest {
 
-    @IsTest
+    @isTest
     private static void testUpdateUserLogins() {
-        String suffix = String.valueOf( System.now().getTime() );
-        String local = 'testuser@example.com.' + suffix; // Prevent DmlException DUPLICATE_USERNAME
+        String suffix = String.valueOf(System.now().getTime());
+        String local = 'testuser@example.com.' + suffix;
         Profile profile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         User user = new User(
             FirstName = 'Test',
@@ -20,51 +20,43 @@ private class NSP_PrepSandboxTest {
         );
         insert user;
 
-        // Query the test user
         User testUser = [SELECT Id FROM User WHERE Username = :local];
-        UserLogin ulogin = [SELECT Id, IsFrozen, UserId From UserLogin Where UserId = :testUser.Id LIMIT 1];
-        if (ulogin != null) {
-            ulogin.IsFrozen = true;
-            update ulogin;
-        }
+        UserLogin ulogin = [SELECT Id, IsFrozen, UserId FROM UserLogin WHERE UserId = :testUser.Id LIMIT 1];
+        ulogin.IsFrozen = true;
+        update ulogin;
 
-        // Mock the Database.UpsertResult for the test user
         Database.UpsertResult userResult = (Database.UpsertResult) JSON.deserialize(
             '{"success":true,"id":"' + testUser.Id + '"}',
             Database.UpsertResult.class
         );
 
-        // Call the updateUserLogins method with the mock result
         Test.startTest();
         NSP_PrepSandbox.updateUserLogins(new List<Database.UpsertResult>{ userResult });
         Test.stopTest();
 
-        // Verify that the UserLogin record was updated
         UserLogin updatedUserLogin = [SELECT Id, IsFrozen FROM UserLogin WHERE UserId = :testUser.Id];
-        System.assertEquals(false, updatedUserLogin.IsFrozen, 'UserLogin record should have IsFrozen set to false');
+        System.Assert.areEqual(false, updatedUserLogin.IsFrozen, 'UserLogin record should have IsFrozen set to false');
     }
 
     @isTest
     private static void testSandboxPrep() {
-        // Insert logic here to create records of the objects that the class your testing manipulates.
         Integer queueCount = 0;
 
         Test.startTest();
-        //Execute test script with RunAsAutoProcUser set to true
         Test.testSandboxPostCopyScript(new NSP_PrepSandbox(), UserInfo.getOrganizationId(),
                 UserInfo.getOrganizationId(), UserInfo.getOrganizationName(), true);
         Test.stopTest();
 
-        // Insert assert statements here to check that the records you created above have the values you expect.        
-        for(Group queue:[SELECT id, email FROM Group WHERE type = 'Queue' AND email > ''])
-        {
-            if(queue.email.indexOf('.invalid') == -1){
+        for (Group queue : [SELECT id, email FROM Group WHERE type = 'Queue' AND email > '']) {
+            if (queue.email.indexOf('.invalid') == -1) {
                 queueCount++;
             }
         }
-        System.assertEquals(0, queueCount);
+        System.Assert.areEqual(0, queueCount);
     }
 
+    // SeeAllData required: doCSettings and doCMetadata read live Custom Settings and Custom Metadata
+    // that cannot be created in test context (DocuSign_Settings__c, NSP_DocuSign_Signers__mdt, etc.)
     @isTest(SeeAllData=true)
     private static void testManualSteps() {
         Test.startTest();
@@ -75,7 +67,35 @@ private class NSP_PrepSandboxTest {
         NSP_PrepSandbox.doCSettings('merge');
         NSP_PrepSandbox.doCSettings('test');
         NSP_PrepSandbox.doCMetadata('test');
+        NSP_PrepSandbox.doAvaTaxSettings();
         Test.stopTest();
+    }
+
+    @isTest
+    private static void testIsCurrentUserAllowedE2C_allowed() {
+        Profile profile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+        User allowedUser = new User(
+            FirstName = 'Paul',
+            LastName = 'McCluskey',
+            Email = 'paul.mccluskey@insperity.com',
+            Username = 'paul.mccluskey@insperity.com.' + String.valueOf(System.now().getTime()),
+            Alias = 'pmcclus',
+            TimeZoneSidKey = 'America/Chicago',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = profile.Id,
+            LanguageLocaleKey = 'en_US'
+        );
+        insert allowedUser;
+
+        Boolean result;
+        System.runAs(allowedUser) {
+            Test.startTest();
+            result = NSP_PrepSandbox.isCurrentUserAllowedE2C();
+            Test.stopTest();
+        }
+
+        System.Assert.areEqual(true, result, 'User with matching email should be allowed');
     }
 
     @isTest
@@ -84,13 +104,12 @@ private class NSP_PrepSandboxTest {
         PageReference pageRef = Page.SandboxManualSteps;
         Test.setCurrentPage(pageRef);
         NSP_PrepSandbox prep = new NSP_PrepSandbox();
-        System.assertEquals(null,prep.resetResult());
-        System.assertEquals(null,prep.doUserImportPage());
-        System.assertEquals(null,prep.runManualStepsButton());
-        System.assertEquals(null,prep.runManualStepsButton2());
-        System.assertEquals(null,prep.runE2CAddressesButton());
+        System.Assert.areEqual(null, prep.resetResult());
+        System.Assert.areEqual(null, prep.doUserImportPage());
+        System.Assert.areEqual(null, prep.runManualStepsButton());
+        System.Assert.areEqual(null, prep.runManualStepsButton2());
+        System.Assert.areEqual(null, prep.runE2CAddressesButton());
         Test.stopTest();
     }
 
 }
-//

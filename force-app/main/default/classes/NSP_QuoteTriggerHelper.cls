@@ -114,50 +114,53 @@ public class NSP_QuoteTriggerHelper {
         }
     }
 
-    //
-    // Method added for STY-00397 to copy approval status to  status feild on quote and STY-01394 :  set lock recordtype on quote
-    // @param QuoteNewMap Map of New Quote.
-    // @param QuoteOldMap Map of Old Quote.
-    // @return void
-    //
+    // copy approval status to  status field on quote and set lock recordtype on quote
     public void copyApprovalStatusToQuoteStatus( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
-        Map<String,string> quoteLockedRecordTypeMap = new Map<String,string>();
-        quoteLockedRecordTypeMap.put('NSP_Recruiting_and_Talent_Connect','NSP_Recruiting_and_Talent_Connect_Locked');
-        quoteLockedRecordTypeMap.put('NSP_Retirement_Services','NSP_Retirement_Services_Locked');
-        quoteLockedRecordTypeMap.put('NSP_Standard','NSP_Standard_Locked');
-        quoteLockedRecordTypeMap.put('NSP_WO_WS','NSP_WO_WS_Locked');
-        quoteLockedRecordTypeMap.put('NSP_WX_WA','NSP_WX_WA_Locked');
-        for(SBQQ__Quote__c newQuote : quoteNewMap.values()){
-
-            SBQQ__Quote__c oldQuote = quoteOldMap != null ? quoteOldMap.get(newQuote.id):null;
-            if(string.isNotBlank(newQuote.ApprovalStatus__c) && newQuote.ApprovalStatus__c != oldQuote.ApprovalStatus__c){
-
-                if(newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_PENDING ){
+        Map<String,String> quoteLockedRecordTypeMap = new Map<String,String>();
+        quoteLockedRecordTypeMap.put( 'NSP_Recruiting_and_Talent_Connect' , 'NSP_Recruiting_and_Talent_Connect_Locked' );
+        quoteLockedRecordTypeMap.put( 'NSP_Retirement_Services' , 'NSP_Retirement_Services_Locked' );
+        quoteLockedRecordTypeMap.put( 'NSP_Standard' , 'NSP_Standard_Locked' );
+        quoteLockedRecordTypeMap.put( 'NSP_WO_WS' , 'NSP_WO_WS_Locked' );
+        quoteLockedRecordTypeMap.put( 'NSP_WX_WA' , 'NSP_WX_WA_Locked' );
+        Map<Id,Schema.RecordTypeInfo> quoteRecordTypeInfosById = Schema.SObjectType.SBQQ__Quote__c.getRecordTypeInfosById();
+        for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
+            SBQQ__Quote__c oldQuote = ( ( quoteOldMap != null ) ? quoteOldMap.get( newQuote.Id ) : null );
+            if ( String.isNotBlank( newQuote.ApprovalStatus__c )
+                && ( newQuote.ApprovalStatus__c != oldQuote.ApprovalStatus__c )
+                )
+            {
+                Schema.RecordTypeInfo quoteRecordTypeInfo = quoteRecordTypeInfosById?.get( newQuote.RecordTypeId );
+                String recordTypeDevName = quoteRecordTypeInfo?.getDeveloperName();
+                if ( newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_PENDING ) {
                     newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_SFA;
                     // update the quote to locked recordtype and store the previous recordtype id
-                    string recordTypeDevName = Schema.SObjectType.SBQQ__Quote__c.getRecordTypeInfosById().get(newQuote.recordTypeId).getDeveloperName();
-                    if(String.isNotBlank(recordTypeDevName) && quoteLockedRecordTypeMap.containsKey(recordTypeDevName)){
-                        newQuote.recordTypeId = Schema.SObjectType.SBQQ__Quote__c.getRecordTypeInfosByDeveloperName().get(quoteLockedRecordTypeMap.get(recordTypeDevName)).getRecordTypeId();
-                        newQuote.NSP_Previous_RecordType_Id__c = oldQuote.recordTypeId;
+                    if ( String.isNotBlank( recordTypeDevName )
+                        && quoteLockedRecordTypeMap.containsKey( recordTypeDevName )
+                        )
+                    {
+                        newQuote.RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'SBQQ__Quote__c' , quoteLockedRecordTypeMap.get( recordTypeDevName ) );
+                        newQuote.NSP_Previous_RecordType_Id__c = oldQuote.RecordTypeId;
                     }
                 }
-                if(newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED  ){
-                    newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_APPROVED ;
-                     // update the quote to locked recordtype
-                     string recordTypeDevName = Schema.SObjectType.SBQQ__Quote__c.getRecordTypeInfosById().get(newQuote.recordTypeId).getDeveloperName();
-                     if(String.isNotBlank(recordTypeDevName) && quoteLockedRecordTypeMap.containsKey(recordTypeDevName)){
-                         newQuote.recordTypeId = Schema.SObjectType.SBQQ__Quote__c.getRecordTypeInfosByDeveloperName().get(quoteLockedRecordTypeMap.get(recordTypeDevName)).getRecordTypeId();
-                         newQuote.NSP_Previous_RecordType_Id__c = oldQuote.recordTypeId;
-                     }
+                if ( newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED ) {
+                    newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_APPROVED;
+                    // update the quote to locked recordtype
+                    if ( String.isNotBlank( recordTypeDevName )
+                        && quoteLockedRecordTypeMap.containsKey( recordTypeDevName )
+                        )
+                    {
+                        newQuote.RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'SBQQ__Quote__c' , quoteLockedRecordTypeMap.get( recordTypeDevName ) );
+                        newQuote.NSP_Previous_RecordType_Id__c = oldQuote.RecordTypeId;
+                    }
                 }
-                if(newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_REJECTED  ){
+                if ( newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_REJECTED ) {
                     newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_REJECTED;
                 }
-                if(newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_RECALLED ){
-                    newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_RECALLED ;
+                if ( newQuote.ApprovalStatus__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_RECALLED ) {
+                    newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_RECALLED;
                     // change recordtype to previus value
-                    if(String.isNotBlank(newQuote.NSP_Previous_RecordType_Id__c)){
-                        newQuote.recordTypeId = newQuote.NSP_Previous_RecordType_Id__c;
+                    if ( String.isNotBlank( newQuote.NSP_Previous_RecordType_Id__c ) ) {
+                        newQuote.RecordTypeId = newQuote.NSP_Previous_RecordType_Id__c;
                     }
                 }
             }

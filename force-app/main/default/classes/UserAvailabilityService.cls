@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (85%)
+    // test w/ UserAvailabilityServiceTest (90%)
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -284,46 +284,75 @@ public with sharing class UserAvailabilityService {
             && !userIds.isEmpty()
             )
         {
+            Map<Id,String> timeZoneByUser = UserAvailabilityService.getUserTimeZones( userIds );
             for ( Event windowEvt : windows ) {
-                // Determine the calendar date this window slot falls on
-                Date windowDate = null;
-                if ( windowEvt.StartDateTime != null ) {
-                    windowDate = windowEvt.StartDateTime.date();
-                }
                 // Resolve which users are capped on this specific day
-                Set<Id> cappedToday = new Set<Id>();
-                if ( ( cappedUsersByDay != null )
-                    && ( windowDate != null )
-                    && ( cappedUsersByDay.get( windowDate ) != null )
-                    && cappedUsersByDay.containsKey( windowDate )
-                    )
-                {
-                    cappedToday = cappedUsersByDay.get( windowDate );
-                }
+                Set<Id> cappedToday = UserAvailabilityService.buildCappedTodaySet( cappedUsersByDay , windowEvt );
                 List<Id> availableForWindow = new List<Id>();
                 for ( Id uid : userIds ) {
                     // Skip this user for this day if they are capped
-                    if ( cappedToday.contains( uid ) ) {
-                        continue;
-                    }
-                    if ( busyByUser.containsKey( uid )
-                        && ( busyByUser.get( uid ) != null )
+                    if ( !cappedToday?.contains( uid )
+                        && UserAvailabilityService.isUserAvailableForWindow( uid , busyByUser , windowEvt , skill , timeZoneByUser )
                         )
                     {
-                        Integer slotCount = UserAvailabilityService.countAvailableSlots(
-                            busyByUser.get( uid ) ,
-                            windowEvt ,
-                            skill
-                        );
-                        if ( slotCount > 0 ) {
-                            availableForWindow.add( uid );
-                        }
+                        availableForWindow.add( uid );
                     }
                 }
                 idsPerWindow.add( availableForWindow );
             }
         }
         return idsPerWindow;
+    }
+
+    private static Boolean isUserAvailableForWindow(
+        Id uid ,
+        Map<Id,List<Event>> busyByUser ,
+        Event windowEvt ,
+        String skill ,
+        Map<Id,String> timeZoneByUser
+        )
+    {
+        Boolean response = false;
+        if ( ( uid != null )
+            && ( busyByUser != null )
+            && busyByUser.containsKey( uid )
+            && ( busyByUser.get( uid ) != null )
+            && ( timeZoneByUser != null )
+            && timeZoneByUser.containsKey( uid )
+            && ( timeZoneByUser.get( uid ) != null )
+            )
+        {
+            Id userBusinessHoursId = UserAvailabilityService.sellerBusinessHoursId( timeZoneByUser.get( uid ) );
+            Integer slotCount = UserAvailabilityService.countAvailableSlots(
+                busyByUser.get( uid ) ,
+                windowEvt ,
+                skill ,
+                userBusinessHoursId
+            );
+            if ( slotCount != null && slotCount > 0 ) {
+                response = true;
+            }
+        }
+        return response;
+    }
+
+    private static Set<Id> buildCappedTodaySet( Map<Date,Set<Id>> cappedUsersByDay , Event window ) {
+        // Determine the calendar date this window slot falls on
+        Date windowDate = null;
+        if ( ( window != null ) && ( window.StartDateTime != null ) ) {
+            windowDate = window.StartDateTime.date();
+        }
+        // Resolve which users are capped on this specific day
+        Set<Id> cappedToday = new Set<Id>();
+        if ( ( cappedUsersByDay != null )
+            && ( windowDate != null )
+            && cappedUsersByDay.containsKey( windowDate )
+            && ( cappedUsersByDay.get( windowDate ) != null )
+            )
+        {
+            cappedToday = cappedUsersByDay.get( windowDate );
+        }
+        return cappedToday;
     }
 
     // Helper: convert a flat list of user-ID lists into a matrix of rows with up to N columns
@@ -346,46 +375,91 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static Integer countAvailableSlots( List<Event> records , Event window , String skill ) {
+    private static Integer countAvailableSlots(
+        List<Event> records ,
+        Event window ,
+        String skill ,
+        Id userBusinessHoursId
+        )
+    {
         List<Event> available = UserAvailabilityService.getAvailableSlots(
             records ,
             window ,
-            skill
+            skill ,
+            userBusinessHoursId
         );
         return ( ( available == null ) ? 0 : available.size() );
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static List<Event> getAvailableSlots( List<Event> records , Event window , String skill ) {
-        // Use existing availability algorithm, summing per-user counts per window
-        UserAvailability helper = new UserAvailability();
+    private static List<Event> getAvailableSlots(
+        List<Event> records ,
+        Event window ,
+        String skill ,
+        Id userBusinessHoursId
+        )
+    {
         List<Event> businessHoursFilter = new List<Event>();
-        List<Event> slots = helper.getAvailableSlots(
-            records ,
-            window ,
-            UserAvailabilityService.getStepMinutes( skill )
-        );
-        if ( ( slots != null ) && !slots.isEmpty() ) {
-            for(Event e : slots) {
-                //If time slot falls between Business Hours, include it
-                if ( ( e.StartDateTime != null )
-                    && ( e.EndDateTime != null )
-                    && ( UserAvailabilityService.defaultBusinessHoursId != null )
-                    && BusinessHours.isWithin( UserAvailabilityService.defaultBusinessHoursId , e.StartDateTime ) )
-                {
-                    Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
-                    Datetime completesAt = BusinessHours.add(
-                        UserAvailabilityService.defaultBusinessHoursId ,
-                        e.StartDateTime ,
-                        durationMs
-                    );
-                    if ( completesAt == e.EndDateTime ) {
+        Id orgBhId = UserAvailabilityService.defaultBusinessHoursId;
+        //Checking default and time zone business hours
+        if ( ( userBusinessHoursId != null ) && ( orgBhId != null ) ) {
+            UserAvailability helper = new UserAvailability();
+            List<Event> slots = helper.getAvailableSlots(
+                records ,
+                window ,
+                UserAvailabilityService.getStepMinutes( skill )
+            );
+            if ( ( slots != null ) && !slots.isEmpty() ) {
+                for ( Event e : slots ) {
+                    if ( UserAvailabilityService.isWithin( orgBhId , userBusinessHoursId , e ) ) {
                         businessHoursFilter.add( e );
                     }
                 }
             }
         }
         return businessHoursFilter;
+    }
+
+    private static Boolean isWithin(
+        Id businessHoursId ,
+        Event e ,
+        Long durationMs
+        )
+    {
+        Boolean response = false;
+        if ( ( businessHoursId != null )
+            && ( durationMs != null )
+            && ( e != null )
+            && ( e.StartDateTime != null )
+            && ( e.EndDateTime != null )
+            && BusinessHours.isWithin( businessHoursId , e.StartDateTime ) 
+            && ( BusinessHours.add( businessHoursId , e.StartDateTime , durationMs ) == e.EndDateTime )
+            )
+        {
+            response = true;
+        }
+        return response;
+    }
+
+    private static Boolean isWithin(
+        Id orgBusinessHoursId ,
+        Id userBusinessHoursId ,
+        Event e
+        )
+    {
+        Boolean response = false;
+        if ( ( e != null )
+            && ( e.StartDateTime != null )
+            && ( e.EndDateTime != null )
+            )
+        {
+            Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
+            response = (
+                UserAvailabilityService.isWithin( orgBusinessHoursId , e , durationMs )
+                && UserAvailabilityService.isWithin( userBusinessHoursId , e , durationMs )
+            );
+        }
+        return response;
     }
 
     private static Map<Date,Set<Id>> usersLessFourDemosFilter( Event window , Set<Id> userIds ) {
@@ -502,64 +576,6 @@ public with sharing class UserAvailabilityService {
         return stepMinutes;
     }
 
-    //DEPRECATED
-    public static List<Id> getAvailableUsersForWindow(
-        Datetime startDateTime ,
-        Datetime endDateTime ,
-        String skill
-        )
-    {
-        // Basic input validation (single return rule: just avoid doing work if invalid)
-        Boolean validWindow = (
-            ( startDateTime != null )
-            && ( endDateTime != null )
-            && ( endDateTime > startDateTime )
-        );
-        // Resolve permission set name
-        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
-        Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
-        // Load overlapping events once for all eligible users (only if inputs are valid)
-        // Expand query window backwards by 30 minutes to catch events whose buffer extends into requested slot
-        Event queryWindow = new Event(
-            StartDateTime=startDateTime.addMinutes( -30 ) ,
-            EndDateTime=endDateTime
-        );
-        List<Event> overlapping = UserAvailabilityService.getEventsForUser(
-            userIds ,
-            queryWindow
-        );
-        // Apply 30-min buffer to Demo events
-        overlapping = UserAvailabilityService.addBufferToEvents( overlapping );
-        // Use original requested window for availability calculation
-        Event window = new Event(
-            StartDateTime=startDateTime ,
-            EndDateTime=endDateTime
-        );
-        // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
-        Map<Id,List<Event>> busyByUser = UserAvailabilityService.initializeBusyUserMap( userIds );
-        if ( ( overlapping != null ) && !overlapping.isEmpty() ) {
-            for ( Event e : overlapping ) {
-                if ( !busyByUser.containsKey( e.OwnerId ) ) {
-                    busyByUser.put(
-                        e.OwnerId ,
-                        new List<Event>()
-                    );
-                }
-                busyByUser.get( e.OwnerId ).add( e );
-            }
-        }
-        // Only compute availability if we have a valid window and eligible users
-        List<Id> availableUsers = new List<Id>();
-        if ( validWindow ) {
-            availableUsers = UserAvailabilityService.getAvailableUsersForWindowHelper(
-                busyByUser ,
-                userIds ,
-                window ,
-                skill
-            );
-        }
-        return availableUsers;
-    }
 
     // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
     private static Map<Id,List<Event>> initializeBusyUserMap( Set<Id> userIds ) {
@@ -572,43 +588,6 @@ public with sharing class UserAvailabilityService {
             }
         }
         return busyByUser;
-    }
-
-    // helper method to defeat sonar cognitive complexity...
-    //DEPRECATED
-    private static List<Id> getAvailableUsersForWindowHelper(
-        Map<Id,List<Event>> busyByUser ,
-        Set<Id> userIds ,
-        Event window ,
-        String skill
-        )
-    {
-        List<Id> availableUsers = new List<Id>();
-        if ( ( busyByUser != null )
-            && ( userIds != null )
-            && !userIds.isEmpty()
-            && ( window != null )
-            )
-        {
-            for ( Id uid : userIds ) {
-                List<Event> userBusy = new List<Event>();
-                if ( busyByUser.containsKey( uid )
-                    && ( busyByUser.get( uid ) != null )
-                    )
-                {
-                    userBusy = busyByUser.get( uid );
-                }
-                List<Event> slots = UserAvailabilityService.getAvailableSlots(
-                    userBusy ,
-                    window ,
-                    skill
-                );
-                if ( ( slots != null ) && !slots.isEmpty() ) {
-                    availableUsers.add( uid );
-                }
-            }
-        }
-        return availableUsers;
     }
 
     private static Map<Id,User> getUsers( Set<Id> userIdSet ) {
@@ -838,6 +817,49 @@ public with sharing class UserAvailabilityService {
             return settings;
         }
         private set;
+    }
+    private static Map<String,Id> businessHoursByTimeZone {
+        private get {
+            if ( businessHoursByTimeZone == null ) {
+                businessHoursByTimeZone = new Map<String,Id>();
+                for ( BusinessHours bh : [
+                    SELECT Id , TimeZoneSidKey
+                    FROM BusinessHours
+                    WHERE (
+                        ( IsActive = true )
+                        AND ( Name LIKE 'Schedule Seller: %' )
+                    )
+                ] ) {
+                    businessHoursByTimeZone.put( bh.TimeZoneSidKey , bh.Id );
+                }
+            }
+            return businessHoursByTimeZone;
+        }
+        private set;
+    }
+
+    private static Map<Id,String> getUserTimeZones( Set<Id> userIds ) {
+        Map<Id,String> timeZoneByUser = new Map<Id,String>();
+        if ( ( userIds != null ) && !userIds.isEmpty() ) {
+            for ( User u : [
+                        SELECT Id , TimeZoneSidKey
+                        FROM User
+                        WHERE ( Id IN :userIds )
+                    ]
+                )
+            {
+                timeZoneByUser.put( u.Id , u.TimeZoneSidKey );
+            }
+        }
+        return timeZoneByUser;
+    }
+
+    private static Id sellerBusinessHoursId( String userTimeZone ) {
+        Id userBhId = UserAvailabilityService.defaultBusinessHoursId;
+        if ( String.isNotBlank( userTimeZone ) ) {
+            userBhId = UserAvailabilityService.businessHoursByTimeZone.get( userTimeZone );
+        }
+        return userBhId;
     }
 }
 //

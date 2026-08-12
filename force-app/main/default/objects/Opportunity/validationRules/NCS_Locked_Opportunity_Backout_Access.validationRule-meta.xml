@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NCS_Locked_Opportunity_Backout_Access</fullName>
     <active>false</active>
-    <description>Only Sales Operations and Sales Admin profile should have access to edit backout fields.</description>
+    <description>DEPRECATED - Only Sales Operations and Sales Admin profile should have access to edit backout fields.</description>
     <errorConditionFormula>AND(
   NOT(
     AND(

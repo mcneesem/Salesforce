@@ -86,39 +86,6 @@ private class UserAvailabilityServiceTest {
     }
 
     @isTest
-    private static void testGetAvailableUsersForWindow_validWindow() {
-        List<User> users = getTestUsers();
-        System.assertEquals(2, users.size(), 'Expect two test users');
-
-        // 9:00 - 10:00 window
-        Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(9, 0, 0, 0));
-        Datetime endDT = startDT.addHours(1);
-
-        // We cannot Mixed-DML PermissionSet assignments; rely on controller returning current user
-        // or broad map in test context. We still validate behavior shape.
-        Test.startTest();
-        List<Id> available = UserAvailabilityService.getAvailableUsersForWindow(startDT, endDT, 'Schedule_Seller');
-        Test.stopTest();
-
-        // Expect at least zero; if controller requires real Custom Permission, list may be empty.
-        // Validate the method executes and returns a list without exception.
-        System.assertNotEquals(null, available, 'Method should return a non-null list');
-    }
-
-    @isTest
-    private static void testGetAvailableUsersForWindow_invalidWindowAndNoSkillUsers() {
-        // invalid window (end before start) yields empty
-        Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(10, 0, 0, 0));
-        Datetime endDT = startDT.addHours(-1);
-
-        Test.startTest();
-        List<Id> available = UserAvailabilityService.getAvailableUsersForWindow(startDT, endDT, 'Nonexistent_Skill');
-        Test.stopTest();
-
-        System.assertEquals(0, available.size(), 'Invalid window or no skilled users should return empty list');
-    }
-
-    @isTest
     private static void testGetAggregateCountsMatrix_withTwoUsers() {
         Test.startTest();
         List<List<List<Id>>> matrix = UserAvailabilityService.getAggregateUserIdsMatrix('Schedule_Seller_HR360', 'America/Chicago');
@@ -221,7 +188,7 @@ private class UserAvailabilityServiceTest {
         System.assertNotEquals( null, sorted, 'Sorted list should not be null' );
         System.assertEquals( 2, sorted.size(), 'Both users should be returned' );
 
-        // Identify the busier user (2 events) — must rank LAST
+        // Identify the busier user (2 events) - must rank LAST
         Map<Id, Integer> eventCountByUser = new Map<Id, Integer>();
         for ( AggregateResult ar : [
             SELECT OwnerId, COUNT(Id) cnt

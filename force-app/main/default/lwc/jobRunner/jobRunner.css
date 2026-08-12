@@ -1,3 +1,7 @@
+:host {
+    --jobRunner-table-max-width: 100%;
+}
+
 .table-section {
-    max-width: 100%;
+    max-width: var(--jobRunner-table-max-width);
 }
