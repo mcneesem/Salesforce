@@ -850,10 +850,6 @@
                 <field>NSP_Reserve__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Max_Days_Overdue__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Long_term_Revenue_Growth__c</field>
             </layoutItems>

@@ -13613,10 +13613,18 @@
         <layout>Macro-Macro Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_Account_Group_Member__c-Account Group Member Layout</layout>
+        <layout>NSP_Account_Group_Member__c-Account Group Member Sales Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_Account_Group__c-Account Group Layout</layout>
+        <layout>NSP_Account_Group__c-Account Group Sales Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Account_Group__c-Account Group Sales Layout</layout>
+        <recordType>NSP_Account_Group__c.Automatically_Created</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Account_Group__c-Account Group Sales Layout</layout>
+        <recordType>NSP_Account_Group__c.Manually_Created</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Account_Team__c-Account Team Layout</layout>

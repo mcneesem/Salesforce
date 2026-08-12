@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To control access to the Sandbox Refresh components on the Home Pages</description>
+    <isLicensed>false</isLicensed>
+    <label>Use Sandbox Tools</label>
+</CustomPermission>

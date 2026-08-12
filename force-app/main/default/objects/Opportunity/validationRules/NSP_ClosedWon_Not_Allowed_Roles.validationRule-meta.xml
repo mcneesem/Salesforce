@@ -2,6 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ClosedWon_Not_Allowed_Roles</fullName>
     <active>false</active>
+    <description>DEPRECATED - </description>
     <errorConditionFormula>AND(
   $Permission.Opportunity_Closed_Won_Edit_Not_Allowed ,
   ISPICKVAL( StageName , &apos;Closed Won&apos; ) ,

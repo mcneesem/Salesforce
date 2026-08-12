@@ -5,106 +5,32 @@
   .THIS{
       font-family : 'BrandoSans-TextFL';
   }
-  
+
   .THIS .span-ref {
-        font-size: 46px;
-        color: #001e60;
-        max-width: 540px;
+        color: var(--slds-g-color-accent-dark-1, #001e60);
       font-family : 'BrandoSans-TextFL';
   }
-  
+
   .THIS .p-tag {
-        font-size: 18px;
-        color: #231f20;
+        color: var(--slds-g-color-on-surface-2, #231f20);
       font-family : 'BrandoSans-TextFL';
   }
-  
-  label.THIS {
-        font-size: 18px;
-        color: rgba(35, 31, 32, 0.6);
-        letter-spacing: 0;
-  }
-  
-  
-  .THIS .slds-select {
-        font-size: 18px;
-        color: #231f20;
-        padding: 7px 15px;
-        margin-bottom: 10px;
-        height: auto;
-        border-color: rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-  }
-  
+
   .THIS .select {
-        font-size: 18px;
-        color: #231f20;
-        padding: 7px 15px;
-        margin-bottom: 10px;
+        color: var(--slds-g-color-on-surface-2, #231f20);
         height: auto;
-        border-color: rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
+        border-color: var(--slds-g-color-neutral-base-0, rgba(0, 0, 0, 0.2));
   }
-  
-  .THIS .slds-input{
-            font-size: 18px;
-        color: #231f20;
-        padding: 7px 15px;
-        margin-bottom: 10px;
-        height: auto;
-        border-color: rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-  }
-  
+
   .THIS .my-brand {
-            line-height: 1.2;
       font-weight: var(--slds-g-font-weight-7, 700);
-      border-radius: 2.5rem;
       font-size: var(--slds-g-font-scale-1, 14px);
-      padding: 0.7rem 1.4rem;
       background-color: var(--slds-g-color-palette-hot-orange-50, #d54400);
       border: var(--slds-g-sizing-border-1, 0.111rem) solid var(--slds-g-color-palette-hot-orange-50, #d54400);
       transition: all .3s ease-in-out;
   }
-  
+
   .THIS .my-brand :hover {
-      background-color: #ffffff;
-      color: var(--slds-g-color-palette-hot-orange-50, #d54400); 
-  }
-  
-  .THIS .button[disabled="true"] {
-        background: lightgray;
-  }
-  
-  /* ID/Class specific edits */
-  .THIS #myDivId {
-        max-width: 800px;
-        margin: 0 auto;
-  }
-  
-  .THIS .slds-dueling-list__column button {
-        margin-top: 50px;
-        background-color: #001e60;
-        border-radius: 50%;
-  }
-  
-  .THIS .svg.slds-button__icon {
-        fill: #ffffff !important;
-  }
-  
-  .THIS .slds-form-element__label {
-        font-size: 18px;
-        font-weight: var(--slds-g-font-weight-bold, bold);
-        color: rgba(35, 31, 32, 0.6);
-      letter-spacing: 0;
-  }
-  
-  .THIS .slds-select_container::before {
-        top: 13px;
-        right: 13px;
-  }
-  
-  .THIS .slds-select_container::after {
-        bottom: 23px;
-        right: 13px;
+      background-color: var(--slds-g-color-surface-1, #ffffff);
+      color: var(--slds-g-color-palette-hot-orange-50, #d54400);
   }

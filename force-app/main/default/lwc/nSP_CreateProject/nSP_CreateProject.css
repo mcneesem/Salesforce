@@ -1,7 +1,11 @@
+:host {
+    --example-holder-width: 55px;
+}
+
 .exampleHolder{
     position: center;
     display: inline-block;
-    width: 55px;
+    width: var(--example-holder-width);
     vertical-align: middle;
     white-space: nowrap;
 }

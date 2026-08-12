@@ -262,6 +262,22 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.Manage_Sales_Set</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Sales_Set_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Owner.LastName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Available</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
@@ -402,6 +418,44 @@
                 <identifier>RecordMidMarket_National_Account_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>conditionalFormatRuleset</name>
+                    <value>Sales_Set_Main_Account</value>
+                </fieldInstanceProperties>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sales_Set_Link__c</fieldItem>
+                <identifier>RecordSales_Set_Link__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Sales_Set_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Active</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sales_Set_Total_Employees__c</fieldItem>
+                <identifier>RecordSales_Set_Total_Employees__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Sales_Set_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Active</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-8c992ecb-6d09-490f-8179-4bc7c657c71e</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -490,6 +544,88 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Sales_Set_Status__c|EQUALS|Active</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Sales_Set__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Sales_Set_Members__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>ACCOUNT.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Sales_Set_Main__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_FEIN__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ACCOUNT.EMPLOYEES</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Account_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Sales_Service_Account_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Sales_Set_Join_Date__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Sales Set Active Members</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>Sales_Set_Main__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Descending</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList9</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Sales_Set_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Active</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

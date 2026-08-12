@@ -532,6 +532,77 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HRScale_Docusign_Form_To_Send__c</picklist>
+        <values>
+            <fullName>Acknowledgement of Receipt of Wages</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement to Automate Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cell Phone Stipend%2FReimbursement Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Change of Status Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Direct Debit Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Deduction Authorization for Union Dues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization - Vacation Advance Notice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization New York - Notice of Intent to Recover Wage Overpayment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization New York - Vacation Advance Notice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization New York - Voluntary Deductions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization New York - Wage Advance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Deduction Authorization for Client Sponsored Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Termination Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Garnishment Release Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Void%2C Lost%2C or Stolen Reissue Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washington PFML Power of Attorney</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Method_of_Shipment__c</picklist>
         <values>
             <fullName>Deliver-It</fullName>

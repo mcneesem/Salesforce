@@ -1,5 +1,9 @@
+:host {
+    --confirmationDialog-modal-max-width: 40rem;
+    --confirmationDialog-modal-height: 110%;
+}
 
-.slds-modal__container{
-    max-width: 40rem !important; 
-    height: 110% !important;
+.confirmationDialog-modal-container {
+    max-width: var(--confirmationDialog-modal-max-width);
+    height: var(--confirmationDialog-modal-height);
 }

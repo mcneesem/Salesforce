@@ -139,6 +139,7 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Prevent Flow Errors: We can&apos;t send your email because your email address domain isn&apos;t verified.</description>
         <name>Check_Recipients</name>
         <label>Check Recipients</label>
         <locationX>314</locationX>
@@ -159,6 +160,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$User.Alias</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>autoproc</stringValue>
                 </rightValue>
             </conditions>
             <connector>

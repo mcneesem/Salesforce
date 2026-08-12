@@ -1,12 +1,6 @@
 .custom-box {
     text-align: left;
-    background-color: #a0a0a02f;
-    padding:0.3rem;
-    border: var(--slds-g-sizing-border-1, 1px) solid #d8dde6;
+    background-color: var(--slds-g-color-neutral-base-65);
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #e5e5e5);
     font-size: medium;
-}
-
-.slds-modal__container {
-    width: 70%;
-    max-width: 70rem;
 }

@@ -106,6 +106,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sales Set</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Venture Capital</fullName>
             <default>false</default>
         </values>

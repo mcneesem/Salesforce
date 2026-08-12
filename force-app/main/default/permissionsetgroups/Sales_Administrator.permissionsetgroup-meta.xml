@@ -7,6 +7,7 @@
     <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
     <permissionSets>Import_Personal_Contacts</permissionSets>
+    <permissionSets>Label_Access</permissionSets>
     <permissionSets>Sales_Administrator_Apex_Access</permissionSets>
     <permissionSets>Sales_Administrator_Assigned_Apps</permissionSets>
     <permissionSets>Sales_Administrator_Field_Permissions</permissionSets>

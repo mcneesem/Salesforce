@@ -184,6 +184,73 @@ Modification Log     :
         System.Assert(objaccount.Id!=null);
     }
 
+    @isTest private static void testUnsetDownPaymentOnProject(){
+        List<Account> objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
+        list<Product2> objproductlist  = [Select Id, Name from Product2 WHERE Name != null];
+        List<PriceBookEntry> pblist = new List<PriceBookEntry>();
+        for(Product2 objproduct : objproductlist){
+            pblist.add(NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,false));
+        }
+        insert pblist;
+
+        Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount[0].Id,'New Product',true);
+        SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount[0].Id,objOpprtunity.Id,true);
+        NSP_TestHelper.createCPQQuotelines(objQuote,objproductlist,pblist,true);
+        objQuote.SBQQ__Primary__c = true;
+        objQuote.SBQQ__Ordered__c = true;
+        test.starttest();
+        update objQuote;
+
+        list<contact> cntList = [select id from contact limit 2];
+        list<pse__Proj__c> prjList = [select id from pse__Proj__c limit 2];
+
+        list<OrderItem> orderItemList = new list<OrderItem>([select id,blng__NextBillingDate__c,blng__InvoiceRunProcessingStatus__c from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
+        list<Order> orderList = new list<Order>([select id from Order WHERE SBQQ__Quote__c =:objQuote.Id]);
+        orderList[0].NSP_Project_Go_Live_Date__c = system.today();
+        orderList[0].Status = 'Reviewed';
+        orderList[0].ShipToContactId = cntList[0].id;
+        orderList[0].NSP_Down_Payment_Required__c = 'yes';
+        update orderList;
+        orderItemList[0].blng__InvoiceRunProcessingStatus__c = 'Pending Billing';
+        orderItemList[0].NSP_Project__c = prjList[0].id;
+        update orderItemList;
+        orderList[0].Status = 'Activated';
+        update orderList;
+        orderList[0].blng__BillNow__c = true;
+        update orderList;
+
+        List<blng__Invoice__c> inv = [Select Id,blng__InvoiceStatus__c,blng__Balance__c,blng__PaymentStatus__c,blng__TotalAmount__c from blng__Invoice__c WHERE Id!=null LIMIT 10];
+        inv[0].blng__InvoiceStatus__c = 'Posted';
+        update inv[0];
+
+        // Pay the invoice so Project_Down_Payment_Received__c gets set to true
+        blng__Payment__c currPayment = new blng__Payment__c();
+        currPayment.blng__Account__c = objaccount[0].id;
+        currPayment.blng__Amount__c = inv[0].blng__TotalAmount__c;
+        currPayment.blng__Status__c = 'Posted';
+        currPayment.blng__PaymentDate__c = system.today();
+        currPayment.blng__PaymentType__c = 'Check';
+        insert currPayment;
+        blng__PaymentAllocationInvoice__c paymentAlloc = new blng__PaymentAllocationInvoice__c();
+        paymentAlloc.blng__Payment__c = currPayment.id;
+        paymentAlloc.blng__Amount__c = currPayment.blng__Amount__c;
+        paymentAlloc.blng__Invoice__c = inv[0].Id;
+        paymentAlloc.blng__Type__c = 'Allocation';
+        insert paymentAlloc;
+
+        // Manually set the project checkbox to true to simulate the paid state
+        pse__Proj__c proj = prjList[0];
+        proj.Project_Down_Payment_Received__c = true;
+        update proj;
+
+        // Now directly call unsetDownPaymentOnProject — simulates Paid -> Unpaid transition
+        NSP_InvoiceTriggerHelper.unsetDownPaymentOnProject(new Set<String>{ inv[0].Id });
+        test.stoptest();
+
+        List<pse__Proj__c> updatedProj = [SELECT Id, Project_Down_Payment_Received__c FROM pse__Proj__c WHERE Id = :prjList[0].Id];
+        System.assertEquals(false, updatedProj[0].Project_Down_Payment_Received__c, 'Project_Down_Payment_Received__c should be unchecked after invoice moves to Unpaid');
+    }
+
     @isTest private static void invoiceLineUnpaidTest(){
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         list<Product2> objproductlist  = [Select Id, Name from Product2 WHERE Name != null];

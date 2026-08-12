@@ -1207,30 +1207,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>assetVisualIndicator</componentName>
-                <identifier>c_assetVisualIndicator</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND ( 2 OR 3 )</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Time_Attendance</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Active</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Terminated</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>label</name>
                     <value>Tabs</value>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Create_Outgoing_Opportunity</name>
         <label>Assign varFaultElement - Create Outgoing Opportunity</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -19,9 +20,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Account_Return_if_NOT_owned_by_Available</name>
+        <label>Assign varFaultElement - Get_Account_Return_if_NOT_owned_by_Available</label>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Return_if_NOT_owned_by_Available</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Primary_Opportunity_Record</name>
         <label>Assign varFaultElement - Get Primary Opportunity Record</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -38,7 +56,7 @@
         <name>Map_fields_from_Primary_Opty_to_Outgoing_Opty</name>
         <label>Map fields from Primary Opty to Outgoing Opty</label>
         <locationX>50</locationX>
-        <locationY>458</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varOutgoingOpty.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -88,7 +106,7 @@
     <decisions>
         <name>Check_for_recordId</name>
         <label>Check for recordId</label>
-        <locationX>710</locationX>
+        <locationX>1172</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Missing recordId</defaultConnectorLabel>
         <rules>
@@ -115,9 +133,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Primary_Opty_Account_owned_by_Available</name>
+        <label>Is Primary Opty Account owned by Available?</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>Account is owned by Available</defaultConnectorLabel>
+        <rules>
+            <name>No_Not_owned_by_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Map_fields_from_Primary_Opty_to_Outgoing_Opty</targetReference>
+            </connector>
+            <label>No - Not owned by Available</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_the_Primary_Opportunity_Found</name>
         <label>Was the Primary Opportunity Found?</label>
-        <locationX>314</locationX>
+        <locationX>710</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>No Primary Opportunity found</defaultConnectorLabel>
         <rules>
@@ -138,12 +178,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Map_fields_from_Primary_Opty_to_Outgoing_Opty</targetReference>
+                <targetReference>Get_Account_Return_if_NOT_owned_by_Available</targetReference>
             </connector>
             <label>Yes - Primary Opty found</label>
         </rules>
     </decisions>
-    <description>Populates the OwnerId on create from Primary Opty. Populated with PROD Outgoing RTID</description>
+    <description>Subflow to create an Outgoing Opportunity based on information from the Primary Opportunity.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Create Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Create Outgoing Opportunity</label>
@@ -170,16 +210,47 @@
         <name>Create_Outgoing_Opportunity</name>
         <label>Create Outgoing Opportunity</label>
         <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationY>782</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Outgoing_Opportunity</targetReference>
         </faultConnector>
         <inputReference>varOutgoingOpty</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>Get_Account_Return_if_NOT_owned_by_Available</name>
+        <label>Get Account - Return if NOT owned by Available</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Primary_Opty_Account_owned_by_Available</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Account_Return_if_NOT_owned_by_Available</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varPrimaryOpty.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>varAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Primary_Opportunity_Record</name>
         <label>Get Primary Opportunity Record</label>
-        <locationX>314</locationX>
+        <locationX>710</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -232,7 +303,7 @@
         <queriedFields>OwnerId</queriedFields>
     </recordLookups>
     <start>
-        <locationX>584</locationX>
+        <locationX>1046</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_recordId</targetReference>
@@ -242,7 +313,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -278,6 +349,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>varAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <name>varFaultElement</name>

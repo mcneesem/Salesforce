@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_On_ParentLead_Update</fullName>
     <active>false</active>
-    <description>This validation rule is created as part of CR-027. Only Users with DA/DM role can update Parent Lead lookup</description>
+    <description>DEPRECATED - This validation rule is created as part of CR-027. Only Users with DA/DM role can update Parent Lead lookup</description>
     <errorConditionFormula>AND(
   NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
   $Profile.Name &lt;&gt; &quot;Data Migration&quot; ,

@@ -31,7 +31,8 @@ public with sharing class OrderTriggerActivateOrderProduct {
                 Order.NSP_Usage_Products_Count__c ,
                 ServiceDate ,
                 SBQQ__RequiredBy__c ,
-                EndDate
+                EndDate ,
+                Order.Revised_Amendment_Start_Date__c
             FROM OrderItem
             WHERE (
                 ( OrderId IN :projCompletedIdSet )
@@ -99,10 +100,13 @@ public with sharing class OrderTriggerActivateOrderProduct {
                 && ( oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
                 )
             {
-                oi.NSP_Project_Completion_Date__c = oi.Order.NSP_Project_Go_Live_Date__c;
+                if ( oi.Order.NSP_Project_Go_Live_Date__c != null ) {
+                    oi.NSP_Override_Start_Date__c = System.today();
+                } else {
+                    oi.NSP_Override_Start_Date__c = oi.Order.Revised_Amendment_Start_Date__c;
+                }
                 if ( ( oi.NSP_AnniversaryBlngApplicable__c == true )
                     && ( oi.EndDate != null )
-                    && ( oi.NSP_QL_ActionType__c != 'Amend' )
                     )
                 {
                     oi.blng__BillThroughDateOverride__c = oi.EndDate;
@@ -119,7 +123,6 @@ public with sharing class OrderTriggerActivateOrderProduct {
                 oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                 if ( ( oi.NSP_AnniversaryBlngApplicable__c == true )
                     && ( oi.EndDate != null )
-                    && ( oi.NSP_QL_ActionType__c != 'Amend' )
                     )
                 {
                     oi.blng__BillThroughDateOverride__c = oi.EndDate;

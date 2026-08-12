@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Check_Assign_Lead_Validation_02</fullName>
     <active>false</active>
-    <description>This is  as part of CR-020. This describes, Product of Interest, Zip Code, Number of Employees, Time and Discovery Call Set Date should be populated to check Assign Lead Check box for If user role is Sales Development rep or Sales Development manager.</description>
+    <description>DEPRECATED - This is  as part of CR-020. This describes, Product of Interest, Zip Code, Number of Employees, Time and Discovery Call Set Date should be populated to check Assign Lead Check box for If user role is SDR/SDManager.</description>
     <errorConditionFormula>AND(
 OR($UserRole.Name = &apos;Sales Development Rep&apos;,
 $UserRole.Name = &apos;Sales Development Manager&apos;),

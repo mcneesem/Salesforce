@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Close_Date_Can_not_be_in_the_past</fullName>
     <active>false</active>
-    <description>Updated and activated with NCS carve out and specified for Type = New Product</description>
+    <description>DEPRECATED - Updated and activated with NCS carve out and specified for Type = New Product</description>
     <errorConditionFormula>AND(CloseDate &lt; TODAY (), 
  ISPICKVAL( Type , &quot;New Product&quot;), 
  $UserRole.DeveloperName != &quot;New_Client_Sales&quot;,

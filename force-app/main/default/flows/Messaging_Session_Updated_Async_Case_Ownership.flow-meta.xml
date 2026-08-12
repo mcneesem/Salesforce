@@ -27,7 +27,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>( ( 1 OR 2 ) AND ( 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 ) )</filterLogic>
+        <filterLogic>( ( 1 OR 2 ) AND ( 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19 ) )</filterLogic>
         <filters>
             <field>AcceptTime</field>
             <operator>IsChanged</operator>
@@ -89,6 +89,76 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>00GPb00000VFSBqMAP</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXlxMAF</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXnZMAV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpSJSMA3</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXpBMAV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpS9bMAF</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXqnMAF</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXvdMAF</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GOy00000IpXxFMAV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GPb00000VFSBqMAP</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00GPb00000VFSBrMAP</stringValue>
             </value>
         </filters>
         <object>MessagingSession</object>

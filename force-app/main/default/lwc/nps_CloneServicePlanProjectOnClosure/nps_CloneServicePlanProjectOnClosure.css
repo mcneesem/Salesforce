@@ -1,0 +1,7 @@
+.task-table-default {
+    max-height: 350px;
+}
+
+.task-table-expanded {
+    height: 800px;
+}

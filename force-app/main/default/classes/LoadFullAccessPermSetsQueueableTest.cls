@@ -85,7 +85,7 @@ private class LoadFullAccessPermSetsQueueableTest {
     @isTest
     private static void testloadExternalIds() {
         Test.startTest();
-        LoadFullAccessPermSetsQueueable.loadExternalIds( 'blng__GLAccount__c' );
+        LoadFullAccessPermSetsQueueable.loadExternalIds( 'blng__FinancePeriod__c' );
         Test.stopTest();
     }
 

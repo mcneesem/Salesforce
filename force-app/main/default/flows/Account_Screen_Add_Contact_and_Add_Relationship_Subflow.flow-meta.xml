@@ -293,23 +293,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varErrorMessageToUser_Account_owned_by_Available</name>
-        <label>Assign varErrorMessageToUser - Account owned by Available</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varErrorMessageToUser</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>New Contacts can&apos;t be created on Accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Something_Went_Wrong_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varErrorMessageToUser_Contact_or_Account_was_not_chosen</name>
         <label>Assign varErrorMessageToUser - Contact or Account was not chosen</label>
         <locationX>0</locationX>
@@ -512,6 +495,40 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Account_Info_Check_if_chosen_Account_is_owned_by_Avai</name>
+        <label>Assign varFaultElement - Get_Account_Info_Check_if_chosen_Account_is_owned_by_Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info_Check_if_chosen_Account_is_owned_by_Available</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Info_Return_if_NOT_owned_by_Available</name>
+        <label>Assign varFaultElement - Get_Account_Info_Return_if_NOT_owned_by_Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info_Return_if_NOT_owned_by_Available</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Account_Info_Return_if_Owned_by_Available</name>
         <label>Assign varFaultElement - Get_Account_Info_Return_if_Owned_by_Available</label>
         <locationX>0</locationX>
@@ -672,9 +689,59 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_varErrorMessageToUser_Account_owned_by_Available</targetReference>
+                <targetReference>CannotAddContactsToAvailable_Screen</targetReference>
             </connector>
             <label>Yes - Owned by Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Current_Account_owned_by_Available</name>
+        <label>Is Current Account owned by Available?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Current_Account_is_owned_by_Available_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account owned by Available</defaultConnectorLabel>
+        <rules>
+            <name>No_Current_Account_is_NOT_owned_by_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contact_Search_Screen</targetReference>
+            </connector>
+            <label>No - Current Account is NOT owned by Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_the_chosen_Account_owned_by_Available</name>
+        <label>Is the chosen Account owned by Available?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_chosen_Contact_and_Account_to_varACRToCreate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account is not owned by Available</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Chosen_account_is_owned_by_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chosen_Account_is_owned_by_Available_Screen</targetReference>
+            </connector>
+            <label>Yes - Chosen account is owned by Available</label>
         </rules>
     </decisions>
     <decisions>
@@ -704,7 +771,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_chosen_Contact_and_Account_to_varACRToCreate</targetReference>
+                <targetReference>Get_Account_Info_Check_if_chosen_Account_is_owned_by_Available</targetReference>
             </connector>
             <label>Contact and Account were chosen</label>
         </rules>
@@ -1148,7 +1215,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Contact_Search_Screen</targetReference>
+                <targetReference>Get_Account_Info_Return_if_NOT_owned_by_Available</targetReference>
             </connector>
             <label>Relate existing Contact to current Account</label>
         </rules>
@@ -1229,6 +1296,70 @@
         </faultConnector>
         <inputReference>varACRtoCreate</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Account_Info_Check_if_chosen_Account_is_owned_by_Available</name>
+        <label>Get Account Info - Check if chosen Account is owned by Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_the_chosen_Account_owned_by_Available</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Account_Info_Check_if_chosen_Account_is_owned_by_Avai</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>varAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Account_Info_Return_if_NOT_owned_by_Available</name>
+        <label>Get Account Info - Return if NOT owned by Available</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Current_Account_owned_by_Available</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Account_Info_Return_if_NOT_owned_by_Available</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>varAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>Get_Account_Info_Return_if_Owned_by_Available</name>
         <label>Get Account Info - Return if Owned by Available</label>
@@ -1426,6 +1557,54 @@
         <inputReference>varAccountContactRelation</inputReference>
     </recordUpdates>
     <screens>
+        <name>CannotAddContactsToAvailable_Screen</name>
+        <label>CannotAddContactsToAvailable - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>CannotAddContact_DisplayText</name>
+            <fieldText>&lt;p&gt;New Contacts can&apos;t be created on Accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Chosen_Account_is_owned_by_Available_Screen</name>
+        <label>Chosen Account is owned by Available - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ChosenAccountOwnedByAvailable_DisplayText</name>
+            <fieldText>&lt;p&gt;The Account that you have chosen is owned by the &quot;Available&quot; user. New Contact Relationships cannot be created on that Account. Please contact your District Manager to request this account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Contact_Search_Screen</name>
         <label>Contact Search Screen</label>
         <locationX>0</locationX>
@@ -1503,6 +1682,30 @@
         <fields>
             <name>NewContactEndFlow_DisplayText</name>
             <fieldText>&lt;p&gt;The Contact record for {!First_Name} {!Last_Name} related to {!varContact.Account.Name} has been created.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Current_Account_is_owned_by_Available_Screen</name>
+        <label>Current Account is owned by &quot;Available&quot; - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>OwnedByAvailable_DisplayText</name>
+            <fieldText>&lt;p&gt;Contacts cannot be related to Accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -2296,7 +2499,7 @@
         </fields>
         <fields>
             <name>CloseScreen_DisplayText</name>
-            <fieldText>&lt;p&gt;Please close out of this screen and go back to the Account record to try again.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Please submit a request for assistance with this Contact creation to salestechnology@insperity.com.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>

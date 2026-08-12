@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SBQQ__ProductOption__c</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldApiNames__c</field>
+        <value xsi:type="xsd:string">NSP_External_Id__c,SBQQ__Feature__r.NSP_External_Id__c, SBQQ__ConfiguredSKU__c,SBQQ__OptionalSKU__c,SBQQ__AppliedImmediatelyContext__c, SBQQ__AppliedImmediately__c, SBQQ__Bundled__c, SBQQ__ComponentCodePosition__c, SBQQ__ComponentCode__c, SBQQ__ComponentDescriptionPosition__c, SBQQ__ComponentDescription__c, SBQQ__DefaultPricingTable__c, SBQQ__DiscountAmount__c, SBQQ__DiscountSchedule__c, SBQQ__Discount__c, SBQQ__DiscountedByPackage__c, SBQQ__ExistingQuantity__c,  SBQQ__MaxQuantity__c, SBQQ__MinQuantity__c, SBQQ__Number__c, SBQQ__QuantityEditable__c, SBQQ__Quantity__c, SBQQ__QuoteLineVisibility__c, SBQQ__RenewalProductOption__c, SBQQ__Required__c, SBQQ__Selected__c, SBQQ__SubscriptionScope__c, SBQQ__System__c, SBQQ__Type__c, SBQQ__UnitPrice__c, SBQQ__UpliftedByPackage__c, NSP_Active_1099_Contractors__c, NSP_Active_W2_Employees__c, NSP_Estimated_Number_Of_Employees__c, NSP_Exclude_From_Report__c,  NSP_ITSTimeSimplicity_Quantity__c, NSP_ITSUserLicense_Quantity__c, NSP_ITS_Telepunch_Users_Quantity__c, NSP_Implementation_Start_Date__c, NSP_Include_in_IWX_bundle_Rollup__c, NSP_Lock_Discount__c, NSP_Multiple_CompaniesQuantityApplicable__c, NSP_No_of_Hiring_Managers__c, NSP_Number_Of_Boxes__c, NSP_Number_Of_Users__c, NSP_Number_of_Checks__c, NSP_Parent_ProductCode__c, NSP_Product_Option_Type__c, NSP_ProjRec_End_Date__c, NSP_ProjRec_Start_Date__c, NSP_Quoted_Quantity__c, NSP_RPO_End_Date__c, NSP_RPO_Start_Date__c, NSP_Setup_Product_Code__c, NSP_Sort_Order_QLI__c, NSP_Talent_ConnectSubscription_StartDate__c, NSP_Talent_Connect_Subscription_End_Date__c, NSP_Target_Date__c, NSP_TimeStar_User_License__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OrderBy__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SObjectApiName__c</field>
+        <value xsi:type="xsd:string">SBQQ__ProductOption__c</value>
+    </values>
+</CustomMetadata>

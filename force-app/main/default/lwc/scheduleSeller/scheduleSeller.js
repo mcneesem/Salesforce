@@ -78,17 +78,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                         );
                         //
                         const endDate = new Date( this.timeBlocks[rowIndex].EndDateTime );
-                        const endUTCDate = new Date(
-                            Date.UTC(
-                                fullDate.getUTCFullYear() ,
-                                fullDate.getUTCMonth() ,
-                                fullDate.getUTCDate() ,
-                                endDate.getUTCHours() ,
-                                endDate.getUTCMinutes() ,
-                                0
-                            )
-                        );
-                        //
+                        const endUTCDate = new Date( startUTCDate.getTime() + ( endDate.getTime() - startDate.getTime() ) );
                         // default Button disabled when zero availability
                         const idArray = ( Array.isArray( counts[colIndex] ) ? counts[colIndex] : [] );
                         const countVal = idArray.length;

@@ -3,7 +3,11 @@
     --slds-g-sizing-border-1: 0;
 }
 
+:host {
+    --helptext-offset-top: -0.125rem;
+}
+
 .relative-up_x-small {
     position: relative;
-    top: -0.125rem;
+    top: var(--helptext-offset-top);
 }

@@ -1,9 +1,1 @@
-.CLASSIC {
-    min-width: 66rem;
-}
-.LARGE {
-    min-width: 40rem;
-}
-.SMALL {
-    min-width: var(--slds-g-sizing-14, 15rem);
-}
+/* Add your CSS styles here */

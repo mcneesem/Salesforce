@@ -11,15 +11,7 @@ lightning-formatted-text{
 }
 
 .nsp_richTextBox{
-  padding: 10px;
-  border: var(--slds-g-sizing-border-1, 1px) solid lightgray;
-  margin-right: 10px;
-  margin-left: 3px;
-  height:auto;
-  max-height:100px;
-  width:100% ;
-}
-
-.nsp_margin{
-  margin-left: 3px;
+  padding: var(--slds-g-spacing-3, 0.75rem);
+  border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #e5e5e5);
+  margin-right: var(--slds-g-spacing-3, 0.75rem);
 }
