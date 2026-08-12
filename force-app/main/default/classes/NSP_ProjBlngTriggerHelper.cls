@@ -1,3 +1,4 @@
+// intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
 public without sharing class NSP_ProjBlngTriggerHelper {
     // test w/ NSP_ProjBlngTriggerHelperTest (81%)
 
