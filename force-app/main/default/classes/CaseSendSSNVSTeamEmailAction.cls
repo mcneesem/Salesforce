@@ -272,12 +272,13 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
         Map<Id, String> subClientContactMap
         )
     {
+        String aimsClientNumber = subClientContact.NSP_AIMS_Sub_Client__c;;
         if ( subClientContact != null &&
         subClientContactMap != null &&
         subClientContactMap.containsKey( subClientContact.Id ) ) {
-            return subClientContactMap.get( subClientContact.Id );
+            aimsClientNumber = subClientContactMap.get( subClientContact.Id );
         }
-        return subClientContact.NSP_AIMS_Sub_Client__c;
+        return aimsClientNumber;
     }
 
     //
