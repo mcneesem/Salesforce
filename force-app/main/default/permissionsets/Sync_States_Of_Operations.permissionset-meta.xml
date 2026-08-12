@@ -5,6 +5,10 @@
         <name>Sync_States_Of_Operations</name>
     </customPermissions>
     <description>Grants the Custom Permission to resynchronize Asset States of Operations.</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Asset_Screen_Sync_States_Of_Operations</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sync States Of Operations</label>
 </PermissionSet>
