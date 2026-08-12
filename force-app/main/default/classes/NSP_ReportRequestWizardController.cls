@@ -241,6 +241,7 @@ public with sharing class NSP_ReportRequestWizardController {
                             ( NSP_Contact__c = :contactId )
                             AND ( NSP_Sub_Client__r.NSP_Account__c = :accountId )
                             AND ( NSP_Sub_Client__c != null )
+                            AND (NSP_Paid_Non_Paid__c ='Paid WSEE')
                         )
                     ];
                     if ( !accSubClientContList.isEmpty() ) {
