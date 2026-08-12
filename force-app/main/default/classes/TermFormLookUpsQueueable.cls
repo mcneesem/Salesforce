@@ -62,6 +62,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Supervisor__c = this.newRolesMap.get( NSP_ServiceConstants.PAYROLL_SUPERVISOR );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST)
                     && mapTermForm.NSP_Payroll_Specialist__c != null
@@ -70,6 +71,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Payroll_Specialist__c = this.newRolesMap.get( NSP_ServiceConstants.PAYROLL_SPECIALIST );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR)
                     && mapTermForm.NSP_Sales_Representative__c != null
@@ -78,6 +80,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Sales_Representative__c = this.newRolesMap.get( NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION)
                     && mapTermForm.NSP_Client_Liaison__c != null
@@ -86,6 +89,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Client_Liaison__c = this.newRolesMap.get( NSP_ServiceConstants.CLIENT_LIAISION );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX)
                     && mapTermForm.NSP_Account_Executive__c != null
@@ -94,6 +98,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Account_Executive__c = this.newRolesMap.get( NSP_ServiceConstants.MID_MARKET_ACC_EX );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES)
                     && mapTermForm.NSP_Manager_HR_Services__c != null
@@ -102,6 +107,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Manager_HR_Services__c = this.newRolesMap.get( NSP_ServiceConstants.MANAGER_HRSERVICES );
+                    updateTermForm.add( mapTermForm );
                 }
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)
                     && mapTermForm.NSP_Insperity_Blended_Role__c != null
@@ -110,8 +116,8 @@ public class TermFormLookUpsQueueable implements Queueable {
                     )
                 {
                     mapTermForm.NSP_Insperity_Blended_Role__c = this.newRolesMap.get( NSP_ServiceConstants.BUS_TEAM_HRSP_CL );
+                    updateTermForm.add( mapTermForm );
                 }
-                updateTermForm.add( mapTermForm );
             }
         }
         if ( !updateTermForm.isEmpty() ) {
