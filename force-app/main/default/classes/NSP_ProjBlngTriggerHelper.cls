@@ -1,4 +1,4 @@
-public with sharing class NSP_ProjBlngTriggerHelper {
+public without sharing class NSP_ProjBlngTriggerHelper {
     // test w/ NSP_ProjBlngTriggerHelperTest (81%)
 
     private static final String PROJECT_UPDATE_ORDER='PROJECT_UPDATE_ORDER';
