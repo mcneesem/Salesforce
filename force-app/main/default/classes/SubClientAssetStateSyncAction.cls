@@ -6,22 +6,20 @@ public class SubClientAssetStateSyncAction {
                     )
     public static List<Boolean> invoke( List<Id> inputs ) {
         List<Boolean> response = new List<Boolean>();
-        if ( ( inputs != null ) && !inputs.isEmpty() ) {
-            for ( Id assetId : inputs ) {
-                response.add( SubClientAssetStateSyncAction.processAssets( new Set<Id>{ assetId } ) );
+        try {
+            if ( ( inputs != null ) && !inputs.isEmpty() ) {
+                NSP_SubClientAssetStateSyncJob syncJob = new NSP_SubClientAssetStateSyncJob();
+                for ( Id assetId : inputs ) {
+                    response.add( syncJob.handleAssets( new Set<Id>{ assetId } ) );
+                }
             }
+        } catch ( Exception exceptionRecord ) {
+            NSP_ErrorLogHandler.logException(
+                SubClientAssetStateSyncAction.class.getName() ,
+                'processAssets' ,
+                exceptionRecord
+            );
         }
         return response;
-    }
-
-    private static Boolean processAssets( Set<Id> assetIds ) {
-        Boolean success = false;
-        try {
-            NSP_SubClientAssetStateSyncJob syncJob = new NSP_SubClientAssetStateSyncJob();
-            success = syncJob.handleAssets( assetIds );
-        } catch ( Exception exceptionRecord ) {
-            NSP_ErrorLogHandler.logException( SubClientAssetStateSyncAction.class.getName(), 'processAssets', exceptionRecord );
-        }
-        return success;
     }
 }

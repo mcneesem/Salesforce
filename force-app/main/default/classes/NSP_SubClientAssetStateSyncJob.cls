@@ -186,7 +186,6 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 'handleAssets' ,
                 e
             );
-            response = false;
         }
         return response;
     }
@@ -407,21 +406,26 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         //Update Sub Client and Asset with updated State of Operation
         if(!subClientStateToBeUpdated.isEmpty()) {
             Database.SaveResult[] results = Database.update(subClientStateToBeUpdated, false);
-            for(Database.SaveResult result : results) {
-                if(!result.isSuccess()) {
-                    response = false;
-                }
+            if( !NSP_SubClientAssetStateSyncJob.isUpdateSuccessful(results) ) {
+                response = false;
             }
         }
         if(!assetStateToBeUpdated.isEmpty()) {
             Database.SaveResult[] results = Database.update(assetStateToBeUpdated, false);
-            for(Database.SaveResult result : results) {
-                if(!result.isSuccess()) {
-                    response = false;
-                }
+            if( !NSP_SubClientAssetStateSyncJob.isUpdateSuccessful(results) ) {
+                response = false;
             }
         }
         return response;
+    }
+
+    private static Boolean isUpdateSuccessful( Database.SaveResult[] results ) {
+        for( Database.SaveResult result : results ) {
+            if( !result.isSuccess() ) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 //

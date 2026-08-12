@@ -10,12 +10,14 @@
         <connector>
             <targetReference>Check_Resync_Result</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Resync_WO_Asset_States</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>inputs</name>
             <value>
                 <elementReference>recordId</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <nameSegment>SubClientAssetStateSyncAction</nameSegment>
@@ -39,6 +41,26 @@
                 <stringValue>Get_Related_Sub_Clients</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Resync_WO_Asset_States</name>
+        <label>Set Fault Element - Resync WO Asset States</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Resync_WO_Asset_States</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
     </assignments>
     <choices>
         <name>No</name>
@@ -74,13 +96,6 @@
         <rules>
             <name>Sub_Clients_Found</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Related_Sub_Clients.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>Get_Related_Sub_Clients.Id</leftValueReference>
                 <operator>IsBlank</operator>
@@ -234,6 +249,31 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Error_Screen_Flow_FaultMessage</name>
+        <label>Error Screen: Flow FaultMessage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message_Flow_FaultMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>No_Sub_Clients_Message</name>
         <label>No Sub Clients Message</label>
         <locationX>0</locationX>
@@ -315,13 +355,34 @@
         </connector>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>AssetIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow</name>
+        <label>Insperity Fault Handler Subflow Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Error_Screen_Flow_FaultMessage</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Asset_Screen_Sync_States_Of_Operations</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
@@ -337,13 +398,6 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

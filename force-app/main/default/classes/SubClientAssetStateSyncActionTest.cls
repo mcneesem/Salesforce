@@ -9,11 +9,7 @@ private class SubClientAssetStateSyncActionTest {
         insert accountRecord;
 
         // Asset creation
-        Id woRecordTypeId = Schema.SObjectType.Asset
-            .getRecordTypeInfosByDeveloperName()
-            .get('WO')
-            .getRecordTypeId();
-
+        Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );      
         Asset assetRecord = new Asset();
         assetRecord.Name = 'Test Asset';
         assetRecord.AccountId = accountRecord.Id;
@@ -57,13 +53,16 @@ private class SubClientAssetStateSyncActionTest {
 
     @isTest
     private static void resyncStatesOfOperationsTest() {
-        Asset assetRecord = [
+        List<Asset> assetRecords = new List<Asset>();
+        assetRecords = [
             SELECT Id
             FROM Asset
             WHERE Name = 'Test Asset'
             LIMIT 1
         ];
-        List<Id> inputs = new List<Id>{ assetRecord.Id };
+        Assert.isNotNull(assetRecords, 'Asset list should not be null.');
+        Assert.isFalse(assetRecords.isEmpty(), 'Test Asset should exist.');    
+        List<Id> inputs = new List<Id>{ assetRecords[0].Id };
         
         Test.startTest();
         List<Boolean> results = SubClientAssetStateSyncAction.invoke(inputs);
@@ -72,19 +71,25 @@ private class SubClientAssetStateSyncActionTest {
         Assert.isNotNull( results, 'A response list should be returned.' );
         Assert.areEqual( 1, results.size(), 'One response should be returned for one input.' );
         Assert.isTrue( results[0], 'The resynchronisation should complete successfully.' );
-        Asset updatedAsset = [
+        List<Asset> updatedAssets = new List<Asset>();
+        updatedAssets = [
             SELECT Id, NSP_States_of_Operations__c
             FROM Asset
-            WHERE Id = :assetRecord.Id
+            WHERE Id = :assetRecords[0].Id
         ];
-        Assert.areEqual( 'AZ;', updatedAsset.NSP_States_of_Operations__c, 'The Asset should contain the eligible state.' );
-        NSP_Sub_Client__c updatedSubClient = [
+        Assert.isNotNull( updatedAssets, 'Updated Asset list should not be null.' );
+        Assert.isFalse( updatedAssets.isEmpty(), 'Updated Asset should exist.' );
+        Assert.areEqual( 'AZ;', updatedAssets[0].NSP_States_of_Operations__c, 'The Asset should contain the eligible state.' );
+        List<NSP_Sub_Client__c> updatedSubClients = new List<NSP_Sub_Client__c>();
+        updatedSubClients = [
             SELECT Id, NSP_States_of_Operations__c
             FROM NSP_Sub_Client__c
-            WHERE NSP_Asset__c = :assetRecord.Id
+            WHERE NSP_Asset__c = :assetRecords[0].Id
             LIMIT 1
         ];
-        Assert.areEqual( 'AZ;', updatedSubClient.NSP_States_of_Operations__c, 'The Sub Client should contain the eligible state.' );
+        Assert.isNotNull( updatedSubClients, 'Updated Sub Client list should not be null.' );
+        Assert.isFalse( updatedSubClients.isEmpty(), 'Updated Sub Client should exist.' );
+        Assert.areEqual( 'AZ;', updatedSubClients[0].NSP_States_of_Operations__c, 'The Sub Client should contain the eligible state.' );
     }
 
     @isTest
