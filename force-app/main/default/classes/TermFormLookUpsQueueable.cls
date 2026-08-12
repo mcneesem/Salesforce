@@ -56,7 +56,6 @@ public class TermFormLookUpsQueueable implements Queueable {
             // Iterate through Account key
             for ( NSP_Termination_Form__c mapTermForm : terminationForms ) {
                 Boolean isChanged = false;
-
                 if ( this.newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR)
                     && mapTermForm.NSP_Supervisor__c != null
                     && oldRolesMap.containsKey( NSP_ServiceConstants.PAYROLL_SUPERVISOR )
@@ -120,8 +119,7 @@ public class TermFormLookUpsQueueable implements Queueable {
                     mapTermForm.NSP_Insperity_Blended_Role__c = this.newRolesMap.get( NSP_ServiceConstants.BUS_TEAM_HRSP_CL );
                     isChanged = true;
                 }
-
-                if(isChanged) {
+                if ( isChanged ) {
                     updateTermForm.add( mapTermForm );
                 }
             }
