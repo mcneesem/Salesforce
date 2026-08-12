@@ -7,9 +7,9 @@ public without sharing class LeadLastActivityDateHelper {
 
     public static void updateLeadLastActivityDate( Set<Id> whoIds ) {
         try {
-            Set<String> statusValues = new Set<String>{ 'Nurturing', 'Unqualified'};
             List<Lead> relatedLeads = null;
             if ( ( whoIds != null ) && !whoIds.isEmpty() ) {
+                // prevent DmlExcpetions: FIELD_CUSTOM_VALIDATION_EXCEPTION, Please select a Reason.: [NSP_Reason__c]
                 relatedLeads = [
                     SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate
                     FROM Lead
@@ -18,9 +18,13 @@ public without sharing class LeadLastActivityDateHelper {
                         AND ( DNB_Connect_DUNS_Number__c != null )
                         AND ( LastActivityDate != null )
                         AND (
-                            (NSP_Reason__c != null)
-                            OR
-                            ( Status NOT IN :statusValues )
+                            ( NSP_Reason__c != null )
+                            OR (
+                                Status NOT IN (
+                                    'Nurturing' ,
+                                    'Unqualified'
+                                )
+                            )
                         )
                     )
                 ];
