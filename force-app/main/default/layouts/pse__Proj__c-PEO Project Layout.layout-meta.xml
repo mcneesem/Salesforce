@@ -173,6 +173,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Is_Opportunity_Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>pse__Is_Active__c</field>
             </layoutItems>
             <layoutItems>

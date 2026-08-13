@@ -213,6 +213,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Is_Opportunity_Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>pse__Is_Active__c</field>
             </layoutItems>
             <layoutItems>

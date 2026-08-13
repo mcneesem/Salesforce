@@ -152,6 +152,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Is_Opportunity_Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>pse__Region__c</field>
             </layoutItems>
         </layoutColumns>

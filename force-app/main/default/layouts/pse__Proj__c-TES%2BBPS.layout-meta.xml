@@ -57,6 +57,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Is_Opportunity_Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Project_Class__c</field>
             </layoutItems>
             <layoutItems>

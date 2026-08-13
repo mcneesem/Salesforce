@@ -328,6 +328,16 @@
                 <identifier>Recordpse_Is_Template_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Is_Opportunity_Template__c</fieldItem>
+                <identifier>RecordIs_Opportunity_Template_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-00f7ff95-9394-4822-87d1-8c5c48febb5f</name>
         <type>Facet</type>
     </flexiPageRegions>

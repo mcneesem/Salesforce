@@ -557,6 +557,20 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Is_Opportunity_Template__c</fieldItem>
+                <identifier>RecordIs_Opportunity_Template_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Region__c</fieldItem>
                 <identifier>Recordpse__Region__cField</identifier>
             </fieldInstance>

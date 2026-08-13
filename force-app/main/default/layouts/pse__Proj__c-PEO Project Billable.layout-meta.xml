@@ -149,6 +149,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Is_Opportunity_Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>TemplateName__c</field>
             </layoutItems>
             <layoutItems>
