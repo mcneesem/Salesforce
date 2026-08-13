@@ -354,55 +354,31 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         List<NSP_Sub_Client__c> subClientStateToBeUpdated = new List<NSP_Sub_Client__c>();
         List<Asset> assetStateToBeUpdated = new List<Asset>();
         //Below code helps to store states for respective sub client
-        List<NSP_Sub_Client_Contact_Address__c> subClientConAddresses = [
-            SELECT
-            Id , NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c , NSP_Address_Type__c ,
-            NSP_State__c , NSP_Sub_Client_Contact__c , NSP_Sub_Client_Contact__r.NSP_Sub_Client__c
-            FROM NSP_Sub_Client_Contact_Address__c
-            WHERE (
-                NSP_Sub_Client_Contact__c = :subClientContact
-                AND NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null
-                AND NSP_State__c != null
-                AND NSP_Sub_Client_Contact__r.NSP_Paid_Non_Paid__c = 'Paid WSEE'
-                AND NSP_Sub_Client_Contact__r.NSP_Employee_Status__c != 'TERMINATED'
-            )
-            LIMIT :NSP_SubClientAssetStateSyncJob.soqlAddressLimit
-        ];
-        for(NSP_Sub_Client_Contact_Address__c subClientConAddress : subClientConAddresses ) {
-            if(subClientByStates.containsKey(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c)) {
-                String states = subClientByStates.get(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c);
-                states = states + (!states.contains(subClientConAddress.NSP_State__c) ? subClientConAddress.NSP_State__c + ';' : '');
-                subClientByStates.put(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c, states);
-            }else {
-                subClientByStates.put(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c, subClientConAddress.NSP_State__c+ ';');
-            }
-            //Below code helps to store states for respective Asset
-            if(assetByStates.containsKey(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c)) {
-                String states = assetByStates.get(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c);
-                states = states + (!states.contains(subClientConAddress.NSP_State__c) ? subClientConAddress.NSP_State__c + ';': '');
-                assetByStates.put(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c, states);
-            }else {
-                assetByStates.put(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c, subClientConAddress.NSP_State__c + ';');
-            }
+        List<NSP_Sub_Client_Contact_Address__c> subClientConAddresses = new List<NSP_Sub_Client_Contact_Address__c>();
+        if( subClientContact != null && !subClientContact.isEmpty() ) {
+            subClientConAddresses = [
+                SELECT
+                Id ,
+                NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c ,
+                NSP_Address_Type__c ,
+                NSP_State__c ,
+                NSP_Sub_Client_Contact__c ,
+                NSP_Sub_Client_Contact__r.NSP_Sub_Client__c
+                FROM NSP_Sub_Client_Contact_Address__c
+                WHERE (
+                    NSP_Sub_Client_Contact__c IN :subClientContact
+                    AND NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null
+                    AND NSP_State__c != null
+                    AND NSP_Sub_Client_Contact__r.NSP_Paid_Non_Paid__c = 'Paid WSEE'
+                    AND NSP_Sub_Client_Contact__r.NSP_Employee_Status__c != 'TERMINATED'
+                )
+                LIMIT :NSP_SubClientAssetStateSyncJob.soqlAddressLimit
+            ];
         }
-        //build state of operation field for sub client
-        if(!existingSubClients.isEmpty()) {
-            for(Id subClientId : existingSubClients.keyset()) {
-                NSP_Sub_Client__c updatedSubClient = new NSP_Sub_Client__c();
-                updatedSubClient.Id = subClientId;
-                updatedSubClient.NSP_States_of_Operations__c = subClientByStates.containsKey(subClientId)? subClientByStates.get(subClientId) : null;
-                subClientStateToBeUpdated.add(updatedSubClient);
-            }
-        }
-        //build state of operation field for Asset
-        if(!setOfParentIds.isEmpty()) {
-            for(Id assetId : setOfParentIds) {
-                Asset updatedAsset = new Asset();
-                updatedAsset.Id = assetId;
-                updatedAsset.NSP_States_of_Operations__c = assetByStates.containsKey(assetId) ? assetByStates.get(assetId) : null;
-                assetStateToBeUpdated.add(updatedAsset);
-            }
-        }
+        NSP_SubClientAssetStateSyncJob.buildStateMaps( subClientConAddresses , subClientByStates , assetByStates );
+        NSP_SubClientAssetStateSyncJob.buildUpdateLists( existingSubClients , setOfParentIds ,
+                                                        subClientByStates , assetByStates ,
+                                                        subClientStateToBeUpdated , assetStateToBeUpdated );
         //Update Sub Client and Asset with updated State of Operation
         if(!subClientStateToBeUpdated.isEmpty()) {
             Database.SaveResult[] results = Database.update(subClientStateToBeUpdated, false);
@@ -419,13 +395,79 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         return response;
     }
 
-    private static Boolean isUpdateSuccessful( Database.SaveResult[] results ) {
-        for( Database.SaveResult result : results ) {
-            if( !result.isSuccess() ) {
-                return false;
+    private static void buildStateMaps(
+        List<NSP_Sub_Client_Contact_Address__c> subClientConAddresses ,
+        Map<Id,String> subClientByStates ,
+        Map<Id,String> assetByStates )
+    {
+        if( subClientConAddresses != null && !subClientConAddresses.isEmpty() ) {
+            for( NSP_Sub_Client_Contact_Address__c subClientConAddress : subClientConAddresses ) {
+                Id subClientId = subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c;
+                Id assetId = subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c;
+                String state = subClientConAddress.NSP_State__c;
+                NSP_SubClientAssetStateSyncJob.addStateToMap( subClientByStates , subClientId , state );
+                NSP_SubClientAssetStateSyncJob.addStateToMap( assetByStates , assetId , state );
             }
         }
-        return true;
+    }
+
+    private static void addStateToMap( Map<Id,String> statesById , Id recordId , String state ) {
+        if( statesById != null && recordId != null && state != null ) {
+            String states = statesById.get(recordId);
+            if(states == null) {
+                states = '';
+            }
+            if(!states.contains(state)) {
+                states += state + ';';
+            }
+            statesById.put(recordId, states);
+        }
+    }
+
+    private static void buildUpdateLists(
+        Map<Id,NSP_Sub_Client__c> existingSubClients ,
+        Set<Id> setOfParentIds ,
+        Map<Id,String> subClientByStates ,
+        Map<Id,String> assetByStates ,
+        List<NSP_Sub_Client__c> subClientStateToBeUpdated ,
+        List<Asset> assetStateToBeUpdated
+    ) {
+        if( existingSubClients != null &&
+           !existingSubClients.isEmpty() &&
+           subClientByStates != null &&
+           subClientStateToBeUpdated != null )
+        {
+            for(Id subClientId : existingSubClients.keySet()) {
+                NSP_Sub_Client__c updatedSubClient = new NSP_Sub_Client__c();
+                updatedSubClient.Id = subClientId;
+                updatedSubClient.NSP_States_of_Operations__c = subClientByStates.get(subClientId);
+                subClientStateToBeUpdated.add(updatedSubClient);
+            }
+        }
+        if( setOfParentIds != null &&
+           !setOfParentIds.isEmpty() &&
+           assetByStates != null &&
+           assetStateToBeUpdated != null )
+        {
+            for(Id assetId : setOfParentIds) {
+                Asset updatedAsset = new Asset();
+                updatedAsset.Id = assetId;
+                updatedAsset.NSP_States_of_Operations__c = assetByStates.get(assetId);
+                assetStateToBeUpdated.add(updatedAsset);
+            }
+        }
+    }
+
+    private static Boolean isUpdateSuccessful( Database.SaveResult[] results ) {
+        Boolean response = true;
+        if( results != null && !results.isEmpty() ) {
+            for( Database.SaveResult result : results ) {
+                if( result != null && !result.isSuccess() ) {
+                    response = false;
+                }
+            }
+        }
+        return response;
     }
 }
 //
