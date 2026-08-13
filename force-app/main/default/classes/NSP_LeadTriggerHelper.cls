@@ -894,7 +894,7 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param leadList List of lead.
     // @return void
     //
-    public static void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
+    public void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
         if(!accountLeadMap?.isEmpty() && !opportunityLeadMap?.isEmpty()) {
 
             if(!System.isFuture() && Limits.getFutureCalls() < Limits.getLimitFutureCalls()) {
@@ -910,10 +910,14 @@ public with sharing class NSP_LeadTriggerHelper {
 
     @future
     private static void setContactasCOIFuture( String accountLeadString , String opportunityLeadString ) {
-        if(String.isNotBlank(accountLeadString) && String.isNotBlank(opportunityLeadString)) {
-            Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
-            Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
-            NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadMap, opportunityLeadMap);
+        try {
+            if(String.isNotBlank(accountLeadString) && String.isNotBlank(opportunityLeadString)) {
+                Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
+                Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
+                NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadMap, opportunityLeadMap);
+            }
+        } catch(Exception e) {
+            NSP_LeadTriggerHelper.handleException( e , 'setContactasCOIFuture' );
         }
     }
 
