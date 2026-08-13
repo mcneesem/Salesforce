@@ -896,8 +896,9 @@ public with sharing class NSP_LeadTriggerHelper {
     //
     public void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
         if ( !accountLeadMap?.isEmpty() && !opportunityLeadMap?.isEmpty() ) {
-            if ( !System.isFuture()
-                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+            if ( ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // Prevent LimitExceptions
+                && !System.isFuture()
+                && !System.isBatch()
                 )
             {
                 NSP_LeadTriggerHelper.setContactasCOIFuture(
