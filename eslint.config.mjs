@@ -11,7 +11,7 @@ export default defineConfig([
     },
     extends: ["@salesforce-ux/slds/recommended"],
     rules: {
-        "@salesforce-ux/slds/no-slds-class-overrides": "warn", // 24 warnings remaining...
+        "@salesforce-ux/slds/no-slds-class-overrides": "error",
         "@salesforce-ux/slds/no-deprecated-slds-classes": "error",
         "@salesforce-ux/slds/lwc-token-to-slds-hook": "error",
         "@salesforce-ux/slds/enforce-sds-to-slds-hooks": "error",
