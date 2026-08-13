@@ -579,7 +579,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     accountId.add(leadObject.convertedAccountId);
                 }
             }
-            setContactasCOI(JSON.serialize(accountLeadMap), JSON.serialize(opportunityLeadMap));
+            setContactasCOI(accountLeadMap, opportunityLeadMap);
             // added as a part of story STY-02090
             setContactAsPrimary( accountId );
             if (convertedOpportunityIdsSet.size() > 0) {
@@ -894,11 +894,31 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param leadList List of lead.
     // @return void
     //
+    public static void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
+        if(!accountLeadMap?.isEmpty() && !opportunityLeadMap?.isEmpty()) {
+            String accountLeadString = JSON.serialize(accountLeadMap);
+            String opportunityLeadString = JSON.serialize(opportunityLeadMap);
+
+            if(!System.isFuture() && Limits.getFutureCalls() < Limits.getLimitFutureCalls()) {
+                NSP_LeadTriggerHelper.setContactasCOIFuture(accountLeadString, opportunityLeadString);
+            }
+            else {
+                NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadString, opportunityLeadString);
+            }
+        }
+    }
+
     @future
-    public static void setContactasCOI( String accountLeadString , String opportunityLeadString ) {
+    private static void setContactasCOIFuture( String accountLeadString , String opportunityLeadString ) {
+        if(String.isNotBlank(accountLeadString) && String.isNotBlank(opportunityLeadString)) {
+            NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadString, opportunityLeadString);
+        }
+    }
+
+    private static void setContactasCOIStatic( String accountLeadString , String opportunityLeadString ) {
         try {
-             Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
-             Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
+            Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
+            Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
 
             List<AccountContactRelation> acrList = new List<AccountContactRelation>();
             for ( String accntID : accountLeadMap.keyset() ) {
