@@ -895,15 +895,18 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return void
     //
     public void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
-        if(!accountLeadMap?.isEmpty() && !opportunityLeadMap?.isEmpty()) {
-
-            if(!System.isFuture() && Limits.getFutureCalls() < Limits.getLimitFutureCalls()) {
-                String accountLeadString = JSON.serialize(accountLeadMap);
-                String opportunityLeadString = JSON.serialize(opportunityLeadMap);
-                NSP_LeadTriggerHelper.setContactasCOIFuture(accountLeadString, opportunityLeadString);
+        if ( !accountLeadMap?.isEmpty() && !opportunityLeadMap?.isEmpty() ) {
+            if ( !System.isFuture()
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                )
+            {
+                NSP_LeadTriggerHelper.setContactasCOIFuture(
+                    JSON.serialize( accountLeadMap ) ,
+                    JSON.serialize( opportunityLeadMap )
+                );
             }
             else {
-                NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadMap , opportunityLeadMap );
+                NSP_LeadTriggerHelper.setContactasCOIStatic( accountLeadMap , opportunityLeadMap );
             }
         }
     }
@@ -911,19 +914,19 @@ public with sharing class NSP_LeadTriggerHelper {
     @future
     private static void setContactasCOIFuture( String accountLeadString , String opportunityLeadString ) {
         try {
-            if(String.isNotBlank(accountLeadString) && String.isNotBlank(opportunityLeadString)) {
-                Map<String,Lead> accountLeadMap  = ( Map<String,Lead> ) JSON.deserialize(accountLeadString,  Map<String,Lead>.class);
-                Map<String,Lead> opportunityLeadMap = ( Map<String,Lead> ) JSON.deserialize(opportunityLeadString,  Map<String,Lead>.class);
-                NSP_LeadTriggerHelper.setContactasCOIStatic(accountLeadMap, opportunityLeadMap);
+            if ( String.isNotBlank( accountLeadString ) && String.isNotBlank( opportunityLeadString ) ) {
+                NSP_LeadTriggerHelper.setContactasCOIStatic(
+                    (Map<String,Lead>)JSON.deserialize( accountLeadString , Map<String,Lead>.class ) ,
+                    (Map<String,Lead>)JSON.deserialize( opportunityLeadString , Map<String,Lead>.class )
+                );
             }
-        } catch(Exception e) {
+        } catch( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'setContactasCOIFuture' );
         }
     }
 
     private static void setContactasCOIStatic( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap  ) {
         try {
-
             List<AccountContactRelation> acrList = new List<AccountContactRelation>();
             for ( String accntID : accountLeadMap.keyset() ) {
                 Lead leadObject = accountLeadMap.get( accntID );
