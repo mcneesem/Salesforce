@@ -1366,16 +1366,21 @@ public class NSP_AssetServiceTriggerHelper {
             || segmentType == NSP_ServiceConstants.CoreAssetSegment || segmentType == NSP_ServiceConstants.BTAssetSegment;
     }
 
-    public static void updatePaperlessBatchDateBeforeInsertOrUpdate(List<Asset> NewList , Map<Id, Asset> OldMap){
-        Id WORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
-
-        For(Asset assetObj : NewList){
-            If(assetObj.RecordTypeId == WORecordTypeId &&
-               ((assetObj.NSP_Account_Status__c != null && OldMap == null) ||
-                (OldMap != null && OldMap.containskey(assetObj.Id) &&
-                 assetObj.NSP_Account_Status__c != OldMap.get(assetObj.Id).NSP_Account_Status__c))){
-                     assetObj.NSP_Paperless_Batch_Date__c = System.Today();
-                 }
+    public static void updatePaperlessBatchDateBeforeInsertOrUpdate( List<Asset> newList , Map<Id,Asset> oldMap ) {
+        Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+        for ( Asset assetObj : newList ) {
+            if ( ( assetObj.RecordTypeId == woRecordTypeId )
+                && ( ( ( assetObj.NSP_Account_Status__c != null ) && ( oldMap == null ) )
+                    || ( ( oldMap != null )
+                        && oldMap.containskey( assetObj.Id )
+                        && ( oldMap.get( assetObj.Id ) != null )
+                        && ( assetObj.NSP_Account_Status__c != oldMap.get( assetObj.Id ).NSP_Account_Status__c )
+                        )
+                    )
+                )
+            {
+                assetObj.NSP_Paperless_Batch_Date__c = System.today();
+            }
         }
     }
 
