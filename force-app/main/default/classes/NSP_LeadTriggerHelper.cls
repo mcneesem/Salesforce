@@ -905,8 +905,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     JSON.serialize( accountLeadMap ) ,
                     JSON.serialize( opportunityLeadMap )
                 );
-            }
-            else {
+            } else {
                 NSP_LeadTriggerHelper.setContactasCOIStatic( accountLeadMap , opportunityLeadMap );
             }
         }
