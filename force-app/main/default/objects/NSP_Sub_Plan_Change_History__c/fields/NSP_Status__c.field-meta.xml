@@ -22,6 +22,11 @@
                 <label>Frozen</label>
             </value>
             <value>
+                <fullName>Marked for Term</fullName>
+                <default>false</default>
+                <label>Marked for Term</label>
+            </value>
+            <value>
                 <fullName>Setup</fullName>
                 <default>false</default>
                 <label>Setup</label>
