@@ -108,6 +108,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Display - Paid - ChatGPT via StackAdapt</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Display - Paid - Connected TV</fullName>
             <default>false</default>
         </values>
