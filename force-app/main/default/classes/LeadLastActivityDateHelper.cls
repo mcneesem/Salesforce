@@ -9,6 +9,7 @@ public without sharing class LeadLastActivityDateHelper {
         try {
             List<Lead> relatedLeads = null;
             if ( ( whoIds != null ) && !whoIds.isEmpty() ) {
+                // prevent DmlExcpetions: FIELD_CUSTOM_VALIDATION_EXCEPTION, Please select a Reason.: [NSP_Reason__c]
                 relatedLeads = [
                     SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate
                     FROM Lead
@@ -16,6 +17,15 @@ public without sharing class LeadLastActivityDateHelper {
                         ( Id IN : whoIds )
                         AND ( DNB_Connect_DUNS_Number__c != null )
                         AND ( LastActivityDate != null )
+                        AND (
+                            ( NSP_Reason__c != null )
+                            OR (
+                                Status NOT IN (
+                                    'Nurturing' ,
+                                    'Unqualified'
+                                )
+                            )
+                        )
                     )
                 ];
             }
@@ -42,7 +52,7 @@ public without sharing class LeadLastActivityDateHelper {
         List<Lead> leadsWithDuns = null;
         if ( ( lastActivityDateMap != null ) && !lastActivityDateMap.isEmpty() ) {
             leadsWithDuns = [
-                SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate , NSP_Last_Activity__c 
+                SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate , NSP_Last_Activity__c
                 FROM Lead
                 WHERE ( DNB_Connect_DUNS_Number__c IN :lastActivityDateMap.keySet() )
                 ORDER BY LastActivityDate DESC NULLS LAST
