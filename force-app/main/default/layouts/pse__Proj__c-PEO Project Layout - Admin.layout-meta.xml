@@ -7,6 +7,7 @@
     <customButtons>pse__Project_Billing</customButtons>
     <customButtons>pse__View_Unfilled_Resource_Requests</customButtons>
     <customButtons>pse__Run_Revenue_Forecast</customButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
