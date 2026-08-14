@@ -16,9 +16,9 @@
                             <value>CustomButton.blng__TaxIntegration__c.AVA_BLNG__test_conn_sbx_avatax</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!Record.AVA_BLNG__TestMode__c}</leftValue>
+                                    <leftValue>{!Record.AVA_BLNG__AvaTaxAccountNumber__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
+                                    <rightValue>1100126607</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -26,9 +26,9 @@
                             <value>CustomButton.blng__TaxIntegration__c.AVA_BLNG__test_conn_prd_avatax</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!Record.AVA_BLNG__TestMode__c}</leftValue>
+                                    <leftValue>{!Record.AVA_BLNG__AvaTaxAccountNumber__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
+                                    <rightValue>1100121237</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
