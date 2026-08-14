@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Portal Project Provisioners.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Portal Project Provisioner</label>
+    <permissionSets>Bypass_Restrict_ACR_Work_Email</permissionSets>
+    <permissionSets>Portal_Preview_Lite</permissionSets>
+    <permissionSets>Portal_Site_Access</permissionSets>
+    <permissionSets>Portal_Use_File_Actions</permissionSets>
+    <permissionSets>Use_Portal_Access</permissionSets>
+    <permissionSets>Use_Portal_Resources</permissionSets>
+    <permissionSets>Use_Portal_Task_Files</permissionSets>
+    <permissionSets>View_Portal_Preview</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
