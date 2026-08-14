@@ -5,7 +5,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ASSET_BPS_RET_RECORDTYPES</shortDescription>
-        <value>NSP_Asset_Product,Time_Attendance,Applicant_Tracking,Employment_Screening,Learning_Development,Organizational_Planning,Performance_Management,Integra,Certify,Insurance_Service,Recruiting_Services,XML,RET_WO</value>
+        <value>NSP_Asset_Product,Time_Attendance,Applicant_Tracking,Employment_Screening,Learning_Development,Organizational_Planning,Performance_Management,Integra,Certify,Insurance_Service,Recruiting_Services,XML,RET_WO,Revolution,Contractor_Management</value>
     </labels>
     <labels>
         <fullName>AddContact_Discovery</fullName>

@@ -76,8 +76,11 @@ public class NSP_AssetServiceTriggerHelper {
         Set<Id> accIdSet = new Set<Id>();
 
         //Get all asset record Type IDs
-        for(String recTypeName : AssetRecTypeSet){
-            finalRecordTypeIds.add(assetAllRecordTypes.get(recTypeName).getRecordTypeId());
+        for ( String recTypeName : AssetRecTypeSet ) {
+            Schema.RecordTypeInfo rtInfo = assetAllRecordTypes.get( recTypeName );
+            if ( rtInfo != null ) {
+                finalRecordTypeIds.add( rtInfo.getRecordTypeId() );
+            }
         }
 
         for (String recTypeName : assetAllRecordTypes.keySet()) {
