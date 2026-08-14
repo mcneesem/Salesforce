@@ -5,6 +5,7 @@
     <label>Portal Project Implementor</label>
     <permissionSets>Portal_Preview_Lite</permissionSets>
     <permissionSets>Portal_Site_Access</permissionSets>
+    <permissionSets>Portal_Use_File_Actions</permissionSets>
     <permissionSets>Use_Portal_Resources</permissionSets>
     <permissionSets>Use_Portal_Task_Files</permissionSets>
     <permissionSets>View_Portal_Preview</permissionSets>
