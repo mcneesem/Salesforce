@@ -20,6 +20,10 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideSlackAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>numVisibleActions</name>
                     <value>3</value>
                 </componentInstanceProperties>
@@ -448,6 +452,22 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>enableIssueAccordion</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableManageResources</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enablePreferences</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRiskAccordion</name>
+                    <value>true</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>height</name>
                     <value>400</value>
@@ -998,6 +1018,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
@@ -1013,6 +1037,18 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showAddRecordsFromTemplate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showAddServicesDeliverables</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showBulkAllocateMilestones</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>projectPlanningToolActions_showCopyToProjectFromTemplate</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1027,6 +1063,10 @@
                 <componentInstanceProperties>
                     <name>projectPlanningToolActions_showOpenProjectPlanner</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showShareProject</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>pse:projectPlanningToolActions</componentName>
                 <identifier>pse_projectPlanningToolActions</identifier>
@@ -1071,6 +1111,10 @@
                 <componentInstanceProperties>
                     <name>projectAssignmentActions_showARPVF</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectAssignmentActions_showAddAssignmentsFromTemplate</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>projectAssignmentActions_showAssignMultipleResources</name>
@@ -1186,6 +1230,10 @@
                     <name>allowProjectTasks</name>
                     <value>false</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableEnhancedListView</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>pse:tm_timeEntry</componentName>
                 <identifier>pse_tm_timeEntry</identifier>
             </componentInstance>
@@ -1291,6 +1339,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
