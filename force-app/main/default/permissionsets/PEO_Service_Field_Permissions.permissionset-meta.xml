@@ -24663,6 +24663,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Project_Task__c.Portal_Event_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>pse__Project_Task__c.Portal_Guidance_API_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
