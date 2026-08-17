@@ -3546,6 +3546,10 @@
         <recordType>Asset.Insurance_Service</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Asset-Insurance Services - Revolution</layout>
+        <recordType>Asset.Revolution</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Asset-Integra Layout</layout>
         <recordType>Asset.Integra</recordType>
     </layoutAssignments>

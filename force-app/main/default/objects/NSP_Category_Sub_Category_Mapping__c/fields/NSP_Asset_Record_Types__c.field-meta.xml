@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Asset Record Types</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -75,6 +75,11 @@
                 <fullName>RET WO</fullName>
                 <default>false</default>
                 <label>RET WO</label>
+            </value>
+            <value>
+                <fullName>Revolution</fullName>
+                <default>false</default>
+                <label>Revolution</label>
             </value>
             <value>
                 <fullName>Time &amp; Attendance</fullName>
