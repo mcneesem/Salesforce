@@ -118,6 +118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_SubPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_usng_third_pary_timekeeping_system__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -999,6 +1004,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.NSP_Contact_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Loyalty_Payout__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Partner_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
