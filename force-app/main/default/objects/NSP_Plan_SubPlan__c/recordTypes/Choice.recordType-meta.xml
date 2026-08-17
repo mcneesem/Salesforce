@@ -25,19 +25,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Less than 11 EE%27s</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Less than 11 Employees</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Less than 3 Years</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Less than 3 yrs</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -274,6 +266,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Test_Plan_Status__c</picklist>
+        <values>
+            <fullName>Annual Safe Harbor True Up</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Coverage - Outside Employees</fullName>
             <default>false</default>
