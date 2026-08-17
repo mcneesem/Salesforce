@@ -438,6 +438,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore Performance Management - Small Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HRCore Vendor File Feeds</fullName>
             <default>false</default>
         </values>
@@ -619,6 +623,14 @@
         </values>
         <values>
             <fullName>Strategic HR Health Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES 360 Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES 360 Retirement Integration</fullName>
             <default>false</default>
         </values>
         <values>
