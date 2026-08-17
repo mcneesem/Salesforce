@@ -83,6 +83,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Client_Specific_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Closed_Lost_Group__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -133,6 +138,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Current_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Current_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Current_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -149,6 +164,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.DCAA_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.DCAA_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -228,6 +248,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Mod_Sheet_Batch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Multi_Year_Addendum_Signed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -299,6 +324,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Next_Action_Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Next_Action_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -388,6 +418,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Renewal_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Renewal_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Renewal_Reserve__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -434,6 +474,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.WC_Allocation_Avg_Increase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.WC_Annual_Increase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

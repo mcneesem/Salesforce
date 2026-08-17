@@ -546,6 +546,16 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Client_Specific_Notes__c</fieldItem>
+                <identifier>RecordClient_Specific_Notes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Renewal_Name__c</fieldItem>
@@ -643,6 +653,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.AIMS_Spec_Prov_3__c</fieldItem>
                 <identifier>RecordAIMS_Spec_Prov_3_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Next_Action_Owner__c</fieldItem>
+                <identifier>RecordNext_Action_Owner_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Renewal_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -934,6 +961,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Client_Retained_WC__c</fieldItem>
+                <identifier>RecordClient_Retained_WC_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Open_Enrollment_Start__c</fieldItem>
                 <identifier>RecordOpen_Enrollment_Start_cField</identifier>
                 <visibilityRule>
@@ -1062,8 +1099,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CAR_Detail__c</fieldItem>
-                <identifier>RecordCAR_Detail_cField</identifier>
+                <fieldItem>Record.DCAA_Summary__c</fieldItem>
+                <identifier>RecordDCAA_Summary_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1248,6 +1285,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Current_Reserve__c</fieldItem>
                 <identifier>RecordCurrent_Reserve_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Current_Part_Time_Margin__c</fieldItem>
+                <identifier>RecordCurrent_Part_Time_Margin_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Current_Part_Time_Reserve__c</fieldItem>
+                <identifier>RecordCurrent_Part_Time_Reserve_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1466,10 +1523,14 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentName>flexipage:blankSpace</componentName>
-                <identifier>flexipage_blankSpace2</identifier>
-            </componentInstance>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Mod_Sheet_Batch__c</fieldItem>
+                <identifier>RecordMod_Sheet_Batch_cField</identifier>
+            </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
@@ -1529,6 +1590,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Renewal_Reserve__c</fieldItem>
                 <identifier>RecordRenewal_Reserve_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Renewal_Part_Time_Margin__c</fieldItem>
+                <identifier>RecordRenewal_Part_Time_Margin_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Renewal_Part_Time_Reserve__c</fieldItem>
+                <identifier>RecordRenewal_Part_Time_Reserve_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1842,16 +1923,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Client_Retained_WC__c</fieldItem>
-                <identifier>RecordClient_Retained_WC_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Medical_Contribution_Structure__c</fieldItem>
                 <identifier>RecordMedical_Contribution_Structure_cField</identifier>
             </fieldInstance>
@@ -1892,8 +1963,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Workers_Comp_Change__c</fieldItem>
-                <identifier>RecordWorkers_Comp_Change_cField</identifier>
+                <fieldItem>Record.WC_Annual_Increase__c</fieldItem>
+                <identifier>RecordWC_Annual_Increase_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -9983,6 +10054,12 @@
                         <valueListItems>
                             <value>CREATEDBY_USER</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>UPDATEDBY_USER</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>LAST_UPDATE</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -11484,46 +11561,13 @@
             <componentInstance>
                 <componentName>NSP_OpportunityGuidanceForSuccess</componentName>
                 <identifier>NSP_OpportunityGuidanceForSuccess</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Opportunity.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>ActivityHistories</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -11573,6 +11617,12 @@
                         <valueListItems>
                             <value>CREATEDBY_USER</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>UPDATEDBY_USER</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>LAST_UPDATE</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -11600,6 +11650,46 @@
                         <rightValue>Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Opportunity.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>ActivityHistories</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
