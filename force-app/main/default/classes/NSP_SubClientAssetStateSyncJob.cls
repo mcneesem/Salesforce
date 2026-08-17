@@ -86,6 +86,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
+            LIMIT :NSP_SubClientAssetStateSyncJob.soqlHistoryLimit
         ];
         for ( NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : addressChanges ) {
             assetIds.add( existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c );
@@ -233,6 +234,27 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 batchSize = local;
             }
             return batchSize;
+        }
+        private set;
+    }
+
+    private static Integer soqlHistoryLimit {
+        private get {
+            if ( soqlHistoryLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlHistoryLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlHistoryLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlHistoryLimit = local;
+            }
+            return soqlHistoryLimit;
         }
         private set;
     }
