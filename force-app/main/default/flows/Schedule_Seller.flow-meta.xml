@@ -460,7 +460,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Loop_Users</targetReference>
+            <targetReference>User_Confirmation</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No admin</defaultConnectorLabel>
         <rules>
@@ -492,6 +492,11 @@
         <name>isScheduleSellerAdmin</name>
         <dataType>Boolean</dataType>
         <expression>IF({!$Permission.Schedule_Seller_Admin}, TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>RushCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>({!Seller.startDateTime} - NOW()) &lt; 1</expression>
     </formulas>
     <formulas>
         <name>selectedDate</name>
@@ -861,6 +866,106 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>User_Confirmation</name>
+        <label>User Confirmation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <backButtonLabel>Return</backButtonLabel>
+        <connector>
+            <targetReference>Loop_Users</targetReference>
+        </connector>
+        <fields>
+            <name>Event_Details</name>
+            <fieldText>Event Details</fieldText>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Event_Details_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ConfirmData</name>
+                    <fieldText>&lt;p&gt;&lt;strong&gt;Product :&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Time Zone : &lt;/strong&gt;{!Time}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes :&lt;/strong&gt; {!Notes}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Start Time :&lt;/strong&gt; {!Seller.startDateTime}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;End Time : &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Seller.endDateTime}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>ConfirmNonRush</name>
+            <fieldText>&lt;h4&gt;Select Next to create Demo Event&lt;/h4&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RushCheck</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfirmRush</name>
+            <fieldText>&lt;h4&gt;You are submitting a Rush Request for a Demo.&amp;nbsp;This date and time is not guaranteed &amp;amp; is subject to approval and availability of Sales Engineers. &lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, BlinkMacSystemFont, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(0, 0, 0);&quot;&gt;An admin will be in touch shortly to confirm.&lt;/span&gt;&lt;/h4&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RushCheck</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <start>
         <locationX>0</locationX>
