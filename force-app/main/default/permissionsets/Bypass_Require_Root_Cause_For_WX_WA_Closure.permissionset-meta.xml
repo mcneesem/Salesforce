@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Require_Root_Cause_For_WX_WA_Closure</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Require Root Cause For WX/WA Closure</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Require Root Cause For WX/WA Closure</label>
+</PermissionSet>
