@@ -661,23 +661,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Next_Action_Owner__c</fieldItem>
-                <identifier>RecordNext_Action_Owner_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Renewal_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Competitive_Bid_Received__c</fieldItem>
                 <identifier>RecordCompetitive_Bid_Received_cField</identifier>
             </fieldInstance>
@@ -834,6 +817,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Next_Action_Due_Date__c</fieldItem>
                 <identifier>RecordNext_Action_Due_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Renewal_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Next_Action_Owner__c</fieldItem>
+                <identifier>RecordNext_Action_Owner_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Renewal_Layout_Access}</leftValue>
