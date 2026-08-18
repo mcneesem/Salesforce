@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants the System Permission: Create and Customize List Views (CreateCustomizeFilters)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Create and Customize List Views</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>CreateCustomizeFilters</name>
+    </userPermissions>
+</PermissionSet>
