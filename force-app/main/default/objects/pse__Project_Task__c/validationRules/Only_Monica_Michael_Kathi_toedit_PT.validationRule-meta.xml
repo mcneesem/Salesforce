@@ -6,6 +6,7 @@
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c ) ,
   NOT( $User.NSP_Service_Stakeholder__c ) ,
+  NOT( $Permission.Service_Stakeholder ) ,
   OR(
     pse__Project__r.pse__Is_Template__c ,
     pse__Project__r.Is_Opportunity_Template__c
