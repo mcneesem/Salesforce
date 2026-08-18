@@ -26,29 +26,34 @@
         <label>HR360 - AS Agency</label>
     </customValue>
     <customValue>
-        <fullName>WS - Asset Plus Corp</fullName>
+        <fullName>WO - WD Full Bundle</fullName>
         <default>false</default>
-        <label>WS - Asset Plus Corp</label>
-    </customValue>
-    <customValue>
-        <fullName>WS - Asset Plus Prop</fullName>
-        <default>false</default>
-        <label>WS - Asset Plus Prop</label>
-    </customValue>
-    <customValue>
-        <fullName>WO - WD Bundle Plus</fullName>
-        <default>false</default>
-        <label>WO - WD Bundle Plus</label>
+        <isActive>false</isActive>
+        <label>WO - WD Full Bundle</label>
     </customValue>
     <customValue>
         <fullName>WS - WD Bundle Plus</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>WS - WD Bundle Plus</label>
     </customValue>
     <customValue>
-        <fullName>WO - WD Full Bundle</fullName>
+        <fullName>WO - WD Bundle Plus</fullName>
         <default>false</default>
-        <label>WO - WD Full Bundle</label>
+        <isActive>false</isActive>
+        <label>WO - WD Bundle Plus</label>
+    </customValue>
+    <customValue>
+        <fullName>WS - Asset Plus Prop</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WS - Asset Plus Prop</label>
+    </customValue>
+    <customValue>
+        <fullName>WS - Asset Plus Corp</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WS - Asset Plus Corp</label>
     </customValue>
     <masterLabel>Service Package</masterLabel>
     <sorted>false</sorted>

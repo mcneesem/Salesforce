@@ -3,7 +3,7 @@
     <fullName>CAR_Summary__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Cost Analysis Report Summary</description>
-    <label>CAR Summary</label>
+    <label>CAR</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>

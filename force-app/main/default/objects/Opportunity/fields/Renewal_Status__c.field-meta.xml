@@ -27,9 +27,9 @@
                 <label>Generated</label>
             </value>
             <value>
-                <fullName>Intro Sent</fullName>
+                <fullName>Intro</fullName>
                 <default>false</default>
-                <label>Intro Sent</label>
+                <label>Intro</label>
             </value>
             <value>
                 <fullName>1st Follow-up</fullName>
@@ -50,6 +50,11 @@
                 <fullName>4th Follow-up</fullName>
                 <default>false</default>
                 <label>4th Follow-up</label>
+            </value>
+            <value>
+                <fullName>Call</fullName>
+                <default>false</default>
+                <label>Call</label>
             </value>
             <value>
                 <fullName>Demand</fullName>
@@ -91,7 +96,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presentation</controllingFieldValue>
-            <valueName>Intro Sent</valueName>
+            <valueName>Intro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presentation</controllingFieldValue>
@@ -108,6 +113,10 @@
         <valueSettings>
             <controllingFieldValue>Presentation</controllingFieldValue>
             <valueName>4th Follow-up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presentation</controllingFieldValue>
+            <valueName>Call</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presentation</controllingFieldValue>
