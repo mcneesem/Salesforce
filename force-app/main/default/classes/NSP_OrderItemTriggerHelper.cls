@@ -514,8 +514,13 @@ public class NSP_OrderItemTriggerHelper {
         if ( orderIdSet == null ) {
            orderIdSet = new Set<Id>();
         }
-        if ( ( recordOld.SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED )
-            && ( recordNew.SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED )
+        Boolean isRecentlyActivated = (
+            ( !recordOld.SBQQ__Activated__c && recordNew.SBQQ__Activated__c )
+            || ( ( recordOld.SBQQ__Status__c != 'Activated' )
+                && ( recordNew.SBQQ__Status__c == 'Activated' )
+                )
+        );
+        if ( isRecentlyActivated
             && ( record.Order.Status != NSP_CPQConstants.ORDER_ACTIVATED )
             && record.Order.Status != NSP_CPQConstants.ORDER_DRAFT
             && ( ( ( record.Order.NSP_Usage_Products_Count__c == 0 ) && ( record.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW ) )
