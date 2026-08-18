@@ -4,8 +4,9 @@
     <active>true</active>
     <description>Only System Admins should be able to edit Project Templates</description>
     <errorConditionFormula>AND(
- NOT( $User.NSP_Service_Stakeholder__c ) ,
- pse__Project_Task__r.NSP_Template__c
+  NOT( $User.NSP_Service_Stakeholder__c ) ,
+  NOT( $Permission.Service_Stakeholder ) ,
+  pse__Project_Task__r.NSP_Template__c
 )</errorConditionFormula>
     <errorMessage>Project templates cannot be edited.</errorMessage>
 </ValidationRule>
