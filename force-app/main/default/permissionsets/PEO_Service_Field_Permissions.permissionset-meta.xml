@@ -1527,7 +1527,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Asset.LocationId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5162,7 +5162,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Event.NSP_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21597,7 +21597,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Task.NSP_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
