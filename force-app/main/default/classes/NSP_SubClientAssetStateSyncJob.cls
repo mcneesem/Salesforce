@@ -149,7 +149,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
 
     public Boolean handleAssets( Set<Id> assetIds ) {
         Boolean response = false;
-        try{
+        try {
             if ( ( assetIds != null ) && !assetIds.isEmpty() ) {
                 Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
                     [
@@ -162,17 +162,17 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                     //Get details for sub client contact where sub client != null
                     List<NSP_Sub_Client_Contact__c> subClientContact = [
                         SELECT
-                        Id ,
-                        NSP_Sub_Client__c ,
-                        NSP_Paid_Non_Paid__c ,
-                        NSP_Employee_Status__c ,
-                        NSP_Union_Employee__c
+                            Id ,
+                            NSP_Sub_Client__c ,
+                            NSP_Paid_Non_Paid__c ,
+                            NSP_Employee_Status__c ,
+                            NSP_Union_Employee__c
                         FROM NSP_Sub_Client_Contact__c
                         WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
                         LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactLimit
                     ];
                     if ( !subClientContact.isEmpty() ) {
-                        response  = NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
+                        response = NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
                             subClientContact ,
                             existingSubClients ,
                             assetIds
@@ -180,7 +180,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                     }
                 }
             }
-        }catch ( Exception e ) {
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_SubClientAssetStateSyncJob.class.getName() ,
                 'handleAssets' ,
@@ -346,9 +346,8 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         List<NSP_Sub_Client_Contact__c> subClientContact ,
         Map<Id,NSP_Sub_Client__c> existingSubClients ,
         Set<Id> setOfParentIds
-    )
+        )
     {
-        Boolean response = true;
         Map<Id, String> subClientByStates = new  Map<Id, String>();
         Map<Id, String> assetByStates = new  Map<Id, String>();
         List<NSP_Sub_Client__c> subClientStateToBeUpdated = new List<NSP_Sub_Client__c>();
@@ -404,31 +403,29 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
             }
         }
         //Update Sub Client and Asset with updated State of Operation
-        if(!subClientStateToBeUpdated.isEmpty()) {
-            Database.SaveResult[] results = Database.update(subClientStateToBeUpdated, false);
-            if( !NSP_SubClientAssetStateSyncJob.isUpdateSuccessful(results) ) {
-                response = false;
-            }
+        Boolean response = true;
+        if ( !subClientStateToBeUpdated.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( subClientStateToBeUpdated , false );
+            response = ( response && NSP_SubClientAssetStateSyncJob.isSuccessfulSaveResult( results ) );
         }
-        if(!assetStateToBeUpdated.isEmpty()) {
-            Database.SaveResult[] results = Database.update(assetStateToBeUpdated, false);
-            if( !NSP_SubClientAssetStateSyncJob.isUpdateSuccessful(results) ) {
-                response = false;
-            }
+        if ( !assetStateToBeUpdated.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( assetStateToBeUpdated , false );
+            response = ( response && NSP_SubClientAssetStateSyncJob.isSuccessfulSaveResult( results ) );
         }
         return response;
     }
 
-    private static Boolean isUpdateSuccessful( Database.SaveResult[] results ) {
+    private static Boolean isSuccessfulSaveResult( Database.SaveResult[] results ) {
         Boolean response = true;
-        if( results != null && !results.isEmpty() ) {
+        if ( ( results != null ) && !results.isEmpty() ) {
             for( Database.SaveResult result : results ) {
-                if( result != null && !result.isSuccess() ) {
+                if ( ( result != null ) && !result.isSuccess() ) {
                     response = false;
                 }
             }
         }
         return response;
     }
+
 }
 //
