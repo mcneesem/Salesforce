@@ -86,6 +86,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
+            LIMIT :NSP_SubClientAssetStateSyncJob.soqlAddressHistoryLimit
         ];
         for ( NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : addressChanges ) {
             assetIds.add( existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c );
@@ -113,6 +114,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
+            LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactHistoryLimit
         ];
         if ( !contactChanges.isEmpty() ) {
             for ( NSP_Sub_Client_Contact__History existingSubClientContacts : contactChanges ) {
@@ -233,6 +235,48 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 batchSize = local;
             }
             return batchSize;
+        }
+        private set;
+    }
+
+    private static Integer soqlAddressHistoryLimit {
+        private get {
+            if ( soqlAddressHistoryLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlAddressHistoryLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlAddressHistoryLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlAddressHistoryLimit = local;
+            }
+            return soqlAddressHistoryLimit;
+        }
+        private set;
+    }
+
+    private static Integer soqlContactHistoryLimit {
+        private get {
+            if ( soqlContactHistoryLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlContactHistoryLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlContactHistoryLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlContactHistoryLimit = local;
+            }
+            return soqlContactHistoryLimit;
         }
         private set;
     }
