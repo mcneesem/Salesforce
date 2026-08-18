@@ -1,4 +1,4 @@
-public with sharing class OpportunityMaxOrientationDateAction {
+public without sharing class OpportunityMaxOrientationDateAction {
     // test w/ OpportunityMaxOrientationDateActionTest (83%)
 
     @InvocableMethod(label='Opportunity Max Orientation Date' description='This method populates the max orientation date on the given Opportunity')
