@@ -199,7 +199,7 @@
             <assignToReference>varContact.Email</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>newContact_Email.value</elementReference>
+                <elementReference>Email_Input</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -227,7 +227,7 @@
             <assignToReference>varContact.NSP_Work_email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>newContact_Email.value</elementReference>
+                <elementReference>Email_Input</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -257,7 +257,7 @@
             <assignToReference>varACRtoCreate.NSP_Work_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>WorkEmail_existingContact.value</elementReference>
+                <elementReference>Work_Email_Input</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2081,6 +2081,10 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;First Name cannot be longer than 40 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!First_Name}) &lt;= 40</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>Last_Name</name>
@@ -2097,6 +2101,10 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Last Name cannot be longer than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Last_Name}) &lt;= 80</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>newContact_Title</name>
@@ -2113,14 +2121,18 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Title cannot be longer than 128 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!newContact_Title}) &lt;= 128</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
-            <name>newContact_Email</name>
-            <extensionName>flowruntime:email</extensionName>
-            <fieldType>ComponentInstance</fieldType>
+            <name>Email_Input</name>
+            <dataType>String</dataType>
+            <fieldText>Email</fieldText>
+            <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <isRequired>false</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -2129,6 +2141,10 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>REGEX({!Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>newContact_Phone</name>
@@ -2325,18 +2341,12 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>WorkEmail_existingContact</name>
-            <extensionName>flowruntime:email</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Work Email</stringValue>
-                </value>
-            </inputParameters>
+            <name>Work_Email_Input</name>
+            <dataType>String</dataType>
+            <fieldText>Work Email</fieldText>
+            <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <isRequired>false</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -2345,6 +2355,10 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>REGEX({!Work_Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>Job_Title_existingContact</name>
@@ -2361,6 +2375,10 @@
                     <stringValue>6</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Job Title cannot be longer than 255 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Job_Title_existingContact}) &lt;= 255</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>Contact_Type_existingContact</name>
