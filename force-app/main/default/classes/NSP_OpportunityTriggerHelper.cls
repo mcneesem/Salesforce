@@ -28,6 +28,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
     private static final String PAYROLL_ONLY ='Payroll Only';
 
+    private static final String SUB_PROD_REVOLUTION = 'Revolution';
+
     //
     // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
     // @param newList List of New Opportunity.
@@ -637,7 +639,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private Set<String> optyGetRecTypeList( List<Opportunity> opportunityList , Set<String> recordTypeSet ) {
         String rectype = null;
         for ( Opportunity opportunityRecord : opportunityList ) {
-            if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
+            if ( ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE )
+                && ( opportunityRecord.NSP_Sub_Product__c == NSP_OpportunityTriggerHelper.SUB_PROD_REVOLUTION )
+                )
+            {
+                rectype = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Revolution' );
+            } else if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
                 rectype = NSP_OpportunityTriggerHelper.insuranceServiceAssetRecordTypeId;
             } else if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT ) {
                 rectype = NSP_OpportunityTriggerHelper.certifyAssetRecordTypeId;
@@ -1475,13 +1482,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Map<Id,String> recordTypeMap = new Map<Id,String>();
         Set<String> recordIdSet = new Set<String>();
         String optyType = null;
-
-        List<Asset> upsertList=new List<Asset>();
-        New NSP_SrcToTargetObjectDataMover(null,'OpportunityAsset') ;//initialize the class
-        List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget(closedWonOpptyList);
-        Map<Id, Asset> assetMap = new Map<Id, asset>();
-        for(Asset assetItem: assetfromCopier){
-            assetMap.put(assetItem.AccountId,assetItem);
+        List<Asset> upsertList = new List<Asset>();
+        new NSP_SrcToTargetObjectDataMover( null , 'OpportunityAsset' );//initialize the class
+        List<Asset> assetfromCopier= NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( closedWonOpptyList );
+        Map<Id,Asset> assetMap = new Map<Id,Asset>();
+        for ( Asset assetItem : assetfromCopier ) {
+            assetMap.put( assetItem.AccountId , assetItem );
+        }
+        Map<Id,String> accountSubProductMap = new Map<Id,String>();
+        for ( Opportunity opty : closedWonOpptyList ) {
+            accountSubProductMap.put( opty.AccountId , opty.NSP_Sub_Product__c );
         }
         List<Asset> existingAssets = [
             SELECT
@@ -1498,44 +1508,71 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 AND ( Status != :NSP_SalesConstants.BACKOUT_STATUS )
             )
         ];
-        Boolean isAssetFound=FALSE;
-        for(Id draftAsset:assetMap.keySet()){
-            for(Asset existingAsset: existingAssets ){
-                if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
-                    isAssetFound=TRUE;
+        Boolean isAssetFound = false;
+        for ( Id draftAsset:assetMap.keySet() ) {
+            for ( Asset existingAsset : existingAssets ) {
+                if ( assetMap.get( draftAsset ).AccountId == existingAsset.AccountId ) {
+                    isAssetFound = true;
                     break;
                 }
             }
-            if ( assetMap.get( draftAsset ).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE ) {
+            String subProduct = accountSubProductMap.get( draftAsset );
+            if ( ( assetMap.get( draftAsset ).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE )
+                && ( subProduct == NSP_OpportunityTriggerHelper.SUB_PROD_REVOLUTION )
+                )
+            {
+                assetMap.get( draftAsset ).RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Revolution' );
+            } else if ( assetMap.get( draftAsset ).NSP_Product_Line__c == NSP_SalesConstants.PROD_INSURANCE ) {
                 assetMap.get( draftAsset ).RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Insurance_Service' );
             } else if ( assetMap.get( draftAsset ).NSP_Product_Line__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT ) {
                 assetMap.get( draftAsset ).RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Certify' );
             } else {
                 assetMap.get( draftAsset ).RecordTypeId = NSP_GenericRecordType.getRecordTypeIdByLabel( 'Asset' , assetMap.get( draftAsset ).NSP_Product_Line__c );
             }
-            String prodLine = assetMap.get(draftAsset).NSP_Product_Line__c;
-            if( prodLine== NSP_SalesConstants.PROD_RECRUITING || prodLine == NSP_SalesConstants.PROD_EMPSCREENING || prodLine == NSP_SalesConstants.PROD_INSURANCE){
-                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONDEMAND_STATUS;
-            } else{
-                assetMap.get(draftAsset).Status = NSP_SalesConstants.ONBOARDING;
+            String prodLine = assetMap.get( draftAsset ).NSP_Product_Line__c;
+            if ( ( prodLine == NSP_SalesConstants.PROD_RECRUITING )
+                || ( prodLine == NSP_SalesConstants.PROD_EMPSCREENING )
+                || ( ( prodLine == NSP_SalesConstants.PROD_INSURANCE )
+                    && ( subProduct != NSP_OpportunityTriggerHelper.SUB_PROD_REVOLUTION )
+                    )
+                )
+            {
+                assetMap.get( draftAsset ).Status = NSP_SalesConstants.ONDEMAND_STATUS;
+            } else {
+                assetMap.get( draftAsset ).Status = NSP_SalesConstants.ONBOARDING;
             }
-            if(prodLine== NSP_SalesConstants.PROD_WX || prodLine== NSP_SalesConstants.PROD_WA){
-                assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +assetMap.get(draftAsset).NSP_ProductBundle__c;
+            if ( ( prodLine == NSP_SalesConstants.PROD_INSURANCE )
+                && ( subProduct == NSP_OpportunityTriggerHelper.SUB_PROD_REVOLUTION )
+                )
+            {
+                assetMap.get( draftAsset ).Component__c = subProduct;
+            }
+            if ( ( prodLine == NSP_SalesConstants.PROD_WX )
+                || ( prodLine== NSP_SalesConstants.PROD_WA )
+                )
+            {
+                assetMap.get( draftAsset ).Name = assetMap.get( draftAsset ).NSP_AccountName__c
+                    + ' ' + '-' + ' '
+                    + assetMap.get( draftAsset ).NSP_ProductBundle__c
+                    ;
                 populateHRContractChanges(
                     assetMap.get( draftAsset ) ,
                     new Map<Id,Opportunity>( closedWonOpptyList )
                 );
             } else {
-                assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +prodLine;
+                assetMap.get( draftAsset ).Name = assetMap.get( draftAsset ).NSP_AccountName__c
+                    + ' '+ '-' + ' '
+                    + prodLine
+                    ;
             }
-            assetMap.get(draftAsset).NSP_Signature_Date__c = System.today();
-            if(!isAssetFound){
-                upsertList.add(assetMap.get(draftAsset));
+            assetMap.get( draftAsset ).NSP_Signature_Date__c = System.today();
+            if ( !isAssetFound ) {
+                upsertList.add( assetMap.get( draftAsset ) );
             }
-            isAssetFound=FALSE;
+            isAssetFound = false;
         }
         try{
-            if(upsertList != null && upsertList.size() > 0){
+            if ( ( upsertList != null ) && !upsertList.isEmpty() ) {
                 upsert upsertList;
             }
         } catch ( Exception e ) {
@@ -1904,7 +1941,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 newOwner
             );
             if ( record.Is_Services_Opportunity__c ) {
-                record.NSP_Sales_Office__c	= null;
+                record.NSP_Sales_Office__c = null;
             }
         }
     }
