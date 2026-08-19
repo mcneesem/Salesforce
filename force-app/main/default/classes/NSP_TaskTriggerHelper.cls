@@ -12,8 +12,7 @@ public with sharing class NSP_TaskTriggerHelper {
     private static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
     private static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
     private static final String HRCORE_TRANSITION = 'HRCore_Transition';
-    private static final String PI_HR360_TO_HRCORE_TRANSITION = 'HR360 to HRCore Transition';
-    private static final String PI_HRSCALE_TO_HRCORE_TRANSITION = 'HRScale to HRCore Transition';
+    private static final String STRATEGIC_SALES_UPSELL = 'Strategic_Sales_Upsell';
 
     //
     // Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
@@ -277,22 +276,29 @@ public with sharing class NSP_TaskTriggerHelper {
     // @param : Set<Id> accountIds
     // @return void
     //
-    public void assignReferralTaskOwner(List<Task> lstRefferalTask, Set<Id> accountIds){
-
+    public void assignReferralTaskOwner( List<Task> lstRefferalTask , Set<Id> accountIds ) {
         Map<Id,Account> mapAccounts = new Map<Id,Account>();
         Map<String,String> mapQueueMapping = new Map<String,String>();
-
-        if(!accountIds.isEmpty()){
-            mapAccounts = new Map<Id,Account>([SELECT Id,OwnerId FROM Account WHERE Id IN: accountIds]);
-        }else{
+        if ( !accountIds.isEmpty() ) {
+            mapAccounts = new Map<Id,Account>(
+                [
+                    SELECT Id , OwnerId
+                    FROM Account
+                    WHERE ( Id IN :accountIds )
+                ]
+            );
+        } else {
             mapQueueMapping = getQueueMapping();
         }
-
-        for(Task oTask: lstRefferalTask){
-            if(pIMappingQueue.containsKey(oTask.Upsell_Product_of_Interest__c)){
-                oTask.OwnerId = mapQueueMapping?.get(pIMappingQueue?.get(oTask.Upsell_Product_of_Interest__c));
-            }else if(mapAccounts.containsKey(oTask.AccountId)){
-                oTask.OwnerId = mapAccounts.get(oTask.AccountId)?.OwnerId;
+        for ( Task oTask: lstRefferalTask ) {
+            Id mappedOwnerId = null;
+            if ( NSP_TaskTriggerHelper.pIMappingQueue.containsKey( oTask.Upsell_Product_of_Interest__c ) ) {
+                mappedOwnerId = mapQueueMapping?.get( NSP_TaskTriggerHelper.pIMappingQueue.get( oTask.Upsell_Product_of_Interest__c ) );
+            } else if ( mapAccounts?.containsKey( oTask.AccountId ) ) {
+                mappedOwnerId = mapAccounts?.get( oTask.AccountId )?.OwnerId;
+            }
+            if ( ( mappedOwnerId != null ) && ( oTask.OwnerId != mappedOwnerId ) ) {
+                oTask.OwnerId = mappedOwnerId;
             }
         }
     }
@@ -357,7 +363,8 @@ public with sharing class NSP_TaskTriggerHelper {
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
             NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
             NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY ,
-            NSP_TaskTriggerHelper.HRCORE_TRANSITION
+            NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
+            NSP_TaskTriggerHelper.STRATEGIC_SALES_UPSELL
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for ( Group ogroup : [
@@ -400,8 +407,10 @@ public with sharing class NSP_TaskTriggerHelper {
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
                 NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
-                NSP_TaskTriggerHelper.PI_HR360_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
-                NSP_TaskTriggerHelper.PI_HRSCALE_TO_HRCORE_TRANSITION => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
+                'HRScale' => NSP_TaskTriggerHelper.STRATEGIC_SALES_UPSELL ,
+                'HR360 to HRScale Transition' => NSP_TaskTriggerHelper.STRATEGIC_SALES_UPSELL ,
+                'HR360 to HRCore Transition' => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
+                'HRScale to HRCore Transition' => NSP_TaskTriggerHelper.HRCORE_TRANSITION ,
                 'Insurance Services (Health & Wellness)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Property & Casualty)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
                 'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES
