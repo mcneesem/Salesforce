@@ -1128,6 +1128,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Proj__c.Is_Opportunity_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>pse__Proj__c.NSP_Account_Executive__c</field>
         <readable>true</readable>
     </fieldPermissions>
