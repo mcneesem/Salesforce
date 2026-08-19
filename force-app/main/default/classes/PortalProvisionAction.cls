@@ -308,7 +308,6 @@ public without sharing class PortalProvisionAction {
                 insert portalUser; // logging this database result to NSP_Error_Log__c would throw MIXED_DML_OPERATION...
                 response = portalUser.Id;
                 PortalProvisionAction.grantPortalSiteAccess( portalUser );
-                PortalProvisionAction.setPortalPassword( portalUser );
                 PortalProvisionAction.linkCertiniaContact( portalUser.ContactId , portalUser.Id );
             }
             if ( PortalProvisionAction.isDryRun ) {
@@ -333,14 +332,6 @@ public without sharing class PortalProvisionAction {
                 PermissionSetId=PortalProvisionAction.portalSiteAccessId ,
                 AssigneeId=portalUser.Id
             ); // logging this database result to NSP_Error_Log__c would throw MIXED_DML_OPERATION...
-        }
-    }
-
-    // Set Default Password
-    // ~ place holder logic until we have the notify step in place...
-    private static void setPortalPassword( User portalUser ) {
-        if ( portalUser != null ) {
-            System.setPassword( portalUser.Id , 'Insperity1!!' ); // default portal password...
         }
     }
 
