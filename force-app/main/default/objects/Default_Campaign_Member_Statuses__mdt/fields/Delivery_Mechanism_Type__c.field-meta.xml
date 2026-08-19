@@ -51,6 +51,11 @@
                 <label>Display - Paid - 6Sense</label>
             </value>
             <value>
+                <fullName>Display - Paid - ChatGPT via StackAdapt</fullName>
+                <default>false</default>
+                <label>Display - Paid - ChatGPT via StackAdapt</label>
+            </value>
+            <value>
                 <fullName>Display - Paid - Connected TV</fullName>
                 <default>false</default>
                 <label>Display - Paid - Connected TV</label>
