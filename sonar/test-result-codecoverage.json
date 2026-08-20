@@ -60444,6 +60444,22 @@
     "coveredPercent": 100
   },
   {
+    "id": "01pdy000001JXSjAAO",
+    "name": "SubClientAssetStateSyncAction",
+    "totalLines": 7,
+    "lines": {
+      "7": 1,
+      "8": 1,
+      "9": 1,
+      "10": 1,
+      "11": 1,
+      "12": 1,
+      "15": 1
+    },
+    "totalCovered": 7,
+    "coveredPercent": 100
+  },
+  {
     "id": "01pPb00000BSzyPIAT",
     "name": "RecalculateRetailPriceBatch",
     "totalLines": 178,
