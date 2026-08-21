@@ -7,6 +7,15 @@
     <name>Health &amp; Welfare External Email Template</name>
     <style>freeForm</style>
     <subject>Thank you for contacting Insperity’s Section 125 Team</subject>
+    <textOnly>Thank you for your email. Your request will be handled in the order it was received. You can expect a response within 48 hours. If you are responding to a request from our team, the Specialist assigned to your case will reach out to you.
+
+
+If you would like to speak to someone by phone, please contact the Insperity Contact Center at 866-715-3552, or via secure live chat on your Insperity Portal. Insperity Contact Center Specialists are available weekdays from 7:00 AM to 7:00 PM CST.
+
+
+Thank you,
+
+Section 125, Health &amp; Welfare Services</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
