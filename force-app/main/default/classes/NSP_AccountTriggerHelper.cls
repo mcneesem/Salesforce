@@ -639,17 +639,50 @@ public class NSP_AccountTriggerHelper {
                 FROM NSP_Checklist__c
                 WHERE ( NSP_Opportunity__r.AccountId = :accountList )
             ];
+
+            Boolean hasBypassPermission = FeatureManagement.checkPermission( 'Bypass_Restrict_Checklist_To_Opportunity_Team_Members' );
+
+            // Only query team members when the running user does not have the bypass permission
+            Set<Id> teamMemberOpportunityIds = new Set<Id>();
+            if ( !hasBypassPermission ) {
+                Set<Id> opportunityIds = new Set<Id>();
+                for ( NSP_Checklist__c cl : checklistList ) {
+                    if ( cl.NSP_Opportunity__c != null ) {
+                        opportunityIds.add( cl.NSP_Opportunity__c );
+                    }
+                }
+                if ( !opportunityIds.isEmpty() ) {
+                    for ( OpportunityTeamMember otm : [
+                        SELECT OpportunityId
+                        FROM OpportunityTeamMember
+                        WHERE OpportunityId = :opportunityIds
+                        AND UserId = :UserInfo.getUserId()
+                    ] ) {
+                        teamMemberOpportunityIds.add( otm.OpportunityId );
+                    }
+                }
+            }
+
             if ( !checklistList.isEmpty() ) {
-                // Iterating checklistList
                 for ( NSP_Checklist__c updateChecklist : checklistList ) {
-                    Account acc = newMap.get( updateChecklist.NSP_Opportunity__r.AccountId );
-                    updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
-                    updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
-                    updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
-                    updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
-                    updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
-                    updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
-                    checklistToUpdate.add( updateChecklist );
+                    // Allow if: bypass permission granted OR no opportunity on checklist OR user is an opp team member
+                    if (
+                        hasBypassPermission ||
+                        (
+                            teamMemberOpportunityIds != null &&
+                            updateChecklist.NSP_Opportunity__c != null &&
+                            teamMemberOpportunityIds.contains( updateChecklist.NSP_Opportunity__c )
+                        )
+                    ) {
+                             Account acc = newMap.get( updateChecklist.NSP_Opportunity__r.AccountId );
+                             updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
+                             updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
+                             updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
+                             updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
+                             updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
+                             updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
+                             checklistToUpdate.add( updateChecklist );
+                            }
                 }
             }
             if ( !checklistToUpdate.isEmpty() ) {
