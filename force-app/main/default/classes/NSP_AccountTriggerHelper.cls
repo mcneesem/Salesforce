@@ -622,7 +622,7 @@ public class NSP_AccountTriggerHelper {
     // User Story - 194644
     // Created By- Ruchi   Date- 12/17/2022
     //
-    public static void updateAddressOnCheckList( List<Account> accountList , Map<Id, Account> newMap ) {
+    private static void updateAddressOnCheckList( List<Account> accountList , Map<Id, Account> newMap ) {
         try {
             List<NSP_Checklist__c> checklistToUpdate = new List<NSP_Checklist__c>();
             List<NSP_Checklist__c> checklistList = [
@@ -639,10 +639,8 @@ public class NSP_AccountTriggerHelper {
                 FROM NSP_Checklist__c
                 WHERE ( NSP_Opportunity__r.AccountId = :accountList )
             ];
-
-            Boolean hasBypassPermission = FeatureManagement.checkPermission( 'Bypass_Restrict_Checklist_To_Opportunity_Team_Members' );
-
             // Only query team members when the running user does not have the bypass permission
+            Boolean hasBypassPermission = FeatureManagement.checkPermission( 'Bypass_Restrict_Checklist_To_Opportunity_Team_Members' );
             Set<Id> teamMemberOpportunityIds = new Set<Id>();
             if ( !hasBypassPermission ) {
                 Set<Id> opportunityIds = new Set<Id>();
@@ -653,36 +651,40 @@ public class NSP_AccountTriggerHelper {
                 }
                 if ( !opportunityIds.isEmpty() ) {
                     for ( OpportunityTeamMember otm : [
-                        SELECT OpportunityId
-                        FROM OpportunityTeamMember
-                        WHERE OpportunityId = :opportunityIds
-                        AND UserId = :UserInfo.getUserId()
-                    ] ) {
+                                SELECT OpportunityId
+                                FROM OpportunityTeamMember
+                                WHERE (
+                                    ( OpportunityId = :opportunityIds )
+                                    AND ( UserId = :UserInfo.getUserId() )
+                                )
+                            ]
+                        )
+                    {
                         teamMemberOpportunityIds.add( otm.OpportunityId );
                     }
                 }
             }
-
             if ( !checklistList.isEmpty() ) {
                 for ( NSP_Checklist__c updateChecklist : checklistList ) {
+                    // prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, You can not edit this checklist, you are not a team member of the related opportunity.
+                    // see Flow: Checklist_Before_Update_Restrict_Checklist_To_Opportunity_Team_Members
                     // Allow if: bypass permission granted OR no opportunity on checklist OR user is an opp team member
-                    if (
-                        hasBypassPermission ||
-                        (
-                            teamMemberOpportunityIds != null &&
-                            updateChecklist.NSP_Opportunity__c != null &&
-                            teamMemberOpportunityIds.contains( updateChecklist.NSP_Opportunity__c )
+                    if ( hasBypassPermission
+                        || ( ( teamMemberOpportunityIds != null )
+                            && ( updateChecklist.NSP_Opportunity__c != null )
+                            && teamMemberOpportunityIds.contains( updateChecklist.NSP_Opportunity__c )
+                            )
                         )
-                    ) {
-                             Account acc = newMap.get( updateChecklist.NSP_Opportunity__r.AccountId );
-                             updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
-                             updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
-                             updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
-                             updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
-                             updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
-                             updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
-                             checklistToUpdate.add( updateChecklist );
-                            }
+                    {
+                        Account acc = newMap.get( updateChecklist.NSP_Opportunity__r.AccountId );
+                        updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
+                        updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
+                        updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
+                        updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
+                        updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
+                        updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
+                        checklistToUpdate.add( updateChecklist );
+                    }
                 }
             }
             if ( !checklistToUpdate.isEmpty() ) {
