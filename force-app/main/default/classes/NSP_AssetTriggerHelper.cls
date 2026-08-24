@@ -11,6 +11,7 @@ public with sharing class NSP_AssetTriggerHelper {
     private static final Id retWoAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_WO' );
     private static final Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_Choice' );
     private static final Id stpChecklistRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist' );
+    private static final Id organizationalPlanningRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Organizational_Planning' );
 
     //
     // Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -168,10 +169,14 @@ public with sharing class NSP_AssetTriggerHelper {
                 }
             }
             List<String> excludeStatusValues = new List<String>();
+            List<String> excluderecordTypeWithStatusValues = new List<String>();
             List<String> excluderecordTypeValues = new List<String>();
             if ( NSP_AssetTriggerHelper.settings != null ) {
                 if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Status__c ) ) {
                     excludeStatusValues = NSP_AssetTriggerHelper.settings.Exclude_Status__c.split( '\\R' );
+                }
+                if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c ) ) {
+                    excluderecordTypeWithStatusValues = NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
                 }
                 if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types__c ) ) {
                     excluderecordTypeValues = NSP_AssetTriggerHelper.settings.Exclude_Record_Types__c.split( '\\R' );
@@ -185,7 +190,7 @@ public with sharing class NSP_AssetTriggerHelper {
                     AND (
                         NOT (
                             (
-                                ( RecordType.Name = :NSP_AssetTriggerHelper.excludeRecordTypesWrtStatus )
+                                ( RecordType.Name = :excluderecordTypeWithStatusValues )
                                 AND ( Status = :excludeStatusValues )
                             )
                             OR ( RecordType.Name = :excluderecordTypeValues )
@@ -377,7 +382,8 @@ public with sharing class NSP_AssetTriggerHelper {
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.performanceAssetRecordTypeId )
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.employmentScreeningAssetRecordTypeId )
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.recruitingServicesAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.applicantTrackingAssetRecordTypeId )
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.applicantTrackingAssetRecordTypeId ) 
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.organizationalPlanningRecordTypeId)
                 );
                 if ( isValidRecordType ) {
                     Asset oldAsset = null;
@@ -1082,32 +1088,6 @@ public with sharing class NSP_AssetTriggerHelper {
                 isEnabledAccountAssetSummary = local;
             }
             return isEnabledAccountAssetSummary;
-        }
-        private set;
-    }
-
-    public static Set<String> excludeRecordTypesWrtStatus {
-        public get {
-            if ( excludeRecordTypesWrtStatus == null ) {
-                // ensure Set is never null...
-                Set<String> local = new Set<String>();
-                if ( NSP_AssetTriggerHelper.settings != null ) {
-                    if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c ) ) {
-                        List<String> excludeRecordTypesWrtStatusList = NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c .split( '\r\n' );
-                        if ( ( excludeRecordTypesWrtStatusList != null ) && !excludeRecordTypesWrtStatusList.isEmpty() ) {
-                            local.addAll( excludeRecordTypesWrtStatusList );
-                        }
-                    }
-                    if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status_2__c ) ) {
-                        List<String> excludeRecordTypesWrtStatusList = NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status_2__c.split( '\r\n' );
-                        if ( ( excludeRecordTypesWrtStatusList != null ) && !excludeRecordTypesWrtStatusList.isEmpty() ) {
-                            local.addAll( excludeRecordTypesWrtStatusList );
-                        }
-                    }
-                }
-                excludeRecordTypesWrtStatus = local;
-            }
-            return excludeRecordTypesWrtStatus ;
         }
         private set;
     }
