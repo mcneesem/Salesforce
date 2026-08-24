@@ -700,7 +700,6 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     }
 
     private String buildBenfitPackage( String benfitPackage ){
-         System.debug('benfitPackage'+benfitPackage);
         String local = '';
         if ( String.isNotBlank( benfitPackage )
             && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue != null
@@ -709,8 +708,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage ) )
            )
         {
-            System.debug('benfitPackage'+benfitPackage);
-          local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage );
+            local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage );
         }
         return local;
     }
