@@ -158,7 +158,7 @@
     <nameField>
         <encryptionScheme>None</encryptionScheme>
         <label>Traction Feature User Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Traction Feature Users</pluralLabel>
