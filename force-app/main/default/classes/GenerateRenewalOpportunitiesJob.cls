@@ -87,6 +87,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     SELECT
                         Id ,
                         Name ,
+                        NSP_Part_Time_Margin__c ,
+                        NSP_Part_Time_Reserve__c ,
                         NSP_Account__r.Name ,
                         NSP_Account_Status__c ,
                         NSP_Client__c ,
@@ -96,6 +98,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         NSP_Asset__c ,
                         NSP_Asset__r.NSP_Sales_Office__c ,
                         NSP_Asset__r.NSP_Service_Package__c ,
+                        NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                        NSP_Asset__r.Status ,
                         NSP_Account__c ,
                         NSP_Margin__c ,
                         NSP_Reserve__c ,
@@ -122,6 +126,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     SELECT
                         Id ,
                         Name ,
+                        NSP_Part_Time_Margin__c ,
+                        NSP_Part_Time_Reserve__c ,
                         NSP_Account__r.Name ,
                         NSP_Account_Status__c ,
                         NSP_Client__c ,
@@ -131,6 +137,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         NSP_Asset__c ,
                         NSP_Asset__r.NSP_Sales_Office__c ,
                         NSP_Asset__r.NSP_Service_Package__c ,
+                        NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                        NSP_Asset__r.Status ,
                         NSP_Account__c ,
                         NSP_Margin__c ,
                         NSP_Reserve__c ,
@@ -457,8 +465,12 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 opp.Next_Renewal_Date__c = subClient.NSP_Renewal_Date__c.addYears( 1 );
             }
             opp.Current_Benefits_Package__c = subClient.NSP_Benefit_Package_Name__c;
+            opp.Renewal_Benefits_Package__c = this.buildBenfitPackage( subClient.NSP_Benefit_Package_Name__c );
+            opp.Current_Multi_Year_Contract__c = this.isCurrentMultiYearContract( subClient );
             opp.Current_Margin__c = subClient.NSP_Margin__c;
             opp.Current_Reserve__c = subClient.NSP_Reserve__c;
+            opp.Current_Part_Time_Margin__c = subClient.NSP_Part_Time_Margin__c;
+            opp.Current_Part_Time_Reserve__c = subClient.NSP_Part_Time_Reserve__c;
             opp.Renewal_Status__c = 'Not Started';
             opp.Renewal_Name__c = this.fetchRenewalName( subClient );
             opp.Renewal_Team__c = this.getRenewalTeam( subClient );
@@ -674,6 +686,35 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         return name;
     }
 
+    private String isCurrentMultiYearContract( NSP_Sub_Client__c subClient ){
+        String value = 'No';
+        if ( subClient != null
+            && subClient.NSP_Asset__r != null
+            && subClient.NSP_Asset__r.Status == 'Active'
+            && subClient.NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c
+           )
+        {
+            value = 'Yes';
+        }
+        return value;
+    }
+
+    private String buildBenfitPackage( String benfitPackage ){
+         System.debug('benfitPackage'+benfitPackage);
+        String local = '';
+        if ( String.isNotBlank( benfitPackage )
+            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue != null
+            && !GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.isEmpty()
+            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.containsKey( benfitPackage )
+            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage ) )
+           )
+        {
+            System.debug('benfitPackage'+benfitPackage);
+          local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage );
+        }
+        return local;
+    }
+
     // Sales office -> Renewal Manager mapping
     private void buildSalesOfficeToRenewalManagerMap( List<NSP_Sub_Client__c> subClients ){
         List<String> salesOfficeKeys = new List<String>();
@@ -829,6 +870,62 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         }
         private set;
     }
+
+    private static String recordTypeAPiName {
+       private get {
+            if ( recordTypeAPiName == null ) {
+                String local = '';
+                List<RecordType> recordTypes = [
+                    SELECT
+                        DeveloperName
+                    FROM RecordType
+                    WHERE Id =: GenerateRenewalOpportunitiesJob.renewalRecordTypeId
+                    LIMIT 1
+                ];
+                if ( ( recordTypes != null )
+                    && !recordTypes.isEmpty()
+                    )
+                {
+                    for( RecordType record: recordTypes ){
+                        local = record.DeveloperName;
+                    }
+                }
+                recordTypeAPiName = local;
+            }
+            return recordTypeAPiName;
+        }
+        private set;
+    }
+
+   private static Map<String, String> validRenewalBenfitPackageValue {
+    get {
+        if ( validRenewalBenfitPackageValue == null ) {
+            Map<String,String> local = new Map<String, String>();
+
+            Schema.DescribeFieldResult fieldDescribe = Opportunity.Renewal_Benefits_Package__c.getDescribe();
+            system.debug('validRenewalBenfitPackageValue'+local);
+            List<Schema.PicklistEntry> picklistEntries;
+            if (fieldDescribe != null) {
+                picklistEntries = fieldDescribe.getPicklistValues();
+            }
+
+            if (picklistEntries != null && !picklistEntries.isEmpty()) {
+                for (Schema.PicklistEntry entry : picklistEntries) {
+                    if (entry != null &&
+                        !String.isBlank(entry.getValue())) {
+                        local.put(
+                            entry.getValue(),
+                            entry.getValue()
+                        );
+                    }
+                }
+            }
+            validRenewalBenfitPackageValue = local;
+        }
+        return validRenewalBenfitPackageValue;
+    }
+    private set;
+}
 
     private static List<String> monitorEmailAddresses  {
         private get {
