@@ -702,13 +702,13 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     private String buildBenfitPackage( String benfitPackage ){
         String local = '';
         if ( String.isNotBlank( benfitPackage )
-            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue != null
-            && !GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.isEmpty()
-            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.containsKey( benfitPackage )
-            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage ) )
+            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues != null
+            && !GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.isEmpty()
+            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.containsKey( benfitPackage )
+            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.get( benfitPackage ) )
            )
         {
-            local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValue.get( benfitPackage );
+            local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.get( benfitPackage );
         }
         return local;
     }
@@ -869,9 +869,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         private set;
     }
 
-    private static Map<String, String> validRenewalBenfitPackageValue {
+    private static Map<String, String> validRenewalBenfitPackageValues {
         private get {
-            if ( validRenewalBenfitPackageValue == null ) {
+            if ( validRenewalBenfitPackageValues == null ) {
                 Map<String,String> local = new Map<String,String>();
                 ConnectApi.PicklistValuesCollection picklistValues = 
                     ConnectApi.recordUi.getPicklistValuesByRecordType(
@@ -885,9 +885,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         }
                     }
                 }
-                validRenewalBenfitPackageValue = local;
+                validRenewalBenfitPackageValues = local;
             }
-            return validRenewalBenfitPackageValue;
+            return validRenewalBenfitPackageValues;
         }
         private set;
     }
