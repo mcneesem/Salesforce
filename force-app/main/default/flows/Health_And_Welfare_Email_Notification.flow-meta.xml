@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Render_Email_Templates</name>
+        <label>Render Email Templates</label>
+        <locationX>578</locationX>
+        <locationY>1308</locationY>
+        <actionName>EmailTemplateRenderer</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Send_Email_To_Sender</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Render_Email_Templates</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>templateId</name>
+            <value>
+                <elementReference>Email_Template_Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>whatId</name>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EmailTemplateRenderer</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>emailBody</assignToReference>
+            <name>htmlBody</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>emailSubject</assignToReference>
+            <name>subject</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Send_Email_To_Sender</name>
         <label>Send Email To Sender</label>
-        <locationX>596</locationX>
-        <locationY>1308</locationY>
+        <locationX>578</locationX>
+        <locationY>1416</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Send_Fault_Message</targetReference>
+            <targetReference>Set_Fault_Element_Send_Email_To_Sender</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -30,15 +67,39 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recipientId</name>
+            <name>emailSubject</name>
             <value>
-                <elementReference>$User.Id</elementReference>
+                <elementReference>emailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>emailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailTemplateId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
             <value>
-                <elementReference>Email_Template_Id</elementReference>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -49,7 +110,7 @@
     <assignments>
         <name>External_Email_Template_Assignment</name>
         <label>External Email Template Assignment</label>
-        <locationX>728</locationX>
+        <locationX>842</locationX>
         <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
@@ -59,13 +120,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_Email_To_Sender</targetReference>
+            <targetReference>Render_Email_Templates</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Internal_Email_Template_Assignment</name>
         <label>Internal Email Template Assignment</label>
-        <locationX>200</locationX>
+        <locationX>50</locationX>
         <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
@@ -75,7 +136,91 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_Email_To_Sender</targetReference>
+            <targetReference>Render_Email_Templates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_External_Email_Template</name>
+        <label>Set Fault Element : External Email Template</label>
+        <locationX>1370</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>External_Email_Template</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Send_Fault_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_RelatedCase_Records</name>
+        <label>Set Fault Element : Get RelatedCase Records</label>
+        <locationX>2426</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RelatedCase_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Send_Fault_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Internal_Email_Template</name>
+        <label>Set Fault Element : Internal Email Template</label>
+        <locationX>578</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Internal_Email_Template</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Send_Fault_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Render_Email_Templates</name>
+        <label>Set Fault Element : Render Email Templates</label>
+        <locationX>1898</locationX>
+        <locationY>1416</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Render_Email_Templates</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Send_Fault_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Send_Email_To_Sender</name>
+        <label>Set Fault Element : Send Email To Sender</label>
+        <locationX>1634</locationX>
+        <locationY>1524</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_To_Sender</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Fault_Message</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -110,7 +255,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>679</locationX>
+        <locationX>908</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Validate_the_Switch</targetReference>
@@ -132,7 +277,7 @@
     <decisions>
         <name>Validate_Case_Records</name>
         <label>Validate Case Records</label>
-        <locationX>1058</locationX>
+        <locationX>1370</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>No Case Records</defaultConnectorLabel>
         <rules>
@@ -140,14 +285,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_RelatedCase_Records</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.FromAddress</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -168,7 +306,7 @@
     <decisions>
         <name>Validate_Email</name>
         <label>Validate Email</label>
-        <locationX>596</locationX>
+        <locationX>578</locationX>
         <locationY>708</locationY>
         <defaultConnector>
             <targetReference>External_Email_Template</targetReference>
@@ -193,7 +331,7 @@
     <decisions>
         <name>Validate_External_Email</name>
         <label>Validate External Email</label>
-        <locationX>860</locationX>
+        <locationX>974</locationX>
         <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -202,13 +340,6 @@
             <conditions>
                 <leftValueReference>External_Email_Template</leftValueReference>
                 <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>External_Email_Template</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -222,7 +353,7 @@
     <decisions>
         <name>Validate_Internal_Email_Template</name>
         <label>Validate Internal Email Template</label>
-        <locationX>332</locationX>
+        <locationX>182</locationX>
         <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -231,13 +362,6 @@
             <conditions>
                 <leftValueReference>Internal_Email_Template</leftValueReference>
                 <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Internal_Email_Template</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -251,14 +375,14 @@
     <decisions>
         <name>Validate_the_Switch</name>
         <label>Validate the Switch</label>
-        <locationX>1421</locationX>
+        <locationX>2030</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Switch Turn Off</defaultConnectorLabel>
         <rules>
             <name>Switch_Turned_On</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Validate_Switch</leftValueReference>
+                <leftValueReference>$Setup.EmailMessageTriggerSettings__c.IsHealthAndWelfareEmailMessageEnabled__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -279,11 +403,6 @@
     </decisions>
     <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>Validate_Switch</name>
-        <dataType>Boolean</dataType>
-        <expression>{!$Setup.EmailMessageTriggerSettings__c.IsHealthAndWelfareEmailMessageEnabled__c}</expression>
-    </formulas>
     <interviewLabel>Health And Welfare Email Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Health And Welfare Email Notification</label>
     <processMetadataValues>
@@ -308,12 +427,15 @@
     <recordLookups>
         <name>External_Email_Template</name>
         <label>External Email Template</label>
-        <locationX>860</locationX>
+        <locationX>974</locationX>
         <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_External_Email</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_External_Email_Template</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -331,25 +453,21 @@
     <recordLookups>
         <name>Get_RelatedCase_Records</name>
         <label>Get_RelatedCase_Records</label>
-        <locationX>1058</locationX>
+        <locationX>1370</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Case_Records</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_RelatedCase_Records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.ParentId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Case_Created_From_Email_To_Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -359,12 +477,15 @@
     <recordLookups>
         <name>Internal_Email_Template</name>
         <label>Internal Email Template</label>
-        <locationX>332</locationX>
+        <locationX>182</locationX>
         <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Internal_Email_Template</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Internal_Email_Template</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -380,7 +501,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>89</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -404,6 +525,20 @@
                 <stringValue>@insperity.com</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Incoming</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EmailRoutingAddressId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>EmailMessage</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -418,13 +553,13 @@
     <subflows>
         <name>Send_Fault_Message</name>
         <label>Send Fault Message</label>
-        <locationX>1256</locationX>
-        <locationY>1416</locationY>
+        <locationX>1634</locationX>
+        <locationY>1632</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Send_Email_To_Sender</stringValue>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -445,6 +580,27 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>emailBody</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>emailSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
