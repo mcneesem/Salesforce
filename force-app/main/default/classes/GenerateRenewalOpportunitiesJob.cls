@@ -871,61 +871,28 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         private set;
     }
 
-    private static String recordTypeAPiName {
-       private get {
-            if ( recordTypeAPiName == null ) {
-                String local = '';
-                List<RecordType> recordTypes = [
-                    SELECT
-                        DeveloperName
-                    FROM RecordType
-                    WHERE Id =: GenerateRenewalOpportunitiesJob.renewalRecordTypeId
-                    LIMIT 1
-                ];
-                if ( ( recordTypes != null )
-                    && !recordTypes.isEmpty()
-                    )
-                {
-                    for( RecordType record: recordTypes ){
-                        local = record.DeveloperName;
+    private static Map<String, String> validRenewalBenfitPackageValue {
+        private get {
+            if ( validRenewalBenfitPackageValue == null ) {
+                Map<String,String> local = new Map<String,String>();
+                ConnectApi.PicklistValuesCollection picklistValues = 
+                    ConnectApi.recordUi.getPicklistValuesByRecordType(
+                        'Opportunity',
+                        GenerateRenewalOpportunitiesJob.renewalRecordTypeId
+                    );
+                if ( picklistValues != null ) {
+                    for ( ConnectApi.PicklistValue p : picklistValues.picklistFieldValues.get('Renewal_Benefits_Package__c').values) {
+                        if ( p != null && p.label != null && p.value != null ){
+                            local.put(p.label,p.value);
+                        }
                     }
                 }
-                recordTypeAPiName = local;
+                validRenewalBenfitPackageValue = local;
             }
-            return recordTypeAPiName;
+            return validRenewalBenfitPackageValue;
         }
         private set;
     }
-
-   private static Map<String, String> validRenewalBenfitPackageValue {
-    get {
-        if ( validRenewalBenfitPackageValue == null ) {
-            Map<String,String> local = new Map<String, String>();
-
-            Schema.DescribeFieldResult fieldDescribe = Opportunity.Renewal_Benefits_Package__c.getDescribe();
-            system.debug('validRenewalBenfitPackageValue'+local);
-            List<Schema.PicklistEntry> picklistEntries;
-            if (fieldDescribe != null) {
-                picklistEntries = fieldDescribe.getPicklistValues();
-            }
-
-            if (picklistEntries != null && !picklistEntries.isEmpty()) {
-                for (Schema.PicklistEntry entry : picklistEntries) {
-                    if (entry != null &&
-                        !String.isBlank(entry.getValue())) {
-                        local.put(
-                            entry.getValue(),
-                            entry.getValue()
-                        );
-                    }
-                }
-            }
-            validRenewalBenfitPackageValue = local;
-        }
-        return validRenewalBenfitPackageValue;
-    }
-    private set;
-}
 
     private static List<String> monitorEmailAddresses  {
         private get {
