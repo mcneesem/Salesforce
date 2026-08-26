@@ -35506,6 +35506,10 @@
         <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>NSP_ReportRequest__c-Report Request Layout</layout>
+        <recordType>NSP_ReportRequest__c.HRScale_Workday_Report</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_ReportRequest__c-HR Survey Layout</layout>
         <recordType>NSP_ReportRequest__c.NSP_SurveyRequest</recordType>
     </layoutAssignments>

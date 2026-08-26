@@ -641,7 +641,7 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -996,6 +996,10 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+        <recordTypeVisibilities>
+        <recordType>NSP_ReportRequest__c.HRScale_Workday_Report</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
