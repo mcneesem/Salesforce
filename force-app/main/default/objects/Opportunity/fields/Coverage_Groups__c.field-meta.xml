@@ -36,6 +36,16 @@
                 <label>NH</label>
             </value>
             <value>
+                <fullName>NJ</fullName>
+                <default>false</default>
+                <label>NJ</label>
+            </value>
+            <value>
+                <fullName>NY</fullName>
+                <default>false</default>
+                <label>NY</label>
+            </value>
+            <value>
                 <fullName>OR</fullName>
                 <default>false</default>
                 <label>OR</label>

@@ -147,6 +147,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Renewal</controllingFieldValue>
+            <controllingFieldValue>Existing Product</controllingFieldValue>
+            <valueName>CAM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Renewal</controllingFieldValue>
             <valueName>Core/EG</valueName>
         </valueSettings>
         <valueSettings>

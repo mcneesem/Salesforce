@@ -122,6 +122,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>NJ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OR</fullName>
             <default>false</default>
         </values>
