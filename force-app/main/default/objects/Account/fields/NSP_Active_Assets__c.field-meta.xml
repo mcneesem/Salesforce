@@ -91,6 +91,11 @@
                 <label>RET WO</label>
             </value>
             <value>
+                <fullName>Revolution</fullName>
+                <default>false</default>
+                <label>Revolution</label>
+            </value>
+            <value>
                 <fullName>Time &amp; Attendance</fullName>
                 <default>false</default>
                 <label>Time &amp; Attendance</label>

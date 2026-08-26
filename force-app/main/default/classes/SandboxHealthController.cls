@@ -978,6 +978,9 @@ public with sharing class SandboxHealthController {
         String label = objName;
         try {
             String soql = 'SELECT count() FROM ' + objName + ' WHERE NSP_External_Id__c = null';
+            if ( objName == 'blng__FinancePeriod__c' ) {
+                soql += ' AND blng__PeriodStartDate__c > 2024-01-01';
+            }
             Integer cnt = Database.countQuery( soql );
             if ( cnt == 0 ) {
                 target.checks.add( newPass( key , label , 'No blank NSP_External_Id__c' , '0' , 'No records with blank ExternalId' ) );
@@ -1117,7 +1120,7 @@ public with sharing class SandboxHealthController {
         email.checks = new List<Check>();
 
         List<String> dynamicLabelNames = new List<String>();
-        String list1 = System.Label.Post_Refresh_Email_Labels;
+        String list1 = System.Label.Post_Refresh_Email_Labels_1;
         if (String.isNotBlank( list1 )) {
             dynamicLabelNames.addAll( new List<String>( list1.split(',') ) );
         }

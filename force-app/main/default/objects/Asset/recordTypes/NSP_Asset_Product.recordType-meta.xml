@@ -2524,6 +2524,10 @@
     <picklistValues>
         <picklist>NSP_TransitionType__c</picklist>
         <values>
+            <fullName>IPS to HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PEO to WX</fullName>
             <default>false</default>
         </values>

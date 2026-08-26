@@ -1638,6 +1638,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Vendor_Case_Submission_Date__c</fieldItem>
                 <identifier>RecordVendor_Case_Submission_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1648,6 +1655,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Vendor_Case__c</fieldItem>
                 <identifier>RecordVendor_Case_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1658,6 +1672,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Vendor_Issue__c</fieldItem>
                 <identifier>RecordVendor_Issue_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-38efe6a2-f517-427e-9a90-469344c51f4a</name>

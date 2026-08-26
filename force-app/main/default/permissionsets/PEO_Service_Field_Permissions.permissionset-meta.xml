@@ -23622,6 +23622,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Proj__c.Is_Opportunity_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Last_Invoice_Date__c</field>
         <readable>true</readable>
@@ -24659,6 +24664,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_of_Days_Offset__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Project_Task__c.Portal_Event_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

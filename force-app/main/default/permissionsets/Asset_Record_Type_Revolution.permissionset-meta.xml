@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants access to the Revolution Asset Record Type</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Asset Record Type: Revolution</label>
+    <recordTypeVisibilities>
+        <recordType>Asset.Revolution</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

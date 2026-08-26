@@ -4930,6 +4930,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Demand</fullName>
             <default>false</default>
         </values>
@@ -4942,7 +4946,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Intro Sent</fullName>
+            <fullName>Intro</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5019,27 +5023,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WO - WD Bundle Plus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO - WD Full Bundle</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WS - Asset Plus Corp</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WS - Asset Plus Prop</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WS - Bundle Plus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WS - WD Bundle Plus</fullName>
             <default>false</default>
         </values>
     </picklistValues>

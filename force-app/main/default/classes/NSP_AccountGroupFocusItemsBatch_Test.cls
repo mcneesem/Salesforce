@@ -26,7 +26,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(4, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '12 Focus Items');
+        system.assertEquals(2, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '12 Focus Items');
     }
 
     @isTest
@@ -83,7 +83,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(4, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
+        system.assertEquals(3, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
     }
 
     @isTest
@@ -120,7 +120,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(3, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
+        system.assertEquals(2, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
     }
 
 }

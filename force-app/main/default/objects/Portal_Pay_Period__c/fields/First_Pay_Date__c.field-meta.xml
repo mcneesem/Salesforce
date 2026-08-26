@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>First_Pay_Date__c</fullName>
     <encryptionScheme>None</encryptionScheme>
-    <inlineHelpText>If applicable: Please note time tracking may not be available for the first Insperity Payroll Period/Pay Date.</inlineHelpText>
+    <inlineHelpText>The dates shown reflect your actual pay dates. Your weekend rule is not displayed here but is captured and applied within Insperity&apos;s system.</inlineHelpText>
     <label>First Pay Date</label>
     <required>false</required>
     <trackHistory>true</trackHistory>

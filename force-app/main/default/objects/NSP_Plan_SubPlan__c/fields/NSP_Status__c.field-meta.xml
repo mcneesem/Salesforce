@@ -12,19 +12,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Active</fullName>
+                <default>false</default>
+                <label>Active</label>
+            </value>
+            <value>
                 <fullName>Frozen</fullName>
                 <default>false</default>
                 <label>Frozen</label>
             </value>
             <value>
+                <fullName>Marked for Term</fullName>
+                <default>false</default>
+                <label>Marked for Term</label>
+            </value>
+            <value>
                 <fullName>Setup</fullName>
                 <default>false</default>
                 <label>Setup</label>
-            </value>
-            <value>
-                <fullName>Active</fullName>
-                <default>false</default>
-                <label>Active</label>
             </value>
             <value>
                 <fullName>Suspended</fullName>

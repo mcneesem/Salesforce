@@ -8,11 +8,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.dnb_exclude_company__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.Days_Since_Termination__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -123,6 +118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_SubPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_usng_third_pary_timekeeping_system__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -214,6 +214,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.dnb_exclude_company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1003,6 +1008,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.NSP_Loyalty_Payout__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.NSP_Partner_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Pin_Dismiss_Date_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1233,11 +1248,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.dnb_exclude_company__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Lead.Engagement_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1314,6 +1324,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.dnb_exclude_company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2058,7 +2073,52 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client__c.AGSC_Modifier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Bid_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Bid_Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.CAR_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.CAR_Summary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Co_Employment_Risk_Charge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2068,7 +2128,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client__c.Current_Delivery__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Current_EPLI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.DCAA_Detail_Report__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.DCAA_Summary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Invoice_Reconciliation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client__c.Is_Primary_Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Medical_Allocation_Report__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2268,6 +2358,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Client_Specific_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Client_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2328,6 +2423,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Current_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Current_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Current_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2344,6 +2449,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.DCAA_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.DCAA_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2474,6 +2584,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Mid_Year_Change_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Mod_Sheet_Batch__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2613,6 +2728,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Next_Action_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Next_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2693,6 +2813,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Pricing_Method_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Pricing_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Product_Recommendation_Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2768,6 +2898,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Renewal_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Renewal_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Renewal_Reserve__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2829,6 +2969,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.WC_Allocation_Avg_Increase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.WC_Annual_Increase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3249,6 +3394,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Subscription__c.Credit_Duration_Months__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.ActivityDate</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3964,6 +4114,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Situation_Termination_Drivers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.Portal_Event_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

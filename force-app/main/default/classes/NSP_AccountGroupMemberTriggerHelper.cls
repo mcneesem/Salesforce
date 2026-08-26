@@ -376,7 +376,9 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 Id accountId = mapAccIdGrp.get( accGrp.Id );
                 Boolean violatesPrimaryTerminationReasonRule = (
                     !hasBypassPermission
-                    && accGrp.Account__r?.WO_Asset__r?.NSP_Written_Term_recd__c
+                    && ( accGrp.Account__r != null )
+                    && ( accGrp.Account__r.WO_Asset__r != null )
+                    && accGrp.Account__r.WO_Asset__r.NSP_Written_Term_recd__c
                     && ( accGrp.NSP_Type__c == 'Renewal Probability' )
                     && this.hasIncompleteTerminationInfo( accGrp )
                 );
