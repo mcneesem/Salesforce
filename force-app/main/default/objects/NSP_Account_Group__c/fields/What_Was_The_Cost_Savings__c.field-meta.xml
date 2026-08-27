@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>What_Was_The_Cost_Savings__c</fullName>
+    <encryptionScheme>None</encryptionScheme>
+    <inlineHelpText>State the cost savings dollar amount and what the savings is related to ex. Admin, medical, etc.</inlineHelpText>
+    <label>What Was The Cost Savings?</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>
