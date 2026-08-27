@@ -292,10 +292,17 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     private void checkForAssets() {
         if ( !accountIds.isEmpty() ) {
             for ( Asset asst : new Selector().getAssets( new List<Id>( accountIds ) ) ) {
-                this.accIdWithAimsClient.put(
-                    asst.AccountId ,
-                    asst.NSP_Client__c
-                );
+                if ( asst != null
+                    && ( asst.Status == 'Active'
+                        || asst.Status == 'Onboarding'
+                       )
+                   )
+                {
+                    this.accIdWithAimsClient.put(
+                        asst.AccountId ,
+                        asst.NSP_Client__c
+                    );
+                }
             }
             for ( Asset asst : new Selector().getNoInsperityAssets( new List<Id>( accountIds ) ) ) {
                 if ( this.isEligibleForNoInsperity401kFocusItem( asst ) ) {
@@ -462,6 +469,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                         NSP_AIMS_Original_First_Pay_Date__c ,
                         NSP_Retirement_Service_Plan_Name__c ,
                         AccountId ,
+                        Status,
                         NSP_Client__c
                     FROM Asset
                     WHERE (

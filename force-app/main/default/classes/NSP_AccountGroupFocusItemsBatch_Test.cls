@@ -11,7 +11,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Account charlieAccRef = new Account(NSP_OneVoice_External_ID__c = 'charlieAcc');
 
         // Create Asset Records
-        Asset woAsset = new Asset(Name = 'WO', recordtypeId = recordTypeWoAsset, NSP_Asset_External_ID__c = 'woAsset', NSP_Client__c='3355345', NSP_AIMS_Original_First_Pay_Date__c = system.today().addMonths(-12), Account = charlieAccRef);
+        Asset woAsset = new Asset(Name = 'WO', recordtypeId = recordTypeWoAsset, NSP_Asset_External_ID__c = 'woAsset', NSP_Client__c='3355345', NSP_AIMS_Original_First_Pay_Date__c = system.today().addMonths(-12), Account = charlieAccRef, Status = 'Active');
 
         // Create the accounts, Assets.
         Test.startTest();
@@ -26,7 +26,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(2, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '12 Focus Items');
+        system.assertEquals(4, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '12 Focus Items');
     }
 
     @isTest
@@ -83,7 +83,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(3, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
+        system.assertEquals(4, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
     }
 
     @isTest
@@ -120,7 +120,7 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
         Test.startTest();
         Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
         Test.stopTest();
-        system.assertEquals(2, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
+        system.assertEquals(3, Database.Query(new NSP_QueryBuilder( FOCUS_ITEM_OBJECT, new List<String>{'Id'}).addLimit(15).build()).size(), '4 Focus Items');
     }
 
 }
