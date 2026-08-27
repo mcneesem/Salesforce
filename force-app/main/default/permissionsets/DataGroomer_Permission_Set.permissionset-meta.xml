@@ -1431,7 +1431,6 @@
         <field>Account.NSP_Margin__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_MedicalRenewal__c</field>
@@ -2680,6 +2679,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.pse__Services_Billing_Time_Period_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.Employee_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
