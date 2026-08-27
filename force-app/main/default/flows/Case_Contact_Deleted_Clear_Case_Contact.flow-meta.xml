@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_New_Case_Contact</name>
+        <label>Assign New Case Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Contacts.NSP_IsPrimary__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_New_Primary_Case_Contact</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Contact_Id</name>
         <label>Set Contact Id</label>
@@ -18,6 +35,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_for_Get_Case_Contacts</name>
+        <label>Set Fault Element for Get Case Contacts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Case_Contacts</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>After_Delete_Of_Case_Contact_Update_Case_Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_For_Get_Case_Record</name>
         <label>Set Fault Element For Get Case Record</label>
         <locationX>0</locationX>
@@ -29,6 +63,27 @@
                 <stringValue>Get_Case_Based_On_Contact_Id_From_Case_Contact</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>After_Delete_Of_Case_Contact_Update_Case_Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_for_Set_New_Primary_Case_Contact</name>
+        <label>Set Fault Element for Set New Primary Case Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Set_New_Primary_Case_Contact</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>After_Delete_Of_Case_Contact_Update_Case_Fault_Flow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_For_Update_Case</name>
@@ -46,6 +101,47 @@
             <targetReference>After_Delete_Of_Case_Contact_Update_Case_Fault_Flow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Update_Case_Name</name>
+        <label>Update Case Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Based_On_Contact_Id_From_Case_Contact.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contacts.NSP_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Record</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Case_Contacts</name>
+        <label>Check Case Contacts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Contact_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_New_Case_Contact</targetReference>
+            </connector>
+            <label>Exist</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Case_Record_Exists</name>
         <label>Check Case Record Exists</label>
@@ -63,11 +159,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Contact_Id</targetReference>
+                <targetReference>Get_Case_Contacts</targetReference>
             </connector>
             <label>Valid Case</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Check_Contact_Id</name>
+        <label>Check Contact Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Name</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>Case Contact - Deleted - Clear Case Contact {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Contact - Deleted - Clear Case Contact</label>
     <processMetadataValues>
@@ -125,10 +244,54 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>ContactId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Contacts</name>
+        <label>Get Case Contacts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Case_Contacts</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_for_Get_Case_Contacts</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Case__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Case_Contacts__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Contact__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Set_New_Primary_Case_Contact</name>
+        <label>Set New Primary Case Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Contact_Id</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_for_Set_New_Primary_Case_Contact</targetReference>
+        </faultConnector>
+        <inputReference>Get_Case_Contacts</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Case_Record</name>
         <label>Update Case Record</label>
@@ -148,6 +311,20 @@
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Contact__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_IsPrimary__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Case__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
