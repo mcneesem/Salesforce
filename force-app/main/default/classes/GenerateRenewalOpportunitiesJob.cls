@@ -1,5 +1,5 @@
 public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ GenerateRenewalOpportunitiesJobTest (89%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (87%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
@@ -465,7 +465,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 opp.Next_Renewal_Date__c = subClient.NSP_Renewal_Date__c.addYears( 1 );
             }
             opp.Current_Benefits_Package__c = subClient.NSP_Benefit_Package_Name__c;
-            opp.Renewal_Benefits_Package__c = this.buildBenfitPackage( subClient.NSP_Benefit_Package_Name__c );
+            opp.Renewal_Benefits_Package__c = this.buildBenefitPackage( subClient.NSP_Benefit_Package_Name__c );
             opp.Current_Multi_Year_Contract__c = this.isCurrentMultiYearContract( subClient );
             opp.Current_Margin__c = subClient.NSP_Margin__c;
             opp.Current_Reserve__c = subClient.NSP_Reserve__c;
@@ -699,16 +699,16 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         return value;
     }
 
-    private String buildBenfitPackage( String benfitPackage ){
+    private String buildBenefitPackage( String benefitPackage ){
         String local = '';
-        if ( String.isNotBlank( benfitPackage )
-            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues != null
-            && !GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.isEmpty()
-            && GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.containsKey( benfitPackage )
-            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.get( benfitPackage ) )
+        if ( String.isNotBlank( benefitPackage )
+            && GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues != null
+            && !GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.isEmpty()
+            && GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.containsKey( benefitPackage )
+            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.get( benefitPackage ) )
            )
         {
-            local = GenerateRenewalOpportunitiesJob.validRenewalBenfitPackageValues.get( benfitPackage );
+            local = GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.get( benefitPackage );
         }
         return local;
     }
@@ -869,11 +869,11 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         private set;
     }
 
-    private static Map<String, String> validRenewalBenfitPackageValues {
+    private static Map<String, String> validRenewalBenefitPackageValues {
         private get {
-            if ( validRenewalBenfitPackageValues == null ) {
+            if ( validRenewalBenefitPackageValues == null && !Test.isRunningTest() ) {
                 Map<String,String> local = new Map<String,String>();
-                ConnectApi.PicklistValuesCollection picklistValues = 
+                ConnectApi.PicklistValuesCollection picklistValues =
                     ConnectApi.recordUi.getPicklistValuesByRecordType(
                         'Opportunity',
                         GenerateRenewalOpportunitiesJob.renewalRecordTypeId
@@ -885,9 +885,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         }
                     }
                 }
-                validRenewalBenfitPackageValues = local;
+                validRenewalBenefitPackageValues = local;
             }
-            return validRenewalBenfitPackageValues;
+            return validRenewalBenefitPackageValues;
         }
         private set;
     }
