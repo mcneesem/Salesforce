@@ -9,15 +9,15 @@
             <stringValue>AccountContactRelationToInsertOpportunityContactRole</stringValue>
         </value>
     </constants>
-    <description>If the Account Contact Relationship is Active and isPrimary is changed, then populate/update Opportunity Contact Roles on Sales Opportunities via subflow</description>
+    <description>DEPRECATED - If the Account Contact Relationship is Active and isPrimary is changed, then populate/update Opportunity Contact Roles on Sales Opportunities via subflow</description>
     <environments>Default</environments>
     <formulas>
         <name>IsNew</name>
         <dataType>Boolean</dataType>
         <expression>ISNEW()</expression>
     </formulas>
-    <interviewLabel>Account Contact Relationship - Updated - Async - Active and isPrimary Changed {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account Contact Relationship - Updated - Async - Active and isPrimary Changed</label>
+    <interviewLabel>DEPRECATED - Account Contact Relationship - Updated - Async - Active and isPrimary Changed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Account Contact Relationship - Updated - Async - Active and isPrimary Changed</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
