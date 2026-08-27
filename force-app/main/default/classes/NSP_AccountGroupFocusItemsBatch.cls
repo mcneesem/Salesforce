@@ -292,12 +292,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     private void checkForAssets() {
         if ( !accountIds.isEmpty() ) {
             for ( Asset asst : new Selector().getAssets( new List<Id>( accountIds ) ) ) {
-                if ( asst != null
-                    && ( asst.Status == 'Active'
-                        || asst.Status == 'Onboarding'
-                       )
-                   )
-                {
+                if ( this.isActiveAsset( asst ) ) {
                     this.accIdWithAimsClient.put(
                         asst.AccountId ,
                         asst.NSP_Client__c
@@ -321,15 +316,26 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
         }
     }
 
+    private Boolean isActiveAsset(Asset asst) {
+        Boolean local = false;
+        if ( ( asst != null )
+            && ( asst.Status == 'Active'
+                || asst.Status == 'Onboarding'
+               )
+           )
+        {
+            local = true;
+        }
+        return local;
+    }
+
     private Boolean isEligibleForNoInsperity401kFocusItem( Asset asst ) {
         Boolean local = false;
         if ( ( asst != null )
             && ( ( asst.NSP_Retirement_Service_Plan_Name__c == null )
                 || asst.NSP_Retirement_Service_Plan_Name__c.contains( NSP_ServiceConstants.ORK )
                 )
-            && ( ( asst.Status == 'Active' )
-                || ( asst.Status == 'Onboarding' )
-                )
+            && ( this.isActiveAsset( asst ) )
             )
         {
             local = true;
