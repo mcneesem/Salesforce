@@ -5,7 +5,8 @@
     <label>Recruiting</label>
     <permissionSets>BPS</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>Opportunity_Owner_Recruiting_Sales</permissionSets>

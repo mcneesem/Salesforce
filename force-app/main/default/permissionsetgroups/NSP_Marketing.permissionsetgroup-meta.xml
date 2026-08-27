@@ -2,7 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Marketing</label>
+    <label>NSP Marketing</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
@@ -11,8 +11,9 @@
     <permissionSets>Campaign_Influence</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
