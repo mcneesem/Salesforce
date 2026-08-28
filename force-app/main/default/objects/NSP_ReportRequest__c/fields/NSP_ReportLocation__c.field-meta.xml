@@ -22,6 +22,11 @@
                 <default>false</default>
                 <label>WebFocus (MRE)</label>
             </value>
+            <value>
+                <fullName>HRScale (Workday) Report</fullName>
+                <default>false</default>
+                <label>HRScale (Workday) Report</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

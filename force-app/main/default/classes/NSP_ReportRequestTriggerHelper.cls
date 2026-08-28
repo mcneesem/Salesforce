@@ -6,6 +6,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     private static final String UNKNOWN = 'Unknown';
     private static final String INSPERITY_PREPARED = 'Insperity-Prepared';
     private static final string SEPERATION_AGREEMENT_RECORD_TYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_SeparationRequest' );
+    public final static String HRSCALE_WORKDAY_REPORT_LOCATION = 'HRScale (Workday) Report';
 
     public void beforeUpdateDirector( Map<Id,NSP_ReportRequest__c> newMap , Map<Id,NSP_ReportRequest__c> oldMap ) {
         List<NSP_ReportRequest__c> repReqList = new List<NSP_ReportRequest__c>();
@@ -55,11 +56,12 @@ public with sharing class NSP_ReportRequestTriggerHelper {
 
     public void beforeInsertDirector( List<NSP_ReportRequest__c> newList , Map<Id,NSP_ReportRequest__c> oldMap ) {
         Id recordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_DevelopmentReport' );
+        Id hrScaleRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'HRScale_Workday_Report' );
         for ( NSP_ReportRequest__c eachRepoReq : newList ) {
             if ( ( recordTypeId != null ) && ( eachRepoReq.RecordTypeId == recordTypeId ) ) {
                 if ( ( eachRepoReq.NSP_Existing_NewReport__c != null )
-                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_Existing_NewReport__c != eachRepoReq.NSP_Existing_NewReport__c )
-                    )
+                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_Existing_NewReport__c != eachRepoReq.NSP_Existing_NewReport__c )
+                )
                 {
                     if ( eachRepoReq.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
                         eachRepoReq.NSP_Action__c = NSP_ServiceConstants.WIZARD_DEVELOPMENT;
@@ -73,8 +75,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                     }
                 }
                 if ( ( eachRepoReq.NSP_InternalClientReport__c != null )
-                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_InternalClientReport__c != eachRepoReq.NSP_InternalClientReport__c )
-                    )
+                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_InternalClientReport__c != eachRepoReq.NSP_InternalClientReport__c )
+                )
                 {
                     if ( eachRepoReq.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
                         if ( eachRepoReq.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
@@ -86,8 +88,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                     }
                 }
                 if ( ( eachRepoReq.NSP_ReportLocation__c != null )
-                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_ReportLocation__c != eachRepoReq.NSP_ReportLocation__c )
-                    )
+                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_ReportLocation__c != eachRepoReq.NSP_ReportLocation__c )
+                )
                 {
                     if ( eachRepoReq.NSP_ReportLocation__c == NSP_ServiceConstants.PREMIER_REPORTING ) {
                         eachRepoReq.NSP_Misc__c = NSP_ServiceConstants.WIRE;
@@ -96,9 +98,66 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                         eachRepoReq.NSP_Misc__c = NSP_ServiceConstants.NON_WIRE;
                     }
                 }
+            } else if(hrScaleRecordTypeId != null && eachRepoReq.RecordTypeId == hrScaleRecordTypeId) {
+                NSP_ReportRequestTriggerHelper.processHRScaleBeforeInsertDirector(eachRepoReq, oldMap, hrScaleRecordTypeId);
             }
         }
     }
+
+    //
+    // MethodName : processHRScaleBeforeInsertDirector
+    // Description : Handles before insert and before update field automation specific to the
+    //               HRScale (Workday) Report record type on NSP_ReportRequest__c.
+    //               Sets NSP_Action__c and NSP_ReportType__c based on field changes, and
+    //               always enforces NSP_ReportLocation__c to the HRScale Workday Report value
+    //               regardless of user selection.
+    // Params : NSP_ReportRequest__c newRecord        - the record being inserted or updated
+    //          Map<Id,NSP_ReportRequest__c> oldMap   - previous field values; empty map on insert
+    //          Id hrScaleRecordTypeId                - record type Id for HRScale_Workday_Report
+    //
+    private static void processHRScaleBeforeInsertDirector(NSP_ReportRequest__c newRecord, Map<Id,NSP_ReportRequest__c> oldMap, Id hrScaleRecordTypeId)
+    {
+        // Guard: ensure record is non-null, record type Id is resolved, and record belongs to HRScale
+        if ( newRecord != null && hrScaleRecordTypeId != null && newRecord.RecordTypeId == hrScaleRecordTypeId ) {
+            // Block 1: React to changes in NSP_Existing_NewReport__c
+            // On insert (oldMap is null or empty) or when the value has changed from the previous saved value,
+            // set NSP_Action__c to Development or Maintenance accordingly.
+            // When New Report + Internal Report, also auto-populate NSP_ReportType__c.
+            if( ( newRecord.NSP_Existing_NewReport__c != null ) &&
+            ( oldMap == null  ||
+            oldMap.get(newRecord.Id)?.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c )
+            ) {
+                if( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
+                    newRecord.NSP_Action__c = NSP_ServiceConstants.WIZARD_DEVELOPMENT;
+                    if( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
+                        newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
+                    }
+                } else {
+                    newRecord.NSP_Action__c = NSP_ServiceConstants.WIZARD_MAINTENANCE;
+                }
+            }
+
+            // Block 2: React to changes in NSP_InternalClientReport__c
+            // On insert (oldMap is empty) or when the value has changed,
+            // auto-populate or clear NSP_ReportType__c based on whether the report is Internal.
+            if( ( newRecord.NSP_InternalClientReport__c  != null ) &&
+            (( oldMap.size() == 0 || oldMap.get(newRecord.Id)?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c ) ) ) {
+                if( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
+                    if( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
+                        newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
+                    }
+                } else {
+                    newRecord.NSP_ReportType__c = null;
+                }
+            }
+
+            // Always enforce Report Location to HRScale (Workday) Report for this record type,
+            // overriding any value the user may have selected — only this location is valid for HRScale.
+            newRecord.NSP_ReportLocation__c = NSP_ReportRequestTriggerHelper.HRSCALE_WORKDAY_REPORT_LOCATION;
+        }
+    }
+
+
 
     //
     // Description: This method is used to validate completed wizard record before deleting

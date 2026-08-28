@@ -22,7 +22,6 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
     @api recordInput;
     error;
     woasset = '';
-    fieldsData ;
     recordTypeID = '012000000000000AAA';
     @track subclientData;
     @track error;
@@ -51,7 +50,13 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         }
     }
 
-    separationQueueName ='HR Separation Agreement Team';
+    separationQueueName = 'HR Separation Agreement Team';
+    hrScaleQueueName = 'HRScale Reporting & Integrations';
+
+    get isHRScale() {
+        return this.reReqObj?.NSP_ReportLocation__c?.value === 'HRScale (Workday) Report';
+    }
+
     getQueueIdbyName( queueName ) {
         if ( this.reReqObj?.isSubmit ) {
             queueName = 'Consulting & Development';
@@ -84,7 +89,9 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                     )
                 {
                     this.recordTypeID = peoRecordtype[0].recordTypeId
-                    if(this.recordInput != null){
+                    if( this.isHRScale) {
+                        this.getQueueIdbyName(this.hrScaleQueueName);
+                    } else if(this.recordInput != null){
                         const caseRecord = JSON.parse(JSON.stringify(this.recordInput));
                         this.createCaseRecord(caseRecord);
                     } else if ( this.reReqObj != null &&  this.reReqObj.NSP_AgreementType__c != null && this.reReqObj.NSP_AgreementType__c.value != null
@@ -124,14 +131,17 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         if(inputData != null && this.reReqObj != null ){
             let today = new Date();
             let subject = today.toISOString();
-            const { wizardReportSubcategory, wizardReportCategory,wizardSeparationCategory, wizardSeparationSubcategory} = LABEL;
+            const { wizardReportSubcategory, wizardReportCategory,wizardSeparationCategory, wizardSeparationSubcategory, wizardHRScaleReportSubcategory } = LABEL;
             const { fields } = inputData;
-            if(this.reReqObj.NSP_ReportName__c !=null && this.reReqObj.NSP_ReportName__c.value !=null){
+            if (this.isHRScale) {
+                subject = 'HRScale ' + this.reReqObj.NSP_ReportName__c?.value ?? subject;
+                fields.NSP_Category__c = wizardReportCategory;
+                fields.NSP_SubCategory__c = wizardHRScaleReportSubcategory;
+            } else if(this.reReqObj.NSP_ReportName__c !=null && this.reReqObj.NSP_ReportName__c.value !=null){
                 subject = this.reReqObj.NSP_ReportName__c.value;
                 fields.NSP_SubCategory__c=wizardReportSubcategory;
                 fields.NSP_Category__c=wizardReportCategory;
-            }
-            if( this.reReqObj.NSP_ReportName__c != null && this.reReqObj.NSP_Existing_NewReport__c != null && this.reReqObj.NSP_ReportLocation__c != null &&
+            } else if( this.reReqObj.NSP_ReportName__c != null && this.reReqObj.NSP_Existing_NewReport__c != null && this.reReqObj.NSP_ReportLocation__c != null &&
                 this.reReqObj.NSP_ReportLocation__c.value != null &&  this.reReqObj.NSP_ReportLocation__c.value == 'Premier Reporting (WIRE)' && this.reReqObj.NSP_Existing_NewReport__c.value != null
                 )
             {
