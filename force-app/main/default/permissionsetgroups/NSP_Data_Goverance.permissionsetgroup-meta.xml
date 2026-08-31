@@ -12,9 +12,10 @@
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
     <permissionSets>D_B_Connect_Lead_Exclude_Company_Edit</permissionSets>
     <permissionSets>Data_Import_Wizard</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>Monitor_Login_History</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
