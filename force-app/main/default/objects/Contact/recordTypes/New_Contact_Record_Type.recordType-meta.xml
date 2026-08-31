@@ -1388,6 +1388,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore Strategic Client Advisor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ITA Analyst</fullName>
             <default>false</default>
         </values>
