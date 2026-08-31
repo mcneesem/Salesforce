@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>New Client-Payroll Taxes - Provide information to clients re: Insperity’s role with payroll tax information</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>New Client-Payroll Taxes</name>
+    <style>freeForm</style>
+    <subject>Payroll Taxes – Understanding Insperity’s Role</subject>
+    <textOnly>Dear Client,
+As a professional employer organization (PEO), Insperity files employment taxes as the employer of record for all federal employment taxes, employee state and local income taxes, most state unemployment taxes and applicable Paid Family Medical Leave.
+“Employer of record” means Insperity files these taxes under its name and tax identification number instead of using the client’s name and tax identification number. Exceptions to this guideline apply to both paid family medical leave and state unemployment tax regulations requiring a PEO to file such taxes under the client’s name and account number.
+This may affect how clients manage their individual employment tax accounts. You can view detailed responses to the most frequently asked employment/unemployment tax questions regarding your role as an Insperity client on Insperity PremierTM by clicking the Payroll Tax Guidelines or by following the path under Payroll &gt; Resources &gt;  Tax or W-2 Resources &gt; Select Payroll Tax Guidelines
+The attached document provides information to assist your accountants and tax advisors in understanding Insperity’s role as a PEO.
+If you have additional questions, please contact me or your Insperity payroll specialist.
+Thank you for trusting Insperity to serve your business.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

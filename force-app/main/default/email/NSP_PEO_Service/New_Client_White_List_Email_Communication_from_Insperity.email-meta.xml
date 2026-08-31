@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL Only - Send to new clients with job aid to provide direction to whitelist emails from Insperity</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>New Client-White List Email Communication from Insperity</name>
+    <style>freeForm</style>
+    <subject>Whitelist email communications from Insperity</subject>
+    <textOnly>Dear [Client],
+
+As you become acclimated to Insperity, I want to ensure that you are prepared for the various communications that come from Insperity. During and after your tenure as a client, Insperity will communicate with you in a variety of methods. Most frequently communications will originate from me; you may occasionally receive emails from Insperity corporate partners as well as important emails that are distributed through our automated email platform. The emails that come through our automated platform will be delivered with the sender address “@response.insperity.com”. To ensure these important emails are received, you will want to whitelist this email address. I have attached a job aid that illustrates how to whitelist that email domain.
+
+Please reach out to me directly with questions after receipt of an email from a corporate partner to avoid delay in my response as the @response.insperity.com email address is not monitored. I recommend that if the email is styled from me with this domain, that you remove the “response.” section of the email domain to ensure accurate delivery.
+
+Thank you for allowing Insperity to serve your business.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

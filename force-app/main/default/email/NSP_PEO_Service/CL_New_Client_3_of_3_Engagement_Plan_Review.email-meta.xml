@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CL only - Schedule a meeting to review and approve the engagement plan</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>CL-New Client 3 of 3 Engagement Plan Review</name>
+    <style>freeForm</style>
+    <subject>Insperity Engagement Plan Review</subject>
+    <textOnly>Dear [client]
+
+I hope this message finds you well.
+
+Thank you again for your time on [insert date of service strategy meeting]. It was great to hear your plans for the coming year and we look forward to our partnership in your success. Your feedback is invaluable as we strive to tailor our offerings to meet and exceed your employee needs. I have attached the proposed service strategy that lays out the Insperity solutions, along with target dates and stakeholders.
+
+I would like to plan some time to review the target dates for these projects with you.
+
+Date/time
+Date/time
+
+This can be a phone or zoom call or we can meet in person according to your preference. Please suggest an alternate time if you are not available on the dates above, otherwise, I’ll look forward to speaking with you then.
+
+Again, I appreciate your time and want to thank you for choosing to do business with Insperity.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
