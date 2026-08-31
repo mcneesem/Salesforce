@@ -393,23 +393,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varErrorMessageToUser_No_existing_ACR_records</name>
-        <label>Assign varErrorMessageToUser - No existing ACR records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varErrorMessageToUser</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>No existing related Contacts were found.</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Something_Went_Wrong_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varErrorMessageToUser_Relevant_Action_not_chosen</name>
         <label>Assign varErrorMessageToUser - Relevant Action not chosen</label>
         <locationX>0</locationX>
@@ -976,7 +959,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Assign_varErrorMessageToUser_No_existing_ACR_records</targetReference>
+            <targetReference>No_Existing_ACRs_on_this_Account_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No AccountContactRelation records found</defaultConnectorLabel>
         <rules>
@@ -2176,8 +2159,11 @@
                 </width>
             </styleProperties>
             <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address and ensure that there are no trailing symbols and is not more than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>AND(
+  LEN({!Email_Input}) &lt;= 80, 
+  REGEX({!Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)
+)</formulaExpression>
             </validationRule>
         </fields>
         <fields>
@@ -2329,6 +2315,30 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>No_Existing_ACRs_on_this_Account_Screen</name>
+        <label>No Existing ACRs on this Account - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NoExistingContacts_DisplayText</name>
+            <fieldText>&lt;p&gt;There are currently no Contacts related to this Account. Please relate an existing Contact to this Account or create a new Contact.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</name>
         <label>Please Update AccountContactRelation Info for this Account - Screen</label>
         <locationX>0</locationX>
@@ -2390,8 +2400,11 @@
                 </width>
             </styleProperties>
             <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!Work_Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address and ensure that there are no trailing symbols and is not more than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>AND(
+  LEN({!Work_Email_Input}) &lt;= 80, 
+  REGEX({!Work_Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)
+)</formulaExpression>
             </validationRule>
         </fields>
         <fields>
