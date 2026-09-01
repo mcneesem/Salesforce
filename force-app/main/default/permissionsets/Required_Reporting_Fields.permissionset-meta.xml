@@ -328,6 +328,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Customer_Stakeholder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Date_Reported_Termed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -459,6 +464,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Payer_Account_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Payer_Account_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Platform__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -15,6 +15,11 @@ private class WingspanCreateUserActionTest {
         wSett.XWingspanUserId__c = 'testXWingspanUserId';
         wSett.ParentUserId__c = 'testParentUserId';
         wSett.Name = 'TESTING';
+        wSett.Hr360ParentUserId__c = 'testKey';
+        wSett.HrScaleParentUserId__c = 'testKey';
+        wSett.SsoPrivateKey__c = 'testKey';
+        wSett.RestrictedCharacters__c = '!';
+        wSett.RestrictedProducts__c = 'test';
         insert wSett;
 
         NSP_ContactTriggerHandler.TriggerDisabled = true;
@@ -43,6 +48,7 @@ private class WingspanCreateUserActionTest {
         objQuote.NSP_Customer_Stakeholder__c = cc.id;
         update objQuote;
         objOpprtunity.StageName = 'Closed Won';
+        objOpprtunity.NSP_Number_of_Employees__c = 100;
         update objOpprtunity;
 
         OrderItem ordItem = [SELECT id FROM OrderItem LIMIT 1];
@@ -54,6 +60,8 @@ private class WingspanCreateUserActionTest {
         asset.name = 'asset3';
         asset.AccountId = objaccount.id;
         asset.ContactId = cc.id;
+        asset.Platform__c = WingspanRestService.NON_SSO;
+        asset.NSP_AccountName__c = 'test!';
 
         insert asset;
 
@@ -68,6 +76,24 @@ private class WingspanCreateUserActionTest {
         WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
         input.contactId = cc.id;
         input.recordId = asset.id;
+        input.isCheckOnly = false;
+        Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
+        Test.startTest();
+        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.createWingspanUser(new List<WingspanCreateUserAction.Input>{input});
+        WingspanCreateUserAction.testHandleException( null , null );
+        WingspanRestService.testHandleException( null , null );
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void createHrUserTest() {
+        List<Asset> assetList = [SELECT id, NSP_OrderProduct__c, Platform__c FROM Asset LIMIT 1];
+        assetList[0].Platform__c = WingspanRestService.HR360;
+        update assetList[0];
+        List<Contact> ccList = [SELECT id FROM Contact LIMIT 1];
+        WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
+        input.contactId = ccList[0].id;
+        input.recordId = assetList[0].id;
         input.isCheckOnly = false;
         Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
         Test.startTest();
