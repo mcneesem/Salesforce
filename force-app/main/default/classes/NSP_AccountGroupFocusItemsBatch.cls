@@ -187,7 +187,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 {
                     // 2) Update existing ACTIVE focus item when AIMS list is present
                     NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActive.get( accGrpId );
-                    focusItem.Details__c = NSP_ServiceConstants.FOCUS_COMMENTS + ' [' + String.join( lstAIMS , ',' ) + ']';
+                    focusItem.Details__c = 'These Client# are less than 2 years old:' + ' [' + String.join( lstAIMS , ',' ) + ']';
                     this.lstFocusItems.add( focusItem );
                 }
             } else if ( this.accGrpWithFocusItemActive.containsKey(accGrpId)
