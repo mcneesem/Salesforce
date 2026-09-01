@@ -7,6 +7,7 @@ IF( ISPICKVAL( Focus_Item__c , &apos;Termination Save Attempt&apos; ) , &apos;Cu
 IF( ISPICKVAL( Focus_Item__c , &apos;Early Tenure&apos; ) , &apos;Customer Relationship&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;No Insperity 401k&apos; ) , &apos;Customer Relationship&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Service Continuity&apos; ) , &apos;Customer Relationship&apos; ,
+IF( ISPICKVAL( Focus_Item__c , &apos;Resource Shift: Potential Client Impact&apos; ) , &apos;Customer Relationship&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Business Restructure&apos; ) , &apos;Macro Environment&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Economic Shifts&apos; ) , &apos;Macro Environment&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Financial Risk&apos; ) , &apos;Macro Environment&apos; ,
@@ -28,7 +29,7 @@ IF( ISPICKVAL( Focus_Item__c , &apos;Invoicing&apos; ) , &apos;Value&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Price Increase&apos; ) , &apos;Value&apos; ,
 IF( ISPICKVAL( Focus_Item__c , &apos;Risk Mitigation&apos; ) , &apos;Value&apos; ,
 null
-)))))))))))))))))))))))))</formula>
+))))))))))))))))))))))))))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Area of Focus</label>
     <required>false</required>
