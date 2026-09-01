@@ -902,7 +902,6 @@
         <outputReference>collectionExistingOpportunityContactRoles</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>ContactId</queriedFields>
-        <queriedFields>Employee_Status__c</queriedFields>
         <queriedFields>IsPrimary</queriedFields>
         <queriedFields>NSP_isReferral__c</queriedFields>
         <queriedFields>OpportunityId</queriedFields>
