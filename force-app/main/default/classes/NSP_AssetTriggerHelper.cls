@@ -11,6 +11,7 @@ public with sharing class NSP_AssetTriggerHelper {
     private static final Id retWoAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_WO' );
     private static final Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_Choice' );
     private static final Id stpChecklistRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist' );
+    private static final Id organizationalPlanningRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Organizational_Planning' );
 
     //
     // Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -378,6 +379,7 @@ public with sharing class NSP_AssetTriggerHelper {
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.employmentScreeningAssetRecordTypeId )
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.recruitingServicesAssetRecordTypeId )
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.applicantTrackingAssetRecordTypeId )
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.organizationalPlanningRecordTypeId)
                 );
                 if ( isValidRecordType ) {
                     Asset oldAsset = null;
