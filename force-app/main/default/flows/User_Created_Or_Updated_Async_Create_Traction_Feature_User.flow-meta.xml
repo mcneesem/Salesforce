@@ -95,7 +95,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterFormula>AND({!$Record.IsActive}, NOT(ISBLANK({!$Record.Title})), OR(UPPER({!$Record.Title}) = &quot;BUSINESS PERFORMANCE ADVISOR&quot;, UPPER({!$Record.Title}) = &quot;ASSOCIATE BUSINESS PERFORMANCE ADVISOR&quot;))</filterFormula>
+        <filterFormula>AND({!$Record.IsActive}, NOT(ISBLANK({!$Record.UserRoleId})), CONTAINS(UPPER({!$Record.UserRole.Name}), &quot;SELLER&quot;))</filterFormula>
         <object>User</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
