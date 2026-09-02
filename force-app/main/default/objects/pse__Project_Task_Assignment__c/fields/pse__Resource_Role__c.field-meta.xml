@@ -111,6 +111,11 @@
                 <label>HRCore Acct. Mgmt</label>
             </value>
             <value>
+                <fullName>HRCore Strategic Client Advisor</fullName>
+                <default>false</default>
+                <label>HRCore Strategic Client Advisor</label>
+            </value>
+            <value>
                 <fullName>HR Specialist</fullName>
                 <default>false</default>
                 <label>HR Specialist</label>
