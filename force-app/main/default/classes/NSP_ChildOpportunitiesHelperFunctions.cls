@@ -26,6 +26,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
                         AND StageName != :NSP_SalesConstants.CLOSED_LOST
+                        AND StageName != :NSP_SalesConstants.CLOSED_WON
                     )
                 ]
             )
@@ -214,7 +215,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
             NSP_ChildOpportunitiesHelperFunctions.handleException( e , methodName );
         }
     }
-    
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_ChildOpportunitiesHelperFunctions.class.getName() ,

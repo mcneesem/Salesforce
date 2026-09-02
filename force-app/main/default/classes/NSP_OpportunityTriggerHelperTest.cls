@@ -1140,6 +1140,52 @@ private class NSP_OpportunityTriggerHelperTest {
     }
 
     @isTest
+    private static void updatesOnChildOpportunity_closedWonChildNotModifiedTest() {
+        // Arrange: locate the existing parent and its Retirement Services child from @testSetup
+        Opportunity parentOpp = [
+            SELECT Id FROM Opportunity
+            WHERE NSP_Parent_Opportunity__c = null
+            AND NSP_PrimaryProduct__c != 'Retirement Services'
+            LIMIT 1
+        ];
+
+        // Set the Retirement Services child to Closed Won before the method runs
+        Opportunity childOpp = [
+            SELECT Id, StageName, NSP_PrimaryProduct__c
+            FROM Opportunity
+            WHERE NSP_Parent_Opportunity__c = :parentOpp.Id
+            AND NSP_PrimaryProduct__c = :NSP_SalesConstants.RETIREMENT_SERVICE
+            LIMIT 1
+        ];
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        childOpp.StageName = NSP_SalesConstants.CLOSED_WON;
+        update childOpp;
+        NSP_OpportunityTriggerHandler.TriggerDisabled = false;
+
+        Test.startTest();
+        NSP_ChildOpportunitiesHelperFunctions helper = new NSP_ChildOpportunitiesHelperFunctions();
+        helper.updatesOnChildOpportunity( new List<String>{ parentOpp.Id } );
+        Test.stopTest();
+
+        // The Closed Won child must remain Closed Won — not get closed lost
+        Opportunity afterUpdate = [
+            SELECT StageName, NSP_Is_Parent_Opportunity_Closed_Lost__c
+            FROM Opportunity
+            WHERE Id = :childOpp.Id
+        ];
+        System.assertEquals(
+            NSP_SalesConstants.CLOSED_WON,
+            afterUpdate.StageName,
+            'Closed Won child should not be moved to Closed Lost'
+        );
+        System.assertEquals(
+            false,
+            afterUpdate.NSP_Is_Parent_Opportunity_Closed_Lost__c,
+            'Closed Won child should not have NSP_Is_Parent_Opportunity_Closed_Lost__c set to true'
+        );
+    }
+
+    @isTest
     private static void hrScaleSoldRewardTest() {
         List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
         Account acc = accList.isEmpty() ? null : accList[0];
