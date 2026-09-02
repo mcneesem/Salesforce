@@ -1075,10 +1075,10 @@
             </value>
         </filters>
         <filters>
-            <field>Type</field>
+            <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Renewal</stringValue>
+                <stringValue>012Pb000006SSU9IAO</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>
@@ -1143,6 +1143,27 @@
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>$Record.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Renewal_Paperwork__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Renewal_ACR[$EachItem].Renewal_Paperwork__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Work_Email__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Renewal_ACR[$EachItem].NSP_Work_Email__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Work_Phone__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Renewal_ACR[$EachItem].NSP_Work_Phone__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
