@@ -28,6 +28,16 @@
                 <label>Acquired by PE firm</label>
             </value>
             <value>
+                <fullName>Active Save Attempt</fullName>
+                <default>false</default>
+                <label>Active Save Attempt</label>
+            </value>
+            <value>
+                <fullName>BPA/BPC Change</fullName>
+                <default>false</default>
+                <label>BPA/BPC Change</label>
+            </value>
+            <value>
                 <fullName>Client escalates within Insperity due to unresolved concerns</fullName>
                 <default>false</default>
                 <label>Client escalates within Insperity due to unresolved concerns</label>
@@ -203,6 +213,11 @@
                 <label>Lack of autonomy or limited access due to PEO relationship</label>
             </value>
             <value>
+                <fullName>No Active Save Attempt</fullName>
+                <default>false</default>
+                <label>No Active Save Attempt</label>
+            </value>
+            <value>
                 <fullName>Notable increase/decrease in engagement or communication</fullName>
                 <default>false</default>
                 <label>Notable increase/decrease in engagement or communication</label>
@@ -231,6 +246,11 @@
                 <fullName>Reporting complexity/needs unmet/missing data</fullName>
                 <default>false</default>
                 <label>Reporting complexity/needs unmet/missing data</label>
+            </value>
+            <value>
+                <fullName>Service Team Member Change</fullName>
+                <default>false</default>
+                <label>Service Team Member Change</label>
             </value>
             <value>
                 <fullName>Shopping a competitor for standard due diligence</fullName>
@@ -281,16 +301,6 @@
                 <fullName>Voices concern that they are paying more than expected or agreed</fullName>
                 <default>false</default>
                 <label>Voices concern that they are paying more than expected or agreed</label>
-            </value>
-            <value>
-                <fullName>Active Save Attempt</fullName>
-                <default>false</default>
-                <label>Active Save Attempt</label>
-            </value>
-            <value>
-                <fullName>No Active Save Attempt</fullName>
-                <default>false</default>
-                <label>No Active Save Attempt</label>
             </value>
             <value>
                 <fullName>Client indicates they have outgrown the PEO/WX/WA</fullName>
@@ -346,6 +356,14 @@
         <valueSettings>
             <controllingFieldValue>Termination Save Attempt</controllingFieldValue>
             <valueName>No Active Save Attempt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resource Shift: Potential Client Impact</controllingFieldValue>
+            <valueName>BPA/BPC Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resource Shift: Potential Client Impact</controllingFieldValue>
+            <valueName>Service Team Member Change</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>

@@ -110,6 +110,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Resource Shift%3A Potential Client Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risk Mitigation</fullName>
             <default>false</default>
         </values>
@@ -142,6 +146,10 @@
         </values>
         <values>
             <fullName>Active Save Attempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA%2FBPC Change</fullName>
             <default>false</default>
         </values>
         <values>
@@ -310,6 +318,10 @@
         </values>
         <values>
             <fullName>Reporting complexity%2Fneeds unmet%2Fmissing data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Team Member Change</fullName>
             <default>false</default>
         </values>
         <values>
