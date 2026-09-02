@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS only - Send to client to request a welcome call meeting</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BT-HRS-New Client Welcome Call</name>
+    <style>freeForm</style>
+    <subject>New Client Welcome Call Request</subject>
+    <textOnly>Good morning/afternoon Client,
+
+I hope you are well. I’d like to introduce myself as your HR specialist and client liaison. I work as your strategic partner to understand your unique business needs and goals so that I can make recommendations to best maximize Insperity’s services.
+
+I’d like to schedule a call to discuss the Insperity partnership, your company’s goals and objectives, and begin to build a plan in which we can best assist you in achieving those goals.  Please let me know what time works best for you, and I will send a calendar invite.
+
+I have attached your Service Team contact sheet so you can identify the various Insperity team members that support you as well you, as well as their role descriptions.
+
+I also encourage you to review the Guide to Insperity for Onsite Supervisors. It is a helpful resource that provides insight into various Insperity procedures, responsibilities, and information that helps as you begin to navigate the Insperity relationship. Please let me know if you would like a hard copy and I will be happy to have them shipped to you.
+
+I look forward to working with you.
+
+Please let me know if you have any questions.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

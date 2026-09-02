@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS Only - Send to new clients to introduce Insperity Premier</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BT HRS-New Client Intro to Insperity Premier</name>
+    <style>freeForm</style>
+    <subject>Introduction to Insperity Premier</subject>
+    <textOnly>Hello [client name],
+
+Welcome again to Insperity – we&apos;re excited you’ve joined us and are looking forward to our partnership. I’m providing some tips and tricks below to help you become familiar with the Insperity Premier™ Portal at portal.insperity.com and who to contact with any questions or challenges.
+
+The Insperity Premier portal is your resource for information, forms, viewing your paystub and making changes to your direct deposit or personal information safely and securely.
+
+At the bottom of every portal page you’ll find a Contact Us link shown below.
+
+
+After selecting that link, you’ll see the phone number and email address for the Insperity Contact Center. For those who prefer a live chat, there is also a ‘Chat Now” option.
+
+
+You will find additional tabs on the page which direct you to other phone numbers you may need in the future such as your Payroll Specialist and EEO Hotline.
+
+Instructional videos and guides are available in the Need Help link at the bottom of any web page. These guides assist on topics such as benefits enrollment, payroll, reporting and other important topics.
+
+As always, please let me know if I can be of assistance.
+
+Sincerely,
+
+[use email signature block]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
