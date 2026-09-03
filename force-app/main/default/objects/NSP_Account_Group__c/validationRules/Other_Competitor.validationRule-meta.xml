@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Competitor</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Primary_Termination_Reason__c ,
+    NOT( ISNEW() ) ,
+    NOT( ISCHANGED( NSP_Total_Payroll_Employees__c ) ) ,
+    NOT( ISCHANGED( NSP_Group_Member_Count__c ) ) ,
+    AND( 
+    ( TEXT( Competitor__c ) = &apos;Other&apos;) ,
+    ISBLANK ( Other_Competitor__c )
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Other_Competitor__c</errorDisplayField>
+    <errorMessage>You must add a value to &quot;Other Competitor&quot; field</errorMessage>
+</ValidationRule>
