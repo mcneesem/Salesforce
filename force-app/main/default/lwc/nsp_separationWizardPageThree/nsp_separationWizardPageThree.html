@@ -44,8 +44,17 @@
                                     value={NSP_Sub_Client__c}
                                     options={subClientOptions}
                                     onchange={handleChange}
+                                    required
                                     >
                                 </lightning-combobox>
+                                <lightning-input-field
+                                    style="display:none"
+                                    field-name="NSP_Sub_Client__c"
+                                    value={NSP_Sub_Client__c}
+                                    required
+                                    class="slds-hidden"
+                                    >
+                                </lightning-input-field>
                             </div>
                             <lightning-input-field  field-name="Sub_Client_Number__c"  value={Sub_Client_Number__c} style="display:none"></lightning-input-field>
                             <lightning-input-field class="slds-p-vertical_medium NSP_DOB__c" field-name="NSP_DOB__c"   value={dateOfBirth} disabled ></lightning-input-field>

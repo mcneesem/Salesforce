@@ -13,6 +13,81 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Sub_Client__c.AGSC_Modifier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.AIMS_Spec_Prov3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Bid_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Bid_Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.CAR_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.CAR_Summary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Co_Employment_Risk_Charge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Current_Delivery__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Current_EPLI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.DCAA_Detail_Report__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.DCAA_Summary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Invoice_Reconciliation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Medical_Allocation_Report__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.AIMS_Spec_Prov_1__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -83,6 +158,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Client_Specific_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Closed_Lost_Group__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -133,6 +213,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Current_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Current_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Current_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -149,6 +239,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.DCAA_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.DCAA_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -228,6 +323,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Mod_Sheet_Batch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Multi_Year_Addendum_Signed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -299,6 +399,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Next_Action_Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Next_Action_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -388,6 +493,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Renewal_Part_Time_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Renewal_Part_Time_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Renewal_Reserve__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -434,6 +549,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.WC_Allocation_Avg_Increase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.WC_Annual_Increase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

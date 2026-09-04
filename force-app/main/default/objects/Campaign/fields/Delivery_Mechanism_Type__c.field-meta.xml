@@ -52,6 +52,11 @@
                 <label>Display - Paid - 6Sense</label>
             </value>
             <value>
+                <fullName>Display - Paid - ChatGPT via StackAdapt</fullName>
+                <default>false</default>
+                <label>Display - Paid - ChatGPT via StackAdapt</label>
+            </value>
+            <value>
                 <fullName>Display - Paid - Connected TV</fullName>
                 <default>false</default>
                 <label>Display - Paid - Connected TV</label>
@@ -432,6 +437,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Display - Paid - 6Sense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Display - Paid - ChatGPT via StackAdapt</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>

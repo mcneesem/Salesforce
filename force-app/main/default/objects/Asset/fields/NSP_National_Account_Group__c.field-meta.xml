@@ -557,6 +557,16 @@
                 <default>false</default>
                 <label>Crest Rock</label>
             </value>
+            <value>
+                <fullName>150</fullName>
+                <default>false</default>
+                <label>F N A</label>
+            </value>
+            <value>
+                <fullName>151</fullName>
+                <default>false</default>
+                <label>Superstep Capital</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

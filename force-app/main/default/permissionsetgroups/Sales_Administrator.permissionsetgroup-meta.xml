@@ -5,6 +5,7 @@
     <label>Sales Administrator</label>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
     <permissionSets>Import_Personal_Contacts</permissionSets>
     <permissionSets>Label_Access</permissionSets>

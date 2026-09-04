@@ -145,6 +145,10 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideSlackAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>numVisibleActions</name>
                     <value>4</value>
                 </componentInstanceProperties>
@@ -1420,6 +1424,29 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Portal_Task_Action__c</fieldItem>
                 <identifier>RecordPortal_Task_Action_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Template__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Event_Name__c</fieldItem>
+                <identifier>RecordPortal_Event_Name_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>

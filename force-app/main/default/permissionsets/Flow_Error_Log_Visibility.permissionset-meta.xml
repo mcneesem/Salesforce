@@ -23,6 +23,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FlowErrorLog__c.CreatedYear__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FlowErrorLog__c.Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -100,6 +105,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>FlowErrorLog__c</object>
+        <viewAllFields>false</viewAllFields>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <tabSettings>

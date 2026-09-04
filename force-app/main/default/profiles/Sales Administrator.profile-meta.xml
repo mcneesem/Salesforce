@@ -13402,6 +13402,10 @@
         <recordType>Asset.NSP_CPQ_Asset</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Asset-Insurance Services - Revolution</layout>
+        <recordType>Asset.Revolution</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Asset-WO Asset Layout</layout>
         <recordType>Asset.WO</recordType>
     </layoutAssignments>
@@ -14290,7 +14294,7 @@
         <name>CreateCustomizeDashboards</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>

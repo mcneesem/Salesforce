@@ -41,6 +41,11 @@
         <label>HR360 to HRCore Transition</label>
     </customValue>
     <customValue>
+        <fullName>HR360 to HRScale Transition</fullName>
+        <default>false</default>
+        <label>HR360 to HRScale Transition</label>
+    </customValue>
+    <customValue>
         <fullName>HRCore Onboarding Amendment</fullName>
         <default>false</default>
         <label>HRCore Onboarding Amendment</label>

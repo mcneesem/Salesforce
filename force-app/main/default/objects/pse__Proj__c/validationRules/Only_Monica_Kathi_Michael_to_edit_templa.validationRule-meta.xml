@@ -4,9 +4,13 @@
     <active>true</active>
     <description>It doesn&apos;t allow user without NSP Service Stakeholder check to change the project template</description>
     <errorConditionFormula>AND(
- NOT( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c ) ,
- NOT( $User.NSP_Service_Stakeholder__c ) ,
- pse__Is_Template__c
+  NOT( $Setup.NSP_Trigger_Switch__c.ProjectValidations__c ) ,
+  NOT( $User.NSP_Service_Stakeholder__c ) ,
+  NOT( $Permission.Service_Stakeholder ) ,
+  OR(
+    pse__Is_Template__c ,
+    Is_Opportunity_Template__c
+  )
 )</errorConditionFormula>
     <errorMessage>You do not have permission to add or edit project templates.</errorMessage>
 </ValidationRule>

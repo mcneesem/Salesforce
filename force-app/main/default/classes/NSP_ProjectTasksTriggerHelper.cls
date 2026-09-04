@@ -468,15 +468,11 @@ public class NSP_ProjectTasksTriggerHelper {
     //
     public static void updateDocusignAsset(List<ID> accountList) {
         List<String> excludeStatusValues = new List<String>();
-        List<String> excluderecordTypeWithStatusValues = new List<String>();
         List<String> excluderecordTypeValues = new List<String>();
         AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
         if ( settings != null ) {
             if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
                 excludeStatusValues = settings.Exclude_Status__c.split( '\\R' );
-            }
-            if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
-                excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
             }
             if ( String.isNotBlank( settings.Exclude_Record_Types__c ) ) {
                 excluderecordTypeValues = settings.Exclude_Record_Types__c.split( '\\R' );
@@ -491,7 +487,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     AND (
                         NOT (
                             (
-                                ( RecordType.Name = :excluderecordTypeWithStatusValues )
+                                ( RecordType.Name = :NSP_AssetTriggerHelper.excludeRecordTypesWrtStatus )
                                 AND ( Status = :excludeStatusValues )
                             )
                             OR ( RecordType.Name = :excluderecordTypeValues )

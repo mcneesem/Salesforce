@@ -1732,6 +1732,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Pricing_Method__c</fieldItem>
+                <identifier>RecordPricing_Method_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Pricing_Method_Reason__c</fieldItem>
+                <identifier>RecordPricing_Method_Reason_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_PremierPathwayLink__c</fieldItem>
                 <identifier>RecordNSP_PremierPathwayLink_cField</identifier>
             </fieldInstance>
@@ -2664,6 +2684,46 @@
                 <identifier>RecordNSP_AddonType_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AIMS_Spec_Prov_1__c</fieldItem>
+                <identifier>RecordAIMS_Spec_Prov_1_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AIMS_Spec_Prov_2__c</fieldItem>
+                <identifier>RecordAIMS_Spec_Prov_2_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AIMS_Spec_Prov_3__c</fieldItem>
+                <identifier>RecordAIMS_Spec_Prov_3_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Competitive_Bid_Received__c</fieldItem>
+                <identifier>RecordCompetitive_Bid_Received_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-9021a0be-5c54-4f63-9367-1e4844380ed5</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2743,6 +2803,140 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-a519f7fd-bdeb-4ddc-82ca-620c01dd8c1f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Open_Enrollment_Start__c</fieldItem>
+                <identifier>RecordOpen_Enrollment_Start_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-f0245d31-8612-4455-b715-dcebb195769b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Open_Enrollment_End__c</fieldItem>
+                <identifier>RecordOpen_Enrollment_End_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-566890eb-bb3c-4b94-b544-194e35986c2a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f0245d31-8612-4455-b715-dcebb195769b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column45</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-566890eb-bb3c-4b94-b544-194e35986c2a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column46</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b44676a8-7604-47da-ba67-623d6b6db0e8</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DCAA_Detail__c</fieldItem>
+                <identifier>RecordDCAA_Detail_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Invoice_Reconciliation__c</fieldItem>
+                <identifier>RecordInvoice_Reconciliation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Medical_Allocation_Report__c</fieldItem>
+                <identifier>RecordMedical_Allocation_Report_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-10b442d0-123c-4a44-8ebf-4b25329c4639</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CAR_Detail__c</fieldItem>
+                <identifier>RecordCAR_Detail_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CAR_Summary__c</fieldItem>
+                <identifier>RecordCAR_Summary_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-17747ac1-97bc-4496-93b6-e47f9ff85877</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-10b442d0-123c-4a44-8ebf-4b25329c4639</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column47</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-17747ac1-97bc-4496-93b6-e47f9ff85877</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column48</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3f7436d2-b42d-4780-a454-f81489e69e68</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3738,6 +3932,66 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection19</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-b44676a8-7604-47da-ba67-623d6b6db0e8</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Dates</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection23</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-3f7436d2-b42d-4780-a454-f81489e69e68</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Breakout Detail Reports</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection24</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>

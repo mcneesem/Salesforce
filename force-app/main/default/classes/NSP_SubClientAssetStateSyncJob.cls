@@ -86,6 +86,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
+            LIMIT :NSP_SubClientAssetStateSyncJob.soqlAddressHistoryLimit
         ];
         for ( NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : addressChanges ) {
             assetIds.add( existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c );
@@ -113,6 +114,7 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
                 AND ( Parent.NSP_Sub_Client__c != null )
                 AND ( Parent.NSP_Sub_Client__r.NSP_Asset__c != null )
             )
+            LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactHistoryLimit
         ];
         if ( !contactChanges.isEmpty() ) {
             for ( NSP_Sub_Client_Contact__History existingSubClientContacts : contactChanges ) {
@@ -145,37 +147,47 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         }
     }
 
-    private void handleAssets( Set<Id> assetIds ) {
-        if ( ( assetIds != null ) && !assetIds.isEmpty() ) {
-            Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
-                [
-                    SELECT Id
-                    FROM NSP_Sub_Client__c
-                    WHERE ( NSP_Asset__c = :assetIds )
-                ]
-            );
-            if ( !existingSubClients.isEmpty() ) {
-                //Get details for sub client contact where sub client != null
-                List<NSP_Sub_Client_Contact__c> subClientContact = [
-                    SELECT
-                        Id ,
-                        NSP_Sub_Client__c ,
-                        NSP_Paid_Non_Paid__c ,
-                        NSP_Employee_Status__c ,
-                        NSP_Union_Employee__c
-                    FROM NSP_Sub_Client_Contact__c
-                    WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
-                    LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactLimit
-                ];
-                if ( !subClientContact.isEmpty() ) {
-                    NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
-                        subClientContact ,
-                        existingSubClients ,
-                        assetIds
-                    );
+    public Boolean handleAssets( Set<Id> assetIds ) {
+        Boolean response = false;
+        try {
+            if ( ( assetIds != null ) && !assetIds.isEmpty() ) {
+                Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
+                    [
+                        SELECT Id
+                        FROM NSP_Sub_Client__c
+                        WHERE ( NSP_Asset__c = :assetIds )
+                    ]
+                );
+                if ( !existingSubClients.isEmpty() ) {
+                    //Get details for sub client contact where sub client != null
+                    List<NSP_Sub_Client_Contact__c> subClientContact = [
+                        SELECT
+                            Id ,
+                            NSP_Sub_Client__c ,
+                            NSP_Paid_Non_Paid__c ,
+                            NSP_Employee_Status__c ,
+                            NSP_Union_Employee__c
+                        FROM NSP_Sub_Client_Contact__c
+                        WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
+                        LIMIT :NSP_SubClientAssetStateSyncJob.soqlContactLimit
+                    ];
+                    if ( !subClientContact.isEmpty() ) {
+                        response = NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
+                            subClientContact ,
+                            existingSubClients ,
+                            assetIds
+                        );
+                    }
                 }
             }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SubClientAssetStateSyncJob.class.getName() ,
+                'handleAssets' ,
+                e
+            );
         }
+        return response;
     }
 
     public void finish( Database.BatchableContext bc ) {
@@ -237,6 +249,48 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
         private set;
     }
 
+    private static Integer soqlAddressHistoryLimit {
+        private get {
+            if ( soqlAddressHistoryLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlAddressHistoryLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlAddressHistoryLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlAddressHistoryLimit = local;
+            }
+            return soqlAddressHistoryLimit;
+        }
+        private set;
+    }
+
+    private static Integer soqlContactHistoryLimit {
+        private get {
+            if ( soqlContactHistoryLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetStateSyncJob.settings != null )
+                    && ( NSP_SubClientAssetStateSyncJob.settings.SoqlContactHistoryLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetStateSyncJob.settings.SoqlContactHistoryLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlContactHistoryLimit = local;
+            }
+            return soqlContactHistoryLimit;
+        }
+        private set;
+    }
+
     private static Integer soqlAddressLimit {
         private get {
             if ( soqlAddressLimit == null ) {
@@ -288,11 +342,11 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
     // Description : This method is used to Update State of Operation field on Asset and Sub Client based on State under SCCA.
     // Params:       List<NSP_Sub_Client_Contact__c> subClientContact
     // ********************************************************************************************
-    private static void updateStateOfOperation(
+    private static Boolean updateStateOfOperation(
         List<NSP_Sub_Client_Contact__c> subClientContact ,
         Map<Id,NSP_Sub_Client__c> existingSubClients ,
         Set<Id> setOfParentIds
-    )
+        )
     {
         Map<Id, String> subClientByStates = new  Map<Id, String>();
         Map<Id, String> assetByStates = new  Map<Id, String>();
@@ -349,12 +403,28 @@ public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedul
             }
         }
         //Update Sub Client and Asset with updated State of Operation
-        if(!subClientStateToBeUpdated.isEmpty()) {
-            Database.update(subClientStateToBeUpdated, false);
+        Boolean response = true;
+        if ( !subClientStateToBeUpdated.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( subClientStateToBeUpdated , false );
+            response = ( response && NSP_SubClientAssetStateSyncJob.isSuccessfulSaveResult( results ) );
         }
-        if(!assetStateToBeUpdated.isEmpty()) {
-            Database.update(assetStateToBeUpdated, false);
+        if ( !assetStateToBeUpdated.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( assetStateToBeUpdated , false );
+            response = ( response && NSP_SubClientAssetStateSyncJob.isSuccessfulSaveResult( results ) );
         }
+        return response;
+    }
+
+    private static Boolean isSuccessfulSaveResult( Database.SaveResult[] results ) {
+        Boolean response = true;
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for( Database.SaveResult result : results ) {
+                if ( ( result != null ) && !result.isSuccess() ) {
+                    response = false;
+                }
+            }
+        }
+        return response;
     }
 
 }

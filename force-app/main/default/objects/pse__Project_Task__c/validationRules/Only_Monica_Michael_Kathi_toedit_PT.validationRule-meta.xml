@@ -4,9 +4,13 @@
     <active>true</active>
     <description>It doesn&apos;t allow user without NSP Service Stakeholder check to change the project task template</description>
     <errorConditionFormula>AND(
- NOT( $Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c ) ,
- NOT( $User.NSP_Service_Stakeholder__c ) ,
- pse__Project__r.pse__Is_Template__c
+  NOT( $Setup.NSP_Trigger_Switch__c.ProjectTaskValidations__c ) ,
+  NOT( $User.NSP_Service_Stakeholder__c ) ,
+  NOT( $Permission.Service_Stakeholder ) ,
+  OR(
+    pse__Project__r.pse__Is_Template__c ,
+    pse__Project__r.Is_Opportunity_Template__c
+  )
 )</errorConditionFormula>
     <errorMessage>You do not have permission to add or edit tasks on project templates.</errorMessage>
 </ValidationRule>
