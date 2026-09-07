@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Filter_for_Editable_Records</name>
+        <label>Filter for Editable Records</label>
+        <locationX>182</locationX>
+        <locationY>2354</locationY>
+        <actionName>ObjectAccessFilter</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Editable_Record</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>Opportunity</typeValue>
+        </dataTypeMappings>
+        <dataTypeMappings>
+            <typeName>U__editableRecords</typeName>
+            <typeValue>Opportunity</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>varOptys</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>ObjectAccessFilter</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>editableOptys</assignToReference>
+            <name>editableRecords</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Opportunity_Max_Orientation_Date</name>
         <label>Opportunity Max Orientation Date</label>
-        <locationX>116</locationX>
-        <locationY>2246</locationY>
+        <locationX>50</locationX>
+        <locationY>2570</locationY>
         <actionName>OpportunityMaxOrientationDateAction</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -28,7 +60,7 @@
     <assignments>
         <name>Assign_new_Max_Orientation_Date_to_varOpportunity</name>
         <label>Assign new Max Orientation Date to varOpportunity</label>
-        <locationX>116</locationX>
+        <locationX>182</locationX>
         <locationY>2138</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Max_Orientation_Date__c</assignToReference>
@@ -38,13 +70,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Opportunity_Max_Orientation_Date</targetReference>
+            <targetReference>Assign_varOppotunity_to_Collection</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_null_value_to_varMaxOrientationEndDate</name>
         <label>Assign null value to varMaxOrientationEndDate</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>varMaxOrientationEndDate</assignToReference>
@@ -57,7 +89,7 @@
     <assignments>
         <name>Assign_Opportunity_ID_from_Asset_to_varOpportunity</name>
         <label>Assign Opportunity ID from Asset to varOpportunity</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Id</assignToReference>
@@ -73,7 +105,7 @@
     <assignments>
         <name>Assign_Opportunity_ID_from_Project_to_varOpportunity</name>
         <label>Assign Opportunity ID from Project to varOpportunity</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Id</assignToReference>
@@ -89,7 +121,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Asset_Info</name>
         <label>Assign varFaultElement - Get Asset Info</label>
-        <locationX>2211</locationX>
+        <locationX>2343</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -106,7 +138,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Cancelled_Project_Tasks</name>
         <label>Assign varFaultElement - Get Cancelled Project Tasks</label>
-        <locationX>600</locationX>
+        <locationX>732</locationX>
         <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -119,7 +151,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opportunity_Info</name>
         <label>Assign varFaultElement - Get Opportunity Info</label>
-        <locationX>2211</locationX>
+        <locationX>2343</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -136,7 +168,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_ProjectAsset_to_get_Asset_ID</name>
         <label>Assign varFaultElement - Get ProjectAsset to get Asset ID</label>
-        <locationX>2211</locationX>
+        <locationX>2343</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -152,7 +184,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_related_New_Client_EE_OT_Meeting_Project_Tasks</name>
         <label>Assign varFaultElement - Get related New Client EE OT Meeting Project Tasks</label>
-        <locationX>1128</locationX>
+        <locationX>1260</locationX>
         <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -166,10 +198,26 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_varOppotunity_to_Collection</name>
+        <label>Assign varOppotunity to Collection</label>
+        <locationX>182</locationX>
+        <locationY>2246</locationY>
+        <assignmentItems>
+            <assignToReference>varOptys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varOpportunity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Filter_for_Editable_Records</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Asset_null_check</name>
         <label>Asset null check</label>
-        <locationX>1238</locationX>
+        <locationX>1370</locationX>
         <locationY>566</locationY>
         <defaultConnectorLabel>Asset doesn&apos;t exist</defaultConnectorLabel>
         <rules>
@@ -191,7 +239,7 @@
     <decisions>
         <name>Does_Max_Orientation_Date_on_Opty_need_to_be_updated</name>
         <label>Does Max Orientation Date on Opty need to be updated?</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>2030</locationY>
         <defaultConnectorLabel>No update needed</defaultConnectorLabel>
         <rules>
@@ -218,9 +266,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Editable_Record</name>
+        <label>Editable Record?</label>
+        <locationX>182</locationX>
+        <locationY>2462</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Editable_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>editableOptys</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Max_Orientation_Date</targetReference>
+            </connector>
+            <label>Yes Editable Record</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Asset_linked_to_Opty</name>
         <label>Is Asset linked to Opty?</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>890</locationY>
         <defaultConnectorLabel>Asset not linked to Opty</defaultConnectorLabel>
         <rules>
@@ -242,7 +312,7 @@
     <decisions>
         <name>Is_Opportunity_Linked_via_Project</name>
         <label>Is Opportunity Linked via Project?</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Is_Asset_linked_to_Opty</targetReference>
@@ -267,7 +337,7 @@
     <decisions>
         <name>Is_Related_Asset_Active</name>
         <label>Is Related Asset Active?</label>
-        <locationX>820</locationX>
+        <locationX>952</locationX>
         <locationY>674</locationY>
         <defaultConnectorLabel>Asset status not active</defaultConnectorLabel>
         <rules>
@@ -296,7 +366,7 @@
     <decisions>
         <name>Null_check_for_related_Project_Tasks</name>
         <label>Null check for related Project Tasks</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>1382</locationY>
         <defaultConnector>
             <targetReference>Get_related_New_Client_EE_OT_Meeting_Cancelled_Project_Tasks</targetReference>
@@ -321,7 +391,7 @@
     <decisions>
         <name>ProjectAsset_null_check</name>
         <label>ProjectAsset null check</label>
-        <locationX>1711</locationX>
+        <locationX>1843</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>No ProjectAsset record</defaultConnectorLabel>
         <rules>
@@ -343,7 +413,7 @@
     <decisions>
         <name>varProject_Null_Check</name>
         <label>varProject Null Check</label>
-        <locationX>2211</locationX>
+        <locationX>2343</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>No Project</defaultConnectorLabel>
         <rules>
@@ -388,7 +458,7 @@
     <recordLookups>
         <name>Get_Asset_Info</name>
         <label>Get Asset Info</label>
-        <locationX>1238</locationX>
+        <locationX>1370</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -415,7 +485,7 @@
         <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: You do not have access to edit this Opportunity. Once it is Closed Won it cannot be modified. Please contact Sales Operations team.</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>1922</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -442,7 +512,7 @@
     <recordLookups>
         <name>Get_ProjectAsset_to_get_Asset_ID</name>
         <label>Get ProjectAsset to get Asset ID</label>
-        <locationX>1711</locationX>
+        <locationX>1843</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -473,7 +543,7 @@
     <recordLookups>
         <name>Get_related_New_Client_EE_OT_Meeting_Cancelled_Project_Tasks</name>
         <label>Get related New Client - EE OT Meeting Cancelled Project Tasks</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1490</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -527,7 +597,7 @@
     <recordLookups>
         <name>Get_related_New_Client_EE_OT_Meeting_Project_Tasks</name>
         <label>Get related New Client - EE OT Meeting Project Tasks</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>1274</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -589,7 +659,7 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>2085</locationX>
+        <locationX>2217</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>varProject_Null_Check</targetReference>
@@ -599,7 +669,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2211</locationX>
+        <locationX>2343</locationX>
         <locationY>0</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -621,6 +691,14 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>editableOptys</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
     <variables>
         <name>varAsset</name>
         <dataType>SObject</dataType>
@@ -647,6 +725,14 @@
         <name>varOpportunity</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>varOptys</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Opportunity</objectType>
