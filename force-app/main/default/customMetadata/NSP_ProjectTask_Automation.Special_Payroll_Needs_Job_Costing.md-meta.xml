@@ -3,6 +3,10 @@
     <label>Payroll Job Costing FSO</label>
     <protected>false</protected>
     <values>
+        <field>API_Name__c</field>
+        <value xsi:type="xsd:string">JOB_COSTING_LABOR_ALLOCATION_SETUP</value>
+    </values>
+    <values>
         <field>NSP_Category__c</field>
         <value xsi:type="xsd:string">Payroll Implementation</value>
     </values>
@@ -21,6 +25,22 @@
     <values>
         <field>Order__c</field>
         <value xsi:type="xsd:double">53.0</value>
+    </values>
+    <values>
+        <field>Portal_Guidance_API_Name__c</field>
+        <value xsi:type="xsd:string">JOB_COSTING_LABOR_ALLOCATION_SETUP</value>
+    </values>
+    <values>
+        <field>Portal_Task_Action__c</field>
+        <value xsi:type="xsd:string">File</value>
+    </values>
+    <values>
+        <field>Portal_Task_Name__c</field>
+        <value xsi:type="xsd:string">Job Costing / Labor Allocation Setup Information</value>
+    </values>
+    <values>
+        <field>Portal_Task_Type__c</field>
+        <value xsi:type="xsd:string">Pre-Transition Setup</value>
     </values>
     <values>
         <field>Task_Order__c</field>
