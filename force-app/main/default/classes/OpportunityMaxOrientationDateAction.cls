@@ -2,7 +2,7 @@
 // Queueable enqueued with a randomized delay, gated by OpportunityTriggerSettings__c.
 // See Custom Setting: OpportunityTriggerSettings__c
 public with sharing class OpportunityMaxOrientationDateAction implements Queueable {
-    // test w/ OpportunityMaxOrientationDateActionTest
+    // test w/ OpportunityMaxOrientationDateActionTest (95%)
 
     //
     // Invocable
