@@ -58,9 +58,9 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND ( 3 OR 4 OR 5 OR 6 OR 7 OR 8 )</conditionLogic>
             <conditions>
-                <leftValueReference>f_parenttask</leftValueReference>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -73,29 +73,56 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>EMPLOYEE_DEDUCTIONS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OUTSIDE_RECORD_KEEPER_DEDUCTIONS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CELL_PHONE_REIMBURSEMENTS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GARNISHMENTS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>COBRA_TAKEOVER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Task__r.API_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>LOA_INFORMATION</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Parent_Task</targetReference>
             </connector>
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>Link child task to parent task</description>
+    <description>Link child task to parent task , dynamic task</description>
     <environments>Default</environments>
-    <formulas>
-        <description>Evaluate Parent Task from Child task name</description>
-        <name>f_parenttask</name>
-        <dataType>String</dataType>
-        <expression>CASE(
-  {!$Record.Name} ,
-  &quot;Employee Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Cell Phone Reimbursements&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;Garnishments&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;COBRA Takeover&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;LOA Information&quot; , &quot;Employee Payroll Documentation&quot; ,
-  &quot;&quot;
-)</expression>
-    </formulas>
     <interviewLabel>Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task Before Create Populate Parent Portal Task</label>
     <processMetadataValues>
@@ -118,6 +145,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Get Parent Task</description>
         <name>Get_Parent_Task</name>
         <label>Get Parent Task</label>
         <locationX>0</locationX>
@@ -134,7 +162,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>f_parenttask</elementReference>
+                <stringValue>Employee Payroll Documentation</stringValue>
             </value>
         </filters>
         <filters>
@@ -158,45 +186,10 @@
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
+            <field>Project_Task__c</field>
+            <operator>IsNull</operator>
             <value>
-                <stringValue>Employee Deductions</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Outside Record Keeper (Retirement Plan) Deductions</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Cell Phone Reimbursements</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Garnishments</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>COBRA Takeover</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>LOA Information</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Portal_Task__c</object>

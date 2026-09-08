@@ -3,6 +3,10 @@
     <label>Employee Deductions RP FSO</label>
     <protected>false</protected>
     <values>
+        <field>API_Name__c</field>
+        <value xsi:type="xsd:string">OUTSIDE_RECORD_KEEPER_DEDUCTIONS</value>
+    </values>
+    <values>
         <field>NSP_Category__c</field>
         <value xsi:type="xsd:string">Payroll Implementation</value>
     </values>
@@ -21,6 +25,22 @@
     <values>
         <field>Order__c</field>
         <value xsi:type="xsd:double">67.0</value>
+    </values>
+    <values>
+        <field>Portal_Guidance_API_Name__c</field>
+        <value xsi:type="xsd:string">OUTSIDE_RECORD_KEEPER_DEDUCTIONS</value>
+    </values>
+    <values>
+        <field>Portal_Task_Action__c</field>
+        <value xsi:type="xsd:string">File</value>
+    </values>
+    <values>
+        <field>Portal_Task_Name__c</field>
+        <value xsi:type="xsd:string">Outside Record Keeper (Retirement Plan) Deductions</value>
+    </values>
+    <values>
+        <field>Portal_Task_Type__c</field>
+        <value xsi:type="xsd:string">Employee Setup</value>
     </values>
     <values>
         <field>Task_Order__c</field>

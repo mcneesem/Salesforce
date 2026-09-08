@@ -952,6 +952,13 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c );
             eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
             eachProjecttask.Name = pta.NSP_Task_Name__c;
+            eachProjecttask.API_Name__c = pta.API_Name__c;
+            eachProjecttask.Portal_Task_Name__c = pta.Portal_Task_Name__c;
+            eachProjecttask.Portal_Event_Name__c = pta.Portal_Event_Name__c;
+            eachProjecttask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
+            eachProjecttask.Portal_Task_Action__c = pta.Portal_Task_Action__c;
+            eachProjecttask.Portal_Task_Type__c = pta.Portal_Task_Type__c;
+
             eachProjecttask.pse__Order__c = pta.Order__c;
             eachProjecttask.Task_Order__c = pta.Task_Order__c;
             eachProjecttask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
