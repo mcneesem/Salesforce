@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Was_Revolution_With_IIS_An_Option__c</fullName>
+    <inlineHelpText>Was Revolution with Insperity Insurance Services presented as an option to the client?</inlineHelpText>
+    <label>Was Revolution With IIS An Option?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>blng__Yes_No</valueSetName>
+    </valueSet>
+</CustomField>

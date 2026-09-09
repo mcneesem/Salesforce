@@ -1,12 +1,13 @@
 public with sharing class WingspanRestAgent {
-    // test w/ WingspanCreateUserActionTest (96%)
+    // test w/ WingspanCreateUserActionTest (89%)
 
     //method to send http requests
     public HttpResponse sendRequest(
         String method ,
         String path ,
         String body ,
-        Id recordId
+        Id recordId ,
+        String platform
         )
     {
         String logDescription = '';
@@ -20,19 +21,19 @@ public with sharing class WingspanRestAgent {
                 req.setBody( body );
             }
             if ( String.isNotBlank( path ) ) {
-                url = WingspanRestAgent.baseUrl + path;
+                url = this.buildUrl( path , platform , method );
                 req.setEndpoint( url );
             }
             if ( String.isNotBlank( method ) ) {
                 req.setMethod( method );
             }
             Map<String,String> headers = new Map<String,String>{
-                'Authorization' => 'Bearer ' + WingspanRestAgent.privateKey
+                'Authorization' => 'Bearer ' + this.buildAuthKey( platform , method )
             };
             if ( method == 'POST' ) {
                 headers.put( 'Accept' , 'application/json' );
                 headers.put( 'Content-Type' , 'application/json' );
-                headers.put( 'X-WINGSPAN-USER' , WingspanRestAgent.xWingspanUserId );
+                headers.put( 'X-WINGSPAN-USER' , this.buildWingspanUserId( platform ) );
             }
             if ( headers != null ) {
                 currentHeaders = JSON.serialize( headers );
@@ -80,7 +81,13 @@ public with sharing class WingspanRestAgent {
         //request headers
         if ( String.isNotBlank( requestHeaders) ) {
             log.Request_Headers__c = SchemaController.safeText(
-                requestHeaders.replace( WingspanRestAgent.privateKey , 'XXX_PRIVATE_KEY_REMOVED_XXX' ) ,
+                requestHeaders.replace( 
+                    WingspanRestAgent.privateKey , 
+                    'XXX_PRIVATE_KEY_REMOVED_XXX' 
+                ).replace( 
+                    WingspanRestAgent.ssoPrivateKey , 
+                    'XXX_SSO_PRIVATE_KEY_REMOVED_XXX' 
+                ) ,
                 sObjectType.Wingspan_Log__c.Fields.Request_Headers__c
             );
         }
@@ -95,8 +102,11 @@ public with sharing class WingspanRestAgent {
                 logMethod += '-getUserByEmail';
             } else if ( requestMethod == 'POST' ) {
                 if ( requestBody.contains( 'email' ) ) {
-                    logDescription = 'POST request for creating Admin in wingspan server';
+                    logDescription = 'POST request for creating non-SSO Admin in wingspan server';
                     logMethod += '-postClientAdmin';
+                } else if ( requestBody.contains( 'payerEmail' ) ) {
+                    logDescription = 'POST request for creating SSO Admin in wingspan server';
+                    logMethod += '-postClientAdmin(SSO)';
                 } else if ( requestBody.contains( 'parentUserId' ) ) {
                     logDescription = 'POST request for associating Admin in wingspan server';
                     logMethod += '-postLinkAdmin';
@@ -154,6 +164,16 @@ public with sharing class WingspanRestAgent {
         private set;
     }
 
+    private String buildWingspanUserId( String platform ) {
+        String wingspanUserId = WingspanRestAgent.xWingspanUserId;
+        if ( platform == WingspanRestService.HR360 && String.isNotBlank( WingspanRestAgent.hr360ParentUserId ) ) {
+            wingspanUserId = WingspanRestAgent.hr360ParentUserId;
+        } else if ( platform == WingspanRestService.HRSCALE && String.isNotBlank( WingspanRestAgent.hrScaleParentUserId ) ) {
+            wingspanUserId = WingspanRestAgent.hrScaleParentUserId;
+        }
+        return wingspanUserId;
+    }
+
     //method to get headers from response
     private String getResponseHeaders( HttpResponse response ) {
         Map<String,String> responseHeaders = new Map<String,String>();
@@ -165,6 +185,39 @@ public with sharing class WingspanRestAgent {
             }
         }
         return JSON.serialize( responseHeaders );
+    }
+
+    //method to construct URL endpoint
+    private String buildUrl( String path , String platform , String method ){
+        String url = WingspanRestAgent.baseUrl;
+        if( method == 'GET' || platform == WingspanRestService.NON_SSO || String.isBlank( platform ) ) {
+            url = url + path;
+        }
+        if( String.isNotBlank( path ) && String.isNotBlank( platform ) && Method != 'GET') {
+            if ( platform == WingspanRestService.HR360 && String.isNotBlank( WingspanRestAgent.hr360ParentUserId ) ) {
+                url = url + path.replace( '{userId}' , WingspanRestAgent.hr360ParentUserId );
+            } else if ( platform == WingspanRestService.HRSCALE && String.isNotBlank( WingspanRestAgent.hrScaleParentUserId ) ) {
+                url = url + path.replace( '{userId}' , WingspanRestAgent.hrScaleParentUserId );
+            }
+        }
+        return url;
+    }
+
+    //method to build authentication key
+    private String buildAuthKey(String platform, String method){
+        String authKey = WingspanRestAgent.privateKey;
+        if( ( String.isNotBlank( platform ) )
+           && method != 'GET'
+           && ( ( platform == WingspanRestService.HR360 )
+               || ( platform == WingspanRestService.HRSCALE )
+              )
+           && ( String.isNotBlank( WingspanRestAgent.ssoPrivateKey ) )
+          )
+        {
+            authKey = WingspanRestAgent.ssoPrivateKey;
+        }
+
+        return authKey;
     }
 
     //
@@ -183,7 +236,13 @@ public with sharing class WingspanRestAgent {
                         ParentUserId__c ,
                         PrivateKey__c ,
                         Timeout__c ,
-                        XWingspanUserId__c
+                        XWingspanUserId__c ,
+                        SsoPrivateKey__c ,
+                        HR360ParentUserId__c ,
+                        HRScaleParentUserId__c ,
+                        RestrictedCharacters__c ,
+                        RestrictedProducts__c,
+                        Complete_Addons__c
                     FROM Wingspan_Settings__c
                     WHERE ( IsEnabled__c = true )
                     LIMIT 1
@@ -232,12 +291,26 @@ public with sharing class WingspanRestAgent {
         private set;
     }
 
+    private static String ssoPrivateKey {
+        private get {
+            if ( ( ssoPrivateKey == null )
+                && ( WingspanRestAgent.settings != null )
+                && String.isNotBlank( WingspanRestAgent.settings.SsoPrivateKey__c )
+               )
+            {
+                ssoPrivateKey = WingspanRestAgent.settings.SsoPrivateKey__c;
+            }
+            return ssoPrivateKey;
+        }
+        private set;
+    }
+
     private static String xWingspanUserId {
         private get {
             if ( ( xWingspanUserId == null )
                 && ( WingspanRestAgent.settings != null )
                 && String.isNotBlank( WingspanRestAgent.settings.XWingspanUserId__c )
-                )
+               )
             {
                 xWingspanUserId = WingspanRestAgent.settings.XWingspanUserId__c;
             }
@@ -256,6 +329,94 @@ public with sharing class WingspanRestAgent {
                 parentUserId = WingspanRestAgent.settings.ParentUserId__c;
             }
             return parentUserId;
+        }
+        private set;
+    }
+
+    public static String hr360ParentUserId {
+        public get {
+            if ( ( hr360ParentUserId == null )
+                && ( WingspanRestAgent.settings != null )
+                && String.isNotBlank( WingspanRestAgent.settings.HR360ParentUserId__c )
+               )
+            {
+                hr360ParentUserId = WingspanRestAgent.settings.HR360ParentUserId__c;
+            }
+            return hr360ParentUserId;
+        }
+        private set;
+    }
+
+    public static String hrScaleParentUserId {
+        public get {
+            if ( ( hrScaleParentUserId == null )
+                && ( WingspanRestAgent.settings != null )
+                && String.isNotBlank( WingspanRestAgent.settings.HRScaleParentUserId__c )
+               )
+            {
+                hrScaleParentUserId = WingspanRestAgent.settings.HRScaleParentUserId__c;
+            }
+            return hrScaleParentUserId;
+        }
+        private set;
+    }
+
+    public static List<String> restrictedCharacters {
+        public get {
+            if ( restrictedCharacters == null ) {
+                List<String> local = new List<String>();
+                if ( WingspanRestAgent.settings != null ) {
+                    String rawRestrictedCharacters = WingspanRestAgent.settings.RestrictedCharacters__c;
+                    if ( String.isNotBlank( rawRestrictedCharacters ) ) {
+                        List<String> splitRestrictedCharacters = rawRestrictedCharacters.split( ',' );
+                        if ( ( splitRestrictedCharacters != null ) && ( splitRestrictedCharacters.size() > 0 ) ) {
+                            local = splitRestrictedCharacters;
+                        }
+                    }
+                }
+                restrictedCharacters = local;
+            }
+            return restrictedCharacters;
+        }
+        private set;
+    }
+
+    public static List<String> completeAddons {
+    public get {
+        if ( completeAddons == null ) {
+            List<String> local = new List<String>();
+            if ( WingspanRestAgent.settings != null ) {
+                String rawCompleteAddons = WingspanRestAgent.settings.Complete_Addons__c;
+                if ( String.isNotBlank( rawCompleteAddons ) ) {
+                    List<String> splitCompleteAddons = rawCompleteAddons.split( '\\s*,\\s*' );
+                    if ( ( splitCompleteAddons != null ) && ( splitCompleteAddons.size() > 0 ) ) {
+                        local = splitCompleteAddons;
+                    }
+                }
+            }
+            completeAddons = local;
+        }
+        return completeAddons;
+    }
+        private set;
+   }
+
+    public static List<String> restrictedProducts {
+        public get {
+            if ( restrictedProducts == null ) {
+                List<String> local = new List<String>();
+                if ( WingspanRestAgent.settings != null ) {
+                    String rawRestrictedProducts = WingspanRestAgent.settings.RestrictedProducts__c;
+                    if ( String.isNotBlank( rawRestrictedProducts ) ) {
+                        List<String> splitRestrictedProducts = rawRestrictedProducts.split( ',' );
+                        if ( ( splitRestrictedProducts != null ) && ( splitRestrictedProducts.size() > 0 ) ) {
+                            local = splitRestrictedProducts;
+                        }
+                    }
+                }
+                restrictedProducts = local;
+            }
+            return restrictedProducts;
         }
         private set;
     }
@@ -284,6 +445,5 @@ public with sharing class WingspanRestAgent {
         }
         private set;
     }
-
 }
 //

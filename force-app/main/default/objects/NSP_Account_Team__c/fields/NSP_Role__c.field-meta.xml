@@ -112,9 +112,29 @@
                 <label>HCM Sales Manager</label>
             </value>
             <value>
+                <fullName>HRCore Strategic Client Advisor</fullName>
+                <default>false</default>
+                <label>HRCore Strategic Client Advisor</label>
+            </value>
+            <value>
+                <fullName>HRScale HCM &amp; Comp Analyst</fullName>
+                <default>false</default>
+                <label>HRScale HCM &amp; Comp Analyst</label>
+            </value>
+            <value>
+                <fullName>HRScale Time &amp; Absence Analyst</fullName>
+                <default>false</default>
+                <label>HRScale Time &amp; Absence Analyst</label>
+            </value>
+            <value>
                 <fullName>HR Specialist</fullName>
                 <default>false</default>
                 <label>HR Specialist</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
             </value>
             <value>
                 <fullName>ITA Analyst</fullName>
@@ -312,6 +332,11 @@
                 <label>WX/WA Benefits Specialist</label>
             </value>
             <value>
+                <fullName>WX/WA Customer Success Specialist</fullName>
+                <default>false</default>
+                <label>WX/WA Customer Success Specialist</label>
+            </value>
+            <value>
                 <fullName>WX/WA Manager</fullName>
                 <default>false</default>
                 <label>WX/WA Manager</label>
@@ -320,16 +345,6 @@
                 <fullName>WX/WA Supervisor</fullName>
                 <default>false</default>
                 <label>WX/WA Supervisor</label>
-            </value>
-            <value>
-                <fullName>WX/WA Customer Success Specialist</fullName>
-                <default>false</default>
-                <label>WX/WA Customer Success Specialist</label>
-            </value>
-            <value>
-                <fullName>WX Time Specialist</fullName>
-                <default>false</default>
-                <label>WX Time Specialist</label>
             </value>
             <value>
                 <fullName>WX Business Team</fullName>
@@ -342,19 +357,9 @@
                 <label>WX Open Enrollment Specialist</label>
             </value>
             <value>
-                <fullName>Insurance Services</fullName>
+                <fullName>WX Time Specialist</fullName>
                 <default>false</default>
-                <label>Insurance Services</label>
-            </value>
-            <value>
-                <fullName>HRScale HCM &amp; Comp Analyst</fullName>
-                <default>false</default>
-                <label>HRScale HCM &amp; Comp Analyst</label>
-            </value>
-            <value>
-                <fullName>HRScale Time &amp; Absence Analyst</fullName>
-                <default>false</default>
-                <label>HRScale Time &amp; Absence Analyst</label>
+                <label>WX Time Specialist</label>
             </value>
         </valueSetDefinition>
     </valueSet>

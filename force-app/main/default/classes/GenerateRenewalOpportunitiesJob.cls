@@ -1,5 +1,5 @@
 public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ GenerateRenewalOpportunitiesJobTest (89%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (87%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
@@ -87,6 +87,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     SELECT
                         Id ,
                         Name ,
+                        NSP_Part_Time_Margin__c ,
+                        NSP_Part_Time_Reserve__c ,
                         NSP_Account__r.Name ,
                         NSP_Account_Status__c ,
                         NSP_Client__c ,
@@ -96,6 +98,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         NSP_Asset__c ,
                         NSP_Asset__r.NSP_Sales_Office__c ,
                         NSP_Asset__r.NSP_Service_Package__c ,
+                        NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                        NSP_Asset__r.Status ,
                         NSP_Account__c ,
                         NSP_Margin__c ,
                         NSP_Reserve__c ,
@@ -122,6 +126,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                     SELECT
                         Id ,
                         Name ,
+                        NSP_Part_Time_Margin__c ,
+                        NSP_Part_Time_Reserve__c ,
                         NSP_Account__r.Name ,
                         NSP_Account_Status__c ,
                         NSP_Client__c ,
@@ -131,6 +137,8 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         NSP_Asset__c ,
                         NSP_Asset__r.NSP_Sales_Office__c ,
                         NSP_Asset__r.NSP_Service_Package__c ,
+                        NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                        NSP_Asset__r.Status ,
                         NSP_Account__c ,
                         NSP_Margin__c ,
                         NSP_Reserve__c ,
@@ -457,8 +465,12 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 opp.Next_Renewal_Date__c = subClient.NSP_Renewal_Date__c.addYears( 1 );
             }
             opp.Current_Benefits_Package__c = subClient.NSP_Benefit_Package_Name__c;
+            opp.Renewal_Benefits_Package__c = this.buildBenefitPackage( subClient.NSP_Benefit_Package_Name__c );
+            opp.Current_Multi_Year_Contract__c = this.isCurrentMultiYearContract( subClient );
             opp.Current_Margin__c = subClient.NSP_Margin__c;
             opp.Current_Reserve__c = subClient.NSP_Reserve__c;
+            opp.Current_Part_Time_Margin__c = subClient.NSP_Part_Time_Margin__c;
+            opp.Current_Part_Time_Reserve__c = subClient.NSP_Part_Time_Reserve__c;
             opp.Renewal_Status__c = 'Not Started';
             opp.Renewal_Name__c = this.fetchRenewalName( subClient );
             opp.Renewal_Team__c = this.getRenewalTeam( subClient );
@@ -674,6 +686,33 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         return name;
     }
 
+    private String isCurrentMultiYearContract( NSP_Sub_Client__c subClient ){
+        String value = 'No';
+        if ( subClient != null
+            && subClient.NSP_Asset__r != null
+            && subClient.NSP_Asset__r.Status == 'Active'
+            && subClient.NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c
+           )
+        {
+            value = 'Yes';
+        }
+        return value;
+    }
+
+    private String buildBenefitPackage( String benefitPackage ){
+        String local = '';
+        if ( String.isNotBlank( benefitPackage )
+            && GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues != null
+            && !GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.isEmpty()
+            && GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.containsKey( benefitPackage )
+            && String.isNotBlank( GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.get( benefitPackage ) )
+           )
+        {
+            local = GenerateRenewalOpportunitiesJob.validRenewalBenefitPackageValues.get( benefitPackage );
+        }
+        return local;
+    }
+
     // Sales office -> Renewal Manager mapping
     private void buildSalesOfficeToRenewalManagerMap( List<NSP_Sub_Client__c> subClients ){
         List<String> salesOfficeKeys = new List<String>();
@@ -826,6 +865,29 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                 renewalRecordTypeId  = local;
             }
             return renewalRecordTypeId;
+        }
+        private set;
+    }
+
+    private static Map<String, String> validRenewalBenefitPackageValues {
+        private get {
+            if ( validRenewalBenefitPackageValues == null && !Test.isRunningTest() ) {
+                Map<String,String> local = new Map<String,String>();
+                ConnectApi.PicklistValuesCollection picklistValues =
+                    ConnectApi.recordUi.getPicklistValuesByRecordType(
+                        'Opportunity',
+                        GenerateRenewalOpportunitiesJob.renewalRecordTypeId
+                    );
+                if ( picklistValues != null ) {
+                    for ( ConnectApi.PicklistValue p : picklistValues.picklistFieldValues.get('Renewal_Benefits_Package__c').values) {
+                        if ( p != null && p.label != null && p.value != null ){
+                            local.put(p.label,p.value);
+                        }
+                    }
+                }
+                validRenewalBenefitPackageValues = local;
+            }
+            return validRenewalBenefitPackageValues;
         }
         private set;
     }

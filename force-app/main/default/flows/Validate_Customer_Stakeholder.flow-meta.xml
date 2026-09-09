@@ -18,7 +18,8 @@
         <inputParameters>
             <name>contactId</name>
             <value>
-                <elementReference>Get_Contact_Record.Id</elementReference>
+                <elementReference>ContactId</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
@@ -56,6 +57,81 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Asset_To_Object_Name</name>
+        <label>Assign Asset To Object Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ObjectName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Asset</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Contact_From_Asset</name>
+        <label>Assign Contact From Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Contact_Record_For_Asset.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Validate_Stakeholder_Through_API</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Contact_From_Quote</name>
+        <label>Assign Contact From Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Contact_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Validate_Stakeholder_Through_API</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Get_Asset_Element</name>
+        <label>Assign Get Asset Element</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Current_Asset</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Get_Contact_Element_For_Asset</name>
+        <label>Assign Get Contact Element For Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Contact_Record_For_Asset</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_Get_Quote_Element</name>
         <label>Assign Get Quote Element</label>
         <locationX>0</locationX>
@@ -90,6 +166,55 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Invalid_Permission_Error</name>
+        <label>Assign Invalid Permission Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>basicErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You do not have permission to execute this flow</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>No_Permission</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Quote_To_Object_Name</name>
+        <label>Assign Quote To Object Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ObjectName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>SBQQ__Quote__c</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Quote</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Unsupported_Object_Error</name>
+        <label>Assign Unsupported Object Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>basicErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>unsupportedObjectError</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>No_Permission</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Update_Record_Fault_Element</name>
         <label>Assign Update Record Fault Element</label>
         <locationX>0</locationX>
@@ -106,6 +231,23 @@
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Update_Record_Fault_Element_For_Asset</name>
+        <label>Assign Update Record Fault Element For Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Asset_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -113,12 +255,78 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Check_Asset</name>
+        <label>Check Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Invalid_Record_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid Asset</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AssetRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Asset_Stakeholder_Input_Screen</targetReference>
+            </connector>
+            <label>Valid Asset</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This element checks if the flow is called from Quote record or Asset record</description>
+        <name>Check_Object</name>
+        <label>Check Object</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Unsupported_Object_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Is_Quote</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>a6s</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Current_Quote</targetReference>
+            </connector>
+            <label>Is Quote</label>
+        </rules>
+        <rules>
+            <name>Is_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>02i</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Current_Asset</targetReference>
+            </connector>
+            <label>Is Asset</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Permission</name>
         <label>Check Permission</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>No_Permission</targetReference>
+            <targetReference>Assign_Invalid_Permission_Error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Does Not Have Permission</defaultConnectorLabel>
         <rules>
@@ -132,7 +340,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Current_Quote</targetReference>
+                <targetReference>Check_Object</targetReference>
             </connector>
             <label>Has Permission</label>
         </rules>
@@ -143,7 +351,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Invalid_Quote_Screen</targetReference>
+            <targetReference>Invalid_Record_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Invalid Quote</defaultConnectorLabel>
         <rules>
@@ -151,7 +359,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>QuoteRecord</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -203,9 +411,42 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Validate_Stakeholder_Through_API</targetReference>
+                <targetReference>Assign_Contact_From_Quote</targetReference>
             </connector>
             <label>Contact Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Returned_Contact_From_Asset</name>
+        <label>Check Returned Contact From Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Invalid_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Contact Invalid</defaultConnectorLabel>
+        <rules>
+            <name>Contact_Found_For_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contact_Record_For_Asset</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Contact_Record_For_Asset.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Contact_From_Asset</targetReference>
+            </connector>
+            <label>Contact Found For Asset</label>
         </rules>
     </decisions>
     <decisions>
@@ -235,13 +476,69 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Quote_Record</targetReference>
+                <targetReference>Update_Record_Check</targetReference>
             </connector>
             <label>User Not Found</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Update_Record_Check</name>
+        <label>Update Record Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Update_Quote</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ObjectName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SBQQ__Quote__c</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>QuoteRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Quote_Record</targetReference>
+            </connector>
+            <label>Update Quote</label>
+        </rules>
+        <rules>
+            <name>Update_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ObjectName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Asset</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AssetRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Asset_Record</targetReference>
+            </connector>
+            <label>Update Asset</label>
+        </rules>
+    </decisions>
     <description>This screen flow perform API call to Wingspan App for Customer Stakeholder Validation only</description>
     <environments>Default</environments>
+    <formulas>
+        <name>unsupportedObjectError</name>
+        <dataType>String</dataType>
+        <expression>&apos;Unsupported sObjectType&apos; + ({!recordId})</expression>
+    </formulas>
     <interviewLabel>Validate Customer Stakeholder {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Validate Customer Stakeholder</label>
@@ -291,13 +588,64 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Contact_Record_For_Asset</name>
+        <label>Get Contact Record For Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Returned_Contact_From_Asset</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Get_Contact_Element_For_Asset</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AssetRecord.Customer_Stakeholder__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Current_Asset</name>
+        <label>Get Current Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Asset_To_Object_Name</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Get_Asset_Element</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Asset</object>
+        <outputReference>AssetRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Customer_Stakeholder__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Current_Quote</name>
         <label>Get Current Quote</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Quote</targetReference>
+            <targetReference>Assign_Quote_To_Object_Name</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Get_Quote_Element</targetReference>
@@ -317,6 +665,16 @@
         <queriedFields>NSP_Product_Type__c</queriedFields>
     </recordLookups>
     <recordUpdates>
+        <name>Update_Asset_Record</name>
+        <label>Update Asset Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Assign_Update_Record_Fault_Element_For_Asset</targetReference>
+        </faultConnector>
+        <inputReference>AssetRecord</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Quote_Record</name>
         <label>Update Quote Record</label>
         <locationX>0</locationX>
@@ -327,6 +685,35 @@
         <inputReference>QuoteRecord</inputReference>
     </recordUpdates>
     <screens>
+        <name>Asset_Stakeholder_Input_Screen</name>
+        <label>Asset Stakeholder Input Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Contact_Record_For_Asset</targetReference>
+        </connector>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>AssetRecord.Customer_Stakeholder__c</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Validate Stakeholder</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Contact_Already_Exists</name>
         <label>Contact Already Exists</label>
         <locationX>0</locationX>
@@ -336,7 +723,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>ContactAlreadyExists</name>
-            <fieldText>&lt;p&gt;Duplicate record &lt;strong&gt;already exists&lt;/strong&gt; in Wingspan. Please update with a new contact email.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Duplicate record already exists in Wingspan. Please update with a new contact email.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -384,7 +771,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>InvalidContactScreen</name>
-            <fieldText>&lt;p&gt;Email &lt;strong&gt;not&lt;/strong&gt; found&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Email not found&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -399,16 +786,16 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Invalid_Quote_Screen</name>
-        <label>Invalid Quote Screen</label>
+        <name>Invalid_Record_Screen</name>
+        <label>Invalid Record Screen</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>InvalidQuoteScreen</name>
-            <fieldText>&lt;p&gt;Invalid Quote&lt;/p&gt;</fieldText>
+            <name>InvalidRecordScreen</name>
+            <fieldText>&lt;p&gt;Invalid {!ObjectName}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -432,7 +819,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;You &lt;strong&gt;do not&lt;/strong&gt; have permission to execute the flow&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!basicErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -512,7 +899,36 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>AssetRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Asset</objectType>
+    </variables>
+    <variables>
+        <name>basicErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ContactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ObjectName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

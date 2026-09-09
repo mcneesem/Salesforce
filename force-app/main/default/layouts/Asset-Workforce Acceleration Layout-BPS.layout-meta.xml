@@ -251,10 +251,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_IES_e_Verify_Client__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Support_Account_Group__c</field>
             </layoutItems>
             <layoutItems>

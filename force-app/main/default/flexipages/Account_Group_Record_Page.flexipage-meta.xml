@@ -786,6 +786,60 @@
                 <identifier>RecordEligible_To_Return_To_Insperity_At_Time_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Leader_Involvement_In_Save_Attempt__c</fieldItem>
+                <identifier>RecordLeader_Involvement_In_Save_Attempt_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.What_Level_Leader__c</fieldItem>
+                <identifier>RecordWhat_Level_Leader_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Leader_Involvement_In_Save_Attempt__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Was_Revolution_With_IIS_An_Option__c</fieldItem>
+                <identifier>RecordWas_Revolution_With_IIS_An_Option_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Why_Why_Not_An_Option__c</fieldItem>
+                <identifier>RecordWhy_Why_Not_An_Option_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Was_Revolution_With_IIS_An_Option__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-8519c9fe-710b-4d1a-a0d8-25175f291adb</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -870,6 +924,40 @@
                         <leftValue>{!Record.Competitor__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Other</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Was_A_Bid_Obtained_For_Review__c</fieldItem>
+                <identifier>RecordWas_A_Bid_Obtained_For_Review_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Did_Client_Go_To_A_Competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.What_Was_The_Cost_Savings__c</fieldItem>
+                <identifier>RecordWhat_Was_The_Cost_Savings_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Did_Client_Go_To_A_Competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

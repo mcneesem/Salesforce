@@ -642,6 +642,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Include_In_Bundle_Rollup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Include_in_IWX_bundle_Rollup__c</field>
             </layoutItems>
             <layoutItems>

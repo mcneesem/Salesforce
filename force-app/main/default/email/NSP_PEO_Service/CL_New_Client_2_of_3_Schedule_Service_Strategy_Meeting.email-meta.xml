@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CL Only - Schedule service strategy meeting, provide linked resources</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>CL-New Client 2 of 3 Schedule Service Strategy Meeting</name>
+    <style>freeForm</style>
+    <subject>Schedule a service strategy meeting</subject>
+    <textOnly>Dear [Client],
+
+It was a pleasure meeting you at our introduction call. You may recall the resources we discussed during the meeting; these are linked below for your review.
+
+Onsite Supervisor Guide
+Manager’s Quick Reference Guide
+Enrollment Administration Guide
+Welcome to Insperity Premier (for Administrators) (0:57)
+
+This screenshot illustrates the footer of Insperity Premier where numerous resources reside for your quick and convenient reference.
+
+To ensure Insperity is helping you achieve your business goals, I would like to schedule a service strategy meeting with you to learn more about your company&apos;s needs. Together we will design the right service strategy plan that aligns the services we provide to help you achieve those goals.
+
+Are you available to meet at one of these dates &amp; time in person or virtually.
+
+insert suggested date and time
+insert suggested date and time
+
+Feel free to suggest alternate times to meet during the times I’ve proposed, if needed.
+
+When we last spoke on [insert initial meeting date], we briefly touched on [insert relevant notes from initial meeting]. At this next meeting, we will talk more in-depth about your plans for this year and which resources at Insperity can help you meet your objectives.
+
+I encourage you to review the Guide to Insperity, available on, Insperity Premier, in advance of our meeting. This Guide provides valuable information about Insperity’s processes, how to access and manage your account on the Insperity Premier portal and who to contact if you need further assistance.
+
+You may also wish to begin exploring Insperity Premier; this platform offers the opportunity to manage your employees’ lifecycle, execute payroll, run reports, and houses forms and policies pertinent to your business. You’ll find supportive videos in the Need Help link at the bottom of the page as well as important contact information that mirrors the Client Contact sheet provided before our first meeting.
+
+I look forward to our next conversation and thank you for allowing Insperity to serve your business.
+
+Thanks so much,
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

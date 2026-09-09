@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL Only - Send to clients to provide resources to online administrator</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>New Client-Online Administrator Review</name>
+    <style>freeForm</style>
+    <subject>Online Administrator Review</subject>
+    <textOnly>Hello [client name],
+
+In review of your account, I see that you’ve been assigned roles for the Online Enrollment Administrator system access. This assignment makes you responsible for onboarding your company’s employees within the Manage Employees area on Insperity Premier. Insperity offers a variety of resources to assist you and help familiarize you with the necessary steps to successfully onboard your new employees.
+
+To get started:
+
+Log in at portal.insperity.com
+At the bottom of any web page, select Need Help
+
+Welcome to Insperity Premier (for Administrators)
+Onboarding a New Employee
+
+
+I encourage you to take a moment to review the above videos and download the Enrollment Administration Guide and the I-9 Instructions. These guides outline the necessary steps to successfully onboard a new employee using Insperity’s Online Paperless Onboarding process.
+
+Please let me know if I can be of additional support as you review these guides and instruct your employees on the first steps to start their new hire process.
+
+Thank you for trusting Insperity to serve your business.
+
+Sincerely,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -6956,6 +6956,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.Include_In_Bundle_Rollup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Product2.Integration_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10052,6 +10057,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Credit_Duration_Months__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Include_In_Bundle_Rollup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19106,7 +19116,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>blng__Invoice__c.NSP_Bill_To_Email__c</field>
+       <field>blng__Invoice__c.NSP_Bill_To_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
