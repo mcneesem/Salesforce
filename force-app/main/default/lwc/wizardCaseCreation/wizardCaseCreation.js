@@ -258,19 +258,14 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         updateRecord(recordInput)
             .then(() => {
                 this.hideSpinner();
-                this[NavigationMixin.GenerateUrl]({
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: result.id,
-                            actionName: 'view'
-                        }
-                    }).then(url => {
-                        var baseurl= window.location.origin;
-                        var vurl= baseurl+url;
-                        window.open(vurl);
-                    });
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: result.id,
+                        actionName: 'view'
+                    }
+                });
                 this.reloadMainPage();
-                // Display fresh data in the form
             })
             .catch(error => {
                 this.hideSpinner();
