@@ -231,6 +231,9 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                         WHERE (
                             ( Id IN :accountIdSet )
                             AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.PROSPECTING )
+                            AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.ACTIVE )
+                            AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.ONDEMAND_STATUS )
+                            AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.ONBOARDING )
                         )
                     ]
                 )

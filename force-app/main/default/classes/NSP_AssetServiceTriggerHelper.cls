@@ -1996,11 +1996,6 @@ Implementation profile related to the account of the created asset
         Boolean anyActive = false;
         Boolean anyOnBoarding = false;
         Boolean anyOnDemand = false;
-        Boolean anyProspecting = (
-            ( acc != null )
-            && ( acc.Opportunities != null )
-            && !acc.Opportunities.isEmpty()
-        );
         List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( ( acc != null ) ? acc.Assets : null );
         for ( Asset assetRecord : filteredAssets ) {
             if ( ( assetRecord != null ) && String.isNotBlank( assetRecord.Status ) ) {
@@ -2019,8 +2014,6 @@ Implementation profile related to the account of the created asset
             returnValue = NSP_SalesConstants.ONBOARDING;
         } else if ( anyOnDemand ) {
             returnValue = NSP_ServiceConstants.AssetStatusOnDemand;
-        } else if ( anyProspecting ) {
-            returnValue = NSP_SalesConstants.PROSPECTING;
         }
         return returnValue;
     }
@@ -2181,19 +2174,12 @@ Implementation profile related to the account of the created asset
         List<Asset> result = new List<Asset>();
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
-            // List of Asset Record type names to exclude
-            Set<String> excludedNames = new Set<String>{
-                'RET WO',
-                'RET Choice',
-                'CPQ Asset',
-                'Hardware Asset',
-                'Hardware Loaner Asset',
-                'Certify',
-                'XML',
-                'Integra',
-                'Time & Attendance',
-                'Performance Management'
-            };
+            List<String> excludedNames = new List<String>();
+            Filter_Asset_Record_Type__c orgFilter = Filter_Asset_Record_Type__c.getOrgDefaults();
+            if( orgFilter != null && String.isNotBlank( orgFilter.Exclude_Record_Type__c ) ) {
+                // List of Asset Record type names to exclude
+                excludedNames = orgFilter.Exclude_Record_Type__c.split(',');
+            }
             for ( Asset record : records ) {
                 String rtName = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Name : null );
                 if ( String.isNotBlank( rtName ) && !excludedNames.contains( rtName ) ) {

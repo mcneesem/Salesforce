@@ -86,7 +86,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     WHERE (
                         ( LastStageChangeDate != null )
                         AND ( LastStageChangeDate = LAST_N_MONTHS:1 )
-                        AND ( StageName IN ( 'Closed Lost' , 'Closed Won' ) )
+                        AND ( IsClosed = True )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
                     )
                 ]
@@ -98,8 +98,8 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     SELECT Id , AccountId
                     FROM Asset
                     WHERE (
-                        ( NSP_Termination_Date__c !=null )
-                        AND ( NSP_Termination_Date__c = LAST_N_MONTHS:1 )
+                        ( Termination_Date__c != null )
+                        AND ( Termination_Date__c = LAST_N_MONTHS:1 )
                         AND ( Status IN ( 'Terminated' , 'Backout' ) )
                         AND ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
@@ -118,7 +118,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
             )
         {
             try {
-                List<Account> accountsToUpdate = NSP_AccountTerminationBatch.processAccounts(
+                List<Account> accountsToUpdate = this.processAccounts(
                     NSP_AccountTerminationBatch.getAccountSet( scope )
                 );
                 if ( ( accountsToUpdate != null ) && !accountsToUpdate.isEmpty() ) {
@@ -172,7 +172,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     }
 
     //method to fetch all related Opportunities and Assets from Accounts(CPQ and Hardware excluded)
-    private static List<Account> processAccounts( Set<Id> accountIdSet ) {
+    private List<Account> processAccounts( Set<Id> accountIdSet ) {
         List<Account> accountsToUpdate = new List<Account>();
         if ( ( accountIdSet != null ) && !accountIdSet.isEmpty() ) {
             List<Account> listofAccts=[
@@ -189,7 +189,10 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
                     (
-                        SELECT Id , StageName
+                        SELECT
+                            Id ,
+                            StageName ,
+                            IsClosed
                         FROM Opportunities
                     )
                 FROM Account
@@ -199,9 +202,21 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                 List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( acc.Assets );
                 Boolean allAssetsTerminated = scanAssets( filteredAssets );
                 Boolean allOpportunitiesClosed = scanOpportunities( acc.Opportunities );
-                if ( allAssetsTerminated && allOpportunitiesClosed ) {
+                if ( NSP_AccountTerminationBatch.prospectingCheck( filteredAssets , acc.Opportunities ) ) {
+                    acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                    accountsToUpdate.add( acc );
+                } else if ( allAssetsTerminated && allOpportunitiesClosed ) {
                     //terminate Account if no open Asset/Opportunity found
                     acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.TERMINATED;
+                    accountsToUpdate.add( acc );
+                } else if  ( ( ( this.objectAPI == NSP_AccountTerminationBatch.OBJ_OPP ) || Test.isRunningTest() )
+                            && ( NSP_AccountTerminationBatch.lostAccountCheck(
+                                filteredAssets ,
+                                acc.Opportunities )
+                               )
+                           )
+                {
+                    acc.NSP_Sales_Service_Account_Status__c = 'Lost';
                     accountsToUpdate.add( acc );
                 }
             }
@@ -243,6 +258,52 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
             }
         }
         return allOpportunitiesClosed;
+    }
+
+    private static Boolean prospectingCheck( List<Asset> assetList , List<Opportunity> oppList ){
+        Boolean hasOpenOpp = False;
+        Boolean hasOpenAsset = False;
+        //should have open opp
+        for ( Opportunity opp : oppList ) {
+            if ( opp.IsClosed == False ) {
+                hasOpenOpp = True;
+                Break;
+            }
+        }
+        //Asset should not be Open
+        for ( Asset ast : assetList ) {
+            if ( ( ast.Status == NSP_SalesConstants.ONBOARDING )
+                || ( ast.Status == NSP_ServiceConstants.AssetStatusOnDemand )
+                || ( ast.Status == NSP_SalesConstants.ACTIVE )
+               )
+            {
+                hasOpenAsset = True;
+                Break;
+            }
+        }
+        return ( hasOpenOpp && !hasOpenAsset );
+    }
+
+    //method to check if account should be marked lost
+    private static Boolean lostAccountCheck( List<Asset> assetList , List<Opportunity> oppList ) {
+        Boolean noAssetPresent = True;
+        Boolean allOppClosedLost = True;
+        //No Asset should be present
+        if ( ( assetList != null ) && ( assetList.size() > 0 ) ) {
+            noAssetPresent = False;
+        }
+        //All opportunities should be closed lost
+        if( ( oppList != null ) && ( oppList.size() > 0 ) ) {
+            for ( Opportunity opp : oppList ) {
+                if( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
+                   || ( opp.Stagename != 'Closed Lost - Outgoing' )
+                  )
+                {
+                    allOppClosedLost = False;
+                }
+            }
+        }
+        return ( noAssetPresent && allOppClosedLost );
     }
 
     //
