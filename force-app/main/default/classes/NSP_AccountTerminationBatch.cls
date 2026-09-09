@@ -1,6 +1,6 @@
 // Batch Class to update Account's status to terminated if all assets are terminated and their termination date is in previous month
-public without sharing class NSP_AccountTerminationBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ NSP_AccountTerminationBatch_Test (89%)
+public without sharing class NSP_AccountTerminationBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+    // test w/ NSP_AccountTerminationBatch_Test (86%)
 
     private static final String OBJ_AST = 'Asset';
     private static final String OBJ_OPP = 'Opportunity';
@@ -10,9 +10,15 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     };
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
+    public NSP_AccountTerminationBatch() {
+        this.objectAPI = NSP_AccountTerminationBatch.OBJ_AST;
+    }
 
+    //
+    // ISelfSchedulable
+    //
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -21,15 +27,40 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         return System.schedule(
             'NSP_AccountTerminationBatch ~ Auto set the value on account based on associated assets or opportunities ~ Scheduled to Run monthly on the first day of every month at 11 pm' + suffix ,
             '0 0 23 1 * ? *' , // first day of every month at 11 PM
-            new NSP_AccountTerminationBatch( NSP_AccountTerminationBatch.OBJ_AST )
+            new NSP_AccountTerminationBatch()
         );
     }
 
+    //
+    // Schedulable
+    //
     public void execute( SchedulableContext sc ) {
-        Database.executeBatch(
-            new NSP_AccountTerminationBatch( NSP_AccountTerminationBatch.OBJ_AST ) ,
-            NSP_AccountTerminationBatch.batchSize
-        );
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+    public Id run() {
+        Id response = null;
+        if ( NSP_AccountTerminationBatch.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_AccountTerminationBatch( NSP_AccountTerminationBatch.OBJ_AST ) ,
+                NSP_AccountTerminationBatch.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -153,7 +184,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             Id ,
                             Status ,
                             NSP_Termination_Date__c ,
-                            RecordType.Name 
+                            RecordType.Name
                         FROM Assets
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
