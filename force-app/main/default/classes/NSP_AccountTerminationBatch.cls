@@ -184,7 +184,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             Id ,
                             Status ,
                             NSP_Termination_Date__c ,
-                            RecordType.Name
+                            RecordType.Name 
                         FROM Assets
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
