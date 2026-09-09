@@ -22,9 +22,10 @@
     <permissionSets>Checklist_Edit</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
     <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>MidMarket_Fields_Read_Access</permissionSets>
     <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>
     <permissionSets>Mid_Market</permissionSets>

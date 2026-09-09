@@ -14,9 +14,10 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
     <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>

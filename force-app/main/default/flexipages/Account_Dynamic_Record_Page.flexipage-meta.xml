@@ -3908,16 +3908,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_IES_e_Verify_Client__c</fieldItem>
-                <identifier>RecordNSP_IES_e_Verify_Client_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_If_ORK_HaveLinksOnInsperityPremier__c</fieldItem>
                 <identifier>RecordNSP_If_ORK_HaveLinksOnInsperityPremier_cField</identifier>
             </fieldInstance>

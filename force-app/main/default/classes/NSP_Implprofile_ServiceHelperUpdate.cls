@@ -1058,8 +1058,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         pse__Project_Task__c eachProjecttask = null;
@@ -1071,8 +1070,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     pta ,
                     ipRecId ,
                     ipwithValue ,
-                    workCalendarId ,
-                    pt
+                    workCalendarId
                 );
             }
         }
@@ -1106,8 +1104,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         // CSP_HCFSA_FSO
@@ -1124,8 +1121,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1138,8 +1134,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         // CSP_HSA_FSO
@@ -1156,8 +1151,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1170,8 +1164,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         // CSP_DCFSA_FSO
@@ -1188,8 +1181,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1202,8 +1194,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
       // CSP_MEDICAL_FSO
@@ -1220,8 +1211,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1234,8 +1224,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         // CSP_DENTAL_FSO
@@ -1252,8 +1241,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1266,8 +1254,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId ,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         // CSP_VISION_FSO
@@ -1284,8 +1271,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 pta ,
                 ipRecId ,
                 ipWithValue ,
-                workCalendarId ,
-                pt
+                workCalendarId
             );
         }
         if(eachProjecttask != null){
@@ -1952,23 +1938,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if ( ( proj != null )
-            && ( automation == NSP_Implprofile_ServiceHelperUpdate.CT_SPONSORED_PLAN_FN )
-            && ( proj.pse__Project_Tasks__r != null )
-            && !proj.pse__Project_Tasks__r.isEmpty()
-           )
-        {
-            for ( pse__Project_Task__c pt : proj.pse__Project_Tasks__r ) {
-                if ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected' ) {
-                    this.createTaskForHealthCareFSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForHSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForDependentCareFSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForMedical( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForDental( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForVision( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                    this.createTaskForCspAuthFormReceived( proj , ipRecId , ipwithValue , workCalendarId , pt );
-                }
-            }
+        if ( automation == NSP_Implprofile_ServiceHelperUpdate.CT_SPONSORED_PLAN_FN ){
+            this.createTaskForHealthCareFSA( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForHSA( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForDependentCareFSA( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForMedical( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForDental( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForVision( proj , ipRecId , ipwithValue , workCalendarId);
+            this.createTaskForCspAuthFormReceived( proj , ipRecId , ipwithValue , workCalendarId);
         }
     }
 
@@ -2761,8 +2738,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         NSP_ProjectTask_Automation__mdt pta,
         Id ipRecId,
         Implementation_Profile__c ipWithValue,
-        Id workCalendarId,
-        pse__Project_Task__c pt
+        Id workCalendarId
         )
     {
         pse__Project_Task__c eachProjectTask = this.genericPMTask(
@@ -2772,10 +2748,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             ipWithValue,
             workCalendarId
         );
-        if (eachProjectTask != null && pt != null && pt.Id != null ) {
-            eachProjectTask.pse__Parent_Task__c = pt.Id;
-            eachProjectTask.pse__Hierarchy_Depth__c = 1;
-        }
         return eachProjectTask;
     }
 

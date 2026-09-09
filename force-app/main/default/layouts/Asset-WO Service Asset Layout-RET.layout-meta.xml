@@ -278,10 +278,6 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_WO_WS_Uses_Background_Services__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_IES_e_Verify_Client__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -10,12 +10,13 @@
         >
             <div class="slds-modal__container modal-container">
                 <header class="slds-modal__header">
-                    <lightning-button
-                        class="slds-modal__close"
-                        title="Close"
-                        onclick={handleCloseModal}
-                        >
-                    </lightning-button>
+                <lightning-button-icon
+                    icon-name="utility:close"
+                    alternative-text="Close"
+                    title="Close"
+                    onclick={handleDialogClose}
+                    class="slds-button slds-button_icon slds-modal__close">
+                </lightning-button-icon>
                     <template if:true={hasHeaderString}>
                         <h2 class="slds-text-heading_medium slds-hyphenate header-string">
                             {header}

@@ -344,23 +344,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varErrorMessageToUser_Looks_like_this_Contact_is_already_related_to_acct</name>
-        <label>Assign varErrorMessageToUser - Looks like this Contact is already related to this Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varErrorMessageToUser</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Looks like this Contact is already related to this Account.</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Something_Went_Wrong_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varErrorMessageToUser_Missing_varAccountId_or_varAction</name>
         <label>Assign varErrorMessageToUser - Missing varAccountId or varAction</label>
         <locationX>0</locationX>
@@ -407,23 +390,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Which_is_error_message_is_populated</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varErrorMessageToUser_No_existing_ACR_records</name>
-        <label>Assign varErrorMessageToUser - No existing ACR records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varErrorMessageToUser</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>No existing related Contacts were found.</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Something_Went_Wrong_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -648,6 +614,22 @@
         </connector>
     </assignments>
     <choices>
+        <name>Choose_another_Contact</name>
+        <choiceText>Choose another Contact</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Choose another Contact</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Close_this_window</name>
+        <choiceText>Close this window</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Close this window</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>I_want_to_create_a_relationship_between_a_related_Contact_and_a_different_Accoun</name>
         <choiceText>I want to create a relationship between a related Contact and a different Account</choiceText>
         <dataType>String</dataType>
@@ -669,6 +651,41 @@
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <decisions>
+        <name>Choose_another_Contact_or_End_Flow</name>
+        <label>Choose another Contact or End Flow?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>N/A</defaultConnectorLabel>
+        <rules>
+            <name>User_chose_to_select_another_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>The_Contact_you_chose_is_already_related_radioButtons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Choose_another_Contact</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Contact_Search_Screen</targetReference>
+            </connector>
+            <label>User chose to select another Contact</label>
+        </rules>
+        <rules>
+            <name>User_chose_to_end_the_flow</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>The_Contact_you_chose_is_already_related_radioButtons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Close_this_window</elementReference>
+                </rightValue>
+            </conditions>
+            <label>User chose to end the flow</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_Account_owned_by_Available</name>
         <label>Is Account owned by Available?</label>
@@ -835,7 +852,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_varErrorMessageToUser_Looks_like_this_Contact_is_already_related_to_acct</targetReference>
+                <targetReference>Relationship_Already_Exists_Screen</targetReference>
             </connector>
             <label>Conflicting AccountContactRelation record found</label>
         </rules>
@@ -942,7 +959,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Assign_varErrorMessageToUser_No_existing_ACR_records</targetReference>
+            <targetReference>No_Existing_ACRs_on_this_Account_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No AccountContactRelation records found</defaultConnectorLabel>
         <rules>
@@ -2142,8 +2159,11 @@
                 </width>
             </styleProperties>
             <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address and ensure that there are no trailing symbols and is not more than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>AND(
+  LEN({!Email_Input}) &lt;= 80, 
+  REGEX({!Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)
+)</formulaExpression>
             </validationRule>
         </fields>
         <fields>
@@ -2295,6 +2315,30 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>No_Existing_ACRs_on_this_Account_Screen</name>
+        <label>No Existing ACRs on this Account - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NoExistingContacts_DisplayText</name>
+            <fieldText>&lt;p&gt;There are currently no Contacts related to this Account. Please relate an existing Contact to this Account or create a new Contact.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</name>
         <label>Please Update AccountContactRelation Info for this Account - Screen</label>
         <locationX>0</locationX>
@@ -2356,8 +2400,11 @@
                 </width>
             </styleProperties>
             <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!Work_Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)</formulaExpression>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address and ensure that there are no trailing symbols and is not more than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>AND(
+  LEN({!Work_Email_Input}) &lt;= 80, 
+  REGEX({!Work_Email_Input}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$&quot;)
+)</formulaExpression>
             </validationRule>
         </fields>
         <fields>
@@ -2427,6 +2474,38 @@
                 </verticalAlignment>
                 <width>
                     <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Relationship_Already_Exists_Screen</name>
+        <label>Relationship Already Exists - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Choose_another_Contact_or_End_Flow</targetReference>
+        </connector>
+        <fields>
+            <name>The_Contact_you_chose_is_already_related_radioButtons</name>
+            <choiceReferences>Choose_another_Contact</choiceReferences>
+            <choiceReferences>Close_this_window</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>The Contact you chose is already related to this Account. Would you like to choose another Contact or close this window?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
                 </width>
             </styleProperties>
         </fields>

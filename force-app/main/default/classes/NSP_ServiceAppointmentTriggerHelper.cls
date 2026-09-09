@@ -699,11 +699,20 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     //
     private static List<ServiceAppointment> updateServiceAppointments( Map<Id,Id> serviceAppIdAssigResMap , Map<Id,Id> assignResIdServiceResMap ) {
         List<ServiceAppointment> serviceAppList = new List<ServiceAppointment>();
-        for(ServiceAppointment oservice: [SELECT Id, OwnerId
-                                          FROM ServiceAppointment
-                                          WHERE Id IN: serviceAppIdAssigResMap.keySet()]){
-            oservice.OwnerId = assignResIdServiceResMap.get(serviceAppIdAssigResMap.get(oservice.Id));
-            serviceAppList.add(oservice);
+        for ( ServiceAppointment oservice: [
+                    SELECT Id , OwnerId
+                    FROM ServiceAppointment
+                    WHERE ( Id IN :serviceAppIdAssigResMap.keySet() )
+                ]
+            )
+        {
+            Id targetOwner = assignResIdServiceResMap.get( serviceAppIdAssigResMap.get( oservice.Id ) );
+            // only update when owner actually differs - avoids UNABLE_TO_LOCK_ROW
+            // when the SA is still locked from the triggering transaction
+            if ( ( targetOwner != null ) && ( oservice.OwnerId != targetOwner ) ) {
+                oservice.OwnerId = targetOwner;
+                serviceAppList.add( oservice );
+            }
         }
         return serviceAppList;
     }

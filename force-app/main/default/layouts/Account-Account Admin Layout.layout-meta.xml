@@ -590,10 +590,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_IES_e_Verify_Client__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_If_ORK_HaveLinksOnInsperityPremier__c</field>
             </layoutItems>
             <layoutItems>

@@ -101,6 +101,11 @@
                 <label>Navigation &amp; Workflow Challenges</label>
             </value>
             <value>
+                <fullName>No Insperity 401k</fullName>
+                <default>false</default>
+                <label>No Insperity 401k</label>
+            </value>
+            <value>
                 <fullName>Price Increase</fullName>
                 <default>false</default>
                 <label>Price Increase</label>
@@ -109,6 +114,11 @@
                 <fullName>Rapid Growth or Decline</fullName>
                 <default>false</default>
                 <label>Rapid Growth or Decline</label>
+            </value>
+            <value>
+                <fullName>Resource Shift: Potential Client Impact</fullName>
+                <default>false</default>
+                <label>Resource Shift: Potential Client Impact</label>
             </value>
             <value>
                 <fullName>Risk Mitigation</fullName>
@@ -124,11 +134,6 @@
                 <fullName>Technology &amp; Seamless Data Transfer</fullName>
                 <default>false</default>
                 <label>Technology &amp; Seamless Data Transfer</label>
-            </value>
-            <value>
-                <fullName>No Insperity 401k</fullName>
-                <default>false</default>
-                <label>No Insperity 401k</label>
             </value>
             <value>
                 <fullName>Termination Save Attempt</fullName>

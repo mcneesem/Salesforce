@@ -5,6 +5,7 @@
     <customButtons>SendWithDocuSign</customButtons>
     <customButtons>Generate_Order_Docusign</customButtons>
     <customButtons>NSP_Send_for_Signature_CPQ</customButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
@@ -799,8 +800,9 @@
     <relatedLists>
         <excludeButtons>OppContactRoleMultiEdit</excludeButtons>
         <fields>ContactName</fields>
-        <fields>IsPrimary</fields>
-        <fields>Role</fields>
+        <fields>Renewal_Paperwork__c</fields>
+        <fields>Work_Email__c</fields>
+        <fields>Work_Phone__c</fields>
         <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>

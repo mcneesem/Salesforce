@@ -187,7 +187,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 {
                     // 2) Update existing ACTIVE focus item when AIMS list is present
                     NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActive.get( accGrpId );
-                    focusItem.Details__c = NSP_ServiceConstants.FOCUS_COMMENTS + ' [' + String.join( lstAIMS , ',' ) + ']';
+                    focusItem.Details__c = 'These Client# are less than 2 years old:' + ' [' + String.join( lstAIMS , ',' ) + ']';
                     this.lstFocusItems.add( focusItem );
                 }
             } else if ( this.accGrpWithFocusItemActive.containsKey(accGrpId)
@@ -292,10 +292,12 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     private void checkForAssets() {
         if ( !accountIds.isEmpty() ) {
             for ( Asset asst : new Selector().getAssets( new List<Id>( accountIds ) ) ) {
-                this.accIdWithAimsClient.put(
-                    asst.AccountId ,
-                    asst.NSP_Client__c
-                );
+                if ( this.isActiveAsset( asst ) ) {
+                    this.accIdWithAimsClient.put(
+                        asst.AccountId ,
+                        asst.NSP_Client__c
+                    );
+                }
             }
             for ( Asset asst : new Selector().getNoInsperityAssets( new List<Id>( accountIds ) ) ) {
                 if ( this.isEligibleForNoInsperity401kFocusItem( asst ) ) {
@@ -314,15 +316,26 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
         }
     }
 
+    private Boolean isActiveAsset(Asset asst) {
+        Boolean local = false;
+        if ( ( asst != null )
+            && ( asst.Status == 'Active'
+                || asst.Status == 'Onboarding'
+               )
+           )
+        {
+            local = true;
+        }
+        return local;
+    }
+
     private Boolean isEligibleForNoInsperity401kFocusItem( Asset asst ) {
         Boolean local = false;
         if ( ( asst != null )
             && ( ( asst.NSP_Retirement_Service_Plan_Name__c == null )
                 || asst.NSP_Retirement_Service_Plan_Name__c.contains( NSP_ServiceConstants.ORK )
                 )
-            && ( ( asst.Status == 'Active' )
-                || ( asst.Status == 'Onboarding' )
-                )
+            && ( this.isActiveAsset( asst ) )
             )
         {
             local = true;
@@ -462,6 +475,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                         NSP_AIMS_Original_First_Pay_Date__c ,
                         NSP_Retirement_Service_Plan_Name__c ,
                         AccountId ,
+                        Status,
                         NSP_Client__c
                     FROM Asset
                     WHERE (

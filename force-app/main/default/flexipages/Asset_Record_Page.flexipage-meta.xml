@@ -59,6 +59,66 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Asset.Validate_Customer_Stakeholder</value>
+                            <visibilityRule>
+                                <booleanFilter>( 1 OR 2 ) AND 3 AND 4 AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Platform__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HR360</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Platform__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Non SSO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Product_Line__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contractor Management</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Validate_Customer_Stakeholder}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Payer_Account_Id__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Asset.Create_Wingspan_Account</value>
+                            <visibilityRule>
+                                <booleanFilter>( 1 OR 2 ) AND 3 AND 4 AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Platform__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HR360</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Platform__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Non SSO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Product_Line__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contractor Management</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Create_Wingspan_Account}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Payer_Account_Id__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

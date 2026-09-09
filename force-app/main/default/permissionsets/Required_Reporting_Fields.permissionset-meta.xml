@@ -328,6 +328,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Customer_Stakeholder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Date_Reported_Termed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -463,6 +468,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Payer_Account_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Payer_Account_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Platform__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Product_Solution__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -584,6 +604,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Campaign.Target_Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignInfluence.Opportunity_Partner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignInfluence.Opportunity_Primary_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3003,6 +3033,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunityContactRole.Renewal_Paperwork__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunityContactRole.Work_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunityContactRole.Work_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.Auto_Termination__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3016,7 +3061,7 @@
         <field>Order.Related_Contract_To_Terminate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>false</editable>
         <field>Order.Revised_Amendment_Start_Date__c</field>
         <readable>true</readable>
@@ -3139,6 +3184,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Flat_Fee_Reference_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Include_In_Bundle_Rollup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3299,6 +3349,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Flat_Fee_Reference_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Include_In_Bundle_Rollup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

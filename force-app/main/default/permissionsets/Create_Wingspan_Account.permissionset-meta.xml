@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Create_Wingspan_Account</name>
+    </customPermissions>
+    <description>Permission set for granting access to &apos;Create Wingspan Account&apos; button on Asset record.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Customer_Stakeholder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Payer_Account_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Payer_Account_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Platform__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Create_Wingspan_Account</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Create Wingspan Account</label>
+</PermissionSet>

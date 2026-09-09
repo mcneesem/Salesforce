@@ -3,9 +3,10 @@
     <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT( $Permission.Bypass_Termination_Reason_Rules ) ,
-  Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
-  ( TEXT( NSP_Type__c ) = &quot;Renewal Probability&quot; ) ,
+  Primary_Termination_Reason__c ,
+  NOT( ISNEW() ) ,
+  NOT( ISCHANGED( NSP_Total_Payroll_Employees__c ) ) ,
+  NOT( ISCHANGED( NSP_Group_Member_Count__c ) ) ,
   OR(
     ISBLANK( TEXT( Primary_Term_Reason__c ) ) ,
     ISBLANK( TEXT( Sub_Term_Reason__c ) ) ,
@@ -14,14 +15,12 @@
     ISBLANK( TEXT( Termination_Anticipated__c ) ) ,
     ISBLANK( TEXT( Did_Client_Go_To_A_Competitor__c ) ) ,
     ( LEN( Why_Why_Not__c ) = 0 ) ,
-    AND(
-      ( TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot; ) ,
-      ISBLANK( TEXT( Competitor__c ) )
-    ) ,
-    AND(
-      ( TEXT( Competitor__c ) = &quot;Other&quot; ) ,
-      ISBLANK( Other_Competitor__c )
-    )
+    ISBLANK( TEXT( Leader_Involvement_In_Save_Attempt__c ) ) ,
+    ISBLANK( TEXT( What_Level_Leader__c ) ) ,
+    ISBLANK( TEXT( Was_A_Bid_Obtained_For_Review__c ) ) ,
+    ISBLANK( TEXT( Was_Revolution_With_IIS_An_Option__c ) ) ,
+    ISBLANK( What_Was_The_Cost_Savings__c ) ,
+    ( LEN( Why_Why_Not_An_Option__c ) = 0 )
   )
 )</errorConditionFormula>
     <errorMessage>You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>

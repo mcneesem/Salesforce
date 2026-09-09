@@ -9,7 +9,8 @@
     <permissionSets>Checklist_Edit</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
-    <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Create_and_Customize_List_Views</permissionSets>
+    <permissionSets>Mass_Edits_from_Lists</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_BPS_Support_Home_Page</permissionSets>
