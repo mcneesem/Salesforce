@@ -13,7 +13,7 @@ public with sharing class PortalClientSelector {
                     WHERE ( Status__c = 'Active' )
                 )
             )
-            ORDER BY CreatedDate ASC
+            ORDER BY Name ASC
         ];
     }
 
