@@ -2,13 +2,13 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesIncludeBosses>false</doesIncludeBosses>
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>hrcore.taxamendmentteam@insperity.com.invalid</email>
+    <email>hrcore.taxamendmentteam@insperity.com</email>
     <name>HRCore Tax Amendments</name>
     <queueMembers>
         <users>
-            <user>celeste.parr@insperity.com.invalid</user>
-            <user>jannette.segovia@insperity.com.invalid</user>
-            <user>keisha.forbes@insperity.com.invalid</user>
+            <user>celeste.parr@insperity.com</user>
+            <user>jannette.segovia@insperity.com</user>
+            <user>keisha.forbes@insperity.com</user>
         </users>
     </queueMembers>
     <queueSobject>
