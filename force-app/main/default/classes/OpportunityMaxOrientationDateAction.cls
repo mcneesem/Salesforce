@@ -174,26 +174,47 @@ public with sharing class OpportunityMaxOrientationDateAction implements Queueab
                 WHERE ( Id IN :maxOrientationDateByOpportunityId.keySet() )
                 WITH USER_MODE
             ];
-            List<Opportunity> dmlRecords = new List<Opportunity>();
-            if ( ( records != null ) && !records.isEmpty() ) {
-                for ( Opportunity record : records ) {
-                    if ( maxOrientationDateByOpportunityId.containsKey( record.Id ) ) {
-                        Date max = maxOrientationDateByOpportunityId.get( record.Id );
-                        if ( record.Max_Orientation_Date__c != max ) {
-                            record.Max_Orientation_Date__c = max;
-                            dmlRecords.add( record );
-                        }
+            List<Opportunity> changedRecords = OpportunityMaxOrientationDateAction.buildChangedOpportunities(
+                records ,
+                maxOrientationDateByOpportunityId
+            );
+            OpportunityMaxOrientationDateAction.updateOpportunities( changedRecords );
+        }
+    }
+
+    // @description Filters queried Opportunity records to those whose Max_Orientation_Date__c differs from the target value.
+    // @param records Opportunity records retrieved from the database.
+    // @param maxOrientationDateByOpportunityId Target Max Orientation Date keyed by Opportunity Id.
+    // @return Opportunity records that require a field update.
+    private static List<Opportunity> buildChangedOpportunities(
+        List<Opportunity> records ,
+        Map<Id,Date> maxOrientationDateByOpportunityId
+    ) {
+        List<Opportunity> changedRecords = new List<Opportunity>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( Opportunity record : records ) {
+                if ( maxOrientationDateByOpportunityId.containsKey( record.Id ) ) {
+                    Date targetDate = maxOrientationDateByOpportunityId.get( record.Id );
+                    if ( record.Max_Orientation_Date__c != targetDate ) {
+                        record.Max_Orientation_Date__c = targetDate;
+                        changedRecords.add( record );
                     }
                 }
             }
-            if ( !dmlRecords.isEmpty() ) {
-                List<Database.SaveResult> results = Database.update( dmlRecords , false , AccessLevel.USER_MODE );
-                NSP_ErrorLogHandler.logResults(
-                    OpportunityMaxOrientationDateAction.class.getName() ,
-                    'populateMaxOrientationDate' ,
-                    results
-                );
-            }
+        }
+        return changedRecords;
+    }
+
+    // @description Persists Max_Orientation_Date__c updates and logs partial-DML results.
+    // @param dmlRecords Opportunity records to update.
+    private static void updateOpportunities( List<Opportunity> dmlRecords ) {
+        if ( ( dmlRecords != null ) && !dmlRecords.isEmpty() ) {
+            List<Database.SaveResult> results = Database.update( dmlRecords , false , AccessLevel.USER_MODE );
+            NSP_ErrorLogHandler.logResults(
+                OpportunityMaxOrientationDateAction.class.getName() ,
+                'populateMaxOrientationDate' ,
+                results
+            );
         }
     }
 
