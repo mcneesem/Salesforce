@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_Concession_Is_Warranted__c</fullName>
+    <label>Reason Concession Is Warranted</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1st payroll processing billing</fullName>
+                <default>false</default>
+                <label>1st payroll processing billing</label>
+            </value>
+            <value>
+                <fullName>Technology Dissatisfaction</fullName>
+                <default>false</default>
+                <label>Technology Dissatisfaction</label>
+            </value>
+            <value>
+                <fullName>Service Dissatisfaction</fullName>
+                <default>false</default>
+                <label>Service Dissatisfaction</label>
+            </value>
+            <value>
+                <fullName>Client Financial Challenges</fullName>
+                <default>false</default>
+                <label>Client Financial Challenges</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

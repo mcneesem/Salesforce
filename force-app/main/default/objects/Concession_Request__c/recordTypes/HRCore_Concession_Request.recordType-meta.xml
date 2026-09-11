@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HRCore_Concession_Request</fullName>
+    <active>true</active>
+    <label>HRCore Concession Request</label>
+    <picklistValues>
+        <picklist>Concession_Type__c</picklist>
+        <values>
+            <fullName>Dollar Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEPM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason_Concession_Is_Warranted__c</picklist>
+        <values>
+            <fullName>1st payroll processing billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Financial Challenges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Dissatisfaction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology Dissatisfaction</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
