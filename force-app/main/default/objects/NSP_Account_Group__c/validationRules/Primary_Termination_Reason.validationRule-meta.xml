@@ -13,14 +13,27 @@
     ( LEN( Termination_Key_Points__c ) = 0 ) ,
     ISBLANK( TEXT( Eligible_To_Return_To_Insperity_At_Time__c ) ) ,
     ISBLANK( TEXT( Termination_Anticipated__c ) ) ,
-    ISBLANK( TEXT( Did_Client_Go_To_A_Competitor__c ) ) ,
     ( LEN( Why_Why_Not__c ) = 0 ) ,
+    ISBLANK( TEXT( Did_Client_Go_To_A_Competitor__c ) ) ,
+    AND(
+        TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot;,
+        ISBLANK( TEXT( Was_A_Bid_Obtained_For_Review__c ) )
+    ),
+    AND(
+        TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot;,
+        TEXT( Was_A_Bid_Obtained_For_Review__c ) = &quot;Yes&quot;,
+        ISBLANK( What_Was_The_Cost_Savings__c )
+    ),
     ISBLANK( TEXT( Leader_Involvement_In_Save_Attempt__c ) ) ,
-    ISBLANK( TEXT( What_Level_Leader__c ) ) ,
-    ISBLANK( TEXT( Was_A_Bid_Obtained_For_Review__c ) ) ,
+    AND(
+        TEXT( Leader_Involvement_In_Save_Attempt__c ) = &quot;Yes&quot;,
+        ISBLANK( TEXT( What_Level_Leader__c ) )
+    ),
     ISBLANK( TEXT( Was_Revolution_With_IIS_An_Option__c ) ) ,
-    ISBLANK( What_Was_The_Cost_Savings__c ) ,
-    ( LEN( Why_Why_Not_An_Option__c ) = 0 )
+    AND(
+        NOT( ISBLANK( TEXT( Was_Revolution_With_IIS_An_Option__c ) ) ),
+        LEN( Why_Why_Not_An_Option__c ) = 0
+    )
   )
 )</errorConditionFormula>
     <errorMessage>You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>

@@ -832,10 +832,16 @@
                 <fieldItem>Record.Why_Why_Not_An_Option__c</fieldItem>
                 <identifier>RecordWhy_Why_Not_An_Option_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Was_Revolution_With_IIS_An_Option__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Was_Revolution_With_IIS_An_Option__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>No</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -920,10 +926,16 @@
                 <fieldItem>Record.Other_Competitor__c</fieldItem>
                 <identifier>RecordOther_Competitor_cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Competitor__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Other</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Did_Client_Go_To_A_Competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -955,7 +967,7 @@
                 <identifier>RecordWhat_Was_The_Cost_Savings_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Did_Client_Go_To_A_Competitor__c}</leftValue>
+                        <leftValue>{!Record.Was_A_Bid_Obtained_For_Review__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
