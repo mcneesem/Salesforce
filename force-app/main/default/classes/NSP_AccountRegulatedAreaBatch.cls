@@ -1,18 +1,18 @@
 /**
 Apex Class Name      :  NSP_AccountRegulatedAreaBatch
-Version              :  1.0 
-Author               :  Jatin                                                                          
-Created Date         :  06/01/22 
+Version              :  1.0
+Author               :  Jatin
+Created Date         :  06/01/22
 Function             :  Creates AccountRegulatedArea and Cases when it matches with Regulated Area State/ZipCode.
-Story                :  As part of STY-03789                                                                    
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
+Story                :  As part of STY-03789
+Modification Log     :
+*--------------------------------------------------------------------------------------------------
+* Developer                   Date                   Description
+* -------------------------------------------------------------------------------------------------
 * Anil                      8/19/2022               First Iteration
 */
-public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject> {
-    // test w/ NSP_AccountRegulatedAreaBatch_Test (86%)
+public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+    // test w/ NSP_AccountRegulatedAreaBatch_Test (83%)
 
     private static final String CASE_SUBJECT = 'Employees work in ';
     private static List<NSP_Account_Regulated_area__c> accRegulatedAreaList = new List<NSP_Account_Regulated_area__c>();
@@ -40,7 +40,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     private static Map<ID, String> caseWithSubject = new Map<ID, String>();
     public Set<String> setRegulatedStates = new Set<String>();
     public Map<String, NSP_Regulated_Area__c> stateWithRegulatedArea = new Map<String, NSP_Regulated_Area__c>();
-    public Map<String, NSP_Regulated_Area__c> zipCodesWithRegArea = new Map<String, NSP_Regulated_Area__c>(); 
+    public Map<String, NSP_Regulated_Area__c> zipCodesWithRegArea = new Map<String, NSP_Regulated_Area__c>();
     public Integer counter = 0;
     public String query;
 
@@ -54,11 +54,11 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
         //Added this if condition as part of STY - STY-04472
         if(counter == 0){
-            query = 'SELECT Id, NSP_City__c, NSP_Postal_Code__c, NSP_Postal_Code_New__c, NSP_State__c, NSP_Address_Type__c, ' 
+            query = 'SELECT Id, NSP_City__c, NSP_Postal_Code__c, NSP_Postal_Code_New__c, NSP_State__c, NSP_Address_Type__c, '
                 + ' NSP_Asset__c, NSP_Contact__c, NSP_Contact__r.Name, NSP_Related_Site__c, NSP_Contact__r.AccountId '
                 + ' FROM NSP_Address__c '
                 + ' WHERE NSP_Contact__c  != NULL'
-                + ' AND NSP_Label_Code__c like \'%PW1%\'' 
+                + ' AND NSP_Label_Code__c like \'%PW1%\''
                 + ' AND (NSP_Address_Type__c = \''+ NSP_ServiceConstants.WORK_SITE + '\' OR NSP_Address_Type__c =\''+ NSP_ServiceConstants.US_MAIL +'\')'
                 + ' AND NSP_Regulated_Batch__c = FALSE '
                 + ' AND (NSP_State__c != NULL OR NSP_Postal_Code_New__c != NULL) '
@@ -76,7 +76,62 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                 + ' AND (NSP_State__c IN '+regulatedStatesString+' OR NSP_Postal_Code_New__c IN '+zipCodesString+')';
         }
     }
-    
+
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_AccountRegulatedAreaBatch() {}
+
+    //
+    // ISelfSchedulable
+    //
+
+    // runs everyday at 12am central...
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_AccountRegulatedArea_Scheduler ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
+            '0 0 0 ? * * *' ,
+            new NSP_AccountRegulatedAreaBatch()
+        );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch( new NSP_RegulatedAreaBatch() , 2000 );
+    }
+
+    //
+    // Batchable
+    //
+
     public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(query);
     }
@@ -184,7 +239,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
             }
             if(accIdWithZipAddress.containsKey(accountId)){
                 lstAddress.addAll(accIdWithZipAddress.get(accountId));
-            } 
+            }
         }
 
         //if Address exists and not created any of the case with state and city then it will prepare case to create
@@ -196,7 +251,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
                 Set<String> lstExistingZipCodes = accWithAccRegCity.containsKey(oAddress.accountId) ? accWithAccRegCity.get(oAddress.accountId) : new Set<String>();
                 Set<String> accIdHasAddressZipCodes = accWithAddressZipCodes.containsKey(oAddress.accountId) ? accWithAddressZipCodes.get(oAddress.accountId) : new Set<String>();
-                
+
                 List<String> lstExistingCaseStates = accWithCaseSubjStates.containsKey(oAddress.accountId) ? accWithCaseSubjStates.get(oAddress.accountId) : new List<String>();
 
                 //check for the state/Zip that exists or not then create new Account Regulated Area
@@ -253,7 +308,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                         accIdWithCaseSubjToCreate.put(
                             oAddress.accountId,
                             new Set<String>{
-                                zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c 
+                                zipCodesWithRegArea?.get(oAddress.zipCode)?.NSP_City__c
                             }
                             // + '/', oAddress.zipCode
                         );
@@ -288,7 +343,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                 if(!accIdWithCase.containsKey(accountId)){
                     newCase(accountId, CASE_SUBJECT + String.join(lstSubj, ', '));
                 }else{
-                    updateCase(accIdWithCase.get(accountId),accountId,caseWithSubject.get(accIdWithCase.get(accountId))+', ' + String.join(lstSubj, ', '));    
+                    updateCase(accIdWithCase.get(accountId),accountId,caseWithSubject.get(accIdWithCase.get(accountId))+', ' + String.join(lstSubj, ', '));
                 }
             }
         }
@@ -331,7 +386,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
             }
         }
     }
-    
+
     /**
      * @description getAccountRecords based onthe Address relatedContact has existingAccounts and then existing Cases
      */
@@ -347,7 +402,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     }
 
     // ********************************************************************************************
-    // MethodName  : getFilteredContactWorkAddressRecords 
+    // MethodName  : getFilteredContactWorkAddressRecords
     // Description : This method will filter address records based on sub clients contacts employee status
     // Params      : List < NSP_Address__c > List of Address records
     // Story       : STY-04472
@@ -364,7 +419,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         }
         for(NSP_Sub_Client_Contact__c subClientContact : [
             Select Id, NSP_Employee_Status__c, NSP_Contact__c, NSP_Contact__r.AccountId
-            from NSP_Sub_Client_Contact__c 
+            from NSP_Sub_Client_Contact__c
             where NSP_Employee_Status__c =: NSP_ServiceConstants.PRIMED_STATUS and NSP_Contact__c IN : setContactID
             ])
         {
@@ -385,7 +440,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     }
 
     // ********************************************************************************************
-    // MethodName  : getFilteredContactWorkAddressBasedOnAsset 
+    // MethodName  : getFilteredContactWorkAddressBasedOnAsset
     // Description : This method will filter address records based on WO asset for that particular account on address records
     // Params      : List < NSP_Address__c > List of Address records
     // Story       : STY-04472
@@ -398,10 +453,10 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
             setAccountIds.add(oAddress.NSP_Contact__r.AccountId);
         }
         for(Asset oAsset : [
-            SELECT Id, AccountId FROM Asset 
+            SELECT Id, AccountId FROM Asset
             WHERE AccountId IN: setAccountIds
-            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE 
-            AND NSP_AIMS_First_Pay_Date__c = NULL 
+            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE
+            AND NSP_AIMS_First_Pay_Date__c = NULL
             AND NSP_Account_Status__c= :NSP_ServiceConstants.ASSET_ACTIVE_STATUS
             ])
         {
@@ -418,17 +473,17 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
         }
         return lstAddress;
     }
-    
+
     private List<NSP_Sub_Client_Contact_Address__c> getFilteredContactAddress(List<NSP_Sub_Client_Contact_Address__c> lstAddress){
         Set<Id> setAccountIds = new Set<Id>();
         Set<Id> setWoAssetAccountIds = new Set<Id>();
         for (NSP_Sub_Client_Contact_Address__c oAddress : lstAddress) {
             setAccountIds.add(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c);
         }
-        for(Asset oAsset : [SELECT Id, AccountId FROM Asset 
+        for(Asset oAsset : [SELECT Id, AccountId FROM Asset
                             WHERE AccountId IN: setAccountIds
-                            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE 
-                            AND NSP_AIMS_First_Pay_Date__c = NULL 
+                            AND RecordType.DeveloperName =: NSP_ServiceConstants.WO_ASSET_RECORDTYPE
+                            AND NSP_AIMS_First_Pay_Date__c = NULL
                             AND NSP_Account_Status__c= :NSP_ServiceConstants.ASSET_ACTIVE_STATUS]){
             setWoAssetAccountIds.add(oAsset.AccountId);
         }
@@ -447,7 +502,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     }
 
     // ********************************************************************************************
-    // MethodName  : getContactAddress 
+    // MethodName  : getContactAddress
     // Description : This method will create a map for accWithAddressStates and accWithAddressZipCodes
     // Params      : List < NSP_Address__c > List of Address records
     // Story       : STY-04472
@@ -530,7 +585,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
 
             String state = oAddress.NSP_State__c;
             setAccountIds.add(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c);
-			
+
             //State matches with the regulated Area
             if (stateWithRegulatedArea.containsKey(state)) {
                 if (accIdWithStateAddress.containsKey(oAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Account__c)) {
@@ -679,7 +734,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
                     accountWithTeamMemberId.put(accTeamMember.NSP_Account__c, new Map<String,Id>());
                 }
                 accountWithTeamMemberId.get(accTeamMember.NSP_Account__c).put(accTeamMember.NSP_Role__c, accTeamMember.NSP_User__c);
-            } 
+            }
             if ( accTeamMember.NSP_Primary__c && !accountWithRoleMap.containsKey(accTeamMember.NSP_Account__c) ) {
                 if ( accTeamMember.NSP_Role__c == NSP_SalesConstants.HRSpecialist ) {
                     accountWithRoleMap.put(accTeamMember.NSP_Account__c, accTeamMember.NSP_Role__c);
@@ -717,7 +772,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
             return [
                 SELECT Id, Name, Type,  NSP_Account_Status__c, NSP_First_Pay_Date__c,
                     (SELECT Id, AccountId, Subject
-                        FROM Cases 
+                        FROM Cases
                         WHERE NSP_Category__c = :NSP_ServiceConstants.INFRASTRUCTURE AND Subject LIKE : strSubject),
                     (SELECT Id, NSP_Account__c, NSP_State__c, NSP_City__c, NSP_Regulated_Area__r.NSP_Zip_Code__c
                         FROM Account_Regulated_areas__r)
@@ -747,7 +802,7 @@ public class NSP_AccountRegulatedAreaBatch implements Database.Batchable<sObject
     }
 
     public void finish(Database.BatchableContext bc) {
-        counter++; 
+        counter++;
         if(counter <= 1){
             Map<String,Object> data = new Map<String,Object>{
                 'counter' => counter,
