@@ -888,8 +888,42 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>ConfirmData</name>
-                    <fieldText>&lt;p&gt;&lt;strong&gt;Product :&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Time Zone : &lt;/strong&gt;{!Time}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes :&lt;/strong&gt; {!Notes}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Start Time :&lt;/strong&gt; {!Seller.startDateTime}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;End Time : &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Seller.endDateTime}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;strong&gt;Product :&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes :&lt;/strong&gt; {!Notes}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>bottom</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <fields>
+                    <name>dateTimeConfirmation</name>
+                    <extensionName>c:scheduleSellerConfirmationScreen</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>endDateTime</name>
+                        <value>
+                            <elementReference>Seller.endDateTime</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>timeZone</name>
+                        <value>
+                            <elementReference>Time</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>startDateTime</name>
+                        <value>
+                            <elementReference>Seller.startDateTime</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -919,9 +953,67 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>ConfirmNonRush</name>
-            <fieldText>&lt;h4&gt;Select Next to create Demo Event&lt;/h4&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>User_Confirmation_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>User_Confirmation_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ConfirmNonRush</name>
+                    <fieldText>&lt;h3 style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Select Next to create Demo Event&lt;/span&gt;&lt;/h3&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>RushCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>ConfirmRush</name>
+                    <fieldText>&lt;h3&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt;You are submitting a demo request for an HR360 demo. The demo is not confirmed until the&lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt; Status of the Demo is in a Scheduled Status&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt;.&lt;/span&gt;&lt;/h3&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>RushCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -930,39 +1022,6 @@
                     <stringValue>12</stringValue>
                 </width>
             </styleProperties>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>RushCheck</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>ConfirmRush</name>
-            <fieldText>&lt;h4&gt;You are submitting a Rush Request for a Demo.&amp;nbsp;This date and time is not guaranteed &amp;amp; is subject to approval and availability of Sales Engineers. &lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, BlinkMacSystemFont, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(0, 0, 0);&quot;&gt;An admin will be in touch shortly to confirm.&lt;/span&gt;&lt;/h4&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>RushCheck</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

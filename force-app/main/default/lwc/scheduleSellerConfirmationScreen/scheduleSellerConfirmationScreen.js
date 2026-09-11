@@ -1,0 +1,15 @@
+import { LightningElement, api } from 'lwc';
+
+export default class ScheduleSellerConfirmationScreen extends LightningElement {
+    @api startDateTime;   // DateTime from the picked slot
+    @api endDateTime;     // DateTime from the picked slot
+    @api timeZone;        // IANA id, e.g. "America/Los_Angeles"
+
+    get hasStart() {
+        return Boolean(this.startDateTime);
+    }
+
+    get hasEnd() {
+        return Boolean(this.endDateTime);
+    }
+}
