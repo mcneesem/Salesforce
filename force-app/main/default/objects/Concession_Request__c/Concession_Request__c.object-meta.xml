@@ -171,7 +171,7 @@
     <searchLayouts>
         <searchResultsAdditionalFields>OBJECT_ID</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Requested_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Created_By__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
