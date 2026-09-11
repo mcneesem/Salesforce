@@ -5,7 +5,7 @@
     <assignments>
         <name>Add_ContactId_to_collection</name>
         <label>Add ContactId to collection</label>
-        <locationX>3097</locationX>
+        <locationX>3361</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>collectionOCRContactIds</assignToReference>
@@ -21,7 +21,7 @@
     <assignments>
         <name>Add_new_OCR_to_collection</name>
         <label>Add new OCR to collection</label>
-        <locationX>3493</locationX>
+        <locationX>3757</locationX>
         <locationY>3186</locationY>
         <assignmentItems>
             <assignToReference>OCRCollection</assignToReference>
@@ -37,7 +37,7 @@
     <assignments>
         <name>Add_OCR_ContactId_to_varOCRContactId</name>
         <label>Add OCR ContactId to varOCRContactId</label>
-        <locationX>3097</locationX>
+        <locationX>3361</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>existingOCRContactId</assignToReference>
@@ -53,7 +53,7 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Referral_OCR</name>
         <label>Assign varFaultElement - Create_Referral_OCR</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>1980</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -70,7 +70,7 @@
     <assignments>
         <name>Assign_varFaultElement_createOCRs</name>
         <label>Assign varFaultElement - createOCRs</label>
-        <locationX>3669</locationX>
+        <locationX>3933</locationX>
         <locationY>3486</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -86,7 +86,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</name>
         <label>Assign varFaultElement - Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</label>
-        <locationX>2602</locationX>
+        <locationX>2866</locationX>
         <locationY>1764</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -103,7 +103,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_ACR_Record_that_matches_Referral_and_not_already_OCR</name>
         <label>Assign varFaultElement - Get_ACR_Record_that_matches_Referral_and_not_already_OCR</label>
-        <locationX>2866</locationX>
+        <locationX>3130</locationX>
         <locationY>1656</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -120,7 +120,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_All_OCR_Contact_Ids</name>
         <label>Assign varFaultElement - Get_All_OCR_Contact_Ids</label>
-        <locationX>4461</locationX>
+        <locationX>4725</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -137,7 +137,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Primary_Contact_Info_if_Referred_By_is_populated</name>
         <label>Assign varFaultElement - Get_Primary_Contact_Info_if_Referred_By_is_populated</label>
-        <locationX>3306</locationX>
+        <locationX>3570</locationX>
         <locationY>1440</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -154,7 +154,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Primary_OCR_Contact_ID</name>
         <label>Assign varFaultElement - Get_Primary_OCR_Contact_ID</label>
-        <locationX>4197</locationX>
+        <locationX>4461</locationX>
         <locationY>1224</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -171,7 +171,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Referral_ACR_record</name>
         <label>Assign varFaultElement - Get_Referral_ACR_record</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>1980</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -188,7 +188,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Renewal_ACR</name>
         <label>Assign varFaultElement - Get_Renewal_ACR</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -205,7 +205,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Triggering_Record</name>
         <label>Assign varFaultElement - Get_Triggering_Record</label>
-        <locationX>4989</locationX>
+        <locationX>5253</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -222,7 +222,7 @@
     <assignments>
         <name>Assign_varFaultElement_GetAllAcrsOnAccount</name>
         <label>Assign varFaultElement - GetAllAcrsOnAccount</label>
-        <locationX>3933</locationX>
+        <locationX>4197</locationX>
         <locationY>2646</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -239,7 +239,7 @@
     <assignments>
         <name>Assign_varFaultElement_Insert_Renewal_OCR</name>
         <label>Assign varFaultElement - Insert_Renewal_OCR</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -256,7 +256,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Referral_s_OCR</name>
         <label>Assign varFaultElement - Update_Referral_s_OCR</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>2088</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -273,7 +273,7 @@
     <assignments>
         <name>Count_ACRs</name>
         <label>Count ACRs</label>
-        <locationX>3229</locationX>
+        <locationX>3493</locationX>
         <locationY>2754</locationY>
         <assignmentItems>
             <assignToReference>countACRs</assignToReference>
@@ -289,7 +289,7 @@
     <assignments>
         <name>CreateNewOCRs</name>
         <label>CreateNewOCRs</label>
-        <locationX>3493</locationX>
+        <locationX>3757</locationX>
         <locationY>3078</locationY>
         <assignmentItems>
             <assignToReference>OpportunityContactRole.ContactId</assignToReference>
@@ -336,7 +336,7 @@
 ~ The following loop has a potential to execute 2 element per ACR selected in the previous query</description>
         <name>Check_Count_ACRs</name>
         <label>Check Count ACRs</label>
-        <locationX>3229</locationX>
+        <locationX>3493</locationX>
         <locationY>2862</locationY>
         <defaultConnector>
             <targetReference>LoopEachACRtoCreateOCR</targetReference>
@@ -359,7 +359,7 @@
         <description>Prevent DmlExceptions: This error occurred when the flow tried to create records: ENTITY_IS_DELETED: entity is deleted.</description>
         <name>Check_Triggering_Record</name>
         <label>Check Triggering Record</label>
-        <locationX>3867</locationX>
+        <locationX>4131</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -381,7 +381,7 @@
     <decisions>
         <name>Do_ACR_Records_exist_on_the_Account</name>
         <label>Do ACR Records exist on the Account?</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>2646</locationY>
         <defaultConnector>
             <targetReference>Count_ACRs</targetReference>
@@ -403,7 +403,7 @@
     <decisions>
         <name>Is_there_a_Primary_OCR</name>
         <label>Is there a Primary OCR?</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>1224</locationY>
         <defaultConnector>
             <targetReference>GetAllAcrsOnAccount</targetReference>
@@ -428,7 +428,7 @@
     <decisions>
         <name>Is_there_a_Referral_Contact</name>
         <label>Is there a Referral Contact?</label>
-        <locationX>2448</locationX>
+        <locationX>2712</locationX>
         <locationY>1440</locationY>
         <defaultConnector>
             <targetReference>GetAllAcrsOnAccount</targetReference>
@@ -453,7 +453,7 @@
     <decisions>
         <name>Referral_ACR_to_OCR_Decisions</name>
         <label>Referral ACR to OCR Decisions</label>
-        <locationX>1766</locationX>
+        <locationX>2030</locationX>
         <locationY>1764</locationY>
         <defaultConnector>
             <targetReference>GetAllAcrsOnAccount</targetReference>
@@ -500,7 +500,7 @@
     <decisions>
         <name>Renewal_ACR_Found</name>
         <label>Renewal ACR Found ?</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Renewal ACR Not Found</defaultConnectorLabel>
         <rules>
@@ -529,7 +529,7 @@
     <decisions>
         <name>Sales_Or_Renewal_Oppty</name>
         <label>Sales Or Renewal Oppty ?</label>
-        <locationX>2090</locationX>
+        <locationX>2354</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Get_Triggering_Record</targetReference>
@@ -558,7 +558,7 @@
     <loops>
         <name>Loop_over_Opty_OCRs_to_get_ContactIds</name>
         <label>Loop over Opty OCRs to get ContactIds</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>708</locationY>
         <collectionReference>Get_All_OCR_Contact_Ids</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -572,7 +572,7 @@
     <loops>
         <name>LoopEachACRtoCreateOCR</name>
         <label>LoopEachACRtoCreateOCR</label>
-        <locationX>3405</locationX>
+        <locationX>3669</locationX>
         <locationY>2970</locationY>
         <collectionReference>GetAllAcrsOnAccount</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -605,7 +605,7 @@
     <recordCreates>
         <name>Create_Referral_OCR</name>
         <label>Create Referral OCR</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>1872</locationY>
         <connector>
             <targetReference>GetAllAcrsOnAccount</targetReference>
@@ -661,7 +661,7 @@
     <recordCreates>
         <name>createOCRs</name>
         <label>createOCRs</label>
-        <locationX>3405</locationX>
+        <locationX>3669</locationX>
         <locationY>3378</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_createOCRs</targetReference>
@@ -671,7 +671,7 @@
     <recordCreates>
         <name>Insert_Renewal_OCR</name>
         <label>Insert Renewal OCR</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>708</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Insert_Renewal_OCR</targetReference>
@@ -681,7 +681,7 @@
     <recordLookups>
         <name>Get_ACR_Record_that_matches_Referral_ALREADY_HAS_OCR</name>
         <label>Get ACR Record that matches Referral ALREADY HAS OCR</label>
-        <locationX>1766</locationX>
+        <locationX>2030</locationX>
         <locationY>1656</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -719,7 +719,7 @@
     <recordLookups>
         <name>Get_ACR_Record_that_matches_Referral_and_not_already_OCR</name>
         <label>Get ACR Record that matches Referral and not already OCR</label>
-        <locationX>1766</locationX>
+        <locationX>2030</locationX>
         <locationY>1548</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -757,7 +757,7 @@
     <recordLookups>
         <name>Get_All_OCR_Contact_Ids</name>
         <label>Get All OCR Contact Ids</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -781,7 +781,7 @@
     <recordLookups>
         <name>Get_Primary_Contact_Info_if_Referred_By_is_populated</name>
         <label>Get Primary Contact Info if Referred By is populated</label>
-        <locationX>2448</locationX>
+        <locationX>2712</locationX>
         <locationY>1332</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -814,7 +814,7 @@
     <recordLookups>
         <name>Get_Primary_OCR_Contact_ID</name>
         <label>Get Primary OCR Contact ID</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>1116</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -847,7 +847,7 @@
     <recordLookups>
         <name>Get_Referral_ACR_record</name>
         <label>Get Referral ACR record</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>1872</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -878,7 +878,7 @@
     <recordLookups>
         <name>Get_Renewal_ACR</name>
         <label>Get Renewal ACR</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -909,7 +909,7 @@
     <recordLookups>
         <name>Get_Triggering_Record</name>
         <label>Get Triggering Record</label>
-        <locationX>3867</locationX>
+        <locationX>4131</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -933,7 +933,7 @@
     <recordLookups>
         <name>GetAllAcrsOnAccount</name>
         <label>GetAllACRsOnAccount</label>
-        <locationX>3009</locationX>
+        <locationX>3273</locationX>
         <locationY>2538</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -985,7 +985,7 @@
     <recordUpdates>
         <name>Update_Referral_s_OCR</name>
         <label>Update Referral&apos;s OCR</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>1980</locationY>
         <connector>
             <targetReference>GetAllAcrsOnAccount</targetReference>
@@ -1029,9 +1029,9 @@
         <object>OpportunityContactRole</object>
     </recordUpdates>
     <start>
-        <locationX>812</locationX>
+        <locationX>1076</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND 4 AND (5 OR 6) ) OR 7</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND 4 AND (5 OR 6) ) OR (7 AND (8 OR 9))</filterLogic>
         <filters>
             <field>StageName</field>
             <operator>NotEqualTo</operator>
@@ -1081,6 +1081,20 @@
                 <stringValue>012Pb000006SSU9IAO</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won - Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Lost - Renewal</stringValue>
+            </value>
+        </filters>
         <object>Opportunity</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -1095,7 +1109,7 @@
     <subflows>
         <name>ErrorHandler</name>
         <label>ErrorHandler</label>
-        <locationX>3669</locationX>
+        <locationX>3933</locationX>
         <locationY>3594</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -1120,7 +1134,7 @@
     <transforms>
         <name>Create_OCR_COllection</name>
         <label>Create OCR COllection</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>600</locationY>
         <connector>
             <targetReference>Insert_Renewal_OCR</targetReference>

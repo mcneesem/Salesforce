@@ -165,7 +165,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Renewal_Opportunities</targetReference>
+            <targetReference>Get_Open_Renewal_Opportunities</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -911,6 +911,51 @@
         <queriedFields>Work_Phone__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Open_Renewal_Opportunities</name>
+        <label>Get Open Renewal Opportunities</label>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Do_relevant_Opportunities_exist</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Renewal_Opportunities</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>record.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Setup.Renewal_Opportunity_Settings__c.RenewalRecordTypeId__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won - Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Lost - Renewal</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputReference>collectionRenewalOpportunities</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Open_Sales_Opportunitites</name>
         <label>Get Open Sales Opportunitites</label>
         <locationX>1634</locationX>
@@ -977,37 +1022,6 @@
         <queriedFields>Id</queriedFields>
         <sortField>LastModifiedDate</sortField>
         <sortOrder>Desc</sortOrder>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Renewal_Opportunities</name>
-        <label>Get Renewal Opportunities</label>
-        <locationX>1106</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Do_relevant_Opportunities_exist</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Renewal_Opportunities</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>record.AccountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Setup.Renewal_Opportunity_Settings__c.RenewalRecordTypeId__c</elementReference>
-            </value>
-        </filters>
-        <object>Opportunity</object>
-        <outputReference>collectionRenewalOpportunities</outputReference>
-        <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Existing_Opportunity_Contact_Roles</name>
