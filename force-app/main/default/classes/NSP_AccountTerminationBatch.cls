@@ -56,7 +56,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         Id response = null;
         if ( NSP_AccountTerminationBatch.isEnabled ) {
             response = Database.executeBatch(
-                new NSP_AccountTerminationBatch( NSP_AccountTerminationBatch.OBJ_AST ) ,
+                new NSP_AccountTerminationBatch() ,
                 NSP_AccountTerminationBatch.batchSize
             );
         }
