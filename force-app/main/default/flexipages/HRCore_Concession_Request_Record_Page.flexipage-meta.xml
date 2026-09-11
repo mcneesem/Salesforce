@@ -103,7 +103,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account_Health__c</fieldItem>
                 <identifier>RecordAccount_Health_cField</identifier>
@@ -409,16 +409,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Requested_Date__c</fieldItem>
                 <identifier>RecordRequested_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Last_Modified_Date__c</fieldItem>
-                <identifier>RecordLast_Modified_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b2180129-288f-47f3-aab6-ff393a03d1c4</name>

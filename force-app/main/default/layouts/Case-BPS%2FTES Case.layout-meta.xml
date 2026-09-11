@@ -679,7 +679,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Requested_Date__c</fields>
-        <fields>Created_By__c</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>Concession_Request__c.Support_Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
