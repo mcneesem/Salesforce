@@ -6,7 +6,7 @@
     </customPermissions>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>Schedule_Seller_Cancel_Status</flow>
+        <flow>Schedule_Seller_Cancel_Event</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Schedule Seller: Cancel Event</label>
