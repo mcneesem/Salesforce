@@ -4,13 +4,6 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>hrcore.taxamendmentteam@insperity.com</email>
     <name>HRCore Tax Amendments</name>
-    <queueMembers>
-        <users>
-            <user>celeste.parr@insperity.com</user>
-            <user>jannette.segovia@insperity.com</user>
-            <user>keisha.forbes@insperity.com</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
