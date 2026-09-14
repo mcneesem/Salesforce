@@ -613,7 +613,7 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>timeZoneSidKey</name>
+                <name>timeZone</name>
                 <value>
                     <elementReference>Time</elementReference>
                 </value>
@@ -910,7 +910,7 @@
                         </value>
                     </inputParameters>
                     <inputParameters>
-                        <name>timeZone</name>
+                        <name>timeZoneSidKey</name>
                         <value>
                             <elementReference>Time</elementReference>
                         </value>
