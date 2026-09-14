@@ -2174,15 +2174,9 @@ Implementation profile related to the account of the created asset
         List<Asset> result = new List<Asset>();
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
-            List<String> excludedNames = new List<String>();
-            Filter_Asset_Record_Type__c orgFilter = Filter_Asset_Record_Type__c.getOrgDefaults();
-            if( orgFilter != null && String.isNotBlank( orgFilter.Exclude_Record_Type__c ) ) {
-                // List of Asset Record type names to exclude
-                excludedNames = orgFilter.Exclude_Record_Type__c.split(',');
-            }
             for ( Asset record : records ) {
                 String rtName = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Name : null );
-                if ( String.isNotBlank( rtName ) && !excludedNames.contains( rtName ) ) {
+                if ( String.isNotBlank( rtName ) && !NSP_AssetServiceTriggerHelper.excludedNames.contains( rtName ) ) {
                     result.add( record );
                 }
             }
@@ -2221,6 +2215,22 @@ Implementation profile related to the account of the created asset
             ];
         }
         return returnList;
+    }
+
+    private static List<String> excludedNames {
+        private get {
+            List<String> local = new List<String>();
+            if ( excludedNames == null ) {
+                Filter_Asset_Record_Type__c filter = Filter_Asset_Record_Type__c.getInstance( UserInfo.getUserId() );
+                if( ( filter != null ) && ( String.isNotBlank( filter.Exclude_Record_Type__c ) ) ) {
+                    // List of Asset Record type names to exclude
+                    local = filter.Exclude_Record_Type__c.split('\\r?\\n');
+                }
+                excludedNames = local;
+            }
+            return excludedNames;
+        }
+        private set;
     }
 
 }

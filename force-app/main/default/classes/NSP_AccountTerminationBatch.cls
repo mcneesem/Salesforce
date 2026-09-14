@@ -86,7 +86,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     WHERE (
                         ( LastStageChangeDate != null )
                         AND ( LastStageChangeDate = LAST_N_MONTHS:1 )
-                        AND ( IsClosed = True )
+                        AND ( IsClosed = true )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
                     )
                 ]
@@ -184,7 +184,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             Id ,
                             Status ,
                             NSP_Termination_Date__c ,
-                            RecordType.Name 
+                            RecordType.Name
                         FROM Assets
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
@@ -261,13 +261,13 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     }
 
     private static Boolean prospectingCheck( List<Asset> assetList , List<Opportunity> oppList ){
-        Boolean hasOpenOpp = False;
-        Boolean hasOpenAsset = False;
+        Boolean hasOpenOpp = false;
+        Boolean hasOpenAsset = false;
         //should have open opp
         for ( Opportunity opp : oppList ) {
-            if ( opp.IsClosed == False ) {
-                hasOpenOpp = True;
-                Break;
+            if ( opp.IsClosed == false ) {
+                hasOpenOpp = true;
+                break;
             }
         }
         //Asset should not be Open
@@ -277,8 +277,8 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                 || ( ast.Status == NSP_SalesConstants.ACTIVE )
                )
             {
-                hasOpenAsset = True;
-                Break;
+                hasOpenAsset = true;
+                break;
             }
         }
         return ( hasOpenOpp && !hasOpenAsset );
@@ -286,20 +286,20 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     //method to check if account should be marked lost
     private static Boolean lostAccountCheck( List<Asset> assetList , List<Opportunity> oppList ) {
-        Boolean noAssetPresent = True;
-        Boolean allOppClosedLost = True;
+        Boolean noAssetPresent = true;
+        Boolean allOppClosedLost = true;
         //No Asset should be present
-        if ( ( assetList != null ) && ( assetList.size() > 0 ) ) {
-            noAssetPresent = False;
+        if ( ( assetList != null ) && ( !assetList.isEmpty() ) ) {
+            noAssetPresent = false;
         }
         //All opportunities should be closed lost
-        if( ( oppList != null ) && ( oppList.size() > 0 ) ) {
+        if( ( oppList != null ) && ( !oppList.isEmpty() ) ) {
             for ( Opportunity opp : oppList ) {
                 if( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
                    || ( opp.Stagename != 'Closed Lost - Outgoing' )
                   )
                 {
-                    allOppClosedLost = False;
+                    allOppClosedLost = false;
                 }
             }
         }
@@ -323,7 +323,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     private static Boolean isEnabled {
         private  get {
             if ( isEnabled == null ) {
-                Boolean local = False;
+                Boolean local = false;
                 if ( NSP_AccountTerminationBatch.settings != null ) {
                     local = NSP_AccountTerminationBatch.settings.IsEnabled__c;
                 }
