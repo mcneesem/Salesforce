@@ -901,7 +901,7 @@
                 </fields>
                 <fields>
                     <name>dateTimeConfirmation</name>
-                    <extensionName>c:scheduleSellerConfirmationScreen</extensionName>
+                    <extensionName>c:scheduleSellerFormattedDateTime</extensionName>
                     <fieldType>ComponentInstance</fieldType>
                     <inputParameters>
                         <name>endDateTime</name>
