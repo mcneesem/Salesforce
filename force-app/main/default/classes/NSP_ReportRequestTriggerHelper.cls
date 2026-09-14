@@ -141,7 +141,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             // On insert (oldMap is empty) or when the value has changed,
             // auto-populate or clear NSP_ReportType__c based on whether the report is Internal.
             if( ( newRecord.NSP_InternalClientReport__c  != null ) &&
-            (( oldMap.size() == 0 || oldMap.get(newRecord.Id)?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c ) ) ) {
+            ( oldMap?.size() == 0 || oldMap.get(newRecord.Id)?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c )  ) {
                 if( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
                     if( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
                         newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;

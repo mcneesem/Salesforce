@@ -7,9 +7,19 @@ export default class MiscModal extends LightningElement {
     repReqObj;
     content = 'The modal content';
 
-    get header(){
-        return this.wizardName.includes('Development') ? 'Request a WebFocus or Wire Report':
-        this.wizardName.includes('Survey')? 'HR Survey Request' : this.wizardName.includes('Separation')? 'Separation Agreement Request' : this.wizardName.includes('HRScale') ? 'Request an HRScale Report' : 'Edit Wizard'
+    get header() {
+        let returnValue = 'Edit Wizard';
+        if (this.wizardName.includes('Development')) {
+            returnValue =  'Request a WebFocus or Wire Report';
+        } else if (this.wizardName.includes('Survey')) {
+            returnValue =  'HR Survey Request';
+        } else if (this.wizardName.includes('Separation')) {
+            returnValue =  'Separation Agreement Request';
+        } else if (this.wizardName.includes('HRScale')) {
+            returnValue = 'Request an HRScale Report';
+        }
+
+        return returnValue;
     }
 
     customLabel ={

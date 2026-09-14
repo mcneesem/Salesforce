@@ -134,7 +134,9 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
             const { wizardReportSubcategory, wizardReportCategory,wizardSeparationCategory, wizardSeparationSubcategory, wizardHRScaleReportSubcategory } = LABEL;
             const { fields } = inputData;
             if (this.isHRScale) {
-                subject = 'HRScale ' + this.reReqObj.NSP_ReportName__c?.value ?? subject;
+                subject = this.reReqObj.NSP_ReportName__c ?
+                    'HRScale ' + this.reReqObj.NSP_ReportName__c.value :
+                    subject;
                 fields.NSP_Category__c = wizardReportCategory;
                 fields.NSP_SubCategory__c = wizardHRScaleReportSubcategory;
             } else if(this.reReqObj.NSP_ReportName__c !=null && this.reReqObj.NSP_ReportName__c.value !=null){
