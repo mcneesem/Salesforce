@@ -111,8 +111,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Schedule Seller - Before Update - Cancel Status</label>
+    <interviewLabel>Event - Before Update - Schedule Seller - Handle Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Event - Before Update - Schedule Seller - Handle Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
