@@ -123,9 +123,9 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Schedule Seller - Cancel Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Schedule Seller - Cancel Event {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Schedule Seller - Cancel Status</label>
+    <label>Schedule Seller - Cancel Event</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -272,7 +272,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Schedule_Seller_Cancel_Status</stringValue>
+                <stringValue>Schedule_Seller_Cancel_Event</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
