@@ -7,16 +7,10 @@
     <label>Point of Contact</label>
     <lookupFilter>
         <active>true</active>
-        <booleanFilter>1 OR 2</booleanFilter>
         <filterItems>
-            <field>$Source.AccountId</field>
-            <operation>equals</operation>
-            <valueField>Contact.AccountId</valueField>
-        </filterItems>
-        <filterItems>
-            <field>$Source.NSP_Billing_Account__c</field>
-            <operation>equals</operation>
-            <valueField>Contact.AccountId</valueField>
+            <field>Contact.AccountId</field>
+            <operation>notEqual</operation>
+            <value></value>
         </filterItems>
         <isOptional>true</isOptional>
     </lookupFilter>
