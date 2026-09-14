@@ -9,7 +9,6 @@
   NOT( ISNEW() ) ,
   NOT( Owner:User.Id = $User.Id ) ,
   OR(
-    ISCHANGED( NSP_Status__c ) ,
     ISCHANGED( Description )
   )
 )</errorConditionFormula>

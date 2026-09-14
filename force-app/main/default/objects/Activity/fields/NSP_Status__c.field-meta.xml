@@ -55,6 +55,11 @@
                 <default>false</default>
                 <label>Complete</label>
             </value>
+            <value>
+                <fullName>Cancel Requested</fullName>
+                <default>false</default>
+                <label>Cancel Requested</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
