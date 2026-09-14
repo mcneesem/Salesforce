@@ -25,7 +25,7 @@ export default class Nsp_payFrequencyForm extends LightningElement {
     isLoadingFirstTime: true,
     isRenderingFirstTime : true,
   };
-  payFrequencyFields = PAY_FREQUENCY_FIELDS;  
+  payFrequencyFields = PAY_FREQUENCY_FIELDS;
 
   @api getFormValues() {
     const formValues = {};
@@ -62,8 +62,8 @@ export default class Nsp_payFrequencyForm extends LightningElement {
   renderedCallback(){
     const { state } = this;
     if(state.isRenderingFirstTime && this.visibility.Have_credit_services_approved__c) {
-          this.addStyleToPrePopulatedQuestions('Have_credit_services_approved__c', this.existingFieldValues['Have_credit_services_approved__c'].value);
-          this.addStyleToPrePopulatedQuestions('Does_arrearage_comply_with_state_laws__c', this.existingFieldValues['Does_arrearage_comply_with_state_laws__c'].value);
+          this.addStyleToPrePopulatedQuestions('Have_credit_services_approved__c', this.existingFieldValues['Have_credit_services_approved__c']?.value);
+          this.addStyleToPrePopulatedQuestions('Does_arrearage_comply_with_state_laws__c', this.existingFieldValues['Does_arrearage_comply_with_state_laws__c']?.value);
           state.isRenderingFirstTime = false;
     }
   }
