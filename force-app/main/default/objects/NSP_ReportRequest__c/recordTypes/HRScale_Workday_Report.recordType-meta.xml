@@ -522,10 +522,6 @@
             <fullName>Rebecca Aviles</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Taylor Queen</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_HaveYouattachedPreparedAgreement__c</picklist>
