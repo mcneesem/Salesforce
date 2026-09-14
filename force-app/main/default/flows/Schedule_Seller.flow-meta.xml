@@ -888,7 +888,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>ConfirmData</name>
-                    <fieldText>&lt;p&gt;&lt;strong&gt;Product:&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes :&lt;/strong&gt; {!Notes}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;strong&gt;Product:&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt; {!Notes}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <styleProperties>
                         <verticalAlignment>
