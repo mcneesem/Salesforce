@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class ScheduleSellerConfirmationScreen extends LightningElement {
+export default class ScheduleSellerFormattedDateTime extends LightningElement {
     @api startDateTime;   // DateTime from the picked slot
     @api endDateTime;     // DateTime from the picked slot
     @api timeZone;        // IANA id, e.g. "America/Los_Angeles"
