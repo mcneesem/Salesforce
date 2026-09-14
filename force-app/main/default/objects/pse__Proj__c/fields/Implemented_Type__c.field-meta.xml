@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>Full Time Tracking to Accruals only</label>
             </value>
+            <value>
+                <fullName>TWI Query</fullName>
+                <default>false</default>
+                <label>TWI Query</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

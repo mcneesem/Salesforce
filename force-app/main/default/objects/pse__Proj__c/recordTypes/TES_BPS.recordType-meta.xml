@@ -203,6 +203,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>TWI Query</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Time Tracking</fullName>
             <default>false</default>
         </values>
