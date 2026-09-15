@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestTriggerHelper {
-    // test w/ NSP_ReportRequestTriggerHelperTest (79%)
+    // test w/ NSP_ReportRequestTriggerHelperTest (89%)
 
     private static final String UNDER_40 = 'Under 40';
     private static final String OVER_40 = 'Over 40';
