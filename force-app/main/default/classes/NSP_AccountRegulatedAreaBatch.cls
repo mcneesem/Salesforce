@@ -1,16 +1,3 @@
-/**
-Apex Class Name      :  NSP_AccountRegulatedAreaBatch
-Version              :  1.0
-Author               :  Jatin
-Created Date         :  06/01/22
-Function             :  Creates AccountRegulatedArea and Cases when it matches with Regulated Area State/ZipCode.
-Story                :  As part of STY-03789
-Modification Log     :
-*--------------------------------------------------------------------------------------------------
-* Developer                   Date                   Description
-* -------------------------------------------------------------------------------------------------
-* Anil                      8/19/2022               First Iteration
-*/
 public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_AccountRegulatedAreaBatch_Test (83%)
 
@@ -81,7 +68,8 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
     // argument-free constructor is required to be "runnable"...
     //
 
-    public NSP_AccountRegulatedAreaBatch() {}
+    public NSP_AccountRegulatedAreaBatch() {
+    }
 
     //
     // ISelfSchedulable
@@ -132,11 +120,11 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
     // Batchable
     //
 
-    public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator(query);
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        return Database.getQueryLocator( query );
     }
 
-    public void execute(Database.BatchableContext bc, List<sObject> lstRecords) {
+    public void execute( Database.BatchableContext bc , List<sObject> lstRecords ) {
         try {
             if(lstRecords instanceOf List<NSP_Address__c>){
                 getContactAddress((List<NSP_Address__c>) lstRecords);
@@ -153,9 +141,11 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 
-    /**
-     * @description insert AccountRegulatedArea Records and Cases into the database
-     */
+    //
+    //
+    //
+
+    // insert AccountRegulatedArea Records and Cases into the database
     private void createRecords() {
         Map<String, String> subjectWithCaseId = new Map<String, String>();
         Set<Id> setAccRegAreas = new Set<Id>();
@@ -349,10 +339,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 
-    /**
-     * @description getAccountRecords based onthe Address relatedContact and check whether the account records
-     * has existingAccounts and then existing Cases
-     */
+    // getAccountRecords based onthe Address relatedContact and check whether the account records has existingAccounts and then existing Cases
     @TestVisible
     private void getAccountRecords() {
         for (Account oAccount : selector.getAccounts()) {
@@ -387,9 +374,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 
-    /**
-     * @description getAccountRecords based onthe Address relatedContact has existingAccounts and then existing Cases
-     */
+    // getAccountRecords based onthe Address relatedContact has existingAccounts and then existing Cases
     private void caseData(Case ocase, Id accountId) {
         String subject = ocase.Subject?.replace(CASE_SUBJECT, '');
         List<String> subj = new List<String>();
@@ -654,10 +639,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 
-    /**
-     * @description newAccountRegulatedArea prepare new account Regulated area to Insert
-     * @param  address         address that has state and city information
-     */
+    // newAccountRegulatedArea prepare new account Regulated area to Insert
     private void newAccountRegulatedArea(Address address) {
         NSP_Account_Regulated_area__c accRegulatedArea = new NSP_Account_Regulated_area__c();
         accRegulatedArea.NSP_Account__c = address.AccountId;
@@ -673,11 +655,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 
-    /**
-     * @description newCase preare new case to Insert
-     * @param  accountId   mapping the new case to the account
-     * @param  caseSubject subject of the new case
-     */
+    // newCase preare new case to Insert
     private void newCase(String accountId, String caseSubject) {
         Map<String,Id> roleMap = new Map<String,Id>();
         Case newCase = new Case();
@@ -718,9 +696,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         lstCasesToUpdate.add(updateCaseRecord);
     }
 
-    /**
-     * @description get Account Team Records based on the AccountId and Role
-     */
+    // get Account Team Records based on the AccountId and Role
     private void getAccountTeams() {
         List<String> QUEUE_FIELDS = new List<String>{'Id','DeveloperNAME'};
         String queryQueue = new NSP_QueryBuilder('Group', QUEUE_FIELDS)
@@ -748,9 +724,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
     @TestVisible
     private without sharing class Selector {
 
-        /**
-         * @description get Account Team Records based on the AccountId and Role
-         */
+        // get Account Team Records based on the AccountId and Role
         public List<NSP_Account_Team__c> getAccountTeamRecords() {
             String accTeamQuery = new NSP_QueryBuilder(
                     'NSP_Account_Team__c',
@@ -763,10 +737,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
             return Database.query(accTeamQuery);
         }
 
-        /**
-         * @description Accounts which has existing AccountRegulatedArea and Cases
-         * @return              list of Accounts that matched with the regulated Area State/ZipCodes
-         */
+        // Accounts which has existing AccountRegulatedArea and Cases
         public  List<Account> getAccounts() {
             String strSubject = CASE_SUBJECT + '%';
             return [
@@ -781,11 +752,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
             ];
         }
 
-        /**
-         * @description  AccountRegulatedArea based on Inserted AccountIds
-         * @param setAccRegAreas setOfAccountId that matches with AccountRgArea.
-         * @return       lstOf of AccountregulatedAreas
-         */
+        // AccountRegulatedArea based on Inserted AccountIds
         public  List<NSP_Account_Regulated_area__c> getAccountsRegulatedAreaRecords(Set<Id> setAccRegAreas ) {
             String query = new NSP_QueryBuilder(
                             'NSP_Account_Regulated_area__c',
@@ -833,3 +800,4 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
         }
     }
 }
+//
