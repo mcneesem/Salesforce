@@ -680,7 +680,7 @@
         <fields>NAME</fields>
         <fields>Requested_Date__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <relatedList>Concession_Request__c.Support_Case__c</relatedList>
+        <relatedList>Concession_Request__c.Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
