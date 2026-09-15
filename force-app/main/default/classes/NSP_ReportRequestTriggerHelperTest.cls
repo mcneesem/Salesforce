@@ -1,25 +1,25 @@
 @isTest
 private class NSP_ReportRequestTriggerHelperTest {
 
-    private static final String REPORT_REQUEST         = 'NSP_ReportRequest__c';
-    private static final String ACCOUNTDEFAULTS        = 'NSP_TestDataFactory.AccountDefaults';
-    private static final String CASEDEFAULTS           = 'NSP_TestDataFactory.CaseDefaults';
+    private static final String REPORT_REQUEST = 'NSP_ReportRequest__c';
+    private static final String ACCOUNTDEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
+    private static final String CASEDEFAULTS = 'NSP_TestDataFactory.CaseDefaults';
     private static final String CONTACT_DEFAULTS_LIGHT = 'NSP_TestDataFactory.ContactDefaultsLight';
     private static final String REPORT_REQUEST_DEFAULTS = 'NSP_TestDataFactory.ReportRequestDefaults';
     private static final String CASE_SUB_CATEGORY_SEPARATION_AGREEMENT_REQUEST = 'Separation Agreement Request';
-    private static final String CLIENT_PREPARED        = 'Client-Prepared';
-    private static final String INSPERITY_PREPARED     = 'Insperity-Prepared';
-    private static final String CORPORATE_REVIEW       = 'Corporate Review';
-    private static final String TERMINATED             = 'TERMINATED';
+    private static final String CLIENT_PREPARED = 'Client-Prepared';
+    private static final String INSPERITY_PREPARED = 'Insperity-Prepared';
+    private static final String CORPORATE_REVIEW = 'Corporate Review';
+    private static final String TERMINATED = 'TERMINATED';
     private static final String INTERNAL_CLIENT_REPORT = 'Client Report';
-    private static final String REPORT_LOCATION        = 'ReportLocation must always be HRScale Workday Report';
-    private static final String REPORT_REQUEST_MSG     = 'ReportRequest should exist after insert';
-    private static final String CONTACT_MSG            = 'Contact test12345 should exist from setup';
+    private static final String REPORT_LOCATION = 'ReportLocation must always be HRScale Workday Report';
+    private static final String REPORT_REQUEST_MSG = 'ReportRequest should exist after insert';
+    private static final String CONTACT_MSG = 'Contact test12345 should exist from setup';
 
     @testSetup
     private static void setup() {
-        NSP_ReportRequestTriggerHelper.testHandleException(null, null);
-        NSP_ReportRequestTriggerHelper.testShowValidationForInsperityPrepared(null);
+        NSP_ReportRequestTriggerHelper.testHandleException( null , null );
+        NSP_ReportRequestTriggerHelper.testShowValidationForInsperityPrepared( null );
 
         Account testAccount = (Account) NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, false);
         testAccount.Name = 'Test Account';
