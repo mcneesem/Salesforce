@@ -104,6 +104,10 @@
                 <behavior>Edit</behavior>
                 <field>Years__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Delta_Quantity__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

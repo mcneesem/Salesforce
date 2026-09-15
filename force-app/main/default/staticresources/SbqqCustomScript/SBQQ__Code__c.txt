@@ -1,3 +1,5 @@
+let cpqProductConfig = { deltaCalc: new Set() };
+
 export function isFieldEditableForObject(fieldName, line, conn, objectName) {
     let discountfields = ['SBQQ__Discount__c','SBQQ__AdditionalDiscountAmount__c','SBQQ__AdditionalDiscount__c'];
     let consultingProducts = ['CSSalary','CSEEHand'];
@@ -27,17 +29,18 @@ export function isFieldEditableForObject(fieldName, line, conn, objectName) {
         {
             return true;
         }
-        if((line.NSP_IsClonedLine__c === true&& line.SBQQ__PricingMethod__c === 'Block' && (fieldName!='NSP_Original_Price__c' && fieldName!='NSP_Delta_Discount__c' && fieldName!='NSP_Delta_Total__c')) || line.NSP_Original_Line__c === true || fieldName === 'NSP_Previous_Quantity__c')
+        let isDeltaCalcProduct = cpqProductConfig.deltaCalc.has(line.SBQQ__ProductCode__c);
+        if((line.NSP_IsClonedLine__c === true && (line.SBQQ__PricingMethod__c === 'Block' || isDeltaCalcProduct) && (fieldName!='NSP_Original_Price__c' && fieldName!='NSP_Delta_Discount__c' && fieldName!='NSP_Delta_Total__c')) || line.NSP_Original_Line__c === true || fieldName === 'NSP_Previous_Quantity__c')
         {
             return false;
         }
         //hide additional disc and show delta disc
-        if(line.SBQQ__PricingMethod__c == 'Block' && (line.SBQQ__Source__c!=null || line.SBQQ__UpgradedSubscription__c!=null) && fieldName==='NSP_Delta_Discount__c')
+        if((line.SBQQ__PricingMethod__c == 'Block' || isDeltaCalcProduct) && (line.SBQQ__Source__c!=null || line.SBQQ__UpgradedSubscription__c!=null) && fieldName==='NSP_Delta_Discount__c')
         {
             return true;
         }
         //hide delta disc
-        if(((line.SBQQ__PricingMethod__c == 'Block' && (line.SBQQ__Source__c===null || line.SBQQ__UpgradedSubscription__c===null)) || line.SBQQ__PricingMethod__c==='List') && fieldName ==='NSP_Delta_Discount__c'){
+        if(((line.SBQQ__PricingMethod__c == 'Block' && (line.SBQQ__Source__c===null || line.SBQQ__UpgradedSubscription__c===null)) || (line.SBQQ__PricingMethod__c==='List' && !isDeltaCalcProduct)) && fieldName ==='NSP_Delta_Discount__c'){
             return false;
         }
         if( (line.SBQQ__ProductCode__c.includes('CSSalary') || line.SBQQ__ProductCode__c.includes('CSEEHand')) && fieldName === 'NSP_Hourly_Day_Rate__c')
@@ -172,23 +175,29 @@ export function isFieldVisibleForObject(fieldName, line, conn, objectName)
 
 export function onBeforeCalculate(quote, lines, conn)
 {
-    debugger;
-    populateGetSeasonalPriceTable(quote,lines);
-    copyQuantityOnClonedlines(quote, lines);
-    processQuotelines(quote, lines);
-    //checkSerialIdValidationFlag(quote, lines);
-    calculateEarlyTerminationFee(quote, lines)
-    checkBookedSetup(quote, lines);
-    let csProducts = quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
-    let csRates = quote.record["Discounted_Consumption_Rates__c"]? quote.record["Discounted_Consumption_Rates__c"].split(',') : null;
-    let Seasonal = checkSeasonalQuote(quote);
-    if(Seasonal === true){
-        ProcessSeasonalRates(quote,lines);
-    }
-    if(csProducts != null && csRates != null){
-        ProcessRates(quote,lines,csProducts,csRates);
-    }
-    return Promise.resolve();
+    //debugger;
+    return conn.query("SELECT ProductCode__c, DeltaCalcOnAmendment__c FROM CPQ_CustomScript_Config__mdt WHERE DeltaCalcOnAmendment__c = true")
+        .then(function(result) {
+            cpqProductConfig = { deltaCalc: new Set() };
+            (result.records || []).forEach(function(r) {
+                cpqProductConfig.deltaCalc.add(r.ProductCode__c);
+            });
+            populateGetSeasonalPriceTable(quote,lines);
+            copyQuantityOnClonedlines(quote, lines);
+            processQuotelines(quote, lines);
+            //checkSerialIdValidationFlag(quote, lines);
+            calculateEarlyTerminationFee(quote, lines);
+            checkBookedSetup(quote, lines);
+            let csProducts = quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
+            let csRates = quote.record["Discounted_Consumption_Rates__c"]? quote.record["Discounted_Consumption_Rates__c"].split(',') : null;
+            let Seasonal = checkSeasonalQuote(quote);
+            if(Seasonal === true){
+                ProcessSeasonalRates(quote,lines);
+            }
+            if(csProducts != null && csRates != null){
+                ProcessRates(quote,lines,csProducts,csRates);
+            }
+        });
 }
 
 export function onAfterCalculate(quote, lines, conn)
@@ -2108,7 +2117,7 @@ export function amendmentForClonedLineCalculation (quote, lines){
     let productMap = new Map();
     if(quoteType == 'Amendment' && quoteTransType != 'Termination'){
         lines.forEach(function(line){
-            if(line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && line.record["SBQQ__PricingMethod__c"]=='Block'){
+            if(line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && (line.record["SBQQ__PricingMethod__c"]=='Block' || cpqProductConfig.deltaCalc.has(line.record["SBQQ__ProductCode__c"]))){
                 //getting source line's list price
                 productMap.set(line.record["SBQQ__ProductCode__c"],line.record["SBQQ__ListPrice__c"]);
             }
@@ -2117,7 +2126,17 @@ export function amendmentForClonedLineCalculation (quote, lines){
         lines.forEach(function(line){
 
             if(productMap.has(line.record["SBQQ__ProductCode__c"]) && line.record["SBQQ__Source__c"]!=null){
-                let deltaPrice = productMap.get(line.record["SBQQ__ProductCode__c"])<0?line.record["SBQQ__ListPrice__c"]+productMap.get(line.record["SBQQ__ProductCode__c"]):line.record["SBQQ__ListPrice__c"]-productMap.get(line.record["SBQQ__ProductCode__c"]);
+                let isDeltaCalc = cpqProductConfig.deltaCalc.has(line.record["SBQQ__ProductCode__c"]);
+                let deltaPrice;
+                if(isDeltaCalc){
+                    let effectiveQty = line.record["SBQQ__EffectiveQuantity__c"] || 0;
+                    let prevQty = line.record["NSP_Previous_Quantity__c"] || 0;
+					let quotedQty = line.record["NSP_Quoted_Quantity__c"] || 0;
+                    let deltaQty = quotedQty - prevQty;
+                    deltaPrice = effectiveQty > 0 ? deltaQty * line.record["SBQQ__ListPrice__c"] : 0;
+                } else {
+                    deltaPrice = productMap.get(line.record["SBQQ__ProductCode__c"])<0?line.record["SBQQ__ListPrice__c"]+productMap.get(line.record["SBQQ__ProductCode__c"]):line.record["SBQQ__ListPrice__c"]-productMap.get(line.record["SBQQ__ProductCode__c"]);
+                }
                 line.record["NSP_Delta_Total__c"] = deltaPrice;
                 let disc = line.record["NSP_Delta_Discount__c"];
                 let discountedValue  = deltaPrice-[disc];
