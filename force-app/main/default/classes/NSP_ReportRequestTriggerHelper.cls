@@ -6,7 +6,6 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     private static final String UNKNOWN = 'Unknown';
     private static final String INSPERITY_PREPARED = 'Insperity-Prepared';
     private static final string SEPERATION_AGREEMENT_RECORD_TYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_SeparationRequest' );
-    public final static String HRSCALE_WORKDAY_REPORT_LOCATION = 'HRScale (Workday) Report';
 
     public void beforeUpdateDirector( Map<Id,NSP_ReportRequest__c> newMap , Map<Id,NSP_ReportRequest__c> oldMap ) {
         List<NSP_ReportRequest__c> repReqList = new List<NSP_ReportRequest__c>();
@@ -136,7 +135,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             NSP_ReportRequest__c oldRecord = ( ( ( oldMap != null ) && !oldMap.isEmpty() ) ? oldMap.get( newRecord.Id ) : null );
             NSP_ReportRequestTriggerHelper.setActionFromExistingNewReport( newRecord , oldRecord );
             NSP_ReportRequestTriggerHelper.setReportTypeFromInternalClientReport( newRecord , oldRecord );
-            newRecord.NSP_ReportLocation__c = HRSCALE_WORKDAY_REPORT_LOCATION;
+            newRecord.NSP_ReportLocation__c = 'HRScale (Workday) Report';
         }
     }
 
