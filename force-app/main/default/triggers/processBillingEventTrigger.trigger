@@ -1,4 +1,4 @@
-/* Trigger for process Billing Event 
+/* Trigger for process Billing Event
 * Relies on NSP_Action__c to determine the type of event to be processed.
 * Created Date : 03/20/2023
 * Author : Rakesh Das
@@ -7,13 +7,14 @@
 */
 
 trigger processBillingEventTrigger on Process_Billing_Event__e (after insert) {
-    
+
     //Variable Declarations
     List<String> closedOpptyIds = new List<String>();
     List<String> activatedOrderIds = new List<String>();
     Map<String,Date> projectGoLiveDateMap = new Map<String,Date>();
     Map<String,Process_Billing_Event__e> projectEventmap= new Map<String,Process_Billing_Event__e>();
     List<String> orderIds = new List<String>();
+    Set<Id> orderProductIds = new Set<Id>();
     //looping through event lists.
     for (Process_Billing_Event__e evt : Trigger.New) {
         //collecting opportunity ids from events for Order Creation.
@@ -32,8 +33,12 @@ trigger processBillingEventTrigger on Process_Billing_Event__e (after insert) {
         if(evt.NSP_Action__c == 'CREATE_PROJECT' && evt.NSP_CreateProject__c == true && evt.NSP_Order_SF_Id__c != null){
             orderIds.add(evt.NSP_Order_SF_Id__c);
         }
+        if ( ( evt.NSP_Action__c == 'CHANGE_PAYMENT_METHOD' ) && ( String.isNotBlank( evt.Order_Product_Id__c ) ) ) {
+            //gather Order product Ids
+            orderProductIds.add( evt.Order_Product_Id__c );
+        }
     }
-    
+
     if(closedOpptyIds.size()>0) {
         //Calling helper function to create orders.
         NSP_GenerateOrderFromOpportunity.orderQuoteOnOpptyCloseWon(closedOpptyIds);
@@ -52,5 +57,9 @@ trigger processBillingEventTrigger on Process_Billing_Event__e (after insert) {
     if(orderIds.size()>0) {
         //Calling helper function to create project.
         NSP_CreateProjFromFlow.createProject(orderIds);
+    }
+    if ( !orderProductIds.isEmpty() ) {
+        //call method
+        NSP_OrderItemTriggerHelper.processPaymentChange( orderProductIds );
     }
 }
