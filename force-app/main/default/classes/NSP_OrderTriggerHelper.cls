@@ -24,6 +24,7 @@ public class NSP_OrderTriggerHelper {
     public void beforeUpdateDirector( Map<Id,Order> orderNewMap , Map<Id,Order> orderOldMap ) {
         updateBillingShippingAddress( orderNewMap.values() , orderOldMap );
         createContract( orderNewMap.values() , orderOldMap );
+        OriginalOpportunityHelper.stampOriginalOpportunityFromAsset( orderNewMap , orderOldMap );
     }
 
     //
@@ -442,41 +443,37 @@ public class NSP_OrderTriggerHelper {
         }
     }
 
-    /**
-* Method Name : setProjNameSupplement
-* Description : Method to update Project Template on Order on supplement transaction
-* Author : CPQ Team       Date : 02/09/2023
-* @param orderListSuppl Set of orderId.
-* @param newList Map of new Order.
-* @return void
-*/
-public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order > newList) {
-    Map<Id,OrderItem> ordProdMap = new Map<Id,OrderItem> (); // this will hold Matching order line as value and order id as key;
+    //
+    // Method Name : setProjNameSupplement
+    // Description : Method to update Project Template on Order on supplement transaction
+    //
+    public static void setProjNameSupplement( Set<Id> orderListSuppl , List<Order> newList ) {
+        Map<Id,OrderItem> ordProdMap = new Map<Id,OrderItem> (); // this will hold Matching order line as value and order id as key;
 
-    if(orderListSuppl!= null && orderListSuppl.size() > 0){
+        if(orderListSuppl!= null && orderListSuppl.size() > 0){
 
-        List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_Amendment__c,NSP_Project_Name_Amendment__c,
-                                          OrderId,NSP_QL_ActionType__c,NSP_Transaction_for_Project__c,NSP_ApplicableProductAmendNew__c,
-                                          NSP_ApplicableProduct_AmendDowngrade__c,NSP_ApplicableProduct_AmendUpsell__c,SBQQ__RequiredBy__c,
-                                          SBQQ__RequiredBy__r.Product2.ProductCode,SBQQ__QuoteLine__r.NSP_ActionType__c FROM OrderItem WHERE OrderId IN :orderListSuppl AND NSP_Priority_Amendment__c!=null and  Separate_Project__c = false  ORDER BY NSP_Priority_Amendment__c ASC];
+            List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_Amendment__c,NSP_Project_Name_Amendment__c,
+                                            OrderId,NSP_QL_ActionType__c,NSP_Transaction_for_Project__c,NSP_ApplicableProductAmendNew__c,
+                                            NSP_ApplicableProduct_AmendDowngrade__c,NSP_ApplicableProduct_AmendUpsell__c,SBQQ__RequiredBy__c,
+                                            SBQQ__RequiredBy__r.Product2.ProductCode,SBQQ__QuoteLine__r.NSP_ActionType__c FROM OrderItem WHERE OrderId IN :orderListSuppl AND NSP_Priority_Amendment__c!=null and  Separate_Project__c = false  ORDER BY NSP_Priority_Amendment__c ASC];
 
-        for( OrderItem orderLine : orderProductObj){
-            if(orderLine.SBQQ__QuoteLine__r.NSP_ActionType__c != null) {
-                if(orderLine.SBQQ__QuoteLine__r.NSP_ActionType__c == NSP_CPQConstants.ACTION_NEW){
-                    if(!ordProdMap.containskey(orderLine.OrderId)){
-                            ordProdMap.put(orderLine.OrderId,orderLine);
+            for( OrderItem orderLine : orderProductObj){
+                if(orderLine.SBQQ__QuoteLine__r.NSP_ActionType__c != null) {
+                    if(orderLine.SBQQ__QuoteLine__r.NSP_ActionType__c == NSP_CPQConstants.ACTION_NEW){
+                        if(!ordProdMap.containskey(orderLine.OrderId)){
+                                ordProdMap.put(orderLine.OrderId,orderLine);
+                        }
                     }
                 }
             }
-        }
-        for(Order newOrder : newList){
-            if(ordProdMap.containskey(newOrder.Id)){
-                newOrder.NSP_Project_Name__c = ordProdMap.get(newOrder.Id).NSP_Project_Name_Amendment__c;
-                newOrder.NSP_Project_Key__c = ordProdMap.get(newOrder.Id).Product2.ProductCode;
+            for(Order newOrder : newList){
+                if(ordProdMap.containskey(newOrder.Id)){
+                    newOrder.NSP_Project_Name__c = ordProdMap.get(newOrder.Id).NSP_Project_Name_Amendment__c;
+                    newOrder.NSP_Project_Key__c = ordProdMap.get(newOrder.Id).Product2.ProductCode;
+                }
             }
         }
     }
-}
 
     //
     // Method Name : stampDunningEmailonContact
@@ -516,15 +513,11 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         }
     }
 
-    /**
-    * Method Name : setInvoiceBatch
-    * Description : Method to update invoice batch based on order product type.
-    * Author : CPQ Team       Date : 10/10/2022
-    * @param orderIdSet Order Id set.
-    * @param newList List of new Order.
-    * @return void
-    */
-    public static void setInvoiceBatch(Set < ID > orderIdSet,List < Order > newList) {
+    //
+    // Method Name : setInvoiceBatch
+    // Description : Method to update invoice batch based on order product type.
+    //
+    public static void setInvoiceBatch( Set<Id> orderIdSet , List<Order> newList ) {
         Map<String,String> invoiceBatchMap = new Map<String,String> ();
         //Invoice Batch metadata holds the Invoice Batch names for each order product type
         List<NSP_Invoice_Batch__mdt> invoiceBatch = NSP_Invoice_Batch__mdt.getAll().values();
@@ -539,22 +532,14 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
                 if(invoiceBatchMap.containsKey(orderOb.NSP_Order_Product_Type__c)){
                     orderOb.blng__InvoiceBatch__c = invoiceBatchMap.get(orderOb.NSP_Order_Product_Type__c);
                 }
-               /*Commented out as part of DF-04797
-                else if(orderOb.NSP_Order_Product_Type__c == 'HR Services' || orderOb.NSP_Order_Product_Type__c == 'Recruiting Services' || orderOb.NSP_Order_Product_Type__c == 'WS Services'){
-                    orderOb.blng__InvoiceBatch__c = null;
-                } */
             }
     }
 
-    /**
-    * Method Name : updateSubStartDate
-    * Description : Method to update StartDate on Subscription
-    * Author : CPQ Team       Date : 10/10/2022
-    * @param orderIdSet Order Id set.
-    * @param newList List of new Order.
-    * @return void
-    */
-    public static void updateSubStartDate(Set < ID > orderIdSet) {
+    //
+    // Method Name : updateSubStartDate
+    // Description : Method to update StartDate on Subscription
+    //
+    public static void updateSubStartDate( Set<Id> orderIdSet ) {
         Set<Id> ordProductSet = new Set<Id>();
         List<SBQQ__Subscription__c> updateSubList = new List<SBQQ__Subscription__c>();
         List<OrderItem> orderProductList=[SELECT Id,SBQQ__Status__c,Order.Type,ServiceDate,SBQQ__BillingFrequency__c,NSP_AnniversaryBlngApplicable__c FROM OrderItem WHERE OrderId IN :orderIdSet AND NSP_AnniversaryBlngApplicable__c = TRUE AND SBQQ__BillingFrequency__c = 'Annual' AND NSP_SubscriptionStartDate__c = 'Project go-live date'];
@@ -574,16 +559,12 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
             }
     }
 
-        /**
-* Method Name : checkDownPaymentDetails
-* Description : method to determine if down payment id required. called from flow  // added for STY-02870
-* Author : CPQ Team       Date : 1/12/2022
-* @param orderIds list of  Orders id.
-* @return void
-*/
+    //
+    // Method Name : checkDownPaymentDetails
+    // Description : method to determine if down payment id required. called from flow  // added for STY-02870
+    //
     @InvocableMethod(label='check DownPayment Detail' description='method to determine if down payment id required' category='Account')
-    public static void checkDownPaymentDetails(List<ID> orderIds)
-    {
+    public static void checkDownPaymentDetails( List<Id> orderIds ) {
         set<Id> orderItemToCheckSet = new set<Id>();
         map<id,pse__Proj__c> projectUpdateMap = new map<id,pse__Proj__c>();
         Map<Id,Order> OrderUpdateMap = new Map<Id,Order>();
@@ -696,15 +677,11 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         }
     }
 
-    /**
-    * Method Name : updateUsageProd
-    * Description : Method to activate Order and update start date on usage based products
-    * Author : CPQ Team       Date : 10/10/2022
-    * @param orderIdSet Order Id set.
-    * @param newList List of new Order.
-    * @return void
-    */
-    public static void updateUsageProd(Set < ID > orderIdSet,List < Order > newList) {
+    //
+    // Method Name : updateUsageProd
+    // Description : Method to activate Order and update start date on usage based products
+    //
+    public static void updateUsageProd( Set<Id> orderIdSet , List<Order> newList ) {
         List<OrderItem> updateOrdProdList = new List<OrderItem>();
         List<OrderItem> orderProductList=[SELECT Id,Order.Project_Status__c,SBQQ__Status__c,ServiceDate,NSP_Order_Activation_Trigger__c,SBQQ__QuoteLine__r.SBQQ__HasConsumptionSchedule__c FROM OrderItem WHERE OrderId IN :orderIdSet AND NSP_Order_Activation_Trigger__c =: NSP_CPQConstants.FIRSTUSAGEUPLOAD];
             for(OrderItem oi :orderProductList){
@@ -809,140 +786,122 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         }
     }
 
-// STY-03797 Starts
-/**
-* Method Name : createAndStampSaleTaxContact
-* Description : Method to create a Sales Tax contact based on Primary Shipping Address
-* Author : Rakesh Das       Date : 12/01/2022
-* @param newList Map of New Orders.
-* @return void
-*/
-public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Order> newList, Map<String, Order> orderAddressKeyToCheck){
+    //
+    // Method Name : createAndStampSaleTaxContact
+    // Description : Method to create a Sales Tax contact based on Primary Shipping Address
+    //
+    public static void createAndStampSalesTaxContact(
+        Set<Id> accountIdSet ,
+        List<Order> newList ,
+        Map<String,Order> orderAddressKeyToCheck
+        )
+    {
 
-    // query record type
-     Id salesTaxRecordType = NSP_GenericRecordType.getRecordTypeId('Contact','Sales_Tax');
+        // query record type
+        Id salesTaxRecordType = NSP_GenericRecordType.getRecordTypeId('Contact','Sales_Tax');
 
-   // Map<String, List<Contact>> accountIdToContactMap = new Map<String, List<Contact>>();
-    Map<String, Integer> accountIdwithCounterMap = new  Map<String, Integer>();
-    //Map<String, String> contactKeyWithIdMap = new  Map<String, String>();
-    Map<String, String> existingContactsMap = new  Map<String, String>();
-    Map<String, String> AccountNameMap = new  Map<String, String>();
-    List<Contact> contactsToInsert = new List<Contact>();
+        Map<String, Integer> accountIdwithCounterMap = new  Map<String, Integer>();
+        Map<String, String> existingContactsMap = new  Map<String, String>();
+        Map<String, String> AccountNameMap = new  Map<String, String>();
+        List<Contact> contactsToInsert = new List<Contact>();
 
-    List<Account> accRecords = NSP_sObjectSelector.getAccountsById(accountIdSet);
-    for (Account acc : accRecords) {
+        List<Account> accRecords = NSP_sObjectSelector.getAccountsById(accountIdSet);
+        for (Account acc : accRecords) {
 
-        if(!AccountNameMap.containsKey(acc.Id)) {
-            AccountNameMap.put(acc.Id, acc.Name);
-        }
-    }
-    List<Contact> salesTaxContacts = NSP_sObjectSelector.getContactsByAccountAndRecTypeId(accountIdSet,salesTaxRecordType);
-    for ( Contact con : salesTaxContacts) {
-        //String conUniqAddressKey = con.AccountId +'-'+con.MailingCity +'-'+ con.MailingStateCode +'-'+ con.MailingCountryCode +'-'+con.MailingPostalCode;
-        if(orderAddressKeyToCheck.containsKey(con.NSP_Sales_Tax_Contact_Key__c)) {
-            existingContactsMap.put(con.NSP_Sales_Tax_Contact_Key__c, con.Id);
-        }
-       // contactKeyWithIdMap.put(conUniqAddressKey,con.Id);
-
-
-        if(accountIdwithCounterMap.containsKey(con.AccountId)) {
-            if(accountIdwithCounterMap.get(con.AccountId) < con.NSP_Sales_Tax_Contact_Counter__c) {
-                accountIdwithCounterMap.put(con.AccountId,(Integer)con.NSP_Sales_Tax_Contact_Counter__c);
+            if(!AccountNameMap.containsKey(acc.Id)) {
+                AccountNameMap.put(acc.Id, acc.Name);
             }
         }
-        else {
-               accountIdwithCounterMap.put(con.AccountId,(Integer)con.NSP_Sales_Tax_Contact_Counter__c);
-        }
+        List<Contact> salesTaxContacts = NSP_sObjectSelector.getContactsByAccountAndRecTypeId(accountIdSet,salesTaxRecordType);
+        for ( Contact con : salesTaxContacts) {
+            if(orderAddressKeyToCheck.containsKey(con.NSP_Sales_Tax_Contact_Key__c)) {
+                existingContactsMap.put(con.NSP_Sales_Tax_Contact_Key__c, con.Id);
+            }
 
-       /* if (accountIdToContactMap.containsKey(con.AccountId) ) {
-            List<Contact> accContactList = accountIdToContactMap.get(con.AccountId);
-            accContactList.add(con);
-            accountIdToContactMap.put(con.AccountId, accContactList);
-        }
-        else {
-            accountIdToContactMap.put(con.AccountId, new List<Contact>{con});
-        }
-        */
 
-    }
-
-    for (String ackey : orderAddressKeyToCheck.keySet()) {
-        if(!existingContactsMap.containsKey(ackey)) {
-
-            String accId = ackey.substringBefore('-');
-            Integer accCounter;
-            if(accountIdwithCounterMap.containsKey(accId) && accountIdwithCounterMap.get(accId) != null ) {
-                accCounter = accountIdwithCounterMap.get(accId);
-                accCounter+=1;
+            if(accountIdwithCounterMap.containsKey(con.AccountId)) {
+                if(accountIdwithCounterMap.get(con.AccountId) < con.NSP_Sales_Tax_Contact_Counter__c) {
+                    accountIdwithCounterMap.put(con.AccountId,(Integer)con.NSP_Sales_Tax_Contact_Counter__c);
+                }
             }
             else {
-                accCounter = 1;
+                accountIdwithCounterMap.put(con.AccountId,(Integer)con.NSP_Sales_Tax_Contact_Counter__c);
             }
 
-            accountIdwithCounterMap.put(accId,accCounter);
+        }
 
-            Order matchOrder = orderAddressKeyToCheck.get(ackey);
-            //populate new contact details
-            Contact newCon = new Contact();
-            newCon.FirstName = (AccountNameMap.get(accId)!=null && AccountNameMap.get(accId).length()>40?AccountNameMap.get(accId).substring(0,40):AccountNameMap.get(accId));
-            newCon.LastName = 'Sales Tax '+ accCounter;
-            newCon.NSP_Sales_Tax_Contact_Key__c = ackey;
-            newCon.NSP_Sales_Tax_Contact_Counter__c = accCounter;
-            newCon.AccountId = matchOrder.AccountId;
-            if(matchOrder.blng__BillingAccount__c != null) {
-                newCon.AccountId = matchOrder.blng__BillingAccount__c;
+        for (String ackey : orderAddressKeyToCheck.keySet()) {
+            if(!existingContactsMap.containsKey(ackey)) {
+
+                String accId = ackey.substringBefore('-');
+                Integer accCounter;
+                if(accountIdwithCounterMap.containsKey(accId) && accountIdwithCounterMap.get(accId) != null ) {
+                    accCounter = accountIdwithCounterMap.get(accId);
+                    accCounter+=1;
+                }
+                else {
+                    accCounter = 1;
+                }
+
+                accountIdwithCounterMap.put(accId,accCounter);
+
+                Order matchOrder = orderAddressKeyToCheck.get(ackey);
+                //populate new contact details
+                Contact newCon = new Contact();
+                newCon.FirstName = (AccountNameMap.get(accId)!=null && AccountNameMap.get(accId).length()>40?AccountNameMap.get(accId).substring(0,40):AccountNameMap.get(accId));
+                newCon.LastName = 'Sales Tax '+ accCounter;
+                newCon.NSP_Sales_Tax_Contact_Key__c = ackey;
+                newCon.NSP_Sales_Tax_Contact_Counter__c = accCounter;
+                newCon.AccountId = matchOrder.AccountId;
+                if(matchOrder.blng__BillingAccount__c != null) {
+                    newCon.AccountId = matchOrder.blng__BillingAccount__c;
+                }
+                newCon.recordTypeId = salesTaxRecordType;
+                newCon.MailingStreet = matchOrder.ShippingStreet;
+                newCon.MailingCity = matchOrder.ShippingCity;
+                newCon.MailingState = matchOrder.ShippingState;
+                newCon.MailingCountry = matchOrder.ShippingCountry;
+                newCon.MailingPostalCode = matchOrder.ShippingPostalCode;
+
+                //add to insert contact list
+                contactsToInsert.add(newCon);
             }
-            newCon.recordTypeId = salesTaxRecordType;
-            newCon.MailingStreet = matchOrder.ShippingStreet;
-            newCon.MailingCity = matchOrder.ShippingCity;
-            newCon.MailingState = matchOrder.ShippingState;
-            newCon.MailingCountry = matchOrder.ShippingCountry;
-            newCon.MailingPostalCode = matchOrder.ShippingPostalCode;
+        }
 
-            //add to insert contact list
-            contactsToInsert.add(newCon);
+        // Database insert contacts
+        NSP_AccountTriggerHandler.TriggerDisabled = true;
+        NSP_ContactTriggerHandler.TriggerDisabled = true;
+        Database.DmlOptions opts = new Database.DmlOptions();
+        opts.DuplicateRuleHeader.allowSave = true;
+        opts.OptAllOrNone = false;
+        Database.SaveResult[] result = Database.insert(contactsToInsert, opts);
+        for(Integer index = 0; index < contactsToInsert.size(); index++) {
+            if(result[index].isSuccess()) {
+                existingContactsMap.put(contactsToInsert[index].NSP_Sales_Tax_Contact_Key__c,result[index].getId());
+            }
+        }
+
+        for ( Order ord : orderAddressKeyToCheck.values() ) {
+
+            // key formation
+            String accStr;
+            if(ord.blng__BillingAccount__c != null) {
+                    accStr = ord.blng__BillingAccount__c;
+                }
+            else {
+                accStr=ord.AccountId;
+            }
+            String ordUniqAddressKey = accStr +'-'+ord.ShippingCity +'-'+ ord.ShippingStateCode +'-'+ ord.ShippingCountryCode +'-'+ord.ShippingPostalCode;
+
+            // get contact id from existing contacts map
+            ord.ShipToContactId = existingContactsMap.get(ordUniqAddressKey);
         }
     }
 
-    // Database insert contacts
-    NSP_AccountTriggerHandler.TriggerDisabled = true;
-    NSP_ContactTriggerHandler.TriggerDisabled = true;
-    Database.DmlOptions opts = new Database.DmlOptions();
-    opts.DuplicateRuleHeader.allowSave = true;
-    opts.OptAllOrNone = false;
-    Database.SaveResult[] result = Database.insert(contactsToInsert, opts);
-    for(Integer index = 0; index < contactsToInsert.size(); index++) {
-        if(result[index].isSuccess()) {
-            existingContactsMap.put(contactsToInsert[index].NSP_Sales_Tax_Contact_Key__c,result[index].getId());
-         }
-    }
-
-    for ( Order ord : orderAddressKeyToCheck.values() ) {
-
-        // key formation
-        String accStr;
-         if(ord.blng__BillingAccount__c != null) {
-                accStr = ord.blng__BillingAccount__c;
-            }
-        else {
-            accStr=ord.AccountId;
-        }
-        String ordUniqAddressKey = accStr +'-'+ord.ShippingCity +'-'+ ord.ShippingStateCode +'-'+ ord.ShippingCountryCode +'-'+ord.ShippingPostalCode;
-
-        // get contact id from existing contacts map
-        ord.ShipToContactId = existingContactsMap.get(ordUniqAddressKey);
-    }
-}
-
-    // STY-03797 Ends
-
-                /**
-* Method Name : changeTaxRulesForWOOrders
-* Description : Method update zero tax rule on Order items for Insperity WO Billing Account Orders
-* Author : CPQ Team     Date : 12/07/2022
-* @param set woBillingOrderId
-* @return void
-*/
+    //
+    // Method Name : changeTaxRulesForWOOrders
+    // Description : Method update zero tax rule on Order items for Insperity WO Billing Account Orders
+    //
     public static void changeTaxRulesForWOOrders( Set<Id> woBillingOrderId ) {
         Map<String,String> legalEntiyBasedZeroTaxRuleMap= new Map<String,String>();
         try{
@@ -1007,15 +966,12 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
         }
     }
 
-    /**
-    * Method Name : setOrderProductType
-    * Description : Method to set order product type
-    * Author : CPQ Team       Date : 5/18/2023
-    * @param orderIdPT Set of new Order.
-    * @return void
-    */
-
-    @future public static void setOrderProductType( Set<Id> orderIdPT ) {
+    //
+    // Method Name : setOrderProductType
+    // Description : Method to set order product type
+    //
+    @future
+    public static void setOrderProductType( Set<Id> orderIdPT ) {
         Map<Id,Order> productType = new Map<Id,Order>();
 
         List<OrderItem> orderProdList=[SELECT Id,SBQQ__Status__c,NSP_Order_Product_Type__c,OrderId FROM OrderItem WHERE OrderId IN :orderIdPT];
@@ -1041,14 +997,11 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
         }
     }
 
-                /**
-     * Method Name : setProjectDatesForInfightOrders
-     * Description : Method to get Project Go Live Dates from Existing Project to Order
-     * Author : CPQ Team     Date : 06/27/2023
-     * @param List of new Orders
-     * @return void
-     */
-    public void setProjectDatesForInfightOrders(List<Order> newList){
+    //
+    // Method Name : setProjectDatesForInfightOrders
+    // Description : Method to get Project Go Live Dates from Existing Project to Order
+    //
+    public void setProjectDatesForInfightOrders( List<Order> newList ) {
         Map<String,Order> projectOrderMap= new Map<String,Order>();
         List<Order> ordersToUpdate= new List<Order>();
         for(Order ord :newList){
@@ -1077,14 +1030,11 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
         }
     }
 
-    /**
-    * Method Name : updateRevisedOrderProd
-    * Description : Method to nullify Revised Order Product on order items when Order is marked as Backout
-    * Author : CPQ Team       Date : 6/30/2023
-    * @param orderIdSet Set of backed out Order.
-    * @return void
-    */
-    public static void updateRevisedOrderProd(Set<String> orderIdSet){
+    //
+    // Method Name : updateRevisedOrderProd
+    // Description : Method to nullify Revised Order Product on order items when Order is marked as Backout
+    //
+    public static void updateRevisedOrderProd( Set<String> orderIdSet ) {
         List<OrderItem> updateList = new List<OrderItem>();
         List<OrderItem> orderProdList=[SELECT Id,SBQQ__Status__c,SBQQ__RevisedOrderProduct__c,OrderId FROM OrderItem WHERE OrderId IN :orderIdSet];
         for(OrderItem oi:orderProdList){
