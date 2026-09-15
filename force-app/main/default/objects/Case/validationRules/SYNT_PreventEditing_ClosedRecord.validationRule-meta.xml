@@ -80,6 +80,7 @@ ISCHANGED(SlaExitDate),
 ISCHANGED(SlaStartDate),
 ISCHANGED(IsEscalated),
 ISCHANGED(NSP_Findings__c),
+ISCHANGED(NSP_First_Reply_Date__c),
 ISCHANGED(NSP_Group_Assign_Date__c),
 ISCHANGED(NSP_HRSpecialistName__c),
 ISCHANGED(NSP_HandledBy__c),
@@ -93,12 +94,14 @@ ISCHANGED(NSP_IsJunkMail__c),
 ISCHANGED(NSP_JobTitle__c),
 ISCHANGED(NSP_L2__c),
 ISCHANGED(Language),
+ISCHANGED(NSP_Last_Message_Date__c),
 ISCHANGED(LastModifiedById),
 ISCHANGED(NSP_LegalHandling__c),
 ISCHANGED(NSP_Level_2__c),
 ISCHANGED(NSP_Level_2_Date__c),
 ISCHANGED(NSP_Loaner_Repair_Serial__c),
 ISCHANGED(NSP_Location__c),
+ISCHANGED(NSP_Open_to_First_Reply_Hours__c),
 ISCHANGED(NSP_Opened_Date__c),
 ISCHANGED(NSP_Operating_System__c),
 ISCHANGED(NSP_OPRT_Directory_View_AIMS__c),
@@ -107,7 +110,8 @@ ISCHANGED(NSP_PaidByInsperity__c)
 ),
 ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;),
 NOT(ISCHANGED(ContactId)),
-NOT(ISCHANGED(NSP_Total_Case_Contacts__c))
+NOT(ISCHANGED(NSP_Total_Case_Contacts__c)),
+NOT(ISCHANGED(NSP_Case_Sub_Status__c))
 )</errorConditionFormula>
     <errorMessage>Case is closed, set the status to Reopened, save, and then edit.</errorMessage>
 </ValidationRule>
