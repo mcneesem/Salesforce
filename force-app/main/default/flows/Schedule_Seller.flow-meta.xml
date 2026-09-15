@@ -615,7 +615,7 @@
             <inputParameters>
                 <name>timeZone</name>
                 <value>
-                    <elementReference>Time</elementReference>
+                    <elementReference>timeZoneSidKey</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
@@ -888,7 +888,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>ConfirmData</name>
-                    <fieldText>&lt;p&gt;&lt;strong&gt;Product:&lt;/strong&gt; {!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt; {!Notes}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;strong&gt;Product: &lt;/strong&gt;{!SelectProduct.selectedProductLabel}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Notes: &lt;/strong&gt;{!Notes}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <styleProperties>
                         <verticalAlignment>
@@ -910,15 +910,15 @@
                         </value>
                     </inputParameters>
                     <inputParameters>
-                        <name>timeZoneSidKey</name>
-                        <value>
-                            <elementReference>Time</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
                         <name>startDateTime</name>
                         <value>
                             <elementReference>Seller.startDateTime</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>timeZoneSidKey</name>
+                        <value>
+                            <elementReference>timeZoneSidKey</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
