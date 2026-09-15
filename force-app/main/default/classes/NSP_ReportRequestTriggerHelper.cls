@@ -152,8 +152,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     private static void setActionFromExistingNewReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
         if ( ( newRecord != null )
             && ( newRecord.NSP_Existing_NewReport__c != null )
-            && ( oldRecord != null )
-            && ( oldRecord.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c )
+            && ( oldRecord?.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c )
             )
         {
             if ( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
@@ -179,8 +178,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     private static void setReportTypeFromInternalClientReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
         if ( ( newRecord != null )
             && ( newRecord.NSP_InternalClientReport__c != null )
-            && ( oldRecord != null )
-            && ( oldRecord.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c )
+            && ( oldRecord?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c )
             )
         {
             if ( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
