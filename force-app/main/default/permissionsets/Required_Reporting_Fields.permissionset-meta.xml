@@ -213,7 +213,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.account6QA6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.account6QAAgeInDays6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.accountIntentScore6sense__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3061,7 +3076,7 @@
         <field>Order.Related_Contract_To_Terminate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.Revised_Amendment_Start_Date__c</field>
         <readable>true</readable>
