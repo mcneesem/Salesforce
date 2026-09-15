@@ -2175,8 +2175,8 @@ Implementation profile related to the account of the created asset
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
             for ( Asset record : records ) {
-                String rtName = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Name : null );
-                if ( String.isNotBlank( rtName ) && !NSP_AssetServiceTriggerHelper.excludedNames.contains( rtName ) ) {
+                Id rtId = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Id : null );
+                if ( String.isNotBlank( rtId ) && !NSP_AssetServiceTriggerHelper.excludedRecordTypes.contains( rtId ) ) {
                     result.add( record );
                 }
             }
@@ -2200,7 +2200,8 @@ Implementation profile related to the account of the created asset
                             Status ,
                             NSP_Account_Status__c ,
                             AccountId ,
-                            RecordType.Name
+                            RecordType.Name ,
+                            RecordType.Id
                         FROM Assets
                     ) ,
                     (
@@ -2217,18 +2218,26 @@ Implementation profile related to the account of the created asset
         return returnList;
     }
 
-    private static List<String> excludedNames {
+    private static Set<Id> excludedRecordTypes {
         private get {
-            List<String> local = new List<String>();
-            if ( excludedNames == null ) {
-                Filter_Asset_Record_Type__c filter = Filter_Asset_Record_Type__c.getInstance( UserInfo.getUserId() );
-                if( ( filter != null ) && ( String.isNotBlank( filter.Exclude_Record_Type__c ) ) ) {
+            Map<Id,RecordType> recordTypes = new Map<Id,RecordType>();
+            if ( excludedRecordTypes == null ) {
+                AssetTriggerSettings__c sett = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+                if( ( sett != null ) && ( String.isNotBlank( sett.Exclude_Record_Type_Status__c ) ) ) {
                     // List of Asset Record type names to exclude
-                    local = filter.Exclude_Record_Type__c.split('\\r?\\n');
+                    recordTypes = new Map<Id,RecordType>([
+                        SELECT
+                            Id ,
+                            Name
+                        FROM RecordType
+                        WHERE
+                            SobjectType = 'Asset'
+                            AND Name IN :sett.Exclude_Record_Type_Status__c.split( '\r\n' )
+                    ]);
                 }
-                excludedNames = local;
+                excludedRecordTypes = recordTypes.keySet();
             }
-            return excludedNames;
+            return excludedRecordTypes;
         }
         private set;
     }

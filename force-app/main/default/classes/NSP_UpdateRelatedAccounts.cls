@@ -220,7 +220,10 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                             Id ,
                             NSP_Sales_Service_Account_Status__c ,
                             (
-                                SELECT Id , RecordType.Name
+                                SELECT
+                                    Id ,
+                                    RecordType.Name ,
+                                    RecordType.Id
                                 FROM Assets
                             ) ,
                             (

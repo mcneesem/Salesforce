@@ -99,5 +99,14 @@ private class NSP_AccountTerminationBatch_Test {
         }
     }
 
+    @isTest
+    private static void lostAccountCheckTest() {
+        List<Asset> assetList = [SELECt Id FROM Asset];
+        List<Opportunity> oppList = [SELECT Id, StageName FROM Opportunity];
+        Test.startTest();
+        NSP_AccountTerminationBatch.lostAccountCheck(assetList, oppList);
+        Test.stopTest();
+    }
+
 }
 //

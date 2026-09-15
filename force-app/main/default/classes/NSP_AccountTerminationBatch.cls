@@ -184,7 +184,8 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             Id ,
                             Status ,
                             NSP_Termination_Date__c ,
-                            RecordType.Name
+                            RecordType.Name ,
+                            RecordType.Id
                         FROM Assets
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
@@ -284,6 +285,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         return ( hasOpenOpp && !hasOpenAsset );
     }
 
+    @TestVisible
     //method to check if account should be marked lost
     private static Boolean lostAccountCheck( List<Asset> assetList , List<Opportunity> oppList ) {
         Boolean noAssetPresent = true;
