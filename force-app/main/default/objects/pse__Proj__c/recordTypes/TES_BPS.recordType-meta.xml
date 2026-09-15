@@ -757,6 +757,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Client Segment Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Client Termed with WO</fullName>
             <default>false</default>
         </values>

@@ -677,6 +677,10 @@
     <picklistValues>
         <picklist>NSP_Cancelled_Reason__c</picklist>
         <values>
+            <fullName>Client Segment Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Client Terminated</fullName>
             <default>false</default>
         </values>
