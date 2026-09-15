@@ -1243,6 +1243,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Event.Rush_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GL_Transaction__c.Account_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3484,6 +3489,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.Rush_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
