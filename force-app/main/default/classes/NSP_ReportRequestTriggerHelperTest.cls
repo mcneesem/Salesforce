@@ -15,6 +15,7 @@ private class NSP_ReportRequestTriggerHelperTest {
     private static final String REPORT_LOCATION = 'ReportLocation must always be HRScale Workday Report';
     private static final String REPORT_REQUEST_MSG = 'ReportRequest should exist after insert';
     private static final String CONTACT_MSG = 'Contact test12345 should exist from setup';
+    private static final String HRSCALE_WORKDAY_REPORT_LOCATION = 'HRScale (Workday) Report';
 
     @testSetup
     private static void setup() {
@@ -264,7 +265,7 @@ private class NSP_ReportRequestTriggerHelperTest {
         NSP_ReportRequest__c result = resultList[0];
         Assert.areEqual(NSP_ServiceConstants.WIZARD_DEVELOPMENT, result.NSP_Action__c, 'Action should be Development for New Report');
         Assert.areEqual(NSP_ServiceConstants.INTERNAL_CLIENT_REPORT, result.NSP_ReportType__c, 'ReportType should be set for Internal Report');
-        Assert.areEqual(NSP_ReportRequestTriggerHelper.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
+        Assert.areEqual(NSP_ReportRequestTriggerHelperTest.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
     }
 
     @isTest
@@ -286,7 +287,7 @@ private class NSP_ReportRequestTriggerHelperTest {
         Assert.isFalse(resultList.isEmpty(), REPORT_REQUEST_MSG);
         NSP_ReportRequest__c result = resultList[0];
         Assert.areEqual(NSP_ServiceConstants.WIZARD_MAINTENANCE, result.NSP_Action__c, 'Action should be Maintenance for existing report');
-        Assert.areEqual(NSP_ReportRequestTriggerHelper.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
+        Assert.areEqual(NSP_ReportRequestTriggerHelperTest.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
     }
 
     @isTest
@@ -310,7 +311,7 @@ private class NSP_ReportRequestTriggerHelperTest {
         NSP_ReportRequest__c result = resultList[0];
         Assert.areEqual(NSP_ServiceConstants.WIZARD_DEVELOPMENT, result.NSP_Action__c, 'Action should be Development for New Report');
         Assert.isNull(result.NSP_ReportType__c, 'ReportType should be null for Client Report');
-        Assert.areEqual(NSP_ReportRequestTriggerHelper.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
+        Assert.areEqual(NSP_ReportRequestTriggerHelperTest.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, REPORT_LOCATION);
     }
 
     @isTest
@@ -335,7 +336,7 @@ private class NSP_ReportRequestTriggerHelperTest {
         Assert.isFalse(resultList.isEmpty(), 'ReportRequest should exist after update');
         NSP_ReportRequest__c result = resultList[0];
         Assert.isNull(result.NSP_ReportType__c, 'ReportType should be cleared when switching from Internal to Client Report');
-        Assert.areEqual(NSP_ReportRequestTriggerHelper.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, 'ReportLocation must always be HRScale Workday Report after update');
+        Assert.areEqual(NSP_ReportRequestTriggerHelperTest.HRSCALE_WORKDAY_REPORT_LOCATION, result.NSP_ReportLocation__c, 'ReportLocation must always be HRScale Workday Report after update');
     }
 
     @isTest
