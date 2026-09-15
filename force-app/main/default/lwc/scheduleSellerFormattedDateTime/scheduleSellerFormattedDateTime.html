@@ -1,7 +1,7 @@
 <template>
     <template lwc:if={hasStart}>
         <span style="white-space:nowrap;">
-            <strong>Date: </strong>&nbsp;
+            <strong>Date:</strong>&nbsp;
             <lightning-formatted-date-time
                 value={startDateTime}
                 weekday="short"
@@ -10,7 +10,8 @@
                 hour="numeric"
                 minute="2-digit"
                 time-zone={timeZoneSidKey}
-            ></lightning-formatted-date-time>
+                >
+            </lightning-formatted-date-time>
             <template lwc:if={hasEnd}>
                 &nbsp;-&nbsp;
                 <lightning-formatted-date-time
@@ -19,7 +20,8 @@
                     minute="2-digit"
                     time-zone={timeZoneSidKey}
                     time-zone-name="short"
-                ></lightning-formatted-date-time>
+                    >
+                </lightning-formatted-date-time>
             </template>
         </span>
     </template>
