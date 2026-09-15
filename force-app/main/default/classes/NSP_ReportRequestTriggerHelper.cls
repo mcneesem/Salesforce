@@ -60,8 +60,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         for ( NSP_ReportRequest__c eachRepoReq : newList ) {
             if ( ( recordTypeId != null ) && ( eachRepoReq.RecordTypeId == recordTypeId ) ) {
                 if ( ( eachRepoReq.NSP_Existing_NewReport__c != null )
-                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_Existing_NewReport__c != eachRepoReq.NSP_Existing_NewReport__c )
-                )
+                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_Existing_NewReport__c != eachRepoReq.NSP_Existing_NewReport__c )
+                    )
                 {
                     if ( eachRepoReq.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
                         eachRepoReq.NSP_Action__c = NSP_ServiceConstants.WIZARD_DEVELOPMENT;
@@ -75,8 +75,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                     }
                 }
                 if ( ( eachRepoReq.NSP_InternalClientReport__c != null )
-                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_InternalClientReport__c != eachRepoReq.NSP_InternalClientReport__c )
-                )
+                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_InternalClientReport__c != eachRepoReq.NSP_InternalClientReport__c )
+                    )
                 {
                     if ( eachRepoReq.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
                         if ( eachRepoReq.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
@@ -88,8 +88,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                     }
                 }
                 if ( ( eachRepoReq.NSP_ReportLocation__c != null )
-                && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_ReportLocation__c != eachRepoReq.NSP_ReportLocation__c )
-                )
+                    && ( oldMap.size() == 0 || oldMap.get(eachRepoReq.Id)?.NSP_ReportLocation__c != eachRepoReq.NSP_ReportLocation__c )
+                    )
                 {
                     if ( eachRepoReq.NSP_ReportLocation__c == NSP_ServiceConstants.PREMIER_REPORTING ) {
                         eachRepoReq.NSP_Misc__c = NSP_ServiceConstants.WIRE;
@@ -98,8 +98,15 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                         eachRepoReq.NSP_Misc__c = NSP_ServiceConstants.NON_WIRE;
                     }
                 }
-            } else if(hrScaleRecordTypeId != null && eachRepoReq.RecordTypeId == hrScaleRecordTypeId) {
-                NSP_ReportRequestTriggerHelper.processHRScaleBeforeInsertDirector(eachRepoReq, oldMap, hrScaleRecordTypeId);
+            } else if ( ( hrScaleRecordTypeId != null )
+                && ( eachRepoReq.RecordTypeId == hrScaleRecordTypeId )
+                )
+            {
+                NSP_ReportRequestTriggerHelper.processHRScaleBeforeInsertDirector(
+                    eachRepoReq ,
+                    oldMap ,
+                    hrScaleRecordTypeId
+                );
             }
         }
     }
@@ -115,11 +122,20 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     //          Map<Id,NSP_ReportRequest__c> oldMap - prior field values; empty map on insert
     //          Id hrScaleRecordTypeId              - record type Id for HRScale_Workday_Report
     //
-    private static void processHRScaleBeforeInsertDirector(NSP_ReportRequest__c newRecord, Map<Id,NSP_ReportRequest__c> oldMap, Id hrScaleRecordTypeId) {
-        if (newRecord != null && hrScaleRecordTypeId != null && newRecord.RecordTypeId == hrScaleRecordTypeId) {
-            NSP_ReportRequest__c oldRecord = (oldMap != null && !oldMap.isEmpty()) ? oldMap.get(newRecord.Id) : null;
-            setActionFromExistingNewReport(newRecord, oldRecord);
-            setReportTypeFromInternalClientReport(newRecord, oldRecord);
+    private static void processHRScaleBeforeInsertDirector(
+        NSP_ReportRequest__c newRecord ,
+        Map<Id,NSP_ReportRequest__c> oldMap ,
+        Id hrScaleRecordTypeId
+        )
+    {
+        if ( ( newRecord != null )
+            && ( hrScaleRecordTypeId != null )
+            && ( newRecord.RecordTypeId == hrScaleRecordTypeId )
+            )
+        {
+            NSP_ReportRequest__c oldRecord = ( ( ( oldMap != null ) && !oldMap.isEmpty() ) ? oldMap.get( newRecord.Id ) : null );
+            NSP_ReportRequestTriggerHelper.setActionFromExistingNewReport( newRecord , oldRecord );
+            NSP_ReportRequestTriggerHelper.setReportTypeFromInternalClientReport( newRecord , oldRecord );
             newRecord.NSP_ReportLocation__c = HRSCALE_WORKDAY_REPORT_LOCATION;
         }
     }
@@ -134,13 +150,16 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Params : NSP_ReportRequest__c newRecord  - record being inserted or updated
     //          NSP_ReportRequest__c oldRecord  - prior saved record; null on insert
     //
-    private static void setActionFromExistingNewReport(NSP_ReportRequest__c newRecord, NSP_ReportRequest__c oldRecord) {
-        Boolean existingNewReportChanged = newRecord.NSP_Existing_NewReport__c != null
-            && oldRecord?.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c;
-        if (existingNewReportChanged) {
-            if (newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT) {
+    private static void setActionFromExistingNewReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
+        if ( ( newRecord != null )
+            && ( newRecord.NSP_Existing_NewReport__c != null )
+            && ( oldRecord != null )
+            && ( oldRecord.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c )
+            )
+        {
+            if ( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
                 newRecord.NSP_Action__c = NSP_ServiceConstants.WIZARD_DEVELOPMENT;
-                if (newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT) {
+                if ( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
                     newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
                 }
             } else {
@@ -158,12 +177,15 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Params : NSP_ReportRequest__c newRecord  - record being inserted or updated
     //          NSP_ReportRequest__c oldRecord  - prior saved record; null on insert
     //
-    private static void setReportTypeFromInternalClientReport(NSP_ReportRequest__c newRecord, NSP_ReportRequest__c oldRecord) {
-        Boolean internalClientReportChanged = newRecord.NSP_InternalClientReport__c != null
-            && oldRecord?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c;
-        if (internalClientReportChanged) {
-            if (newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT) {
-                if (newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT) {
+    private static void setReportTypeFromInternalClientReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
+        if ( ( newRecord != null )
+            && ( newRecord.NSP_InternalClientReport__c != null )
+            && ( oldRecord != null )
+            && ( oldRecord.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c )
+            )
+        {
+            if ( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
+                if ( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
                     newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
                 }
             } else {
@@ -171,8 +193,6 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             }
         }
     }
-
-
 
     //
     // Description: This method is used to validate completed wizard record before deleting
