@@ -3,8 +3,8 @@
     <fullName>Product_Line__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-      Support_Case__r.Asset.RecordType.DeveloperName = &quot;NSP_Asset_Product&quot;,
-      TEXT(Support_Case__r.Asset.NSP_Product_Line__c),
+      Case__r.Asset.RecordType.DeveloperName = &quot;NSP_Asset_Product&quot;,
+      TEXT(Case__r.Asset.NSP_Product_Line__c),
       &quot;&quot;
   )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

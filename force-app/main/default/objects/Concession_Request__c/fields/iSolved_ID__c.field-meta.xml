@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>iSolved_ID__c</fullName>
     <externalId>false</externalId>
-    <formula>Support_Case__r.iSolved_ID__c</formula>
+    <formula>Case__r.iSolved_ID__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>iSolved ID</label>
     <required>false</required>

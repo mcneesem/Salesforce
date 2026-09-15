@@ -8,17 +8,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Account_Name__c</assignToReference>
+            <assignToReference>$Record.Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Support_Case__r.AccountId</elementReference>
+                <elementReference>$Record.Case__r.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.Client_Contact__c</assignToReference>
+            <assignToReference>$Record.Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Support_Case__r.ContactId</elementReference>
+                <elementReference>$Record.Case__r.ContactId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -61,14 +61,14 @@
             <name>Exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Support_Case__r.Account_Id__c</leftValueReference>
+                <leftValueReference>$Record.Case__r.AccountId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Support_Case__r.ContactId</leftValueReference>
+                <leftValueReference>$Record.Case__r.ContactId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -148,7 +148,7 @@
             <field>Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Support_Case__r.AccountId</elementReference>
+                <elementReference>$Record.Case__r.AccountId</elementReference>
             </value>
         </filters>
         <filters>
@@ -170,7 +170,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Support_Case__c</field>
+            <field>Case__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>

@@ -129,7 +129,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HRCore_Concession_Request_Record_Page</content>
+        <content>Concession_Request_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -137,7 +137,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HRCore_Concession_Request_Record_Page</content>
+        <content>Concession_Request_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -161,7 +161,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Concession Request</label>
     <nameField>
-        <displayFormat>CRR-{0000000000}</displayFormat>
+        <displayFormat>CR-{0000000000}</displayFormat>
         <label>Concession Request ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
