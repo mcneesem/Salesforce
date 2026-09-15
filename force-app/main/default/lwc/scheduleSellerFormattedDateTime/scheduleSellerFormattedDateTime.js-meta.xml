@@ -7,12 +7,11 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="startDateTime" type="DateTime" label="Start Date/Time" role="inputOnly"
-                />
-            <property name="endDateTime" type="DateTime" label="End Date/Time" role="inputOnly"
-                />
+            <property name="startDateTime" type="DateTime" label="Start Date/Time" role="inputOnly"/>
+            <property name="endDateTime" type="DateTime" label="End Date/Time" role="inputOnly"/>
             <property name="timeZoneSidKey" type="String" label="Time Zone" role="inputOnly"
-                description="e.g. America/Los_Angeles, America/Denver, America/Chicago, America/New_York" />
+                description="e.g. America/Los_Angeles, America/Denver, America/Chicago, America/New_York"
+                />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
