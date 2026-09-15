@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customSettingsType>Hierarchy</customSettingsType>
-    <description>Store the values of record types that are to be filtered.</description>
-    <enableFeeds>false</enableFeeds>
-    <label>Filter Asset Record Type</label>
-    <visibility>Public</visibility>
-</CustomObject>
