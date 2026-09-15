@@ -16,17 +16,17 @@
     ( LEN( Why_Why_Not__c ) = 0 ) ,
     ISBLANK( TEXT( Did_Client_Go_To_A_Competitor__c ) ) ,
     AND(
-        TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot;,
+        ISPICKVAL(Did_Client_Go_To_A_Competitor__c, &quot;Yes&quot;),
         ISBLANK( TEXT( Was_A_Bid_Obtained_For_Review__c ) )
     ),
     AND(
-        TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot;,
-        TEXT( Was_A_Bid_Obtained_For_Review__c ) = &quot;Yes&quot;,
-        ISBLANK( What_Was_The_Cost_Savings__c )
+        ISPICKVAL(Did_Client_Go_To_A_Competitor__c, &quot;Yes&quot;),
+        ISPICKVAL(Was_A_Bid_Obtained_For_Review__c, &quot;Yes&quot;),
+        LEN( What_Was_The_Cost_Savings__c ) = 0
     ),
     ISBLANK( TEXT( Leader_Involvement_In_Save_Attempt__c ) ) ,
     AND(
-        TEXT( Leader_Involvement_In_Save_Attempt__c ) = &quot;Yes&quot;,
+        ISPICKVAL(Leader_Involvement_In_Save_Attempt__c, &quot;Yes&quot;),
         ISBLANK( TEXT( What_Level_Leader__c ) )
     ),
     ISBLANK( TEXT( Was_Revolution_With_IIS_An_Option__c ) ) ,

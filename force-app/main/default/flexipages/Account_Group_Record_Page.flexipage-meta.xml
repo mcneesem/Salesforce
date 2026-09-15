@@ -966,8 +966,14 @@
                 <fieldItem>Record.What_Was_The_Cost_Savings__c</fieldItem>
                 <identifier>RecordWhat_Was_The_Cost_Savings_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Was_A_Bid_Obtained_For_Review__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Did_Client_Go_To_A_Competitor__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
