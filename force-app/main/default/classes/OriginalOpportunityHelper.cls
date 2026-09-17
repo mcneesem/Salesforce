@@ -1,5 +1,6 @@
 // intentionally `without sharing` to ensure access to all OrderItem records...
-public class OriginalOpportunityHelper {
+public without sharing class OriginalOpportunityHelper {
+    // test w/ NSP_OrderTriggerHelperTest, NSP_OrderItemTriggerHelperTest, NSP_QuoteTriggerHelper_Test, NSP_ProjBlngTriggerHelperTest (??%)
 
     //
     // Method Name : stampOriginalOpportunityFromAsset
