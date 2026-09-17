@@ -60,6 +60,10 @@
                 <behavior>Edit</behavior>
                 <field>Revised_Amendment_Start_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Original_Opportunity__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
