@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>End_Time__c</field>
-        <value xsi:type="xsd:double">15.5</value>
+        <value xsi:type="xsd:double">13.5</value>
     </values>
     <values>
         <field>Is_Active__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Start_Time__c</field>
-        <value xsi:type="xsd:double">14.5</value>
+        <value xsi:type="xsd:double">12.5</value>
     </values>
     <values>
         <field>Time_Zone__c</field>
