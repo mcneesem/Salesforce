@@ -206,6 +206,11 @@
                 <label>RM - Event - Loyalty (Our Client&apos;s Clients)</label>
             </value>
             <value>
+                <fullName>RM - Event - Loyalty (Sports Marketing)</fullName>
+                <default>false</default>
+                <label>RM - Event - Loyalty (Sports Marketing)</label>
+            </value>
+            <value>
                 <fullName>RM - Event - PCM</fullName>
                 <default>false</default>
                 <label>RM - Event - PCM</label>
