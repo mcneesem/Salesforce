@@ -8,5 +8,5 @@
     NOT(ISBLANK(Portal_Task_Name__c)),
     NOT(ISBLANK(Portal_Event_Name__c))
 )</errorConditionFormula>
-    <errorMessage>Please enter either Portal Task name or Portal Event name</errorMessage>
+    <errorMessage>Please enter either Portal Task Name or Portal Event Name</errorMessage>
 </ValidationRule>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Portal_Task_Action__c</fullName>
-    <description>Added for Dynamic Task</description>
+    <description>See Global Value Set: Portal_Task_Action</description>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Portal Task Action</label>
     <required>false</required>
