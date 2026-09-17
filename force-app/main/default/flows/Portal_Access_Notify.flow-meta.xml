@@ -185,7 +185,6 @@
             <label>Has Send Notification</label>
         </rules>
     </decisions>
-    <description>ADO-627450 Updated Subject and Body on 9/9</description>
     <environments>Default</environments>
     <formulas>
         <name>headerDocumentId</name>
@@ -502,8 +501,8 @@
             &lt;/ol&gt;
         &lt;/ul&gt;
         &lt;p&gt;Once logged in, please complete the required &lt;b&gt;Pre-Transition Setup&lt;/b&gt; tasks on the &lt;b&gt;Progress&lt;/b&gt; tab before your scheduled transition call.&lt;/p&gt;
-&lt;p&gt;Please review the documents available in the &lt;b&gt;Resources&lt;/b&gt; section, as they contain important information to help you prepare for your upcoming transition.&lt;/p&gt;
-&lt;p&gt;If you have any questions or need assistance, please contact your &lt;b&gt;Project Manager&lt;/b&gt;. Their contact information can be found in your &lt;b&gt;Welcome to Insperity: Getting Started email.&lt;/b&gt;&lt;/p&gt;
+        &lt;p&gt;Please review the documents available in the &lt;b&gt;Resources&lt;/b&gt; section, as they contain important information to help you prepare for your upcoming transition.&lt;/p&gt;
+        &lt;p&gt;If you have any questions or need assistance, please contact your &lt;b&gt;Project Manager&lt;/b&gt;. Their contact information can be found in your &lt;b&gt;Welcome to Insperity: Getting Started&lt;/b&gt; email.&lt;/p&gt;
         &lt;p&gt;We&apos;re excited to partner with you and look forward to supporting a smooth and successful implementation experience!.&lt;/p&gt;
         &lt;br/&gt;
     &lt;/div&gt;
@@ -512,7 +511,7 @@
     <textTemplates>
         <name>emailSubject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Welcome to Insperity | ACTION REQUIRED!</text>
+        <text>Welcome to Insperity | ACTION REQUIRED</text>
     </textTemplates>
     <variables>
         <name>faultElement</name>
