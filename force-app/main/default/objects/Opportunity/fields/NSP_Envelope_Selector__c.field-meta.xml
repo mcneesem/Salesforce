@@ -10,7 +10,11 @@
     $Label.NSP_Estimate_Envelope_Configuration ,
     IF(
       NSP_Selected_Template__c == &apos;I9AssistandEVerify&apos; ,
-      $Label.I9_Assist_Envelope_Configuration ,
+      IF(
+        ISPICKVAL( NSP_Client_For_Life__c , &apos;WO/WS&apos; ) ,
+        $Setup.Envelope_Settings__c.I9_Assist_WO_WS__c ,
+        $Setup.Envelope_Settings__c.I9_Assist_Default__c
+      ) ,
       IF(
         OR(
           NSP_Selected_Template__c == &apos;TimeStarHardware&apos; ,
