@@ -448,7 +448,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             opp.OwnerId = this.getOpportunityOwner( subClient );
             opp.NSP_PrimaryProduct__c = this.getPrimaryProduct(  subClient );
             opp.NSP_Client_For_Life__c = 'WO/WS';
-            opp.CloseDate = subclient.NSP_Renewal_Date__c;
+            if ( subClient.NSP_Renewal_Date__c != null ) {
+                opp.CloseDate = subClient.NSP_Renewal_Date__c.addYears( 1 );
+            }
             opp.StageName = 'Preparation';
             opp.Type = 'Renewal';
             opp.Asset__c = subClient.NSP_Asset__c;
