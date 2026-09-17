@@ -13664,6 +13664,10 @@
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Event-Schedule Seller</layout>
+        <recordType>Event.Schedule_Seller</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>FeedItem-Feed Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
