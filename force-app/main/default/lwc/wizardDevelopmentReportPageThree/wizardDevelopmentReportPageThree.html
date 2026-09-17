@@ -4,14 +4,14 @@
       <lightning-messages></lightning-messages>
       <lightning-layout>
       <lightning-layout-item size="7">
-        <div class="slds-m-around_medium"> 
+        <div class="slds-m-around_medium">
       <template if:true={enable_HowIsReportUsed}>
       <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_HowIsReportUsed__c" required ></lightning-input-field>
       </template>
 
      <div class="slds-p-vertical_medium">
-       <div class="slds-form-element slds-form-element_horizontal"> 
-      <label for="NeedcolumnHeading" class="slds-form-element__label"><span class="slds-required" >*</span> What are the column headings needed on this Report ?</label>
+       <div class="slds-form-element slds-form-element_horizontal">
+      <label for="NeedcolumnHeading" class="slds-form-element__label"><span class="slds-required" >*</span> What are the column headings needed on this Report?</label>
       <lightning-input-field  id="NeedcolumnHeading" required field-name="NSP_NeedcolumnHeading__c" variant="label-hidden"></lightning-input-field>
      </div>
      </div>
@@ -25,33 +25,33 @@
     <div class="slds-p-vertical_medium" >
       <lightning-input-field field-name="NSP_HowToSort__c" required></lightning-input-field>
     </div>
-     
+
      <div class="slds-p-vertical_medium">
       <template if:true={reportSepartedSortOption.data}>
-        <div class="slds-form-element slds-form-element_horizontal">       
+        <div class="slds-form-element slds-form-element_horizontal">
           <lightning-radio-group name="reportSepartedSort" id="reportSepartedSort"
-          label="Should this report be separated by the first sort ?"
+          label="Should this report be separated by the first sort?"
           options={reportSepartedSortOption.data.values}
           value={selectedReportSepartedSort}
           onchange={handleChange}
           required
           type="radio">
           </lightning-radio-group>
-        </div> 
+        </div>
       </template>
     </div>
-     
+
     <div style='display:none'>
       <lightning-input-field class="slds-hidden" field-name="NSP_IsReportSeparatedbytheFirstSort__c"  value={selectedReportSepartedSort} required> </lightning-input-field>
-      <lightning-input-field class="slds-hidden" field-name="NSP_LastSavedPageNumber__c" value={pageNumber} > </lightning-input-field> 
+      <lightning-input-field class="slds-hidden" field-name="NSP_LastSavedPageNumber__c" value={pageNumber} > </lightning-input-field>
       <lightning-input-field class="slds-hidden" field-name="NSP_OutputFormatToProduced__c" value={selectedOutputFormat} required> </lightning-input-field>
      </div>
-  
+
   <div class="slds-p-vertical_medium">
      <template if:true={outputFormatOption.data}>
-      <div class="slds-form-element slds-form-element_horizontal">  
+      <div class="slds-form-element slds-form-element_horizontal">
         <lightning-radio-group name="outputformat" id="outputformat"
-        label="What format is the Report output to be produced ?"  
+        label="What format is the Report output to be produced?"
         options={outputFormatOption.data.values}
         value={selectedOutputFormat}
         onchange={handleChange}
@@ -75,15 +75,15 @@
     <c-wizard-file-upload re-req-id={reReqId}> </c-wizard-file-upload>
     </div>
    <!--<c-test-file-upload re-req-id={reReqId}> </c-test-file-upload>-->
-   
+
   </lightning-layout-item>
 
  </lightning-layout>
 
   <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
-      <lightning-button variant="brand" 
+      <lightning-button variant="brand"
       label="Previous"
-      onclick={handlePrev} 
+      onclick={handlePrev}
       class="slds-m-top_small slds-m-left_small"
       ></lightning-button>
 
@@ -92,14 +92,14 @@
       label="Save and Exit"
       onclick={handleSave}>
     </lightning-button>
-    
+
       <lightning-button
-          variant="brand" 
+          variant="brand"
           class="slds-m-top_small slds-m-left_small"
           type="submit"
           label="Submit">
       </lightning-button>
   </div>
-  </lightning-record-edit-form>  
-  </div>  
+  </lightning-record-edit-form>
+  </div>
 </template>

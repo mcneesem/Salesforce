@@ -5,7 +5,7 @@ import { LABEL } from './constants';
 
 export default class WizardHomePage extends LightningElement {
     objectApiName;
-  
+
     @wire(getObjectInfo, { objectApiName: REPORT_REQUEST_OBJ })
     objectInfo;
 
@@ -22,16 +22,19 @@ export default class WizardHomePage extends LightningElement {
                 let recordType={...eachValues};
 
                 if(eachValues.name.includes(LABEL.wizardRecordType)){
-                  recordType.name=LABEL.wizardReportName;                  
+                  recordType.name=LABEL.wizardReportName;
                 }
                 if(eachValues.name.includes(LABEL.wizardSeperationRecordType)){
-                  recordType.name=LABEL.wizardSeperationRequest;                  
+                  recordType.name=LABEL.wizardSeperationRequest;
                 }
-                
+                if (eachValues.name.includes(LABEL.wizardHRScaleRecordType)) {
+                  recordType.name = LABEL.wizardHRScaleReportName;
+                }
+
                 recordTypes.push(recordType);
               }
            });
-           
+
            return JSON.parse(JSON.stringify(recordTypes));;
         }
       }
@@ -41,7 +44,7 @@ export default class WizardHomePage extends LightningElement {
     handleCloseModal(){
 
         const draftWizard = this.template.querySelector('c-handle-draft-wizards');
-        draftWizard.refreshdraft();  
+        draftWizard.refreshdraft();
        // this.showDrafts = true ;
     }
 }

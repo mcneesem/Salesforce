@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestTriggerHelper {
-    // test w/ NSP_ReportRequestTriggerHelperTest (79%)
+    // test w/ NSP_ReportRequestTriggerHelperTest (89%)
 
     private static final String UNDER_40 = 'Under 40';
     private static final String OVER_40 = 'Over 40';
@@ -55,6 +55,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
 
     public void beforeInsertDirector( List<NSP_ReportRequest__c> newList , Map<Id,NSP_ReportRequest__c> oldMap ) {
         Id recordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_DevelopmentReport' );
+        Id hrScaleRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'HRScale_Workday_Report' );
         for ( NSP_ReportRequest__c eachRepoReq : newList ) {
             if ( ( recordTypeId != null ) && ( eachRepoReq.RecordTypeId == recordTypeId ) ) {
                 if ( ( eachRepoReq.NSP_Existing_NewReport__c != null )
@@ -96,6 +97,96 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                         eachRepoReq.NSP_Misc__c = NSP_ServiceConstants.NON_WIRE;
                     }
                 }
+            } else if ( ( hrScaleRecordTypeId != null )
+                && ( eachRepoReq.RecordTypeId == hrScaleRecordTypeId )
+                )
+            {
+                NSP_ReportRequestTriggerHelper.processHRScaleBeforeInsertDirector(
+                    eachRepoReq ,
+                    oldMap ,
+                    hrScaleRecordTypeId
+                );
+            }
+        }
+    }
+
+    //
+    // MethodName : processHRScaleBeforeInsertDirector
+    // Description : Entry point for HRScale (Workday) Report field automation on before-insert and
+    //               before-update. Guards that the record is non-null and belongs to the HRScale
+    //               record type, resolves the prior saved record once, then delegates field-level
+    //               logic to setActionFromExistingNewReport and setReportTypeFromInternalClientReport
+    //               before enforcing NSP_ReportLocation__c to the fixed HRScale value.
+    // Params : NSP_ReportRequest__c newRecord      - record being inserted or updated
+    //          Map<Id,NSP_ReportRequest__c> oldMap - prior field values; empty map on insert
+    //          Id hrScaleRecordTypeId              - record type Id for HRScale_Workday_Report
+    //
+    private static void processHRScaleBeforeInsertDirector(
+        NSP_ReportRequest__c newRecord ,
+        Map<Id,NSP_ReportRequest__c> oldMap ,
+        Id hrScaleRecordTypeId
+        )
+    {
+        if ( ( newRecord != null )
+            && ( hrScaleRecordTypeId != null )
+            && ( newRecord.RecordTypeId == hrScaleRecordTypeId )
+            )
+        {
+            NSP_ReportRequest__c oldRecord = ( ( ( oldMap != null ) && !oldMap.isEmpty() ) ? oldMap.get( newRecord.Id ) : null );
+            NSP_ReportRequestTriggerHelper.setActionFromExistingNewReport( newRecord , oldRecord );
+            NSP_ReportRequestTriggerHelper.setReportTypeFromInternalClientReport( newRecord , oldRecord );
+            newRecord.NSP_ReportLocation__c = 'HRScale (Workday) Report';
+        }
+    }
+
+    //
+    // MethodName : setActionFromExistingNewReport
+    // Description : Sets NSP_Action__c based on a change to NSP_Existing_NewReport__c.
+    //               On insert (oldRecord is null) or when the value differs from the prior saved
+    //               value, sets Action to WIZARD_DEVELOPMENT for New Report or WIZARD_MAINTENANCE
+    //               for existing. Also auto-populates NSP_ReportType__c when the report is both
+    //               New and Internal.
+    // Params : NSP_ReportRequest__c newRecord  - record being inserted or updated
+    //          NSP_ReportRequest__c oldRecord  - prior saved record; null on insert
+    //
+    private static void setActionFromExistingNewReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
+        if ( ( newRecord != null )
+            && ( newRecord.NSP_Existing_NewReport__c != null )
+            && ( oldRecord?.NSP_Existing_NewReport__c != newRecord.NSP_Existing_NewReport__c )
+            )
+        {
+            if ( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
+                newRecord.NSP_Action__c = NSP_ServiceConstants.WIZARD_DEVELOPMENT;
+                if ( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
+                    newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
+                }
+            } else {
+                newRecord.NSP_Action__c = NSP_ServiceConstants.WIZARD_MAINTENANCE;
+            }
+        }
+    }
+
+    //
+    // MethodName : setReportTypeFromInternalClientReport
+    // Description : Sets or clears NSP_ReportType__c based on a change to NSP_InternalClientReport__c.
+    //               On insert (oldRecord is null) or when the value differs from the prior saved
+    //               value, sets NSP_ReportType__c to INTERNAL_CLIENT_REPORT when the report is
+    //               both Internal and New; clears it for any other report type selection.
+    // Params : NSP_ReportRequest__c newRecord  - record being inserted or updated
+    //          NSP_ReportRequest__c oldRecord  - prior saved record; null on insert
+    //
+    private static void setReportTypeFromInternalClientReport( NSP_ReportRequest__c newRecord , NSP_ReportRequest__c oldRecord ) {
+        if ( ( newRecord != null )
+            && ( newRecord.NSP_InternalClientReport__c != null )
+            && ( oldRecord?.NSP_InternalClientReport__c != newRecord.NSP_InternalClientReport__c )
+            )
+        {
+            if ( newRecord.NSP_InternalClientReport__c == NSP_ServiceConstants.INTERNAL_REPORT ) {
+                if ( newRecord.NSP_Existing_NewReport__c == NSP_ServiceConstants.NEW_REPORT ) {
+                    newRecord.NSP_ReportType__c = NSP_ServiceConstants.INTERNAL_CLIENT_REPORT;
+                }
+            } else {
+                newRecord.NSP_ReportType__c = null;
             }
         }
     }

@@ -6806,6 +6806,30 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <value>Who should the FLSA team reach out to at the client for the FLSA Review? Please provide Client Contact name(s) and phone and/or email information.</value>
     </labels>
     <labels>
+        <fullName>Wizard_HR_Scale_Record_Type</fullName>
+        <categories>Wizard Output Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Wizard HR Scale Record Type</shortDescription>
+        <value>HRScale</value>
+    </labels>
+    <labels>
+        <fullName>Wizard_HR_Scale_Report_Name</fullName>
+        <categories>Wizard Output Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Wizard HR Scale Report Name</shortDescription>
+        <value>Request an HRScale Report</value>
+    </labels>
+    <labels>
+        <fullName>Wizard_HRScale_Report_Subcategory</fullName>
+        <categories>Wizard Output Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Wizard HRScale Report Subcategory</shortDescription>
+        <value>Request - HRScale Customized Report</value>
+    </labels>
+    <labels>
         <fullName>Would_the_client_like_a_FLSA_Exemption</fullName>
         <language>en_US</language>
         <protected>false</protected>
