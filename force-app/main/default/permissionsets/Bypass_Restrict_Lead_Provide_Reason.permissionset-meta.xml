@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_Lead_Provide_Reason</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Lead.NSP_Provide_Reason Rule.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Restrict Lead Provide Reason</label>
+</PermissionSet>
