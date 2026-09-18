@@ -244,7 +244,15 @@ export default class PortalTaskAction extends LightningElement {
     }
 
     get inputButtonLabel() {
-        return ( this.isChecked ? ( this.isToggleable ? "Mark as Pending" : "Completed" ) : "Mark as Completed" );
+        let value =  "Mark as Completed";
+        if ( this.isChecked ) {
+            if ( this.isToggleable ) {
+                value = "Mark as Pending";
+            } else {
+                value = "Completed";
+            }
+        }
+        return value;
     }
 
     get inputButtonVariant() {
