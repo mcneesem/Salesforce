@@ -3750,6 +3750,14 @@
         <name>ManageMobile</name>
     </userPermissions>
     <userPermissions>
+        <enabled>false</enabled>
+        <name>ManageMobileAppSecurity</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ManagePartners</name>
+    </userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>ManageNetworks</name>
     </userPermissions>
@@ -3840,6 +3848,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageUnlistedGroups</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ManageUserAccessPolicies</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
