@@ -5,6 +5,7 @@
     <description>This validation is created as part of STY-03984. When updating the primary checkbox of Case Contact, The Account on the Case Contact&apos;s Contact Account should match with Case Contact&apos;s case Account.</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.NSP_CaseContactTrigger__c ) ,
+  NOT( $Permission.Bypass_Restrict_Case_Contacts_Primary_Contact ) ,
   NOT( PRIORVALUE( NSP_IsPrimary__c ) ) ,
   NSP_IsPrimary__c ,
   ( NSP_Case__r.AccountId != NSP_Contact__r.AccountId )
