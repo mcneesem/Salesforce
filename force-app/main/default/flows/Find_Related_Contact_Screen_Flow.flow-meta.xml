@@ -412,7 +412,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
+        <description>Prevent DmlExceptions: Closed Cases can not be modified due to Case Validation Rules.</description>
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
         <locationX>732</locationX>
@@ -1007,7 +1007,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Prevent DmlExceptions:  FIELD_CUSTOM_VALIDATION_EXCEPTION: Can&apos;t Reopen the Case that Closed 90 days ago.</description>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Can&apos;t Reopen the Case that Closed 90 days ago.</description>
         <name>Select_Current_Case</name>
         <label>Select Current Case</label>
         <locationX>1139</locationX>
