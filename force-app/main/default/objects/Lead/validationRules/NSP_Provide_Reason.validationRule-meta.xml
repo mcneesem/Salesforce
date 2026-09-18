@@ -3,10 +3,19 @@
     <fullName>NSP_Provide_Reason</fullName>
     <active>true</active>
     <description>If lead status is Nurturing,Unqualified provide reason</description>
-    <errorConditionFormula>AND( $Setup.NSP_Trigger_Switch__c.LeadValidations__c != true, OR(
-AND(ISPICKVAL( Status ,&apos;Nurturing&apos;), ISBLANK(TEXT(NSP_Reason__c))),
-AND(ISPICKVAL( Status ,&apos;Unqualified&apos;), ISBLANK(TEXT(NSP_Reason__c)))
-))</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c ) ,
+  OR(
+    AND(
+      ISPICKVAL( Status , &apos;Nurturing&apos; ) ,
+      ISBLANK( TEXT( NSP_Reason__c ) )
+    ) ,
+    AND(
+      ISPICKVAL( Status , &apos;Unqualified&apos; ) ,
+      ISBLANK( TEXT( NSP_Reason__c ) )
+    )
+  )
+)</errorConditionFormula>
     <errorDisplayField>NSP_Reason__c</errorDisplayField>
     <errorMessage>Please select a Reason.</errorMessage>
 </ValidationRule>
