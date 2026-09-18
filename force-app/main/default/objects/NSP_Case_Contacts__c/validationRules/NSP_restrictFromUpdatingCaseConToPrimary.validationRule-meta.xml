@@ -3,7 +3,11 @@
     <fullName>NSP_restrictFromUpdatingCaseConToPrimary</fullName>
     <active>true</active>
     <description>This validation is created as part of STY-03984. When updating the primary checkbox of Case Contact, The Account on the Case Contact&apos;s Contact Account should match with Case Contact&apos;s case Account.</description>
-    <errorConditionFormula>AND( PRIORVALUE(NSP_IsPrimary__c) = false, NSP_IsPrimary__c = true,  NSP_Case__r.AccountId !=  NSP_Contact__r.AccountId,
-$Setup.NSP_Trigger_Switch__c.NSP_CaseContactTrigger__c != true)</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Setup.NSP_Trigger_Switch__c.NSP_CaseContactTrigger__c ) ,
+  NOT( PRIORVALUE( NSP_IsPrimary__c ) ) ,
+  NSP_IsPrimary__c ,
+  ( NSP_Case__r.AccountId != NSP_Contact__r.AccountId )
+)</errorConditionFormula>
     <errorMessage>Contact is not associated with this account. Please remove it.</errorMessage>
 </ValidationRule>
