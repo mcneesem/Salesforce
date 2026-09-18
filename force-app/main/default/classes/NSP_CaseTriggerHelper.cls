@@ -1,5 +1,5 @@
 public class NSP_CaseTriggerHelper {
-    // test w/ NSP_CaseTriggerHelperTest (77%)
+    // test w/ NSP_CaseTriggerHelperTest (78%)
 
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
     public static string QUEUE_TYPE       = 'Queue';
@@ -1194,7 +1194,8 @@ Date        : 30/09/2021
             Set<String> assetRecTypeSet       = new Set<String>( catSubCatMap.values() );
             Map<String,Id> activeAssetMap     = new Map<String,Id>();
             Map<String,Id> terminatedAssetMap = new Map<String,Id>();
-            this.buildAssetLookupMaps( accIdSet , assetRecTypeSet , activeAssetMap , terminatedAssetMap );
+            Set<Id> assetRecTypeIdSet = this.getAssetRecordTypeIds(assetRecTypeSet);
+            this.buildAssetLookupMaps( accIdSet , assetRecTypeIdSet , activeAssetMap , terminatedAssetMap );
             for ( Case cse : caseList ) {
                 cse.AssetId = this.resolveAssetId( cse , catSubCatMap , activeAssetMap , terminatedAssetMap );
             }
@@ -1204,6 +1205,17 @@ Date        : 30/09/2021
         } catch ( Exception e ) {
             NSP_CaseTriggerHelper.handleException( e , 'autoPopulateAsset' );
         }
+    }
+
+    private Set<Id> getAssetRecordTypeIds( Set<String> assetRecTypeSet ) {
+        Set<Id> assetRecTypeIdSet = new Set<Id>();
+        if( !assetRecTypeSet?.isEmpty() ) {
+            for( String assetRecTypeName : assetRecTypeSet ) {
+                assetRecTypeIdSet.add(NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecTypeName));
+            }
+        }
+
+        return assetRecTypeIdSet;
     }
 
     // @description Builds map from "category;subcategory" key to asset record type name.
@@ -1248,17 +1260,11 @@ Date        : 30/09/2021
     // @param terminatedAssetMap Populated with most recently terminated assets keyed by "recordTypeName-accountId".
     private void buildAssetLookupMaps(
         Set<Id> accIdSet ,
-        Set<String> assetRecTypeSet ,
+        Set<Id> assetRecTypeIdSet ,
         Map<String,Id> activeAssetMap ,
         Map<String,Id> terminatedAssetMap
         )
     {
-        Set<Id> assetRecTypeIdSet = new Set<Id>();
-        if( !assetRecTypeSet?.isEmpty() ) {
-            for( String assetRecTypeName : assetRecTypeSet ) {
-                assetRecTypeIdSet.add(NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecTypeName));
-            }
-        }
         if ( !accIdSet?.isEmpty() && !assetRecTypeIdSet?.isEmpty() ) {
             List<String> excludedAccountStatuses = new List<String>{
                 NSP_ServiceConstants.TERMINATED ,
