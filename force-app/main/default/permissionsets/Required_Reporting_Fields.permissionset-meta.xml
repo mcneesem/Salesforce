@@ -243,6 +243,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.Account_Contact_Relationship_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.Active_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1383,12 +1388,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Leave_Payment__c.Leave_Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leave_Supporting_Documentation__c.Leave_Supporting_Documentation_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Leave__c.Benefits_Terminated_For_Exhaustion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Leave__c.Benefits_Terminated_For_Non_Payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leave__c.Leave_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2099,6 +2119,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Sub_Client_Contact_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
