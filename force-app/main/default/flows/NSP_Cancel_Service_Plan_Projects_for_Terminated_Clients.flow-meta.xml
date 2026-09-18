@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Add_ProjectIds_to_List</name>
-        <label>Add ProjectIds to List</label>
-        <locationX>176</locationX>
-        <locationY>600</locationY>
+        <name>Cancel_Project_Task</name>
+        <label>Cancel Project Task</label>
+        <locationX>754</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
-            <assignToReference>ProjectIds</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>canceledProjectTask.pse__Status__c</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>Loop_Projects.Id</elementReference>
+                <stringValue>Canceled</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_Projects</targetReference>
+            <targetReference>Collect_Canceled_Project_Tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Collect_Canceled_Project_Tasks</name>
+        <label>Collect Canceled Project Tasks</label>
+        <locationX>754</locationX>
+        <locationY>1140</locationY>
+        <assignmentItems>
+            <assignToReference>canceledProjectTasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>canceledProjectTask</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Related_Project_Tasks</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_PEO_Projects</name>
         <label>Set Fault Element: Get_PEO_Projects</label>
-        <locationX>1408</locationX>
+        <locationX>2338</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -35,10 +52,44 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Related_Project_Tasks</name>
+        <label>Set Fault Element: Get_Related_Project_Tasks</label>
+        <locationX>1810</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Related_Project_Tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Canceled_Project_Tasks</name>
+        <label>Set Fault Element: Update_Canceled_Project_Tasks</label>
+        <locationX>666</locationX>
+        <locationY>1632</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Canceled_Project_Tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Update_Project_Related_Milestones</name>
         <label>Set Fault Element: Update_Project_Related_Milestones</label>
-        <locationX>616</locationX>
-        <locationY>1008</locationY>
+        <locationX>1546</locationX>
+        <locationY>2106</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -52,27 +103,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Update_Project_Related_Project_Tasks</name>
-        <label>Set Fault Element: Update_Project_Related_Project_Tasks</label>
-        <locationX>880</locationX>
-        <locationY>900</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Project_Related_Project_Tasks</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Update_Project_Status_To_Cancelled</name>
         <label>Set Fault Element: Update_Project_Status_To_Cancelled</label>
-        <locationX>352</locationX>
-        <locationY>1116</locationY>
+        <locationX>1282</locationX>
+        <locationY>2214</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -85,14 +119,80 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Prevent DmlExceptions from Validation Rule pse__Project_Task__c.pse__Actual_Start_Must_Be_Before_End
+~ Error Condition Formula: pse__Actual_End_Date_Time__c &lt; pse__Actual_Start_Date_Time__c</description>
+        <name>Check_Actual_End_Date_Time</name>
+        <label>Check Actual End Date &amp; Time</label>
+        <locationX>886</locationX>
+        <locationY>924</locationY>
+        <defaultConnector>
+            <targetReference>Iterate_Related_Project_Tasks</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Actual_End_Date_Time</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Related_Project_Tasks.pse__Actual_End_Date_Time__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Iterate_Related_Project_Tasks.pse__Actual_Start_Date_Time__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancel_Project_Task</targetReference>
+            </connector>
+            <label>Valid Actual End Date &amp; Time</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Canceled_Project_Tasks</name>
+        <label>Check Canceled Project Tasks</label>
+        <locationX>666</locationX>
+        <locationY>1416</locationY>
+        <defaultConnector>
+            <targetReference>Update_Project_Related_Milestones</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Canceled_Project_Tasks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>canceledProjectTasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>canceledProjectTasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Canceled_Project_Tasks</targetReference>
+            </connector>
+            <label>Has Canceled Project Tasks</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Projects</name>
         <label>Check Projects</label>
-        <locationX>616</locationX>
+        <locationX>1480</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Projects</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_PEO_Projects</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_PEO_Projects</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -101,26 +201,58 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Loop_Projects</targetReference>
+                <targetReference>Related_PEO_Projects</targetReference>
             </connector>
             <label>Has Projects</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Related_Project_Tasks</name>
+        <label>Check Related Project Tasks</label>
+        <locationX>886</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>Update_Project_Related_Milestones</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Related_Project_Tasks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Related_Project_Tasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Related_Project_Tasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Related_Project_Tasks</targetReference>
+            </connector>
+            <label>Has Related Project Tasks</label>
         </rules>
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Cancel Service Plan Projects for Terminated Clients {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Cancel Service Plan Projects for Terminated Clients</label>
     <loops>
-        <name>Loop_Projects</name>
-        <label>Loop Projects</label>
-        <locationX>88</locationX>
-        <locationY>492</locationY>
-        <collectionReference>Get_PEO_Projects</collectionReference>
+        <name>Iterate_Related_Project_Tasks</name>
+        <label>Iterate Related Project Tasks</label>
+        <locationX>666</locationX>
+        <locationY>816</locationY>
+        <collectionReference>Get_Related_Project_Tasks</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Add_ProjectIds_to_List</targetReference>
+            <targetReference>Check_Actual_End_Date_Time</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Project_Related_Project_Tasks</targetReference>
+            <targetReference>Check_Canceled_Project_Tasks</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -143,9 +275,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>&quot;PEO Project&quot; Record Type (Id=0124x0000019lA2AAI)</description>
         <name>Get_PEO_Projects</name>
         <label>Get PEO Projects</label>
-        <locationX>616</locationX>
+        <locationX>1480</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -175,11 +308,69 @@
         <queriedFields>NSP_Cancelled_Reason__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Related_Project_Tasks</name>
+        <label>Get Related Project Tasks</label>
+        <locationX>886</locationX>
+        <locationY>600</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Related_Project_Tasks</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Related_Project_Tasks</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>Related_PEO_Projects</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed - Moved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Canceled</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>pse__Project_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Canceled_Project_Tasks</name>
+        <label>Update Canceled Project Tasks</label>
+        <locationX>402</locationX>
+        <locationY>1524</locationY>
+        <connector>
+            <targetReference>Update_Project_Related_Milestones</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Canceled_Project_Tasks</targetReference>
+        </faultConnector>
+        <inputReference>canceledProjectTasks</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Project_Related_Milestones</name>
         <label>Update Project Related Milestones</label>
-        <locationX>88</locationX>
-        <locationY>900</locationY>
+        <locationX>886</locationX>
+        <locationY>1998</locationY>
         <connector>
             <targetReference>Update_Project_Status_To_Cancelled</targetReference>
         </connector>
@@ -191,7 +382,7 @@
             <field>pse__Project__c</field>
             <operator>In</operator>
             <value>
-                <elementReference>ProjectIds</elementReference>
+                <elementReference>Related_PEO_Projects</elementReference>
             </value>
         </filters>
         <filters>
@@ -217,58 +408,10 @@
         <object>pse__Milestone__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Project_Related_Project_Tasks</name>
-        <label>Update Project Related Project Tasks</label>
-        <locationX>88</locationX>
-        <locationY>792</locationY>
-        <connector>
-            <targetReference>Update_Project_Related_Milestones</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Project_Related_Project_Tasks</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>pse__Project__c</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>ProjectIds</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Cancelled</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed - Moved</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>pse__Status__c</field>
-            <value>
-                <stringValue>Cancelled</stringValue>
-            </value>
-        </inputAssignments>
-        <object>pse__Project_Task__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Project_Status_To_Cancelled</name>
         <label>Update Project Status To Cancelled</label>
-        <locationX>88</locationX>
-        <locationY>1008</locationY>
+        <locationX>886</locationX>
+        <locationY>2106</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Project_Status_To_Cancelled</targetReference>
         </faultConnector>
@@ -277,7 +420,7 @@
             <field>Id</field>
             <operator>In</operator>
             <value>
-                <elementReference>ProjectIds</elementReference>
+                <elementReference>Related_PEO_Projects</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -295,10 +438,10 @@
         <object>pse__Proj__c</object>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>639</locationX>
         <locationY>0</locationY>
         <filterFormula>AND(
-  {!$Record.RecordType.DeveloperName} = &apos;WO&apos; ,
+  ( {!$Record.RecordTypeId} = &apos;0124x000000yRuzAAE&apos; ) ,
   NOT( ISNULL( {!$Record.AccountId} ) ) ,
   NOT( ISNULL( {!$Record.NSP_Account_Status_Date__c} ) ) ,
   ISPICKVAL( {!$Record.NSP_Account_Status__c} , &apos;Terminated&apos; ) ,
@@ -324,8 +467,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>352</locationX>
-        <locationY>1224</locationY>
+        <locationX>1282</locationX>
+        <locationY>2322</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -346,12 +489,42 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>ProjectIds</name>
+    <transforms>
+        <name>Related_PEO_Projects</name>
+        <label>Related PEO Projects</label>
+        <locationX>886</locationX>
+        <locationY>492</locationY>
+        <connector>
+            <targetReference>Get_Related_Project_Tasks</targetReference>
+        </connector>
         <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_PEO_Projects[$EachItem].Id</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <variables>
+        <name>canceledProjectTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Project_Task__c</objectType>
+    </variables>
+    <variables>
+        <name>canceledProjectTasks</name>
+        <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <objectType>pse__Project_Task__c</objectType>
     </variables>
     <variables>
         <name>varFaultElement</name>
