@@ -5,6 +5,7 @@
     <description>If lead status is Nurturing,Unqualified provide reason</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.LeadValidations__c ) ,
+  NOT( $Permission.Bypass_Restrict_Lead_Provide_Reason ) ,
   OR(
     AND(
       ISPICKVAL( Status , &apos;Nurturing&apos; ) ,
