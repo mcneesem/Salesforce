@@ -211,7 +211,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
+        <description>Prevent DmlExceptions: Closed Cases can not be modified due to Case Validation Rules.</description>
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
         <locationX>314</locationX>
@@ -435,7 +435,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Cases created from Email-to-Case require a Category and Subcategory.</description>
+        <description>Prevent DmlExceptions: Cases created from Email-to-Case require a Category and Subcategory.</description>
         <name>Check_Related_Validation_Rules</name>
         <label>Check Related Validation Rules</label>
         <locationX>314</locationX>
