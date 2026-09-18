@@ -1601,7 +1601,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SDR__c</fieldItem>
                 <identifier>RecordNSP_SDR_cField</identifier>
