@@ -1175,7 +1175,12 @@ Date        : 30/09/2021
 
     }
 
-    // This method describes about the auto population of Asset on Case based on Category subcategory Mapping sheet
+    // @description Resolves and assigns Asset to Cases based on category/subcategory mapping.
+    // @param caseList Cases to process.
+    // @param categorySet Case categories to match.
+    // @param subCategorySet Case subcategories to match.
+    // @param accIdSet Account Ids from the cases.
+    // @param isInsert True when running in before-insert context.
     public void autoPopulateAsset(
         List<Case> caseList ,
         Set<String> categorySet ,
@@ -1185,91 +1190,166 @@ Date        : 30/09/2021
         )
     {
         try {
-            Set<String> catsubCatAssetRecTypeSet = new Set<String>();
-            Map<String,String> catSubCatStringAssetRecTypeMap = new Map<String,String>();
-            Map<String,Id> assetRecTypeAssetIdMap = new Map<String,Id>();
-            List<String> listofValues = new List<String>{
+            Map<String,String> catSubCatMap   = this.buildCategoryAssetRecordTypeMap( categorySet , subCategorySet );
+            Set<String> assetRecTypeSet       = new Set<String>( catSubCatMap.values() );
+            Map<String,Id> activeAssetMap     = new Map<String,Id>();
+            Map<String,Id> terminatedAssetMap = new Map<String,Id>();
+            this.buildAssetLookupMaps( accIdSet , assetRecTypeSet , activeAssetMap , terminatedAssetMap );
+            for ( Case cse : caseList ) {
+                cse.AssetId = this.resolveAssetId( cse , catSubCatMap , activeAssetMap , terminatedAssetMap );
+            }
+            if ( isInsert ) {
+                this.clearFlsaSubCategoryIfApplicable( caseList );
+            }
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException( e , 'autoPopulateAsset' );
+        }
+    }
+
+    // @description Builds map from "category;subcategory" key to asset record type name.
+    // @param categorySet Categories to filter.
+    // @param subCategorySet Subcategories to filter.
+    // @return Map keyed by "category;subcategory" to asset record type name.
+    private Map<String,String> buildCategoryAssetRecordTypeMap(
+        Set<String> categorySet ,
+        Set<String> subCategorySet
+        )
+    {
+        Map<String,String> catSubCatMap = new Map<String,String>();
+        if( categorySet != null  && subCategorySet != null ) {
+            for ( NSP_Category_Sub_Category_Mapping__c mapping : [
+                SELECT
+                NSP_Category__c ,
+                NSP_Subcategory__c ,
+                NSP_Asset_Record_Types__c
+                FROM NSP_Category_Sub_Category_Mapping__c
+                WHERE (
+                    ( NSP_Category__c IN :categorySet )
+                    AND ( NSP_Subcategory__c IN :subCategorySet )
+                    )
+                    ]
+                )
+            {
+                catSubCatMap.put(
+                    mapping.NSP_Category__c + ';' + mapping.NSP_Subcategory__c ,
+                    mapping.NSP_Asset_Record_Types__c
+                );
+            }
+        }
+        return catSubCatMap;
+    }
+
+    // @description Populates active and terminated asset lookup maps from a single query.
+    //              ORDER BY NSP_Termination_Date__c DESC NULLS LAST places terminated records
+    //              first, so the first terminated record per key is the most recently terminated.
+    // @param accIdSet Account Ids to query.
+    // @param assetRecTypeSet Asset record type names to include.
+    // @param activeAssetMap Populated with active assets keyed by "recordTypeName-accountId".
+    // @param terminatedAssetMap Populated with most recently terminated assets keyed by "recordTypeName-accountId".
+    private void buildAssetLookupMaps(
+        Set<Id> accIdSet ,
+        Set<String> assetRecTypeSet ,
+        Map<String,Id> activeAssetMap ,
+        Map<String,Id> terminatedAssetMap
+        )
+    {
+        Set<Id> assetRecTypeIdSet = new Set<Id>();
+        if( !assetRecTypeSet?.isEmpty() ) {
+            for( String assetRecTypeName : assetRecTypeSet ) {
+                assetRecTypeIdSet.add(NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecTypeName));
+            }
+        }
+        if ( !accIdSet?.isEmpty() && !assetRecTypeIdSet?.isEmpty() ) {
+            List<String> excludedAccountStatuses = new List<String>{
                 NSP_ServiceConstants.TERMINATED ,
                 NSP_ServiceConstants.BACKOUT
             };
-            for ( NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [
-                        SELECT
-                            Id ,
-                            Name ,
-                            NSP_Category__c ,
-                            NSP_Subcategory__c ,
-                            NSP_Asset_Record_Types__c ,
-                            NSP_UserTitle__c ,
-                            NSP_RecordType__c
-                        FROM NSP_Category_Sub_Category_Mapping__c
-                        WHERE (
-                            ( NSP_Category__c IN :categorySet )
-                            AND ( NSP_Subcategory__c IN :subCategorySet )
-                        )
-                    ]
-                )
-            {
-                catSubCatStringAssetRecTypeMap.put(
-                    catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c ,
-                    catSubCatMapping.NSP_Asset_Record_Types__c
-                );
-                catsubCatAssetRecTypeSet.add( catSubCatMapping.NSP_Asset_Record_Types__c );
-            }
-            for ( Asset asst : [
+            for ( Asset assetRecord : [
                         SELECT
                             Id ,
                             AccountId ,
-                            RecordTypeId ,
                             RecordType.Name ,
-                            NSP_Account_Status__c
+                            NSP_Account_Status__c ,
+                            NSP_Termination_Date__c
                         FROM Asset
                         WHERE (
                             ( AccountId IN :accIdSet )
+                            AND ( RecordTypeId IN :assetRecTypeIdSet )
                             AND (
-                                Status IN (
-                                    'Active' ,
-                                    'Onboarding' ,
-                                    'On Demand'
+                                (
+                                    Status IN ( 'Active' , 'Onboarding' , 'On Demand' )
+                                    AND NSP_Account_Status__c NOT IN :excludedAccountStatuses
                                 )
+                                OR NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED
                             )
-                            AND ( RecordType.Name IN :catsubCatAssetRecTypeSet )
-                            AND ( NSP_Account_Status__c NOT IN :(listofValues) )
                         )
+                        ORDER BY NSP_Termination_Date__c DESC NULLS LAST , LastModifiedDate DESC
                     ]
                 )
             {
-                assetRecTypeAssetIdMap.put(
-                    asst.RecordType.Name + '-' + asst.AccountId ,
-                    asst.Id
-                );
-            }
-            for ( Case cse : CaseList ) {
-                if ( !catSubCatStringAssetRecTypeMap.isEmpty()
-                    && !assetRecTypeAssetIdMap.isEmpty()
-                    )
-                {
-                    cse.AssetId = assetRecTypeAssetIdMap.get(
-                        catSubCatStringAssetRecTypeMap.get(
-                            cse.NSP_Category__c + ';' + cse.NSP_SubCategory__c
-                        ) + '-' + cse.AccountId
-                    );
-                } else {
-                    cse.AssetId = null;
+                String key = this.buildAssetKey( assetRecord.RecordType.Name , assetRecord.AccountId );
+                if ( assetRecord.NSP_Account_Status__c == NSP_ServiceConstants.TERMINATED ) {
+                    if ( terminatedAssetMap != null &&  !terminatedAssetMap.containsKey( key ) ) {
+                        terminatedAssetMap.put( key , assetRecord.Id );
+                    }
+                } else if( activeAssetMap != null ){
+                    activeAssetMap.put( key , assetRecord.Id );
                 }
-                if ( isInsert
-                    && ( cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY )
-                    && ( cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                    )
+            }
+        }
+    }
+
+    // @description Resolves the Asset Id for a Case using active then terminated fallback.
+    // @param cse Case to evaluate.
+    // @param catSubCatMap Category/subcategory to asset record type map.
+    // @param activeAssetMap Active asset lookup map.
+    // @param terminatedAssetMap Terminated asset fallback lookup map.
+    // @return Asset Id, or null if no match found.
+    private Id resolveAssetId(
+        Case cse ,
+        Map<String,String> catSubCatMap ,
+        Map<String,Id> activeAssetMap ,
+        Map<String,Id> terminatedAssetMap
+        )
+    {
+        Id resolvedAssetId = null;
+        String assetRecType = catSubCatMap?.get( cse.NSP_Category__c + ';' + cse.NSP_SubCategory__c );
+        if ( String.isNotBlank( assetRecType ) ) {
+            String key = buildAssetKey( assetRecType , cse.AccountId );
+            if ( activeAssetMap?.containsKey( key ) ) {
+                resolvedAssetId = activeAssetMap.get( key );
+            } else if ( terminatedAssetMap?.containsKey( key ) ) {
+                resolvedAssetId = terminatedAssetMap.get( key );
+            }
+        }
+        return resolvedAssetId;
+    }
+
+    // @description Clears NSP_SubCategory__c for FLSA cases on insert.
+    // @param caseList Cases to evaluate.
+    private List<Case> clearFlsaSubCategoryIfApplicable( List<Case> caseList ) {
+        List<Case> returnCaseList = new List<Case>();
+        if( caseList != null && !caseList.isEmpty() ) {
+             for ( Case cse : caseList ) {
+                if ( cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY
+                && cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI
+                )
                 {
                     cse.NSP_SubCategory__c = '';
+                    returnCaseList.add(cse);
                 }
             }
-        } catch ( Exception e ) {
-            NSP_CaseTriggerHelper.handleException(
-                e ,
-                'autoPopulateAsset'
-            );
         }
+
+        return returnCaseList;
+    }
+
+    // @description Builds the asset lookup key from record type name and account Id.
+    // @param recordTypeName Asset record type name.
+    // @param accountId Account Id.
+    // @return Concatenated key string.
+    private String buildAssetKey( String recordTypeName , Id accountId ) {
+        return recordTypeName + '-' + accountId;
     }
 
     // update contact support role from ACR
