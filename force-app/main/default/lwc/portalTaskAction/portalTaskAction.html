@@ -18,7 +18,22 @@
             </template>
             <template lwc:elseif={showValueInput}>
                 <lightning-layout>
-                    <template lwc:if={showInputDate}>
+                    <template lwc:if={showInputCheckbox}>
+                        <lightning-layout-item flexibility="auto" class="slds-m-bottom_xx-small">
+                            <lightning-button
+                                label={inputButtonLabel}
+                                title={inputButtonLabel}
+                                onclick={handleClickInput}
+                                onfocus={handleFocusInput}
+                                onblur={handleBlurInput}
+                                variant={inputButtonVariant}
+                                disabled={isInputDisabled}
+                                style="max-width: 14.375rem;"
+                                >
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:elseif={showInputDate}>
                         <lightning-layout-item flexibility="auto" class="slds-m-bottom_xx-small">
                             <lightning-input
                                 type="date"
