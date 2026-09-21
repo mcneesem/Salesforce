@@ -486,8 +486,6 @@ public with sharing class NSP_AccountTeamTriggerHelper {
 
     // used to update Asset Fields on after Insert
     public static void updateAssetServiceRegion( List<NSP_Account_Team__c> newAccTeam , Map<Id,NSP_Account_Team__c> oldMap ) {
-        //Get Record Type Id
-        Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
         Set<Id> accIds = new Set<Id>();
         Map<Id, NSP_Account_Team__c> accountTeams = new  Map<Id, NSP_Account_Team__c>();
         //Filter record based on Insert or Update
