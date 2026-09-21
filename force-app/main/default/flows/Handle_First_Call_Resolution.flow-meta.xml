@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Re_Open_Current_Case</name>
         <label>Re-Open Current Case</label>
@@ -210,7 +211,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
+        <description>Prevent DmlExceptions: Closed Cases can not be modified due to Case Validation Rules.</description>
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
         <locationX>314</locationX>
@@ -434,7 +435,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Cases created from Email-to-Case require a Category and Subcategory.</description>
+        <description>Prevent DmlExceptions: Cases created from Email-to-Case require a Category and Subcategory.</description>
         <name>Check_Related_Validation_Rules</name>
         <label>Check Related Validation Rules</label>
         <locationX>314</locationX>
@@ -645,7 +646,7 @@
         </faultConnector>
         <inputReference>relatedCase</inputReference>
     </recordUpdates>
-    <runInMode>SystemModeWithSharing</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
@@ -658,6 +659,14 @@
             <name>Fault_Display_Text</name>
             <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -677,6 +686,14 @@
             <name>showRelatedCase</name>
             <fieldText>&lt;p&gt;Select Case(s) to relate to the current Case.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>RelatedCases</name>
@@ -725,6 +742,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
