@@ -2743,7 +2743,7 @@
         <name>ManageTwoFactor</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageUnlistedGroups</name>
     </userPermissions>
     <userPermissions>

@@ -5577,6 +5577,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
+        <name>ManageUnlistedGroups</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>ManageUserAccessPolicies</name>
     </userPermissions>
     <userPermissions>
