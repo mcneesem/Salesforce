@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Create_Opportunity_Projects</name>
+    </customPermissions>
+    <description>To provide the access , so users can create the Projects and associate to Opportunity from the template</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Opportunity_Screen_Create_Project</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Create Opportunity Projects</label>
+</PermissionSet>
