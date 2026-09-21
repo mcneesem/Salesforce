@@ -18,7 +18,7 @@
             <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
         </connector>
     </assignments>
-    <description>8/26 Update for ADO-626765</description>
+    <description>New Client Portal: Populate Sub Portal Tasks</description>
     <environments>Default</environments>
     <interviewLabel>Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task - Created - Async - Populate Sub Portal Tasks</label>
