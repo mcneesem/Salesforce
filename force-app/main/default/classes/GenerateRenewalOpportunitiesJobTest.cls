@@ -82,7 +82,7 @@ private class GenerateRenewalOpportunitiesJobTest {
     @isTest
     private static void testRenewalOpportunityBatch() {
         Test.startTest();
-        Database.executeBatch(new GenerateRenewalOpportunitiesJob(12, 2026));
+        Database.executeBatch(new GenerateRenewalOpportunitiesJob(12, 2026, null));
         Test.stopTest();
         Integer cnt = [
             SELECT COUNT()
@@ -93,5 +93,24 @@ private class GenerateRenewalOpportunitiesJobTest {
         );
     }
 
+    @isTest
+    private static void testRenewalOpportunityBatchWithClient() {
+        List<NSP_Sub_Client__c> subClients = [
+            SELECT NSP_Client__c
+            FROM NSP_Sub_Client__c
+            WHERE NSP_Client__c != null
+            LIMIT 1
+        ];
+        Set<String> clientNumbers = new Set<String>{ subClients[0].NSP_Client__c };
+
+        Test.startTest();
+        Database.executeBatch( new GenerateRenewalOpportunitiesJob( 12, 2026, clientNumbers ) );
+        Test.stopTest();
+        Integer cnt = [
+            SELECT COUNT()
+            FROM Opportunity
+        ];
+        System.assertEquals( 2, cnt );
+    }
 }
 //

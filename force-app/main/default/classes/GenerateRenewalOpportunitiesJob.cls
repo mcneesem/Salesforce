@@ -1,9 +1,10 @@
 public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ GenerateRenewalOpportunitiesJobTest (87%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (90%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
     private Integer runYear = null;
+    private Set<String> clientNumbers = new Set<String>();
     private String renewalCreated = null;
 
     // Derived eligibility: one year prior selected month
@@ -45,25 +46,25 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     //
 
     public Id run() {
-        return GenerateRenewalOpportunitiesJob.executeBatch( null , null );
+        return GenerateRenewalOpportunitiesJob.executeBatch( null , null , null );
     }
 
     //
     // Batchable
     //
 
-    public static Id executeBatch( Integer monthNum , Integer yearNum ) {
+    public static Id executeBatch( Integer monthNum , Integer yearNum , Set<String> clientNumbers ) {
         Id response = null;
         if ( GenerateRenewalOpportunitiesJob.isEnabled ) {
             response = Database.executeBatch(
-                new GenerateRenewalOpportunitiesJob( monthNum , yearNum ) ,
+                new GenerateRenewalOpportunitiesJob( monthNum , yearNum , clientNumbers ) ,
                 GenerateRenewalOpportunitiesJob.batchSize
             );
         }
         return response;
     }
 
-    public GenerateRenewalOpportunitiesJob( Integer monthNum , Integer yearNum ) {
+    public GenerateRenewalOpportunitiesJob( Integer monthNum , Integer yearNum , Set<String> clientNumbers ) {
         if ( ( monthNum != null ) && ( yearNum != null ) ) {
             this.runMonth = monthNum;
             this.runYear  = yearNum;
@@ -72,6 +73,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             Integer eligibleYear = ( yearNum - 1 );
             this.eligibleStart = Date.newInstance( eligibleYear , monthNum , 1 );
             this.eligibleEnd = this.eligibleStart.addMonths( 1 ).addDays( -1 );
+            if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
+                this.clientNumbers.addAll( clientNumbers );
+            }
         }
     }
 
@@ -82,43 +86,84 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && String.isNotBlank( this.renewalCreated )
             )
         {
-            queryLocator = Database.getQueryLocator(
-                [
-                    SELECT
-                        Id ,
-                        Name ,
-                        NSP_Part_Time_Margin__c ,
-                        NSP_Part_Time_Reserve__c ,
-                        NSP_Account__r.Name ,
-                        NSP_Account_Status__c ,
-                        NSP_Client__c ,
-                        NSP_Sub_Client__c ,
-                        NSP_Renewal_Date__c ,
-                        NSP_Benefit_Package_Name__c ,
-                        NSP_Asset__c ,
-                        NSP_Asset__r.NSP_Sales_Office__c ,
-                        NSP_Asset__r.NSP_Service_Package__c ,
-                        NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
-                        NSP_Asset__r.Status ,
-                        NSP_Account__c ,
-                        NSP_Margin__c ,
-                        NSP_Reserve__c ,
-                        NSP_Actual_Full_Time_EE_Count__c ,
-                        NSP_Actual_Part_Time_EE_Count__c ,
-                        NSP_Actual_Seasonal_Time_EE_Count__c ,
-                        NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c ,
-                        Renewal_Created__c
-                    FROM NSP_Sub_Client__c
-                    WHERE (
-                        ( NSP_Account_Status__c = 'Active' )
-                        AND ( NSP_Renewal_Date__c >= :this.eligibleStart )
-                        AND ( NSP_Renewal_Date__c <= :this.eligibleEnd )
-                        AND ( NSP_Renewal_Date__c != null )
-                        AND ( Renewal_Created__c != :this.renewalCreated )
-                    )
-                    ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
-                ]
-            );
+            if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
+                queryLocator = Database.getQueryLocator(
+                    [
+                        SELECT
+                            Id ,
+                            Name ,
+                            NSP_Part_Time_Margin__c ,
+                            NSP_Part_Time_Reserve__c ,
+                            NSP_Account__r.Name ,
+                            NSP_Account_Status__c ,
+                            NSP_Client__c ,
+                            NSP_Sub_Client__c ,
+                            NSP_Renewal_Date__c ,
+                            NSP_Benefit_Package_Name__c ,
+                            NSP_Asset__c ,
+                            NSP_Asset__r.NSP_Sales_Office__c ,
+                            NSP_Asset__r.NSP_Service_Package__c ,
+                            NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                            NSP_Asset__r.Status ,
+                            NSP_Account__c ,
+                            NSP_Margin__c ,
+                            NSP_Reserve__c ,
+                            NSP_Actual_Full_Time_EE_Count__c ,
+                            NSP_Actual_Part_Time_EE_Count__c ,
+                            NSP_Actual_Seasonal_Time_EE_Count__c ,
+                            NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c ,
+                            Renewal_Created__c
+                        FROM NSP_Sub_Client__c
+                        WHERE (
+                            ( NSP_Account_Status__c = 'Active' )
+                            AND ( NSP_Renewal_Date__c >= :this.eligibleStart )
+                            AND ( NSP_Renewal_Date__c <= :this.eligibleEnd )
+                            AND ( NSP_Renewal_Date__c != null )
+                            AND ( Renewal_Created__c != :this.renewalCreated )
+                            AND ( NSP_Client__c IN :this.clientNumbers )
+                        )
+                        ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
+                    ]
+                );
+            } else {
+                queryLocator = Database.getQueryLocator(
+                    [
+                        SELECT
+                            Id ,
+                            Name ,
+                            NSP_Part_Time_Margin__c ,
+                            NSP_Part_Time_Reserve__c ,
+                            NSP_Account__r.Name ,
+                            NSP_Account_Status__c ,
+                            NSP_Client__c ,
+                            NSP_Sub_Client__c ,
+                            NSP_Renewal_Date__c ,
+                            NSP_Benefit_Package_Name__c ,
+                            NSP_Asset__c ,
+                            NSP_Asset__r.NSP_Sales_Office__c ,
+                            NSP_Asset__r.NSP_Service_Package__c ,
+                            NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
+                            NSP_Asset__r.Status ,
+                            NSP_Account__c ,
+                            NSP_Margin__c ,
+                            NSP_Reserve__c ,
+                            NSP_Actual_Full_Time_EE_Count__c ,
+                            NSP_Actual_Part_Time_EE_Count__c ,
+                            NSP_Actual_Seasonal_Time_EE_Count__c ,
+                            NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c ,
+                            Renewal_Created__c
+                        FROM NSP_Sub_Client__c
+                        WHERE (
+                            ( NSP_Account_Status__c = 'Active' )
+                            AND ( NSP_Renewal_Date__c >= :this.eligibleStart )
+                            AND ( NSP_Renewal_Date__c <= :this.eligibleEnd )
+                            AND ( NSP_Renewal_Date__c != null )
+                            AND ( Renewal_Created__c != :this.renewalCreated )
+                        )
+                        ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
+                    ]
+                );
+            }
         } else {
             // batch requires non-null query locator even when the inputs are null...
             queryLocator = Database.getQueryLocator(
