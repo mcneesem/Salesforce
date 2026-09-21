@@ -1321,7 +1321,7 @@ Date        : 30/09/2021
         Id resolvedAssetId = null;
         String assetRecType = catSubCatMap?.get( cse.NSP_Category__c + ';' + cse.NSP_SubCategory__c );
         if ( String.isNotBlank( assetRecType ) ) {
-            String key = buildAssetKey( assetRecType , cse.AccountId );
+            String key = this.buildAssetKey( assetRecType , cse.AccountId );
             if ( activeAssetMap?.containsKey( key ) ) {
                 resolvedAssetId = activeAssetMap.get( key );
             } else if ( terminatedAssetMap?.containsKey( key ) ) {
