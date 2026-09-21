@@ -14637,6 +14637,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
+        <name>ManagePreferenceCenter</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>ManageProfilesPermissionsets</name>
     </userPermissions>
     <userPermissions>
