@@ -176,7 +176,7 @@ export function isFieldVisibleForObject(fieldName, line, conn, objectName)
 export function onBeforeCalculate(quote, lines, conn)
 {
     //debugger;
-    return conn.query("SELECT ProductCode__c, DeltaCalcOnAmendment__c FROM CPQ_CustomScript_Config__mdt WHERE DeltaCalcOnAmendment__c = true")
+    return conn.query("SELECT ProductCode__c, DeltaCalcOnAmendment__c FROM CustomScript_Config__mdt WHERE DeltaCalcOnAmendment__c = true")
         .then(function(result) {
             cpqProductConfig = { deltaCalc: new Set() };
             (result.records || []).forEach(function(r) {
