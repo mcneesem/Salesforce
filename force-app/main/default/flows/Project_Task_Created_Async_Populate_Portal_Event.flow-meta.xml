@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>Flow respect dynamic task</description>
+    <description>New Client Portal: Populate Portal Event</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Created - Async - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Created - Async - Populate Portal Event</label>

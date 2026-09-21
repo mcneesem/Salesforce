@@ -438,7 +438,7 @@
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Portal Task Mapping - Sync Version , Dynamic tasks</description>
+    <description>New Client Portal: Populate Portal Task</description>
     <environments>Default</environments>
     <formulas>
         <name>portalTaskStatus</name>
@@ -448,7 +448,7 @@
   &quot;Complete&quot; , &quot;Completed&quot; ,
   &quot;Pending - Insperity&quot; , &quot;Pending - Insperity&quot; ,
   &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
- &quot;Canceled&quot; , &quot;Hidden&quot; ,
+  &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>

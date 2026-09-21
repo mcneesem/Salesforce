@@ -437,7 +437,7 @@
             <label>Proceed to Sync</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Portal Event Mapping - Sync Version , dynamic task</description>
+    <description>New Client Portal: Populate Portal Event</description>
     <environments>Default</environments>
     <formulas>
         <description>Status for portal event</description>
@@ -446,7 +446,7 @@
         <expression>CASE(
   {!recordProjectTask.pse__Status__c} ,
   &quot;Complete&quot; , &quot;Completed&quot; ,
- &quot;Canceled&quot; , &quot;Hidden&quot; ,
+  &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
 )</expression>
     </formulas>
