@@ -31,7 +31,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         }
         return System.schedule(
             'TerminationEmailBatch ~ every weekday at 5:00 PM CT' + suffix ,
-            '0 0 17 ? * MON-FRI' ,
+            '0 0 17 ? * MON-FRI *' ,
             new TerminationEmailBatch()
         );
     }
@@ -226,9 +226,9 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     attachmentIds.add( TerminationEmailBatch.fileYearMap.get( year ) );
                 }
             }
-            if ( TerminationEmailBatch.alwaysAttachedIds != null 
-                && !( TerminationEmailBatch.alwaysAttachedIds.isEmpty() )
-               )
+            if ( ( TerminationEmailBatch.alwaysAttachedIds != null )
+                && !TerminationEmailBatch.alwaysAttachedIds.isEmpty()
+                )
             {
                 attachmentIds.addAll( TerminationEmailBatch.alwaysAttachedIds );
             }
@@ -477,7 +477,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                         Document_Id__c ,
                         Is_Always_Attached__c ,
                         Year__c
-                    FROM Termination_Email_Attachment__mdt 
+                    FROM Termination_Email_Attachment__mdt
                     WHERE (
                         ( Active__c = true )
                         AND ( Document_Id__c != null )
