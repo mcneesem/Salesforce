@@ -31,7 +31,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Case_Record</targetReference>
+            <targetReference>Check_Restrictions_Entries_Processed</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -114,7 +114,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Case_Record</targetReference>
+            <targetReference>Check_Restrictions_Entries_Processed</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -137,7 +137,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_New_Case_Contact</targetReference>
+                <targetReference>Check_Restrictions_Primary_Contact</targetReference>
             </connector>
             <label>Exist</label>
         </rules>
@@ -184,6 +184,97 @@
                 <targetReference>Update_Case_Name</targetReference>
             </connector>
             <label>Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: You must enter the number of entries processed to close the case.
+~ PEO Case Record Type (Id=0124x0000019l99AAA)
+~ See Validation Rule: Case.EntriesProcessedReqrdIFPyrlShrdShrdClsd</description>
+        <name>Check_Restrictions_Entries_Processed</name>
+        <label>Check Restrictions: Entries Processed</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Case_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Restricted_Entries_Processed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Based_On_Contact_Id_From_Case_Contact.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0124x0000019l99AAA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Based_On_Contact_Id_From_Case_Contact.NSP_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Payroll Shared Services</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Based_On_Contact_Id_From_Case_Contact.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Based_On_Contact_Id_From_Case_Contact.Entries_Processed__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Restricted: Entries Processed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Contact is not associated with this account. Please remove it.
+~ See Validation Rule: NSP_Case_Contacts__c.NSP_restrictFromUpdatingCaseConToPrimary</description>
+        <name>Check_Restrictions_Primary_Contact</name>
+        <label>Check Restrictions: Primary Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_New_Case_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Restricted_Primary_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts.NSP_IsPrimary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts.NSP_Case__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts.NSP_Contact__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Contacts.NSP_Case__r.AccountId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Case_Contacts.NSP_Contact__r.AccountId</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Restricted: Primary Contact</label>
         </rules>
     </decisions>
     <environments>Default</environments>
