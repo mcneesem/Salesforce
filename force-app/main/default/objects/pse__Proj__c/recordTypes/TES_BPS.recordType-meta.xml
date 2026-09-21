@@ -218,23 +218,23 @@
     <picklistValues>
         <picklist>Implementer_Status__c</picklist>
         <values>
-            <fullName>Active</fullName>
-            <default>true</default>
-        </values>
-        <values>
             <fullName>Agile Resource</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Cornerstone</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Existing Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market%2FNational Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>New Hire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>On Leave</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Team Lead</fullName>
             <default>false</default>
         </values>
     </picklistValues>
