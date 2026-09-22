@@ -309,12 +309,12 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
             && String.isNotBlank( emailBody )
             )
         {
-            NSP_EmailImageController emailImageCtrl = new NSP_EmailImageController();
-            String bannerUrl = emailImageCtrl.getHeaderLogoUrl();
             formatted = '<html>';
             formatted += '<body>';
             formatted += '<div>';
             formatted += '<div style="max-width: 46rem; margin-left: auto; margin-right: auto; font-family: Aptos, sans-serif;">';
+            NSP_EmailImageController emailImageCtrl = new NSP_EmailImageController();
+            String bannerUrl = emailImageCtrl.getHeaderLogoUrl();
             if ( String.isNotBlank( bannerUrl ) ) {
                 formatted += '<div><img src="' + bannerUrl + '" style="max-width: 46rem;"/></div>';
             }
