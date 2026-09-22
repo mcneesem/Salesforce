@@ -241,6 +241,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 RecordTypeId = NSP_AccountGroupMemberTriggerHelper.automaticallyCreatedAccountGroupRecordTypeId ,
                 Name = nspType ,
                 NSP_Account__c = accName ,
+                Account__c = accountId ,
                 NSP_Type__c = nspType
             );
             result = NSP_AccountGroupMemberTriggerHelper.addToMap(
