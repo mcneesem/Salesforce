@@ -203,14 +203,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Project_From_Template_And_Account</targetReference>
+                <targetReference>Get_Eligible_Templates</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
-        <name>HasRecordIId</name>
-        <label>HasRecordIId</label>
+        <name>Check_Record_Id</name>
+        <label>Check Record Id</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -228,7 +228,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Eligible_Templates</targetReference>
+                <targetReference>Get_Opportunity</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -436,7 +436,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Opportunity</targetReference>
+            <targetReference>Create_Project_From_Template_And_Account</targetReference>
         </connector>
         <fields>
             <name>Select_Project_Template_Field</name>
@@ -535,7 +535,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>HasRecordIId</targetReference>
+            <targetReference>Check_Record_Id</targetReference>
         </connector>
     </start>
     <status>Draft</status>
