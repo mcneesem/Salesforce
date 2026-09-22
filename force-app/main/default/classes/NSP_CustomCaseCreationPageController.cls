@@ -622,12 +622,12 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
     public static List<Asset> autoPopulateAsset( String category , String subCategory , String accountId ) {
         List<Asset> response = null;
         if ( String.isNotBlank( category ) && String.isNotBlank( subCategory ) ) {
-            List<NSP_Category_Sub_Category_Mapping__c> mappings = queryCategorySubCategoryMapping( category , subCategory );
+            List<NSP_Category_Sub_Category_Mapping__c> mappings = NSP_CustomCaseCreationPageController.queryCategorySubCategoryMapping( category , subCategory );
             if ( String.isNotBlank( accountId ) && mappings != null && !mappings.isEmpty() ) {
                 String assetRecordTypeName = mappings[0].NSP_Asset_Record_Types__c;
-                response = queryActiveAssets( accountId , assetRecordTypeName );
+                response = NSP_CustomCaseCreationPageController.queryActiveAssets( accountId , assetRecordTypeName );
                 if ( response == null || response.isEmpty() ) {
-                    response = queryMostRecentTerminatedAsset( accountId , assetRecordTypeName );
+                    response = NSP_CustomCaseCreationPageController.queryMostRecentTerminatedAsset( accountId , assetRecordTypeName );
                 }
             }
         }
@@ -643,17 +643,22 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
         String subCategory
         )
     {
-        return [
-            SELECT
+        List<NSP_Category_Sub_Category_Mapping__c> categorySubcategoryList = new List<NSP_Category_Sub_Category_Mapping__c>();
+        if( string.isNotBlank( category ) && string.isNotBlank( subCategory )) {
+            categorySubcategoryList =  [
+                SELECT
                 Id , Name , NSP_Category__c ,
                 NSP_Subcategory__c , NSP_Asset_Record_Types__c ,
                 NSP_UserTitle__c , NSP_RecordType__c
-            FROM NSP_Category_Sub_Category_Mapping__c
-            WHERE (
-                ( NSP_Category__c = :category )
-                AND ( NSP_Subcategory__c = :subCategory )
-            )
-        ];
+                FROM NSP_Category_Sub_Category_Mapping__c
+                WHERE (
+                    ( NSP_Category__c = :category )
+                    AND ( NSP_Subcategory__c = :subCategory )
+                )
+            ];
+        }
+
+        return categorySubcategoryList;
     }
 
     // @description Queries active (non-terminated, non-backout) assets for an account and record type.
@@ -661,20 +666,30 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
     // @param assetRecordTypeName Asset record type name to filter.
     // @return Matching active Asset records.
     private static List<Asset> queryActiveAssets( String accountId , String assetRecordTypeName ) {
-        return [
-            SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status
-            FROM Asset
-            WHERE (
-                ( AccountId = :accountId )
-                AND ( RecordType.Name = :assetRecordTypeName )
-                AND (
-                    Status NOT IN (
-                        :NSP_ServiceConstants.TERMINATED ,
-                        :NSP_ServiceConstants.BACKOUT
+        List<Asset> assetList = new List<Asset>();
+        Id assetRecTypeId = null;
+        if( string.isNotBlank(assetRecordTypeName) ) {
+            assetRecTypeId = NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecordTypeName);
+        }
+
+        if( assetRecTypeId != null && accountId != null ) {
+            assetList  = [
+                SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status
+                FROM Asset
+                WHERE (
+                    ( AccountId = :accountId )
+                    AND ( RecordTypeId = :assetRecTypeId )
+                    AND (
+                        Status NOT IN (
+                            :NSP_ServiceConstants.TERMINATED ,
+                            :NSP_ServiceConstants.BACKOUT
+                        )
                     )
                 )
-            )
-        ];
+            ];
+        }
+
+        return assetList;
     }
 
     // @description Queries the most recently terminated asset for an account and record type.
@@ -682,17 +697,26 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
     // @param assetRecordTypeName Asset record type name to filter.
     // @return Single most recently terminated Asset, or empty list.
     private static List<Asset> queryMostRecentTerminatedAsset( String accountId , String assetRecordTypeName ) {
-        return [
-            SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status , NSP_Termination_Date__c
-            FROM Asset
-            WHERE (
-                ( AccountId = :accountId )
-                AND ( RecordType.Name = :assetRecordTypeName )
-                AND ( NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED )
-            )
-            ORDER BY NSP_Termination_Date__c DESC NULLS LAST , LastModifiedDate DESC
-            LIMIT 1
-        ];
+        List<Asset> assetList = new List<Asset>();
+        Id assetRecTypeId = null;
+        if( string.isNotBlank(assetRecordTypeName) ) {
+            assetRecTypeId = NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecordTypeName);
+        }
+        if( assetRecTypeId != null &&  AccountId != null ) {
+            assetList =  [
+                SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status , NSP_Termination_Date__c
+                FROM Asset
+                WHERE (
+                    ( AccountId = :accountId )
+                    AND ( RecordTypeId = :assetRecTypeId )
+                    AND ( NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED )
+                    )
+                    ORDER BY NSP_Termination_Date__c DESC NULLS LAST , LastModifiedDate DESC
+                    LIMIT 1
+            ];
+        }
+
+        return assetList;
     }
 
     // @method getCaseRecordType()
