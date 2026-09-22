@@ -76,6 +76,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>NSP_ReportRequest__c.NSP_SurveyRequest</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

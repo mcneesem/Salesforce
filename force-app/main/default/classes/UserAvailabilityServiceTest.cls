@@ -103,73 +103,7 @@ private class UserAvailabilityServiceTest {
         System.assertNotEquals(null, dates, 'Dates list should not be null');
         System.assertEquals(true, dates.isEmpty() || dates.size() <= 10, 'Dates should be empty or limited');
     }
-
-    @isTest
-    private static void testGetBusinessDates_skipsToday_forNonAdmin() {
-        // Create a non-admin user (no Schedule_Seller_Admin custom permission)
-        Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-        User u = new User(
-            Alias = 'nausr',
-            Email = 'nausr@example.com',
-            EmailEncodingKey = 'UTF-8',
-            LastName = 'NonAdmin',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US',
-            TimeZoneSidKey = 'America/Chicago',
-            Username = 'nausr' + String.valueOf(Datetime.now().getTime()) + '@example.com',
-            ProfileId = p.Id
-        );
-        insert u;
-
-        Test.startTest();
-        System.runAs(u) {
-            List<Date> dates = UserAvailabilityService.getBusinessDates('Schedule_Seller_HRCore');
-            System.assertNotEquals(null, dates, 'Dates list should not be null');
-            // Non-admin must not see today if BH would include it
-            System.assertEquals(false, dates.contains(Date.today()), 'Non-admin must not see today in available dates.');
-            for (Date d : dates) {
-                System.assertEquals(true, d > Date.today(), 'All dates must be strictly after today for non-admin.');
-            }
-            System.assertEquals(true, dates.size() <= 10, 'Must not exceed DAYS_LIMIT.');
-        }
-        Test.stopTest();
-    }
-
-    @isTest
-    private static void testGetBusinessDates_allowsToday_forAdminIfPresent() {
-        // Try to find any user that has the Schedule_Seller_Admin custom permission via controller
-        Map<Id, User> admins = CustomPermissionController.getPermittedUsersMap('Schedule_Seller_Admin');
-        User target;
-        if (admins != null && !admins.isEmpty()) {
-            target = admins.values()[0];
-        } else {
-            // Fallback: create a regular user; we cannot Mixed-DML assign CPs here.
-            // In this fallback, we only assert method stability/limits.
-            Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-            target = new User(
-                Alias = 'admlk',
-                Email = 'admlk@example.com',
-                EmailEncodingKey = 'UTF-8',
-                LastName = 'AdminLike',
-                LanguageLocaleKey = 'en_US',
-                LocaleSidKey = 'en_US',
-                TimeZoneSidKey = 'America/Chicago',
-                Username = 'admlk' + String.valueOf(Datetime.now().getTime()) + '@example.com',
-                ProfileId = p.Id
-            );
-            insert target;
-        }
-
-        Test.startTest();
-        System.runAs(target) {
-            List<Date> dates = UserAvailabilityService.getBusinessDates('Schedule_Seller_HRCore');
-            System.assertNotEquals(null, dates, 'Dates list should not be null');
-            System.assertEquals(true, dates.size() <= 10, 'Must not exceed DAYS_LIMIT.');
-            // We do not force BH; if BH includes today for this user, our code should not remove it for admins.
-            // Therefore, no strict assertion on presence of today beyond the absence of filtering errors.
-        }
-        Test.stopTest();
-    }
+    
     @isTest
     private static void testSortUsersByDailyLoad_sortsAscending() {
         List<User> users = getTestUsers();

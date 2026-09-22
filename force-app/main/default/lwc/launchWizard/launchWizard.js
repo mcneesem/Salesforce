@@ -6,21 +6,31 @@ export default class MiscModal extends LightningElement {
     @api recordTypes;
     repReqObj;
     content = 'The modal content';
-    
-    get header(){
-        return this.wizardName.includes('Development') ? 'Request a WebFocus or Wire Report':
-        this.wizardName.includes('Survey')? 'HR Survey Request' : this.wizardName.includes('Separation')? 'Separation Agreement Request' :'Edit Wizard'
+
+    get header() {
+        let returnValue = 'Edit Wizard';
+        if (this.wizardName.includes('Development')) {
+            returnValue =  'Request a WebFocus or Wire Report';
+        } else if (this.wizardName.includes('Survey')) {
+            returnValue =  'HR Survey Request';
+        } else if (this.wizardName.includes('Separation')) {
+            returnValue =  'Separation Agreement Request';
+        } else if (this.wizardName.includes('HRScale')) {
+            returnValue = 'Request an HRScale Report';
+        }
+
+        return returnValue;
     }
-    
+
     customLabel ={
-        selectWizard   
+        selectWizard
     }
     wizardName =''
 
-   
+
 
     get showDevelopReport(){
-        return  this.wizardName.includes('Development Report');
+        return  this.wizardName.includes('Development Report') || this.wizardName.includes('HRScale');
     }
     get showSurvey(){
         return  this.wizardName.includes('Survey');
@@ -35,7 +45,7 @@ export default class MiscModal extends LightningElement {
             let recordTypeList =[];
             Object.values(this.recordTypes).forEach((eachValues) => {
                 if(eachValues.name !== 'Master' && eachValues.available){
-                    recordTypeList.push({ label: eachValues.name, value : eachValues.recordTypeId}); 
+                    recordTypeList.push({ label: eachValues.name, value : eachValues.recordTypeId});
                 }
              });
            return   recordTypeList;
@@ -48,10 +58,10 @@ export default class MiscModal extends LightningElement {
 
     handleChange(event){
         if(event.currentTarget.value!=null){
-            this.repReqObj= { RecordTypeId : event.currentTarget.value }; 
+            this.repReqObj= { RecordTypeId : event.currentTarget.value };
             // determine record type.  If summary, change which modal components are shown
             const repReqRecId = this.repReqObj.RecordTypeId;
-            const rtis = this.objectInfo.data.recordTypeInfos;        
+            const rtis = this.objectInfo.data.recordTypeInfos;
             this.wizardName = rtis[repReqRecId].name;
         }
     }

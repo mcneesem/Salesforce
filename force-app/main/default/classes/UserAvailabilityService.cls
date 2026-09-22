@@ -32,10 +32,7 @@ public with sharing class UserAvailabilityService {
                         nextBusinessStart.month() ,
                         nextBusinessStart.day()
                     );
-                    // If user is not admin, skip today; otherwise include as-is
-                    if ( UserAvailabilityService.isScheduleSellerAdmin() || ( days != Date.today() ) ) {
-                        response.add( days );
-                    }
+                    response.add( days );
                     // Advance to the next business start (next business day)
                     nextBusinessStart = BusinessHours.nextStartDate(
                         open.Id ,

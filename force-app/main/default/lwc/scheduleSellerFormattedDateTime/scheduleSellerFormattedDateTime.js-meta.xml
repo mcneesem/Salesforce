@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="startDateTime" type="DateTime" label="Start Date/Time" role="inputOnly"/>
+            <property name="endDateTime" type="DateTime" label="End Date/Time" role="inputOnly"/>
+            <property name="timeZoneSidKey" type="String" label="Time Zone" role="inputOnly"
+                description="e.g. America/Los_Angeles, America/Denver, America/Chicago, America/New_York"
+                />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

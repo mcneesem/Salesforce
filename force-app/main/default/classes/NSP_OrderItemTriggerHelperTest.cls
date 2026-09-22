@@ -748,6 +748,44 @@ private class NSP_OrderItemTriggerHelperTest{
         Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
     }
 
+    @isTest
+    private static void processPaymentMethodTest() {
+        List<OrderItem> ops = [
+            SELECT
+                Id ,
+                SBQQ__QuoteLine__c ,
+                blng__BillingAccount__c ,
+                NSP_Payment_Method__c
+            FROM OrderItem
+        ];
+        blng__PaymentMethod__c paymentMethod = new blng__PaymentMethod__c(
+            blng__Account__c = ops[0].blng__BillingAccount__c,
+            blng__PaymentType__c = 'ACH',
+            NSP_ACH_method__c = 'BoFA',
+            blng__Active__c = true,
+            Payment_Method_Type__c = 'ACH',
+            blng__BankAccountType__c = 'Checking',
+            blng__BankName__c = 'Test',
+            blng__BankAccountName__c = 'Test',
+            blng__BankRoutingCode__c = '123',
+            blng__BankAccountNumber__c = '12345'
+        );
+        insert paymentMethod;
+        ops[0].NSP_Payment_Method__c = paymentMethod.Id;
+        update ops[0];
+
+        Test.startTest();
+        NSP_OrderItemTriggerHelper.processPaymentChange(new Set<Id>{ops[0].Id});
+        Test.stopTest();
+
+        List<SBQQ__QuoteLine__c> qLines = [
+            SELECT NSP_Payment_Method__c
+            FROM SBQQ__QuoteLine__c
+            WHERE Id = :ops[0].SBQQ__QuoteLine__c
+        ];
+        system.assertEquals(qLines[0].NSP_Payment_Method__c,paymentMethod.Id);
+    }
+
 
 }
 //

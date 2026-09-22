@@ -140,6 +140,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>NSP_ReportRequest__c.HRScale_Workday_Report</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NSP_ReportRequest__c.NSP_SurveyRequest</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
