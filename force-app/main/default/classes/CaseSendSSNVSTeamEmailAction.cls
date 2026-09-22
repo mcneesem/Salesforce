@@ -309,7 +309,12 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
             && String.isNotBlank( emailBody )
             )
         {
+            NSP_EmailImageController emailImageCtrl = new NSP_EmailImageController();
+            String bannerUrl = emailImageCtrl.getHeaderLogoUrl();
             formatted = '<html><body>';
+            if ( String.isNotBlank( bannerUrl ) ) {
+                formatted += '<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td><img src="' + bannerUrl + '" alt="Insperity" width="100%" style="width:100%;height:auto;display:block;" /></td></tr></table><br />';
+            }
             formatted += '<b><p>SSN Mismatch Client Notice</p></b><br />';
             formatted += '<b>SSN Mismatch / ' + aimsClientNumber + ' / ';
             if ( String.isNotBlank( contactObj.NSP_Per_ID__c ) ) {
