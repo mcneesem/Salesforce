@@ -213,7 +213,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.account6QA6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.account6QAAgeInDays6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.accountBuyingStage6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.accountIntentScore6sense__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1224,6 +1239,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.Rush_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3053,6 +3073,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.Original_Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.Plan_Activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3061,7 +3086,7 @@
         <field>Order.Related_Contract_To_Terminate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.Revised_Amendment_Start_Date__c</field>
         <readable>true</readable>
@@ -3469,6 +3494,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.Rush_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1441,7 +1441,7 @@
                 <fieldItem>Record.Leadership_Attendance__c</fieldItem>
                 <identifier>RecordLeadership_Attendance_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -1456,16 +1456,6 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WX</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WA</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
@@ -1484,7 +1474,7 @@
                 <fieldItem>Record.Discovery_Call_Debriefed__c</fieldItem>
                 <identifier>RecordDiscovery_Call_Debriefed_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -1499,16 +1489,6 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WX</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WA</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>

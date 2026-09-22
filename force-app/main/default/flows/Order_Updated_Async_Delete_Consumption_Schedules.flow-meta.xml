@@ -90,6 +90,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Collect_CMCP</name>
+        <label>Collect CMCP</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ConsumptionSchedulesList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CMCP_Loop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CMCP_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>CollectOrderItemIDs_Cat1</name>
         <label>CollectOrderItemIDs - Cat1</label>
         <locationX>0</locationX>
@@ -128,6 +144,22 @@
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>CollectOrderItemIDsCat3</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Order_Products.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Order_Products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CollectOrderItemIDs_CMCP</name>
+        <label>CollectOrderItemIDs - CMCP</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>CollectOrderItemIDsCMCP</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Order_Products.Id</elementReference>
@@ -198,6 +230,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_CS_Cat3</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Path</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_CS_CMCP</name>
+        <label>Set Fault Element : Get_CS_CMCP</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_CS_CMCP</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -389,7 +438,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>CS_Delete_List_Check</targetReference>
+            <targetReference>Check_CMCP</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -413,6 +462,77 @@
                 <targetReference>Get_CS_Cat3</targetReference>
             </connector>
             <label>Cat3</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_CMCP</name>
+        <label>Check CMCP</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>CS_Delete_List_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CMCP_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CollectOrderItemIDsCMCP</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CollectOrderItemIDsCMCP</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_CS_CMCP</targetReference>
+            </connector>
+            <label>CMCP Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_CMCP_Condition</name>
+        <label>Check CMCP Condition</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Seasonal</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_CMCP_Product</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Order_Product_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contractor Management</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Order_Products.SBQQ__QuoteLine__r.SBQQ__HasConsumptionSchedule__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Order_Products.SBQQ__QuoteLine__r.NSP_Parent_Product_Code__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CMCP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CollectOrderItemIDs_CMCP</targetReference>
+            </connector>
+            <label>Is CMCP Product</label>
         </rules>
     </decisions>
     <decisions>
@@ -495,6 +615,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>CMCP_Null_Check</name>
+        <label>CMCP Null Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>CS_Delete_List_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CMCP_Records_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_CS_CMCP</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_CS_CMCP</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CMCP_Loop</targetReference>
+            </connector>
+            <label>CMCP Records Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>CS_Delete_List_Check</name>
         <label>CS Delete List Check ?</label>
         <locationX>0</locationX>
@@ -527,12 +679,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Exclude_Product_Codes</name>
+        <label>Exclude Product Codes?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_CMCP_Condition</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Excluding_Products</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Exclude_Deleting_Consumption_Schedules__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>Order_Products.Product2.ProductCode</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Products</targetReference>
+            </connector>
+            <label>Excluding Products</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Cat3_records_Null</name>
         <label>Is Cat3 records Null</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>CS_Delete_List_Check</targetReference>
+            <targetReference>Check_CMCP</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -585,31 +762,6 @@
                 <targetReference>Order_Products</targetReference>
             </connector>
             <label>Order Products Exists</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Exclude_Product_Codes</name>
-        <label>Exclude Product Codes?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Is_Seasonal</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Excluding_Products</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Exclude_Deleting_Consumption_Schedules__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <elementReference>Order_Products.Product2.ProductCode</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Order_Products</targetReference>
-            </connector>
-            <label>Excluding Products</label>
         </rules>
     </decisions>
     <decisions>
@@ -736,6 +888,20 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
+        <name>CMCP_Loop</name>
+        <label>CMCP Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_CS_CMCP</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Collect_CMCP</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>CS_Delete_List_Check</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Loop_Cat3_Consumption_Schedules</name>
         <label>Loop Cat3 Consumption Schedules</label>
         <locationX>0</locationX>
@@ -746,7 +912,7 @@
             <targetReference>Check_Consumption_Schedule_Name</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>CS_Delete_List_Check</targetReference>
+            <targetReference>Check_CMCP</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -903,6 +1069,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_CS_CMCP</name>
+        <label>Get CS CMCP</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CMCP_Null_Check</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_CS_CMCP</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__OrderItem__c</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>CollectOrderItemIDsCMCP</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>SBQQ__OrderItemConsumptionSchedule__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Order_Products</name>
         <label>Get Order Products</label>
         <locationX>0</locationX>
@@ -1034,6 +1224,13 @@
     </variables>
     <variables>
         <name>CollectOrderItemIDsCat3</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CollectOrderItemIDsCMCP</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>

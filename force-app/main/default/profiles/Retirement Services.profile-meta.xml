@@ -3550,6 +3550,10 @@
         <recordType>Asset.Insurance_Service</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Asset-Insurance Services - Revolution</layout>
+        <recordType>Asset.Revolution</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Asset-Integra Layout-RET</layout>
         <recordType>Asset.Integra</recordType>
     </layoutAssignments>
@@ -3838,6 +3842,10 @@
     <layoutAssignments>
         <layout>NSP_ReportRequest__c-Report Request Layout</layout>
         <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_ReportRequest__c-Report Request Layout</layout>
+        <recordType>NSP_ReportRequest__c.HRScale_Workday_Report</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_ReportRequest__c-Report Request Layout</layout>

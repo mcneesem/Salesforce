@@ -47,11 +47,11 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     get processedTableData() {
         const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
         const matrix = ( Array.isArray( this.matrix ) ? this.matrix : [] );
-
+        const nowUtc = new Date();
+        nowUtc.setUTCSeconds(0, 0);
         // Compute cutoff for non-admins: now + 24h (rounded to minute)
         const cutoffUtc = new Date(Date.now() + 24 * 60 * 60 * 1000);
         cutoffUtc.setUTCSeconds(0, 0);
-
         const rowCount = this.timeBlocks.length;
         return Array.from(
             { length: rowCount } ,
@@ -81,15 +81,18 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                         const endUTCDate = new Date( startUTCDate.getTime() + ( endDate.getTime() - startDate.getTime() ) );
                         // default Button disabled when zero availability
                         const idArray = ( Array.isArray( counts[colIndex] ) ? counts[colIndex] : [] );
-                        const countVal = idArray.length;
+                        let countVal = idArray.length;
                         let isDisabled = ( countVal === 0 );
-                        if ( !isDisabled && !this.isAdmin ) {
-                            const startRounded = new Date(startUTCDate.getTime());
-                            startRounded.setUTCSeconds(0, 0);
-                            // Enforce 24-hour restriction for non-admins and disable when count is zero
-                            isDisabled = ( startRounded < cutoffUtc );
+                        const startRounded = new Date(startUTCDate.getTime());
+                        startRounded.setUTCSeconds(0, 0);
+                        // Enforce 24-hour restriction for non-admins and disable when count is zero
+                        if ( startRounded < nowUtc ) {
+                            isDisabled = true;
+                            countVal = 'R';
+                        } else if ( !this.isAdmin && ( startRounded < cutoffUtc ) ) {
+                            countVal = 'R';
+                            isDisabled = false;
                         }
-
                         return {
                             key: `${id}-${c.fullDate}` ,
                             value: ( countVal != null ? countVal : '' ),

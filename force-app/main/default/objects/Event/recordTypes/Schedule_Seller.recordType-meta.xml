@@ -1123,6 +1123,10 @@
     <picklistValues>
         <picklist>NSP_Status__c</picklist>
         <values>
+            <fullName>Cancel Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cancelled</fullName>
             <default>false</default>
         </values>

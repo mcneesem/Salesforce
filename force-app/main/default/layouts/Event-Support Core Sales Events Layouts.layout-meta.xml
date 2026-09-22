@@ -82,6 +82,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Running_SubRegion__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Rush_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

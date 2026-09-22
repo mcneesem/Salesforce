@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_columsToBeTotaled__c</fullName>
     <externalId>false</externalId>
-    <label>Which columns should be totaled ?</label>
+    <label>Which columns should be totaled?</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>true</trackHistory>

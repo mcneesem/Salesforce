@@ -186,7 +186,6 @@ public class NSP_OrderItemTriggerHelper {
         Set<Id> orderLinesToActivate = new Set<Id> ();
         Set<String> orderLinesForUsage = new Set<String>();
         Map<Id,Date> opTerminationMap= new Map<Id,Date>();
-        List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
 
         Map<Id,SBQQ__QuoteLine__c> mapRelatedQuoteLines = new Map<Id,SBQQ__QuoteLine__c>();
         NSP_hotfix_Switch__c hotfixSwitch =  NSP_hotfix_Switch__c.getInstance(UserInfo.getUserId());
@@ -391,21 +390,10 @@ public class NSP_OrderItemTriggerHelper {
                         + oi.NSP_Shipping_Postal_Code__c
                         + (String)oi.NSP_Payment_Method__c
                         ;
-                    if ( oi.SBQQ__QuoteLine__c != null ) {
-                        quoteLinesToUpdate.add(
-                            new SBQQ__QuoteLine__c(
-                                Id=oi.SBQQ__QuoteLine__c ,
-                                NSP_Payment_Method__c=oi.NSP_Payment_Method__c
-                            )
-                        );
-                    }
                 }
             }
         }
         try {
-            if ( quoteLinesToUpdate.size() > 0 ) {
-                update quoteLinesToUpdate; // throws ~ System.ListException: Duplicate id in list: a6oXXXXXXXXXXXXXXX
-            }
             if ( orderLinesForUsage.size() > 0 ) {
                 NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
             }
@@ -417,6 +405,50 @@ public class NSP_OrderItemTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_OrderItemTriggerHelper.handleException( e , 'beforeUpdateDirector' );
+        }
+    }
+
+    //method to process Quote Lines for updating Payment method
+    //Called via processBillingEventTrigger, platform event Process_Billing_Event__e
+    public static void processPaymentChange( Set<Id> orderProductIds ) {
+        try{
+            List<SBQQ__QuoteLine__c> linesToUpdate = new List<SBQQ__QuoteLine__c>();
+            if ( ( orderProductIds != null ) && ( orderProductIds.size() > 0 ) ) {
+                for( OrderItem op : [
+                    SELECT
+                        Id ,
+                        SBQQ__QuoteLine__c ,
+                        NSP_Payment_Method__c
+                    FROM OrderItem
+                    WHERE (
+                        ( Id IN :orderProductIds )
+                        AND ( SBQQ__QuoteLine__c != null )
+                        AND ( NSP_Payment_Method__c != null )
+                    )
+                ])
+                {
+                    if ( ( op.SBQQ__QuoteLine__c != null )
+                        && ( String.isNotBlank( op.NSP_Payment_Method__c ) ) )
+                    {
+                        linesToUpdate.add(
+                            new SBQQ__QuoteLine__c(
+                                Id = op.SBQQ__QuoteLine__c ,
+                                NSP_Payment_Method__c = op.NSP_Payment_Method__c
+                            )
+                        );
+                    }
+                }
+                if ( ( linesToUpdate != null ) && ( linesToUpdate.size() > 0 ) ) {
+                    Database.SaveResult[] result = Database.update( linesToUpdate , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_OrderItemTriggerHelper.class.getName() ,
+                        'processPaymentChange',
+                        result
+                    );
+                }
+            }
+        } catch ( exception e ) {
+            NSP_OrderItemTriggerHelper.handleException( e , 'processPaymentChange' );
         }
     }
 

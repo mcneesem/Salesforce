@@ -26,13 +26,28 @@ export default class HandleDraftWizards extends NavigationMixin(LightningElement
         this.handleRelatedList();
     }
 
-    get header(){
-        return this.wizardName.includes('Development') ? 'Request a WebFocus or Wire Report':
-        this.wizardName.includes('Survey')? 'HR Survey Request' : this.wizardName.includes('Separation')? 'Separation Agreement Request' :'Edit Wizard'
+    get header() {
+        if (this.wizardName.includes("Development")) {
+            return "Request a WebFocus or Wire Report";
+        }
+        if (this.wizardName.includes("Survey")) {
+            return "HR Survey Request";
+        }
+        if (this.wizardName.includes("Separation")) {
+            return "Separation Agreement Request";
+        }
+        if (this.wizardName.includes("HRScale")) {
+            return "Request an HRScale Report";
+        }
+
+        return 'Edit Wizard';
     }
 
     get showDevelopReport(){
-        return  this.wizardName.includes('Development');
+        return  (
+            this.wizardName.includes('Development') ||
+            this.wizardName.includes("HRScale")
+        );
     }
     get showSurvey(){
         return  this.wizardName.includes('Survey');
@@ -45,7 +60,7 @@ export default class HandleDraftWizards extends NavigationMixin(LightningElement
     @api refreshdraft(){
          refreshApex(this.handleRelatedList());
         this.navigateToWebPage();
-      // return refreshApex(this.wiredReportRequestResult); 
+      // return refreshApex(this.wiredReportRequestResult);
     }
 
     navigateToWebPage() {
@@ -72,7 +87,7 @@ export default class HandleDraftWizards extends NavigationMixin(LightningElement
                     if(obj.NSP_ClientName__c && obj.NSP_ClientName__r.Name != undefined){
 
                      return {...obj , AccountName : createDate+" - "+obj.NSP_ClientName__r.Name}
-                    
+
                     }else{
                      return {...obj, AccountName :  createDate+' - No Account Selected'}
                     }
@@ -101,13 +116,13 @@ export default class HandleDraftWizards extends NavigationMixin(LightningElement
         this.wizardName = this.repReqObj.RecordType.DeveloperName;
         this.openPrompt = true;
         const modalPrompt = this.template.querySelector('c-wizard-resume-prompt');
-        
+
         modalPrompt.show();
     }
 
     deleteReportRequest(event) {
         if(event.target.name === 'deleteRequest'){
-       
+
 
         this.originalMessage = event.target.dataset.recordid ;
         //shows the component
@@ -170,14 +185,14 @@ export default class HandleDraftWizards extends NavigationMixin(LightningElement
         modal.hide();
          refreshApex(this.handleRelatedList());
          this.refreshdraft();
-        // return refreshApex(this.wiredReportRequestResult); 
+        // return refreshApex(this.wiredReportRequestResult);
     }
 
     handleResume(event){
         const modal = this.template.querySelector('c-modal[data-fname="OpenlastSavedPage"]');
         modal.show();
     }
-    handleStartOver(event){   
+    handleStartOver(event){
       const modal = this.template.querySelector('c-modal[data-fname="OpenFirstPage"]');
         modal.show();
     }

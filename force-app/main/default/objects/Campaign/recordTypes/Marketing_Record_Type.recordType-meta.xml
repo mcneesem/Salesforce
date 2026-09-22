@@ -228,6 +228,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RM - Event - Loyalty %28Sports Marketing%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RM - Event - PCM</fullName>
             <default>false</default>
         </values>

@@ -969,8 +969,8 @@ public class NSP_ServiceConstants {
     public static final String EARLY_TENURE = 'Early Tenure';
     public static final String EARLY_TENURE_CLIENT = 'Early Tenure Client';
     public static final String UNFAVORABLE = 'Unfavorable';
-    public static final String FOCUS_COMMENTS = 'These Client#\'s are less than 2 years old:';
-    public static final String FOCUS_401_COMMENTS = 'These Client# do not have an Insperity 401k:';
+    public static final String FOCUS_COMMENTS = 'These Clients are less than 2 years old:';
+    public static final String FOCUS_401_COMMENTS = 'These Clients do not have an Insperity 401k:';
     public static final String NEUTRAL = 'Neutral';
     public static final String NO_INSPERITY_401K = 'No Insperity 401k';
     public static final String CUSTOMER_RELATIONSHIP = 'Customer Relationship';

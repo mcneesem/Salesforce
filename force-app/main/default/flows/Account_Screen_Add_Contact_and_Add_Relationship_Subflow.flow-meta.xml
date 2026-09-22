@@ -529,6 +529,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Chosen_Contacts_ACR_Record_on_New_Account</name>
+        <label>Assign varFaultElement - Get_Chosen_Contacts_ACR_Record_on_New_Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Chosen_Contacts_ACR_Record_on_New_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Existing_Contact_ACR_records_related_to_current_Accou</name>
         <label>Assign varFaultElement - Get_Existing_Contact_ACR_records_related_to_current_Account</label>
         <locationX>0</locationX>
@@ -687,6 +704,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_an_ACR_already_exist_between_Chosen_Contact_and_New_Account</name>
+        <label>Does an ACR already exist between Chosen Contact and New Account?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_chosen_Contact_and_Account_to_varACRToCreate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Contact is not yet related to New Account</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Contact_is_already_related_to_New_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varACRtoCreate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contact_is_already_related_to_New_Account_Screen</targetReference>
+            </connector>
+            <label>Yes - Contact is already related to New Account</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Account_owned_by_Available</name>
         <label>Is Account owned by Available?</label>
         <locationX>0</locationX>
@@ -742,7 +784,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Assign_chosen_Contact_and_Account_to_varACRToCreate</targetReference>
+            <targetReference>Get_Chosen_Contacts_ACR_Record_on_New_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Account is not owned by Available</defaultConnectorLabel>
         <rules>
@@ -1437,6 +1479,37 @@
         <queriedFields>Roles</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Chosen_Contacts_ACR_Record_on_New_Account</name>
+        <label>Get Chosen Contact&apos;s ACR Record on New Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_an_ACR_already_exist_between_Chosen_Contact_and_New_Account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Chosen_Contacts_ACR_Record_on_New_Account</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>WhichContactDoYouWantToLink_DataTable.firstSelectedRow.ContactId</elementReference>
+            </value>
+        </filters>
+        <object>AccountContactRelation</object>
+        <outputReference>varACRtoCreate</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Existing_Contact_ACR_records_related_to_current_Account</name>
         <label>Get Existing Contact ACR records related to current Account</label>
         <locationX>0</locationX>
@@ -1608,6 +1681,30 @@
         <fields>
             <name>ChosenAccountOwnedByAvailable_DisplayText</name>
             <fieldText>&lt;p&gt;The Account that you have chosen is owned by the &quot;Available&quot; user. New Contact Relationships cannot be created on that Account. Please contact your District Manager to request this account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Contact_is_already_related_to_New_Account_Screen</name>
+        <label>Contact is already related to New Account - Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ContactAlreadyRelated_DisplayText</name>
+            <fieldText>&lt;p&gt;{!WhichContactDoYouWantToLink_DataTable.firstSelectedRow.Contact_Name__c} is already related to {!varNewAccountName}. Please go update that Account Contact Relationship record if needed.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1862,6 +1959,10 @@
             <outputParameters>
                 <assignToReference>varNewAccountId</assignToReference>
                 <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>varNewAccountName</assignToReference>
+                <name>recordName</name>
             </outputParameters>
             <styleProperties>
                 <verticalAlignment>
@@ -2825,6 +2926,13 @@
     </variables>
     <variables>
         <name>varNewAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNewAccountName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

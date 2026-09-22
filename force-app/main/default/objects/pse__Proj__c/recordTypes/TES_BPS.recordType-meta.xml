@@ -203,6 +203,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>TWI Query</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Time Tracking</fullName>
             <default>false</default>
         </values>
@@ -750,6 +754,10 @@
         </values>
         <values>
             <fullName>Cancelled at Intake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Segment Change</fullName>
             <default>false</default>
         </values>
         <values>
