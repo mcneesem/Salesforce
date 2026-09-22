@@ -165,15 +165,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && !records.isEmpty()
             )
         {
-            List<NSP_Sub_Client__c> selectedClientRecords = new List<NSP_Sub_Client__c>();
-            if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
-                for ( NSP_Sub_Client__c record : records ) {
-                    if ( this.clientNumbers.contains( record.NSP_Client__c ) ) {
-                        selectedClientRecords.add( record );
-                    }
-                }
-                records = selectedClientRecords;
-            }
+            records = this.getSelectedClientRecords( records );
             if ( !records.isEmpty() ) {
                 try {
                     this.buildSalesOfficeToRenewalManagerMap( records );
@@ -349,6 +341,19 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     //
     //
     //
+
+    private List<NSP_Sub_Client__c> getSelectedClientRecords( List<NSP_Sub_Client__c> records ) {
+        List<NSP_Sub_Client__c> selectedClientRecords = new List<NSP_Sub_Client__c>();
+        if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
+            for ( NSP_Sub_Client__c record : records ) {
+                if ( this.clientNumbers.contains( record.NSP_Client__c ) ) {
+                    selectedClientRecords.add( record );
+                }
+            }
+            records = selectedClientRecords;
+        }
+        return records;
+    }
 
     private void processOpportunities( List<NSP_Sub_Client__c> records ) {
         List<Opportunity> parentOpportunities = new List<Opportunity>();
