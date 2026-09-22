@@ -66,16 +66,10 @@ private class GenerateRenewalOpportunitiesJobTest {
         som.Renewal_Manager__c = UserInfo.getUserId();
         insert som;
 
-        Renewal_Opportunity_Settings__c cs = new Renewal_Opportunity_Settings__c(
-            SetupOwnerId = UserInfo.getUserId(),
-            IsEnabled__c = true,
-            BatchSize__c = 50,
-            RenewalRecordTypeId__c = Schema.getGlobalDescribe().get( 'Opportunity' )
-            .getDescribe()
-            .getRecordTypeInfosByDeveloperName()
-            .get('Renewal')
-            .getRecordTypeId()
-        );
+        Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
+        cs.IsEnabled__c = true;
+        cs.BatchSize__c = 50;
+        cs.RenewalRecordTypeId__c = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Renewal' );
         upsert cs;
     }
 
