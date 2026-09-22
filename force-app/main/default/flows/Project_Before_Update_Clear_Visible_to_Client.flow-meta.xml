@@ -18,8 +18,8 @@
     </assignments>
     <description>ADO-547976 - Uncheck Visible to Client checkbox when FSO or MM Impl Project is Cancelled</description>
     <environments>Default</environments>
-    <interviewLabel>Project - Before Save - Update Visible to Client {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project - Before Save - Update Visible to Client</label>
+    <interviewLabel>Project - Before Update - Clear Visible to Client {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Before Update - Clear Visible to Client</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
