@@ -14,7 +14,28 @@
                 <stringValue>Create_a_Task</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_VarFaultElement_Get_Task_records</name>
+        <label>Assign VarFaultElement - Get Task records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Task_records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -183,6 +204,9 @@ if(NOT(ISBLANK({!record.ORK_Subplan__c})), &apos;ORK Subplan: &apos; + {!record.
         <connector>
             <targetReference>Task_already_exists</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_VarFaultElement_Get_Task_records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
