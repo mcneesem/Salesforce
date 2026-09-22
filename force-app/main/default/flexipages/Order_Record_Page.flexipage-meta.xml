@@ -377,6 +377,16 @@
                 <identifier>RecordIsReductionOrderField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Transaction_Type__c</fieldItem>
+                <identifier>RecordNSP_Transaction_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-37ddae41-d2a5-49bb-b394-395e1464eb11</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -419,6 +429,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Ready_For_Review__c</fieldItem>
                 <identifier>RecordNSP_Ready_For_Review_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Transition_Type__c</fieldItem>
+                <identifier>RecordTransition_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-410f1ad5-d6b8-4868-8ed3-ff97b648fb90</name>
@@ -1527,16 +1547,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.AVA_SFCLOUD__Tax_Date__c</fieldItem>
                 <identifier>RecordAVA_SFCLOUD_Tax_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Transaction_Type__c</fieldItem>
-                <identifier>RecordNSP_Transaction_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ae0ef242-8485-4410-8eca-f80787d7baf6</name>
