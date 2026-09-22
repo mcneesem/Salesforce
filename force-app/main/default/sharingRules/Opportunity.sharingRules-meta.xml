@@ -48,7 +48,7 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
-        <sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Orientation_Planner_Opportunity_Access</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Orientation Planner Opportunity Access</label>
