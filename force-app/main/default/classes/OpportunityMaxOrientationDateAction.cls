@@ -53,7 +53,7 @@ public without sharing class OpportunityMaxOrientationDateAction {
             }
         }
         if ( !dmlRecords.isEmpty() ) {
-            List<Database.SaveResult> results = Database.update( dmlRecords, false );
+            List<Database.SaveResult> results = Database.update( dmlRecords , false );
             NSP_ErrorLogHandler.logResults(
                 OpportunityMaxOrientationDateAction.class.getName() ,
                 'populateMaxOrientationDate' ,
