@@ -1,5 +1,5 @@
 public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ GenerateRenewalOpportunitiesJobTest (90%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (88%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
@@ -73,9 +73,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             Integer eligibleYear = ( yearNum - 1 );
             this.eligibleStart = Date.newInstance( eligibleYear , monthNum , 1 );
             this.eligibleEnd = this.eligibleStart.addMonths( 1 ).addDays( -1 );
-            if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
-                this.clientNumbers.addAll( clientNumbers );
-            }
+        }
+        if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
+            this.clientNumbers.addAll( clientNumbers );
         }
     }
 
@@ -86,47 +86,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && String.isNotBlank( this.renewalCreated )
             )
         {
-            if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
-                queryLocator = Database.getQueryLocator(
-                    [
-                        SELECT
-                            Id ,
-                            Name ,
-                            NSP_Part_Time_Margin__c ,
-                            NSP_Part_Time_Reserve__c ,
-                            NSP_Account__r.Name ,
-                            NSP_Account_Status__c ,
-                            NSP_Client__c ,
-                            NSP_Sub_Client__c ,
-                            NSP_Renewal_Date__c ,
-                            NSP_Benefit_Package_Name__c ,
-                            NSP_Asset__c ,
-                            NSP_Asset__r.NSP_Sales_Office__c ,
-                            NSP_Asset__r.NSP_Service_Package__c ,
-                            NSP_Asset__r.NSP_Multi_Year_Client_Service_Agreement__c ,
-                            NSP_Asset__r.Status ,
-                            NSP_Account__c ,
-                            NSP_Margin__c ,
-                            NSP_Reserve__c ,
-                            NSP_Actual_Full_Time_EE_Count__c ,
-                            NSP_Actual_Part_Time_EE_Count__c ,
-                            NSP_Actual_Seasonal_Time_EE_Count__c ,
-                            NSP_Asset__r.NSP_Client_Retained_Workers_Comp__c ,
-                            Renewal_Created__c
-                        FROM NSP_Sub_Client__c
-                        WHERE (
-                            ( NSP_Account_Status__c = 'Active' )
-                            AND ( NSP_Renewal_Date__c >= :this.eligibleStart )
-                            AND ( NSP_Renewal_Date__c <= :this.eligibleEnd )
-                            AND ( NSP_Renewal_Date__c != null )
-                            AND ( Renewal_Created__c != :this.renewalCreated )
-                            AND ( NSP_Client__c IN :this.clientNumbers )
-                        )
-                        ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
-                    ]
-                );
-            } else {
-                queryLocator = Database.getQueryLocator(
+            queryLocator = Database.getQueryLocator(
                     [
                         SELECT
                             Id ,
@@ -163,7 +123,6 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
                         ORDER BY NSP_Client__c , NSP_Sub_Client__c ASC
                     ]
                 );
-            }
         } else {
             // batch requires non-null query locator even when the inputs are null...
             queryLocator = Database.getQueryLocator(
@@ -206,19 +165,30 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && !records.isEmpty()
             )
         {
-            try {
-                this.buildSalesOfficeToRenewalManagerMap( records );
-                this.buildWSEEMaps( records );
-                this.processEntries( records );
-                this.processOpportunities( records );
-            } catch ( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    GenerateRenewalOpportunitiesJob.class.getName() ,
-                    'execute' ,
-                    e
-                );
-                if ( this.executeExceptions != null ) {
-                    this.executeExceptions.add( e );
+            List<NSP_Sub_Client__c> selectedClientRecords = new List<NSP_Sub_Client__c>();
+            if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
+                for ( NSP_Sub_Client__c record : records ) {
+                    if ( this.clientNumbers.contains( record.NSP_Client__c ) ) {
+                        selectedClientRecords.add( record );
+                    }
+                }
+                records = selectedClientRecords;
+            }
+            if ( !records.isEmpty() ) {
+                try {
+                    this.buildSalesOfficeToRenewalManagerMap( records );
+                    this.buildWSEEMaps( records );
+                    this.processEntries( records );
+                    this.processOpportunities( records );
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        GenerateRenewalOpportunitiesJob.class.getName() ,
+                        'execute' ,
+                        e
+                    );
+                    if ( this.executeExceptions != null ) {
+                        this.executeExceptions.add( e );
+                    }
                 }
             }
         }
