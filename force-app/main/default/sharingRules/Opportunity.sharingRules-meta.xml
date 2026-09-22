@@ -49,20 +49,6 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Orientation_Planner_Opportunity_Access</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Orientation Planner Opportunity Access</label>
-        <sharedTo>
-            <role>Orientation_Planner_MM_and_Core</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>StageName</field>
-            <operation>equals</operation>
-            <value>Closed Won</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>Renewal_Opportunities</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Shares Renewal Opportunities with Renewal Team Members</description>
