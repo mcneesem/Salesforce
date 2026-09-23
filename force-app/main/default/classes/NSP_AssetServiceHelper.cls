@@ -250,7 +250,7 @@ public class NSP_AssetServiceHelper {
     // when the verbal termination received is checked...
     private static Asset applyTerminationVerbalNoticeReceived( Asset record , Asset recordOld ) {
         if ( ( record != null )
-            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET ) ) {
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
             && ( record.NSP_Verbal_Term_recd__c == true )
             && ( ( oldAsset == null ) || ( oldAsset.NSP_Verbal_Term_recd__c != true ) )
             )
@@ -264,7 +264,7 @@ public class NSP_AssetServiceHelper {
     // when Written Termination Notice Received is checked...
     private static Asset applyTerminationWrittenNoticeReceived( Asset record , Asset recordOld ) {
         if ( ( record != null )
-            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET ) ) {
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
             && ( record.NSP_Written_Term_recd__c == true )
             && ( ( recordOld == null ) || ( recordOld.NSP_Written_Term_recd__c != true ) )
             )
@@ -279,7 +279,7 @@ public class NSP_AssetServiceHelper {
     // when the WO asset Status becomes Terminated, clear only the two flags and keep the rest of the termination form intact...
     private static Asset applyTerminationFlags( Asset record , Asset recordOld ) {
         if ( ( record != null )
-            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET ) ) {
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
             && ( record.Status == NSP_ServiceConstants.TERMINATED )
             && ( ( recordOld == null ) || ( recordOld.Status != NSP_ServiceConstants.TERMINATED )
             )
