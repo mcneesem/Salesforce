@@ -1,5 +1,21 @@
 <messaging:emailTemplate subject="NA" recipientType="Contact" relatedToType="SBQQ__QuoteLine__c">
 <messaging:plainTextEmailBody >
-{!IF(ISBLANK(relatedTo.SBQQ__Description__c), '**Product Description Missing**', relatedTo.SBQQ__Description__c)}{!IF( AND( relatedTo.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment' , relatedTo.NSP_ActionType__c != 'Add Product' , !ISBLANK( relatedTo.NSP_ActionType__c ) ) , ' (from ' + TEXT( IF( ISBLANK( relatedTo.NSP_QLE_Prior_Quantity__c ) , 0 , FLOOR( relatedTo.NSP_QLE_Prior_Quantity__c ) ) ) + ' to ' + TEXT( IF( ISBLANK( relatedTo.NSP_Quoted_Quantity__c) , 0 , FLOOR( relatedTo.NSP_Quoted_Quantity__c) ) ) + ')' , '' )}
+{!IF(
+    ISBLANK( relatedTo.SBQQ__Description__c ) ,
+    '**Product Description Missing**' ,
+    relatedTo.SBQQ__Description__c
+)}{!IF(
+    AND(
+        ( relatedTo.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment' ) ,
+        ( relatedTo.NSP_ActionType__c != 'Add Product' ) ,
+        NOT( ISBLANK( relatedTo.NSP_ActionType__c ) )
+    ) ,
+    ' (from '
+        + TEXT( IF( ISBLANK( relatedTo.NSP_QLE_Prior_Quantity__c ) , 0 , FLOOR( relatedTo.NSP_QLE_Prior_Quantity__c ) ) )
+        + ' to '
+        + TEXT( IF( ISBLANK( relatedTo.NSP_Quoted_Quantity__c) , 0 , FLOOR( relatedTo.NSP_Quoted_Quantity__c) ) )
+        + ')' ,
+    ''
+)}
 </messaging:plainTextEmailBody>
 </messaging:emailTemplate>
