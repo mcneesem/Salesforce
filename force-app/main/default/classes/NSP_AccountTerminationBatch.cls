@@ -4,9 +4,9 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     private static final String OBJ_AST = 'Asset';
     private static final String OBJ_OPP = 'Opportunity';
-    private static final List<String> CPQ_HARDWARE_RECORDYPEIDS = new List<String>{
-        '0124x0000019l8qAAA' , // Hardware_Asset
-        '0124x000000yRuyAAE' // NSP_CPQ_Asset
+    private static final List<String> CPQ_HARDWARE = new List<String>{
+        'Hardware_Asset' ,
+        'NSP_CPQ_Asset'
     };
 
     //
@@ -101,7 +101,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                         ( Termination_Date__c != null )
                         AND ( Termination_Date__c = LAST_N_MONTHS:1 )
                         AND ( Status IN ( 'Terminated' , 'Backout' ) )
-                        AND ( RecordTypeId NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE_RECORDYPEIDS )
+                        AND ( RecordType.DeveloperName NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
                     )
                 ]
@@ -187,7 +187,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             RecordType.Name ,
                             RecordTypeId
                         FROM Assets
-                        WHERE ( RecordTypeId NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE_RECORDYPEIDS )
+                        WHERE ( RecordType.DeveloperName NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
                     (
                         SELECT
