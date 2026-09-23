@@ -198,7 +198,7 @@
             </value>
         </filters>
         <object>Concession_Request__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
