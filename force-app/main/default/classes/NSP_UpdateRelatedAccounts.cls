@@ -217,7 +217,7 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                                 SELECT
                                     Id ,
                                     RecordType.Name ,
-                                    RecordType.Id
+                                    RecordTypeId
                                 FROM Assets
                             ) ,
                             (
