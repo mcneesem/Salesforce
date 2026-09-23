@@ -8,6 +8,13 @@
         <locationX>754</locationX>
         <locationY>1032</locationY>
         <assignmentItems>
+            <assignToReference>canceledProjectTask.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Related_Project_Tasks.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>canceledProjectTask.pse__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
