@@ -252,7 +252,7 @@ public class NSP_AssetServiceHelper {
         if ( ( record != null )
             && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
             && ( record.NSP_Verbal_Term_recd__c == true )
-            && ( ( oldAsset == null ) || ( oldAsset.NSP_Verbal_Term_recd__c != true ) )
+            && ( ( recordOld == null ) || ( recordOld.NSP_Verbal_Term_recd__c != true ) )
             )
         {
             record.NSP_Verbal_Term_Date__c = ( ( record.NSP_Verbal_Term_Date__c == null ) ? System.today() : record.NSP_Verbal_Term_Date__c );
@@ -281,7 +281,7 @@ public class NSP_AssetServiceHelper {
         if ( ( record != null )
             && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
             && ( record.Status == NSP_ServiceConstants.TERMINATED )
-            && ( ( recordOld == null ) || ( recordOld.Status != NSP_ServiceConstants.TERMINATED )
+            && ( ( recordOld == null ) || ( recordOld.Status != NSP_ServiceConstants.TERMINATED ) )
             )
         {
             record.NSP_Written_Term_recd__c = false;
