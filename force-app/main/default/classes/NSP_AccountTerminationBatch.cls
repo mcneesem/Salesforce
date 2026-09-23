@@ -261,7 +261,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     private Boolean prospectingCheck( List<Asset> assetList , List<Opportunity> oppList ){
         //should have open opp
         Boolean hasOpenOpp = false;
-        if ( ( oppList != null ) && !oppList.isEmpty() ) {
+        if ( !oppList?.isEmpty() ) {
             for ( Opportunity opp : oppList ) {
                 if ( opp.IsClosed == false ) {
                     hasOpenOpp = true;
@@ -271,7 +271,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         }
         //Asset should not be Open
         Boolean hasOpenAsset = false;
-        if ( ( assetList != null ) && !assetList.isEmpty() ) {
+        if ( !assetList?.isEmpty() ) {
             for ( Asset ast : assetList ) {
                 if ( ( ast.Status == NSP_SalesConstants.ONBOARDING )
                     || ( ast.Status == NSP_ServiceConstants.AssetStatusOnDemand )
