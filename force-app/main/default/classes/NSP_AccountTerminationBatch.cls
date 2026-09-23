@@ -183,7 +183,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                         SELECT
                             Id ,
                             Status ,
-                            NSP_Termination_Date__c ,
+                            Termination_Date__c ,
                             RecordType.Name ,
                             RecordType.Id
                         FROM Assets
@@ -210,7 +210,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     //terminate Account if no open Asset/Opportunity found
                     acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.TERMINATED;
                     accountsToUpdate.add( acc );
-                } else if  ( ( ( this.objectAPI == NSP_AccountTerminationBatch.OBJ_OPP ) || Test.isRunningTest() )
+                } else if  ( ( this.objectAPI == NSP_AccountTerminationBatch.OBJ_OPP )
                             && ( NSP_AccountTerminationBatch.lostAccountCheck(
                                 filteredAssets ,
                                 acc.Opportunities )
@@ -231,7 +231,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         if ( ( assets != null ) && !assets.isEmpty() ) {
             for ( Asset asobj : assets ) {
                 //check for any open Assets
-                if ( ( asobj.NSP_Termination_Date__c == null )
+                if ( ( asobj.Termination_Date__c == null )
                     || ( ( asobj.Status != NSP_ServiceConstants.BACKOUT ) && ( asobj.Status != NSP_ServiceConstants.TERMINATED ) )
                     )
                 {
