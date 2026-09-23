@@ -1,3 +1,4 @@
+// intentionally `without sharing` to ensure that Project_Max_Orientation_Date_Subflow has access to all Opportunity records...
 public without sharing class OpportunityMaxOrientationDateAction {
     // test w/ OpportunityMaxOrientationDateActionTest (84%)
 
