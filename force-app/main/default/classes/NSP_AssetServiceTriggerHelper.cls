@@ -1927,7 +1927,7 @@ Implementation profile related to the account of the created asset
 
                                           }
 
-                    Boolean switchEnabled = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsAccountServiceSegmentCheckEnabled__c;
+                    Boolean switchEnabled = NSP_AssetServiceTriggerHelper.settings.IsAccountServiceSegmentCheckEnabled__c;
                     if(!accIdAssetMap.isEmpty()){
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accIdAssetMap.keySet()]){
                             acc.NSP_Service_Segment__c = accIdAssetMap.get(acc.Id).recordTypeId == woAssetRecordTypeId ? accIdAssetMap.get(acc.Id).NSP_Client_Segment_type__c :
@@ -2175,8 +2175,11 @@ Implementation profile related to the account of the created asset
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
             for ( Asset record : records ) {
-                Id rtId = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Id : null );
-                if ( String.isNotBlank( rtId ) && !NSP_AssetServiceTriggerHelper.excludedRecordTypes.contains( rtId ) ) {
+                if ( ( record != null )
+                    && ( record.RecordTypeId != null )
+                    && !NSP_AssetServiceTriggerHelper.excludedRecordTypeIds.contains( record.RecordTypeId )
+                    )
+                {
                     result.add( record );
                 }
             }
@@ -2201,7 +2204,7 @@ Implementation profile related to the account of the created asset
                             NSP_Account_Status__c ,
                             AccountId ,
                             RecordType.Name ,
-                            RecordType.Id
+                            RecordTypeId
                         FROM Assets
                     ) ,
                     (
@@ -2209,7 +2212,12 @@ Implementation profile related to the account of the created asset
                             Id ,
                             StageName
                         FROM Opportunities
-                        WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+                        WHERE (
+                            StageName NOT IN (
+                                'Closed Won' ,
+                                'Closed Lost'
+                            )
+                        )
                     )
                 FROM Account
                 WHERE ( Id IN :accountIds )
@@ -2218,26 +2226,40 @@ Implementation profile related to the account of the created asset
         return returnList;
     }
 
-    private static Set<Id> excludedRecordTypes {
-        private get {
-            Map<Id,RecordType> recordTypes = new Map<Id,RecordType>();
-            if ( excludedRecordTypes == null ) {
-                AssetTriggerSettings__c sett = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
-                if( ( sett != null ) && ( String.isNotBlank( sett.Exclude_Record_Type_Status__c ) ) ) {
-                    // List of Asset Record type names to exclude
-                    recordTypes = new Map<Id,RecordType>([
-                        SELECT
-                            Id ,
-                            Name
-                        FROM RecordType
-                        WHERE
-                            SobjectType = 'Asset'
-                            AND Name IN :sett.Exclude_Record_Type_Status__c.split( '\r\n' )
-                    ]);
-                }
-                excludedRecordTypes = recordTypes.keySet();
+    private static AssetTriggerSettings__c settings {
+        get {
+            if ( settings == null ) {
+                settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
             }
-            return excludedRecordTypes;
+            return settings;
+        }
+        private set;
+    }
+
+    private static Set<Id> excludedRecordTypeIds {
+        private get {
+            if ( excludedRecordTypeIds == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( NSP_AssetServiceTriggerHelper.settings != null ) {
+                    // List of Asset Record Type Ids to exclude...
+                    String rawExcludedRecordTypeIds = NSP_AssetServiceTriggerHelper.settings.Exclude_Record_Type_Status__c;
+                    if ( String.isNotBlank( rawExcludedRecordTypeIds ) ) {
+                        List<String> splitExcludedRecordTypeIds = rawExcludedRecordTypeIds.split( '\r\n' );
+                        if ( ( splitExcludedRecordTypeIds != null ) && !splitExcludedRecordTypeIds.isEmpty() ) {
+                            for ( String splitExcludedRecordTypeId : splitExcludedRecordTypeIds ) {
+                                if ( splitExcludedRecordTypeId InstanceOf Id ) {
+                                    Id checkId = Id.valueOf( splitExcludedRecordTypeId );
+                                    if ( checkId.getSObjectType() == RecordType.getSObjectType() ) {
+                                        local.add( checkId );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                excludedRecordTypeIds = local;
+            }
+            return excludedRecordTypeIds;
         }
         private set;
     }
