@@ -207,12 +207,6 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
     }
 
     private static void updateAccountStatusInternal( Set<String> accountIdSet ) {
-        Set<String> excludedAccountStatuses = new Set<String>{
-            NSP_SalesConstants.PROSPECTING ,
-            NSP_SalesConstants.ACTIVE ,
-            NSP_SalesConstants.ONDEMAND_STATUS ,
-            NSP_SalesConstants.ONBOARDING
-        };
         try {
             List<Account> records = new List<Account>();
             for ( Account record : [
@@ -239,7 +233,14 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                         FROM Account
                         WHERE (
                             ( Id IN :accountIdSet )
-                            AND ( NSP_Sales_Service_Account_Status__c NOT IN :excludedAccountStatuses )
+                            AND (
+                                NSP_Sales_Service_Account_Status__c NOT IN (
+                                    'Prospecting' ,
+                                    'Active' ,
+                                    'On Demand' ,
+                                    'Onboarding'
+                                )
+                            )
                         )
                     ]
                 )
@@ -249,7 +250,7 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                     && ( filteredAssets.isEmpty() )
                     )
                 {
-                    record.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                    record.NSP_Sales_Service_Account_Status__c = 'Prospecting';
                     records.add( record );
                 }
             }
