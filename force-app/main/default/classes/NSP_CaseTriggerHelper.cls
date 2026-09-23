@@ -1190,14 +1190,27 @@ Date        : 30/09/2021
         )
     {
         try {
-            Map<String,String> catSubCatMap   = this.buildCategoryAssetRecordTypeMap( categorySet , subCategorySet );
-            Set<String> assetRecTypeSet       = new Set<String>( catSubCatMap.values() );
-            Map<String,Id> activeAssetMap     = new Map<String,Id>();
+            Map<String,String> catSubCatMap = this.buildCategoryAssetRecordTypeMap(
+                categorySet ,
+                subCategorySet
+            );
+            Set<String> assetRecTypeSet = new Set<String>( catSubCatMap.values() );
+            Map<String,Id> activeAssetMap = new Map<String,Id>();
             Map<String,Id> terminatedAssetMap = new Map<String,Id>();
             Set<Id> assetRecTypeIdSet = this.getAssetRecordTypeIds(assetRecTypeSet);
-            this.buildAssetLookupMaps( accIdSet , assetRecTypeIdSet , activeAssetMap , terminatedAssetMap );
+            this.buildAssetLookupMaps(
+                accIdSet ,
+                assetRecTypeIdSet ,
+                activeAssetMap ,
+                terminatedAssetMap
+            );
             for ( Case cse : caseList ) {
-                cse.AssetId = this.resolveAssetId( cse , catSubCatMap , activeAssetMap , terminatedAssetMap );
+                cse.AssetId = this.resolveAssetId(
+                    cse ,
+                    catSubCatMap ,
+                    activeAssetMap ,
+                    terminatedAssetMap
+                );
             }
             if ( isInsert ) {
                 this.clearFlsaSubCategoryIfApplicable( caseList );
@@ -1209,12 +1222,16 @@ Date        : 30/09/2021
 
     private Set<Id> getAssetRecordTypeIds( Set<String> assetRecTypeSet ) {
         Set<Id> assetRecTypeIdSet = new Set<Id>();
-        if( !assetRecTypeSet?.isEmpty() ) {
-            for( String assetRecTypeName : assetRecTypeSet ) {
-                assetRecTypeIdSet.add(NSP_GenericRecordType.getRecordTypeIdByLabel('Asset', assetRecTypeName));
+        if ( !assetRecTypeSet?.isEmpty() ) {
+            for ( String assetRecTypeName : assetRecTypeSet ) {
+                assetRecTypeIdSet.add(
+                    NSP_GenericRecordType.getRecordTypeIdByLabel(
+                        'Asset' ,
+                        assetRecTypeName
+                    )
+                );
             }
         }
-
         return assetRecTypeIdSet;
     }
 
@@ -1228,17 +1245,18 @@ Date        : 30/09/2021
         )
     {
         Map<String,String> catSubCatMap = new Map<String,String>();
-        if( categorySet != null  && subCategorySet != null ) {
+        if ( ( categorySet != null ) && ( subCategorySet != null ) ) {
             for ( NSP_Category_Sub_Category_Mapping__c mapping : [
-                SELECT
-                NSP_Category__c ,
-                NSP_Subcategory__c ,
-                NSP_Asset_Record_Types__c
-                FROM NSP_Category_Sub_Category_Mapping__c
-                WHERE (
-                    ( NSP_Category__c IN :categorySet )
-                    AND ( NSP_Subcategory__c IN :subCategorySet )
-                    )
+                        SELECT
+                            Id ,
+                            NSP_Category__c ,
+                            NSP_Subcategory__c ,
+                            NSP_Asset_Record_Types__c
+                        FROM NSP_Category_Sub_Category_Mapping__c
+                        WHERE (
+                            ( NSP_Category__c IN :categorySet )
+                            AND ( NSP_Subcategory__c IN :subCategorySet )
+                        )
                     ]
                 )
             {
@@ -1283,10 +1301,14 @@ Date        : 30/09/2021
                             AND ( RecordTypeId IN :assetRecTypeIdSet )
                             AND (
                                 (
-                                    Status IN ( 'Active' , 'Onboarding' , 'On Demand' )
-                                    AND NSP_Account_Status__c NOT IN :excludedAccountStatuses
+                                    Status IN (
+                                        'Active' ,
+                                        'Onboarding' ,
+                                        'On Demand'
+                                    )
+                                    AND ( NSP_Account_Status__c NOT IN :excludedAccountStatuses )
                                 )
-                                OR NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED
+                                OR ( NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED )
                             )
                         )
                         ORDER BY NSP_Termination_Date__c DESC NULLS LAST , LastModifiedDate DESC
@@ -1295,10 +1317,13 @@ Date        : 30/09/2021
             {
                 String key = this.buildAssetKey( assetRecord.RecordType.Name , assetRecord.AccountId );
                 if ( assetRecord.NSP_Account_Status__c == NSP_ServiceConstants.TERMINATED ) {
-                    if ( terminatedAssetMap != null &&  !terminatedAssetMap.containsKey( key ) ) {
+                    if ( ( terminatedAssetMap != null )
+                        && !terminatedAssetMap.containsKey( key )
+                        )
+                    {
                         terminatedAssetMap.put( key , assetRecord.Id );
                     }
-                } else if( activeAssetMap != null ){
+                } else if ( activeAssetMap != null ) {
                     activeAssetMap.put( key , assetRecord.Id );
                 }
             }
@@ -1335,18 +1360,17 @@ Date        : 30/09/2021
     // @param caseList Cases to evaluate.
     private List<Case> clearFlsaSubCategoryIfApplicable( List<Case> caseList ) {
         List<Case> returnCaseList = new List<Case>();
-        if( caseList != null && !caseList.isEmpty() ) {
+        if ( ( caseList != null ) && !caseList.isEmpty() ) {
              for ( Case cse : caseList ) {
-                if ( cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY
-                && cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI
-                )
+                if ( ( cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY )
+                    && ( cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                    )
                 {
                     cse.NSP_SubCategory__c = '';
-                    returnCaseList.add(cse);
+                    returnCaseList.add( cse );
                 }
             }
         }
-
         return returnCaseList;
     }
 
