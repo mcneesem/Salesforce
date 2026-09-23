@@ -4,9 +4,9 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     private static final String OBJ_AST = 'Asset';
     private static final String OBJ_OPP = 'Opportunity';
-    private static final List<String> CPQ_HARDWARE = new List<String>{
-        'Hardware_Asset' ,
-        'NSP_CPQ_Asset'
+    private static final List<String> CPQ_HARDWARE_RECORDYPEIDS = new List<String>{
+        '0124x0000019l8qAAA' , // Hardware_Asset
+        '0124x000000yRuyAAE' // NSP_CPQ_Asset
     };
 
     //
@@ -101,7 +101,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                         ( Termination_Date__c != null )
                         AND ( Termination_Date__c = LAST_N_MONTHS:1 )
                         AND ( Status IN ( 'Terminated' , 'Backout' ) )
-                        AND ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
+                        AND ( RecordTypeId NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE_RECORDYPEIDS )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
                     )
                 ]
@@ -185,9 +185,9 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                             Status ,
                             Termination_Date__c ,
                             RecordType.Name ,
-                            RecordType.Id
+                            RecordTypeId
                         FROM Assets
-                        WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
+                        WHERE ( RecordTypeId NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE_RECORDYPEIDS )
                     ) ,
                     (
                         SELECT
@@ -201,21 +201,18 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
             ];
             for ( Account acc : listofAccts ) {
                 List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( acc.Assets );
-                Boolean allAssetsTerminated = scanAssets( filteredAssets );
+                Boolean allAssetsTerminated = this.scanAssets( filteredAssets );
                 Boolean allOpportunitiesClosed = scanOpportunities( acc.Opportunities );
-                if ( NSP_AccountTerminationBatch.prospectingCheck( filteredAssets , acc.Opportunities ) ) {
+                if ( this.prospectingCheck( filteredAssets , acc.Opportunities ) ) {
                     acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
                     accountsToUpdate.add( acc );
                 } else if ( allAssetsTerminated && allOpportunitiesClosed ) {
                     //terminate Account if no open Asset/Opportunity found
                     acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.TERMINATED;
                     accountsToUpdate.add( acc );
-                } else if  ( ( this.objectAPI == NSP_AccountTerminationBatch.OBJ_OPP )
-                            && ( NSP_AccountTerminationBatch.lostAccountCheck(
-                                filteredAssets ,
-                                acc.Opportunities )
-                               )
-                           )
+                } else if ( ( this.objectAPI == NSP_AccountTerminationBatch.OBJ_OPP )
+                    && this.lostAccountCheck( filteredAssets , acc.Opportunities )
+                    )
                 {
                     acc.NSP_Sales_Service_Account_Status__c = 'Lost';
                     accountsToUpdate.add( acc );
@@ -226,7 +223,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     }
 
     //method to scan for any open Assets on Account
-    private static Boolean scanAssets( List<Asset> assets ) {
+    private Boolean scanAssets( List<Asset> assets ) {
         Boolean allAssetsTerminated = true;
         if ( ( assets != null ) && !assets.isEmpty() ) {
             for ( Asset asobj : assets ) {
@@ -261,25 +258,29 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         return allOpportunitiesClosed;
     }
 
-    private static Boolean prospectingCheck( List<Asset> assetList , List<Opportunity> oppList ){
-        Boolean hasOpenOpp = false;
-        Boolean hasOpenAsset = false;
+    private Boolean prospectingCheck( List<Asset> assetList , List<Opportunity> oppList ){
         //should have open opp
-        for ( Opportunity opp : oppList ) {
-            if ( opp.IsClosed == false ) {
-                hasOpenOpp = true;
-                break;
+        Boolean hasOpenOpp = false;
+        if ( ( oppList != null ) && !oppList.isEmpty() ) {
+            for ( Opportunity opp : oppList ) {
+                if ( opp.IsClosed == false ) {
+                    hasOpenOpp = true;
+                    break;
+                }
             }
         }
         //Asset should not be Open
-        for ( Asset ast : assetList ) {
-            if ( ( ast.Status == NSP_SalesConstants.ONBOARDING )
-                || ( ast.Status == NSP_ServiceConstants.AssetStatusOnDemand )
-                || ( ast.Status == NSP_SalesConstants.ACTIVE )
-               )
-            {
-                hasOpenAsset = true;
-                break;
+        Boolean hasOpenAsset = false;
+        if ( ( assetList != null ) && !assetList.isEmpty() ) {
+            for ( Asset ast : assetList ) {
+                if ( ( ast.Status == NSP_SalesConstants.ONBOARDING )
+                    || ( ast.Status == NSP_ServiceConstants.AssetStatusOnDemand )
+                    || ( ast.Status == NSP_SalesConstants.ACTIVE )
+                    )
+                {
+                    hasOpenAsset = true;
+                    break;
+                }
             }
         }
         return ( hasOpenOpp && !hasOpenAsset );
@@ -287,19 +288,19 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     @TestVisible
     //method to check if account should be marked lost
-    private static Boolean lostAccountCheck( List<Asset> assetList , List<Opportunity> oppList ) {
-        Boolean noAssetPresent = true;
-        Boolean allOppClosedLost = true;
+    private Boolean lostAccountCheck( List<Asset> assetList , List<Opportunity> oppList ) {
         //No Asset should be present
-        if ( ( assetList != null ) && ( !assetList.isEmpty() ) ) {
+        Boolean noAssetPresent = true;
+        if ( ( assetList != null ) && !assetList.isEmpty() ) {
             noAssetPresent = false;
         }
         //All opportunities should be closed lost
-        if( ( oppList != null ) && ( !oppList.isEmpty() ) ) {
+        Boolean allOppClosedLost = true;
+        if ( ( oppList != null ) && !oppList.isEmpty() ) {
             for ( Opportunity opp : oppList ) {
-                if( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
-                   || ( opp.Stagename != 'Closed Lost - Outgoing' )
-                  )
+                if ( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
+                    || ( opp.Stagename != 'Closed Lost - Outgoing' )
+                    )
                 {
                     allOppClosedLost = false;
                 }
