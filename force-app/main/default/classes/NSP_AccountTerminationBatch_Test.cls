@@ -104,7 +104,8 @@ private class NSP_AccountTerminationBatch_Test {
         List<Asset> assetList = [SELECt Id FROM Asset];
         List<Opportunity> oppList = [SELECT Id, StageName FROM Opportunity];
         Test.startTest();
-        NSP_AccountTerminationBatch.lostAccountCheck(assetList, oppList);
+        NSP_AccountTerminationBatch job = new NSP_AccountTerminationBatch();
+        job.lostAccountCheck( assetList , oppList );
         Test.stopTest();
     }
 
