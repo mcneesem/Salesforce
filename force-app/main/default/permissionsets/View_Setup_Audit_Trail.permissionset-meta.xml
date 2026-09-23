@@ -3,8 +3,4 @@
     <description>Grants the System Permission: View Setup Audit Trail</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>View Setup Audit Trail</label>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ViewSetupAuditTrail</name>
-    </userPermissions>
 </PermissionSet>
