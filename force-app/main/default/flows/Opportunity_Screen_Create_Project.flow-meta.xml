@@ -28,7 +28,18 @@
         </inputParameters>
         <nameSegment>CreateProjectFromTemplateAccount</nameSegment>
         <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>varErrorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varSuccess</assignToReference>
+            <name>isSuccess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varProjectId</assignToReference>
+            <name>projectId</name>
+        </outputParameters>
     </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
@@ -122,7 +133,7 @@
             <assignToReference>varFaultMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Create_Project_From_Template_And_Account.errorMessage</elementReference>
+                <elementReference>varErrorMessage</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -174,13 +185,6 @@
         <rules>
             <name>Yes_Opportunities</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Opportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>Get_Opportunity</leftValueReference>
                 <operator>IsBlank</operator>
@@ -246,14 +250,14 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Create_Project_From_Template_And_Account.isSuccess</leftValueReference>
+                <leftValueReference>varSuccess</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Create_Project_From_Template_And_Account.projectId</leftValueReference>
+                <leftValueReference>varProjectId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -367,7 +371,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Create_Project_From_Template_And_Account.projectId</elementReference>
+                <elementReference>varProjectId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -469,7 +473,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Eligible_Project_Template_Error_Message</name>
-            <fieldText>&lt;p&gt;No eligible Project Templates were found for this process&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; font-size: inherit;&quot;&gt;No Opportunity Project Templates found.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -493,7 +497,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Missing_Opportunity</name>
-            <fieldText>&lt;p&gt;The Opportunity could not be found or is not available for this process&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Opportunity not found (Id={!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -517,7 +521,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Record_Id_Error_Message</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Unable to Continue&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;We couldn’t identify the Opportunity record. Please return to the Opportunity and try again.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Missing recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -582,8 +586,29 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>varFaultMessage</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varProjectId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
