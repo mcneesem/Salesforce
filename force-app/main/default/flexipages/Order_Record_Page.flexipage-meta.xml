@@ -595,6 +595,16 @@
                 <identifier>RecordProject_Status_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_CreateProject__c</fieldItem>
+                <identifier>RecordNSP_CreateProject_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-217d8e18-fdad-45e5-83f9-d8d044b8314e</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -637,6 +647,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_First_usage_upload__c</fieldItem>
                 <identifier>RecordNSP_First_usage_upload_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Project_Key__c</fieldItem>
+                <identifier>RecordNSP_Project_Key_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1abe6896-d508-4074-ab8f-62b9d64497e9</name>
