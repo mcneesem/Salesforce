@@ -77,7 +77,7 @@ private class GenerateRenewalOpportunitiesActionTest {
     private static void testLaunchRenewalBatchWithoutClient() {
         GenerateRenewalOpportunitiesAction.MonthYearData input =
             new GenerateRenewalOpportunitiesAction.MonthYearData();
-        input.monthValue = '1';
+        input.monthValue = 1;
         input.yearValue = 2026;
         input.isRunAllClients = true;
         List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
@@ -99,7 +99,7 @@ private class GenerateRenewalOpportunitiesActionTest {
         System.assert( !subClients.isEmpty(), 'Expected test Sub Client data to exist' );
         GenerateRenewalOpportunitiesAction.MonthYearData input =
             new GenerateRenewalOpportunitiesAction.MonthYearData();
-        input.monthValue = '12';
+        input.monthValue = 12;
         input.yearValue = 2026;
         input.clientNumber = subClients[0].NSP_Client__c;
         input.isRunAllClients = false;
@@ -115,7 +115,7 @@ private class GenerateRenewalOpportunitiesActionTest {
     private static void testInvalidRequest() {
         GenerateRenewalOpportunitiesAction.MonthYearData input =
             new GenerateRenewalOpportunitiesAction.MonthYearData();
-        input.monthValue = '12';
+        input.monthValue = 12;
         input.yearValue = 2026;
         input.isRunAllClients = false;
         List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =

@@ -48,6 +48,40 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Set_Client_Validation_Error</name>
+        <label>Set Client Validation Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Show_Client_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Client_Number_Input</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Eligible_Client</name>
+        <label>Set Fault Element - Get Eligible Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Eligible_Client</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Launch_Renewal_Batch</name>
         <label>Set Fault Element - Launch Renewal Batch</label>
         <locationX>0</locationX>
@@ -66,17 +100,17 @@
     <choices>
         <name>Apr</name>
         <choiceText>Apr</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>4</stringValue>
+            <numberValue>4.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Aug</name>
         <choiceText>Aug</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>8</stringValue>
+            <numberValue>8.0</numberValue>
         </value>
     </choices>
     <choices>
@@ -90,57 +124,57 @@
     <choices>
         <name>Dec</name>
         <choiceText>Dec</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>12</stringValue>
+            <numberValue>12.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Feb</name>
         <choiceText>Feb</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>2</stringValue>
+            <numberValue>2.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jan</name>
         <choiceText>Jan</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>1</stringValue>
+            <numberValue>1.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jul</name>
         <choiceText>Jul</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>7</stringValue>
+            <numberValue>7.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jun</name>
         <choiceText>Jun</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>6</stringValue>
+            <numberValue>6.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Mar</name>
         <choiceText>Mar</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>3</stringValue>
+            <numberValue>3.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>May</name>
         <choiceText>May</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>5</stringValue>
+            <numberValue>5.0</numberValue>
         </value>
     </choices>
     <choices>
@@ -154,25 +188,25 @@
     <choices>
         <name>Nov</name>
         <choiceText>Nov</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>11</stringValue>
+            <numberValue>11.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Oct</name>
         <choiceText>Oct</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>10</stringValue>
+            <numberValue>10.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Sep</name>
         <choiceText>Sep</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>9</stringValue>
+            <numberValue>9.0</numberValue>
         </value>
     </choices>
     <decisions>
@@ -200,6 +234,56 @@
             <label>Queued</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Client_Validation</name>
+        <label>Client Validation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Client_Validation_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid Client</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Eligible_Client.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Launch_Renewal_Batch</targetReference>
+            </connector>
+            <label>Valid Client</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Run_All_Clients</name>
+        <label>Is Run All Clients?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Eligible_Client</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Specific Client</defaultConnectorLabel>
+        <rules>
+            <name>All_Clients</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Run_All_Clients</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Launch_Renewal_Batch</targetReference>
+            </connector>
+            <label>All Clients</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>CurrentYearFormula</name>
@@ -207,15 +291,35 @@
         <expression>TEXT(YEAR(TODAY()))</expression>
     </formulas>
     <formulas>
-        <name>Month_Number</name>
-        <dataType>Number</dataType>
-        <expression>VALUE({!Select_Month})</expression>
-        <scale>0</scale>
+        <name>Eligible_End</name>
+        <dataType>Date</dataType>
+        <expression>ADDMONTHS(
+    {!Eligible_Start},
+    1
+) - 1</expression>
+    </formulas>
+    <formulas>
+        <name>Eligible_Start</name>
+        <dataType>Date</dataType>
+        <expression>DATE(
+    {!YearNumber} - 1,
+    {!Select_Month},
+    1
+)</expression>
     </formulas>
     <formulas>
         <name>NextYearFormula</name>
         <dataType>String</dataType>
         <expression>TEXT(YEAR(TODAY()) + 1)</expression>
+    </formulas>
+    <formulas>
+        <name>Renewal_Created_Value</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Select_Month})
+&amp;
+&quot;/&quot;
+&amp;
+TEXT({!YearNumber})</expression>
     </formulas>
     <formulas>
         <name>YearNumber</name>
@@ -245,6 +349,59 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Eligible_Client</name>
+        <label>Get Eligible Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Client_Validation</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Eligible_Client</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Client__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Client_Number</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>Eligible_Start</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Date__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>Eligible_End</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Renewal_Created__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Renewal_Created_Value</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Sub_Client__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Batch_Not_Queued</name>
         <label>Batch Not Queued</label>
@@ -300,36 +457,11 @@
         <label>Client Number Input</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actions>
-            <name>Validate_Renewal_Client</name>
-            <actionName>Validate_Renewal_Client</actionName>
-            <actionType>flow</actionType>
-            <inputParameters>
-                <name>ClientNumber</name>
-                <value>
-                    <elementReference>Client_Number</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>Month_Number</name>
-                <value>
-                    <elementReference>Select_Month</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>YearNumber</name>
-                <value>
-                    <elementReference>YearNumber</elementReference>
-                </value>
-            </inputParameters>
-            <label>Validate Renewal Client</label>
-            <nameSegment>Validate_Renewal_Client</nameSegment>
-        </actions>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Launch_Renewal_Batch</targetReference>
+            <targetReference>Is_Run_All_Clients</targetReference>
         </connector>
         <fields>
             <name>Run_All_Clients</name>
@@ -365,18 +497,38 @@
                     <stringValue>12</stringValue>
                 </width>
             </styleProperties>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Enter a valid Client Number.&lt;/p&gt;</errorMessage>
-                <formulaExpression>OR(
-    {!Run_All_Clients},
-    AND(
-        NOT(ISBLANK({!Client_Number})),
-{!Validate_Renewal_Client.Results.IsValidClient}
-    )
-)</formulaExpression>
-            </validationRule>
             <visibilityRule>
                 <conditionLogic>1</conditionLogic>
+                <conditions>
+                    <leftValueReference>Run_All_Clients</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 32, 13);&quot;&gt;Error: Enter a valid Client Number.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Show_Client_Error</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>Run_All_Clients</leftValueReference>
                     <operator>EqualTo</operator>
@@ -389,72 +541,6 @@
         <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
-        <triggers>
-            <eventName>flow__screeninit</eventName>
-            <eventSource>Client_Number_Input</eventSource>
-            <handlers>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Run_All_Clients</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Client_Number</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <screenActionName>Validate_Renewal_Client</screenActionName>
-            </handlers>
-        </triggers>
-        <triggers>
-            <eventName>flow__screenfieldattributechange</eventName>
-            <eventSource>Client_Number</eventSource>
-            <handlers>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Run_All_Clients</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Client_Number</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <screenActionName>Validate_Renewal_Client</screenActionName>
-            </handlers>
-        </triggers>
-        <triggers>
-            <eventName>flow__formulachange</eventName>
-            <eventSource>YearNumber</eventSource>
-            <handlers>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Run_All_Clients</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Client_Number</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <screenActionName>Validate_Renewal_Client</screenActionName>
-            </handlers>
-        </triggers>
     </screens>
     <screens>
         <name>Error_Screen_Flow_FaultMessage</name>
@@ -506,14 +592,15 @@
             <choiceReferences>Oct</choiceReferences>
             <choiceReferences>Nov</choiceReferences>
             <choiceReferences>Dec</choiceReferences>
-            <dataType>String</dataType>
+            <dataType>Number</dataType>
             <fieldText>Select Month</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <scale>0</scale>
             <styleProperties>
                 <verticalAlignment>
-                    <stringValue>middle</stringValue>
+                    <stringValue>top</stringValue>
                 </verticalAlignment>
                 <width>
                     <stringValue>6</stringValue>
@@ -590,6 +677,16 @@
     </variables>
     <variables>
         <name>IsBatchQueued</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Show_Client_Error</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
