@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_Case_Contacts_Primary_Contact</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Restrict Case Contacts Primary Contact</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Restrict Case Contacts Primary Contact</label>
+</PermissionSet>
