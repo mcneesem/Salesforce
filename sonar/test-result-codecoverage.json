@@ -9934,7 +9934,7 @@
   {
     "id": "01p4x00000NS3l3AAD",
     "name": "NSP_AccountTeamTriggerHelper",
-    "totalLines": 332,
+    "totalLines": 329,
     "lines": {
       "12": 1,
       "13": 1,
@@ -10264,12 +10264,9 @@
       "676": 1,
       "677": 1,
       "679": 1,
-      "680": 1,
-      "681": 1,
-      "682": 1,
-      "683": 1
+      "680": 1
     },
-    "totalCovered": 280,
+    "totalCovered": 277,
     "coveredPercent": 84
   },
   {
