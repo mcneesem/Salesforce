@@ -2131,7 +2131,7 @@ export function amendmentForClonedLineCalculation (quote, lines){
                 if(isDeltaCalc){
                     let effectiveQty = line.record["SBQQ__EffectiveQuantity__c"] || 0;
                     let prevQty = line.record["NSP_Previous_Quantity__c"] || 0;
-					let quotedQty = line.record["NSP_Quoted_Quantity__c"] || 0;
+                    let quotedQty = line.record["NSP_Quoted_Quantity__c"] || 0;
                     let deltaQty = quotedQty - prevQty;
                     deltaPrice = effectiveQty > 0 ? deltaQty * line.record["SBQQ__ListPrice__c"] : 0;
                 } else {
