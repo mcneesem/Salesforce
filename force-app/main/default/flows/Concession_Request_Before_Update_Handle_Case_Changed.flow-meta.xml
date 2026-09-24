@@ -110,8 +110,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Concession Request - Before Create - Update Related Records {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Concession Request - Before Create - Update Related Records</label>
+    <interviewLabel>Concession Request - Before Update - Handle Case Changed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Concession Request - Before Update - Handle Case Changed</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -168,7 +168,7 @@
         <connector>
             <targetReference>Account_and_Contact_Check</targetReference>
         </connector>
-        <filterLogic>( 1 AND ( 2 OR 3 OR 4 ) )</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>IsNull</operator>
@@ -177,28 +177,14 @@
             </value>
         </filters>
         <filters>
-            <field>Account__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Contact__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Account_Health__c</field>
-            <operator>IsNull</operator>
+            <field>Case__c</field>
+            <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Concession_Request__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
