@@ -165,22 +165,22 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             && !records.isEmpty()
             )
         {
-            records = this.getSelectedClientRecords( records );
-            if ( !records.isEmpty() ) {
-                try {
+            try {
+                records = this.getSelectedClientRecords( records );
+                if ( !records.isEmpty() ) {
                     this.buildSalesOfficeToRenewalManagerMap( records );
                     this.buildWSEEMaps( records );
                     this.processEntries( records );
                     this.processOpportunities( records );
-                } catch ( Exception e ) {
-                    NSP_ErrorLogHandler.logException(
-                        GenerateRenewalOpportunitiesJob.class.getName() ,
-                        'execute' ,
-                        e
-                    );
-                    if ( this.executeExceptions != null ) {
-                        this.executeExceptions.add( e );
-                    }
+                }
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    GenerateRenewalOpportunitiesJob.class.getName() ,
+                    'execute' ,
+                    e
+                );
+                if ( this.executeExceptions != null ) {
+                    this.executeExceptions.add( e );
                 }
             }
         }
@@ -347,12 +347,13 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
         if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
             for ( NSP_Sub_Client__c record : records ) {
                 if ( this.clientNumbers.contains( record.NSP_Client__c ) ) {
-                    selectedClientRecords.add( record );
+                    selectedClientRecords.add( record ) ;
                 }
             }
-            records = selectedClientRecords;
+        } else{
+            selectedClientRecords = records ;
         }
-        return records;
+        return selectedClientRecords ;
     }
 
     private void processOpportunities( List<NSP_Sub_Client__c> records ) {

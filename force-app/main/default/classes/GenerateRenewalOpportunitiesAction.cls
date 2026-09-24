@@ -8,7 +8,7 @@ public with sharing class GenerateRenewalOpportunitiesAction {
             for ( MonthYearData input : inputs ) {
                 Boolean isValid = false;
                 if ( GenerateRenewalOpportunitiesAction.isValidRequest( input ) ) {
-                    Integer monthNumber = Integer.valueOf( input.monthValue );
+                    Integer monthNumber = input.monthValue ;
                     Integer yearNumber = input.yearValue;
                     Set<String> clientNumbers = GenerateRenewalOpportunitiesAction.getClientNumbers( input );
                     Id jobId = GenerateRenewalOpportunitiesJob.executeBatch( monthNumber, yearNumber, clientNumbers );
@@ -22,12 +22,12 @@ public with sharing class GenerateRenewalOpportunitiesAction {
 
     private static Boolean isValidRequest( MonthYearData input ) {
         Boolean isValid = false;
-        if ( ( input != null ) && String.isNotBlank( input.monthValue ) && ( input.yearValue != null ) ) {
+        if ( ( input != null ) && ( input.monthValue != null ) && ( input.yearValue != null ) ) {
             if ( input.isRunAllClients == true ) {
                 isValid = true;
             } else if ( String.isNotBlank( input.clientNumber ) ) {
                 String clientNumber = input.clientNumber.trim();
-                Integer monthNumber = Integer.valueOf( input.monthValue );
+                Integer monthNumber = input.monthValue ;
                 isValid = GenerateRenewalOpportunitiesAction.isEligibleClient( clientNumber, monthNumber, input.yearValue );
             }
         }
@@ -66,7 +66,7 @@ public with sharing class GenerateRenewalOpportunitiesAction {
 
     public class MonthYearData {
         @InvocableVariable(label='Month Value' required=true)
-        public String monthValue;
+        public Integer monthValue;
         @InvocableVariable(label='Year Value' required=true)
         public Integer yearValue;
         @InvocableVariable(label='Client Number')
