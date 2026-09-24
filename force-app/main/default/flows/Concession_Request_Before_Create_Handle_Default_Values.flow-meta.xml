@@ -168,7 +168,7 @@
         <connector>
             <targetReference>Account_and_Contact_Check</targetReference>
         </connector>
-        <filterLogic>( 1 AND ( 2 OR 3 OR 4  ) )</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 OR 4 ) )</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>IsNull</operator>
