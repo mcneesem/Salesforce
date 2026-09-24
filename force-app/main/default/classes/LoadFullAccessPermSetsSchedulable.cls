@@ -1,4 +1,4 @@
-public without sharing class LoadFullAccessPermSetsSchedulable implements Schedulable {
+public without sharing class LoadFullAccessPermSetsSchedulable implements ISelfSchedulable , Schedulable {
     // test w/ LoadFullAccessPermSetsSchedulableTest (100%)
 
     private static String READ_PS = 'All_objects_All_fields_Read_access';
@@ -15,15 +15,17 @@ public without sharing class LoadFullAccessPermSetsSchedulable implements Schedu
         LoadFullAccessPermSets.runLoadFullAccessPermSets( READ_PS_NLO , EDIT_PS_NLO , null , filterNamespaces );
     }
 
+    // runs every friday at 2am central...
+    // ~ process needs to be completed after release and post-steps are completed (Thursday nights)...
+    // ~ process needs to be completed before DEV*** sandbox refresh cycle begins (Friday mornings)...
     public static String schedule() {
         String suffix = '';
-        String schedmon5am = '0 00 05 ? * 2';  //Every Monday, 5AM
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'LoadFullAccessPermSetsSchedulable ~ Every Monday, 5AM' + suffix ,
-            schedmon5am ,
+            'LoadFullAccessPermSetsSchedulable ~ Every Friday, 2AM' + suffix ,
+            '0 0 2 ? * FRI *' ,
             new LoadFullAccessPermSetsSchedulable()
         );
     }
