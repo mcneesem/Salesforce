@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <attachedDocuments>Services/Learning_and_Development_Brochure.pdf</attachedDocuments>
     <available>true</available>
     <description>BT HRS and CL  - Information regarding training and development available on the learning platform</description>
     <encodingKey>ISO-8859-1</encodingKey>
@@ -9,50 +10,49 @@
     <subject>Training and Development Opportunities</subject>
     <textOnly>Dear [Client]
 
-Your partnership with Insperity grants access to the Insperity Learning Portal which houses books, self-paced trainings, and other professional development opportunities. Your employees have access to this platform at no additional charge. Our learning and development solutions are designed to meet the wide range of challenges facing today’s small businesses. Our online course library is broad enough to support specific business goals, while also providing individual skill development. Please feel welcome to share the attached flyer with your employees to give an overview of some of the available content across multiple delivery modes, as well as the sample below.
+Your partnership with Insperity grants access to the Insperity Learning Portal which houses books, self-paced trainings, and other professional development opportunities. Your employees have access to this platform at no additional charge. Our learning and development solutions are designed to meet the wide range of challenges facing today's small businesses. Our online course library is broad enough to support specific business goals, while also providing individual skill development. Please feel welcome to share the attached flyer with your employees to give an overview of some of the available content across multiple delivery modes, as well as the sample below.
 
 You are welcome to disseminate the below email to your employees as appropriate to remind them of the resources available to them.
-
 Please always feel welcome to reach out to me with any questions.
-
 [signature]
 
 Dear [Team Members]
+
 We are excited to remind you that through our Insperity relationship you have access to an array of training and development resources.  We encourage you to leverage the access to the professional development opportunities available to you at no charge.
 
 These trainings can be found on Insperity Premier by navigating to the Learning Portal.
 
 The Learning Portal supports various learning needs:
 
-• Leader development
-• Employee development
-• Personal wellbeing
-• Working remote
-• Microsoft Office suite and other software
-• Select IT and Business certification prep courses
-• Environmental, Safety &amp; Health, including OSHA compliance
-• Legal compliance
+Leader development
+Employee development
+Personal wellbeing
+Working remote
+Microsoft Office suite and other software
+Select IT and Business certification prep courses
+Environmental, Safety &amp; Health, including OSHA compliance
+Legal compliance
 
 Resources are available for multiple learning styles:
 
-• Self-paced courses
-• Instructor-led virtual training available for registration
-• Videos
-• Book Summaries
-• Articles
+Self-paced courses
+Instructor-led virtual training available for registration
+Videos
+Book Summaries
+Articles
 
 Manager Administrator Options
 
-• View employee transcripts
-• Enroll employees in courses
-• Create and assign curriculum for groups of courses
-• Run reports
+View employee transcripts
+Enroll employees in courses
+Create and assign curriculum for groups of courses
+Run reports
 
 Get started
 
-Log in at elearning.insperity.com and enter your Insperity® Premier login information.
+Log in at elearning.insperity.com and enter your Insperity(R)S Premier login information.
 
-Please reach out to the Insperity Contact Center at 866.715.3552, 7 a.m. – 7 p.m. CT</textOnly>
+Please reach out to the Insperity Contact Center at 866.715.3552, 7 a.m. - 7 p.m. CT</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
