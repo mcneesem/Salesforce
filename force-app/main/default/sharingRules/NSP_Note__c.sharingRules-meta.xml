@@ -2,7 +2,7 @@
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
         <fullName>NSP_FLSA_Note_Sharing_Rules</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <label>FLSA Note Sharing Rules</label>
         <sharedTo>
             <group>NSP_FLSA_Users</group>
@@ -16,7 +16,7 @@
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>NSP_UX_Team_Note_Sharing_Rules</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <label>UX Team Note Sharing Rules</label>
         <sharedTo>
             <group>NSP_UX_Users</group>
@@ -30,7 +30,7 @@
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Non_FLSA_Note_Sharing_Rules</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <label>Non FLSA Note Sharing Rules</label>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
