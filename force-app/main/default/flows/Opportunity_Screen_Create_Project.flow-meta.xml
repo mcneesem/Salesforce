@@ -101,23 +101,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_Opportunity</name>
-        <label>Set Fault Element: Get_Opportunity</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Opportunity</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Not_Successful</name>
         <label>Set Fault Element: Not Successful</label>
         <locationX>0</locationX>
@@ -341,7 +324,7 @@
             <targetReference>Check_for_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Opportunity</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -406,6 +389,30 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Message_Text</name>
+            <fieldText>&lt;p&gt;An error occurred:&lt;/p&gt;&lt;p&gt; {!varErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>FAULT</name>
