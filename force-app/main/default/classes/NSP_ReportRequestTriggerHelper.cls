@@ -213,74 +213,68 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
     private void updateWSEEDetails( List<NSP_ReportRequest__c> repReqList , Set<Id> repReqContactIds , Set<Id> repReqAccountIds ) {
-        try {
-            Map<Id,Contact> contactMap = new Map<Id,Contact>();
-            Map<Id,NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id,NSP_Sub_Client_Contact__c>();
-            Map<Id,NSP_Sub_Client_Contact_Address__c> subClientContactAddressMap = new Map<Id,NSP_Sub_Client_Contact_Address__c>();
-            for ( Contact con : [
-                        SELECT Id , NSP_Date_of_Birth__c , Name
-                        FROM Contact
-                        WHERE ( Id IN :repReqContactIds )
-                    ]
-                )
-            {
-                contactMap.put( con.Id , con );
-            }
-            for ( NSP_Sub_Client_Contact__c scc : [
-                        SELECT
-                            Id ,
-                            NSP_Is_Primary__c ,
-                            NSP_Employee_Status__c ,
-                            NSP_Status_Date__c ,
-                            NSP_AIMS_Sub_Client__c ,
-                            NSP_Sub_Client__c ,
-                            NSP_Sub_Client__r.NSP_Account__c ,
-                            NSP_Contact__c
-                        FROM NSP_Sub_Client_Contact__c
-                        WHERE (
-                            ( NSP_Contact__c IN :repReqContactIds )
-                            AND ( NSP_Is_Primary__c = true )
-                            AND ( NSP_Sub_Client__r.NSP_Account__c IN :repReqAccountIds )
-                        )
-                    ]
-                )
-            {
-                subClientContactMap.put(scc.NSP_Contact__c, scc);
-            }
-            for ( NSP_Sub_Client_Contact_Address__c scca : [
-                        SELECT
-                            Id ,
-                            NSP_State__c ,
-                            NSP_Sub_Client_Contact__c ,
-                            NSP_Sub_Client_Contact__r.NSP_Contact__c
-                        FROM NSP_Sub_Client_Contact_Address__c
-                        WHERE (
-                            ( NSP_Sub_Client_Contact__r.NSP_Contact__c IN :repReqContactIds )
-                            AND ( NSP_Sub_Client_Contact__r.NSP_Is_Primary__c = true )
-                            AND ( NSP_State__c != null )
-                        )
-                    ]
-                )
-            {
-                subClientContactAddressMap.put( scca.NSP_Sub_Client_Contact__r.NSP_Contact__c , scca );
-            }
-            for ( NSP_ReportRequest__c repReq : repReqList ) {
-                repReq.NSP_DOB__c = (contactMap.containskey(repReq.NSP_WSEE__c) && contactMap.get(repReq.NSP_WSEE__c).NSP_Date_of_Birth__c != null) ?
-                    contactMap.get(repReq.NSP_WSEE__c).NSP_Date_of_Birth__c : null;
-                repReq.NSP_Employee_Status__c =  subClientContactMap.containsKey(repReq.NSP_WSEE__c) && subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c != null?
-                    subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c : '';
-                repReq.NSP_Termination_Date__c = (subClientContactMap.containsKey(repReq.NSP_WSEE__c) &&
-                                                  subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c != null &&
-                                                  subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c == NSP_ServiceConstants.TERMINATED_STATUS ) ?
-                    subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Status_Date__c : repReq.NSP_Termination_Date__c;
-                repReq.NSP_WSEE_SubClient_Parent_Client_if_None__c = subClientContactMap.containsKey(repReq.NSP_WSEE__c) && subClientContactMap.get(repReq.NSP_WSEE__c).NSP_AIMS_Sub_Client__c != null ?
-                    subClientContactMap.get(repReq.NSP_WSEE__c).NSP_AIMS_Sub_Client__c : '';
-                repReq.NSP_WorkState__c = (subClientContactAddressMap.containskey(repReq.NSP_WSEE__c) && subClientContactAddressMap.get(repReq.NSP_WSEE__c).NSP_State__c != null)?
-                    subClientContactAddressMap.get(repReq.NSP_WSEE__c).NSP_State__c : '';
-                repReq.NSP_Age_Range_Is__c = getAgeRange(repReq.NSP_DOB__c, repReq.NSP_Termination_Date__c);
-            }
-        } catch ( Exception e ) {
-            NSP_ReportRequestTriggerHelper.handleException( e , 'updateWSEEDetails' );
+    try {
+        Map<Id,Contact> contactMap = new Map<Id,Contact>();
+        Map<Id,NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id,NSP_Sub_Client_Contact__c>();
+        Map<Id,NSP_Sub_Client_Contact_Address__c> subClientContactAddressMap = new Map<Id,NSP_Sub_Client_Contact_Address__c>();
+        for ( Contact con : [
+                    SELECT Id , NSP_Date_of_Birth__c , Name
+                    FROM Contact
+                    WHERE ( Id IN :repReqContactIds )
+                ]
+            )
+        {
+            contactMap.put( con.Id , con );
+        }
+        for ( NSP_Sub_Client_Contact__c scc : [
+                    SELECT
+                        Id ,
+                        NSP_Is_Primary__c ,
+                        NSP_Employee_Status__c ,
+                        NSP_Status_Date__c ,
+                        NSP_AIMS_Sub_Client__c ,
+                        NSP_Sub_Client__c ,
+                        NSP_Sub_Client__r.NSP_Account__c ,
+                        NSP_Contact__c
+                    FROM NSP_Sub_Client_Contact__c
+                    WHERE (
+                        ( NSP_Contact__c IN :repReqContactIds )
+                        AND ( NSP_Is_Primary__c = true )
+                        AND ( NSP_Sub_Client__r.NSP_Account__c IN :repReqAccountIds )
+                    )
+                ]
+            )
+        {
+            subClientContactMap.put(scc.NSP_Contact__c, scc);
+        }
+        for ( NSP_Sub_Client_Contact_Address__c scca : [
+                    SELECT
+                        Id ,
+                        NSP_State__c ,
+                        NSP_Sub_Client_Contact__c ,
+                        NSP_Sub_Client_Contact__r.NSP_Contact__c
+                    FROM NSP_Sub_Client_Contact_Address__c
+                    WHERE (
+                        ( NSP_Sub_Client_Contact__r.NSP_Contact__c IN :repReqContactIds )
+                        AND ( NSP_Sub_Client_Contact__r.NSP_Is_Primary__c = true )
+                        AND ( NSP_State__c != null )
+                    )
+                ]
+            )
+        {
+            subClientContactAddressMap.put( scca.NSP_Sub_Client_Contact__r.NSP_Contact__c , scca );
+        }
+        for ( NSP_ReportRequest__c repReq : repReqList ) {
+            repReq.NSP_DOB__c = (contactMap.containskey(repReq.NSP_WSEE__c) && contactMap.get(repReq.NSP_WSEE__c).NSP_Date_of_Birth__c != null) ?
+                contactMap.get(repReq.NSP_WSEE__c).NSP_Date_of_Birth__c : null;
+            repReq.NSP_Termination_Date__c = (subClientContactMap.containsKey(repReq.NSP_WSEE__c) &&
+                                              subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c != null &&
+                                              subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Employee_Status__c == NSP_ServiceConstants.TERMINATED_STATUS ) ?
+                subClientContactMap.get(repReq.NSP_WSEE__c).NSP_Status_Date__c : repReq.NSP_Termination_Date__c;
+            repReq.NSP_Age_Range_Is__c = getAgeRange(repReq.NSP_DOB__c, repReq.NSP_Termination_Date__c);
+        }
+    } catch ( Exception e ) {
+        NSP_ReportRequestTriggerHelper.handleException( e , 'updateWSEEDetails' );
         }
     }
 
@@ -463,49 +457,43 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
     private void updateCaseSubjectName( List<NSP_ReportRequest__c> repReqList ) {
-        List<Case> caseIdSet = new List<Case>();
-        try{
-            for ( NSP_ReportRequest__c repRequestRecord : [
-                        SELECT
-                            Id ,
-                            NSP_WSEE__c ,
-                            NSP_WSEE__r.Name ,
-                            NSP_Case__c ,
-                            NSP_ReviewType__c ,
-                            NSP_AgreementType__c ,
-                            NSP_WSEE_SubClient_Parent_Client_if_None__c
-                        FROM NSP_ReportRequest__c
-                        WHERE ( Id IN :repReqList )
-                    ]
-                )
-            {
-                case newCase = new Case();
-                newCase.Id = repRequestRecord.NSP_Case__c;
-                if(repRequestRecord.NSP_ReviewType__c != null){
-                    newCase.Subject = repRequestRecord.NSP_WSEE_SubClient_Parent_Client_if_None__c !=null?
-                        repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_ReviewType__c + ' - ' +
-                        repRequestRecord.NSP_WSEE__r.Name + ' ('+ repRequestRecord.NSP_WSEE_SubClient_Parent_Client_if_None__c +')' :
-                    repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_ReviewType__c + ' - ' +
-                        repRequestRecord.NSP_WSEE__r.Name ;
-                }else if(repRequestRecord.NSP_ReviewType__c == null && repRequestRecord.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO){
-                    newCase.Subject = repRequestRecord.NSP_WSEE_SubClient_Parent_Client_if_None__c != null ?
-                        repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_WSEE__r.Name +  ' ('+ repRequestRecord.NSP_WSEE_SubClient_Parent_Client_if_None__c +')' :
-                    repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_WSEE__r.Name;
-                }
-                caseIdSet.add(newCase);
+    List<Case> caseIdSet = new List<Case>();
+    try{
+        for ( NSP_ReportRequest__c repRequestRecord : [
+                    SELECT
+                        Id ,
+                        NSP_WSEE__c ,
+                        NSP_WSEE__r.Name ,
+                        NSP_Case__c ,
+                        NSP_ReviewType__c ,
+                        NSP_AgreementType__c
+                    FROM NSP_ReportRequest__c
+                    WHERE ( Id IN :repReqList )
+                ]
+            )
+        {
+            case newCase = new Case();
+            newCase.Id = repRequestRecord.NSP_Case__c;
+            if(repRequestRecord.NSP_ReviewType__c != null){
+                newCase.Subject = repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_ReviewType__c + ' - ' +
+                    repRequestRecord.NSP_WSEE__r.Name ;
+            }else if(repRequestRecord.NSP_ReviewType__c == null && repRequestRecord.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO){
+                newCase.Subject = repRequestRecord.NSP_AgreementType__c + ' - ' + repRequestRecord.NSP_WSEE__r.Name;
             }
-            if ( !caseIdSet.isEmpty() ) {
-                Database.SaveResult[] results = Database.update( caseIdSet , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ReportRequestTriggerHelper.class.getName() ,
-                    'updateCaseSubjectName:update' ,
-                    results
-                );
-            }
-        } catch ( Exception e ) {
-            NSP_ReportRequestTriggerHelper.handleException( e , 'updateCaseSubjectName' );
+            caseIdSet.add(newCase);
         }
+        if ( !caseIdSet.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( caseIdSet , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ReportRequestTriggerHelper.class.getName() ,
+                'updateCaseSubjectName:update' ,
+                results
+            );
+        }
+    } catch ( Exception e ) {
+        NSP_ReportRequestTriggerHelper.handleException( e , 'updateCaseSubjectName' );
     }
+ }
 
     // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
