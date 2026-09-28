@@ -211,7 +211,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
             oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-            String[] sendingTo = new String[]{'sfconfig@insperity.com'};
+            String[] sendingTo = LoadFullAccessPermSetsQueueable.monitorEmailAddresses;
             oEmail.setToAddresses(sendingTo);
             oEmail.setSaveAsActivity(false);
             oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
@@ -231,6 +231,36 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         {
             createErrorLogFuture( methodName , objectName , info );
         }
+    }
+
+    private static OrgSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = OrgSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static List<String> monitorEmailAddresses  {
+        private get {
+            if ( monitorEmailAddresses == null ) {
+                List<String> local = new List<String>();
+                if ( LoadFullAccessPermSetsQueueable.settings != null ) {
+                    String rawMonitorEmailAddresses = LoadFullAccessPermSetsQueueable.settings.MonitorEmailAddresses__c;
+                    if ( String.isNotBlank( rawMonitorEmailAddresses ) ) {
+                        List<String> splitMonitorEmailAddresses = rawMonitorEmailAddresses.split( '\r\n' );
+                        if ( ( splitMonitorEmailAddresses != null ) && ( splitMonitorEmailAddresses.size() > 0 ) ) {
+                            local = splitMonitorEmailAddresses;
+                        }
+                    }
+                }
+                monitorEmailAddresses = local;
+            }
+            return monitorEmailAddresses;
+        }
+        private set;
     }
 
     @future
