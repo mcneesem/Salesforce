@@ -4,7 +4,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
     private Integer runYear = null;
-    private Set<String> clientNumbers = new Set<String>();
+    private Set<String> runClientNumbers = null;
     private String renewalCreated = null;
 
     // Derived eligibility: one year prior selected month
@@ -75,7 +75,7 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             this.eligibleEnd = this.eligibleStart.addMonths( 1 ).addDays( -1 );
         }
         if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
-            this.clientNumbers.addAll( clientNumbers );
+            this.runClientNumbers = clientNumbers;
         }
     }
 
@@ -344,10 +344,10 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
 
     private List<NSP_Sub_Client__c> getSelectedClientRecords( List<NSP_Sub_Client__c> records ) {
         List<NSP_Sub_Client__c> selectedClientRecords = records;
-        if ( this.clientNumbers != null && !this.clientNumbers.isEmpty() ) {
+        if ( this.runClientNumbers != null && !this.runClientNumbers.isEmpty() ) {
             selectedClientRecords = new List<NSP_Sub_Client__c>();
             for ( NSP_Sub_Client__c record : records ) {
-                if ( this.clientNumbers.contains( record.NSP_Client__c ) ) {
+                if ( this.runClientNumbers.contains( record.NSP_Client__c ) ) {
                     selectedClientRecords.add( record ) ;
                 }
             }
