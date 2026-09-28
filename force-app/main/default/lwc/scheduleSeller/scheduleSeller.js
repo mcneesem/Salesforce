@@ -49,6 +49,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const matrix = ( Array.isArray( this.matrix ) ? this.matrix : [] );
         const nowUtc = new Date();
         nowUtc.setUTCSeconds(0, 0);
+        const rushCutoff  = this.getRushCutoff();
         // Compute cutoff for non-admins: now + 24h (rounded to minute)
         const cutoffUtc = new Date(Date.now() + 24 * 60 * 60 * 1000);
         cutoffUtc.setUTCSeconds(0, 0);
@@ -83,13 +84,13 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                         const idArray = ( Array.isArray( counts[colIndex] ) ? counts[colIndex] : [] );
                         let countVal = idArray.length;
                         let isDisabled = ( countVal === 0 );
-                        const startRounded = new Date(startUTCDate.getTime());
-                        startRounded.setUTCSeconds(0, 0);
-                        // Enforce 24-hour restriction for non-admins and disable when count is zero
+                        const startRounded = new Date( startUTCDate.getTime() );
+                        startRounded.setUTCSeconds( 0, 0 );
                         if ( startRounded < nowUtc ) {
+                            // Already passed, gray out
                             isDisabled = true;
                             countVal = 'R';
-                        } else if ( !this.isAdmin && ( startRounded < cutoffUtc ) ) {
+                        } else if ( !this.isAdmin && ( rushCutoff !== null ) && ( startRounded < rushCutoff ) ) {
                             countVal = 'R';
                             isDisabled = false;
                         }
@@ -238,6 +239,21 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         );
         // Standardize milliseconds to .000Z
         return dt.toISOString();
+    }
+
+    // Rush follows business days AND the 24h cutoff.
+    getRushCutoff() {
+        const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
+        const now = new Date();
+        const todayStr = now.toLocaleDateString( 'en-CA' );
+        //It only takes the first element (next business day)
+        const nextCol = cols.find( col => col.fullDate > todayStr );
+        let cutoff = null;
+        if ( nextCol ) {
+            const [ y , m , d ] = nextCol.fullDate.split( '-' ).map( Number );
+            cutoff = new Date( Date.UTC( y , ( m - 1 ) , d , now.getUTCHours() , now.getUTCMinutes() , 0 ) );
+        }
+        return cutoff;
     }
 
 }
