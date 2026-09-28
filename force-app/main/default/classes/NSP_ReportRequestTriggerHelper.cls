@@ -205,7 +205,6 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             }
         }
     }
-
     //
     // MethodName : updateWSEEDetails
     // Description : Updates all the related WSEE details on wizard output record
@@ -456,6 +455,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Params : List<NSP_ReportRequest__c>repReqList
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
+
     private void updateCaseSubjectName( List<NSP_ReportRequest__c> repReqList ) {
     List<Case> caseIdSet = new List<Case>();
     try{
