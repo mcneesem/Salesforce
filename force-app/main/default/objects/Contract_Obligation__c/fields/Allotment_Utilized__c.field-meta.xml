@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allotment_Utilized__c</fullName>
+    <label>Allotment Utilized</label>
+    <summarizedField>Contract_Obligation_Rendered__c.Allotment_Utilized__c</summarizedField>
+    <summaryForeignKey>Contract_Obligation_Rendered__c.Contract_Obligation__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>
