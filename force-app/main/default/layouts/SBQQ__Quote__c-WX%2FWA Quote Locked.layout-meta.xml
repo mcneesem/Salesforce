@@ -164,10 +164,6 @@
                 <behavior>Readonly</behavior>
                 <field>SBQQ__PaymentTerms__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Seasonal_Pricing__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
