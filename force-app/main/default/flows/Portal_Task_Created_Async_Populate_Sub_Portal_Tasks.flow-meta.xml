@@ -11,13 +11,6 @@
             <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Insperity Client Authorization</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>defaultTaskNames</assignToReference>
-            <operator>Add</operator>
-            <value>
                 <stringValue>Client Sponsored Plans</stringValue>
             </value>
         </assignmentItems>
@@ -25,6 +18,7 @@
             <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
         </connector>
     </assignments>
+    <description>New Client Portal: Populate Sub Portal Tasks</description>
     <environments>Default</environments>
     <interviewLabel>Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task - Created - Async - Populate Sub Portal Tasks</label>

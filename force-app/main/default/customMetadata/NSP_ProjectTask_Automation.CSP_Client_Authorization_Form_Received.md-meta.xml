@@ -3,6 +3,10 @@
     <label>CSP Client Authorization Form Received</label>
     <protected>false</protected>
     <values>
+        <field>API_Name__c</field>
+        <value xsi:type="xsd:string">INSPERITY_CLIENT_AUTHORIZATION</value>
+    </values>
+    <values>
         <field>Milestone_Owner_Type__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -25,6 +29,26 @@
     <values>
         <field>Order__c</field>
         <value xsi:type="xsd:double">25.0</value>
+    </values>
+    <values>
+        <field>Portal_Event_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Portal_Guidance_API_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Portal_Task_Action__c</field>
+        <value xsi:type="xsd:string">Docusign</value>
+    </values>
+    <values>
+        <field>Portal_Task_Name__c</field>
+        <value xsi:type="xsd:string">Insperity Client Authorization</value>
+    </values>
+    <values>
+        <field>Portal_Task_Type__c</field>
+        <value xsi:type="xsd:string">Company Setup</value>
     </values>
     <values>
         <field>Task_Order__c</field>
