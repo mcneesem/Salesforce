@@ -22,7 +22,6 @@ NSP_StatusOfAgreement__c;
 NSP_ConfirmationOfAgreementStatement__c= '';
 NSP_ReviewType__c;
 NSP_ClientName__c;
-NSP_WSEE_SubClient_Parent_Client_if_None__c;
 NSP_WSEE__c;
 NSP_ShowSeperationList='';
 fieldValue =  { currentTarget : { name :'', value :''} };
@@ -43,7 +42,7 @@ fieldValue =  { currentTarget : { name :'', value :''} };
 pickValueYesNo = [
   { "attributes": null, "label": "No", "value": "No" },
   { "attributes": null, "label": "Yes", "value": "Yes"}
-  
+
 ];
 
 get reportRecordName (){
@@ -51,7 +50,7 @@ get reportRecordName (){
 
   (this.NSP_AgreementType__c != null  && this.NSP_ReviewType__c != null )? (this.reportName = this.NSP_AgreementType__c+' - '+this.NSP_ReviewType__c) :
    this.NSP_ReviewType__c != null ? (this.reportName = this.NSP_ReviewType__c + '- Created On '+ this.createDate ):
-    this.reportName == null? 
+    this.reportName == null?
     (this.reportName =  'Separation Report Created On '+ this.createDate) : this.reportName.startsWith('a7Y1')?
     (this.reportName =  'Separation Report Created On '+ this.createDate):'';
 
@@ -64,26 +63,26 @@ get reportRecordName (){
     this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
     if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
 
-      this.NSP_ConfirmationOfAgreementStatement__c =  this.fieldsData.NSP_ConfirmationOfAgreementStatement__c != null ? 
+      this.NSP_ConfirmationOfAgreementStatement__c =  this.fieldsData.NSP_ConfirmationOfAgreementStatement__c != null ?
       this.fieldsData.NSP_ConfirmationOfAgreementStatement__c.value: '' , console.log(this.fieldsData.NSP_ConfirmationOfAgreementStatement__c.value);
 
       if(this.isOnloaded){
       if(this.reviewTypeValues.data!=null&& this.statusOfAgreementValues.data !=null && this.agreementTypeValues.data != null){
             for (let key in this.fieldsData) {
-              if( this.fieldsData[key]!= null && this.currentPageFields.includes(key) && this.fieldsData[key].value !=null 
+              if( this.fieldsData[key]!= null && this.currentPageFields.includes(key) && this.fieldsData[key].value !=null
                   && this.fieldsData[key].value != ''){
                       this[key]=this.fieldsData[key].value;
                       this.fieldValue.currentTarget.name = key ;
                       this.fieldValue.currentTarget.value = this.fieldsData[key].value;
                       this.handleChange(this.fieldValue);
-                    } 
+                    }
           }
-          
+
           if( this.template.querySelector("div.NSP_AgreementType__c") != null  && this.template.querySelector("div.midMarketEnterprise") != null
           && this.template.querySelector("div.statusAgreementDiv") !=null
         && this.template.querySelector("div.confirmationDiv") != null){
             this.isOnloaded = false;
-          }   
+          }
         }
        }
       }
@@ -91,9 +90,6 @@ get reportRecordName (){
     if(this.isOnloaded ){
     if(this.recordObj?.NSP_ClientName__c?.value != null && this.NSP_ClientName__c == null){
       this.NSP_ClientName__c = this.recordObj.NSP_ClientName__c.value;
-     }
-     if(this.recordObj?.NSP_Client_Number__c?.value != null && this.NSP_WSEE_SubClient_Parent_Client_if_None__c == null){
-      this.NSP_WSEE_SubClient_Parent_Client_if_None__c = this.recordObj.NSP_Client_Number__c.value;
      }
 
     if(this.recordObj.NSP_WSEE__c != null && this.recordObj.NSP_WSEE__c.value != null && this.NSP_WSEE__c == null){
@@ -156,7 +152,7 @@ handleSuccess(event) {
     this.dispatchEvent(new CustomEvent('next', {detail:recordField }));
   }else if(this.isSaveClick){
       const saveEvent = new CustomEvent('saveexit', { bubbles: true });
-      this.dispatchEvent(saveEvent);     
+      this.dispatchEvent(saveEvent);
   }
 }
 
@@ -210,12 +206,12 @@ handleSubmit(event){
         this.NSP_ConfirmationOfAgreementStatement__c = null;
         this.NSP_ConfirmationOfAgreementStatement =false;
         }
-    } 
+    }
 /** Review Type */
 		if(event.currentTarget.name == 'NSP_ReviewType__c' && event.currentTarget.value != null ){
             this.NSP_ReviewType__c = event.currentTarget.value;
         if(this.template.querySelector("div.midMarketEnterprise") !=null){
-          
+
             if(this.NSP_ReviewType__c ==='HRS Review' ){
               this.template.querySelector("div.midMarketEnterprise").style.display='';
               this[event.currentTarget.name.slice(0,-3)] = true;
@@ -234,16 +230,16 @@ handleSubmit(event){
           this.NSP_StatusOfAgreement =false;
           this.NSP_ConfirmationOfAgreementStatement =false;
           }
-          
+
         }
-     } 
+     }
      if(this.NSP_Mid_Market_or_Mid_Market_Enterprise__c ==='Yes' && this.NSP_Written_Approval_From_The_MHRS__c==='Yes' && this.NSP_StatusOfAgreement__c ==='Agreement Executed by WSEE'){
       this.NSP_ShowSeperationList=separationAgreementList;
      }else if(this.NSP_Mid_Market_or_Mid_Market_Enterprise__c ==='No' && this.NSP_StatusOfAgreement__c ==='Agreement Executed by WSEE'){
       this.NSP_ShowSeperationList=separationAgreementTermsList;
      }
 
-     
+
 
      /**Middle Market or Middle Market Enterprise client */
      if(event.currentTarget.name == 'NSP_Mid_Market_or_Mid_Market_Enterprise__c' && event.currentTarget.value != null){
@@ -258,7 +254,7 @@ handleSubmit(event){
           this.NSP_ConfirmationOfAgreementStatement__c = null;
           this.NSP_ConfirmationOfAgreementStatement = false;
           this.template.querySelector("div.confirmationDiv") !=null?this.template.querySelector("div.confirmationDiv").style.display='none' :'';
-          
+
         }else{
             this.template.querySelector('lightning-radio-group.NSP_Mid_Market_or_Mid_Market_Enterprise__c') != null? this.template.querySelector('lightning-radio-group.NSP_Mid_Market_or_Mid_Market_Enterprise__c').value ='':'';
             this.template.querySelector("div.statusAgreementDiv").style.display='';
@@ -272,12 +268,12 @@ handleSubmit(event){
           this.NSP_StatusOfAgreement__c=null;
           this.NSP_StatusOfAgreement=false;
 
-          
+
           this.NSP_ConfirmationOfAgreementStatement =false;
           }
       }
     }
-    
+
 
     /**Written approval from MHRS */
     if(event.currentTarget.name == 'NSP_Written_Approval_From_The_MHRS__c' && event.currentTarget.value != null){
@@ -309,11 +305,11 @@ handleSubmit(event){
             this[event.currentTarget.name.slice(0,-3)] = false;
             this.NSP_ConfirmationOfAgreementStatement__c = null;
             this.NSP_ConfirmationOfAgreementStatement = false;
-            
-          } 
+
+          }
          }
-      } 
- 
+      }
+
 
      /**  Status of Agreeemnt */
 		if(event.currentTarget.name == 'NSP_StatusOfAgreement__c' && event.currentTarget.value != null){
@@ -339,10 +335,10 @@ handleSubmit(event){
               this[event.currentTarget.name.slice(0,-3)] = false;
               this.NSP_ConfirmationOfAgreementStatement__c = null;
               this.template.querySelector("div.ChangeToCorporateReivew")!=null?this.template.querySelector("div.ChangeToCorporateReivew").style.display='block':'';
-              
-          } 
+
+          }
          }
-      } 
+      }
 /** Confirmation of Agreement */
         if(event.currentTarget.name == 'NSP_ConfirmationOfAgreementStatement__c' && event.currentTarget.value != null){
           this.NSP_ConfirmationOfAgreementStatement__c = event.currentTarget.value;
@@ -362,18 +358,18 @@ handleSubmit(event){
             this.NSP_ReviewType = false;
             this.template.querySelector("div.midMarketEnterprise").style.display='none';
               this.template.querySelector("div.confirmationDiv").style.display='none';
-              
+
               this.template.querySelector("div.ChangeToCorporateReivew")!=null?this.template.querySelector("div.ChangeToCorporateReivew").style.display='':'';
               this.NSP_ConfirmationOfAgreementStatement__c =null;
               this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c') != null? this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c').value =null:'';
           } else{
             this.NSP_ConfirmationOfAgreementStatement__c  = 'No';
           }
-      } 
+      }
 
       if(this.currentPageFields.includes(event.currentTarget.name)){
         /**   this[event.currentTarget.name] =  event.currentTarget.value;*/
-      } 
+      }
     }
 
 
@@ -390,6 +386,6 @@ handleSubmit(event){
     }
 
     findFileSize(){
-      
+
     }
 }

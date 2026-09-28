@@ -173,9 +173,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                     subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
                 }
                 if(this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
-                    subject = this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value != null ?
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue + ' ('+ this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value +')' :
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
+                    subject = subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
                 }
             } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
                 fields.NSP_Category__c='Strategic Consulting Services';
@@ -261,12 +259,12 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
             .then(() => {
                 this.hideSpinner();
                 this[NavigationMixin.Navigate]({
-                    type: 'standard__recordPage',
-                    attributes: {
-                        recordId: result.id,
-                        actionName: 'view'
-                    }
-                });
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: result.id,
+                            actionName: 'view'
+                        }
+                    });
                 this.reloadMainPage();
             })
             .catch(error => {
