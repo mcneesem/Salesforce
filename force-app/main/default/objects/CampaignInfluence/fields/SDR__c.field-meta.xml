@@ -7,7 +7,6 @@
     <inlineHelpText>This is the SDR field on Opportunity</inlineHelpText>
     <label>SDR</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
