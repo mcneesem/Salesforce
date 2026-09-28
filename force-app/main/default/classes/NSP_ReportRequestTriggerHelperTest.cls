@@ -191,7 +191,6 @@ private class NSP_ReportRequestTriggerHelperTest {
         repReq.NSP_AgreementType__c = INSPERITY_PREPARED;
         repReq.NSP_ReviewType__c = '';
         repReq.NSP_RequestingMultipleEmployees__c = NSP_ServiceConstants.NO;
-        repReq.NSP_WSEE_SubClient_Parent_Client_if_None__c = '24334';
         repReq.NSP_WSEE__c = contList[0].Id;
         update repReq;
         Test.stopTest();
