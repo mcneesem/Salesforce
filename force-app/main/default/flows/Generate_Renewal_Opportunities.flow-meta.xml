@@ -288,43 +288,32 @@
     <formulas>
         <name>CurrentYearFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT(YEAR(TODAY()))</expression>
+        <expression>TEXT( YEAR( TODAY() ) )</expression>
     </formulas>
     <formulas>
         <name>Eligible_End</name>
         <dataType>Date</dataType>
-        <expression>ADDMONTHS(
-    {!Eligible_Start},
-    1
-) - 1</expression>
+        <expression>( ADDMONTHS( {!Eligible_Start} , 1 ) - 1 )</expression>
     </formulas>
     <formulas>
         <name>Eligible_Start</name>
         <dataType>Date</dataType>
-        <expression>DATE(
-    {!YearNumber} - 1,
-    {!Select_Month},
-    1
-)</expression>
+        <expression>DATE( ( {!YearNumber} - 1 ) , {!Select_Month} , 1 )</expression>
     </formulas>
     <formulas>
         <name>NextYearFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT(YEAR(TODAY()) + 1)</expression>
+        <expression>TEXT( YEAR( TODAY() ) + 1 )</expression>
     </formulas>
     <formulas>
         <name>Renewal_Created_Value</name>
         <dataType>String</dataType>
-        <expression>TEXT({!Select_Month})
-&amp;
-&quot;/&quot;
-&amp;
-TEXT({!YearNumber})</expression>
+        <expression>TEXT( {!Select_Month} ) &amp; &quot;/&quot; &amp; TEXT( {!YearNumber} )</expression>
     </formulas>
     <formulas>
         <name>YearNumber</name>
         <dataType>Number</dataType>
-        <expression>VALUE({!Select_Year})</expression>
+        <expression>VALUE( {!Select_Year} )</expression>
         <scale>0</scale>
     </formulas>
     <interviewLabel>Generate Renewal Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
