@@ -20,6 +20,21 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         return results;
     }
 
+    public class MonthYearData {
+        @InvocableVariable(label='Month Value' required=true)
+        public Integer monthValue;
+        @InvocableVariable(label='Year Value' required=true)
+        public Integer yearValue;
+        @InvocableVariable(label='Client Number')
+        public String clientNumber;
+        @InvocableVariable(label='Run All Clients')
+        public Boolean isRunAllClients;
+    }
+
+    //
+    //
+    //
+
     private static Boolean isValidRequest( MonthYearData input ) {
         Boolean isValid = false;
         if ( ( input != null ) && ( input.monthValue != null ) && ( input.yearValue != null ) ) {
@@ -64,15 +79,5 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         return !eligibleClients.isEmpty();
     }
 
-    public class MonthYearData {
-        @InvocableVariable(label='Month Value' required=true)
-        public Integer monthValue;
-        @InvocableVariable(label='Year Value' required=true)
-        public Integer yearValue;
-        @InvocableVariable(label='Client Number')
-        public String clientNumber;
-        @InvocableVariable(label='Run All Clients')
-        public Boolean isRunAllClients;
-    }
 }
 //
