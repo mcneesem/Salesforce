@@ -2,7 +2,7 @@
     <template lwc:if={checkRequiredFields}>
         <div onsaveexit={handleCloseModal} class="slds-var-m-around_medium">
             <div class="customHeader customHeaderWithClose">
-                <label class="slds-text-heading_medium slds-hyphenate header-string">
+                <label for="wizardHeader" class="slds-text-heading_medium slds-hyphenate header-string">
                     {label.wizardHeader}
                 </label>
                 <lightning-button-icon
@@ -13,7 +13,7 @@
                     onclick={handleCloseModal}>
                 </lightning-button-icon>
             </div>
-            <c-development-report-wizard rep-req-obj={recordObj} current-step="1">
+            <c-development-report-wizard id="wizardHeader" rep-req-obj={recordObj} current-step="1">
             </c-development-report-wizard>
         </div>
     </template>
