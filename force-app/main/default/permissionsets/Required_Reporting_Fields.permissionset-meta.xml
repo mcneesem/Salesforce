@@ -638,6 +638,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>CampaignInfluence.SDR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Account_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
