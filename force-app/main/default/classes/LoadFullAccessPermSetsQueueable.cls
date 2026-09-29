@@ -210,7 +210,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public static void sendCompletionEmail() {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
-            oEmail.setSubject( LoadFullAccessPermSetsQueueable.sandboxName ': LoadFullAccessPermSets job finished' );
+            oEmail.setSubject( LoadFullAccessPermSetsQueueable.sandboxName + ': LoadFullAccessPermSets job finished' );
             oEmail.setToAddresses( LoadFullAccessPermSetsQueueable.monitorEmailAddresses );
             oEmail.setSaveAsActivity( false );
             oEmail.setPlainTextBody( 'Your LoadFullAccessPermSets job has finished for org: ' + LoadFullAccessPermSetsQueueable.sandboxName + '.') ;
