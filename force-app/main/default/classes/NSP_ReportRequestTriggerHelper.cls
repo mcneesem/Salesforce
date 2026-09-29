@@ -466,7 +466,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                             NSP_WSEE__r.Name ,
                             NSP_Case__c ,
                             NSP_ReviewType__c ,
-                        NSP_AgreementType__c
+                            NSP_AgreementType__c
                         FROM NSP_ReportRequest__c
                         WHERE ( Id IN :repReqList )
                     ]
