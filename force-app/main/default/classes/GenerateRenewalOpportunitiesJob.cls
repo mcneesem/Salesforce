@@ -1,9 +1,10 @@
 public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ GenerateRenewalOpportunitiesJobTest (87%)
+    // test w/ GenerateRenewalOpportunitiesJobTest (88%)
 
     // Inputs from Flow/Invocable (selected month & year)
     private Integer runMonth = null;
     private Integer runYear = null;
+    private Set<String> runClientNumbers = null;
     private String renewalCreated = null;
 
     // Derived eligibility: one year prior selected month
@@ -45,25 +46,25 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     //
 
     public Id run() {
-        return GenerateRenewalOpportunitiesJob.executeBatch( null , null );
+        return GenerateRenewalOpportunitiesJob.executeBatch( null , null , null );
     }
 
     //
     // Batchable
     //
 
-    public static Id executeBatch( Integer monthNum , Integer yearNum ) {
+    public static Id executeBatch( Integer monthNum , Integer yearNum , Set<String> clientNumbers ) {
         Id response = null;
         if ( GenerateRenewalOpportunitiesJob.isEnabled ) {
             response = Database.executeBatch(
-                new GenerateRenewalOpportunitiesJob( monthNum , yearNum ) ,
+                new GenerateRenewalOpportunitiesJob( monthNum , yearNum , clientNumbers ) ,
                 GenerateRenewalOpportunitiesJob.batchSize
             );
         }
         return response;
     }
 
-    public GenerateRenewalOpportunitiesJob( Integer monthNum , Integer yearNum ) {
+    public GenerateRenewalOpportunitiesJob( Integer monthNum , Integer yearNum , Set<String> clientNumbers ) {
         if ( ( monthNum != null ) && ( yearNum != null ) ) {
             this.runMonth = monthNum;
             this.runYear  = yearNum;
@@ -72,6 +73,9 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             Integer eligibleYear = ( yearNum - 1 );
             this.eligibleStart = Date.newInstance( eligibleYear , monthNum , 1 );
             this.eligibleEnd = this.eligibleStart.addMonths( 1 ).addDays( -1 );
+        }
+        if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
+            this.runClientNumbers = clientNumbers;
         }
     }
 
@@ -162,10 +166,13 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
             )
         {
             try {
-                this.buildSalesOfficeToRenewalManagerMap( records );
-                this.buildWSEEMaps( records );
-                this.processEntries( records );
-                this.processOpportunities( records );
+                records = this.getSelectedClientRecords( records );
+                if ( !records.isEmpty() ) {
+                    this.buildSalesOfficeToRenewalManagerMap( records );
+                    this.buildWSEEMaps( records );
+                    this.processEntries( records );
+                    this.processOpportunities( records );
+                }
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     GenerateRenewalOpportunitiesJob.class.getName() ,
@@ -334,6 +341,19 @@ public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable 
     //
     //
     //
+
+    private List<NSP_Sub_Client__c> getSelectedClientRecords( List<NSP_Sub_Client__c> records ) {
+        List<NSP_Sub_Client__c> selectedClientRecords = records;
+        if ( this.runClientNumbers != null && !this.runClientNumbers.isEmpty() ) {
+            selectedClientRecords = new List<NSP_Sub_Client__c>();
+            for ( NSP_Sub_Client__c record : records ) {
+                if ( this.runClientNumbers.contains( record.NSP_Client__c ) ) {
+                    selectedClientRecords.add( record ) ;
+                }
+            }
+        }
+        return selectedClientRecords ;
+    }
 
     private void processOpportunities( List<NSP_Sub_Client__c> records ) {
         List<Opportunity> parentOpportunities = new List<Opportunity>();
