@@ -3,16 +3,6 @@
     <description>Grants the System Permission: Download AppExchange Packages</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Download AppExchange Packages</label>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>NSP_Note__c</object>
-        <viewAllFields>false</viewAllFields>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>AssignPermissionSets</name>
