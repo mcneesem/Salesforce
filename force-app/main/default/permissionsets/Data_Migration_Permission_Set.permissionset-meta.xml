@@ -23059,10 +23059,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>SolutionImport</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>UpdateWithInactiveOwner</name>
     </userPermissions>
     <userPermissions>
