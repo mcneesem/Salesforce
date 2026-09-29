@@ -210,11 +210,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public static void sendCompletionEmail() {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
-            oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-            String[] sendingTo = LoadFullAccessPermSetsQueueable.monitorEmailAddresses;
-            oEmail.setToAddresses(sendingTo);
-            oEmail.setSaveAsActivity(false);
-            oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
+            oEmail.setSubject( LoadFullAccessPermSetsQueueable.sandboxName ': LoadFullAccessPermSets job finished' );
+            oEmail.setToAddresses( LoadFullAccessPermSetsQueueable.monitorEmailAddresses );
+            oEmail.setSaveAsActivity( false );
+            oEmail.setPlainTextBody( 'Your LoadFullAccessPermSets job has finished for org: ' + LoadFullAccessPermSetsQueueable.sandboxName + '.') ;
             try {
                 Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ oEmail } );
             } catch ( Exception e ) {
@@ -236,14 +235,31 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     private static OrgSettings__c settings {
         private get {
             if ( settings == null ) {
-                settings = OrgSettings__c.getInstance( UserInfo.getUserId() );
+                settings = OrgSettings__c.getOrgDefaults();
             }
             return settings;
         }
         private set;
     }
 
-    private static List<String> monitorEmailAddresses  {
+    private static String sandboxName {
+        private get {
+            if ( sandboxName == null ) {
+                String local = '';
+                if ( ( LoadFullAccessPermSetsQueueable.settings != null )
+                    && String.isNotBlank( LoadFullAccessPermSetsQueueable.settings.SandboxName__c )
+                    )
+                {
+                    local = LoadFullAccessPermSetsQueueable.settings.SandboxName__c;
+                }
+                sandboxName = local;
+            }
+            return sandboxName;
+        }
+        private set;
+    }
+
+    private static List<String> monitorEmailAddresses {
         private get {
             if ( monitorEmailAddresses == null ) {
                 List<String> local = new List<String>();
