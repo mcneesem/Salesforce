@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <attachedDocuments>Services/Learning_and_Development_Brochure.pdf</attachedDocuments>
+    
     <available>true</available>
     <description>BT HRS and CL  - Information regarding training and development available on the learning platform</description>
     <encodingKey>ISO-8859-1</encodingKey>
