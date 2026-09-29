@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SDR__c</fullName>
-    <description>This is the SDR field on Opportunity</description>
+    <description>Hyperlink to the record Id value in Opportunity.NSP_SDR__c</description>
     <externalId>false</externalId>
-    <formula>HYPERLINK (Opportunity.NSP_SDR__c, Opportunity.NSP_SDR__r.FirstName +&quot; &quot;+ Opportunity.NSP_SDR__r.LastName)</formula>
+    <formula>IF(
+  NOT( ISBLANK( Opportunity.NSP_SDR__c ) ) ,
+  HYPERLINK(
+    &quot;/&quot; &amp; Opportunity.NSP_SDR__c ,
+    Opportunity.NSP_SDR__r.FirstName + &quot; &quot; + Opportunity.NSP_SDR__r.LastName
+  ) ,
+  &quot;&quot;
+)</formula>
     <inlineHelpText>This is the SDR field on Opportunity</inlineHelpText>
     <label>SDR</label>
     <required>false</required>
