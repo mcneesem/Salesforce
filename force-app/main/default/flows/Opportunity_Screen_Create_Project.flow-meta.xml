@@ -88,37 +88,6 @@
                 <stringValue>Get_Eligible_Templates</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varFaultMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Not_Successful</name>
-        <label>Set Fault Element: Not Successful</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Project_From_Template_And_Account</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varFaultMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varErrorMessage</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
@@ -226,7 +195,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Set_Fault_Element_Not_Successful</targetReference>
+            <targetReference>Project_Creation_Error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -261,7 +230,7 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
-    <interviewLabel>Opportunity Screen Create Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Opportunity - Screen - Create Project {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Opportunity - Screen - Create Project</label>
     <processMetadataValues>
@@ -424,7 +393,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>FAULTDisplay</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Error creating Project: &lt;/strong&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -437,6 +406,30 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Project_Creation_Error</name>
+        <label>Project Creation Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Project_Creation_Error_Message</name>
+            <fieldText>&lt;p&gt;Unable to create the project.&lt;/p&gt;&lt;p&gt; {!varErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_Project_Template</name>
@@ -574,7 +567,7 @@
         <inputAssignments>
             <name>faultMessage</name>
             <value>
-                <elementReference>varFaultMessage</elementReference>
+                <stringValue>$Flow.FaultMessage</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -594,13 +587,6 @@
     </variables>
     <variables>
         <name>varErrorMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varFaultMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
