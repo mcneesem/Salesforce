@@ -4,7 +4,7 @@
     <description>This field is created as part of STY-02069</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Deprecated Employee Status</label>
+    <label>DEPRECATED Employee Status</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
