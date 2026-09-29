@@ -1564,6 +1564,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Benefits_Waiting_Period__c</fieldItem>
+                <identifier>RecordNSP_Benefits_Waiting_Period_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Benefit_Classing__c</fieldItem>
                 <identifier>RecordNSP_Benefit_Classing_cField</identifier>
             </fieldInstance>
