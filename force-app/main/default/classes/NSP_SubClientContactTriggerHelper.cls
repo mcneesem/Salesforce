@@ -209,9 +209,8 @@ public with sharing class NSP_SubClientContactTriggerHelper {
     public static void updateRelatedWizardEmployeeStatus( Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate){
         List<NSP_ReportRequest__c> repReqListToUpdate = new List<NSP_ReportRequest__c>();
         try{
-            for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Employee_Status__c, NSP_Termination_Date__c
+            for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Termination_Date__c
                                             FROM NSP_ReportRequest__c WHERE NSP_WSEE__c IN: conIdStatusDate.keySet()]){
-                                                repReq.NSP_Employee_Status__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c);
                                                 repReq.NSP_Termination_Date__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c) == NSP_ServiceConstants.TERMINATED_STATUS ?
                                                     conIdStatusDate.get(repReq.NSP_WSEE__c) : repReq.NSP_Termination_Date__c ;
                                                 repReqListToUpdate.add(repReq);
