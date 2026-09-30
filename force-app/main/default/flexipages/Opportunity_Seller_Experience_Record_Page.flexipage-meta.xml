@@ -789,6 +789,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>fraudAlertBanner</componentName>
+                <identifier>c_fraudAlertBanner</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>hideUpdateButton</name>
                     <value>false</value>
