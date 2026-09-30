@@ -1,8 +1,9 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (86%)
 
-    static final string STRING_INVALID = '.invalid';
-    static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
+    private static final String STRING_INVALID = '.invalid';
+    private static final String DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
+    private static final String TOOLING_API_PATH = '/services/data/v65.0/tooling/';
 
     public String runManualResult{get;set;}
 
@@ -469,7 +470,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static void doEmailAlerts() {
         try {
             String host = URL.getOrgDomainUrl().toExternalForm();
-            String endPoint = host + '/services/data/v55.0/tooling/';
+            String endPoint = host + NSP_PrepSandbox.TOOLING_API_PATH;
             String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
