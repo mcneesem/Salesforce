@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Current_Status_Start_Date</name>
+        <label>Assign Current Status Start Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Status_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Get the number of days in each status from the record, to be able to add on if status goes backward</description>
+        <name>Assign_prior_days_in_status_information</name>
+        <label>Assign prior &quot;days in status&quot; information</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>priorDaysInCurrentStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Days_In_Current_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>priorDaysInNew</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Days_In_Status_New__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>priorDaysInWorking</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Days_In_Status_Working__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>priorDaysInNurturing</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Days_In_Status_Nurturing__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>priorDaysInUnqualified</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Days_In_Status_Unqualified__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>What_was_the_prior_status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Calculate the new total Days in New</description>
+        <name>Get_total_Days_in_New</name>
+        <label>Get total Days in New</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Days_In_Status_New__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>totalDaysInNew</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Current_Status_Start_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Get_total_Days_in_Nurturing</name>
+        <label>Get total Days in Nurturing</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Days_In_Status_Nurturing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>totalDaysInNurturing</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Current_Status_Start_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Get_total_Days_in_Unqualified</name>
+        <label>Get total Days in Unqualified</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Days_In_Status_Unqualified__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>totalDaysInUnqualified</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Current_Status_Start_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Calculate the new total Days in Working</description>
+        <name>Get_total_Days_in_Working</name>
+        <label>Get total Days in Working</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Days_In_Status_Working__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>totalDaysInWorking</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Current_Status_Start_Date</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>What was the status that the lead is moving on from?</description>
+        <name>What_was_the_prior_status</name>
+        <label>What was the prior status?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Current_Status_Start_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Prior status not applicable</defaultConnectorLabel>
+        <rules>
+            <name>New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_total_Days_in_New</targetReference>
+            </connector>
+            <label>New</label>
+        </rules>
+        <rules>
+            <name>Working</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Working</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_total_Days_in_Working</targetReference>
+            </connector>
+            <label>Working</label>
+        </rules>
+        <rules>
+            <name>Nurturing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nurturing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_total_Days_in_Nurturing</targetReference>
+            </connector>
+            <label>Nurturing</label>
+        </rules>
+        <rules>
+            <name>Unqualified</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unqualified</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_total_Days_in_Unqualified</targetReference>
+            </connector>
+            <label>Unqualified</label>
+        </rules>
+    </decisions>
+    <description>This flow calculates the total days a lead spends in each stage</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Calculate the new total Days in New</description>
+        <name>totalDaysInNew</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+  AND(
+    NOT( ISNULL( {!priorDaysInNew} ) ) ,
+    ( {!priorDaysInNew} &gt; 0 )
+  ) ,
+  ( {!priorDaysInNew} + {!priorDaysInCurrentStatus} ) ,
+  {!priorDaysInCurrentStatus}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the new total Days in Nurturing</description>
+        <name>totalDaysInNurturing</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+  AND(
+    NOT( ISNULL( {!priorDaysInNurturing} ) ) ,
+    ( {!priorDaysInNurturing} &gt; 0 )
+  ) ,
+  ( {!priorDaysInNurturing} + {!priorDaysInCurrentStatus} ) ,
+  {!priorDaysInCurrentStatus}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the new total Days in Unqualified</description>
+        <name>totalDaysInUnqualified</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+  AND(
+    NOT( ISNULL( {!priorDaysInUnqualified} ) ) ,
+    ( {!priorDaysInUnqualified} &gt; 0 )
+  ) ,
+  ( {!priorDaysInUnqualified} + {!priorDaysInCurrentStatus} ) ,
+  {!priorDaysInCurrentStatus}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the new total Days in Working</description>
+        <name>totalDaysInWorking</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+  AND(
+    NOT( ISNULL( {!priorDaysInWorking} ) ) ,
+    ( {!priorDaysInWorking} &gt; 0 )
+  ) ,
+  ( {!priorDaysInWorking} + {!priorDaysInCurrentStatus} ) ,
+  {!priorDaysInCurrentStatus}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Lead - Before Update - Track Status Changes {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead - Before Update - Track Status Changes</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_prior_days_in_status_information</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>priorDaysInCurrentStatus</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>priorDaysInNew</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>priorDaysInNurturing</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>priorDaysInUnqualified</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>priorDaysInWorking</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+</Flow>
