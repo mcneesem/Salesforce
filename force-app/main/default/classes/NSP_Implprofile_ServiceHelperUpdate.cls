@@ -962,7 +962,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Project_Task__c eachProjectTask ,
         NSP_ProjectTask_Automation__mdt pta ,
         Id milestoneId ,
-        Id workCalendarId ,
+        Id workCalendarId
         )
     {
         if ( ( eachProjectTask != null ) && ( pta != null ) ) {
