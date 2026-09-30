@@ -93,6 +93,23 @@
             <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Opportunity</name>
+        <label>Set_Fault_Element_Get_Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Are_Templates_Available</name>
         <label>Are Templates Available ?</label>
@@ -293,7 +310,7 @@
             <targetReference>Check_for_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Get_Opportunity</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -360,30 +377,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Error_Screen</name>
-        <label>Error Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Text</name>
-            <fieldText>&lt;p&gt;An error occurred:&lt;/p&gt;&lt;p&gt; {!varErrorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>FAULT</name>
         <label>FAULT</label>
         <locationX>0</locationX>
@@ -417,7 +410,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Project_Creation_Error_Message</name>
-            <fieldText>&lt;p&gt;Unable to create the project.&lt;/p&gt;&lt;p&gt; {!varErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!varErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -473,7 +466,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Eligible_Project_Template_Error_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; font-size: inherit;&quot;&gt;No Opportunity Project Templates found.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;No Opportunity Project Templates found.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -495,6 +488,10 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
+        </connector>
         <fields>
             <name>Missing_Opportunity</name>
             <fieldText>&lt;p&gt;Opportunity not found (Id={!recordId}).&lt;/p&gt;</fieldText>
