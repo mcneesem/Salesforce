@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
-    <assignments>
-        <description>Update the Case Record</description>
-        <name>Update_Asset_fields_on_Case_Record</name>
-        <label>Update Asset fields on Case Record</label>
-        <locationX>1106</locationX>
-        <locationY>719</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.NSP_ClientNumber__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_AssetRecords_WO.NSP_Client__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.NSP_Segment__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_AssetRecords_WO.NSP_Client_Segment_type__c</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Update_Asset_Fields_on_Case_Record_DOL</name>
         <label>Update Asset Fields on Case Record</label>
@@ -136,28 +116,6 @@
             </conditions>
             <connector>
                 <targetReference>Update_Asset_Fields_on_Case_Record_Wage_Claim</targetReference>
-            </connector>
-            <label>If Asset exists</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Asset2</name>
-        <label>Check Asset</label>
-        <locationX>1238</locationX>
-        <locationY>611</locationY>
-        <defaultConnectorLabel>If Asset doesnot exists</defaultConnectorLabel>
-        <rules>
-            <name>If_Asset_exists2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_AssetRecords_WO.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Asset_fields_on_Case_Record</targetReference>
             </connector>
             <label>If Asset exists</label>
         </rules>
@@ -313,7 +271,7 @@
             <label>If DOL Audits Record</label>
         </rules>
     </decisions>
-    <description>This flow is created as part of STY-02154 
+    <description>This flow is created as part of STY-02154
 Updated on 1/29/203 for STY-256456
 Updated Sprint 2 (2026) ADO-511131</description>
     <environments>Default</environments>
@@ -339,7 +297,7 @@ Updated Sprint 2 (2026) ADO-511131</description>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
