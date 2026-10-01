@@ -151,7 +151,10 @@ public without sharing class NSP_SubscriptionTriggerHelper {
                     )
                 {
                     OrderItem currOrderLine = orderlinesMap.get( sub.SBQQ__OrderProduct__c );
-                    if ( currOrderLine.NSP_Override_Start_Date__c != null ) {
+                    if ( ( currOrderLine != null )
+                        && ( currOrderLine.NSP_Override_Start_Date__c != null )
+                        )
+                    {
                         sub.SBQQ__TerminatedDate__c = ( currOrderLine.NSP_Override_Start_Date__c - 1 );
                     }
                     revOrderProdIds.add( sub.SBQQ__OrderProduct__c );
