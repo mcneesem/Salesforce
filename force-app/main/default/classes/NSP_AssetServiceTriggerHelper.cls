@@ -1,4 +1,5 @@
-public class NSP_AssetServiceTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_AssetServiceTriggerHelper {
     // test w/ NSP_AssetServiceTriggerHelperTest (78%)
 
     public final String PEORECORDTYPE = 'PEO';

@@ -1,4 +1,5 @@
-public class NSP_ProjectTasksTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (80%)
     // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)

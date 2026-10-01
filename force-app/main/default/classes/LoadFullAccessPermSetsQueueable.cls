@@ -1,4 +1,5 @@
-public class LoadFullAccessPermSetsQueueable implements Queueable {
+// intentionally `without sharing` to preserve default sharing at api version 58...
+public without sharing class LoadFullAccessPermSetsQueueable implements Queueable {
     // test w/ LoadFullAccessPermSetsQueueableTest (79%)
 
     // **************************************************************************************************

@@ -1,5 +1,6 @@
 // Represents the Asset Service helper which handles the logic for BPS project creation through automation.
-public class NSP_AssetServiceHelper {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_AssetServiceHelper {
     // test w/ NSP_AssetServiceHelperTest (88%)
 
     public static final Id PEO_PROJECT = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PEOProject );
