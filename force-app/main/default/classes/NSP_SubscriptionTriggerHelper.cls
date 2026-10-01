@@ -1,4 +1,5 @@
-public class NSP_SubscriptionTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 53...
+public without sharing class NSP_SubscriptionTriggerHelper {
     // test w/ NSP_SubscriptionTriggerHelperTest (76%)
 
     //

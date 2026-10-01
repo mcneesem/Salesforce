@@ -1,5 +1,5 @@
 // Represents the Asset Service helper which handles the logic for BPS project creation through automation.
-// intentionally `without sharing` to ensure generic access to all records...
+// intentionally `without sharing` to preserve default sharing at api version 55...
 public without sharing class NSP_AssetServiceHelper {
     // test w/ NSP_AssetServiceHelperTest (88%)
 
