@@ -1,5 +1,5 @@
 public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ NSP_AssetBatchTest (80%)
+    // test w/ NSP_AssetBatchTest (91%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
