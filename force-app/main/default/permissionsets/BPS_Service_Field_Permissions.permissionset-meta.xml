@@ -148,11 +148,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.NSP_Account_At_Risk_Actual__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.NSP_Account_At_Risk_Level_Calc_Text__c</field>
         <readable>true</readable>
     </fieldPermissions>
