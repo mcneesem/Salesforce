@@ -1,4 +1,5 @@
-public class NSP_Implprofile_ServiceHelperUpdate {
+// intentionally `without sharing` to ensure generic access to all records...
+public without sharing class NSP_Implprofile_ServiceHelperUpdate {
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
 
     private  Boolean isRerun = false;

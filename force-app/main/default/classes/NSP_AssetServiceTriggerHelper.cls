@@ -1,4 +1,5 @@
-public class NSP_AssetServiceTriggerHelper {
+// intentionally `without sharing` to ensure generic access to all records...
+public without sharing class NSP_AssetServiceTriggerHelper {
     // test w/ NSP_AssetServiceTriggerHelperTest (78%)
 
     public final String PEORECORDTYPE = 'PEO';

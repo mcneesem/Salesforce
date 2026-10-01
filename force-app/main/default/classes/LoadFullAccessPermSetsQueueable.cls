@@ -1,4 +1,5 @@
-public class LoadFullAccessPermSetsQueueable implements Queueable {
+// intentionally `without sharing` to ensure generic access to all records...
+public without sharing class LoadFullAccessPermSetsQueueable implements Queueable {
     // test w/ LoadFullAccessPermSetsQueueableTest (79%)
 
     // **************************************************************************************************

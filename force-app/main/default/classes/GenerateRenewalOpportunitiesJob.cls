@@ -1,4 +1,5 @@
-public class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+// intentionally `without sharing` to ensure generic access to all records...
+public without sharing class GenerateRenewalOpportunitiesJob implements Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ GenerateRenewalOpportunitiesJobTest (88%)
 
     // Inputs from Flow/Invocable (selected month & year)
