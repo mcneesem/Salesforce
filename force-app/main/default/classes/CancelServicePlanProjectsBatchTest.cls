@@ -1,14 +1,14 @@
-@isTest(seeAllData=false)
+@isTest
 private class CancelServicePlanProjectsBatchTest {
 
     @TestSetup
-    private static void setupTestData() {        
+    private static void setupTestData() {
         CancelServicePlanProjectsBatchSettings__c settings = CancelServicePlanProjectsBatchSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.BatchSize__c = 200;
         settings.ServicePlanGracePeriod__c = 14;
         upsert settings;
-        
+
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
             'Asset' ,
             NSP_ServiceConstants.WO_ASSET_RECORDTYPE
@@ -33,7 +33,7 @@ private class CancelServicePlanProjectsBatchTest {
         woAsset.NSP_Client_Segment_type__c = NSP_ServiceConstants.CoreAssetSegment;
         woAsset.NSP_Account_Status_Date__c = System.today().addDays( -15 );
         insert woAsset;
-        
+
         //create project
         Id project_PEORTId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
         pse__proj__c project = (pse__proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
@@ -71,7 +71,7 @@ private class CancelServicePlanProjectsBatchTest {
             'The batch job should complete without an uncaught failure'
         );
     }
-    
+
        // The generic runner should enqueue the batch and return the job Id.
     @isTest
     private static void shouldQueueBatch_WhenRunInvoked() {
@@ -86,7 +86,7 @@ private class CancelServicePlanProjectsBatchTest {
             'call(run) should enqueue the batch and return an AsyncApexJob Id'
         );
     }
-    
+
     // An empty chunk should be a safe no-op (no scope records selected).
     @isTest
     private static void shouldNoOp_WhenScopeEmpty() {
