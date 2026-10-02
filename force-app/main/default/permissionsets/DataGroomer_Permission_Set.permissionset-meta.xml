@@ -1853,11 +1853,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.NSP_Risk_Assessment_Level__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.NSP_Risk_Assessment__c</field>
         <readable>true</readable>
     </fieldPermissions>

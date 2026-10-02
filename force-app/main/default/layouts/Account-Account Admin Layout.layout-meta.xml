@@ -1655,10 +1655,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Risk_Assessment_Level__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Dunning_Status__c</field>
             </layoutItems>
         </layoutColumns>
