@@ -6184,7 +6184,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP Workforce Primary Product</shortDescription>
-        <value>WX,WA,WO,WS</value>
+        <value>WX,WA,WO,WS,HRScale</value>
     </labels>
     <labels>
         <fullName>NSP_Yes</fullName>
