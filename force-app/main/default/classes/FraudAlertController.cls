@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that frautAlertBanner has access to all Contact, Account, and Case records...
 public without sharing class FraudAlertController {
-    // test w/ FraudAlertControllerTest (80%)
+    // test w/ FraudAlertControllerTest (91%)
 
     // AuraEnabled controller for the Fraud Alert Banner LWC component.
     // Determines whether a Fraud Alert should be displayed on Contact, Account, Opportunity, and Case record pages by evaluating the Fraud_Alert__c field on related Contact records.
