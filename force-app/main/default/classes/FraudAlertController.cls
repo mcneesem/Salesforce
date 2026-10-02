@@ -78,10 +78,13 @@ public without sharing class FraudAlertController {
             List<Opportunity> opportunities = [
                 SELECT AccountId
                 FROM Opportunity
-                WHERE Id = :opportunityId
+                WHERE (
+                    ( Id = :opportunityId )
+                    AND ( AccountId != null )
+                )
                 LIMIT 1
             ];
-            if ( !opportunities.isEmpty() && opportunities[0].AccountId != null ) {
+            if ( !opportunities.isEmpty() ) {
                 opportunityFraudAlert = FraudAlertController.checkAccountFraudAlert( opportunities[0].AccountId );
             }
         }
