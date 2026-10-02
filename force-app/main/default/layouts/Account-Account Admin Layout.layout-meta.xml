@@ -1659,10 +1659,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Image__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Account_Risk_Assessment_Level_Image__c</field>
             </layoutItems>
             <layoutItems>
