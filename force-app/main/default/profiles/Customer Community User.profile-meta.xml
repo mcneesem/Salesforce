@@ -1414,11 +1414,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.NSP_Anticipated_Date_of_Termination__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.NSP_AnyActiveOpportunitiesInThe_Pipeline__c</field>
         <readable>true</readable>
     </fieldPermissions>
