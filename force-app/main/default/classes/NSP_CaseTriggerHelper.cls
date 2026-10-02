@@ -1195,9 +1195,9 @@ Date        : 30/09/2021
                 subCategorySet
             );
             Set<String> assetRecTypeSet = new Set<String>( catSubCatMap.values() );
-            Map<String, Asset> activeAssetMap = new Map<String, Asset>();
-            Map<String, Asset> terminatedAssetMap = new Map<String, Asset>();
-            Set<Id> assetRecTypeIdSet = this.getAssetRecordTypeIds(assetRecTypeSet);
+            Map<String,Asset> activeAssetMap = new Map<String,Asset>();
+            Map<String,Asset> terminatedAssetMap = new Map<String,Asset>();
+            Set<Id> assetRecTypeIdSet = this.getAssetRecordTypeIds( assetRecTypeSet );
             this.buildAssetLookupMaps(
                 accIdSet ,
                 assetRecTypeIdSet ,
@@ -1211,8 +1211,7 @@ Date        : 30/09/2021
                     activeAssetMap ,
                     terminatedAssetMap
                 );
-
-                if(assetRec != null) {
+                if ( assetRec != null ) {
                     cse.AssetId = assetRec.Id;
                     cse.NSP_ClientNumber__c = assetRec.NSP_Client__c;
                     cse.NSP_Segment__c = assetRec.NSP_Client_Segment_type__c;
