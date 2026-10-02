@@ -1321,10 +1321,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Anticipated_Date_of_Termination__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Account_Health__c</field>
             </layoutItems>
             <layoutItems>

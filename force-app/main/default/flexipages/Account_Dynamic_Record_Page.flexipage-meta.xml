@@ -5786,16 +5786,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Anticipated_Date_of_Termination__c</fieldItem>
-                <identifier>RecordNSP_Anticipated_Date_of_Termination_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Health__c</fieldItem>
                 <identifier>RecordNSP_Account_Health_cField</identifier>
             </fieldInstance>
