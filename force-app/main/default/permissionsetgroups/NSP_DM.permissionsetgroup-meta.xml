@@ -42,6 +42,8 @@
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>User_Share_SO_Update</permissionSets>
     <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>

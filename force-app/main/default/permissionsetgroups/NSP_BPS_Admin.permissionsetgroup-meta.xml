@@ -26,6 +26,9 @@
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Admin</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>pse__PSAProjectManagementCreateProjectFromTemplate</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
