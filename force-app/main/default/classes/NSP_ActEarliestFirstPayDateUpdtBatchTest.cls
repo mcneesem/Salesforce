@@ -1,6 +1,6 @@
 @isTest
-private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
-    // test w/ NSP_AcntEarliestFirstPayDateUpdateBatch
+private class NSP_ActEarliestFirstPayDateUpdtBatchTest
+{
 
     private static final String TEST_ACCOUNT_NAME = 'nsp_focus_item__c';
     private static final Id WO_ASSET_RECORD_TYPE_ID = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
@@ -58,7 +58,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Positive: batch processes WO assets and sets account first pay date from AIMS date.
     @isTest
-    private static void testBatchExecute_WithFirstPayDateAssets_UpdatesAccountDate() {
+    private static void testUpdatesAccountFirstPayDate() {
         Test.startTest();
         NSP_AcntEarliestFirstPayDateUpdateBatch batchJob = new NSP_AcntEarliestFirstPayDateUpdateBatch();
         Database.executeBatch(batchJob, 200);
@@ -74,7 +74,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Negative: null first pay date asset is skipped; account date still set from valid assets.
     @isTest
-    private static void testBatchExecute_WithNullFirstPayDate_SkipsNullAssets() {
+    private static void testSkipsNullFirstPayDate() {
         Account testAccount = NSP_ActEarliestFirstPayDateUpdtBatchTest.getTestAccount();
 
         Asset nullDateAsset = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
@@ -101,7 +101,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Covers schedule() static method; verifies a non-null job Id is returned.
     @isTest
-    private static void testSchedule_WhenCalled_ReturnsJobId() {
+    private static void testScheduleReturnsJobId() {
         Test.startTest();
         String jobId = NSP_AcntEarliestFirstPayDateUpdateBatch.schedule();
         Test.stopTest();
@@ -111,7 +111,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Covers execute(SchedulableContext) -> call(run) -> run() -> Database.executeBatch chain.
     @isTest
-    private static void testSchedulableExecute_WhenTriggered_RunsBatchJob() {
+    private static void testSchedulableExecuteRunsBatch() {
         Test.startTest();
         NSP_AcntEarliestFirstPayDateUpdateBatch batchJob = new NSP_AcntEarliestFirstPayDateUpdateBatch();
         batchJob.execute(null);
@@ -127,7 +127,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Covers call() with an unrecognized action; verifies null is returned without error.
     @isTest
-    private static void testCall_WithUnknownAction_ReturnsNull() {
+    private static void testCallUnknownActionReturnsNull() {
         NSP_AcntEarliestFirstPayDateUpdateBatch batchJob = new NSP_AcntEarliestFirstPayDateUpdateBatch();
 
         Test.startTest();
@@ -139,7 +139,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Branch: else-if fires when a later-inserted asset has an earlier date than the current map entry.
     @isTest
-    private static void testBatchExecute_WithEarlierAssets_UsesEarliestDate() {
+    private static void testUsesEarliestPayDate() {
         Account testAccount = NSP_ActEarliestFirstPayDateUpdtBatchTest.getTestAccount();
 
         Asset earlierAsset1 = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
@@ -175,7 +175,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Branch: || second condition fires when account already has a future date the batch replaces.
     @isTest
-    private static void testBatchExecute_WithExistingFutureDate_ReplacesWithEarlierDate() {
+    private static void testReplacesFuturePayDate() {
         Account testAccount = NSP_ActEarliestFirstPayDateUpdtBatchTest.getTestAccount();
         testAccount.NSP_Product_First_Pay_Date__c = Date.today().addDays(30);
         update testAccount;
@@ -195,7 +195,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Bulk: 200+ assets process correctly without hitting governor limits.
     @isTest
-    private static void testBatchExecute_WithBulkAssets_ProcessesAllRecordsWithinLimits() {
+    private static void testProcessesBulkAssets() {
         Account testAccount = NSP_ActEarliestFirstPayDateUpdtBatchTest.getTestAccount();
 
         List<Asset> bulkAssets = new List<Asset>();
@@ -227,7 +227,7 @@ private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     // @description Security: batch processes correctly when run under a specific user context via System.runAs().
     @isTest
-    private static void testBatchExecute_AsTestUser_UpdatesAccountDate() {
+    private static void testRunsAsSpecificUser() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
         Test.startTest();
