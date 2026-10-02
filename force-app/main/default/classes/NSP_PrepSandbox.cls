@@ -1,4 +1,5 @@
-global class NSP_PrepSandbox implements SandboxPostCopy {
+// intentionally `without sharing` to preserve default sharing at api version 57...
+global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (86%)
 
     private static final String STRING_INVALID = '.invalid';
