@@ -42,12 +42,11 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday ' + suffix ,
+            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday at 1am ' + suffix ,
             '0 0 1 ? * * *' ,
             new CancelServicePlanProjectsBatch()
         );
     }
-
     //
     // Schedulable
     //
@@ -100,24 +99,20 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // @param bc BatchableContext supplied by the platform.
     // @return QueryLocator over the matching Asset records.
     public Database.QueryLocator start( Database.BatchableContext bc ) {
+        Database.queryLocator queryLocator = null;
         Date lagDate = System.today().addDays( -CancelServicePlanProjectsBatch.ServicePlanGracePeriod );
-        String finalDate = String.valueOf( lagDate ).removeEnd( ' 00:00:00' );
-        List<String> assetFields = new List<String>{
-            'Id' ,
-            'AccountId' ,
-            'RecordTypeId' ,
-            'NSP_Account_Status__c' ,
-            'NSP_Account_Status_Date__c'
-        };
-        NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder( 'Asset' , assetFields )
-            .addFilter( 'AccountId' , NULL , NSP_QueryBuilder.Operator.NOT_EQUALS , false )
-            .addFilter( 'RecordTypeId' , CancelServicePlanProjectsBatch.WO_ASSET_RECORDTYPE , NSP_QueryBuilder.Operator.EQUALS , true )
-            .addFilter( 'NSP_Account_Status__c' , NSP_ServiceConstants.TERMINATED , NSP_QueryBuilder.Operator.EQUALS , true )
-            .addFilter( 'NSP_Account_Status_Date__c' , NULL , NSP_QueryBuilder.Operator.NOT_EQUALS , false )
-            .addFilter( 'NSP_Account_Status_Date__c' , finalDate , NSP_QueryBuilder.Operator.LESS_THAN_OR_EQUALS , false )
-            .setSecurityEnforce( false );
-        String query = queryBuilder.build();
-        return Database.getQueryLocator( query );
+        Id woRecordTypeId = CancelServicePlanProjectsBatch.WO_ASSET_RECORDTYPE;
+        String terminatedStatus = NSP_ServiceConstants.TERMINATED;
+        queryLocator =  Database.getQueryLocator( [
+            SELECT Id , AccountId , RecordTypeId , NSP_Account_Status__c , NSP_Account_Status_Date__c
+            FROM Asset
+            WHERE AccountId != null
+                AND RecordTypeId = :woRecordTypeId
+                AND NSP_Account_Status__c = :terminatedStatus
+                AND NSP_Account_Status_Date__c != null
+                AND NSP_Account_Status_Date__c <= :lagDate
+        ] );
+        return queryLocator;
     }
 
     // @description Collects the distinct Account Ids in the chunk and cancels their open
@@ -135,7 +130,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                 }
             }
             if ( !accountIds.isEmpty() ) {
-                cancelProjectsForAccounts( accountIds );
+                this.cancelProjectsForAccounts( accountIds );
             }
         }
     }
@@ -154,7 +149,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // Service Plan get their status set to Cancelled with the "Client Terminated" reason.
     // @param accountIds Distinct Account Ids whose open Service Plan projects should be cancelled.
     // @throws Exception details are logged through NSP_ErrorLogHandler.
-    private static void cancelProjectsForAccounts( Set<Id> accountIds ) {
+    private void cancelProjectsForAccounts( Set<Id> accountIds ) {
         try {
             List<pse__Proj__c> projectsToCancel = [
                 SELECT Id , pse__Project_Status__c , NSP_Cancelled_Reason__c
@@ -172,7 +167,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                     serviceProject.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
                     serviceProject.NSP_Cancelled_Reason__c = CancelServicePlanProjectsBatch.CANCELLED_REASON;
                 }
-                updateProjects( projectsToCancel );
+                this.updateProjects( projectsToCancel );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -186,7 +181,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // @description Partial-success update of the cancelled projects; results are logged.
     // @param projectsToCancel Service Plan projects to move to Cancelled status.
     // @throws Exception details are logged through NSP_ErrorLogHandler.
-    private static void updateProjects( List<pse__Proj__c> projectsToCancel ) {
+    private void updateProjects( List<pse__Proj__c> projectsToCancel ) {
         try {
             Database.SaveResult[] results = Database.update( projectsToCancel , false );
             NSP_ErrorLogHandler.logResults(
@@ -261,9 +256,9 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
 
     // @description Grace period in days after NSP_Account_Status_Date__c before projects are
     // cancelled. Sourced from ServicePlanGracePeriod__c, defaulted to 14, clamped to 1-365.
-    private static Integer ServicePlanGracePeriod {
+    private static Integer servicePlanGracePeriod {
         private get {
-            if ( ServicePlanGracePeriod == null ) {
+            if ( servicePlanGracePeriod == null ) {
                 Integer local = CancelServicePlanProjectsBatch.DEFAULT_GARCE_PERIOD_DAYS;
                 if ( ( CancelServicePlanProjectsBatch.settings != null )
                     && ( CancelServicePlanProjectsBatch.settings.ServicePlanGracePeriod__c != null )
@@ -279,9 +274,9 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                 if ( local > 365 ) {
                     local = 365;
                 }
-                ServicePlanGracePeriod = local;
+                servicePlanGracePeriod = local;
             }
-            return ServicePlanGracePeriod;
+            return servicePlanGracePeriod;
         }
         private set;
     }
