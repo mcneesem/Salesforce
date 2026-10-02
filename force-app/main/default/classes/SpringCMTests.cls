@@ -260,6 +260,14 @@ private class SpringCMTests {
         test = ert.Sender;
         test = ert.Status;
 
+        CLMExternalReviewTasks.AlsoNotify ertan = new CLMExternalReviewTasks.AlsoNotify();
+        test = ertan.Name;
+        test = ertan.Email;
+
+        CLMExternalReviewTasks.Recipient ertr = new CLMExternalReviewTasks.Recipient();
+        test = ertr.Name;
+        test = ertr.Email;
+
         CLMFolder fld = new CLMFolder();
         test = fld.Name;
         test = fld.CreatedDate;
@@ -280,6 +288,21 @@ private class SpringCMTests {
         test = fld.Security;
         test = fld.CreateDocumentHref;
         test = fld.Href;
+
+        fld.Href = '';
+        CLMFolderRequest fldr = new CLMFolderRequest(
+            fld ,
+            new SpringCMService( null )
+        );
+        test = fldr.getExpandParentFolder();
+        test = fldr.getExpandDocuments();
+        test = fldr.getExpandFolders();
+        test = fldr.getExpandPath();
+        test = fldr.getExpandEosParentInfo();
+        test = fldr.getExpandEosInfo();
+        test = fldr.getExpandShareLinks();
+        test = fldr.getExpandAttributeGroups();
+        test = fldr.getExpandSecurity();
 
         CLMFolderArchiveTasks fldAT = new CLMFolderArchiveTasks();
         test = fldAT.ArchiveSize;
