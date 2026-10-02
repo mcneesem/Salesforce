@@ -1663,10 +1663,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Calc__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Account_At_Risk_Level_Calc_Text__c</field>
             </layoutItems>
             <layoutItems>

@@ -6634,16 +6634,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_At_Risk_Level_Calc__c</fieldItem>
-                <identifier>RecordNSP_Account_At_Risk_Level_Calc_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_At_Risk_Level_Calc_Text__c</fieldItem>
                 <identifier>RecordNSP_Account_At_Risk_Level_Calc_Text_cField</identifier>
             </fieldInstance>
