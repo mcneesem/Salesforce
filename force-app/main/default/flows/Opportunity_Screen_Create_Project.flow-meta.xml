@@ -488,10 +488,6 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_1</targetReference>
-        </connector>
         <fields>
             <name>Missing_Opportunity</name>
             <fieldText>&lt;p&gt;Opportunity not found (Id={!recordId}).&lt;/p&gt;</fieldText>
