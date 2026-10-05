@@ -1321,10 +1321,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Anticipated_Date_of_Termination__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Account_Health__c</field>
             </layoutItems>
             <layoutItems>
@@ -1656,38 +1652,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_DM_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Actual__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Calc__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Calc_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_At_Risk_Level_Image__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Risk_Assessment_Level_Image__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_AccountRiskAssessmentLevel_Calc_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Account_Risk_Level__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Risk_Assessment_Level__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

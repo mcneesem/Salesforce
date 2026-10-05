@@ -219,7 +219,7 @@ private class NSP_AccountTriggerHelperTest {
         User userRecord1 = testSellerUsers[0];
         // User userRecord1 = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
-        List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
+        List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId FROM Account WHERE Id =: accountMapOld.keySet()];
         for(Account accountRecord : accountUpdateList) {
             accountRecord.NSP_Delete_Account_Teams__c = system.now(); // Added as part of Test class fix
             accountRecord.NSP_Ready_for_Integration_Sync__c = TRUE;
@@ -539,7 +539,7 @@ private class NSP_AccountTriggerHelperTest {
 
         User userRecord1 = [SELECT id FROM User WHERE isActive = true AND Profile.Name = 'Sales Manager' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
-            List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
+            List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId FROM Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
                 accountRecord.NSP_Delete_Account_Teams__c = system.now(); // Added as part of Test class fix
                 accountRecord.NSP_Ready_for_Integration_Sync__c = TRUE;
