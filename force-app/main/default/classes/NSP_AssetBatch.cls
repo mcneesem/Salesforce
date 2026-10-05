@@ -27,8 +27,8 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_AssetBatch ~ Asset Biometric Indicator Expiration ~ Scheduled to run daily at 1 AM' + suffix ,
-            '0 0 1 * * ? *' ,
+            'NSP_AssetBatch ~ When a biometric indicator is added or removed, cases will be created for the HRS on the account team ~ Scheduled to Run daily at 3 AM' + suffix,
+            '0 0 3 ? * * *' ,
             new NSP_AssetBatch()
         );
     }
@@ -55,7 +55,7 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     // IJobRunnable
     //
     public Id run() {
-        return Database.executeBatch( new NSP_AssetBatch() );
+        return Database.executeBatch( new NSP_AssetBatch() , 200 );
     }
 
     //

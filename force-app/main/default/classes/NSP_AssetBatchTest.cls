@@ -9,8 +9,7 @@ private class NSP_AssetBatchTest
 
     // @description Creates shared test data: Account, User, Account Team records, and an expired biometric Asset.
     @TestSetup
-    private static void setup()
-    {
+    private static void setup() {
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
         upsert emailSetting;
