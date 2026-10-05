@@ -29,7 +29,9 @@
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_WX_Product_Only</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
