@@ -102,7 +102,7 @@
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get opportunity</stringValue>
+                <stringValue>Get_Opportunity</stringValue>
             </value>
         </assignmentItems>
         <connector>
