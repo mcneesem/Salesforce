@@ -1,4 +1,5 @@
-public class NSP_CaseTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_CaseTriggerHelper {
     // test w/ NSP_CaseTriggerHelperTest (78%)
 
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
