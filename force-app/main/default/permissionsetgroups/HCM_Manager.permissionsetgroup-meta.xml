@@ -48,8 +48,10 @@
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>Transfer_Record</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
