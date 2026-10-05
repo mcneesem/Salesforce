@@ -6,7 +6,7 @@
 * Story : STY-03875 - Create Batches for fields that are set view trigger for go-live migrated data
 * Version : V1
 **************************************************************************************************************************/
-public class NSP_AcntEarliestFirstPayDateUpdateBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+public without sharing class NSP_AcntEarliestFirstPayDateUpdateBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_ActEarliestFirstPayDateUpdtBatchTest (96%)
 
     Id woassetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( NSP_ServiceConstants.ASSET_SOBJECT_TYPE, NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
