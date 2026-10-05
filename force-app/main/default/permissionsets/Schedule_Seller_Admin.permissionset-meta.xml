@@ -2,21 +2,9 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Restrict_Schedule_Seller_Events</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
         <name>Schedule_Seller_Admin</name>
     </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Use_Schedule_Seller</name>
-    </customPermissions>
     <description>Scheduling tool permission set for Schedule Seller Admins</description>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Schedule_Seller</flow>
-    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Schedule Seller: Admin</label>
 </PermissionSet>
