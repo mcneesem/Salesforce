@@ -6,15 +6,6 @@
 public without sharing class CancelServicePlanProjectsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ CancelServicePlanProjectsBatchTest (88%)
 
-    // Fallback used when ServicePlanGracePeriod__c custom setting field is blank.
-    private static final Integer DEFAULT_GARCE_PERIOD_DAYS = 14;
-
-    // Default chunk size used when the custom setting BatchSize__c is not populated. Kept small
-    // because each Account can fan out to many projects.
-    private static final Integer DEFAULT_BATCH_SIZE = 200;
-
-    // Reason written onto the cancelled projects.
-    private static final String CANCELLED_REASON = 'Client Terminated';
 
     private static final Id WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(
         'Asset' ,
@@ -122,7 +113,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     public void execute( Database.BatchableContext bc , List<Asset> scopeAssets ) {
         if ( CancelServicePlanProjectsBatch.isEnabled ) {
             Set<Id> accountIds = new Set<Id>();
-            if ( scopeAssets != null ) {
+            if ( scopeAssets != null && !scopeAssets.isEmpty() ) {
                 for ( Asset terminatedAsset : scopeAssets ) {
                     if ( terminatedAsset.AccountId != null ) {
                         accountIds.add( terminatedAsset.AccountId );
@@ -165,9 +156,14 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
             if ( ( projectsToCancel != null ) && !projectsToCancel.isEmpty() ) {
                 for ( pse__Proj__c serviceProject : projectsToCancel ) {
                     serviceProject.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
-                    serviceProject.NSP_Cancelled_Reason__c = CancelServicePlanProjectsBatch.CANCELLED_REASON;
+                    serviceProject.NSP_Cancelled_Reason__c = 'Client Terminated';
                 }
-                this.updateProjects( projectsToCancel );
+                Database.SaveResult[] results = Database.update( projectsToCancel , false );
+                NSP_ErrorLogHandler.logResults(
+                    CancelServicePlanProjectsBatch.class.getName() ,
+                    'cancelProjectsForAccounts:update' ,
+                    results
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -178,27 +174,6 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
         }
     }
 
-    // @description Partial-success update of the cancelled projects; results are logged.
-    // @param projectsToCancel Service Plan projects to move to Cancelled status.
-    // @throws Exception details are logged through NSP_ErrorLogHandler.
-    private void updateProjects( List<pse__Proj__c> projectsToCancel ) {
-        try {
-            Database.SaveResult[] results = Database.update( projectsToCancel , false );
-            NSP_ErrorLogHandler.logResults(
-                CancelServicePlanProjectsBatch.class.getName() ,
-                'updateProjects:update' ,
-                results
-            );
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                CancelServicePlanProjectsBatch.class.getName() ,
-                'updateProjects' ,
-                e
-            );
-        }
-    }
-
-    //
     // Custom setting (CancelServicePlanProjectsBatchSettings__c) accessors
     //
 
@@ -232,7 +207,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     private static Integer batchSize {
         private get {
             if ( batchSize == null ) {
-                Integer local = CancelServicePlanProjectsBatch.DEFAULT_BATCH_SIZE;
+                Integer local = 200;
                 if ( ( CancelServicePlanProjectsBatch.settings != null )
                     && ( CancelServicePlanProjectsBatch.settings.BatchSize__c != null )
                     )
@@ -259,7 +234,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     private static Integer servicePlanGracePeriod {
         private get {
             if ( servicePlanGracePeriod == null ) {
-                Integer local = CancelServicePlanProjectsBatch.DEFAULT_GARCE_PERIOD_DAYS;
+                Integer local = 14;
                 if ( ( CancelServicePlanProjectsBatch.settings != null )
                     && ( CancelServicePlanProjectsBatch.settings.ServicePlanGracePeriod__c != null )
                     )
@@ -267,8 +242,8 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                     local = CancelServicePlanProjectsBatch.settings.ServicePlanGracePeriod__c.intValue();
                 }
                 // lag must be at least 1 day...
-                if ( local < 1 ) {
-                    local = 1;
+                if ( local < 0 ) {
+                    local = 0;
                 }
                 // lag capped at 1 year to prevent runaway scope...
                 if ( local > 365 ) {
