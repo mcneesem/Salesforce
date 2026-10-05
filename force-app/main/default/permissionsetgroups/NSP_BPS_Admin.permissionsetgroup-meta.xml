@@ -6,6 +6,7 @@
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
     <permissionSets>BPS_Sales_Admin_Mgr_Perms</permissionSets>
+    <permissionSets>Bypass_Restrict_Schedule_Seller_Events</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
