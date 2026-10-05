@@ -379,7 +379,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>FAULTDisplay</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Fault Message: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -403,7 +403,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Project_Creation_Error_Message</name>
-            <fieldText>&lt;p&gt;{!varErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Unable to create Project: {!varErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
