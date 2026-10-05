@@ -13651,15 +13651,6 @@
     <layoutAssignments>
         <layout>dfsle__EnvelopeStatus__c-dfsle__DocuSign Envelope Status Layout</layout>
     </layoutAssignments>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Lead</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <pageAccesses>
         <apexPage>NSP_GoogleReCaptcha</apexPage>
         <enabled>true</enabled>
