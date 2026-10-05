@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Used as a proactive touch point to remind new clients of the Transition Progress Report</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>New Client-Onboarding Survey Awareness</name>
+    <style>freeForm</style>
+    <subject>COMING SOON: Insperity Progress Report Survey</subject>
+    <textOnly>Dear &lt;Client name&gt;,
+
+I hope this message finds you well. I&apos;m reaching out to express my gratitude for the trust you&apos;ve placed in us during the onboarding and payroll implementation process. Your cooperation has been instrumental in this transition.
+
+We&apos;re eager to hear about your experience in implementation; keep an eye on your inbox for a brief survey coming your way. Your insights are crucial and allow us to enhance our services for you and future clients. Please check your spam folder if you do not receive the survey and ensure that surveys@insperity.com is recognized as a trusted contact.
+
+Your satisfaction is our priority; please feel free to reach out with any questions or feedback you might have.
+
+Thank you once again for choosing Insperity as your business partner.
+
+Warm regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

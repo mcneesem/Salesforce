@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Provide information to client about how to run TCS and its value</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Total Compensation Statement</name>
+    <style>freeForm</style>
+    <subject>Total Compensation report</subject>
+    <textOnly>Hello [client],
+
+I would like to make you aware of the Insperity Total Compensation Statement. This resource reflects the full value of your employees' total compensation packages. The Total Compensation Statement provides a high-level overview that allows you to demonstrate the worth of their employment with you. The statement includes the market cost of the benefits offered such as health insurance, 401(k) contributions and life insurance.
+
+Insperity provides this statement as an easy-to-run report via the Insperity Premier Reporting Center. Typically, Total Compensation Statements are provided once a year and are often tied to distribution of performance reviews.
+
+[if client has external data]
+
+I see that you have an external benefit plan. Please let me know if you'd like to add this information to the Total Compensation Statement and I will provide additional assistance.
+
+Total Compensation Statements can be run via this path:
+
+Insperity Premier&gt;&gt;Reporting&gt;&gt;Benefits Information&gt;&gt;Total Compensation Statements
+
+If you have any additional questions, please do not hesitate to reach out.
+
+Thank you for trusting Insperity to serve your business.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

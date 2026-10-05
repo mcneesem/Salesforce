@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Client Liaisons and BT HRS - Send to client to request a planning meeting/ESS Review</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Schedule a Revision Meeting</name>
+    <style>freeForm</style>
+    <subject>Request to Schedule a Planning Meeting</subject>
+    <textOnly>Dear &lt;Client Contact&gt;,
+
+I hope you're well.
+
+[If pre renewal] I'd like to schedule time to review an Executive Service Summary with you in advance of your renewal with Insperity. This report provides a high-level overview of the projects, services plans, and general services you and your employees have engaged in and benefitted from during your last year with Insperity. It can assist as a roadmap in demonstrating the value of your relationship with Insperity and provide an outline of and direction for your future goals.
+
+[If post renewal] Thank you so much for your renewal and reinvestment in the Insperity(R) relationship. I look forward to our continued partnership and would like to schedule time with you to discuss your business's future goals. In this meeting we will review an Executive Service Summary, a report that report provides a high-level overview of the projects, services plans, and general services you and your employees have engaged in and benefitted from during your last year with Insperity. It can assist as a roadmap in demonstrating the value of your relationship with Insperity and provide an outline of and direction for your future goals.
+
+Let me know if either of the times below will work for you or provide an alternative suggestion. I will send a calendar invitation under separate email once confirmed.
+
+Wednesday, December 9th at 10:30 a.m.  CT
+
+Friday, December 11th at 3 p.m. CT
+
+Thank you for trusting Insperity to serve your business. I look forward to meeting with you.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
