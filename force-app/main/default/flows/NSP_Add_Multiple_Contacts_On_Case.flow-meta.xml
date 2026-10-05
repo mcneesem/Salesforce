@@ -46,7 +46,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_isFirstItem_Flag</targetReference>
+            <targetReference>Loop_Each_New_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -233,7 +233,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_To_Final_Case_Contact_List</targetReference>
+            <targetReference>Set_isFirstItem_Flag</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -352,7 +352,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_To_Final_Case_Contact_List</targetReference>
+            <targetReference>Set_isFirstItem_Flag</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -453,7 +453,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_Each_New_Contact</targetReference>
+            <targetReference>Add_To_Final_Case_Contact_List</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -702,7 +702,6 @@
         <locationX>1447</locationX>
         <locationY>3698</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Set_isFirstItem_Flag</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Primary</defaultConnectorLabel>
@@ -1114,7 +1113,7 @@
             <name>MissingCase</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(247, 4, 28); font-size: 16px;&quot;&gt;Case Not Found!&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
+                    </fields>
         <showFooter>false</showFooter>
         <showHeader>true</showHeader>
     </screens>
