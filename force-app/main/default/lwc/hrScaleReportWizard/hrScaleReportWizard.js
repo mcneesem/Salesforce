@@ -9,7 +9,7 @@ import wizardHeader from '@salesforce/label/c.Wizard_HR_Scale_Report_Name';
 
 const HRSCALE_RECORD_TYPE = 'HRScale';
 
-export default class HrScaleReportWizardOnAccount extends LightningElement {
+export default class HrScaleReportWizard extends LightningElement {
     @api recordId;
 
     @track recordObj = {
