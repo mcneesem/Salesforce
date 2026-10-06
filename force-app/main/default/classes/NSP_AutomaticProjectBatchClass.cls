@@ -22,8 +22,8 @@ public without sharing class NSP_AutomaticProjectBatchClass implements ISelfSche
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_AutomaticProjectScheduler ~ Create an Engagement Plan Project based on an asset\'s AIMS\'s status and AIMS\'s status date ~ Schedule to Run Everyday 11 pm' + suffix ,
-            '0 0 23 * * ?' ,
+            'NSP_AutomaticProjectBatchClass ~ Create an Engagement Plan Project based on an asset AIMS status and AIMS status date ~ Schedule to Run Everyday 11 pm' + suffix ,
+            '0 0 23 ? * * *' ,
             new NSP_AutomaticProjectBatchClass()
         );
     }
