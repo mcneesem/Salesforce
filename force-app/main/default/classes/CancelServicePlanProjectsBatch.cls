@@ -91,7 +91,8 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // @return QueryLocator over the matching Asset records.
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         Database.queryLocator queryLocator = null;
-        Date lagDate = System.today().addDays( -CancelServicePlanProjectsBatch.ServicePlanGracePeriod );
+        Date lagDate = System.today().addDays( -CancelServicePlanProjectsBatch.servicePlanGracePeriod );
+        Date bufferDate = lagDate.addDays( -CancelServicePlanProjectsBatch.bufferPeriod );
         Id woRecordTypeId = CancelServicePlanProjectsBatch.WO_ASSET_RECORDTYPE;
         String terminatedStatus = NSP_ServiceConstants.TERMINATED;
         queryLocator =  Database.getQueryLocator( [
@@ -101,6 +102,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                 AND RecordTypeId = :woRecordTypeId
                 AND NSP_Account_Status__c = :terminatedStatus
                 AND NSP_Account_Status_Date__c != null
+                AND NSP_Account_Status_Date__c > :bufferDate
                 AND NSP_Account_Status_Date__c <= :lagDate
         ] );
         return queryLocator;
@@ -252,6 +254,33 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                 servicePlanGracePeriod = local;
             }
             return servicePlanGracePeriod;
+        }
+        private set;
+    }
+
+    // @description Buffer period in days to eliminiate Assets which are termed more than Grace Period.
+    // defaulted to 5 days.
+    private static Integer bufferPeriod {
+        private get {
+            if ( bufferPeriod == null ) {
+                Integer local = 5;
+                if ( ( CancelServicePlanProjectsBatch.settings != null )
+                    && ( CancelServicePlanProjectsBatch.settings.BufferPeriod__c != null )
+                    )
+                {
+                    local = CancelServicePlanProjectsBatch.settings.BufferPeriod__c.intValue();
+                }
+                // lag must be at least 1 day...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                // lag capped at 1 year to prevent runaway scope...
+                if ( local > 365 ) {
+                    local = 365;
+                }
+                bufferPeriod = local;
+            }
+            return bufferPeriod;
         }
         private set;
     }

@@ -7,6 +7,7 @@ private class CancelServicePlanProjectsBatchTest {
         settings.IsEnabled__c = true;
         settings.BatchSize__c = 200;
         settings.ServicePlanGracePeriod__c = 14;
+        settings.BufferPeriod__c = 5;
         upsert settings;
 
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
