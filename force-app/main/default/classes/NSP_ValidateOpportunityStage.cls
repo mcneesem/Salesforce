@@ -73,7 +73,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             SELECT Id , Status , NSP_Task_Type__c , Subject
                             FROM Tasks
                             WHERE (
-                                ( CreatedBy.ProfileId = :NSP_ValidateOpportunityStage.integUserProfileId )
+                                ( CreatedById IN :NSP_ValidateOpportunityStage.permittedTaskValidationUserMap.keySet() )
                                 AND ( NSP_Task_Type__c != null )
                             )
                         ) ,
@@ -1093,6 +1093,17 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
+    private static Map<Id,User> permittedTaskValidationUserMap {
+        private get {
+            if ( permittedTaskValidationUserMap == null ) {
+                permittedTaskValidationUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Task_Validation_Bypass' );
+            }
+            return permittedTaskValidationUserMap;
+        }
+        private set;
+    }
+
     //
     //
     //
@@ -1124,25 +1135,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
             }
             return userGroupMembership;
-        }
-        private set;
-    }
-
-    private static Id integUserProfileId {
-        private get {
-            if ( integUserProfileId == null ) {
-                List<NSP_Profile_Detail__mdt> profileDetailList = [
-                    SELECT Profile_ID__c , Profile_Name__c
-                    FROM NSP_Profile_Detail__mdt
-                    WHERE ( Profile_Name__c = :System.Label.NSP_Integration_User_Profile_Name )
-                    LIMIT 1
-                ];
-                integUserProfileId = NSP_SalesConstants.INTEGRATION_USER_PROFILE_ID;
-                if ( ( profileDetailList != null ) && !profileDetailList.isEmpty() ) {
-                    integUserProfileId = profileDetailList[0].Profile_ID__c;
-                }
-            }
-            return integUserProfileId;
         }
         private set;
     }
