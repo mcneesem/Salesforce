@@ -25,8 +25,8 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         public Integer monthValue;
         @InvocableVariable(label='Year Value' required=true)
         public Integer yearValue;
-        @InvocableVariable(label='Client Number')
-        public String clientNumber;
+        @InvocableVariable(label='Client Numbers')
+        public List<String> clientNumbers;
         @InvocableVariable(label='Run All Clients')
         public Boolean isRunAllClients;
     }
@@ -40,10 +40,25 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         if ( ( input != null ) && ( input.monthValue != null ) && ( input.yearValue != null ) ) {
             if ( input.isRunAllClients == true ) {
                 isValid = true;
-            } else if ( String.isNotBlank( input.clientNumber ) ) {
-                String clientNumber = input.clientNumber.trim();
-                Integer monthNumber = input.monthValue ;
-                isValid = GenerateRenewalOpportunitiesAction.isEligibleClient( clientNumber, monthNumber, input.yearValue );
+            } else if ( input.clientNumbers != null && !input.clientNumbers.isEmpty( ) ){
+               isValid = GenerateRenewalOpportunitiesAction.validateClientNumbers( input.clientNumbers, input.monthValue, input.yearValue );
+            }
+        }
+        return isValid;
+    }
+
+    private static Boolean validateClientNumbers( List<String> clientNumbers, Integer monthNumber, Integer yearNumber ) {
+        Boolean isValid = false;
+        Set<String> requestedClientNumbers = new Set<String>();
+        if ( clientNumbers != null && !clientNumbers.isEmpty() ) {
+            for ( String clientNumber : clientNumbers ) {
+                if ( String.isNotBlank( clientNumber ) ) {
+                    requestedClientNumbers.add( clientNumber.trim() );
+                }
+            }
+            if ( !requestedClientNumbers.isEmpty() ) {
+                Set<String> eligibleClientNumbers = GenerateRenewalOpportunitiesAction.getEligibleClientNumbers( requestedClientNumbers, monthNumber, yearNumber );
+                isValid = eligibleClientNumbers.containsAll( requestedClientNumbers );
             }
         }
         return isValid;
@@ -51,33 +66,44 @@ public with sharing class GenerateRenewalOpportunitiesAction {
 
     private static Set<String> getClientNumbers( MonthYearData input ) {
         Set<String> clientNumbers = new Set<String>();
-        if ( input != null && input.isRunAllClients != true && String.isNotBlank( input.clientNumber ) ) {
-            clientNumbers.add( input.clientNumber.trim() );
+        if ( input != null && input.isRunAllClients != true && input.clientNumbers != null && !input.clientNumbers.isEmpty() ) {
+            for ( String clientNumber : input.clientNumbers ) {
+                if ( String.isNotBlank( clientNumber ) ) {
+                    clientNumbers.add( clientNumber.trim() );
+                }
+            }
         }
         return clientNumbers;
     }
 
-    private static Boolean isEligibleClient( String clientNumber, Integer monthNumber, Integer yearNumber ) {
-        List<NSP_Sub_Client__c> eligibleClients = new List<NSP_Sub_Client__c>();
-        if ( String.isNotBlank( clientNumber ) && ( monthNumber != null ) && ( yearNumber != null ) ) {
+    private static Set<String> getEligibleClientNumbers( Set<String> clientNumbers, Integer monthNumber, Integer yearNumber ) {
+        Set<String> eligibleClientNumbers = new Set<String>();
+        if ( clientNumbers != null && !clientNumbers.isEmpty() && ( monthNumber != null ) && ( yearNumber != null ) ) {
             Integer eligibleYear = yearNumber - 1;
             Date eligibleStart = Date.newInstance( eligibleYear, monthNumber, 1 );
             Date eligibleEnd = eligibleStart.addMonths( 1 ).addDays( -1 );
             String renewalCreated = monthNumber + '/' + yearNumber;
-            eligibleClients = [
-                SELECT Id
+            List<NSP_Sub_Client__c> eligibleSubClients = [
+                SELECT
+                Id,
+                NSP_Client__c
                 FROM NSP_Sub_Client__c
-                WHERE NSP_Client__c = :clientNumber
+                WHERE NSP_Client__c IN :clientNumbers
                 AND NSP_Account_Status__c = 'Active'
                 AND NSP_Renewal_Date__c >= :eligibleStart
                 AND NSP_Renewal_Date__c <= :eligibleEnd
                 AND Renewal_Created__c != :renewalCreated
                 AND NSP_Renewal_Date__c != null
-                LIMIT 1
             ];
+            if ( !eligibleSubClients.isEmpty() ) {
+                for ( NSP_Sub_Client__c eligibleSubClient : eligibleSubClients ) {
+                    if ( String.isNotBlank( eligibleSubClient.NSP_Client__c ) ) {
+                        eligibleClientNumbers.add( eligibleSubClient.NSP_Client__c );
+                    }
+                }
+            }
         }
-        return !eligibleClients.isEmpty();
+        return eligibleClientNumbers;
     }
-
 }
 //
