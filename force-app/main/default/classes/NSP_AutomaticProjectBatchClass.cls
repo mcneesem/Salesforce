@@ -1,9 +1,5 @@
-//
-// @description  : Batch Class to create project whenever a asset with account id is not present
-// Automatically Creating a Service Plan Project for a new client based on STY-01029
-// @date 05/12/2022
-//
-public class NSP_AutomaticProjectBatchClass implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+// intentionally `without sharing` to preserve default sharing at api version 56...
+public without sharing class NSP_AutomaticProjectBatchClass implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_AutomaticProjectBatchTest (83%)
 
     @TestVisible
