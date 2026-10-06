@@ -1,4 +1,5 @@
-public class NSP_Implprofile_ServiceHelperUpdate {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_Implprofile_ServiceHelperUpdate {
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
 
     private  Boolean isRerun = false;
@@ -948,18 +949,41 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(proj != null && eachProjecttask != null && pta != null){
-            Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c );
-            eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
-            eachProjecttask.Name = pta.NSP_Task_Name__c;
-            eachProjecttask.pse__Order__c = pta.Order__c;
-            eachProjecttask.Task_Order__c = pta.Task_Order__c;
-            eachProjecttask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
-            eachProjecttask.pse__Milestone__c = milestoneId;
+        if ( ( eachProjecttask != null ) && ( proj != null ) && ( pta != null ) ) {
+            eachProjecttask = NSP_Implprofile_ServiceHelperUpdate.genericProjectTaskHelper(
+                eachProjecttask ,
+                pta ,
+                this.getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c ) ,
+                workCalendarId
+            );
+        }
+    }
+
+    public static pse__Project_Task__c genericProjectTaskHelper(
+        pse__Project_Task__c eachProjectTask ,
+        NSP_ProjectTask_Automation__mdt pta ,
+        Id milestoneId ,
+        Id workCalendarId
+        )
+    {
+        if ( ( eachProjectTask != null ) && ( pta != null ) ) {
+            eachProjectTask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
+            eachProjectTask.Name = pta.NSP_Task_Name__c;
+            eachProjectTask.API_Name__c = pta.API_Name__c;
+            eachProjectTask.Portal_Event_Name__c = pta.Portal_Event_Name__c;
+            eachProjectTask.Portal_Task_Name__c = pta.Portal_Task_Name__c;
+            eachProjectTask.Portal_Task_Action__c = pta.Portal_Task_Action__c;
+            eachProjectTask.Portal_Task_Type__c = pta.Portal_Task_Type__c;
+            eachProjectTask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
+            eachProjectTask.pse__Order__c = pta.Order__c;
+            eachProjectTask.Task_Order__c = pta.Task_Order__c;
+            eachProjectTask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
+            eachProjectTask.pse__Milestone__c = milestoneId;
             if ( workCalendarId != null ) {
-                eachProjecttask.pse__Work_Calendar__c = workCalendarId;
+                eachProjectTask.pse__Work_Calendar__c = workCalendarId;
             }
         }
+        return eachProjectTask;
     }
 
     private Id getProjectTaskId(pse__Proj__c proj, String projectTaskName){

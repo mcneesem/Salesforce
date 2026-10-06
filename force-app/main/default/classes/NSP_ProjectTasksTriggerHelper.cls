@@ -1,4 +1,5 @@
-public class NSP_ProjectTasksTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (80%)
     // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
@@ -165,7 +166,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    
+
 
     private void createHSASubtask( pse__Project_Task__c pTask ) {
         List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
@@ -494,6 +495,12 @@ public class NSP_ProjectTasksTriggerHelper {
                     ipId = pt.Implementation_Profile__c;
                     eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
                     eachProjecttask.Name = pta.NSP_Task_Name__c;
+                    eachProjecttask.API_Name__c = pta.API_Name__c;
+                    eachProjecttask.Portal_Event_Name__c = pta.Portal_Event_Name__c;
+                    eachProjecttask.Portal_Task_Name__c = pta.Portal_Task_Name__c;
+                    eachProjecttask.Portal_Task_Action__c = pta.Portal_Task_Action__c;
+                    eachProjecttask.Portal_Task_Type__c = pta.Portal_Task_Type__c;
+                    eachProjecttask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
                     eachProjecttask.pse__Hierarchy_Depth__c = hierarchyDepth;
                     eachProjecttask.pse__Order__c= pta.Order__c;
                     eachProjecttask.Task_Order__c= pta.Task_Order__c;

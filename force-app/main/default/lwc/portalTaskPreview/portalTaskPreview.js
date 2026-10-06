@@ -11,6 +11,7 @@ import PORTAL_GUIDANCE_FIELD from "@salesforce/schema/Portal_Task__c.Portal_Guid
 import PORTAL_PROJECT_FIELD from "@salesforce/schema/Portal_Task__c.Portal_Project__c";
 import STATUS_FIELD from "@salesforce/schema/Portal_Task__c.Status__c";
 import TYPE_FIELD from "@salesforce/schema/Portal_Task__c.Type__c";
+import VALUE_CHECKBOX_FIELD from "@salesforce/schema/Portal_Task__c.Value_Checkbox__c";
 import VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
 import VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
 import VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer__c";
@@ -35,6 +36,7 @@ export default class PortalTaskPreview extends LightningElement {
             PORTAL_PROJECT_FIELD ,
             STATUS_FIELD ,
             TYPE_FIELD ,
+            VALUE_CHECKBOX_FIELD ,
             VALUE_DATE_FIELD ,
             VALUE_DATETIME_FIELD ,
             VALUE_INTEGER_FIELD ,

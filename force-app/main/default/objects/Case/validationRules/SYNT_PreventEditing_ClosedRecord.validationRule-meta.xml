@@ -110,7 +110,8 @@ ISCHANGED(NSP_PaidByInsperity__c)
 ),
 ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;),
 NOT(ISCHANGED(ContactId)),
-NOT(ISCHANGED(NSP_Total_Case_Contacts__c))
+NOT(ISCHANGED(NSP_Total_Case_Contacts__c)),
+NOT(ISCHANGED(NSP_Case_Sub_Status__c))
 )</errorConditionFormula>
     <errorMessage>Case is closed, set the status to Reopened, save, and then edit.</errorMessage>
 </ValidationRule>

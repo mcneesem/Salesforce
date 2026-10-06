@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Launch_Renewals_Batch</name>
-        <label>Launch Renewals Batch</label>
+        <name>Launch_Renewal_Batch</name>
+        <label>Launch Renewal Batch</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <actionName>GenerateRenewalOpportunitiesAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Batch_Queued</targetReference>
+            <targetReference>Batch_Launch_Result</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Launch_Renewal_Batch</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>clientNumber</name>
+            <value>
+                <elementReference>Client_Number</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isRunAllClients</name>
+            <value>
+                <elementReference>Run_All_Clients</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>monthValue</name>
             <value>
@@ -20,29 +35,82 @@
         <inputParameters>
             <name>yearValue</name>
             <value>
-                <formulaDataType>Number</formulaDataType>
-                <formulaExpression>VALUE({!Select_Year})</formulaExpression>
+                <elementReference>YearNumber</elementReference>
             </value>
         </inputParameters>
         <nameSegment>GenerateRenewalOpportunitiesAction</nameSegment>
         <offset>0</offset>
+        <outputParameters>
+            <assignToReference>IsBatchQueued</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Client_Validation_Error</name>
+        <label>Set Client Validation Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Show_Client_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Client_Number_Input</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Eligible_Client</name>
+        <label>Set Fault Element - Get Eligible Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Eligible_Client</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Launch_Renewal_Batch</name>
+        <label>Set Fault Element - Launch Renewal Batch</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Launch_Renewal_Batch</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Apr</name>
         <choiceText>Apr</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Apr</stringValue>
+            <numberValue>4.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Aug</name>
         <choiceText>Aug</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Aug</stringValue>
+            <numberValue>8.0</numberValue>
         </value>
     </choices>
     <choices>
@@ -56,57 +124,57 @@
     <choices>
         <name>Dec</name>
         <choiceText>Dec</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Dec</stringValue>
+            <numberValue>12.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Feb</name>
         <choiceText>Feb</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Feb</stringValue>
+            <numberValue>2.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jan</name>
         <choiceText>Jan</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Jan</stringValue>
+            <numberValue>1.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jul</name>
         <choiceText>Jul</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Jul</stringValue>
+            <numberValue>7.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Jun</name>
         <choiceText>Jun</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Jun</stringValue>
+            <numberValue>6.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Mar</name>
         <choiceText>Mar</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Mar</stringValue>
+            <numberValue>3.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>May</name>
         <choiceText>May</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>May</stringValue>
+            <numberValue>5.0</numberValue>
         </value>
     </choices>
     <choices>
@@ -120,37 +188,133 @@
     <choices>
         <name>Nov</name>
         <choiceText>Nov</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Nov</stringValue>
+            <numberValue>11.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Oct</name>
         <choiceText>Oct</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Oct</stringValue>
+            <numberValue>10.0</numberValue>
         </value>
     </choices>
     <choices>
         <name>Sep</name>
         <choiceText>Sep</choiceText>
-        <dataType>String</dataType>
+        <dataType>Number</dataType>
         <value>
-            <stringValue>Sep</stringValue>
+            <numberValue>9.0</numberValue>
         </value>
     </choices>
+    <decisions>
+        <name>Batch_Launch_Result</name>
+        <label>Batch Launch Result</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Batch_Not_Queued</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Queued</defaultConnectorLabel>
+        <rules>
+            <name>Queued</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsBatchQueued</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Batch_Queued</targetReference>
+            </connector>
+            <label>Queued</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Client_Validation</name>
+        <label>Client Validation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Client_Validation_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid Client</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Eligible_Client.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Launch_Renewal_Batch</targetReference>
+            </connector>
+            <label>Valid Client</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Run_All_Clients</name>
+        <label>Is Run All Clients?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Eligible_Client</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Specific Client</defaultConnectorLabel>
+        <rules>
+            <name>All_Clients</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Run_All_Clients</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Launch_Renewal_Batch</targetReference>
+            </connector>
+            <label>All Clients</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>CurrentYearFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT(YEAR(TODAY()))</expression>
+        <expression>TEXT( YEAR( TODAY() ) )</expression>
+    </formulas>
+    <formulas>
+        <name>Eligible_End</name>
+        <dataType>Date</dataType>
+        <expression>( ADDMONTHS( {!Eligible_Start} , 1 ) - 1 )</expression>
+    </formulas>
+    <formulas>
+        <name>Eligible_Start</name>
+        <dataType>Date</dataType>
+        <expression>DATE( ( {!YearNumber} - 1 ) , {!Select_Month} , 1 )</expression>
     </formulas>
     <formulas>
         <name>NextYearFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT(YEAR(TODAY()) + 1)</expression>
+        <expression>TEXT( YEAR( TODAY() ) + 1 )</expression>
+    </formulas>
+    <formulas>
+        <name>Renewal_Created_Value</name>
+        <dataType>String</dataType>
+        <expression>TEXT( {!Select_Month} ) &amp; &quot;/&quot; &amp; TEXT( {!YearNumber} )</expression>
+    </formulas>
+    <formulas>
+        <name>YearNumber</name>
+        <dataType>Number</dataType>
+        <expression>VALUE( {!Select_Year} )</expression>
+        <scale>0</scale>
     </formulas>
     <interviewLabel>Generate Renewal Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -174,6 +338,84 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Eligible_Client</name>
+        <label>Get Eligible Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Client_Validation</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Eligible_Client</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Client__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Client_Number</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>Eligible_Start</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Date__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>Eligible_End</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Renewal_Created__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Renewal_Created_Value</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Sub_Client__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Batch_Not_Queued</name>
+        <label>Batch Not Queued</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message</name>
+            <fieldText>&lt;p&gt;Unable to queue the renewal batch. Please try again or contact your Salesforce administrator.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Batch_Queued</name>
         <label>Batch Queued</label>
@@ -200,6 +442,121 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Client_Number_Input</name>
+        <label>Client Number Input</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Is_Run_All_Clients</targetReference>
+        </connector>
+        <fields>
+            <name>Run_All_Clients</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Run All Clients</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>bottom</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Client_Number</name>
+            <dataType>String</dataType>
+            <fieldText>Client Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>1</conditionLogic>
+                <conditions>
+                    <leftValueReference>Run_All_Clients</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 32, 13);&quot;&gt;Error: Enter a valid Client Number.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Show_Client_Error</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Run_All_Clients</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen_Flow_FaultMessage</name>
+        <label>Error Screen: Flow FaultMessage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message_Flow_FaultMessage</name>
+            <fieldText>&lt;p&gt;Flow Fault:&amp;nbsp;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Month_Year_Capture</name>
         <label>Month Year Capture</label>
         <locationX>0</locationX>
@@ -208,7 +565,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Launch_Renewals_Batch</targetReference>
+            <targetReference>Client_Number_Input</targetReference>
         </connector>
         <fields>
             <name>Select_Month</name>
@@ -224,14 +581,15 @@
             <choiceReferences>Oct</choiceReferences>
             <choiceReferences>Nov</choiceReferences>
             <choiceReferences>Dec</choiceReferences>
-            <dataType>String</dataType>
+            <dataType>Number</dataType>
             <fieldText>Select Month</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <scale>0</scale>
             <styleProperties>
                 <verticalAlignment>
-                    <stringValue>middle</stringValue>
+                    <stringValue>top</stringValue>
                 </verticalAlignment>
                 <width>
                     <stringValue>6</stringValue>
@@ -256,7 +614,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -268,4 +626,62 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow</name>
+        <label>Insperity Fault Handler Subflow Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Error_Screen_Flow_FaultMessage</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Generate_Renewal_Opportunities</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>IsBatchQueued</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Show_Client_Error</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
 </Flow>

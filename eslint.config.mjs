@@ -21,7 +21,7 @@ export default defineConfig([
         "@salesforce-ux/slds/no-slds-namespace-for-custom-hooks": "error",
         "@salesforce-ux/slds/enforce-component-hook-naming-convention": "error",
         "@salesforce-ux/slds/no-slds-private-var": "error",
-        "@salesforce-ux/slds/no-hardcoded-values-slds2": "warn", // 80 warnings remaining...
+        "@salesforce-ux/slds/no-hardcoded-values-slds2": "warn", // 48 warnings remaining...
         "@salesforce-ux/slds/reduce-annotations": "error",
         "@salesforce-ux/slds/enforce-bem-usage": "error",
         "@salesforce-ux/slds/no-deprecated-classes-slds2": "error",

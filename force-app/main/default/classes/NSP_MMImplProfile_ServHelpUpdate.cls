@@ -1,4 +1,5 @@
-public class NSP_MMImplProfile_ServHelpUpdate {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_MMImplProfile_ServHelpUpdate {
     // test w/ NSP_MMImplProfile_UpdateTest (94%)
 
     private  Boolean isRerun =false;
@@ -526,16 +527,12 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         Id workCalendarId
         )
     {
-        Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c );
-        eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
-        eachProjecttask.Name = pta.NSP_Task_Name__c;
-        eachProjecttask.pse__Order__c = pta.Order__c;
-        eachProjecttask.Task_Order__c = pta.Task_Order__c;
-        eachProjecttask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
-        eachProjecttask.pse__Milestone__c = milestoneId;
-        if ( workCalendarId != null ) {
-            eachProjecttask.pse__Work_Calendar__c = workCalendarId;
-        }
+        eachProjecttask = NSP_Implprofile_ServiceHelperUpdate.genericProjectTaskHelper(
+            eachProjecttask ,
+            pta ,
+            this.getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c ) ,
+            workCalendarId
+        );
     }
 
     //Create Project Tasks for Time and Attendance automation

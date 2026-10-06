@@ -176,6 +176,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Portal_Task__c.Value_Checkbox__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Portal_Task__c.Value_DateTime__c</field>
         <readable>true</readable>
     </fieldPermissions>

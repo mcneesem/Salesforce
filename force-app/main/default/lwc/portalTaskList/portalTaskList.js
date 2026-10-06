@@ -80,6 +80,7 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Portal_Project__c' ,
             'Portal_Task__c.Status__c' ,
             'Portal_Task__c.Type__c' ,
+            'Portal_Task__c.Value_Checkbox__c' ,
             'Portal_Task__c.Value_Date__c' ,
             'Portal_Task__c.Value_DateTime__c' ,
             'Portal_Task__c.Value_Integer__c' ,

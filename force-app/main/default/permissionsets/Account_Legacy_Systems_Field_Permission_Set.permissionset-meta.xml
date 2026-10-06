@@ -51,5 +51,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account - Legacy Systems Field Permission Set</label>
+    <label>DEPRECATED - Account - Legacy Systems Field Permission Set</label>
 </PermissionSet>
