@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to SOAP API Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>SOAP API User</label>
+    <permissionSets>Use_Any_API_Auth</permissionSets>
+    <permissionSets>Use_Any_API_Client</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

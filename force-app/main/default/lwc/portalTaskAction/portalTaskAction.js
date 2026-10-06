@@ -4,6 +4,7 @@ import logInfo from "@salesforce/apex/PortalClientSelector.logInfo";
 import createPortalLinks from "@salesforce/apex/PortalClientSharing.createPortalLinks";
 import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
 import PORTAL_TASK_STATUS_FIELD from "@salesforce/schema/Portal_Task__c.Status__c";
+import PORTAL_TASK_VALUE_CHECKBOX_FIELD from "@salesforce/schema/Portal_Task__c.Value_Checkbox__c";
 import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
 import PORTAL_TASK_VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
 import PORTAL_TASK_VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer__c";
@@ -20,7 +21,9 @@ export default class PortalTaskAction extends LightningElement {
     @api
     set record( value ) {
         this._record = value;
-        if ( this.showInputDate ) {
+        if ( this.showInputCheckbox ) {
+            this.recordValue = this.record?.fields?.Value_Checkbox__c?.value;
+        } else if ( this.showInputDate ) {
             this.recordValue = this.record?.fields?.Value_Date__c?.value;
         } else if ( this.showInputDateTime ) {
             this.recordValue = this.record?.fields?.Value_DateTime__c?.value;
@@ -53,7 +56,14 @@ export default class PortalTaskAction extends LightningElement {
             fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
         }
         if ( this.showValueInput ) {
-            if ( this.showInputDate ) {
+            if ( this.showInputCheckbox ) {
+                fields[PORTAL_TASK_VALUE_CHECKBOX_FIELD.fieldApiName] = this.recordValue;
+                if ( this.recordValue ) {
+                    fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed";
+                } else {
+                    fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending"; // reset status when toggle is allowed...
+                }
+            } else if ( this.showInputDate ) {
                 fields[PORTAL_TASK_VALUE_DATE_FIELD.fieldApiName] = this.recordValue;
             } else if ( this.showInputDateTime ) {
                 fields[PORTAL_TASK_VALUE_DATETIME_FIELD.fieldApiName] = this.recordValue;
@@ -93,7 +103,7 @@ export default class PortalTaskAction extends LightningElement {
     @api disabled;
 
     get isInputDisabled() {
-        return ( this.isLoading || this.disabled );
+        return ( this.isLoading || this.disabled || ( !this.isToggleable && this.isChecked ) );
     }
 
     get isLoading() {
@@ -115,11 +125,16 @@ export default class PortalTaskAction extends LightningElement {
 
     get showValueInput() {
         return (
-            this.showInputDate
+            this.showInputCheckbox
+            || this.showInputDate
             || this.showInputDateTime
             || this.showInputInteger
             || this.showInputText
         );
+    }
+
+    get showInputCheckbox() {
+        return ( this.action == "Checkbox" );
     }
 
     get showInputDate() {
@@ -220,6 +235,38 @@ export default class PortalTaskAction extends LightningElement {
     //
 
     inputValue;
+
+    handleClickInput( event ) {
+        this.inputValue = !this.recordValue;
+        if ( this.isAutoSaveEnabled ) {
+            this.handleSave(); // start auto save...
+        }
+    }
+
+    get inputButtonLabel() {
+        let value =  "Mark as Completed";
+        if ( this.isChecked ) {
+            if ( this.isToggleable ) {
+                value = "Mark as Pending";
+            } else {
+                value = "Completed";
+            }
+        }
+        return value;
+    }
+
+    get inputButtonVariant() {
+        return ( this.isChecked ? "neutral" : "brand" );
+    }
+
+    get isChecked() {
+        return this.record?.fields?.Value_Checkbox__c?.value;
+    }
+
+    get isToggleable() {
+        return true;
+    }
+
     handleChangeInput( event ) {
         let value = event?.detail?.value;
         let valueFloored = value;
@@ -281,8 +328,18 @@ export default class PortalTaskAction extends LightningElement {
                 this.showToastError( errorLabel , errorMessage );
                 this.handleLogInfo( 'handleSave' , JSON.stringify( error ) );
             }
-            this.isSaving = false;
+            setTimeout(
+                function() {
+                    this.unlockInputs();
+                }.bind( this ) ,
+                this.clickWaitingMilliseconds
+            );
         }
+    }
+    clickWaitingMilliseconds = 1000;
+
+    unlockInputs() {
+        this.isSaving = false;
     }
 
     get saveButtonVariant() {

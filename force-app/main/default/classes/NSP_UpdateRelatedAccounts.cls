@@ -214,7 +214,10 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                             Id ,
                             NSP_Sales_Service_Account_Status__c ,
                             (
-                                SELECT Id , RecordType.Name
+                                SELECT
+                                    Id ,
+                                    RecordType.Name ,
+                                    RecordTypeId
                                 FROM Assets
                             ) ,
                             (
@@ -230,7 +233,14 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                         FROM Account
                         WHERE (
                             ( Id IN :accountIdSet )
-                            AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.PROSPECTING )
+                            AND (
+                                NSP_Sales_Service_Account_Status__c NOT IN (
+                                    'Prospecting' ,
+                                    'Active' ,
+                                    'On Demand' ,
+                                    'Onboarding'
+                                )
+                            )
                         )
                     ]
                 )
@@ -240,7 +250,7 @@ public without sharing class NSP_UpdateRelatedAccounts implements Queueable {
                     && ( filteredAssets.isEmpty() )
                     )
                 {
-                    record.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                    record.NSP_Sales_Service_Account_Status__c = 'Prospecting';
                     records.add( record );
                 }
             }

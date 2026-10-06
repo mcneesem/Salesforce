@@ -3,6 +3,10 @@
     <label>General Auto Liability FSO</label>
     <protected>false</protected>
     <values>
+        <field>API_Name__c</field>
+        <value xsi:type="xsd:string">GENERAL_AUTO_LIABILITY_CERTIFICATE</value>
+    </values>
+    <values>
         <field>NSP_Category__c</field>
         <value xsi:type="xsd:string">Onboarding</value>
     </values>
@@ -21,6 +25,26 @@
     <values>
         <field>Order__c</field>
         <value xsi:type="xsd:double">34.0</value>
+    </values>
+    <values>
+        <field>Portal_Event_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Portal_Guidance_API_Name__c</field>
+        <value xsi:type="xsd:string">GENERAL_AUTO_LIABILITY_CERTIFICATE</value>
+    </values>
+    <values>
+        <field>Portal_Task_Action__c</field>
+        <value xsi:type="xsd:string">File</value>
+    </values>
+    <values>
+        <field>Portal_Task_Name__c</field>
+        <value xsi:type="xsd:string">General Auto Liability Certificate of Coverage</value>
+    </values>
+    <values>
+        <field>Portal_Task_Type__c</field>
+        <value xsi:type="xsd:string">Company Setup</value>
     </values>
     <values>
         <field>Task_Order__c</field>

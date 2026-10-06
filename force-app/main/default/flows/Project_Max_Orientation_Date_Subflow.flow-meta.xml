@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Assign_new_Max_Orientation_Date_to_varOpportunity</name>
-        <label>Assign new Max Orientation Date to varOpportunity</label>
+    <actionCalls>
+        <name>Update_Opportunity_max_orientation_date</name>
+        <label>Update Opportunity max orientation date</label>
         <locationX>50</locationX>
-        <locationY>2138</locationY>
-        <assignmentItems>
-            <assignToReference>varOpportunity.Max_Orientation_Date__c</assignToReference>
-            <operator>Assign</operator>
+        <locationY>2096</locationY>
+        <actionName>OpportunityMaxOrientationDateAction</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Updateopportunitymaxorientationdate</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>maxOrientationDate</name>
             <value>
                 <elementReference>varMaxOrientationEndDate</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Max_Orientation_Date_on_Opportunity</targetReference>
-        </connector>
-    </assignments>
+        </inputParameters>
+        <inputParameters>
+            <name>opportunitytId</name>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <nameSegment>OpportunityMaxOrientationDateAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_null_value_to_varMaxOrientationEndDate</name>
         <label>Assign null value to varMaxOrientationEndDate</label>
@@ -92,12 +104,16 @@
                 <stringValue>Get_related_New_Client_EE_OT_Meeting_Cancelled_Project_Tasks</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Get_Opportunity_Info</name>
         <label>Assign varFaultElement - Get Opportunity Info</label>
         <locationX>930</locationX>
-        <locationY>2030</locationY>
+        <locationY>1988</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -144,15 +160,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Update_Max_Orientation_Date_on_Opportunity</name>
-        <label>Assign varFaultElement - Update Max Orientation Date on Opportunity</label>
+        <name>Updateopportunitymaxorientationdate</name>
+        <label>Assign varFaultElement - Update opportunity max orientation date</label>
         <locationX>314</locationX>
-        <locationY>2354</locationY>
+        <locationY>2204</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update_Max_Orientation_Date_on_Opportunity</stringValue>
+                <stringValue>Update_Opportunity_max_orientation_date</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -186,7 +202,7 @@
         <name>Does_Max_Orientation_Date_on_Opty_need_to_be_updated</name>
         <label>Does Max Orientation Date on Opty need to be updated?</label>
         <locationX>314</locationX>
-        <locationY>2030</locationY>
+        <locationY>1988</locationY>
         <defaultConnectorLabel>No update needed</defaultConnectorLabel>
         <rules>
             <name>Yes_Update_Max_Orientation_Date_on_Opty</name>
@@ -206,7 +222,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_new_Max_Orientation_Date_to_varOpportunity</targetReference>
+                <targetReference>Update_Opportunity_max_orientation_date</targetReference>
             </connector>
             <label>Yes - Update Max Orientation Date on Opty</label>
         </rules>
@@ -410,7 +426,7 @@
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>314</locationX>
-        <locationY>1922</locationY>
+        <locationY>1880</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Does_Max_Orientation_Date_on_Opty_need_to_be_updated</targetReference>
@@ -424,13 +440,6 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>varOpportunity.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Won</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>
@@ -588,16 +597,6 @@
         <sortField>pse__End_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Max_Orientation_Date_on_Opportunity</name>
-        <label>Update Max Orientation Date on Opportunity</label>
-        <locationX>50</locationX>
-        <locationY>2246</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Max_Orientation_Date_on_Opportunity</targetReference>
-        </faultConnector>
-        <inputReference>varOpportunity</inputReference>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>2151</locationX>

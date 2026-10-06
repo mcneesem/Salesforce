@@ -4,9 +4,9 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>Label Code</label>
-    <length>40</length>
+    <length>80</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

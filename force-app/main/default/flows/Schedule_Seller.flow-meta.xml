@@ -983,7 +983,7 @@
                 </fields>
                 <fields>
                     <name>ConfirmRush</name>
-                    <fieldText>&lt;h3&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt;You are submitting a demo request for an HR360 demo. The demo is not confirmed until the&lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt; Status of the Demo is in a Scheduled Status&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Calibri, sans-serif; color: black; font-size: 16px;&quot;&gt;.&lt;/span&gt;&lt;/h3&gt;</fieldText>
+                    <fieldText>&lt;h3&gt;&lt;span style=&quot;font-size: 16px; color: black; font-family: Calibri, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;You are submitting a RUSH demo request for an HR360 demo. The demo is not confirmed until the&lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: black; font-family: Calibri, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt; Status of the Demo is in a Scheduled Status&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: black; font-family: Calibri, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/h3&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <styleProperties>
                         <verticalAlignment>

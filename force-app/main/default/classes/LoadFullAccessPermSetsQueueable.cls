@@ -1,4 +1,5 @@
-public class LoadFullAccessPermSetsQueueable implements Queueable {
+// intentionally `without sharing` to preserve default sharing at api version 58...
+public without sharing class LoadFullAccessPermSetsQueueable implements Queueable {
     // test w/ LoadFullAccessPermSetsQueueableTest (79%)
 
     // **************************************************************************************************
@@ -210,11 +211,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public static void sendCompletionEmail() {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
-            oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-            String[] sendingTo = new String[]{'sfconfig@insperity.com'};
-            oEmail.setToAddresses(sendingTo);
-            oEmail.setSaveAsActivity(false);
-            oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
+            oEmail.setSubject( LoadFullAccessPermSetsQueueable.sandboxName + ': LoadFullAccessPermSets job finished' );
+            oEmail.setToAddresses( LoadFullAccessPermSetsQueueable.monitorEmailAddresses );
+            oEmail.setSaveAsActivity( false );
+            oEmail.setPlainTextBody( 'Your LoadFullAccessPermSets job has finished for org: ' + LoadFullAccessPermSetsQueueable.sandboxName + '.') ;
             try {
                 Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ oEmail } );
             } catch ( Exception e ) {
@@ -231,6 +231,53 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         {
             createErrorLogFuture( methodName , objectName , info );
         }
+    }
+
+    private static OrgSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = OrgSettings__c.getOrgDefaults();
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static String sandboxName {
+        private get {
+            if ( sandboxName == null ) {
+                String local = '';
+                if ( ( LoadFullAccessPermSetsQueueable.settings != null )
+                    && String.isNotBlank( LoadFullAccessPermSetsQueueable.settings.SandboxName__c )
+                    )
+                {
+                    local = LoadFullAccessPermSetsQueueable.settings.SandboxName__c;
+                }
+                sandboxName = local;
+            }
+            return sandboxName;
+        }
+        private set;
+    }
+
+    private static List<String> monitorEmailAddresses {
+        private get {
+            if ( monitorEmailAddresses == null ) {
+                List<String> local = new List<String>();
+                if ( LoadFullAccessPermSetsQueueable.settings != null ) {
+                    String rawMonitorEmailAddresses = LoadFullAccessPermSetsQueueable.settings.MonitorEmailAddresses__c;
+                    if ( String.isNotBlank( rawMonitorEmailAddresses ) ) {
+                        List<String> splitMonitorEmailAddresses = rawMonitorEmailAddresses.split( '\r\n' );
+                        if ( ( splitMonitorEmailAddresses != null ) && ( splitMonitorEmailAddresses.size() > 0 ) ) {
+                            local = splitMonitorEmailAddresses;
+                        }
+                    }
+                }
+                monitorEmailAddresses = local;
+            }
+            return monitorEmailAddresses;
+        }
+        private set;
     }
 
     @future

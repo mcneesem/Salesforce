@@ -4,14 +4,9 @@ public with sharing class NSP_AssetTriggerHelper {
     private static final Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     private static final Id wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
     private static final Id cpqAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_CPQ_Asset' );
-    private static final Id performanceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' );
-    private static final Id employmentScreeningAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Employment_Screening' );
-    private static final Id recruitingServicesAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Recruiting_Services' );
-    private static final Id applicantTrackingAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Applicant_Tracking' );
     private static final Id retWoAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_WO' );
     private static final Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_Choice' );
     private static final Id stpChecklistRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist' );
-    private static final Id organizationalPlanningRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Organizational_Planning' );
 
     //
     // Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -370,16 +365,22 @@ public with sharing class NSP_AssetTriggerHelper {
         if ( assetFieldFromMdt.NSP_Active__c ) {
             assetFieldDetails.addall( assetFieldFromMdt.NSP_Fields__c.split( ';' ) );
         }
+
+        Id performanceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' );
+        Id employmentScreeningAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Employment_Screening' );
+        Id recruitingServicesAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Recruiting_Services' );
+        Id applicantTrackingAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Applicant_Tracking' );
+        Id organizationalPlanningRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Organizational_Planning' );
         for ( Asset record : newAssets ) {
             Boolean isModified = false;
             for ( String assetField : assetFieldDetails ) {
                 Boolean isValidRecordType = (
                     ( record.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.performanceAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.employmentScreeningAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.recruitingServicesAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.applicantTrackingAssetRecordTypeId )
-                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.organizationalPlanningRecordTypeId)
+                    || ( record.RecordTypeId == performanceAssetRecordTypeId )
+                    || ( record.RecordTypeId == employmentScreeningAssetRecordTypeId )
+                    || ( record.RecordTypeId == recruitingServicesAssetRecordTypeId )
+                    || ( record.RecordTypeId == applicantTrackingAssetRecordTypeId )
+                    || ( record.RecordTypeId == organizationalPlanningRecordTypeId)
                 );
                 if ( isValidRecordType ) {
                     Asset oldAsset = null;

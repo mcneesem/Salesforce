@@ -53,6 +53,11 @@
                 <default>false</default>
                 <label>SBQQ__ProductFamily__c</label>
             </value>
+            <value>
+                <fullName>NSP_Parent_Product_Code__c</fullName>
+                <default>false</default>
+                <label>NSP_Parent_Product_Code__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Opportunity Product</controllingFieldValue>
@@ -87,6 +92,10 @@
         <valueSettings>
             <controllingFieldValue>SBQQ__QuoteLine__c</controllingFieldValue>
             <valueName>SBQQ__ProductFamily__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SBQQ__QuoteLine__c</controllingFieldValue>
+            <valueName>NSP_Parent_Product_Code__c</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

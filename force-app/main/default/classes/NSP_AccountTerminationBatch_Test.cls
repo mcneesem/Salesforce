@@ -25,7 +25,7 @@ private class NSP_AccountTerminationBatch_Test {
         assetObj.NSP_Client__c = 'asset1';
         assetObj.name = 'asset1';
         assetObj.Status = 'Terminated';
-        assetObj.NSP_Termination_Date__c = system.today()-31;
+        assetObj.Termination_Date__c = system.today()-31;
         assetList.add(assetObj);
         //Create Asset
         Asset assetObj1 = new Asset();
@@ -33,7 +33,7 @@ private class NSP_AccountTerminationBatch_Test {
         assetObj1.NSP_Client__c = 'asset2';
         assetObj1.name = 'asset2';
         assetObj1.Status = 'Terminated';
-        assetObj1.NSP_Termination_Date__c = system.today().addDays(-30);
+        assetObj1.Termination_Date__c = system.today().addDays(-30);
         assetList.add(assetObj1);
 
         Asset assetObj3 = new Asset();
@@ -84,8 +84,8 @@ private class NSP_AccountTerminationBatch_Test {
             astList[0].Status = 'Terminated';
             astList[1].Status = 'Terminated';
             update astList;
-            astList[0].NSP_Termination_Date__c = system.today().addDays(-30);
-            astList[1].NSP_Termination_Date__c = system.today().addDays(-30);
+            astList[0].Termination_Date__c = system.today().addDays(-30);
+            astList[1].Termination_Date__c = system.today().addDays(-30);
             update astList;
             NSP_AccountTerminationBatch batchSch = new NSP_AccountTerminationBatch('Asset');
             Database.executeBatch(batchSch, 100);
@@ -97,6 +97,16 @@ private class NSP_AccountTerminationBatch_Test {
         } catch(Exception ex){
             System.debug( ' ~ ex=' + ex );
         }
+    }
+
+    @isTest
+    private static void lostAccountCheckTest() {
+        List<Asset> assetList = [SELECt Id FROM Asset];
+        List<Opportunity> oppList = [SELECT Id, StageName FROM Opportunity];
+        Test.startTest();
+        NSP_AccountTerminationBatch job = new NSP_AccountTerminationBatch();
+        job.lostAccountCheck( assetList , oppList );
+        Test.stopTest();
     }
 
 }

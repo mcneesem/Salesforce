@@ -193,6 +193,23 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Value_Checkbox__c</fieldItem>
+                <identifier>RecordValue_Checkbox_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Action__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Checkbox</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Value_Date__c</fieldItem>

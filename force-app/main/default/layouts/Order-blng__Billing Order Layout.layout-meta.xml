@@ -176,6 +176,10 @@
                 <behavior>Readonly</behavior>
                 <field>Project_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_CreateProject__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -193,6 +197,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_First_usage_upload__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Project_Key__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

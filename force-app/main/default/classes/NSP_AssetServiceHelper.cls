@@ -1,5 +1,6 @@
 // Represents the Asset Service helper which handles the logic for BPS project creation through automation.
-public class NSP_AssetServiceHelper {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_AssetServiceHelper {
     // test w/ NSP_AssetServiceHelperTest (88%)
 
     public static final Id PEO_PROJECT = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PEOProject );
@@ -221,30 +222,8 @@ public class NSP_AssetServiceHelper {
     // This method will update the asset termination information section
     public static void updateTerminationInformation( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
         try {
-            for ( Asset asset : newList ) {
-                //when the verbal termination received is checked
-                if ( ( asset.recordTypeId == WO_ASSET )
-                    && ( asset.NSP_Verbal_Term_recd__c == true )
-                    && ( ( oldMapAsset == null )
-                        || ( ( oldMapAsset != null ) && ( oldMapAsset.get( asset.Id ).NSP_Verbal_Term_recd__c != true ) )
-                        )
-                    )
-                {
-                    asset.NSP_Verbal_Term_Date__c = ( ( asset.NSP_Verbal_Term_Date__c == null ) ? System.today() : asset.NSP_Verbal_Term_Date__c );
-                    asset.NSP_Verbal_Term_Updatedby__c = UserInfo.getUserId();
-                }
-                //when Written Termination Notice Received is checked
-                if ( ( asset.recordTypeId == WO_ASSET )
-                    && ( asset.NSP_Written_Term_recd__c == true )
-                    && ( ( oldMapAsset == null )
-                        || ( ( oldMapAsset != null ) && ( oldMapAsset.get( asset.Id ).NSP_Written_Term_recd__c != true ) )
-                        )
-                    )
-                {
-                    asset.NSP_Written_Term_Date__c = ( ( asset.NSP_Written_Term_Date__c == null ) ? System.today() : asset.NSP_Written_Term_Date__c );
-                    asset.NSP_Written_Termination_Updated_By__c = UserInfo.getUserId();
-                    asset.NSP_Pending_Termination__c = true;
-                }
+            for ( Asset record  : newList ) {
+                record = NSP_AssetServiceHelper.applyTerminationInformation( record , oldMapAsset );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -255,6 +234,63 @@ public class NSP_AssetServiceHelper {
         }
     }
 
+    // Applies the termination information rules for a single WO asset...
+    private static Asset applyTerminationInformation( Asset record , Map<Id,Asset> oldMapAsset ) {
+        if ( ( record != null ) && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET ) ) {
+            Asset oldAsset = oldMapAsset?.get( record.Id );
+            // when the verbal termination received is checked...
+            record = NSP_AssetServiceHelper.applyTerminationVerbalNoticeReceived( record , oldAsset );
+            // when Written Termination Notice Received is checked...
+            record = NSP_AssetServiceHelper.applyTerminationWrittenNoticeReceived( record , oldAsset );
+            // when the WO asset Status becomes Terminated, clear only the two flags and keep the rest of the termination form intact...
+            record = NSP_AssetServiceHelper.applyTerminationFlags( record , oldAsset );
+        }
+        return record;
+    }
+
+    // when the verbal termination received is checked...
+    private static Asset applyTerminationVerbalNoticeReceived( Asset record , Asset recordOld ) {
+        if ( ( record != null )
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
+            && ( record.NSP_Verbal_Term_recd__c == true )
+            && ( ( recordOld == null ) || ( recordOld.NSP_Verbal_Term_recd__c != true ) )
+            )
+        {
+            record.NSP_Verbal_Term_Date__c = ( ( record.NSP_Verbal_Term_Date__c == null ) ? System.today() : record.NSP_Verbal_Term_Date__c );
+            record.NSP_Verbal_Term_Updatedby__c = UserInfo.getUserId();
+        }
+        return record;
+    }
+
+    // when Written Termination Notice Received is checked...
+    private static Asset applyTerminationWrittenNoticeReceived( Asset record , Asset recordOld ) {
+        if ( ( record != null )
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
+            && ( record.NSP_Written_Term_recd__c == true )
+            && ( ( recordOld == null ) || ( recordOld.NSP_Written_Term_recd__c != true ) )
+            )
+        {
+            record.NSP_Written_Term_Date__c = ( ( record.NSP_Written_Term_Date__c == null ) ? System.today() : record.NSP_Written_Term_Date__c );
+            record.NSP_Written_Termination_Updated_By__c = UserInfo.getUserId();
+            record.NSP_Pending_Termination__c = true;
+        }
+        return record;
+    }
+
+    // when the WO asset Status becomes Terminated, clear only the two flags and keep the rest of the termination form intact...
+    private static Asset applyTerminationFlags( Asset record , Asset recordOld ) {
+        if ( ( record != null )
+            && ( record.RecordTypeId == NSP_AssetServiceHelper.WO_ASSET )
+            && ( record.Status == NSP_ServiceConstants.TERMINATED )
+            && ( ( recordOld == null ) || ( recordOld.Status != NSP_ServiceConstants.TERMINATED ) )
+            )
+        {
+            record.NSP_Written_Term_recd__c = false;
+            record.NSP_Pending_Termination__c = false;
+        }
+        return record;
+    }
+
     // This method will clear the asset termination information section
     public void clearAssetTerminationSection( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
         Set<Id> accountIdSet = new Set<Id> ();
@@ -262,7 +298,7 @@ public class NSP_AssetServiceHelper {
         List<Asset> updatedAssetList = new List<Asset>();
         try{
             for(Asset asset: newList){
-                if(asset.recordTypeId == WO_ASSET && !String.isBlank(asset.AccountId)
+                if(asset.recordTypeId == NSP_AssetServiceHelper.WO_ASSET && !String.isBlank(asset.AccountId)
                    && asset.NSP_Anticipated_Date_Of_Termination__c!=NULL && asset.NSP_Anticipated_Date_Of_Termination__c != oldMapAsset.get(asset.Id).NSP_Anticipated_Date_Of_Termination__c
                    )
                 {

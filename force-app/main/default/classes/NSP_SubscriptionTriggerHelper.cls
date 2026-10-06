@@ -1,4 +1,5 @@
-public class NSP_SubscriptionTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 53...
+public without sharing class NSP_SubscriptionTriggerHelper {
     // test w/ NSP_SubscriptionTriggerHelperTest (76%)
 
     //
@@ -131,14 +132,32 @@ public class NSP_SubscriptionTriggerHelper {
             }
         }
 
-        if( !orderItemIds.isEmpty() ){
-            Map<Id, OrderItem> orderlinesMap = new Map<Id, OrderItem>([SELECT Id, NSP_Override_Start_Date__c FROM OrderItem WHERE Id IN:orderItemIds]);
+        if ( !orderItemIds.isEmpty() ) {
+            Map<Id,OrderItem> orderlinesMap = new Map<Id,OrderItem>(
+                [
+                    SELECT Id , NSP_Override_Start_Date__c
+                    FROM OrderItem
+                    WHERE ( Id IN :orderItemIds )
+                ]
+            );
             for ( SBQQ__Subscription__c sub : newList ) {
-                if( sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__TerminatedDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null
-                    && sub.SBQQ__OrderProduct__c != null && orderlinesMap != null && !orderlinesMap.isEmpty() ){
-                    OrderItem currOrderLine =  orderlinesMap.get(sub.SBQQ__OrderProduct__c);
-                    sub.SBQQ__TerminatedDate__c = currOrderLine.NSP_Override_Start_Date__c - 1;
-                    revOrderProdIds.add(sub.SBQQ__OrderProduct__c);
+                if ( ( sub.NSP_ProjectGoLiveDate__c != null )
+                    && ( sub.SBQQ__TerminatedDate__c != null )
+                    && ( sub.SBQQ__BillingFrequency__c == 'Annual' )
+                    && ( sub.SBQQ__RevisedSubscription__c != null )
+                    && ( sub.SBQQ__OrderProduct__c != null )
+                    && ( orderlinesMap != null )
+                    && !orderlinesMap.isEmpty()
+                    )
+                {
+                    OrderItem currOrderLine = orderlinesMap.get( sub.SBQQ__OrderProduct__c );
+                    if ( ( currOrderLine != null )
+                        && ( currOrderLine.NSP_Override_Start_Date__c != null )
+                        )
+                    {
+                        sub.SBQQ__TerminatedDate__c = ( currOrderLine.NSP_Override_Start_Date__c - 1 );
+                    }
+                    revOrderProdIds.add( sub.SBQQ__OrderProduct__c );
                 }
             }
         }

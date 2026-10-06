@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Modules_Client_Utilizes__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    Case__r.Asset.RecordType.DeveloperName = &quot;NSP_Asset_Product&quot;,
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;401k - Ubiquity Payroll Export&quot;), &quot;401k - Ubiquity Payroll Export; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;ACA Administration&quot;), &quot;ACA Administration; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Benefits Administration&quot;), &quot;Benefits Administration; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Carrier Integrations -Health&quot;), &quot;Carrier Integrations -Health; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Carrier Integrations 401K&quot;), &quot;Carrier Integrations 401K; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Cobra&quot;), &quot;Cobra; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;eLearning&quot;), &quot;eLearning; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;FSA, HSA&quot;), &quot;FSA, HSA; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;HR Resource Center&quot;), &quot;HR Resource Center; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Insperity Integra&quot;), &quot;Insperity Integra; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Insperity TimeStar&quot;), &quot;Insperity TimeStar; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;iSolved Hire&quot;), &quot;iSolved Hire; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;iSolved Performance Mgmt&quot;), &quot;iSolved Performance Mgmt; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;iSolved Time&quot;), &quot;iSolved Time; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;iSolved Time Advanced Scheduling&quot;), &quot;iSolved Time Advanced Scheduling; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;iSolved Time Virtual Clock&quot;), &quot;iSolved Time Virtual Clock; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Leave Administration&quot;), &quot;Leave Administration; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;OrgPlus Employee Directory&quot;), &quot;OrgPlus Employee Directory; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Payroll&quot;), &quot;Payroll; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Retirement Services Integration&quot;), &quot;Retirement Services Integration; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Share &amp; Perform&quot;), &quot;Share &amp; Perform; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Training and Development (Non-SSO)&quot;), &quot;Training and Development (Non-SSO); &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;Training and Development (SSO)&quot;), &quot;Training and Development (SSO); &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;WC - Amtrust&quot;), &quot;WC - Amtrust; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;WC - Erie&quot;), &quot;WC - Erie; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;WC - Guard&quot;), &quot;WC - Guard; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;WC - Hartford&quot;), &quot;WC - Hartford; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;WC - Insurelinx&quot;), &quot;WC - Insurelinx; &quot;, &quot;&quot;) &amp;
+    IF(INCLUDES(Case__r.Asset.NSP_WX_WA_Modules_Implemented__c, &quot;401k-360 Retirement Integration&quot;), &quot;401k-360 Retirement Integration; &quot;, &quot;&quot;),
+    &quot;&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Modules Client Utilizes</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

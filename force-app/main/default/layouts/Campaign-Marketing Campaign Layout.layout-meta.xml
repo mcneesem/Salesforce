@@ -359,7 +359,7 @@
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>Opportunity_Primary_Product__c</fields>
         <fields>OPPORTUNITY.TYPE</fields>
-        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>SDR__c</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedCampaignInfluence2CampaignList</relatedList>

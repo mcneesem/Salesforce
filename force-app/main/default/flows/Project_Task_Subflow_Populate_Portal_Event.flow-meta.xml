@@ -74,71 +74,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Project_Meetings_Collection</name>
-        <label>Assign : Project Meetings Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Client Transition Meeting - PM</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>New Client - EE OT Meeting</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Configuration Call</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Time &amp; Attendance Training</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Enrollment Administrator Training</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Transition to Service</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Premier Training</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projectmeetings</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Transition Progress Meeting</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Project_Meetings_Tasks</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Reset before assignment</description>
         <name>Reset_Record_Variables</name>
         <label>Reset : Record Variables</label>
@@ -326,7 +261,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Project_Meetings_Collection</targetReference>
+                <targetReference>Get_Project_Meetings_Tasks</targetReference>
             </connector>
             <label>Full Sync</label>
         </rules>
@@ -502,24 +437,8 @@
             <label>Proceed to Sync</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Portal Event Mapping - Sync Version</description>
+    <description>New Client Portal: Populate Portal Event</description>
     <environments>Default</environments>
-    <formulas>
-        <name>portalEventName</name>
-        <dataType>String</dataType>
-        <expression>CASE(
-  {!recordProjectTask.Name} ,
-  &quot;Client Transition Meeting - PM&quot; , &quot;Client Transition Meeting&quot; ,
-  &quot;New Client - EE OT Meeting&quot; , &quot;Employee Orientation&quot; ,
-  &quot;Configuration Call&quot; , &quot;Configuration Call&quot; ,
-  &quot;Time &amp; Attendance Training&quot; , &quot;Time &amp; Attendance Training&quot; ,
-  &quot;Enrollment Administrator Training&quot; , &quot;Enrollment Administrator Training&quot; ,
-  &quot;Transition to Service&quot; , &quot;Client Transition To Service&quot; ,
-  &quot;Premier Training&quot; , &quot;Insperity Premier/Payroll Training&quot; ,
-  &quot;Transition Progress Meeting&quot; , &quot;Transition Progress Meeting&quot; ,
-  &quot;&quot;
-)</expression>
-    </formulas>
     <formulas>
         <description>Status for portal event</description>
         <name>portalEventStatus</name>
@@ -666,10 +585,24 @@
             </value>
         </filters>
         <filters>
-            <field>Name</field>
-            <operator>In</operator>
+            <field>API_Name__c</field>
+            <operator>IsNull</operator>
             <value>
-                <elementReference>tc_projectmeetings</elementReference>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Event_Name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Task_Name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
@@ -679,6 +612,12 @@
         <queriedFields>pse__Start_Date_Time__c</queriedFields>
         <queriedFields>pse__End_Date_Time__c</queriedFields>
         <queriedFields>pse__Status__c</queriedFields>
+        <queriedFields>API_Name__c</queriedFields>
+        <queriedFields>Portal_Task_Name__c</queriedFields>
+        <queriedFields>Portal_Event_Name__c</queriedFields>
+        <queriedFields>Portal_Guidance_API_Name__c</queriedFields>
+        <queriedFields>Portal_Task_Action__c</queriedFields>
+        <queriedFields>Portal_Task_Type__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Portal_Event</name>
@@ -745,13 +684,6 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Name</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>portalEventName</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>StartDateTime__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -777,6 +709,13 @@
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>portalEventStatus</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Portal_Event_Name__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -803,13 +742,6 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Name</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>portalEventName</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>StartDateTime__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -835,6 +767,13 @@
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>portalEventStatus</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Portal_Event_Name__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -898,13 +837,5 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Project_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>collection of all project meetings for full sync</description>
-        <name>tc_projectmeetings</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>

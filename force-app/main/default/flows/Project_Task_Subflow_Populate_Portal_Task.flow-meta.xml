@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>65.0</apiVersion>
+    <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Collection_Sync</name>
@@ -33,148 +33,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Validate_Create</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Project_Tasks_Collection</name>
-        <label>Assign : Project Tasks Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Generate Form 8973</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>General/Auto Liability Certificate of Coverage</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Client Logo</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Direct Debit Agreement</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Client User Access</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Deductions - Employee Level</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Set up Cell Phone reimbursements</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Employee Garnishments Provided</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>COBRA Takeover Form(s) received and submitted to COBRA Team</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Employees Currently on LOA</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>YTD Gross Wage Report Provided</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>PTO, paid sick leave, or other accrual policy received</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Employee Priming Data Provided</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>FEIN documentation</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Current Payroll Register</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Job Costing Setup</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_projecttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Review and Provide RRP Education</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_All_Project_Tasks</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -352,7 +210,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Project_Tasks_Collection</targetReference>
+                <targetReference>Get_All_Project_Tasks</targetReference>
             </connector>
             <label>Full Sync</label>
         </rules>
@@ -580,62 +438,8 @@
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Portal Task Mapping - Sync Version</description>
+    <description>New Client Portal: Populate Portal Task</description>
     <environments>Default</environments>
-    <formulas>
-        <name>portalTaskAction</name>
-        <dataType>String</dataType>
-        <expression>CASE(
-  {!portalTaskName} ,
-  &quot;Employee Data Collection&quot; , &quot;File&quot; ,
-  &quot;IRS Assignment Letter&quot; , &quot;File&quot; ,
-  &quot;Current / Prior Payroll Report Samples&quot; , &quot;File&quot; ,
-  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;File&quot; ,
-  &quot;YTD Gross Wages Report&quot; , &quot;File&quot; ,
-  &quot;Time Off Policies / Handbook&quot; , &quot;File&quot; ,
-  &quot;Form 8973&quot; , &quot;Docusign&quot; ,
-  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;File&quot; ,
-  &quot;Company Logo&quot; , &quot;File&quot; ,
-  &quot;Direct Debit Agreement&quot; , &quot;Docusign&quot; ,
-  &quot;User Access Roles Request Form&quot; , &quot;Docusign&quot; ,
-  &quot;Cafeteria Plan Documentation&quot; , &quot;File&quot; ,
-  &quot;Employee Deductions&quot; , &quot;File&quot; ,
-  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;File&quot; ,
-  &quot;Cell Phone Reimbursements&quot; , &quot;Docusign&quot; ,
-  &quot;Garnishments&quot; , &quot;File&quot; ,
-  &quot;COBRA Takeover&quot; , &quot;File&quot; ,
-  &quot;LOA Information&quot; , &quot;File&quot; ,
-  &quot;Regular Rate Of Pay&quot; , &quot;View Information&quot; ,
-  &quot;&quot;
-)</expression>
-    </formulas>
-    <formulas>
-        <name>portalTaskName</name>
-        <dataType>String</dataType>
-        <expression>CASE(
-  {!recordProjectTask.Name} ,
-  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
-  &quot;FEIN documentation&quot; , &quot;IRS Assignment Letter&quot; ,
-  &quot;Current Payroll Register&quot; , &quot;Current / Prior Payroll Report Samples&quot; ,
-  &quot;Job Costing Setup&quot; , &quot;Job Costing / Labor Allocation Setup Information&quot; ,
-  &quot;YTD Gross Wage Report Provided&quot; , &quot;YTD Gross Wages Report&quot; ,
-  &quot;PTO, paid sick leave, or other accrual policy received&quot; , &quot;Time Off Policies / Handbook&quot; ,
-  &quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
-  &quot;General/Auto Liability Certificate of Coverage&quot; , &quot;General Auto Liability Certificate of Coverage&quot; ,
-  &quot;Client Logo&quot; , &quot;Company Logo&quot; ,
-  &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
-  &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
-  &quot;Deductions - Employee Level&quot; , &quot;Employee Deductions&quot; ,
-  &quot;Employee Deduction Authorization Form - ORK&quot; , &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; ,
-  &quot;Set up Cell Phone reimbursements&quot; , &quot;Cell Phone Reimbursements&quot; ,
-  &quot;Employee Garnishments Provided&quot; , &quot;Garnishments&quot; ,
-  &quot;COBRA Takeover Form(s) received and submitted to COBRA Team&quot; , &quot;COBRA Takeover&quot; ,
-  &quot;Employees Currently on LOA&quot; , &quot;LOA Information&quot; ,
-  &quot;CSP Client Authorization/Cafeteria Plan documentation collected&quot; , &quot;Cafeteria Plan Documentation&quot; ,
-  &quot;Review and Provide RRP Education&quot; , &quot;Regular Rate Of Pay&quot; ,
-  {!recordProjectTask.Name}
-)</expression>
-    </formulas>
     <formulas>
         <name>portalTaskStatus</name>
         <dataType>String</dataType>
@@ -646,33 +450,6 @@
   &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
   &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
-)</expression>
-    </formulas>
-    <formulas>
-        <name>portalTaskType</name>
-        <dataType>String</dataType>
-        <expression>CASE(
-  {!portalTaskName} ,
-  &quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;IRS Assignment Letter&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Form 8973&quot; , &quot;Company Setup&quot; ,
-  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
-  &quot;Company Logo&quot; , &quot;Company Setup&quot; ,
-  &quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
-  &quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
-  &quot;Employee Deductions&quot; , &quot;Employee Setup&quot; ,
-  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;Employee Setup&quot; ,
-  &quot;Cell Phone Reimbursements&quot; , &quot;Employee Setup&quot; ,
-  &quot;Garnishments&quot; , &quot;Employee Setup&quot; ,
-  &quot;COBRA Takeover&quot; , &quot;Employee Setup&quot; ,
-  &quot;LOA Information&quot; , &quot;Employee Setup&quot; ,
-  &quot;Cafeteria Plan Documentation&quot; , &quot;Company Setup&quot; ,
-  &quot;Regular Rate Of Pay&quot; , &quot;Employee Setup&quot; ,
-  &quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Project Task - Subflow - Populate Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
@@ -752,10 +529,17 @@
             </value>
         </filters>
         <filters>
-            <field>Name</field>
-            <operator>In</operator>
+            <field>API_Name__c</field>
+            <operator>IsNull</operator>
             <value>
-                <elementReference>tc_projecttasks</elementReference>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Event_Name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
@@ -765,6 +549,12 @@
         <queriedFields>Is_Completed__c</queriedFields>
         <queriedFields>pse__Status__c</queriedFields>
         <queriedFields>pse__End_Date_Time__c</queriedFields>
+        <queriedFields>API_Name__c</queriedFields>
+        <queriedFields>Portal_Task_Name__c</queriedFields>
+        <queriedFields>Portal_Event_Name__c</queriedFields>
+        <queriedFields>Portal_Guidance_API_Name__c</queriedFields>
+        <queriedFields>Portal_Task_Action__c</queriedFields>
+        <queriedFields>Portal_Task_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Portal_Project</name>
@@ -877,13 +667,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <transformValues>
             <transformValueActions>
-                <outputFieldApiName>Name</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>portalTaskName</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Project_Task__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -905,24 +688,31 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskStatus</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
                 <outputFieldApiName>Action__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskAction</elementReference>
+                    <elementReference>recordProjectTask.Portal_Task_Action__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Type__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskType</elementReference>
+                    <elementReference>recordProjectTask.Portal_Task_Type__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Status__c</outputFieldApiName>
+                <outputFieldApiName>Name</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskStatus</elementReference>
+                    <elementReference>recordProjectTask.Portal_Task_Name__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -942,13 +732,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <transformValues>
             <transformValueActions>
-                <outputFieldApiName>Name</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>portalTaskName</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Project_Task__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -970,13 +753,6 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Action__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>portalTaskAction</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Status__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -984,10 +760,24 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
+                <outputFieldApiName>Action__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Portal_Task_Action__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
                 <outputFieldApiName>Type__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskType</elementReference>
+                    <elementReference>recordProjectTask.Portal_Task_Type__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>recordProjectTask.Portal_Task_Name__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -1045,12 +835,5 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Project_Task__c</objectType>
-    </variables>
-    <variables>
-        <name>tc_projecttasks</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>

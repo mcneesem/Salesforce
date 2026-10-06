@@ -1,4 +1,5 @@
-public class NSP_AssetServiceTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_AssetServiceTriggerHelper {
     // test w/ NSP_AssetServiceTriggerHelperTest (78%)
 
     public final String PEORECORDTYPE = 'PEO';
@@ -1927,7 +1928,7 @@ Implementation profile related to the account of the created asset
 
                                           }
 
-                    Boolean switchEnabled = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsAccountServiceSegmentCheckEnabled__c;
+                    Boolean switchEnabled = NSP_AssetServiceTriggerHelper.settings.IsAccountServiceSegmentCheckEnabled__c;
                     if(!accIdAssetMap.isEmpty()){
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accIdAssetMap.keySet()]){
                             acc.NSP_Service_Segment__c = accIdAssetMap.get(acc.Id).recordTypeId == woAssetRecordTypeId ? accIdAssetMap.get(acc.Id).NSP_Client_Segment_type__c :
@@ -1996,11 +1997,6 @@ Implementation profile related to the account of the created asset
         Boolean anyActive = false;
         Boolean anyOnBoarding = false;
         Boolean anyOnDemand = false;
-        Boolean anyProspecting = (
-            ( acc != null )
-            && ( acc.Opportunities != null )
-            && !acc.Opportunities.isEmpty()
-        );
         List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( ( acc != null ) ? acc.Assets : null );
         for ( Asset assetRecord : filteredAssets ) {
             if ( ( assetRecord != null ) && String.isNotBlank( assetRecord.Status ) ) {
@@ -2019,8 +2015,6 @@ Implementation profile related to the account of the created asset
             returnValue = NSP_SalesConstants.ONBOARDING;
         } else if ( anyOnDemand ) {
             returnValue = NSP_ServiceConstants.AssetStatusOnDemand;
-        } else if ( anyProspecting ) {
-            returnValue = NSP_SalesConstants.PROSPECTING;
         }
         return returnValue;
     }
@@ -2181,22 +2175,12 @@ Implementation profile related to the account of the created asset
         List<Asset> result = new List<Asset>();
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
-            // List of Asset Record type names to exclude
-            Set<String> excludedNames = new Set<String>{
-                'RET WO',
-                'RET Choice',
-                'CPQ Asset',
-                'Hardware Asset',
-                'Hardware Loaner Asset',
-                'Certify',
-                'XML',
-                'Integra',
-                'Time & Attendance',
-                'Performance Management'
-            };
             for ( Asset record : records ) {
-                String rtName = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Name : null );
-                if ( String.isNotBlank( rtName ) && !excludedNames.contains( rtName ) ) {
+                if ( ( record != null )
+                    && ( record.RecordTypeId != null )
+                    && !NSP_AssetServiceTriggerHelper.excludedRecordTypeIds.contains( record.RecordTypeId )
+                    )
+                {
                     result.add( record );
                 }
             }
@@ -2220,7 +2204,8 @@ Implementation profile related to the account of the created asset
                             Status ,
                             NSP_Account_Status__c ,
                             AccountId ,
-                            RecordType.Name
+                            RecordType.Name ,
+                            RecordTypeId
                         FROM Assets
                     ) ,
                     (
@@ -2228,13 +2213,56 @@ Implementation profile related to the account of the created asset
                             Id ,
                             StageName
                         FROM Opportunities
-                        WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+                        WHERE (
+                            StageName NOT IN (
+                                'Closed Won' ,
+                                'Closed Lost'
+                            )
+                        )
                     )
                 FROM Account
                 WHERE ( Id IN :accountIds )
             ];
         }
         return returnList;
+    }
+
+    private static AssetTriggerSettings__c settings {
+        get {
+            if ( settings == null ) {
+                settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Set<Id> excludedRecordTypeIds {
+        private get {
+            if ( excludedRecordTypeIds == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( NSP_AssetServiceTriggerHelper.settings != null ) {
+                    // List of Asset Record Type Ids to exclude...
+                    String rawExcludedRecordTypeIds = NSP_AssetServiceTriggerHelper.settings.Exclude_Record_Type_Status__c;
+                    if ( String.isNotBlank( rawExcludedRecordTypeIds ) ) {
+                        List<String> splitExcludedRecordTypeIds = rawExcludedRecordTypeIds.split( '\r\n' );
+                        if ( ( splitExcludedRecordTypeIds != null ) && !splitExcludedRecordTypeIds.isEmpty() ) {
+                            for ( String splitExcludedRecordTypeId : splitExcludedRecordTypeIds ) {
+                                if ( splitExcludedRecordTypeId InstanceOf Id ) {
+                                    Id checkId = Id.valueOf( splitExcludedRecordTypeId );
+                                    if ( checkId.getSObjectType() == RecordType.getSObjectType() ) {
+                                        local.add( checkId );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                excludedRecordTypeIds = local;
+            }
+            return excludedRecordTypeIds;
+        }
+        private set;
     }
 
 }

@@ -309,8 +309,16 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
             && String.isNotBlank( emailBody )
             )
         {
-            formatted = '<html><body>';
-            formatted += '<b><p>SSN Mismatch Client Notice</p></b><br />';
+            formatted = '<html>';
+            formatted += '<body>';
+            formatted += '<div>';
+            formatted += '<div style="max-width: 46rem; margin-left: auto; margin-right: auto; font-family: Aptos, sans-serif;">';
+            NSP_EmailImageController emailImageCtrl = new NSP_EmailImageController();
+            String bannerUrl = emailImageCtrl.getHeaderLogoUrl();
+            if ( String.isNotBlank( bannerUrl ) ) {
+                formatted += '<div><img src="' + bannerUrl + '" style="max-width: 46rem;"/></div>';
+            }
+            formatted += '<p><b>SSN Mismatch Client Notice</b></p><br/>';
             formatted += '<b>SSN Mismatch / ' + aimsClientNumber + ' / ';
             if ( String.isNotBlank( contactObj.NSP_Per_ID__c ) ) {
                 formatted += contactObj.NSP_Per_ID__c + ' / ';
@@ -319,7 +327,10 @@ public with sharing class CaseSendSSNVSTeamEmailAction {
             }
             formatted += contactObj.FirstName + ' ' + contactObj.LastName + '</b><br/>';
             formatted += emailBody;
-            formatted += '</body></html>';
+            formatted += '</div>';
+            formatted += '</div>';
+            formatted += '</body>';
+            formatted += '</html>';
         }
         return formatted;
     }
