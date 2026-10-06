@@ -27,6 +27,7 @@
     <permissionSets>Opportunity_Edit_and_Max_Orientation_Date_Edit</permissionSets>
     <permissionSets>Opportunity_Lock_Enrollment_Fee_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Management</permissionSets>
+    <permissionSets>Opportunity_Task_Validation_Bypass</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
