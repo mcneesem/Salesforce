@@ -6057,11 +6057,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Proj__c.Invoice_Ready__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Proj__c.Last_Invoice_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6115,7 +6110,6 @@
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -6126,7 +6120,6 @@
         <field>pse__Proj__c.NSP_Sales_Rep__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Template_Generated__c</field>
@@ -6137,7 +6130,6 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
