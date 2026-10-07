@@ -1,5 +1,5 @@
 public with sharing class NSP_CustomCaseCreationPageController {
-    // test w/ NSP_CustomCaseCreationPageControllerTest (80%)
+    // test w/ NSP_CustomCaseCreationPageControllerTest (79%)
 
     private static final String SERVICE_OPERATIONS = 'Service Operations';
 
@@ -613,48 +613,136 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
         }
     }
 
-    //
-    // @desc Auto populate asset on case record based on cat, subcat & account selected
-    // @param {String} category - Category selected which comes from category subcategory mapping object
-    // @param {String} subCategory - subCategory selected which comes from category subcategory mapping object
-    // @param {String} accountId - Id from Account object
-    // @return List<Asset> - returns Asset based on active asset linked to account
-    //
+    // @description Populates Asset on Case based on category, subcategory, and account.
+    // @param category Category selected on Case creation.
+    // @param subCategory Subcategory selected on Case creation.
+    // @param accountId Id of the Account on the Case.
+    // @return Active Asset, or most recently terminated Asset, or null.
     @AuraEnabled
-    public static List<Asset> autoPopulateAsset( String category , String subCategory , String accountId ) {
+    public static List<Asset> autoPopulateAsset(
+        String category ,
+        String subCategory ,
+        String accountId
+        )
+    {
         List<Asset> response = null;
         if ( String.isNotBlank( category ) && String.isNotBlank( subCategory ) ) {
-            //query cat, subcat records for asset recordtype based on user selection while creating case
-            List<NSP_Category_Sub_Category_Mapping__c> catSubcat = [
+            List<NSP_Category_Sub_Category_Mapping__c> mappings = NSP_CustomCaseCreationPageController.queryCategorySubCategoryMapping(
+                category ,
+                subCategory
+            );
+            if ( String.isNotBlank( accountId )
+                && ( accountId InstanceOf Id )
+                && ( mappings != null )
+                && !mappings.isEmpty()
+                )
+            {
+                Id assetRecTypeId = NSP_GenericRecordType.getRecordTypeIdByLabel(
+                    'Asset' ,
+                    mappings[0].NSP_Asset_Record_Types__c
+                );
+                response = NSP_CustomCaseCreationPageController.queryActiveAssets(
+                    accountId ,
+                    assetRecTypeId
+                );
+                if ( ( response == null ) || response.isEmpty() ) {
+                    response = NSP_CustomCaseCreationPageController.queryMostRecentTerminatedAsset(
+                        accountId ,
+                        assetRecTypeId
+                    );
+                }
+            }
+        }
+        return response;
+    }
+
+    // @description Queries category/subcategory mapping records for asset record type resolution.
+    // @param category Category value to filter.
+    // @param subCategory Subcategory value to filter.
+    // @return Matching NSP_Category_Sub_Category_Mapping__c records.
+    private static List<NSP_Category_Sub_Category_Mapping__c> queryCategorySubCategoryMapping(
+        String category ,
+        String subCategory
+        )
+    {
+        List<NSP_Category_Sub_Category_Mapping__c> categorySubcategoryList = new List<NSP_Category_Sub_Category_Mapping__c>();
+        if ( String.isNotBlank( category ) && String.isNotBlank( subCategory ) ) {
+            categorySubcategoryList =  [
                 SELECT
-                    Id , Name , NSP_Category__c ,
-                    NSP_Subcategory__c , NSP_Asset_Record_Types__c ,
-                    NSP_UserTitle__c , NSP_RecordType__c
+                    Id ,
+                    Name ,
+                    NSP_Category__c ,
+                    NSP_Subcategory__c ,
+                    NSP_Asset_Record_Types__c ,
+                    NSP_UserTitle__c ,
+                    NSP_RecordType__c
                 FROM NSP_Category_Sub_Category_Mapping__c
                 WHERE (
                     ( NSP_Category__c = :category )
                     AND ( NSP_Subcategory__c = :subCategory )
                 )
             ];
-            if ( String.isNotBlank( accountId ) && ( catSubcat != null ) && !catSubcat.isEmpty() ) {
-                //pass asset record type from above query to get active asset id from the related account of case
-                response = [
-                    SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status
-                    FROM Asset
-                    WHERE (
-                        ( AccountId = :accountId )
-                        AND ( RecordType.Name = :catSubcat[0].NSP_Asset_Record_Types__c )
-                        AND (
-                            Status NOT IN (
-                                :NSP_ServiceConstants.TERMINATED ,
-                                :NSP_ServiceConstants.BACKOUT
-                            )
+        }
+        return categorySubcategoryList;
+    }
+
+    // @description Queries active (non-terminated, non-backout) assets for an account and record type.
+    // @param accountId Account Id to filter.
+    // @param assetRecordTypeName Asset record type name to filter.
+    // @return Matching active Asset records.
+    private static List<Asset> queryActiveAssets( Id accountId , Id assetRecTypeId ) {
+        List<Asset> assetList = new List<Asset>();
+        if ( ( accountId != null ) && ( assetRecTypeId != null ) ) {
+            assetList  = [
+                SELECT
+                    Id ,
+                    AccountId ,
+                    RecordTypeId ,
+                    RecordType.Name ,
+                    Status ,
+                    NSP_Termination_Date__c
+                FROM Asset
+                WHERE (
+                    ( AccountId = :accountId )
+                    AND ( RecordTypeId = :assetRecTypeId )
+                    AND (
+                        Status NOT IN (
+                            :NSP_ServiceConstants.TERMINATED ,
+                            :NSP_ServiceConstants.BACKOUT
                         )
                     )
-                ];
-            }
+                )
+            ];
         }
-        return response;
+        return assetList;
+    }
+
+    // @description Queries the most recently terminated asset for an account and record type.
+    // @param accountId Account Id to filter.
+    // @param assetRecordTypeName Asset record type name to filter.
+    // @return Single most recently terminated Asset, or empty list.
+    private static List<Asset> queryMostRecentTerminatedAsset( Id accountId , Id assetRecTypeId ) {
+        List<Asset> assetList = new List<Asset>();
+        if ( ( accountId != null ) && ( assetRecTypeId != null ) ) {
+            assetList =  [
+                SELECT
+                    Id ,
+                    AccountId ,
+                    RecordTypeId ,
+                    RecordType.Name ,
+                    Status ,
+                    NSP_Termination_Date__c
+                FROM Asset
+                WHERE (
+                    ( AccountId = :accountId )
+                    AND ( RecordTypeId = :assetRecTypeId )
+                    AND ( NSP_Account_Status__c = :NSP_ServiceConstants.TERMINATED )
+                )
+                ORDER BY NSP_Termination_Date__c DESC NULLS LAST , LastModifiedDate DESC
+                LIMIT 1
+            ];
+        }
+        return assetList;
     }
 
     // @method getCaseRecordType()
