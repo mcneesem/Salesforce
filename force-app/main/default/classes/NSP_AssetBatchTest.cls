@@ -1,6 +1,6 @@
 @isTest
-private class NSP_AssetBatchTest
-{
+private class NSP_AssetBatchTest {
+
     private static final String HR_SPECIALIST = 'HR Specialist';
     private static final String BUS_TEAM_HRSP_CL = 'Bus. Team-HRSp/CL';
     private static final String MANAGER_HR_SERVICES = 'Manager, HR Services';
@@ -8,7 +8,7 @@ private class NSP_AssetBatchTest
     private static final String ASSERT_BIOMETRIC_EXPIRED = 'Expected NSP_Biometric_Indicator_Expired__c to be true after batch execution';
 
     // @description Creates shared test data: Account, User, Account Team records, and an expired biometric Asset.
-    @TestSetup
+    @testSetup
     private static void setup() {
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
@@ -74,8 +74,7 @@ private class NSP_AssetBatchTest
 
     // @description Verifies that the scheduler creates a scheduled job via NSP_AssetBatchScheduler.
     @isTest
-    private static void testCreatesOneScheduledJob()
-    {
+    private static void testCreatesOneScheduledJob() {
         Test.startTest();
         NSP_AssetBatchScheduler assetBatch = new NSP_AssetBatchScheduler();
         Database.executeBatch(new NSP_AssetBatch());
@@ -94,8 +93,7 @@ private class NSP_AssetBatchTest
 
     // @description Verifies that executing the batch for an HR Specialist account team creates a Case and marks the Asset as expired.
     @isTest
-    private static void testCreatesExpiredHRSpecialistCase()
-    {
+    private static void testCreatesExpiredHRSpecialistCase() {
         Test.startTest();
         Database.executeBatch(new NSP_AssetBatch());
         Test.stopTest();
@@ -112,8 +110,7 @@ private class NSP_AssetBatchTest
 
     // @description Verifies that when the first account team record is reassigned to Bus. Team-HRSp/CL, a Case is created and the Asset is expired.
     @isTest
-    private static void testCreatesExpiredBusinessTeamCase()
-    {
+    private static void testCreatesExpiredBusinessTeamCase() {
         List<NSP_Account_Team__c> accountTeams = [SELECT Id FROM NSP_Account_Team__c WITH USER_MODE LIMIT 1];
         NSP_Account_Team__c accountTeamRecord = accountTeams[0];
         accountTeamRecord.NSP_Role__c = NSP_AssetBatchTest.BUS_TEAM_HRSP_CL;
@@ -135,8 +132,7 @@ private class NSP_AssetBatchTest
 
     // @description Verifies that when the first account team record is reassigned to Manager, HR Services, a Case is created and the Asset is expired.
     @isTest
-    private static void testCreatesExpiredManagerHRCase()
-    {
+    private static void testCreatesExpiredManagerHRCase() {
         List<NSP_Account_Team__c> accountTeams = [SELECT Id FROM NSP_Account_Team__c WITH USER_MODE LIMIT 1];
         NSP_Account_Team__c accountTeamRecord = accountTeams[0];
         accountTeamRecord.NSP_Role__c = NSP_AssetBatchTest.MANAGER_HR_SERVICES;
@@ -158,8 +154,7 @@ private class NSP_AssetBatchTest
 
     // @description Verifies that when one account team record is deleted, the batch still creates a Case and the owner defaults to the current user.
     @isTest
-    private static void testDefaultsOwnerWhenTeamIsDeleted()
-    {
+    private static void testDefaultsOwnerWhenTeamIsDeleted() {
         List<NSP_Account_Team__c> accountTeams = [SELECT Id FROM NSP_Account_Team__c WITH USER_MODE LIMIT 1];
         delete accountTeams;
 
@@ -184,8 +179,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers NSP_AssetBatch.schedule() static method (ISelfSchedulable interface).
     @isTest
-    private static void testScheduleReturnsJobId()
-    {
+    private static void testScheduleReturnsJobId() {
         Test.startTest();
         String jobId = NSP_AssetBatch.schedule();
         Test.stopTest();
@@ -194,8 +188,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers execute(SchedulableContext) — the Schedulable interface method — by scheduling NSP_AssetBatch directly.
     @isTest
-    private static void testSchedulableTriggersBatch()
-    {
+    private static void testSchedulableTriggersBatch() {
         Test.startTest();
         System.schedule('Test NSP_AssetBatch Direct Schedulable', '0 0 2 * * ?', new NSP_AssetBatch());
         Test.stopTest();
@@ -215,8 +208,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers Callable.call() with the supported 'run' action.
     @isTest
-    private static void testRunActionReturnsBatchJobId()
-    {
+    private static void testRunActionReturnsBatchJobId() {
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Test.startTest();
         Object result = batchInstance.call('run', null);
@@ -226,8 +218,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers Callable.call() null-response branch for an unrecognised action.
     @isTest
-    private static void testUnknownActionReturnsNull()
-    {
+    private static void testUnknownActionReturnsNull() {
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Object result = batchInstance.call('unknown_action', null);
         System.Assert.isNull(result, 'call() with an unrecognised action should return null');
@@ -235,8 +226,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers IJobRunnable.run() which enqueues the batch and returns a job ID.
     @isTest
-    private static void testRunReturnsBatchJobId()
-    {
+    private static void testRunReturnsBatchJobId() {
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Test.startTest();
         Id batchJobId = batchInstance.run();
@@ -246,8 +236,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when the account team map is null — should default to the current user.
     @isTest
-    private static void testOwnerIdWithNullMapReturnsUser()
-    {
+    private static void testOwnerIdWithNullMapReturnsUser() {
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Id result = batchInstance.getCaseOwnerId(null, null);
         System.Assert.areEqual(
@@ -259,8 +248,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when both HR Specialist and Business Team roles are present and NSP_Primary__c is true — expects HR Specialist owner.
     @isTest
-    private static void testOwnerIdBothRolesPrimaryTrue()
-    {
+    private static void testOwnerIdBothRolesPrimaryTrue() {
         List<User> alternateUsers = [
             SELECT Id
             FROM User
@@ -291,8 +279,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when both HR Specialist and Business Team roles are present and NSP_Primary__c is false — expects Business Team owner.
     @isTest
-    private static void testOwnerIdBothRolesPrimaryFalse()
-    {
+    private static void testOwnerIdBothRolesPrimaryFalse() {
         List<User> alternateUsers = [
             SELECT Id
             FROM User
@@ -323,8 +310,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when only HR Specialist is present in the map.
     @isTest
-    private static void testOwnerIdWithOnlyHRSpecialist()
-    {
+    private static void testOwnerIdWithOnlyHRSpecialist() {
         Id hrUserId = UserInfo.getUserId();
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Map<String, Id> userMap = new Map<String, Id>{
@@ -342,8 +328,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when only Business Team role is present in the map.
     @isTest
-    private static void testOwnerIdWithOnlyBusinessTeam()
-    {
+    private static void testOwnerIdWithOnlyBusinessTeam() {
         Id btUserId = UserInfo.getUserId();
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Map<String, Id> userMap = new Map<String, Id>{
@@ -361,8 +346,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers getCaseOwnerId when only Manager HR Services role is present in the map.
     @isTest
-    private static void testOwnerIdWithOnlyManagerHRRole()
-    {
+    private static void testOwnerIdWithOnlyManagerHRRole() {
         Id mhrUserId = UserInfo.getUserId();
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         Map<String, Id> userMap = new Map<String, Id>{
@@ -380,8 +364,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() branch where both HR Specialist (NSP_Primary__c=true) and Business Team AIMS teams exist — case should be owned by HR Specialist.
     @isTest
-    private static void testBothAimsPrimaryTrueAssignsHR()
-    {
+    private static void testBothAimsPrimaryTrueAssignsHR() {
         List<Account> accounts = [SELECT Id FROM Account WITH USER_MODE LIMIT 1];
         List<User> hrUsers = [SELECT Id FROM User WHERE Alias = 'uDelet' WITH USER_MODE LIMIT 1];
 
@@ -408,8 +391,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() branch where HR Specialist (NSP_Primary__c=false) and Business Team AIMS teams exist — case should be owned by Business Team.
     @isTest
-    private static void testBothAimsPrimaryFalseAssignsBT()
-    {
+    private static void testBothAimsPrimaryFalseAssignsBT() {
         List<Account> accounts = [SELECT Id FROM Account WITH USER_MODE LIMIT 1];
         List<User> hrUsers = [SELECT Id FROM User WHERE Alias = 'uDelet' WITH USER_MODE LIMIT 1];
 
@@ -436,8 +418,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() HR-Specialist-only AIMS branch by removing Business Team and Manager HR AIMS teams.
     @isTest
-    private static void testOnlyHRAimsTeamOwnsCase()
-    {
+    private static void testOnlyHRAimsTeamOwnsCase() {
         delete [SELECT Id FROM NSP_Account_Team__c WHERE NSP_Integrated_With__c = 'AIMS' AND NSP_Role__c = :NSP_AssetBatchTest.BUS_TEAM_HRSP_CL WITH USER_MODE];
         delete [SELECT Id FROM NSP_Account_Team__c WHERE NSP_Integrated_With__c = 'AIMS' AND NSP_Role__c = :NSP_AssetBatchTest.MANAGER_HR_SERVICES WITH USER_MODE];
 
@@ -466,8 +447,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() Manager HR-only AIMS branch by removing Business Team and HR AIMS teams.
     @isTest
-    private static void testOnlyManagerHRAimsTeamOwnsCase()
-    {
+    private static void testOnlyManagerHRAimsTeamOwnsCase() {
         delete [SELECT Id FROM NSP_Account_Team__c WHERE NSP_Integrated_With__c = 'AIMS' AND NSP_Role__c = :NSP_AssetBatchTest.BUS_TEAM_HRSP_CL WITH USER_MODE];
         delete [SELECT Id FROM NSP_Account_Team__c WHERE NSP_Integrated_With__c = 'AIMS' AND NSP_Role__c = :NSP_AssetBatchTest.HR_SPECIALIST WITH USER_MODE];
 
@@ -486,8 +466,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() null-map branch (no AIMS teams at all) — case defaults to current user.
     @isTest
-    private static void testNoAimsTeamsDefaultsOwnerToUser()
-    {
+    private static void testNoAimsTeamsDefaultsOwnerToUser() {
         delete [SELECT Id FROM NSP_Account_Team__c WHERE NSP_Integrated_With__c = 'AIMS' WITH USER_MODE];
 
         Test.startTest();
@@ -505,8 +484,7 @@ private class NSP_AssetBatchTest
 
     // @description Covers the execute() empty-scope early-exit branch — no Cases should be created when scope is empty.
     @isTest
-    private static void testEmptyScopeCreatesNoCases()
-    {
+    private static void testEmptyScopeCreatesNoCases() {
         NSP_AssetBatch batchInstance = new NSP_AssetBatch();
         batchInstance.execute(null, new List<SObject>());
         System.Assert.areEqual(0, [SELECT count() FROM Case WITH USER_MODE], 'No cases should be created when scope is empty');
@@ -514,14 +492,12 @@ private class NSP_AssetBatchTest
 
     // @description Bulk test: verifies that the batch correctly processes 200+ expired biometric assets and creates a Case per asset.
     @isTest
-    private static void testTwoHundredAssetsCreatesCases()
-    {
+    private static void testTwoHundredAssetsCreatesCases() {
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         List<Account> accounts = [SELECT Id FROM Account WITH USER_MODE LIMIT 1];
 
         List<Asset> bulkAssets = new List<Asset>();
-        for (Integer assetIndex = 0; assetIndex < 200; assetIndex++)
-        {
+        for (Integer assetIndex = 0; assetIndex < 200; assetIndex++) {
             bulkAssets.add(new Asset(
                 Name = 'Bulk Biometric Asset ' + assetIndex,
                 AccountId = accounts[0].Id,
@@ -544,12 +520,10 @@ private class NSP_AssetBatchTest
 
     // @description Security test: verifies getCaseOwnerId returns the running user ID when called as a standard (non-admin) user with a null map.
     @isTest
-    private static void testOwnerIdAsStandardUserReturns()
-    {
+    private static void testOwnerIdAsStandardUserReturns() {
         List<User> hrUsers = [SELECT Id FROM User WHERE Alias = 'uDelet' WITH USER_MODE LIMIT 1];
 
-        System.runAs(hrUsers[0])
-        {
+        System.runAs(hrUsers[0]) {
             NSP_AssetBatch batchInstance = new NSP_AssetBatch();
             Id result = batchInstance.getCaseOwnerId(null, null);
             System.Assert.areEqual(
@@ -561,3 +535,4 @@ private class NSP_AssetBatchTest
     }
 
 }
+//
