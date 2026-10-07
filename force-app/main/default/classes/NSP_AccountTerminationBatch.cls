@@ -224,6 +224,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     //method to scan for any open Assets on Account
     private Boolean scanAssets( List<Asset> assets ) {
+        //terminate if all assets are terminated/backedout
         Boolean allAssetsTerminated = true;
         if ( ( assets != null ) && !assets.isEmpty() ) {
             for ( Asset asobj : assets ) {
@@ -232,10 +233,14 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     || ( ( asobj.Status != NSP_ServiceConstants.BACKOUT ) && ( asobj.Status != NSP_ServiceConstants.TERMINATED ) )
                     )
                 {
+                    //do not terminate if open asset exists
                     allAssetsTerminated = false;
                     break;
                 }
             }
+        } else {
+            //do not terminate if asset count is 0
+            allAssetsTerminated = false;
         }
         return allAssetsTerminated;
     }
@@ -299,7 +304,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         if ( ( oppList != null ) && !oppList.isEmpty() ) {
             for ( Opportunity opp : oppList ) {
                 if ( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
-                    || ( opp.Stagename != 'Closed Lost - Outgoing' )
+                    && ( opp.Stagename != 'Closed Lost - Outgoing' )
                     )
                 {
                     allOppClosedLost = false;
