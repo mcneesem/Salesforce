@@ -327,31 +327,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_AccountRiskAssessmentLevel_Calc_Text__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_At_Risk_Actual__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Calc_Text__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Calc__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_At_Risk_Level_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Account_DBA_Text__c</field>
         <readable>true</readable>
@@ -399,16 +374,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Account_Owners_Profile__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_Risk_Assessment_Level_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Account_Risk_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -474,11 +439,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.NSP_Agreement_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Anticipated_Date_of_Termination__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1304,11 +1264,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Renewal_Probability__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_Risk_Assessment_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

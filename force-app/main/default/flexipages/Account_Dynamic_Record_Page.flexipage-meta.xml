@@ -5786,16 +5786,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Anticipated_Date_of_Termination__c</fieldItem>
-                <identifier>RecordNSP_Anticipated_Date_of_Termination_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Health__c</fieldItem>
                 <identifier>RecordNSP_Account_Health_cField</identifier>
             </fieldInstance>
@@ -6616,86 +6606,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_DM_Status__c</fieldItem>
                 <identifier>RecordNSP_DM_Status_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_At_Risk_Actual__c</fieldItem>
-                <identifier>RecordNSP_Account_At_Risk_Actual_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_At_Risk_Level_Calc__c</fieldItem>
-                <identifier>RecordNSP_Account_At_Risk_Level_Calc_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_At_Risk_Level_Calc_Text__c</fieldItem>
-                <identifier>RecordNSP_Account_At_Risk_Level_Calc_Text_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_At_Risk_Level_Image__c</fieldItem>
-                <identifier>RecordNSP_Account_At_Risk_Level_Image_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Risk_Assessment_Level_Image__c</fieldItem>
-                <identifier>RecordNSP_Account_Risk_Assessment_Level_Image_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AccountRiskAssessmentLevel_Calc_Text__c</fieldItem>
-                <identifier>RecordNSP_AccountRiskAssessmentLevel_Calc_Text_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Risk_Level__c</fieldItem>
-                <identifier>RecordNSP_Account_Risk_Level_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Risk_Assessment_Level__c</fieldItem>
-                <identifier>RecordNSP_Risk_Assessment_Level_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
