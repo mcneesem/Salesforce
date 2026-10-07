@@ -3647,7 +3647,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|EQUALS|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;O&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -3680,6 +3680,9 @@
                             <value>Leave_Number__c</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Leave_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Leave_Schedule__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -3687,6 +3690,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Anticipated_Return_To_Work_Date__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Processed_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -3724,7 +3730,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|NOT_EQUAL|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;C&quot;,&quot;Y&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -3755,6 +3761,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Number__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Leave_Status__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Schedule__c</value>
