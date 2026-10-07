@@ -53,7 +53,10 @@ public without sharing class NSP_AutomaticProjectBatchClass implements ISelfSche
     //
 
     public Id run() {
-        return Database.executeBatch( new NSP_AutomaticProjectBatchClass() , 1 );
+        return Database.executeBatch(
+            new NSP_AutomaticProjectBatchClass() ,
+            1
+        );
     }
 
     //
