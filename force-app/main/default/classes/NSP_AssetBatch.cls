@@ -5,7 +5,11 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     public final String HRSPECIALISTROLE = 'HR Specialist';
     public final String BTHRSPECIALISTROLE = 'Bus. Team-HRSp/CL';
     public final String MHRSPECIALISTROLE = 'Manager, HR Services';
-    public final List<String> lAccountTeamRoles = new List<String>{ HRSPECIALISTROLE , BTHRSPECIALISTROLE , MHRSPECIALISTROLE };
+    public final List<String> lAccountTeamRoles = new List<String>{
+        HRSPECIALISTROLE ,
+        BTHRSPECIALISTROLE ,
+        MHRSPECIALISTROLE
+    };
     public final String VALIDATEBIOMETRICSUBJECT = 'Validate Biometric Consent form removed from OEE; Discuss removal of handbook policy w/ client';
     public final String HRSERVICECATEGORY = 'HR Services';
     public final String HRINFRASTRUCTURESUBCATEGORY = 'HR Infrastructure';
@@ -16,11 +20,14 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     //
     // argument-free constructor is required to be "runnable"...
     //
-    public NSP_AssetBatch() {}
+
+    public NSP_AssetBatch() {
+    }
 
     //
     // ISelfSchedulable
     //
+
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -36,6 +43,7 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     //
     // Schedulable
     //
+
     public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
@@ -43,6 +51,7 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     //
     // Callable
     //
+
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -54,8 +63,12 @@ public with sharing class NSP_AssetBatch implements ISelfSchedulable , Schedulab
     //
     // IJobRunnable
     //
+
     public Id run() {
-        return Database.executeBatch( new NSP_AssetBatch() , 200 );
+        return Database.executeBatch(
+            new NSP_AssetBatch() ,
+            200
+        );
     }
 
     //
