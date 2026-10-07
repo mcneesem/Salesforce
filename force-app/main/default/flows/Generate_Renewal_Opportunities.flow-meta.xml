@@ -120,24 +120,26 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Show_Client_Error</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Client_Rows</assignToReference>
             <operator>RemoveAll</operator>
             <value>
                 <elementReference>Client_Rows</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Looping_Client_Numbers</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Error_UX</name>
+        <label>Reset Error UX</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>Invalid_Clients_Display</assignToReference>
+            <assignToReference>Show_Client_Error</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue></stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -147,8 +149,15 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Invalid_Clients_Display</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Looping_Client_Numbers</targetReference>
+            <targetReference>Is_Run_All_Clients</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -391,6 +400,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Are_Specific_Clients_Selected</name>
+        <label>Are Specific Clients Selected?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_Client_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Client Selected</defaultConnectorLabel>
+        <rules>
+            <name>Specific_Clients_Selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Client_Numbers_Repeater.AllItems</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Client_Collections</targetReference>
+            </connector>
+            <label>Specific Clients Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Batch_Launch_Result</name>
         <label>Batch Launch Result</label>
         <locationX>0</locationX>
@@ -453,9 +487,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Set_No_Client_Error</targetReference>
+            <targetReference>Are_Specific_Clients_Selected</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Client Selected</defaultConnectorLabel>
+        <defaultConnectorLabel>Specific Clients</defaultConnectorLabel>
         <rules>
             <name>All_Clients</name>
             <conditionLogic>and</conditionLogic>
@@ -470,28 +504,6 @@
                 <targetReference>Launch_Renewal_Batch</targetReference>
             </connector>
             <label>All Clients</label>
-        </rules>
-        <rules>
-            <name>Specific_Clients</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Run_All_Clients</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Client_Numbers_Repeater.AllItems</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Reset_Client_Collections</targetReference>
-            </connector>
-            <label>Specific Clients</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -698,7 +710,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Is_Run_All_Clients</targetReference>
+            <targetReference>Reset_Error_UX</targetReference>
         </connector>
         <fields>
             <name>Run_All_Clients</name>

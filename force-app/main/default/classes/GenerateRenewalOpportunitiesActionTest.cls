@@ -85,13 +85,13 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testLaunchRenewalBatchWithoutClient() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 1;
         input.yearValue = 2026;
         input.isRunAllClients = true;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
 
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke(inputs);
@@ -100,13 +100,13 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testInvalidRequest() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 12;
         input.yearValue = 2026;
         input.isRunAllClients = false;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke(inputs);
         Test.stopTest();
@@ -114,14 +114,14 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testLaunchRenewalBatchWithMultipleValidClients() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 12;
         input.yearValue = 2026;
         input.clientNumbers = new List<String>{ '1234500', '1234600' };
         input.isRunAllClients = false;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke( inputs );
         Test.stopTest();
@@ -129,14 +129,14 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testLaunchRenewalBatchWithInvalidClient() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 12;
         input.yearValue = 2026;
         input.clientNumbers = new List<String>{ '1234500', '9999999' };
         input.isRunAllClients = false;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke( inputs );
         Test.stopTest();
