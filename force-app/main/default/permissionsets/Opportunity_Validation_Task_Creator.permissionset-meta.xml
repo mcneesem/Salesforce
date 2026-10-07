@@ -2,9 +2,9 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Opportunity_Task_Validation_Bypass</name>
+        <name>Opportunity_Validation_Task_Creator</name>
     </customPermissions>
     <description>Grants the Custom Permission to control Opportunity Task Validation based on creator.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Opportunity Task Validation Bypass</label>
+    <label>Opportunity Validation Task Creator</label>
 </PermissionSet>

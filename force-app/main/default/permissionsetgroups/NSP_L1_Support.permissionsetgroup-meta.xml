@@ -23,7 +23,7 @@
     <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Opportunity_Create_Rewards</permissionSets>
     <permissionSets>Opportunity_Lock_Enrollment_Fee_Read_Access</permissionSets>
-    <permissionSets>Opportunity_Task_Validation_Bypass</permissionSets>
+    <permissionSets>Opportunity_Validation_Task_Creator</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
