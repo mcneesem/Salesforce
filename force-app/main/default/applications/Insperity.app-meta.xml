@@ -328,24 +328,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>System Admin Lite</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>System Admin Lite</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Payroll_Record_Dynamic_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
@@ -1370,69 +1352,6 @@
         <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
         <type>Flexipage</type>
         <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>BPS Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>BPS Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>Contact Center</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>Contact Center</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>Retirement Services</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
