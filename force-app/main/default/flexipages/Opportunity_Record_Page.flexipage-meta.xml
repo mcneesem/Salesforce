@@ -11598,6 +11598,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>nsp_visualIndicator</componentName>
+                <identifier>c_nsp_visualIndicator</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
                     <valueList>
