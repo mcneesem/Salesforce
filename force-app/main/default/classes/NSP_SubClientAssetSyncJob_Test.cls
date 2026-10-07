@@ -3,14 +3,21 @@ private class NSP_SubClientAssetSyncJob_Test {
 
     @testSetup
     private static void createTestData() {
-        SubClientAssetStateSyncJobSettings__c settings = SubClientAssetStateSyncJobSettings__c.getOrgDefaults();
-        settings.IsEnabled__c = True;
-        settings.BatchSize__c = 200;
-        settings.SoqlAddressLimit__c = 20000;
-        settings.SoqlContactLimit__c = 20000;
-        settings.SoqlAddressHistoryLimit__c = 20000;
-        settings.SoqlContactHistoryLimit__c = 20000;
-        upsert settings;
+        SubClientAssetSyncJobSettings__c settings1 = SubClientAssetSyncJobSettings__c.getOrgDefaults();
+        settings1.IsEnabled__c = true;
+        settings1.BatchSize__c = 200;
+        settings1.SoqlAssetLimit__c = 20000;
+        settings1.SoqlSubClientLimit__c = 20000;
+        upsert settings1;
+
+        SubClientAssetStateSyncJobSettings__c settings2 = SubClientAssetStateSyncJobSettings__c.getOrgDefaults();
+        settings2.IsEnabled__c = true;
+        settings2.BatchSize__c = 200;
+        settings2.SoqlAddressLimit__c = 20000;
+        settings2.SoqlContactLimit__c = 20000;
+        settings2.SoqlAddressHistoryLimit__c = 20000;
+        settings2.SoqlContactHistoryLimit__c = 20000;
+        upsert settings2;
 
         //Account creation
         Account acc = new Account();

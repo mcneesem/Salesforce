@@ -1,5 +1,5 @@
 public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
-    // test w/ NSP_SubClientAssetSyncJob_Test (94%)
+    // test w/ NSP_SubClientAssetSyncJob_Test (92%)
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -51,7 +51,14 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
     //
 
     public Id run() {
-        return Database.executeBatch( new NSP_SubClientAssetSyncJob() , 200 );
+        Id response = null;
+        if ( NSP_SubClientAssetSyncJob.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_SubClientAssetSyncJob() ,
+                NSP_SubClientAssetSyncJob.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -92,26 +99,36 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
 
     // Batch Execute: Process each chunk
     public void execute( Database.BatchableContext bc , List<NSP_Sub_Client_Contact__c> scope ) {
-        Set<Id> subClientIds = new Set<Id>();
-        for ( NSP_Sub_Client_Contact__c contactRec : scope ) {
-            if ( contactRec.NSP_Sub_Client__c != null ) {
-                subClientIds.add(contactRec.NSP_Sub_Client__c);
+        try {
+            if ( NSP_SubClientAssetSyncJob.isEnabled ) {
+                Set<Id> subClientIds = new Set<Id>();
+                for ( NSP_Sub_Client_Contact__c contactRec : scope ) {
+                    if ( contactRec.NSP_Sub_Client__c != null ) {
+                        subClientIds.add(contactRec.NSP_Sub_Client__c);
+                    }
+                }
+                if ( subClientIds != null && !subClientIds.isEmpty() ) {
+                    List<NSP_Sub_Client__c> subClients = NSP_SubClientAssetSyncJob.getSubClientRecords( subClientIds );
+                    Map<Id,NSP_Sub_Client__c> subClientMap = NSP_SubClientAssetSyncJob.filterSubClients( subClients );
+                    Set<Id> assetIds = NSP_SubClientAssetSyncJob.getAssetIds( subClients , subClientMap );
+                    List<Asset> assetRecords = NSP_SubClientAssetSyncJob.getAssetRecords( assetIds );
+                    List<Asset> updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords , subClientMap );
+                    if ( ( subClientMap != null ) && !subClientMap.isEmpty() ) {
+                        NSP_SubClientAssetSyncJob.updateRecords( subClientMap.values() , updateAssetRecords );
+                    }
+                }
             }
-        }
-        if ( subClientIds != null && !subClientIds.isEmpty() ) {
-            List<NSP_Sub_Client__c> subClients = NSP_SubClientAssetSyncJob.getSubClientRecords( subClientIds );
-            Map<Id,NSP_Sub_Client__c> subClientMap = NSP_SubClientAssetSyncJob.filterSubClients( subClients );
-            Set<Id> assetIds = NSP_SubClientAssetSyncJob.getAssetIds( subClients , subClientMap );
-            List<Asset> assetRecords = NSP_SubClientAssetSyncJob.getAssetRecords( assetIds );
-            List<Asset> updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords , subClientMap );
-            if ( ( subClientMap != null ) && !subClientMap.isEmpty() ) {
-                NSP_SubClientAssetSyncJob.updateRecords( subClientMap.values() , updateAssetRecords );
-            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SubClientAssetSyncJob.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 
-    // Batch Finish: Optional cleanup
     public void finish( Database.BatchableContext bc ) {
+        // intentionally blank...
     }
 
     // ---------------- Helper Methods ----------------
@@ -162,9 +179,9 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
                     )
                 FROM NSP_Sub_Client__c
                 WHERE ( Id IN :subClientIds )
+                LIMIT :NSP_SubClientAssetSyncJob.soqlSubClientLimit
             ];
         }
-
         return returnSubClientRecords;
     }
 
@@ -241,6 +258,7 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
                     )
                 FROM Asset
                 WHERE ( Id IN :assetIds )
+                LIMIT :NSP_SubClientAssetSyncJob.soqlAssetLimit
             ];
         }
         return returnAssetList;
@@ -295,6 +313,103 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
             }
         }
         return returnValue;
+    }
+
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionlly static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static SubClientAssetSyncJobSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = SubClientAssetSyncJobSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    // is the Schedulable enabled for execution???
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( NSP_SubClientAssetSyncJob.settings != null ) {
+                    local = NSP_SubClientAssetSyncJob.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_SubClientAssetSyncJob.settings != null )
+                    && ( NSP_SubClientAssetSyncJob.settings.BatchSize__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetSyncJob.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
+        }
+        private set;
+    }
+
+    private static Integer soqlAssetLimit {
+        private get {
+            if ( soqlAssetLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetSyncJob.settings != null )
+                    && ( NSP_SubClientAssetSyncJob.settings.SoqlAssetLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetSyncJob.settings.SoqlAssetLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlAssetLimit = local;
+            }
+            return soqlAssetLimit;
+        }
+        private set;
+    }
+
+    private static Integer soqlSubClientLimit {
+        private get {
+            if ( soqlSubClientLimit == null ) {
+                Integer local = 25000;
+                if ( ( NSP_SubClientAssetSyncJob.settings != null )
+                    && ( NSP_SubClientAssetSyncJob.settings.SoqlSubClientLimit__c != null )
+                    )
+                {
+                    local = NSP_SubClientAssetSyncJob.settings.SoqlSubClientLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlSubClientLimit = local;
+            }
+            return soqlSubClientLimit;
+        }
+        private set;
     }
 
 }
