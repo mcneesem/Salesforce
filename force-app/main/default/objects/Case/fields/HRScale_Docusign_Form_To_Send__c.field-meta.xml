@@ -28,14 +28,14 @@
                 <label>Cell Phone Stipend/Reimbursement Form</label>
             </value>
             <value>
-                <fullName>Client Change of Status Form</fullName>
-                <default>false</default>
-                <label>Client Change of Status Form</label>
-            </value>
-            <value>
                 <fullName>Client Direct Debit Authorization</fullName>
                 <default>false</default>
                 <label>Client Direct Debit Authorization</label>
+            </value>
+            <value>
+                <fullName>Company Data Changes Request Form</fullName>
+                <default>false</default>
+                <label>Company Data Changes Request Form</label>
             </value>
             <value>
                 <fullName>Compensation Deduction Authorization for Union Dues</fullName>
