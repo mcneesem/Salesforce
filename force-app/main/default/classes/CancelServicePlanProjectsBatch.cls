@@ -90,9 +90,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // @param bc BatchableContext supplied by the platform.
     // @return QueryLocator over the matching Asset records.
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        Database.queryLocator queryLocator = null;
-        Date lagDate = System.today().addDays( -CancelServicePlanProjectsBatch.servicePlanGracePeriod );
-        Date bufferDate = lagDate.addDays( -CancelServicePlanProjectsBatch.bufferPeriod );
+        Database.queryLocator queryLocator = null;        
         Id woRecordTypeId = CancelServicePlanProjectsBatch.WO_ASSET_RECORDTYPE;
         String terminatedStatus = NSP_ServiceConstants.TERMINATED;
         queryLocator =  Database.getQueryLocator( [
@@ -102,8 +100,8 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
                 AND RecordTypeId = :woRecordTypeId
                 AND NSP_Account_Status__c = :terminatedStatus
                 AND NSP_Account_Status_Date__c != null
-                AND NSP_Account_Status_Date__c > :bufferDate
-                AND NSP_Account_Status_Date__c <= :lagDate
+                AND NSP_Account_Status_Date__c > :CancelServicePlanProjectsBatch.statusDaysMaximumDate
+                AND NSP_Account_Status_Date__c <= :CancelServicePlanProjectsBatch.statusDaysMinimumDate
         ] );
         return queryLocator;
     }
@@ -231,59 +229,70 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
         private set;
     }
 
-    // @description Grace period in days after NSP_Account_Status_Date__c before projects are
-    // cancelled. Sourced from ServicePlanGracePeriod__c, defaulted to 14, clamped to 1-365.
-    private static Integer servicePlanGracePeriod {
+    // Grace Period translates statusDaysMinimum into a specific Date value...
+    private static Date statusDaysMinimumDate {
         private get {
-            if ( servicePlanGracePeriod == null ) {
+            if ( statusDaysMinimumDate == null ) {
+               statusDaysMinimumDate = System.today().addDays( -1 * CancelServicePlanProjectsBatch.statusDaysMinimum );              
+            }
+            return statusDaysMinimumDate;
+        }
+        private set;
+    }
+
+    // Grace Peiord allow Rep to Complete Pending Work on the Project before its Cancel
+    private static Integer statusDaysMinimum {
+        private get {
+            if ( statusDaysMinimum == null ) {
                 Integer local = 14;
                 if ( ( CancelServicePlanProjectsBatch.settings != null )
-                    && ( CancelServicePlanProjectsBatch.settings.ServicePlanGracePeriod__c != null )
+                    && ( CancelServicePlanProjectsBatch.settings.StatusDaysMinimum__c != null )
                     )
                 {
-                    local = CancelServicePlanProjectsBatch.settings.ServicePlanGracePeriod__c.intValue();
+                    local = CancelServicePlanProjectsBatch.settings.StatusDaysMinimum__c.intValue();
                 }
-                // lag must be at least 1 day...
+                // limit must be non-negative...
                 if ( local < 0 ) {
                     local = 0;
                 }
-                // lag capped at 1 year to prevent runaway scope...
-                if ( local > 365 ) {
-                    local = 365;
-                }
-                servicePlanGracePeriod = local;
+                statusDaysMinimum = local;
             }
-            return servicePlanGracePeriod;
+            return statusDaysMinimum;
         }
         private set;
     }
 
-    // @description Buffer period in days to eliminiate Assets which are termed more than Grace Period.
-    // defaulted to 5 days.
-    private static Integer bufferPeriod {
+// translates statusDaysMaximum into a specific Date value...
+    private static Date statusDaysMaximumDate {
         private get {
-            if ( bufferPeriod == null ) {
-                Integer local = 5;
-                if ( ( CancelServicePlanProjectsBatch.settings != null )
-                    && ( CancelServicePlanProjectsBatch.settings.BufferPeriod__c != null )
-                    )
-                {
-                    local = CancelServicePlanProjectsBatch.settings.BufferPeriod__c.intValue();
-                }
-                // lag must be at least 1 day...
-                if ( local < 0 ) {
-                    local = 0;
-                }
-                // lag capped at 1 year to prevent runaway scope...
-                if ( local > 365 ) {
-                    local = 365;
-                }
-                bufferPeriod = local;
+            if ( statusDaysMaximumDate == null ) {
+                statusDaysMaximumDate = System.today().addDays( -1 * CancelServicePlanProjectsBatch.statusDaysMaximum );
             }
-            return bufferPeriod;
+            return statusDaysMaximumDate;
         }
         private set;
     }
 
+    // how far back (in days) should be queried??? Avoid re-Scan all Termed Asset everytime once processed
+    private static Integer statusDaysMaximum {
+        private get {
+            if ( statusDaysMaximum == null ) {
+                Integer local = CancelServicePlanProjectsBatch.statusDaysMinimum;
+                if ( ( CancelServicePlanProjectsBatch.settings != null )
+                    && ( CancelServicePlanProjectsBatch.settings.StatusDaysMaximum__c != null )
+                    )
+                {
+                    local = CancelServicePlanProjectsBatch.settings.StatusDaysMaximum__c.intValue();
+                }
+                // limit must be greater than or equal to the minimum...
+                if ( local < CancelServicePlanProjectsBatch.statusDaysMinimum ) {
+                    local = CancelServicePlanProjectsBatch.statusDaysMinimum;
+                }
+                statusDaysMaximum = local;
+            }
+            return statusDaysMaximum;
+        }
+        private set;
+    }
 }
 //
