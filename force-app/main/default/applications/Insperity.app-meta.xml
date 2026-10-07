@@ -1346,15 +1346,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Termination_Form_Record_Page21</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Termination_Form__c</pageOrSobjectType>
