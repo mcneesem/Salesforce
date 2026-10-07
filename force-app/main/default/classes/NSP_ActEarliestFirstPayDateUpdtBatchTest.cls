@@ -1,6 +1,5 @@
 @isTest
-private class NSP_ActEarliestFirstPayDateUpdtBatchTest
-{
+private class NSP_ActEarliestFirstPayDateUpdtBatchTest {
 
     private static final String TEST_ACCOUNT_NAME = 'nsp_focus_item__c';
     private static final Id WO_ASSET_RECORD_TYPE_ID = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
