@@ -12,7 +12,7 @@ const HRSCALE_RECORD_TYPE = 'HRScale';
 export default class HrScaleReportWizard extends LightningElement {
     @api recordId;
 
-    @track recordObj = {
+    recordObj = {
         RecordTypeId: null,
         NSP_ClientName__c: { displayValue: null, value: null }
     };
