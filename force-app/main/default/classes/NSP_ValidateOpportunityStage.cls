@@ -1097,7 +1097,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Map<Id,User> permittedTaskValidationUserMap {
         private get {
             if ( permittedTaskValidationUserMap == null ) {
-                permittedTaskValidationUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Task_Validation_Bypass' );
+                permittedTaskValidationUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Validation_Task_Creator' );
             }
             return permittedTaskValidationUserMap;
         }
