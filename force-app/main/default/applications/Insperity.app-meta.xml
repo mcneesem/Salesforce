@@ -1140,15 +1140,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Report_Request_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_ReportRequest__c</pageOrSobjectType>
-        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>NSP_ITA_CQA_Case_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
