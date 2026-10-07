@@ -1113,7 +1113,7 @@
             <name>MissingCase</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(247, 4, 28); font-size: 16px;&quot;&gt;Case Not Found!&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-                    </fields>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>true</showHeader>
     </screens>
