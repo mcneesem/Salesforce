@@ -75,10 +75,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Is_WO_to_WX_transition__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Signed_Delivery_Order__c</field>
             </layoutItems>
             <layoutItems>
@@ -95,14 +91,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_REMOVE_Special_Provisions__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Post_to_R_Drive__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_EEs__c</field>
             </layoutItems>
             <layoutItems>
@@ -112,22 +100,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Count_as_Sale__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Input_CL__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Enter_C_C__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Log_R_R_in_GENERAL_CONTRACT_screen__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Log_R_R_in_CLIENT_MAINTENANCE_screen__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -148,10 +120,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Account_Billing_State_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Book_in_SALES_LOG_EDIT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

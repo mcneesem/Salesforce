@@ -135,7 +135,7 @@
             <assignToReference>recordChecklist.NSP_Pay_Frequency__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_PayFrequency_STP_WO</elementReference>
+                <elementReference>PayFrequency_MMC</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1020,22 +1020,6 @@
             <targetReference>Create_Checklist</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Yes</name>
-        <choiceText>Yes</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Yes</stringValue>
-        </value>
-    </choices>
     <decisions>
         <name>Checklist_Routing</name>
         <label>Checklist Routing</label>
@@ -1147,46 +1131,6 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>addendumsRequiredBeforeDownloadPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Addendums_required_before_download__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>addendumsRequiredBeforeOTPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Addendums_required_before_OT__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>additionalObjectivesPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Doyouhaveanyadditional_objectives__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>additionalPayrollCyclesPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Additional_Payroll_Cycles__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>anyShiftDifferentialsPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_any_shift_differentials__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>areAllEmployeesPaidUnderOneFEINPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -1200,14 +1144,6 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Are_you_a_Government_contractor__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>areYouLookingForDCAAReportingPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Are_you_looking_for_DCAA_reporting__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1235,91 +1171,11 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>completeClosingDocsTaskInSFPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_CompleteCLOSINGDOCSTASKin_Salesforce__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>demoCompletedPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Demo_completed__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>differentRatesOfPayPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Diffratesofpaybasedonjob_function__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doesClientNeedAlertsPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Does_the_client_need_alerts__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doesTheEmployeeDoASelfEvalPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Doestheemployeedoaself_evaluation__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>downPaymentPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Down_Payment__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouHaveAnyUnionEmployeesPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_any_Union_employees__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouHaveAPointsPolicyPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_a_points_policy__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouHaveASpecificGoalPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_a_specific_goal__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouHaveATemplatePicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_a_template__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouHaveDoubleTimePicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_have_double_time__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1331,83 +1187,11 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>doYouPayCurrentPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Do_you_pay_current__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>doYouWantToAutomateUnionRulesPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_want_us_to_automate_any_union_rule__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>electronicTimesheetsPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Electronic_Time_Sheets__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>employeeCount50AtYearEndPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Isemployeecount50_at_end_of_the_year__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>employeesToViewScheduleOnlinePicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_employeestoviewtheirschedule_online__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>employeeTimeOffReqElectronicallyPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Emps_time_off_request_electronically__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>everBeenInBankruptcyPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_BankruptcyReceivershipCreditapprovl__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>existingProductPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Existing_Product__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>govContractorPrevailingWagePicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Govt_Contractorhave_prevailing_wage__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>governmentContractApprovalPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Govt_Contract_approval_granted__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1427,75 +1211,11 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>howDoYouWantSystemToCalcOTPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_How_doyouwantsystemto_calc_overtime__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>howManyPeopleReviewedPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Howmanypeoplewillreviewed_in_total__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>howOftenWillPerformReviewsMultiPicklist</name>
-        <dataType>Multipicklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Howoftenperformancereviews_be_done__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>hushProtocolPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Hush_Protocol__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>ifAnnuallyAnnualReviewDateBasedPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Ifannuallyannualreviewdatebased__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>isThisARushOrderPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Is_this_a_rush_order__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>largeEmployerGrowingPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_large_empgrowing_50_emp_by_year_end__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>minimumMetPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Minimum_met__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>mobileWebClockPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Mobile_Web_Clock__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1515,14 +1235,6 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>otherEmployeesPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Other_employees__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>payCurrentOrInArrearsPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -1536,14 +1248,6 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Pay_Frequency__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>qualifiedLargeEmployerChecklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Are_you_a_qualified_large_employer__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1563,35 +1267,11 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>sendEmailToSalesPRPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Send_email_to_Sales_PR_wpayment_info__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>statusPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Status__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>webClockPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Web_Clock__c</picklistField>
-        <picklistObject>NSP_Checklist__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>weightedAverageOTPicklist</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Weighted_Average_Overtime__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -1636,21 +1316,9 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <name>increaseNumberOfBookingChecklist</name>
-        <dataType>Number</dataType>
-        <expression>{!recordOpportunity.Number_of_Booking_Checklists__c} + 1</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
         <name>increaseNumberOfMMCChecklist</name>
         <dataType>Number</dataType>
         <expression>{!recordOpportunity.Number_of_MMC_Checklists__c} + 1</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <name>increaseNumberOfSEQChecklist</name>
-        <dataType>Number</dataType>
-        <expression>{!recordOpportunity.Number_of_SEQ_Checklists__c} + 1</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
@@ -2210,7 +1878,7 @@
                     </styleProperties>
                 </fields>
                 <fields>
-                    <name>Copy_1_of_PayFrequency_STP_WO</name>
+                    <name>PayFrequency_MMC</name>
                     <choiceReferences>payFrequencyPicklist</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Pay Frequency</fieldText>
