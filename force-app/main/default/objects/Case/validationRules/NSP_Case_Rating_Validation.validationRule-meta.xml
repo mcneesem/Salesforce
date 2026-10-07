@@ -8,5 +8,5 @@ ISPICKVAL(Status, &apos;Closed&apos;),
 RecordType.DeveloperName != &apos;NSP_ITA_CQA&apos;, RecordType.DeveloperName != &apos;NSP_WX_IMPL&apos;,
 RecordType.DeveloperName != &apos;Dunning&apos;,
 ISBLANK(TEXT(NSP_Rating__c)))</errorConditionFormula>
-    <errorMessage>A Quick Rate value is required to close this case</errorMessage>
+    <errorMessage>Update Quick Rate in order to close the Case.</errorMessage>
 </ValidationRule>
