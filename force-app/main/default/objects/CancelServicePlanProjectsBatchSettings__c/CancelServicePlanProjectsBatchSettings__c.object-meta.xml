@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>Hierarchy</customSettingsType>
-    <description>Refer Batch - CancelServicePlanProjectsBatch</description>
+    <description>See Apex Class: CancelServicePlanProjectsBatch</description>
     <enableFeeds>false</enableFeeds>
     <label>CancelServicePlanProjectsBatchSettings</label>
     <visibility>Public</visibility>
