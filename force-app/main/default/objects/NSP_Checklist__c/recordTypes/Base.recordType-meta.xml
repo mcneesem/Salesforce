@@ -68,17 +68,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Addendums_required_before_OT__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Addendums_required_before_download__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -134,17 +123,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_BankruptcyReceivershipCreditapprovl__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Benefit_Classing__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -187,17 +165,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ClientusingBenefitAdministrationMod__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_CompleteCLOSINGDOCSTASKin_Salesforce__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -325,21 +292,6 @@
         </values>
         <values>
             <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Down_Payment__c</picklist>
-        <values>
-            <fullName>Cheque</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Card</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Wire</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -510,17 +462,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NSP_Minimum_met__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Mobile_Web_Clock__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -607,17 +548,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Reverse_Wire_Policy_Explained__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Send_email_to_Sales_PR_wpayment_info__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
