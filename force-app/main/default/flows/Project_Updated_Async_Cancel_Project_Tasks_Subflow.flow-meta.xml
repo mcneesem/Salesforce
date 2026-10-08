@@ -14,6 +14,10 @@
                 <stringValue>Get_Implementation_Profile</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Get_Project_Milestones</name>
@@ -27,6 +31,10 @@
                 <stringValue>Get_Project_Milestones</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Get_Project_Task</name>
@@ -40,6 +48,10 @@
                 <stringValue>Get_Project_Task</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Implementation_Profile_Update</name>
@@ -53,6 +65,9 @@
                 <stringValue>Implementation_Profile_Update</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Project_Milestone_Update</name>
@@ -66,6 +81,10 @@
                 <stringValue>Project_Milestone_Update</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Project_Task_Update</name>
@@ -79,6 +98,10 @@
                 <stringValue>Project_Task_Update</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Inactive_Profile</name>
@@ -343,12 +366,8 @@
             <label>Yes : Valid Projects</label>
         </rules>
     </decisions>
+    <description>ADO-623082 , Cancel Project Tasks and Milestones</description>
     <environments>Default</environments>
-    <formulas>
-        <name>CurrentDate</name>
-        <dataType>Date</dataType>
-        <expression>$Flow.CurrentDate</expression>
-    </formulas>
     <interviewLabel>Project - Updated - Async - Cancel Project Tasks Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project - Updated - Async - Cancel Project Tasks Subflow</label>
     <loops>
@@ -564,6 +583,32 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <description>Insperity Fault Handler Subflow</description>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Project_Updated_Async_Cancel_Project_Tasks_Subflow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
@@ -593,14 +638,6 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>projectList</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>pse__Proj__c</objectType>
     </variables>
     <variables>
         <name>TaskList</name>
