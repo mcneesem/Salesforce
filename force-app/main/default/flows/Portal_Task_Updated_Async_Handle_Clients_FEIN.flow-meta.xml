@@ -65,7 +65,7 @@
             <stringValue>LightningFlowBuilder</stringValue>
         </value>
     </processMetadataValues>
-    <processMetadataValues>sf project retrieve start -m Flow:Portal_Task_Updated_Async_Handle_Clients_FEIN --ignore-conflicts
+    <processMetadataValues>
         <name>CanvasMode</name>
         <value>
             <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
