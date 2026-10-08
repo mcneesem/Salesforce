@@ -2024,23 +2024,19 @@
     <picklistValues>
         <picklist>NSP_Engagement_Level__c</picklist>
         <values>
-            <fullName>Level 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 4</fullName>
+            <fullName>Key Account</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>No Active Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary - Key Account</fullName>
             <default>false</default>
         </values>
     </picklistValues>

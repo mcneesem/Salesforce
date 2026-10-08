@@ -269,6 +269,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Engagement_Level_Criteria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Engagement_Level_Exception__c</field>
             </layoutItems>
             <layoutItems>
