@@ -4,12 +4,14 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     //
     // argument-free constructor is required to be "runnable"...
     //
+
     public EntitySubscriptionRetentionJob() {
     }
 
     //
     // ISelfSchedulable
     //
+
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -25,6 +27,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     //
     // Schedulable
     //
+
     public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
@@ -32,6 +35,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     //
     // Callable
     //
+
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -43,7 +47,8 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     //
     // IJobRunnable
     //
-    public Id run(){
+
+    public Id run() {
         Id response = null;
         if ( EntitySubscriptionRetentionJob.isEnabled ) {
             response = Database.executeBatch(
@@ -57,6 +62,7 @@ public with sharing class EntitySubscriptionRetentionJob implements ISelfSchedul
     //
     // Batchable
     //
+
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         Set<Id> parentIds = new Set<Id>();
         Map<Id,ContentDocument> documentsMap = new Map<Id,ContentDocument>(

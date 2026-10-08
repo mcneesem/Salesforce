@@ -1,6 +1,9 @@
-// Batch Class to update Account's status to terminated if all assets are terminated and their termination date is in previous month
 public without sharing class NSP_AccountTerminationBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_AccountTerminationBatch_Test (86%)
+
+    //
+    // Batch Class to update Account's status to terminated if all assets are terminated and their termination date is in previous month
+    //
 
     private static final String OBJ_AST = 'Asset';
     private static final String OBJ_OPP = 'Opportunity';
@@ -9,9 +12,16 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         'NSP_CPQ_Asset'
     };
 
+    private String objectAPI = null;
+
+    public NSP_AccountTerminationBatch( String local ) {
+        this.objectAPI = local;
+    }
+
     //
     // argument-free constructor is required to be "runnable"...
     //
+
     public NSP_AccountTerminationBatch() {
         this.objectAPI = NSP_AccountTerminationBatch.OBJ_AST;
     }
@@ -19,6 +29,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     //
     // ISelfSchedulable
     //
+
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -34,6 +45,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     //
     // Schedulable
     //
+
     public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
@@ -41,6 +53,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     //
     // Callable
     //
+
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -52,6 +65,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     //
     // IJobRunnable
     //
+
     public Id run() {
         Id response = null;
         if ( NSP_AccountTerminationBatch.isEnabled ) {
@@ -66,13 +80,6 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
     //
     // Batchable
     //
-
-    private String objectAPI = null;
-
-    //constructor with objectAPI
-    public NSP_AccountTerminationBatch ( String objectAPI ) {
-        this.objectAPI = objectAPI;
-    }
 
     //fetch recently closed records where the Parent Account is still Open
     public Database.QueryLocator start( Database.BatchableContext bc ) {
@@ -125,14 +132,14 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     Database.SaveResult[] accountSaveResults = Database.update( accountsToUpdate , true );
                     NSP_ErrorLogHandler.logResults(
                         'NSP_AccountTerminationBatch' ,
-                        'execute:update:' + objectAPI ,
+                        'execute:update:' + this.objectAPI ,
                         accountSaveResults
                     );
                 }
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_AccountTerminationBatch.class.getName() ,
-                    'execute:' + objectAPI ,
+                    'execute:' + this.objectAPI ,
                     e
                 );
             }
@@ -224,6 +231,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
 
     //method to scan for any open Assets on Account
     private Boolean scanAssets( List<Asset> assets ) {
+        //terminate if all assets are terminated/backedout
         Boolean allAssetsTerminated = true;
         if ( ( assets != null ) && !assets.isEmpty() ) {
             for ( Asset asobj : assets ) {
@@ -232,10 +240,14 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     || ( ( asobj.Status != NSP_ServiceConstants.BACKOUT ) && ( asobj.Status != NSP_ServiceConstants.TERMINATED ) )
                     )
                 {
+                    //do not terminate if open asset exists
                     allAssetsTerminated = false;
                     break;
                 }
             }
+        } else {
+            //do not terminate if asset count is 0
+            allAssetsTerminated = false;
         }
         return allAssetsTerminated;
     }
@@ -299,7 +311,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
         if ( ( oppList != null ) && !oppList.isEmpty() ) {
             for ( Opportunity opp : oppList ) {
                 if ( ( opp.StageName != NSP_ServiceConstants.CLOSED_LOST )
-                    || ( opp.Stagename != 'Closed Lost - Outgoing' )
+                    && ( opp.Stagename != 'Closed Lost - Outgoing' )
                     )
                 {
                     allOppClosedLost = false;
