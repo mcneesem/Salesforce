@@ -669,13 +669,10 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>NSP_Asset__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NSP_AIMS_Client__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NSP_Area_of_Focus__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Focus_Item__c</value>
@@ -687,7 +684,7 @@
                             <value>Details__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Estimated_Impact__c</value>
+                            <value>Plan_of_Action__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Status__c</value>
@@ -696,7 +693,7 @@
                             <value>NSP_Start_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_End_Date__c</value>
+                            <value>Due_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
