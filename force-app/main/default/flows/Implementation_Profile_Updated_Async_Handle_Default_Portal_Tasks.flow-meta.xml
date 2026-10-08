@@ -9,79 +9,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portaltask_to_update.Value_Date__c</assignToReference>
+            <assignToReference>recPortalTask.Value_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Business_Inception_Date__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_Update_Collection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Assign new value Bus Inception Date to update</description>
-        <name>Assign_IP_FEIN</name>
-        <label>Assign IP : FEIN</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portaltask_to_update.Value_Text__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Client_FEIN__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Assign_Update_Collection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Assign portal task id</description>
-        <name>Assign_Portal_Task_Id</name>
-        <label>Assign Portal Task Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portaltask_to_update.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_For_Each_Portal_Task.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Which_Field_Updated</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Update record to collection</description>
-        <name>Assign_Update_Collection</name>
-        <label>Assign : Update Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>rc_portaltasks_to_update</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>r_portaltask_to_update</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Clear_Record_Variable</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Clear Portal Task Record Variable</description>
-        <name>Clear_Record_Variable</name>
-        <label>Clear Record Variable</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portaltask_to_update</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_For_Each_Portal_Task</targetReference>
+            <targetReference>Update_Portal_Task_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -168,128 +103,22 @@
             <name>Yes_Valid_Portal_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_portaltasks</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>recPortalTask</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portaltasks</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop_For_Each_Portal_Task</targetReference>
-            </connector>
-            <label>Yes : Valid Portal Task</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Valid_Update</name>
-        <label>Valid Update ?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Update</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>rc_portaltasks_to_update</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portaltasks_to_update</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Portal_Task_Record</targetReference>
-            </connector>
-            <label>Yes : Update</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Verify which IP Field Updated</description>
-        <name>Which_Field_Updated</name>
-        <label>Which Field Updated ?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Clear_Record_Variable</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Bus_Inception_Date</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_For_Each_Portal_Task.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Business Inception Date</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop_For_Each_Portal_Task.Value_Date__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.Business_Inception_Date__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Assign_IP_Bus_Inception_Date</targetReference>
             </connector>
-            <label>Bus Inception Date</label>
-        </rules>
-        <rules>
-            <name>FEIN</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_For_Each_Portal_Task.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Federal Employer Identification Number (FEIN)</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop_For_Each_Portal_Task.Value_Text__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.Client_FEIN__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_IP_FEIN</targetReference>
-            </connector>
-            <label>FEIN</label>
+            <label>Yes : Valid Portal Task</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Handle Default Portal Tasks</description>
+    <description>Handle Business Inception Date , Remove FEIN</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Profile - Updated - Async - Handle Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Profile - Updated - Async - Handle Default Portal Tasks</label>
-    <loops>
-        <name>Loop_For_Each_Portal_Task</name>
-        <label>Loop : For Each Portal Task</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>rc_portaltasks</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Portal_Task_Id</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Valid_Update</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -348,7 +177,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Task</targetReference>
         </faultConnector>
-        <filterLogic>1 AND ( 2 OR 3 )</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Portal_Project__c</field>
             <operator>EqualTo</operator>
@@ -360,23 +189,15 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Federal Employer Identification Number (FEIN)</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
                 <stringValue>Business Inception Date</stringValue>
             </value>
         </filters>
         <object>Portal_Task__c</object>
-        <outputReference>rc_portaltasks</outputReference>
+        <outputReference>recPortalTask</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
         <queriedFields>Value_Date__c</queriedFields>
-        <queriedFields>Value_Integer__c</queriedFields>
         <queriedFields>Value_Text__c</queriedFields>
+        <queriedFields>Value_Integer__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <description>Update Portal Task for Bus Inception Date and FEIN</description>
@@ -387,12 +208,12 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Portal_Task_Record</targetReference>
         </faultConnector>
-        <inputReference>rc_portaltasks_to_update</inputReference>
+        <inputReference>recPortalTask</inputReference>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) )</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Account__c</field>
             <operator>IsNull</operator>
@@ -416,13 +237,6 @@
         </filters>
         <filters>
             <field>Business_Inception_Date__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Client_FEIN__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -473,28 +287,10 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Record for update</description>
-        <name>r_portaltask_to_update</name>
+        <description>Portal Task Record</description>
+        <name>recPortalTask</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>Current task collection</description>
-        <name>rc_portaltasks</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>for update collection</description>
-        <name>rc_portaltasks_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Task__c</objectType>

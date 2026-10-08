@@ -72,24 +72,23 @@
             <label>Yes : Valid Record</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Populate Portal Guidance</description>
+    <description>New Client Portal: Populate Portal Guidance - respect dynamic tasks, removed FEIN</description>
     <environments>Default</environments>
     <formulas>
         <description>Get the API Name based on the Task Name</description>
         <name>portalGuidanceApiName</name>
         <dataType>String</dataType>
         <expression>IF(
-  NOT( ISBLANK( {!$Record.Project_Task__r.Portal_Guidance_API_Name__c} ) ) ,
-  {!$Record.Project_Task__r.Portal_Guidance_API_Name__c} ,
+  NOT(ISBLANK({!$Record.Project_Task__r.Portal_Guidance_API_Name__c})),
+  {!$Record.Project_Task__r.Portal_Guidance_API_Name__c},
   CASE(
-    {!$Record.Name} ,
-    &quot;Client Sponsored Plans&quot; , &quot;CLIENT_SPONSORED_PLANS&quot; ,
-    &quot;Employee Payroll Documentation&quot; , &quot;EMPLOYEE_PAYROLL_DOCUMENTATION&quot; ,
-    &quot;Business Inception Date&quot; , &quot;BUSINESS_INCEPTION_DATE&quot; ,
-    &quot;Additional Documentation&quot; , &quot;ADDITIONAL_DOCUMENTATION&quot; ,
-    &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER&quot; ,
-    &quot;&quot;
-  )
+    {!$Record.Name},
+    &quot;Client Sponsored Plans&quot;, &quot;CLIENT_SPONSORED_PLANS&quot;,
+    &quot;Employee Payroll Documentation&quot;, &quot;EMPLOYEE_PAYROLL_DOCUMENTATION&quot;,
+    &quot;Business Inception Date&quot;, &quot;BUSINESS_INCEPTION_DATE&quot;,
+    &quot;Additional Documentation&quot;, &quot;ADDITIONAL_DOCUMENTATION&quot;,
+    &quot;&quot; 
+    )
 )</expression>
     </formulas>
     <interviewLabel>Portal Task - Before Create - Populate Portal Guidance {!$Flow.CurrentDateTime}</interviewLabel>

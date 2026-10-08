@@ -28,13 +28,6 @@
                 <stringValue>Employee Payroll Documentation</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>defaultTaskNames</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Federal Employer Identification Number (FEIN)</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
         </connector>
