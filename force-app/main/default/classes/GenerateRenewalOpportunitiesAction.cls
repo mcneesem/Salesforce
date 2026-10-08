@@ -49,17 +49,10 @@ public with sharing class GenerateRenewalOpportunitiesAction {
 
     private static Boolean validateClientNumbers( FlowInput input ) {
         Boolean isValid = false;
-        Set<String> requestedClientNumbers = new Set<String>();
-        if ( input != null && input.clientNumbers != null && !input.clientNumbers.isEmpty() ) {
-            for ( String clientNumber : input.clientNumbers ) {
-                if ( String.isNotBlank( clientNumber ) ) {
-                    requestedClientNumbers.add( clientNumber.trim() );
-                }
-            }
-            if ( !requestedClientNumbers.isEmpty() ) {
-                Set<String> eligibleClientNumbers = GenerateRenewalOpportunitiesAction.getEligibleClientNumbers( requestedClientNumbers, input.monthValue, input.yearValue );
-                isValid = eligibleClientNumbers.containsAll( requestedClientNumbers );
-            }
+        Set<String> requestedClientNumbers = GenerateRenewalOpportunitiesAction.getClientNumbers( input );
+        if ( !requestedClientNumbers.isEmpty() ) {
+            Set<String> eligibleClientNumbers = GenerateRenewalOpportunitiesAction.getEligibleClientNumbers( requestedClientNumbers, input.monthValue, input.yearValue );
+            isValid = eligibleClientNumbers.containsAll( requestedClientNumbers );
         }
         return isValid;
     }

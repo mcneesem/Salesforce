@@ -101,36 +101,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Reset_Client_Collections</name>
-        <label>Reset Client Collections</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>Selected_Client_Numbers</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>Selected_Client_Numbers</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Invalid_Client_Numbers</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>Invalid_Client_Numbers</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Client_Rows</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>Client_Rows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Looping_Client_Numbers</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Reset_Error_UX</name>
         <label>Reset Error UX</label>
         <locationX>0</locationX>
@@ -156,6 +126,27 @@
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Selected_Client_Numbers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Selected_Client_Numbers</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Client_Rows</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Client_Rows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Invalid_Client_Numbers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Invalid_Client_Numbers</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Is_Run_All_Clients</targetReference>
         </connector>
@@ -170,13 +161,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Show_No_Client_Error</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -227,34 +211,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Show_Client_Error</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Client_Rows</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>Client_Rows</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Invalid_Client_Numbers</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>Invalid_Client_Numbers</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Invalid_Clients_Display</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -419,7 +375,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Reset_Client_Collections</targetReference>
+                <targetReference>Looping_Client_Numbers</targetReference>
             </connector>
             <label>Specific Clients Selected</label>
         </rules>
@@ -489,7 +445,7 @@
         <defaultConnector>
             <targetReference>Are_Specific_Clients_Selected</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Specific Clients</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>All_Clients</name>
             <conditionLogic>and</conditionLogic>
