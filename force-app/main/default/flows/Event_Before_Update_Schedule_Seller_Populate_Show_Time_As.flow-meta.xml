@@ -35,22 +35,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Don_t_change_value</name>
-        <label>Don&apos;t change value</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.NSP_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record__Prior.NSP_Status__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Status_Cancelled</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Make_Event_Busy</name>
         <label>Make Event Busy</label>
         <locationX>0</locationX>
@@ -76,60 +60,29 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Restore_Prior_Status</name>
+        <label>Restore Prior Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.NSP_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Status_Cancelled</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Is_Status_Cancelled</name>
-        <label>Is Status Cancelled</label>
+        <name>Check_Prior_Status</name>
+        <label>Check Prior Status</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Is_Status_Not_Cancelled</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Cancelled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cancelled</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Make_Event_Free</targetReference>
-            </connector>
-            <label>Cancelled</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Status_Not_Cancelled</name>
-        <label>Is Status Not Cancelled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Not_Cancelled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record__Prior.NSP_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cancelled</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Make_Event_Busy</targetReference>
-            </connector>
-            <label>Not Cancelled</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Prior_Status_is_Requested</name>
-        <label>Prior Status is Requested</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Don_t_change_value</targetReference>
+            <targetReference>Restore_Prior_Status</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -171,6 +124,53 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Prior_Status_Cancelled</name>
+        <label>Is Prior Status Cancelled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Cancelled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Make_Event_Busy</targetReference>
+            </connector>
+            <label>Not Cancelled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Status_Cancelled</name>
+        <label>Is Status Cancelled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Prior_Status_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancelled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Make_Event_Free</targetReference>
+            </connector>
+            <label>Cancelled</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Schedule_Seller_Admin</name>
         <label>Schedule Seller Admin</label>
         <locationX>0</locationX>
@@ -190,7 +190,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prior_Status_is_Requested</targetReference>
+                <targetReference>Check_Prior_Status</targetReference>
             </connector>
             <label>Is not Admin</label>
         </rules>
