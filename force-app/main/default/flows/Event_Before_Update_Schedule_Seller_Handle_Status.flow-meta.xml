@@ -111,8 +111,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>DEPRECTAED - Event - Before Update - Schedule Seller - Handle Status {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>DEPRECTAED - Event - Before Update - Schedule Seller - Handle Status</label>
+    <interviewLabel>DEPRECATED - Event - Before Update - Schedule Seller - Handle Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Event - Before Update - Schedule Seller - Handle Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
