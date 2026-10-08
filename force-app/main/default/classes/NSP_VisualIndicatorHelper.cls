@@ -243,8 +243,10 @@ public without sharing class NSP_VisualIndicatorHelper {
             Case c = [SELECT Id,AccountId FROM Case WHERE Id=:accId limit 1];
             accountId = c.AccountId;
         } else if(String.valueOf(objectName) == 'Opportunity') {
-            Opportunity OppRec = [SELECT ID, AccountId FROM Opportunity WHERE ID =:accId LIMIT 1];
-            accountId = oppRec.AccountId;
+            List<Opportunity> oppRecords = [SELECT ID, AccountId FROM Opportunity WHERE ID =:accId LIMIT 1];
+            if(oppRecords != null && !oppRecords?.isEmpty() && oppRecords[0].AccountId != null) {
+                accountId = oppRecords[0].AccountId;
+            }
         }
         return accountId;
     }
