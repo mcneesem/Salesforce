@@ -1,7 +1,7 @@
 @isTest
 private class CancelServicePlanProjectsBatchTest {
 
-    @TestSetup
+    @testSetup
     private static void setupTestData() {
         CancelServicePlanProjectsBatchSettings__c settings = CancelServicePlanProjectsBatchSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
@@ -39,13 +39,13 @@ private class CancelServicePlanProjectsBatchTest {
         Id project_PEORTId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
         pse__proj__c project = (pse__proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         project.Name = 'BT Engagement Plan Test';
-    	project.recordTypeId = project_PEORTId ;
+        project.recordTypeId = project_PEORTId ;
         project.pse__Project_Status__c = 'Active' ;
         project.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
         project.pse__Account__c = terminatedAccount.Id;
-    	project.TemplateName__c = NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
-    	project.pse__Start_Date__c = System.today();
-    	insert project;
+        project.TemplateName__c = NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
+        project.pse__Start_Date__c = System.today();
+        insert project;
     }
 
     // Scope should include a WO Asset Terminated for 15 days and the batch should run to completion.
@@ -131,5 +131,4 @@ private class CancelServicePlanProjectsBatchTest {
     }
 
 }
-
 //
