@@ -28,13 +28,6 @@
                 <stringValue>Employee Payroll Documentation</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>tc_defaulttasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Federal Employer Identification Number (FEIN)</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Create_Default_Portal_Tasks</targetReference>
         </connector>
@@ -231,7 +224,7 @@
             <label>Yes : Valid Portal Project</label>
         </rules>
     </decisions>
-    <description>Project Visible to Client Updated Sync all Project details to Portal</description>
+    <description>Project Visible to Client Updated Sync all Project details to Portal, removed FEIN</description>
     <environments>Default</environments>
     <interviewLabel>Project - Subflow - Sync Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project - Subflow - Sync Portal Project</label>
