@@ -1,0 +1,8 @@
+<template>
+    <template lwc:if={hasPermission}>
+        <lightning-flow
+            flow-api-name="Case_Creation_Screen_Flow"
+            onstatuschange={handleStatusChange}>
+        </lightning-flow>
+    </template>
+</template>
