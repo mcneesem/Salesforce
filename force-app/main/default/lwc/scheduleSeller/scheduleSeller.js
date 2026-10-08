@@ -49,7 +49,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const matrix = ( Array.isArray( this.matrix ) ? this.matrix : [] );
         const nowUtc = new Date();
         nowUtc.setUTCSeconds(0, 0);
-        const rushCutoff  = this.getRushCutoff();
+        const rushCutoff = this.getRushCutoff();
         // Compute cutoff for non-admins: now + 24h (rounded to minute)
         const cutoffUtc = new Date(Date.now() + 24 * 60 * 60 * 1000);
         cutoffUtc.setUTCSeconds(0, 0);
@@ -90,7 +90,11 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                             // Already passed, gray out
                             isDisabled = true;
                             countVal = 'R';
-                        } else if ( !this.isAdmin && ( rushCutoff !== null ) && ( startRounded < rushCutoff ) ) {
+                        } else if ( !this.isAdmin
+                            && ( rushCutoff !== null )
+                            && ( startRounded < rushCutoff )
+                            )
+                        {
                             countVal = 'R';
                             isDisabled = false;
                         }
