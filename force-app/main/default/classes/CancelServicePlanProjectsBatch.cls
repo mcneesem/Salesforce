@@ -1,23 +1,17 @@
+//
 // @description Batch that finds WO Assets whose Account was Terminated 14+ days ago and cancels
 // the related open Service Plan projects (status not Complete/Cancelled, project type Service Plan)
 // by setting their status to Cancelled with the "Client Terminated" reason.
-// without sharing is intentional: this is an unattended, system-context maintenance job that
 // must evaluate every matching Asset org-wide, independent of the scheduling user's sharing.
+//
+// intentionally `without sharing` to ensure visibility of all Asset and pse__Proj__c records...
 public without sharing class CancelServicePlanProjectsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ CancelServicePlanProjectsBatchTest (88%)
 
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
 
-    private static final Id WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(
-        'Asset' ,
-        NSP_ServiceConstants.WO_ASSET_RECORDTYPE
-    );
-
-    private static final Id PROJECT_PEO_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(
-        NSP_ServiceConstants.PROJECT_SOBJECT_NAME ,
-        NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE
-    );
-
-    // @description Argument-free constructor required so the job can be run/scheduled generically.
     public CancelServicePlanProjectsBatch() {
     }
 
@@ -25,8 +19,6 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // ISelfSchedulable
     //
 
-    // @description Schedules this batch to run every day at 1 AM Central.
-    // @return CronTrigger Id of the scheduled job.
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -38,12 +30,11 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
             new CancelServicePlanProjectsBatch()
         );
     }
+
     //
     // Schedulable
     //
 
-    // @description Scheduler entry point; delegates to the generic runner.
-    // @param sc SchedulableContext supplied by the platform.
     public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
@@ -52,10 +43,6 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // Callable
     //
 
-    // @description Generic invocation entry point.
-    // @param action Action name; only 'run' is supported.
-    // @param args Optional arguments (unused).
-    // @return AsyncApexJob Id when the batch is queued, otherwise null.
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -68,8 +55,6 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // IJobRunnable
     //
 
-    // @description Queues this batch for execution when the custom-setting killswitch is enabled.
-    // @return AsyncApexJob Id of the queued batch, or null when disabled.
     public Id run() {
         Id response = null;
         if ( CancelServicePlanProjectsBatch.isEnabled ) {
@@ -90,20 +75,25 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     // @param bc BatchableContext supplied by the platform.
     // @return QueryLocator over the matching Asset records.
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        Database.queryLocator queryLocator = null;        
-        Id woRecordTypeId = CancelServicePlanProjectsBatch.WO_ASSET_RECORDTYPE;
-        String terminatedStatus = NSP_ServiceConstants.TERMINATED;
-        queryLocator =  Database.getQueryLocator( [
-            SELECT Id , AccountId , RecordTypeId , NSP_Account_Status__c , NSP_Account_Status_Date__c
-            FROM Asset
-            WHERE AccountId != null
-                AND RecordTypeId = :woRecordTypeId
-                AND NSP_Account_Status__c = :terminatedStatus
-                AND NSP_Account_Status_Date__c != null
-                AND NSP_Account_Status_Date__c > :CancelServicePlanProjectsBatch.statusDaysMaximumDate
-                AND NSP_Account_Status_Date__c <= :CancelServicePlanProjectsBatch.statusDaysMinimumDate
-        ] );
-        return queryLocator;
+        return Database.getQueryLocator(
+            [
+                SELECT
+                    Id ,
+                    AccountId ,
+                    RecordTypeId ,
+                    NSP_Account_Status__c ,
+                    NSP_Account_Status_Date__c
+                FROM Asset
+                WHERE (
+                    ( AccountId != null )
+                    AND ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' ) )
+                    AND ( NSP_Account_Status__c = 'Terminated' )
+                    AND ( NSP_Account_Status_Date__c != null )
+                    AND ( NSP_Account_Status_Date__c > :CancelServicePlanProjectsBatch.statusDaysMaximumDate )
+                    AND ( NSP_Account_Status_Date__c <= :CancelServicePlanProjectsBatch.statusDaysMinimumDate )
+                )
+            ]
+        );
     }
 
     // @description Collects the distinct Account Ids in the chunk and cancels their open
@@ -143,22 +133,29 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     private void cancelProjectsForAccounts( Set<Id> accountIds ) {
         try {
             List<pse__Proj__c> projectsToCancel = [
-                SELECT Id , pse__Project_Status__c , NSP_Cancelled_Reason__c
+                SELECT
+                    Id ,
+                    pse__Project_Status__c ,
+                    NSP_Cancelled_Reason__c
                 FROM pse__Proj__c
                 WHERE (
-                    pse__Account__c IN :accountIds
-                    AND pse__Project_Status__c != :NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
-                    AND pse__Project_Status__c != :NSP_ServiceConstants.PROJECTSTATUSCANCELLED
-                    AND pse__Project_Type__c = :NSP_ServiceConstants.PROJECT_TYPE_SERVICE
-                    AND RecordTypeId = :CancelServicePlanProjectsBatch.PROJECT_PEO_RECORDTYPE
+                    ( pse__Account__c IN :accountIds )
+                    AND (
+                        pse__Project_Status__c NOT IN (
+                            'Complete' ,
+                            'Cancelled'
+                        )
+                    )
+                    AND ( pse__Project_Type__c = 'Service Plan' )
+                    AND ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' ) )
                 )
             ];
             if ( ( projectsToCancel != null ) && !projectsToCancel.isEmpty() ) {
                 for ( pse__Proj__c serviceProject : projectsToCancel ) {
-                    serviceProject.pse__Project_Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
+                    serviceProject.pse__Project_Status__c = 'Cancelled';
                     serviceProject.NSP_Cancelled_Reason__c = 'Client Terminated';
                 }
-                Database.SaveResult[] results = Database.update( projectsToCancel , false );
+                List<Database.SaveResult> results = Database.update( projectsToCancel , false );
                 NSP_ErrorLogHandler.logResults(
                     CancelServicePlanProjectsBatch.class.getName() ,
                     'cancelProjectsForAccounts:update' ,
@@ -233,7 +230,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
     private static Date statusDaysMinimumDate {
         private get {
             if ( statusDaysMinimumDate == null ) {
-               statusDaysMinimumDate = System.today().addDays( -1 * CancelServicePlanProjectsBatch.statusDaysMinimum );              
+               statusDaysMinimumDate = System.today().addDays( -1 * CancelServicePlanProjectsBatch.statusDaysMinimum );
             }
             return statusDaysMinimumDate;
         }
@@ -262,7 +259,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
         private set;
     }
 
-// translates statusDaysMaximum into a specific Date value...
+    // translates statusDaysMaximum into a specific Date value...
     private static Date statusDaysMaximumDate {
         private get {
             if ( statusDaysMaximumDate == null ) {
@@ -294,5 +291,6 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
         }
         private set;
     }
+
 }
 //
