@@ -61,7 +61,7 @@
     </decisions>
     <description>Before - Save flow that manages Quick Rate defaulting on Case Creation</description>
     <environments>Default</environments>
-    <interviewLabel>Case Before Create Populate Quick Rate {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Case - Before Create - Populate Quick Rate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case - Before Create - Populate Quick Rate</label>
     <processMetadataValues>
         <name>BuilderType</name>
