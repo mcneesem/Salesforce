@@ -59,15 +59,8 @@
                 <elementReference>Validate_Client_Numbers</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Invalid_Clients_Display</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Updated_Invalid_Clients_Display</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Validate_Client_Numbers</targetReference>
+            <targetReference>Update_Invalid_Clients_Display</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -218,6 +211,22 @@
             <targetReference>Client_Number_Input</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Update_Invalid_Clients_Display</name>
+        <label>Update Invalid Clients Display</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Invalid_Clients_Display</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Updated_Invalid_Clients_Display</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Validate_Client_Numbers</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Apr</name>
         <choiceText>Apr</choiceText>
@@ -353,6 +362,39 @@
                 <targetReference>Launch_Renewal_Batch</targetReference>
             </connector>
             <label>NO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_Client_Numbers_Available</name>
+        <label>Are Client Numbers Available?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_No_Client_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Client_Numbers_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Selected_Client_Numbers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Selected_Client_Numbers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Eligible_Clients</targetReference>
+            </connector>
+            <label>Client Numbers Available</label>
         </rules>
     </decisions>
     <decisions>
@@ -517,7 +559,7 @@
             <targetReference>Prepare_Client_Row</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_Eligible_Clients</targetReference>
+            <targetReference>Are_Client_Numbers_Available</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
