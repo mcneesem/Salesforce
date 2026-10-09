@@ -175,16 +175,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                     subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
                 }
                 if(this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
-                    const fields = this.subclientData?.fields?.NSP_Sub_Client__r?.value?.fields;
-                    this.aimsValue = null;
-                    if (fields?.NSP_Sub_Client__c?.value != null) {
-                        this.aimsValue = fields.NSP_Sub_Client__c.value;
-                        } else if (fields?.NSP_Client__c?.value != null) {
-                            this.aimsValue = fields.NSP_Client__c.value;
-                        }
-                    subject = this.aimsValue != null ?
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue + ' ('+ this.aimsValue +')' :
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
+                    subject = this.appendWseeToSubject(subject);
                 }
             } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
                 fields.NSP_Category__c='Strategic Consulting Services';
@@ -243,6 +234,21 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         else {
             this.hideSpinner();
         }
+    }
+
+    appendWseeToSubject(subject) {
+        const subFields = this.subclientData?.fields?.NSP_Sub_Client__r?.value?.fields;
+        this.aimsValue = null;
+        if (subFields?.NSP_Sub_Client__c?.value != null) {
+            this.aimsValue = subFields.NSP_Sub_Client__c.value;
+            } else if (subFields?.NSP_Client__c?.value != null) {
+                this.aimsValue = subFields.NSP_Client__c.value;
+            }
+            let aimsSuffix = '';
+            if (this.aimsValue != null) {
+                aimsSuffix = ' (' + this.aimsValue + ')';
+            }
+            return subject + ' - ' + this.reReqObj.NSP_WSEE__r.displayValue + aimsSuffix;
     }
 
     categorySubcategoryMM(fields){
