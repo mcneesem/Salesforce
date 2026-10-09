@@ -82,7 +82,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_AccountRegulatedArea_Scheduler ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
+            'NSP_AccountRegulatedAreaBatch ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
             '0 0 0 ? * * *' ,
             new NSP_AccountRegulatedAreaBatch()
         );
