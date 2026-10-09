@@ -379,14 +379,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Selected_Client_Numbers</leftValueReference>
-                <operator>IsEmpty</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Selected_Client_Numbers</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
