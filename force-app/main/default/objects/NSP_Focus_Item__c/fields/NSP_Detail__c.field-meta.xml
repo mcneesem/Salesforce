@@ -113,6 +113,11 @@
                 <label>Direct cost renewal increases (medical benefits, WC)</label>
             </value>
             <value>
+                <fullName>Director Engaged - Client Risk Indicator</fullName>
+                <default>false</default>
+                <label>Director Engaged - Client Risk Indicator</label>
+            </value>
+            <value>
                 <fullName>Dissatisfied with ancillary solutions</fullName>
                 <default>false</default>
                 <label>Dissatisfied with ancillary solutions</label>
@@ -588,6 +593,10 @@
         <valueSettings>
             <controllingFieldValue>Risk Mitigation</controllingFieldValue>
             <valueName>Client operates outside the compliance guidance provided by Insperity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Risk Mitigation</controllingFieldValue>
+            <valueName>Director Engaged - Client Risk Indicator</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
