@@ -1,4 +1,5 @@
-public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+// intentionally `without sharing` to preserve default sharing at api version 57...
+public without sharing class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_AccountRegulatedAreaBatch_Test (83%)
 
     private static final String CASE_SUBJECT = 'Employees work in ';
@@ -82,7 +83,7 @@ public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedul
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_AccountRegulatedArea_Scheduler ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
+            'NSP_AccountRegulatedAreaBatch ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
             '0 0 0 ? * * *' ,
             new NSP_AccountRegulatedAreaBatch()
         );

@@ -1,38 +1,39 @@
 global with sharing class CLMExternalReviewTasks {
-    
-        global CLMUser Sender { get; set; }
+    // test w/ SpringCMTests (??%)
 
-        global CLMDocumentItems Documents { get; set; }        
+    global CLMUser Sender { get; set; }
 
-        global Recipient Recipient { get; set; }
+    global CLMDocumentItems Documents { get; set; }
 
-        global AlsoNotify[] AlsoNotify { get; set; }
+    global Recipient Recipient { get; set; }
 
-        global string Status { get; set; }
+    global AlsoNotify[] AlsoNotify { get; set; }
 
-        global string DueDate { get; set; }
+    global String Status { get; set; }
 
-        global string EmailSubject { get; set; }
+    global String DueDate { get; set; }
 
-        global string EmailMessage { get; set; }
+    global String EmailSubject { get; set; }
 
-        global string Comment { get; set; }
+    global String EmailMessage { get; set; }
 
-        global boolean AddSignature { get; set; }
+    global String Comment { get; set; }
 
-        global string Href { get; set; }
+    global Boolean AddSignature { get; set; }
 
-    global class Recipient
-    {
-        global string Name { get; set; }
+    global String Href { get; set; }
 
-        global string Email { get; set; }
+    global class Recipient {
+        global String Name { get; set; }
+
+        global String Email { get; set; }
     }
 
-    global class AlsoNotify
-    {
-        global string Name { get; set; }
+    global class AlsoNotify {
+        global String Name { get; set; }
 
-        global string Email { get; set; }
+        global String Email { get; set; }
     }
+
 }
+//

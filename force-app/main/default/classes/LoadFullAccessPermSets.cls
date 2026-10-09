@@ -1,4 +1,5 @@
-public class LoadFullAccessPermSets {
+// intentionally `without sharing` to preserve default sharing at api version 58...
+public without sharing class LoadFullAccessPermSets {
     // test w/ LoadFullAccessPermSetsQueueableTest (89%)
 
     // ********************************************************************************************************
@@ -129,4 +130,6 @@ public class LoadFullAccessPermSets {
         }
         return objectApiNames;
     }
+
 }
+//
