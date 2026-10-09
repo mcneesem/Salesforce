@@ -230,18 +230,53 @@ public without sharing class NSP_VisualIndicatorHelper {
     // @return String
     //
     @AuraEnabled(cacheable=true)
-    public static String getAccountId(String accId) {
-        Id objectId = accId;
-        Id accountId;
-        SObjectType objectName = objectId.getSObjectType();
-        if(String.valueOf(objectName) == 'Account'){
+    public static String getAccountId( String accId ) {
+        Schema.sObjectType soType = null;
+        if ( accId InstanceOf Id ) {
+            soType = Id.valueOf( accId ).getSObjectType();
+        }
+        Id accountId = null;
+        if ( soType == Account.getSObjectType() ) {
             accountId = accId;
-        }else if(String.valueOf(objectName) == 'Asset'){
-            Asset a = [SELECT Id,AccountId FROM Asset WHERE Id=:accId limit 1];
-            accountId = a.AccountId;
-        }else if(String.valueOf(objectName) == 'Case'){
-            Case c = [SELECT Id,AccountId FROM Case WHERE Id=:accId limit 1];
-            accountId = c.AccountId;
+        } else if ( soType == Asset.getSObjectType() ) {
+            List<Asset> records = [
+                SELECT Id , AccountId
+                FROM Asset
+                WHERE (
+                    ( Id = :accId )
+                    AND ( AccountId != null )
+                )
+                LIMIT 1
+            ];
+            if ( ( records != null ) && !records.isEmpty() ) {
+                accountId = records[0].AccountId;
+            }
+        } else if ( soType == Case.getSObjectType() ) {
+            List<Case> records = [
+                SELECT Id , AccountId
+                FROM Case
+                WHERE (
+                    ( Id = :accId )
+                    AND ( AccountId != null )
+                )
+                LIMIT 1
+            ];
+            if ( ( records != null ) && !records.isEmpty() ) {
+                accountId = records[0].AccountId;
+            }
+        } else if ( soType == Opportunity.getSObjectType() ) {
+            List<Opportunity> records = [
+                SELECT Id , AccountId
+                FROM Opportunity
+                WHERE (
+                    ( Id = :accId )
+                    AND ( AccountId != null )
+                )
+                LIMIT 1
+            ];
+            if ( ( records != null ) && !records.isEmpty() ) {
+                accountId = records[0].AccountId;
+            }
         }
         return accountId;
     }
