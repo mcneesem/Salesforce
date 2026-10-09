@@ -74,16 +74,19 @@ export default class ScheduleSellerProductSelector extends LightningElement {
                 { label: 'HR360 Solution' , value: 'Schedule_Seller_HR360_MidMarket' } ,
                 { label: 'HRCore Solution' , value: 'Schedule_Seller_HRCore_MidMarket' } ,
                 { label: 'HRScale' , value: 'Schedule_Seller_HRScale' } ,
+                { label: 'Contractor Management' , value: 'Schedule_Seller_Contractor_Management' } ,
             ] ,
             Enterprise: [
                 { label: 'HR360 Solution' , value: 'Schedule_Seller_HR360_Enterprise' } ,
                 { label: 'HRCore Solution' , value: 'Schedule_Seller_HRCore_Enterprise' } ,
                 { label: 'HRScale' , value: 'Schedule_Seller_HRScale' } ,
+                { label: 'Contractor Management' , value: 'Schedule_Seller_Contractor_Management' } ,
             ] ,
             Default: [
                 { label: 'HR360 Solution' , value: 'Schedule_Seller_HR360' } ,
                 { label: 'HRCore Solution' , value: 'Schedule_Seller_HRCore' } ,
                 { label: 'HRScale' , value: 'Schedule_Seller_HRScale' } ,
+                { label: 'Contractor Management' , value: 'Schedule_Seller_Contractor_Management' } ,
             ] ,
         };
         // Extended options shown only when user has permission and client is Active

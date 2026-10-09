@@ -649,6 +649,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contractor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HR360 Solution</fullName>
             <default>false</default>
         </values>
