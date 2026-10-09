@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Event_Subtype__c</fullName>
-    <externalId>false</externalId>
     <label>Event Subtype</label>
     <required>false</required>
     <type>Picklist</type>
@@ -129,6 +128,11 @@
                 <fullName>Multiple Products</fullName>
                 <default>false</default>
                 <label>Multiple Products</label>
+            </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
             </value>
             <value>
                 <fullName>Email</fullName>
@@ -331,6 +335,10 @@
         <valueSettings>
             <controllingFieldValue>Demo</controllingFieldValue>
             <valueName>Multiple Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Contractor Management</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

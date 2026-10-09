@@ -219,6 +219,8 @@ public with sharing class UserAvailabilityService {
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill, timeZone );
         // Build windows directly from events-only matrix
         List<Event> windows = UserAvailabilityService.getMatrixWindows( daysOfWeek );
+        // Step (slot length) comes from the time slot metadata
+        Integer stepMinutes = UserAvailabilityService.getStepMinutes( skill , timeZone );
         // Union window: derive from earliest start and latest end among windows
         Event window = UserAvailabilityService.getBoundingWindow( windows );
         // Identify users with Schedule Seller Custom Permission
@@ -258,7 +260,7 @@ public with sharing class UserAvailabilityService {
                 windows ,
                 userIds ,
                 busyByUser ,
-                skill ,
+                stepMinutes ,
                 cappedUsersByDay
             )
         );
@@ -268,7 +270,7 @@ public with sharing class UserAvailabilityService {
         List<Event> windows ,
         Set<Id> userIds ,
         Map<Id,List<Event>> busyByUser ,
-        String skill ,
+        Integer stepMinutes ,
         Map<Date,Set<Id>> cappedUsersByDay
         )
     {
@@ -289,7 +291,7 @@ public with sharing class UserAvailabilityService {
                 for ( Id uid : userIds ) {
                     // Skip this user for this day if they are capped
                     if ( !cappedToday?.contains( uid )
-                        && UserAvailabilityService.isUserAvailableForWindow( uid , busyByUser , windowEvt , skill , timeZoneByUser )
+                        && UserAvailabilityService.isUserAvailableForWindow( uid , busyByUser , windowEvt , stepMinutes , timeZoneByUser )
                         )
                     {
                         availableForWindow.add( uid );
@@ -305,7 +307,7 @@ public with sharing class UserAvailabilityService {
         Id uid ,
         Map<Id,List<Event>> busyByUser ,
         Event windowEvt ,
-        String skill ,
+        Integer stepMinutes ,
         Map<Id,String> timeZoneByUser
         )
     {
@@ -323,7 +325,7 @@ public with sharing class UserAvailabilityService {
             Integer slotCount = UserAvailabilityService.countAvailableSlots(
                 busyByUser.get( uid ) ,
                 windowEvt ,
-                skill ,
+                stepMinutes ,
                 userBusinessHoursId
             );
             if ( slotCount != null && slotCount > 0 ) {
@@ -375,14 +377,14 @@ public with sharing class UserAvailabilityService {
     private static Integer countAvailableSlots(
         List<Event> records ,
         Event window ,
-        String skill ,
+        Integer stepMinutes ,
         Id userBusinessHoursId
         )
     {
         List<Event> available = UserAvailabilityService.getAvailableSlots(
             records ,
             window ,
-            skill ,
+            stepMinutes ,
             userBusinessHoursId
         );
         return ( ( available == null ) ? 0 : available.size() );
@@ -392,7 +394,7 @@ public with sharing class UserAvailabilityService {
     private static List<Event> getAvailableSlots(
         List<Event> records ,
         Event window ,
-        String skill ,
+        Integer stepMinutes ,
         Id userBusinessHoursId
         )
     {
@@ -404,7 +406,7 @@ public with sharing class UserAvailabilityService {
             List<Event> slots = helper.getAvailableSlots(
                 records ,
                 window ,
-                UserAvailabilityService.getStepMinutes( skill )
+                stepMinutes
             );
             if ( ( slots != null ) && !slots.isEmpty() ) {
                 for ( Event e : slots ) {
@@ -429,7 +431,7 @@ public with sharing class UserAvailabilityService {
             && ( e != null )
             && ( e.StartDateTime != null )
             && ( e.EndDateTime != null )
-            && BusinessHours.isWithin( businessHoursId , e.StartDateTime ) 
+            && BusinessHours.isWithin( businessHoursId , e.StartDateTime )
             && ( BusinessHours.add( businessHoursId , e.StartDateTime , durationMs ) == e.EndDateTime )
             )
         {
@@ -545,32 +547,22 @@ public with sharing class UserAvailabilityService {
         return windows;
     }
 
-    private static Integer getStepMinutes( String skill ) {
-        Map<String,Integer> skillStepMinutesMap = new Map<String,Integer>{
-            'Schedule_Seller_HR360' => 60 ,
-            'Schedule_Seller_HRCore' => 60 ,
-            'Schedule_Seller_HRScale' => 120 ,
-            'Schedule_Seller_Time_Attendance' => 30 ,
-            'Schedule_Seller_Performance_Management' => 30 ,
-            'Schedule_Seller_HR360_MidMarket' => 90 ,
-            'Schedule_Seller_HRCore_MidMarket' => 90 ,
-            'Schedule_Seller_HRScale_MidMarket' => 120 ,
-            'Schedule_Seller_HR360_Enterprise' => 90 ,
-            'Schedule_Seller_HRCore_Enterprise' => 90 ,
-            'Schedule_Seller_Applicant_Tracking' => 30 ,
-            'Schedule_Seller_Organizational_Planning' => 30 ,
-            'Schedule_Seller_Multiple_Products' => 60
-        };
-        //
-        Integer stepMinutes = 60;
-        if ( String.isNotBlank( skill )
-            && skillStepMinutesMap.containsKey( skill )
-            && ( skillStepMinutesMap.get( skill ) != null )
-            )
-        {
-            stepMinutes = skillStepMinutesMap.get( skill );
+    // Step minutes = slot length (End_Time__c - Start_Time__c)
+    private static Integer getStepMinutes( String skill , String timeZone ) {
+        Integer stepMinutes = null;
+        for ( Schedule_Seller_Time_Slot__mdt row : UserAvailabilityService.getTimeSlots( skill , timeZone ) ) {
+            Integer startMinutes = UserAvailabilityService.getMinutes( row.Start_Time__c );
+            Integer endMinutes = UserAvailabilityService.getMinutes( row.End_Time__c );
+            if ( ( stepMinutes == null )
+                && ( startMinutes != null )
+                && ( endMinutes != null )
+                && ( endMinutes > startMinutes )
+               )
+            {
+                stepMinutes = endMinutes - startMinutes;
+            }
         }
-        return stepMinutes;
+        return ( ( stepMinutes != null ) ? stepMinutes : 60 );
     }
 
 
