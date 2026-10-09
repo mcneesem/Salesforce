@@ -210,7 +210,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
         List<NSP_ReportRequest__c> repReqListToUpdate = new List<NSP_ReportRequest__c>();
         try{
             for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Termination_Date__c
-                                            FROM NSP_ReportRequest__c WHERE NSP_WSEE__c IN: conIdStatusDate.keySet()]){
+                                            	FROM NSP_ReportRequest__c WHERE NSP_WSEE__c IN: conIdStatusDate.keySet()]){
                                                 repReq.NSP_Termination_Date__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c) == NSP_ServiceConstants.TERMINATED_STATUS ?
                                                     conIdStatusDate.get(repReq.NSP_WSEE__c) : repReq.NSP_Termination_Date__c ;
                                                 repReqListToUpdate.add(repReq);
