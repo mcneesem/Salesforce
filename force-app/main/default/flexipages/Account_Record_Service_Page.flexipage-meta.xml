@@ -434,7 +434,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|EQUALS|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;O&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -464,9 +464,6 @@
                             <value>Employee__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Employee_ID__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Employee_Work_State__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -474,6 +471,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Number__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Leave_Status__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Schedule__c</value>
@@ -523,7 +523,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|NOT_EQUAL|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;C&quot;,&quot;Y&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1003,7 +1003,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|EQUALS|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;O&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1033,9 +1033,6 @@
                             <value>Employee__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Employee_ID__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Employee_Work_State__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -1043,6 +1040,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Number__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Leave_Status__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Leave_Schedule__c</value>
@@ -1092,7 +1092,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Actual_Return_To_Work_Date__c|NOT_EQUAL|</value>
+                            <value>Closed_Indicator__c|EQUALS|[&quot;C&quot;,&quot;Y&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
