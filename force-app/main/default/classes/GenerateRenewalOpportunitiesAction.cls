@@ -10,7 +10,7 @@ public with sharing class GenerateRenewalOpportunitiesAction {
                 if ( GenerateRenewalOpportunitiesAction.isValidRequest( input ) ) {
                     Integer monthNumber = input.monthValue;
                     Integer yearNumber = input.yearValue;
-                    Set<String> clientNumbers = GenerateRenewalOpportunitiesAction.getClientNumbers( input );
+                    Set<String> clientNumbers = GenerateRenewalOpportunitiesAction.getInputClientNumbers( input );
                     Id jobId = GenerateRenewalOpportunitiesJob.executeBatch( monthNumber, yearNumber, clientNumbers );
                     isValid = ( jobId != null );
                 }
@@ -25,6 +25,8 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         public Integer monthValue;
         @InvocableVariable(label='Year Value' required=true)
         public Integer yearValue;
+        @InvocableVariable(label='DEPRECATED - Client Number')
+        public String clientNumber;
         @InvocableVariable(label='Client Numbers')
         public List<String> clientNumbers;
         @InvocableVariable(label='Run All Clients')
@@ -49,15 +51,15 @@ public with sharing class GenerateRenewalOpportunitiesAction {
 
     private static Boolean validateClientNumbers( FlowInput input ) {
         Boolean isValid = false;
-        Set<String> requestedClientNumbers = GenerateRenewalOpportunitiesAction.getClientNumbers( input );
+        Set<String> requestedClientNumbers = GenerateRenewalOpportunitiesAction.getInputClientNumbers( input );
         if ( !requestedClientNumbers.isEmpty() ) {
-            Set<String> eligibleClientNumbers = GenerateRenewalOpportunitiesAction.getEligibleClientNumbers( requestedClientNumbers, input.monthValue, input.yearValue );
+            Set<String> eligibleClientNumbers = GenerateRenewalOpportunitiesAction.getEligibleClientNumbers( input );
             isValid = eligibleClientNumbers.containsAll( requestedClientNumbers );
         }
         return isValid;
     }
 
-    private static Set<String> getClientNumbers( FlowInput input ) {
+    private static Set<String> getInputClientNumbers( FlowInput input ) {
         Set<String> clientNumbers = new Set<String>();
         if ( input != null && input.isRunAllClients != true && input.clientNumbers != null && !input.clientNumbers.isEmpty() ) {
             for ( String clientNumber : input.clientNumbers ) {
@@ -69,13 +71,14 @@ public with sharing class GenerateRenewalOpportunitiesAction {
         return clientNumbers;
     }
 
-    private static Set<String> getEligibleClientNumbers( Set<String> clientNumbers, Integer monthNumber, Integer yearNumber ) {
+    private static Set<String> getEligibleClientNumbers( FlowInput input ) {
         Set<String> eligibleClientNumbers = new Set<String>();
-        if ( clientNumbers != null && !clientNumbers.isEmpty() && ( monthNumber != null ) && ( yearNumber != null ) ) {
-            Integer eligibleYear = yearNumber - 1;
-            Date eligibleStart = Date.newInstance( eligibleYear, monthNumber, 1 );
+        Set<String> clientNumbers = GenerateRenewalOpportunitiesAction.getInputClientNumbers( input );
+        if ( input != null && input.monthValue != null && input.yearValue != null && clientNumbers != null && !clientNumbers.isEmpty() ) {
+            Integer eligibleYear = input.yearValue - 1;
+            Date eligibleStart = Date.newInstance( eligibleYear, input.monthValue, 1 );
             Date eligibleEnd = eligibleStart.addMonths( 1 ).addDays( -1 );
-            String renewalCreated = monthNumber + '/' + yearNumber;
+            String renewalCreated = input.monthValue + '/' + input.yearValue;
             List<NSP_Sub_Client__c> eligibleSubClients = [
                 SELECT
                 Id,
