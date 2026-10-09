@@ -421,6 +421,32 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Opportunity.Create_Project</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Create_Opportunity_Projects}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Insurance Services</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Closing</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NSP_Sub_Product__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Revolution</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

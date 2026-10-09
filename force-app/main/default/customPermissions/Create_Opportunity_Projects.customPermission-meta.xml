@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To provide the access , so users can create the Projects and associate to Opportunity from the template</description>
+    <isLicensed>false</isLicensed>
+    <label>Create Opportunity Projects</label>
+</CustomPermission>
