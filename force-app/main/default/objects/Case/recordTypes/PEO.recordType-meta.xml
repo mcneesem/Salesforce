@@ -2615,7 +2615,7 @@
         </values>
         <values>
             <fullName>Neutral</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Somewhat Favorable</fullName>
