@@ -130,7 +130,7 @@
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Not_Cancelled</name>
+            <name>Previously_Cancelled</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.NSP_Status__c</leftValueReference>
@@ -142,7 +142,7 @@
             <connector>
                 <targetReference>Make_Event_Busy</targetReference>
             </connector>
-            <label>Not Cancelled</label>
+            <label>Previously Cancelled</label>
         </rules>
     </decisions>
     <decisions>
