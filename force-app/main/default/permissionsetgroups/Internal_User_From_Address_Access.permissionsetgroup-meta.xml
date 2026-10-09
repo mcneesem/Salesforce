@@ -80,6 +80,7 @@
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Code_Changes</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Info</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Posters</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_XML_Utility</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
