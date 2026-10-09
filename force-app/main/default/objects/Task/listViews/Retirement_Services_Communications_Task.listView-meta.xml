@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retirement_Services_Communications_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Retirement Services - Communications</label>
+    <queue>Retirement_Services_Communications</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
