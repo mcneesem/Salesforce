@@ -1,4 +1,5 @@
-public class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+// intentionally `without sharing` to preserve default sharing at api version 57...
+public without sharing class NSP_AccountRegulatedAreaBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_AccountRegulatedAreaBatch_Test (83%)
 
     private static final String CASE_SUBJECT = 'Employees work in ';
