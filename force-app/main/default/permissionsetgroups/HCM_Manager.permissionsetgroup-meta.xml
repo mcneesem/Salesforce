@@ -6,6 +6,7 @@
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
