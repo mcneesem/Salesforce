@@ -1,17 +1,13 @@
-/**************************************************************************************************************************
-* @description  :  Batch Class to create automated case
-* @date 1/25/2023
-* Author : Ramya Ravi
-* Name : NSP_CreateAutomatedCaseBatch
-* Story : STY-03358 - Batch Class to create automated case
-* Version : V1
-**************************************************************************************************************************/
-
-public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject>
-{
+// intentionally `without sharing` to preserve default sharing at api version 56...
+public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_CreateAutomatedCaseBatchTest (77%)
 
-    public NSP_CreateAutomatedCaseBatch(){}
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_CreateAutomatedCaseBatch() {
+    }
 
     //
     // ISelfSchedulable
@@ -65,9 +61,9 @@ public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedula
     //
 
     //Start method to query project records
-    public Database.QueryLocator start(Database.BatchableContext bc){
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
         List<String> accountTeamFields = new List<String>{
-            	'ID',
+                'ID',
                 'NSP_Role__c',
                 'NSP_User__c',
                 'NSP_Account__c',
@@ -88,8 +84,9 @@ public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedula
         String query = queryBuilder.build();
         return Database.getQueryLocator(query);
     }
+
     //Execute method to send email alert when ITA project is created
-    public void execute(Database.BatchableContext bc, List<NSP_Account_Team__c>accountTeamList){
+    public void execute( Database.BatchableContext bc , List<NSP_Account_Team__c>accountTeamList ) {
         try{
             Set<ID> accountIDs = new Set<ID>();
             ID WORecordType = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
@@ -118,11 +115,12 @@ public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedula
             NSP_ErrorLogHandler.logSaveException('NSP_CreateAutomatedCaseBatch', 'execute', ex.getMessage());
         }
     }
-    //finish method
-    public void finish(Database.BatchableContext bc){
 
+    //finish method
+    public void finish( Database.BatchableContext bc ) {
     }
-    public static void createCase(List<Case> caseToInsert){
+
+    public static void createCase( List<Case> caseToInsert ) {
         try{
             // insert the case records
             if(!caseToInsert.isEmpty()){
@@ -134,7 +132,7 @@ public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedula
         }
     }
 
-    public static List<Case> populateCaseList(Set<ID> accountIDs, Map<ID,ID> accountWOAssetMap, MAP<ID,String> accountAIMSClientMap){
+    public static List<Case> populateCaseList( Set<Id> accountIDs , Map<Id,Id> accountWOAssetMap , Map<Id,String> accountAIMSClientMap ) {
         Set<ID> accountToExclude = new Set<ID>();
         List<Case> caseToInsert = new List<Case>();
         try{// query to get National Business Team Queue ID
@@ -170,3 +168,4 @@ public class NSP_CreateAutomatedCaseBatch implements ISelfSchedulable , Schedula
         return caseToInsert;
     }
 }
+//
