@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Custom Permission to access Case Creation Outlook</description>
+    <isLicensed>false</isLicensed>
+    <label>Case Creation Outlook</label>
+</CustomPermission>
