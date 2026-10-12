@@ -14306,4 +14306,8 @@
         <enabled>false</enabled>
         <name>ViewHealthCheck</name>
     </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ViewSetupAuditTrail</name>
+    </userPermissions>
 </Profile>
