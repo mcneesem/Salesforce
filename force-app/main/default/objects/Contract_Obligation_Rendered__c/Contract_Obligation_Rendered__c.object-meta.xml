@@ -161,7 +161,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Contract Obligation Rendered</label>
     <nameField>
-        <displayFormat>COR-{0000}</displayFormat>
+        <displayFormat>COR-{0000000000}</displayFormat>
         <label>Contract Obligation Rendered ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
