@@ -48,4 +48,15 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Renewal_Note</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Renewal Note</label>
+        <sharedTo>
+            <group>PEO_Renewals</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>PEO_Renewals</group>
+        </sharedFrom>
+    </sharingOwnerRules>
 </SharingRules>
