@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Opportunity_Validation_Task_Creator</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to control Opportunity Task Validation based on creator.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Opportunity Validation Task Creator</label>
+</PermissionSet>
