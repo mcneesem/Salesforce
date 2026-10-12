@@ -367,7 +367,9 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Case_Contacts__c</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Case__c</queriedFields>
         <queriedFields>NSP_Contact__c</queriedFields>
+        <queriedFields>NSP_IsPrimary__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
