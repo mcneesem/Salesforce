@@ -273,9 +273,10 @@ export default class SandboxDataExportTool extends LightningElement {
     }
 
     triggerCsvDownload(filename, csvContent) {
-        const dataUri = 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvContent);
+        const blob = new Blob([csvContent]);
+        const url = URL.createObjectURL(blob);
         const anchor = document.createElement('a');
-        anchor.href = dataUri;
+        anchor.href = url;
         anchor.download = filename;
         anchor.style.display = 'none';
 
@@ -285,6 +286,7 @@ export default class SandboxDataExportTool extends LightningElement {
 
         const timeoutId = setTimeout(() => {
             anchor.remove();
+            URL.revokeObjectURL(url);
         }, 1000);
         this._pendingTimeouts.push(timeoutId);
     }
