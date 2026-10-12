@@ -1019,12 +1019,19 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Select_Current_Case</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 ) )</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Voice_Call.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Date_Closed__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
