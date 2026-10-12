@@ -174,5 +174,66 @@ private class FraudAlertControllerTest {
         );
     }
 
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Opportunity Tests
+    // ─────────────────────────────────────────────────────────────────────────
+
+    @isTest
+    private static void shouldReturnTrue_WhenOpportunityAccountHasFraudAlert() {
+        List<Account> testAccounts = [SELECT Id FROM Account WHERE Name = :ACCOUNT_NAME_FRAUD LIMIT 1];
+
+        Assert.isFalse(
+            testAccounts.isEmpty(),
+            'Expected a test Account with a Contact.'
+        );
+
+        Opportunity fraudOpportunity = (Opportunity) NSP_TestExtendedDataFactory.createSObject(
+            new Opportunity(), OPPORTUNITY_FACTORY_KEY, false
+        );
+        fraudOpportunity.AccountId = testAccounts[0].Id;
+        fraudOpportunity.StageName = 'Discovery';
+        fraudOpportunity.NSP_PrimaryProduct__c ='Applicant Tracking';
+        fraudOpportunity.NSP_Number_of_Employees__c = 15;
+        insert fraudOpportunity;
+
+        Test.startTest();
+        Boolean result = FraudAlertController.hasFraudAlert(fraudOpportunity.Id);
+        Test.stopTest();
+
+        Assert.isTrue(
+            result,
+            'hasFraudAlert should return true when the Opportunity Account has a related Contact with Fraud_Alert__c = true'
+        );
+    }
+
+    @isTest
+    private static void shouldReturnFalse_WhenOpportunityAccountHasNoFraudAlert() {
+        Account noFraudAccount = (Account) NSP_TestExtendedDataFactory.createSObject(
+            new Account(), ACCOUNT_FACTORY_KEY, false
+        );
+        noFraudAccount.Name = 'No Fraud Account Opportunity';
+        insert noFraudAccount;
+
+        Opportunity safeOpportunity = (Opportunity) NSP_TestExtendedDataFactory.createSObject(
+            new Opportunity(), OPPORTUNITY_FACTORY_KEY, false
+        );
+        safeOpportunity.AccountId = noFraudAccount.Id;
+        safeOpportunity.StageName = 'Discovery';
+        safeOpportunity.NSP_PrimaryProduct__c ='Applicant Tracking';
+        safeOpportunity.NSP_Number_of_Employees__c = 15;
+        insert safeOpportunity;
+
+        Test.startTest();
+        Boolean result = FraudAlertController.hasFraudAlert(safeOpportunity.Id);
+        Test.stopTest();
+
+        Assert.areEqual(
+            false,
+            result,
+            'hasFraudAlert should return false when the Opportunity Account has no Contacts with Fraud_Alert__c = true'
+        );
+    }
+
 }
 //

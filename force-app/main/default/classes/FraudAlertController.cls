@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that frautAlertBanner has access to all Contact, Account, and Case records...
 public without sharing class FraudAlertController {
-    // test w/ FraudAlertControllerTest (80%)
+    // test w/ FraudAlertControllerTest (91%)
 
     // AuraEnabled controller for the Fraud Alert Banner LWC component.
     // Determines whether a Fraud Alert should be displayed on Contact, Account, Opportunity, and Case record pages by evaluating the Fraud_Alert__c field on related Contact records.
@@ -27,6 +27,8 @@ public without sharing class FraudAlertController {
             if ( recordId != null ) {
                 if ( recordId.getSObjectType() == Account.getSObjectType() ) {
                     isFraudAlert = FraudAlertController.checkAccountFraudAlert( recordId );
+                } else if ( recordId.getSObjectType() == Opportunity.getSObjectType() ) {
+                    isFraudAlert = FraudAlertController.checkOpportunityFraudAlert( recordId );
                 } else if ( recordId.getSObjectType() == Case.getSObjectType() ) {
                     isFraudAlert = FraudAlertController.checkCaseFraudAlert( recordId );
                 }
@@ -61,6 +63,32 @@ public without sharing class FraudAlertController {
            accFraudAlert = !relations.isEmpty();
         }
         return accFraudAlert;
+    }
+
+    //
+    // @description Checks whether the Account related to the Opportunity has a fraud alert by
+    //              resolving the Opportunity's AccountId and delegating to checkAccountFraudAlert.
+    // @param opportunityId The Opportunity record Id.
+    // @return              True if the related Account's fraud alert check returns true,
+    //                      false otherwise.
+    //
+    private static Boolean checkOpportunityFraudAlert( Id opportunityId ) {
+        Boolean opportunityFraudAlert = false;
+        if ( opportunityId != null ) {
+            List<Opportunity> opportunities = [
+                SELECT AccountId
+                FROM Opportunity
+                WHERE (
+                    ( Id = :opportunityId )
+                    AND ( AccountId != null )
+                )
+                LIMIT 1
+            ];
+            if ( !opportunities.isEmpty() ) {
+                opportunityFraudAlert = FraudAlertController.checkAccountFraudAlert( opportunities[0].AccountId );
+            }
+        }
+        return opportunityFraudAlert;
     }
 
     //
