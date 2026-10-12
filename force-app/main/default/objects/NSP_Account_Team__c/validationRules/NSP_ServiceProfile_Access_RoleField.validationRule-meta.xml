@@ -4,55 +4,60 @@
     <active>true</active>
     <description>Service Profiles with the account management permission set can create/update a Account Team record when role is WX/WA Benefits Specialist, WA/WX Payroll Specialist, Customer Success Specialist, 401k Plan Consultant. STY-(STY-03549) ,STY-240034 12/11/2023</description>
     <errorConditionFormula>AND(
-  NOT( $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c ) ,
-  NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
+  NOT( $Setup.NSP_Trigger_Switch__c.AccountTeamValidations__c ),
+  NOT(
   OR(
-    $Profile.Name = &apos;BPS Service&apos; ,
-    $Profile.Name = &apos;Contact Center&apos; ,
-    $Profile.Name = &apos;Retirement Services&apos; ,
-    $Profile.Name = &apos;PEO Service&apos;
+    $Profile.Name = &apos;Insperity Integration&apos; ,
+    $Profile.Name = &apos;Workday Integration&apos; ,
+    $Profile.Name = &apos;L3 Support&apos; ,
+    $Profile.Name = &apos;System Admin Lite&apos;,
+    $Profile.Name = &apos;Administrators&apos;
+   )
   ) ,
   OR(
-    NOT(
       OR(
-        ISPICKVAL( NSP_Role__c , &quot;WA/WX Payroll Specialist&quot; ) ,
-        ISPICKVAL( NSP_Role__c , &quot;WX/WA Benefits Specialist&quot; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;WX/WA Manager&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &quot;Benefits Specialist&quot; ) ,
+        ISPICKVAL( NSP_Role__c , &quot;Bus. Team-HRSp/CL&quot; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Business Performance Advisor&apos; ) ,
         ISPICKVAL( NSP_Role__c , &apos;WX/WA Supervisor&apos; ) ,
         ISPICKVAL( NSP_Role__c , &apos;WX/WA Customer Success Specialist&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;WX Open Enrollment Specialist&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;WX Time Specialist&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;WX Business Team&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;Customer Success Specialist&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;ITA Analyst&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;Manager, ITA&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;ITA Support Specialist&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;Manager, ITA Support&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;401k Plan Consultant&apos; ) ,
-        ISPICKVAL( NSP_Role__c , &apos;Insurance Services&apos; )
-      )
+        ISPICKVAL( NSP_Role__c , &apos;Business Performance Consultant&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Client Liaison&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;HRScale HCM &amp; Comp Analyst&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;HRScale Time &amp; Absence Analyst&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;HR Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Manager, HR Services&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;MidMarket Account Exec&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Payroll Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Payroll Supervisor&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Performance Specialist&apos; ),
+        ISPICKVAL( NSP_Role__c , &apos;Recruiting&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Renewal Coordinator&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Safety Consultant&apos; )
     ) ,
-    NOT(
-      OR(
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WA/WX Payroll Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Benefits Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Manager&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Supervisor&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Customer Success Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Time Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Open Enrollment Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Business Team&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Customer Success Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;ITA Analyst&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Manager, ITA&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;ITA Support Specialist&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Manager, ITA Support&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;401k Plan Consultant&apos; ) ,
-        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Insurance Services&apos; )
+    AND(
+     NOT(ISNEW()),
+       OR(
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Benefits Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Bus. Team-HRSp/CL&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Business Performance Advisor&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Business Performance Consultant&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Client Liaison&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;HRScale HCM &amp; Comp Analyst&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;HR Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Manager, HR Services&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;MidMarket Account Exec&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;National Account Exec&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Payroll Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Payroll Supervisor&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Performance Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Recruiting&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Renewal Coordinator&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Safety Consultant&apos; )
       )
     )
   )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Role__c</errorDisplayField>
-    <errorMessage>Service User can only select WX/WA Benefits Specialist, WA/WX Payroll Specialist, WX/WA Manager, WX/WA Supervisor, WX/WA Customer Success Specialist, WX Time Specialist, WX Business Team, Customer Success Specialist, 401k Plan Consultant Roles</errorMessage>
+    <errorMessage>Integrated roles cannot be added or updated except via integration.</errorMessage>
 </ValidationRule>
