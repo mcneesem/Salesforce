@@ -57,6 +57,16 @@ private class GenerateRenewalOpportunitiesActionTest {
             NSP_Asset__c = assetObj1.Id
         );
         subClients.add(sc2);
+        NSP_Sub_Client__c sc3 = new NSP_Sub_Client__c(
+            NSP_Account__c = accObj.Id,
+            NSP_Account_Status__c = 'Active',
+            NSP_Client__c = '1234600',
+            NSP_Sub_Client__c = '1234600',
+            NSP_Renewal_Date__c = Date.newInstance( 2025, 12, 27 ),
+            NSP_Benefit_Package_Name__c = 'Freedom Premier',
+            NSP_Asset__c = assetObj1.Id
+        );
+        subClients.add( sc3 );
 
         insert subClients;
 
@@ -75,36 +85,13 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testLaunchRenewalBatchWithoutClient() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 1;
         input.yearValue = 2026;
         input.isRunAllClients = true;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
-
-        Test.startTest();
-        List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke(inputs);
-        Test.stopTest();
-    }
-
-    @isTest
-    private static void testLaunchRenewalBatchWithValidClient() {
-        List<NSP_Sub_Client__c> subClients = [
-            SELECT NSP_Client__c
-            FROM NSP_Sub_Client__c
-            WHERE NSP_Client__c != null
-            LIMIT 1
-        ];
-        System.assert( !subClients.isEmpty(), 'Expected test Sub Client data to exist' );
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
-        input.monthValue = 12;
-        input.yearValue = 2026;
-        input.clientNumber = subClients[0].NSP_Client__c;
-        input.isRunAllClients = false;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
 
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke(inputs);
@@ -113,15 +100,45 @@ private class GenerateRenewalOpportunitiesActionTest {
 
     @isTest
     private static void testInvalidRequest() {
-        GenerateRenewalOpportunitiesAction.MonthYearData input =
-            new GenerateRenewalOpportunitiesAction.MonthYearData();
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
         input.monthValue = 12;
         input.yearValue = 2026;
         input.isRunAllClients = false;
-        List<GenerateRenewalOpportunitiesAction.MonthYearData> inputs =
-            new List<GenerateRenewalOpportunitiesAction.MonthYearData>{ input };
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
         Test.startTest();
         List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke(inputs);
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testLaunchRenewalBatchWithMultipleValidClients() {
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
+        input.monthValue = 12;
+        input.yearValue = 2026;
+        input.clientNumbers = new List<String>{ '1234500', '1234600' };
+        input.isRunAllClients = false;
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
+        Test.startTest();
+        List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke( inputs );
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testLaunchRenewalBatchWithInvalidClient() {
+        GenerateRenewalOpportunitiesAction.FlowInput input =
+            new GenerateRenewalOpportunitiesAction.FlowInput();
+        input.monthValue = 12;
+        input.yearValue = 2026;
+        input.clientNumbers = new List<String>{ '1234500', '9999999' };
+        input.isRunAllClients = false;
+        List<GenerateRenewalOpportunitiesAction.FlowInput> inputs =
+            new List<GenerateRenewalOpportunitiesAction.FlowInput>{ input };
+        Test.startTest();
+        List<Boolean> results = GenerateRenewalOpportunitiesAction.invoke( inputs );
         Test.stopTest();
     }
 }
