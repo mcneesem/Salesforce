@@ -330,9 +330,6 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedAttachmentList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Contact_Name__c</fields>
         <fields>NSP_Work_Phone__c</fields>
@@ -344,6 +341,9 @@
         <fields>NSP_Home_Phone__c</fields>
         <fields>NSP_Contact_Email__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
