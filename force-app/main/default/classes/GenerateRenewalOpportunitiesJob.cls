@@ -332,7 +332,7 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
         {
             // conditionally prefix subject with Sandbox Name...
             if ( String.isNotBlank( GenerateRenewalOpportunitiesJob.sandboxName ) ) {
-                subject = GenerateRenewalOpportunitiesJob.sandboxName + ': ' + subject;
+                subject = GenerateRenewalOpportunitiesJob.sandboxName.toUpperCase() + ': ' + subject;
             }
             Map<String,Object> inputs = new Map<String,Object>();
             inputs.put( 'toEmailAddresses' , recipients );
