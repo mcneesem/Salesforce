@@ -158,10 +158,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Contract Obligation</label>
     <nameField>
-        <displayFormat>CO-{0000}</displayFormat>
+        <displayFormat>CO-{0000000000}</displayFormat>
         <label>Contract Obligation ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
@@ -180,6 +180,6 @@
         <excludedStandardButtons>MassAssignRecordLabel</excludedStandardButtons>
         <excludedStandardButtons>OmniChannelMassRouteWork</excludedStandardButtons>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

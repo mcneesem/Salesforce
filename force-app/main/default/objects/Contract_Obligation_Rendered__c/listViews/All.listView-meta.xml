@@ -5,6 +5,10 @@
     <columns>Account__c</columns>
     <columns>Asset__c</columns>
     <columns>Product_Solution__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
