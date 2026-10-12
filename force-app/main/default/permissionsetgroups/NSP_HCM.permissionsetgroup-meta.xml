@@ -5,6 +5,7 @@
     <label>HCM</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
