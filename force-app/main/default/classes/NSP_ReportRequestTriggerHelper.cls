@@ -205,7 +205,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             }
         }
     }
-    
+
     //
     // MethodName : updateWSEEDetails
     // Description : Updates all the related WSEE details on wizard output record
@@ -457,9 +457,9 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
 
-    private void updateCaseSubjectName(List<NSP_ReportRequest__c> repReqList) {
+    private void updateCaseSubjectName( List<NSP_ReportRequest__c> repReqList ) {
     List<Case> caseIdSet = new List<Case>();
-    try {
+    try{
         for (NSP_ReportRequest__c repRequestRecord : [
             SELECT
                 Id,
@@ -474,7 +474,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             FROM NSP_ReportRequest__c
             WHERE Id IN :repReqList
         ]) {
-            Case newCase = new Case();
+            case newCase = new Case();
             newCase.Id = repRequestRecord.NSP_Case__c;
             String aimsValue = null;
             if (repRequestRecord.NSP_Sub_Client__r != null) {
@@ -507,9 +507,9 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             }
             caseIdSet.add(newCase);
         }
-        if (!caseIdSet.isEmpty()) {
+        if ( !caseIdSet.isEmpty() ) {
             Database.SaveResult[] results = Database.update(
-                caseIdSet,
+                caseIdSet ,
                 false
             );
             NSP_ErrorLogHandler.logResults(
@@ -518,9 +518,9 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                 results
             );
         }
-    } catch (Exception e) {
+    } catch ( Exception e ) {
         NSP_ReportRequestTriggerHelper.handleException(
-            e,
+            e ,
             'updateCaseSubjectName'
         );
     }
