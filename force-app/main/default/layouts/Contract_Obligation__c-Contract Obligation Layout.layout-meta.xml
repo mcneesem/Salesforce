@@ -18,7 +18,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
@@ -142,7 +142,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Contract_Obligation_Rendered__c.Contract_Obligation__c</relatedList>
+        <relatedList>Rendered_Contract_Obligation__c.Contract_Obligation__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
