@@ -3,10 +3,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>emailTrackingAvailable</name>
-                    <value>true</value>
-                </componentInstanceProperties>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
                 <identifier>lightningInbox_logItemButtonContainer</identifier>
             </componentInstance>
@@ -54,10 +50,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>emailTrackingAvailable</name>
-                    <value>true</value>
-                </componentInstanceProperties>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
                 <identifier>lightningInbox_logItemButtonContainer2</identifier>
             </componentInstance>
