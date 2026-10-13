@@ -1,29 +1,79 @@
-/**
-* @description  :  Batch Class to delete duplicate milestones
-* @date 12/15/2022
-* Author : Abhishek Kumar
-* Name : NSP_DeleteDuplicateMilestoneBatch
-* Story : STY-02725
-* Version : first iteration
-*/
-public class NSP_DeleteDuplicateMilestoneBatch implements Schedulable,Database.Batchable<SObject>{
+//
+// @description  :  Batch Class to delete duplicate milestones
+// @date 12/15/2022
+// Author : Abhishek Kumar
+// Name : NSP_DeleteDuplicateMilestoneBatch
+// Story : STY-02725
+// Version : first iteration
+//
+// test w/ NSP_DeleteDuplicateMilestoneBatchTest (96%)
+//
+public class NSP_DeleteDuplicateMilestoneBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
 
-    private static final List<String> MILESTONE_FIELDS = new List<String>{
-        'Id',
-        'Name',
-        'pse__Project__c'
-    };
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
 
-    //start
-    public Database.QueryLocator start(Database.BatchableContext bc){
-        //query to duplicate milestones
-        String query = new NSP_QueryBuilder('pse__Milestone__c', MILESTONE_FIELDS)
-                            .addFilter('NSP_isDuplicate__c', true)
-                            .build();
-        
-        return Database.getQueryLocator(query);
+    public NSP_DeleteDuplicateMilestoneBatch() {
     }
-    
+
+    //
+    // ISelfSchedulable
+    //
+
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_DeleteDuplicateMilestoneBatch ~ Duplicate milestones should not be created when project tasks are added from a template ~ run Hourly' + suffix ,
+            '0 0 * * * ? *' ,
+            new NSP_DeleteDuplicateMilestoneBatch()
+        );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch(
+            new NSP_DeleteDuplicateMilestoneBatch() ,
+            200
+        );
+    }
+
+    //
+    // Batchable
+    //
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        return Database.getQueryLocator(
+            [ SELECT Id , Name , pse__Project__c FROM pse__Milestone__c WHERE NSP_isDuplicate__c = true ]
+        );
+    }
+
     //Execute
     public void execute(Database.BatchableContext bc, List<pse__Milestone__c> milestoneList){
         List<Id> milestoneIds = new List<Id>();
@@ -54,24 +104,19 @@ public class NSP_DeleteDuplicateMilestoneBatch implements Schedulable,Database.B
                 List<Database.SaveResult> results = Database.update(projectTaskListToUpdate,false);
                 NSP_ErrorLogHandler.logSaveResultsException('NSP_DeleteDuplicateMilestoneBatch', 'ExecuteMethod', results );
             }
-            //delete duplicate milestones   
+            //delete duplicate milestones
             if(!milestoneIds.isEmpty()){
-                List<Database.DeleteResult> results = Database.delete(milestoneIds,false); 
+                List<Database.DeleteResult> results = Database.delete(milestoneIds,false);
                 NSP_ErrorLogHandler.logDeleteResultsException('NSP_DeleteDuplicateMilestoneBatch', 'ExecuteMethod', results );
             }
-            
+
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_DeleteDuplicateMilestoneBatch', 'ExecuteMethod', ex.getMessage());
         }
     }
 
-    //finish
-    public void finish(Database.BatchableContext bc){
-        
+    public void finish( Database.BatchableContext bc ) {
     }
-    public void execute(SchedulableContext scon) {
-        //Executes Batch
-        Database.executeBatch(new NSP_DeleteDuplicateMilestoneBatch(),200);
-    }
-    
+
 }
+//
