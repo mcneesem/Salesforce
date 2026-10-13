@@ -44,12 +44,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>lightningInbox:contextualTrackingContainer</componentName>
-                <identifier>lightningInbox_contextualTrackingContainer</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
                 <identifier>lightningInbox_logItemButtonContainer2</identifier>
             </componentInstance>
