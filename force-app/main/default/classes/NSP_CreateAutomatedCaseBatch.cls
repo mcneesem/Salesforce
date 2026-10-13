@@ -112,11 +112,7 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
                 createCase(caseToInsert);
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_CreateAutomatedCaseBatch.class.getName() ,
-                'execute' ,
-                e
-            );
+            NSP_CreateAutomatedCaseBatch.handleException( e , 'execute' );
         }
     }
 
@@ -136,11 +132,7 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
                 );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_CreateAutomatedCaseBatch.class.getName() ,
-                'createCase' ,
-                e
-            );
+            NSP_CreateAutomatedCaseBatch.handleException( e , 'createCase' );
         }
     }
 
@@ -176,13 +168,23 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
                 }
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_CreateAutomatedCaseBatch.class.getName() ,
-                'populateCaseList' ,
-                e
-            );
+            NSP_CreateAutomatedCaseBatch.handleException( e , 'populateCaseList' );
         }
         return caseToInsert;
+    }
+
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            ContractTerminationQueue.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_CreateAutomatedCaseBatch.class.getName() ,
+            methodName ,
+            e
+        );
     }
 
 }
