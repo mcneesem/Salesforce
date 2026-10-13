@@ -467,7 +467,6 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                 NSP_Case__c,
                 NSP_ReviewType__c,
                 NSP_AgreementType__c,
-                NSP_RequestingMultipleEmployees__c,
                 NSP_Sub_Client__c,
                 NSP_Sub_Client__r.NSP_Sub_Client__c,
                 NSP_Sub_Client__r.NSP_Client__c
