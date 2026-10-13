@@ -1253,7 +1253,7 @@
   {
     "id": "01p4x00000NRY84AAH",
     "name": "CMSalesforceUserAuthenticator",
-    "totalLines": 53,
+    "totalLines": 48,
     "lines": {
       "2": 1,
       "3": 1,
@@ -1302,14 +1302,9 @@
       "81": 1,
       "85": 0,
       "86": 0,
-      "92": 1,
-      "94": 1,
-      "95": 1,
-      "96": 1,
-      "98": 1,
-      "100": 1
+      "92": 1
     },
-    "totalCovered": 43,
+    "totalCovered": 38,
     "coveredPercent": 81
   },
   {
