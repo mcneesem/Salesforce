@@ -462,14 +462,14 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     try{
         for (NSP_ReportRequest__c repRequestRecord : [
             SELECT
-                Id,
-                NSP_WSEE__c,
-                NSP_WSEE__r.Name,
-                NSP_Case__c,
-                NSP_ReviewType__c,
-                NSP_AgreementType__c,
-                NSP_Sub_Client__c,
-                NSP_Sub_Client__r.NSP_Sub_Client__c,
+                Id ,
+                NSP_WSEE__c ,
+                NSP_WSEE__r.Name ,
+                NSP_Case__c ,
+                NSP_ReviewType__c ,
+                NSP_AgreementType__c ,
+                NSP_Sub_Client__c ,
+                NSP_Sub_Client__r.NSP_Sub_Client__c ,
                 NSP_Sub_Client__r.NSP_Client__c
             FROM NSP_ReportRequest__c
             WHERE Id IN :repReqList
@@ -513,7 +513,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                 false
             );
             NSP_ErrorLogHandler.logResults(
-                NSP_ReportRequestTriggerHelper.class.getName(),
+                NSP_ReportRequestTriggerHelper.class.getName() ,
                 'updateCaseSubjectName:update',
                 results
             );
