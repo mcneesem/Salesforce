@@ -65,6 +65,7 @@
     <permissionSets>Organization_Wide_Email_Address_Referral_Lead_Form_Site</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Salesforce_Email_to_Case</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_TES_HR_Support_Center</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_TWI_Support</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Talent_Connect</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_TimeStar_Hardware</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Time_and_Attendance</permissionSets>
