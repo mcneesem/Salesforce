@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_With_Current_Owner__c</fullName>
+    <description>This is a formula field that calculates the number of days the Lead has been assigned to the current owner.</description>
+    <externalId>false</externalId>
+    <formula>BLANKVALUE(
+TODAY() - Current_Owner_Start_Date__c,
+0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>This is a formula field that calculates the number of days the Lead has been assigned to the current owner</inlineHelpText>
+    <label>Days With Current Owner</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
