@@ -475,13 +475,8 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         ]) {
             Case newCase = new Case();
             newCase.Id = repRequestRecord.NSP_Case__c;
-
-            // Use AIMS Sub Client # if available,
-            // otherwise fall back to AIMS Client #.
             String aimsValue = null;
-
             if (repRequestRecord.NSP_Sub_Client__r != null) {
-
                 if (repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c != null) {
                     aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c;
                 }
@@ -489,52 +484,40 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                     aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Client__c;
                 }
             }
-
             String aimsSuffix = '';
-
             if (aimsValue != null) {
                 aimsSuffix = ' (' + aimsValue + ')';
             }
-
             if (repRequestRecord.NSP_ReviewType__c != null) {
-
                 newCase.Subject =
                     repRequestRecord.NSP_AgreementType__c + ' - ' +
                     repRequestRecord.NSP_ReviewType__c + ' - ' +
                     repRequestRecord.NSP_WSEE__r.Name +
                     aimsSuffix;
-
             }
             else if (
                 repRequestRecord.NSP_ReviewType__c == null &&
                 repRequestRecord.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO
             ) {
-
                 newCase.Subject =
                     repRequestRecord.NSP_AgreementType__c + ' - ' +
                     repRequestRecord.NSP_WSEE__r.Name +
                     aimsSuffix;
             }
-
             caseIdSet.add(newCase);
         }
-
         if (!caseIdSet.isEmpty()) {
-
             Database.SaveResult[] results = Database.update(
                 caseIdSet,
                 false
             );
-
             NSP_ErrorLogHandler.logResults(
                 NSP_ReportRequestTriggerHelper.class.getName(),
                 'updateCaseSubjectName:update',
                 results
             );
         }
-
     } catch (Exception e) {
-
         NSP_ReportRequestTriggerHelper.handleException(
             e,
             'updateCaseSubjectName'
