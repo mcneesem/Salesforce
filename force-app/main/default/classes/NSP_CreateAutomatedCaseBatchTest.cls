@@ -120,7 +120,7 @@ private class NSP_CreateAutomatedCaseBatchTest {
         System.assertEquals(NSP_ServiceConstants.UNASSIGNED, createdCase.NSP_Case_Sub_Status__c, 'Substatus should match the provided value');
         System.assertEquals('Upcoming Renewal/Determine Next Steps', createdCase.Subject, 'Subject should match the provided value');
 
-        ContractTerminationQueue.testHandleException( null , null );
+        NSP_CreateAutomatedCaseBatch.testHandleException( null , null );
     }
 
 }
