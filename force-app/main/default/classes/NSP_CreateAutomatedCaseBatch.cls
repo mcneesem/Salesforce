@@ -175,7 +175,7 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
 
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
-            ContractTerminationQueue.handleException( e , methodName );
+            NSP_CreateAutomatedCaseBatch.handleException( e , methodName );
         }
     }
 
