@@ -174,9 +174,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                 {
                     subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
                 }
-                if(subject != null && this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
-                    subject = this.appendWseeToSubject(subject);
-                }
+                subject = this.appendWseeIfPresent(subject);
             } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
                 fields.NSP_Category__c='Strategic Consulting Services';
                 fields.NSP_SubCategory__c  ='Engagement Survey';
@@ -234,6 +232,13 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         else {
             this.hideSpinner();
         }
+    }
+
+    appendWseeIfPresent(subject) {
+        if (subject != null && this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null) {
+            return this.appendWseeToSubject(subject);
+        }
+        return subject;
     }
 
     appendWseeToSubject(subject) {
