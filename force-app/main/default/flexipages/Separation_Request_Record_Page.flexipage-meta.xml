@@ -1224,13 +1224,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Termination_Date_cField4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Employee_Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>TERMINATED</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
