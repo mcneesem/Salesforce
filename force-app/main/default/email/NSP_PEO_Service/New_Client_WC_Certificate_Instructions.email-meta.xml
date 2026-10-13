@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Used as a reactive response to educate a client regarding options to request a Workers&apos; Compensation Certificate</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>New Client-WC Certificate Instructions</name>
+    <style>freeForm</style>
+    <subject>Workers&apos; Compensation Certificate details</subject>
+    <textOnly>Should only be proactively sent to client's whose industries need these as a regular ongoing practice - remove this line prior to sending
+
+Good morning/Afternoon,
+
+As a new client with Insperity you may have immediate or future needs for Workers&apos; Compensation Certificates. I&apos;d like to proactively share with you some information on this process.
+
+Accessing this document requires the web role "Liability Administrator"; I can connect you to your [payroll specialist name and contact information] if not already in place. Once granted, sign into your Insperity Premier account, then navigate to Company &gt; Regulatory and Compliance.
+
+From this page you can access information regarding Coverages and Requirements, your area&apos;s claims specialist and request a certificate of insurance.
+
+
+There are two types of certificates, Standard and Custom. The standard version will not auto renew and is typically used for one-time only purposes. The custom version pertains to certificates you want renewed or that have special requirements.
+
+If you have questions or need additional support regarding your certificates you may reach out to 281-348-3930.
+
+Thank you for trusting Insperity to serve your business.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
