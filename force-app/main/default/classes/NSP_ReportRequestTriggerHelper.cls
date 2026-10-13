@@ -449,7 +449,6 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         }
         return ageRange;
     }
-
     //
     // MethodName : updateCaseSubjectName
     // Description : updates the case subject when WSEE value is updated on wizard output
