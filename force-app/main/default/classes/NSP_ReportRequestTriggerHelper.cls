@@ -449,13 +449,13 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         }
         return ageRange;
     }
+    
     //
     // MethodName : updateCaseSubjectName
     // Description : updates the case subject when WSEE value is updated on wizard output
     // Params : List<NSP_ReportRequest__c>repReqList
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
-
     private void updateCaseSubjectName( List<NSP_ReportRequest__c> repReqList ) {
     List<Case> caseIdSet = new List<Case>();
     try{
