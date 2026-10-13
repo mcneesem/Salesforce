@@ -3893,7 +3893,7 @@
                             <value>Asset.NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Asset.NSP_Status__c</value>
+                            <value>Asset.STATUS</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Asset.NSP_Client__c</value>
