@@ -2118,6 +2118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.NSP_NSPk_SubPlan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.New_EEs_Affected__c</field>
         <readable>true</readable>
     </fieldPermissions>
