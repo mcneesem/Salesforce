@@ -4,7 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
-                <identifier>lightningInbox_logItemButtonContainer</identifier>
+                <identifier>lightningInbox_logItemButtonContainer3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -27,7 +27,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
-                <identifier>lightningInbox_logItemButtonContainer2</identifier>
+                <identifier>lightningInbox_logItemButtonContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
