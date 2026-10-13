@@ -87,7 +87,7 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
 
     //Execute method to send email alert when ITA project is created
     public void execute( Database.BatchableContext bc , List<NSP_Account_Team__c>accountTeamList ) {
-        try{
+        try {
             Set<ID> accountIDs = new Set<ID>();
             ID WORecordType = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
             Map<ID,ID> accountWOAssetMap = new Map<ID,ID>();
@@ -111,8 +111,12 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
             if(!caseToInsert.isEmpty()){
                 createCase(caseToInsert);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_CreateAutomatedCaseBatch', 'execute', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateAutomatedCaseBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 
@@ -121,21 +125,30 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
     }
 
     public static void createCase( List<Case> caseToInsert ) {
-        try{
+        try {
             // insert the case records
-            if(!caseToInsert.isEmpty()){
-                Database.SaveResult[] result =  Database.insert(caseToInsert,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_CreateAutomatedCaseBatch', 'createCase:caseToInsert', result);
+            if ( !caseToInsert.isEmpty() ) {
+                Database.SaveResult[] results =  Database.insert( caseToInsert , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CreateAutomatedCaseBatch.class.getName() ,
+                    'createCase:insert' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_CreateAutomatedCaseBatch', 'createCase', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateAutomatedCaseBatch.class.getName() ,
+                'createCase' ,
+                e
+            );
         }
     }
 
     public static List<Case> populateCaseList( Set<Id> accountIDs , Map<Id,Id> accountWOAssetMap , Map<Id,String> accountAIMSClientMap ) {
         Set<ID> accountToExclude = new Set<ID>();
         List<Case> caseToInsert = new List<Case>();
-        try{// query to get National Business Team Queue ID
+        try {
+            // query to get National Business Team Queue ID
             List<Group> groupLst = [select Id FROM Group WHERE Type =: NSP_ServiceConstants.GROUPTYPE AND DeveloperName =: NSP_ServiceConstants.NATIONAL_BUSINESS_TEAM LIMIT 1 ];
             // loopthrough the case under same account with owner as ID to exclude case creation for those accounts
             for(Case caseID:[Select ID,AccountId FROM case WHERE AccountId =: accountIDs AND OwnerId =: groupLst[0].ID ]){
@@ -162,10 +175,15 @@ public without sharing class NSP_CreateAutomatedCaseBatch implements ISelfSchedu
                     }
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_CreateAutomatedCaseBatch', 'populateCaseList', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateAutomatedCaseBatch.class.getName() ,
+                'populateCaseList' ,
+                e
+            );
         }
         return caseToInsert;
     }
+
 }
 //
