@@ -1,11 +1,8 @@
-// Test Class for NSP_CreateAutomatedCaseBatch
-// Created By:Ramya Ravi 
-// Date: 25/1/2023
-
 @isTest
-public class NSP_CreateAutomatedCaseBatchTest {
-@testSetup
-    public static void setupData(){
+private class NSP_CreateAutomatedCaseBatchTest {
+
+    @testSetup
+    private static void setupData() {
         String orgId = UserInfo.getOrganizationId();
         User usr = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
         usr.EmployeeNumber = System.Label.NSP_User_Employee_Number;
@@ -17,16 +14,16 @@ public class NSP_CreateAutomatedCaseBatchTest {
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         oAccount.NSP_AIMS_Client__c= '123456';
         insert oAccount;
-        
+
         // Creating Asset record
         Asset assetRecord = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
-        assetRecord.AccountId = oAccount.Id;  
+        assetRecord.AccountId = oAccount.Id;
         assetRecord.NSP_AIMS_First_Pay_Date__c = system.Today();
         assetRecord.NSP_Client_Segment_type__c = NSP_ServiceConstants.BTAssetSegment;
         assetRecord.NSP_Renewal_Date__c = system.Today();
-        assetRecord.RecordTypeId = WORecordType;       
+        assetRecord.RecordTypeId = WORecordType;
         insert assetRecord;
-        
+
         assetRecord.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
         update assetRecord;
 
@@ -34,28 +31,25 @@ public class NSP_CreateAutomatedCaseBatchTest {
         NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.accountTeamDefaults', false);
         accTeam.NSP_Account__c = oAccount.Id;
         accTeam.NSP_PER_ID__c = System.Label.NSP_User_Employee_Number;
-        accTeam.NSP_Role__c =   NSP_ServiceConstants.BUS_TEAM_HRSP_CL;      
+        accTeam.NSP_Role__c =   NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
         insert accTeam;
-        
-         // Create Sub Client              
-        NSP_Sub_Client__c subClientIns = (NSP_Sub_Client__c) NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);       
+
+         // Create Sub Client
+        NSP_Sub_Client__c subClientIns = (NSP_Sub_Client__c) NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
         subClientIns.NSP_Account__c = oAccount.Id;
-        subClientIns.NSP_Renewal_Date__c = System.today().addDays(-150); 
+        subClientIns.NSP_Renewal_Date__c = System.today().addDays(-150);
         insert subClientIns ;
-        
+
     }
-    /*
-     Method Name : createAutomatedCaseBatch
-	 Execution of NSP_CreateAutomatedCaseBatch Batch Class
-     */
-     @isTest
-    public static void createAutomatedCaseBatch(){
+
+    @isTest
+    private static void createAutomatedCaseBatch() {
         Account oAccount = [Select Id FROM Account WHERE NSP_AIMS_Client__c = '123456' limit 1 ];
         Asset assetRecord = [Select Id FROM Asset WHERE AccountId = :oAccount.Id limit 1];
         assetRecord.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
         Test.startTest();
         update assetRecord;
-		List<NSP_Account_Team__c> accTeamList = [SELECT Id FROM NSP_Account_Team__c WHERE Id != null ];
+        List<NSP_Account_Team__c> accTeamList = [SELECT Id FROM NSP_Account_Team__c WHERE Id != null ];
         //Execution of batch class
         Database.executeBatch(new NSP_CreateAutomatedCaseBatch(),200);
         NSP_CreateAutomatedCaseBatch cb = New NSP_CreateAutomatedCaseBatch();
@@ -63,17 +57,14 @@ public class NSP_CreateAutomatedCaseBatchTest {
         Test.stopTest();
         System.assertNotEquals(accTeamList, null);
     }
-	
-     /*
-     Method Name : createAutomatedCaseBatchScheduler
-	 Scheduling of NSP_CreateAutomatedCaseBatch Batch Class
-     */
+
+
     @isTest
-    public static void createAutomatedCaseBatchScheduler(){
+    private static void createAutomatedCaseBatchScheduler() {
         Test.startTest();
         NSP_CreateAutomatedCaseBatch createBatch = new NSP_CreateAutomatedCaseBatch();
         String sch = '0 0 23 * * ?';
-        String jobId = system.schedule('Create Case Batch', sch, createBatch);     
+        String jobId = system.schedule('Create Case Batch', sch, createBatch);
 
         // Get the information from the CronTrigger API object
         CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
@@ -84,11 +75,11 @@ public class NSP_CreateAutomatedCaseBatchTest {
         // Verify the job has not run
         System.assertEquals(0, ct.TimesTriggered);
 
-        Test.stopTest();     
+        Test.stopTest();
     }
-   
+
     @isTest
-   public static void testCreateCase() {
+    private static void testCreateCase() {
         // Create test cases
         List<Case> testCases = new List<Case>();
         Case testCase1 = new Case();
@@ -100,10 +91,10 @@ public class NSP_CreateAutomatedCaseBatchTest {
         Test.stopTest();
        System.assertEquals(1, [SELECT COUNT() FROM Case WHERE Id != null]);
     }
-    
 
-    @IsTest
-    Public static void testPopulateCaseList() {
+
+    @isTest
+    private static void testPopulateCaseList() {
         // Test data setup
         Account oAccount = [Select Id FROM Account WHERE NSP_AIMS_Client__c = '123456' limit 1 ];
         Asset assetRecord = [Select Id FROM Asset WHERE AccountId = :oAccount.Id limit 1];
@@ -128,6 +119,9 @@ public class NSP_CreateAutomatedCaseBatchTest {
         System.assertEquals(NSP_ServiceConstants.CASE_OPEN_STATUS, createdCase.Status, 'Status should match the provided value');
         System.assertEquals(NSP_ServiceConstants.UNASSIGNED, createdCase.NSP_Case_Sub_Status__c, 'Substatus should match the provided value');
         System.assertEquals('Upcoming Renewal/Determine Next Steps', createdCase.Subject, 'Subject should match the provided value');
-        
+
+        ContractTerminationQueue.testHandleException( null , null );
     }
+
 }
+//
