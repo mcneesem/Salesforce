@@ -36,7 +36,7 @@
                     </apex:outputPanel>
                 </p>
                 <p>
-                    <apex:outputPanel rendered="{!((relatedTo.Quote__r.NSP_Has_WA_product__c || relatedTo.Quote__r.NSP_Has_WX_product__c)&& relatedTo.Quote__r.NSP_Free_Month__c != '') }">
+                    <apex:outputPanel rendered="{!(relatedTo.Quote__r.NSP_Free_Month__c != '')}">
                         <b>Free Months:</b>&nbsp;<apex:outputField value=" {!relatedTo.Quote__r.NSP_Free_Month__c}"/><br/>
                     </apex:outputPanel>
                 </p>
