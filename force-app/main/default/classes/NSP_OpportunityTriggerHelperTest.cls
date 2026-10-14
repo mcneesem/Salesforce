@@ -1167,7 +1167,7 @@ private class NSP_OpportunityTriggerHelperTest {
         helper.updatesOnChildOpportunity( new List<String>{ parentOpp.Id } );
         Test.stopTest();
 
-        // The Closed Won child must remain Closed Won — not get closed lost
+        // The Closed Won child must remain Closed Won - not get closed lost
         Opportunity afterUpdate = [
             SELECT StageName, NSP_Is_Parent_Opportunity_Closed_Lost__c
             FROM Opportunity
