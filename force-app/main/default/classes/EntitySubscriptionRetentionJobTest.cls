@@ -24,6 +24,7 @@ private class EntitySubscriptionRetentionJobTest {
         insCase.ContactId = insPriCon.id;
         insCase.NSP_CorporateEmployeeEE__c = true;
         insCase.status = 'Closed';
+        insCase.NSP_Rating__c = 'Neutral';
         Insert insCase;
 
         EntitySubscription es = new  EntitySubscription();
