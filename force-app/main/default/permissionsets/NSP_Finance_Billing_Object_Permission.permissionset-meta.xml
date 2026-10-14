@@ -4341,6 +4341,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Proj__c.Project_Down_Payment_Not_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Annual_Base_Salary__c</field>
         <readable>true</readable>
     </fieldPermissions>
