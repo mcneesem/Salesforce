@@ -161,14 +161,14 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Contract Obligation</label>
     <nameField>
-        <displayFormat>CO-{0000000000}</displayFormat>
+        <encryptionScheme>None</encryptionScheme>
         <label>Contract Obligation ID</label>
         <trackHistory>true</trackHistory>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Contract Obligations</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields xsi:nil="true"></searchResultsAdditionalFields>
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
