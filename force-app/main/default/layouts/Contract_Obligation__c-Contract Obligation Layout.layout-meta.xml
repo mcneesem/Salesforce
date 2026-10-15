@@ -141,6 +141,9 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Rendered_Contract_Obligation__c.Contract_Obligation__c</relatedList>
     </relatedLists>
