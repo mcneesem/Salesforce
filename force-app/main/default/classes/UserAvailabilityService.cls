@@ -429,7 +429,7 @@ public with sharing class UserAvailabilityService {
             && ( e != null )
             && ( e.StartDateTime != null )
             && ( e.EndDateTime != null )
-            && BusinessHours.isWithin( businessHoursId , e.StartDateTime ) 
+            && BusinessHours.isWithin( businessHoursId , e.StartDateTime )
             && ( BusinessHours.add( businessHoursId , e.StartDateTime , durationMs ) == e.EndDateTime )
             )
         {
@@ -481,6 +481,7 @@ public with sharing class UserAvailabilityService {
                             AND ( NSP_Event_Subtype__c != null )
                             AND ( StartDateTime >= :window.StartDateTime )
                             AND ( StartDateTime < :window.EndDateTime )
+                            AND ShowAs != 'Free'
                         )
                         GROUP BY OwnerId , DAY_ONLY(StartDateTime)
                         HAVING ( COUNT(Id) >= 4 )
