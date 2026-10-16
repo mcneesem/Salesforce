@@ -137,6 +137,11 @@
                 <label>Insurance Services</label>
             </value>
             <value>
+                <fullName>Insurance Services Revolution</fullName>
+                <default>false</default>
+                <label>Insurance Services Revolution</label>
+            </value>
+            <value>
                 <fullName>ITA Analyst</fullName>
                 <default>false</default>
                 <label>ITA Analyst</label>
