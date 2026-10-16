@@ -5,7 +5,7 @@ const DYNAMIC_FIELDS = {
     {
       expValue: [YES],
       dependentFields: [
-        'X2nd_Pay_Date__c',
+        'X1st_Pay_Date__c',
       ],
     },
   ],
@@ -153,11 +153,20 @@ const DYNAMIC_FIELDS = {
       dependentFields: [
         'Accrual_rates_are_based_Input_Number__c_AIMS_CALENDAR',
         'NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR',
-        
+
       ],
     },
   ],
   NSP_timeaccrue_underplan_aimsanniversary__c: [
+    {
+      expValue: [
+        'First of Month: Accrual is added on the first day of each month',
+        'Pay Period: Accrual is added on each pay date',
+      ],
+      dependentFields: [
+        'NSP_If_hired_midway_through_pay_period__c_AIMS_ANNIVERSARY',
+      ],
+    },
     {
       expValue: [
         'Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid',

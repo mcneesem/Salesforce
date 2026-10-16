@@ -124,7 +124,7 @@
         </rules>
         <rules>
             <name>Anniversary_Year</name>
-            <conditionLogic>5 AND 2 AND ((6 AND 7) OR (1 AND 3 AND ((4 AND 8 AND 9) OR (8 AND NOT(9) AND NOT(4)))))</conditionLogic>
+            <conditionLogic>5 AND 2 AND ((6 AND 7 AND (((10 OR 11) AND 12) OR (NOT(10) AND NOT(11)))) OR (1 AND 3 AND ((4 AND 8 AND 9) OR (8 AND NOT(9) AND NOT(4)))))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -183,6 +183,27 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_List_pay_codes__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>First of Month: Accrual is added on the first day of each month</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pay Period: Accrual is added on each pay date</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -968,7 +989,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.X2nd_Pay_Date__c</leftValueReference>
+                <leftValueReference>$Record.X1st_Pay_Date__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1256,7 +1277,7 @@ NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
 NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
 NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
 
- OR( 
+ OR(
         NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
 ),
