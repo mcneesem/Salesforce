@@ -3,6 +3,22 @@
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_User_Running_Flow</name>
+        <label>Assign User Running Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>runningUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Cancel_Requested</name>
         <label>Cancel Requested</label>
         <locationX>0</locationX>
@@ -211,6 +227,13 @@
                     <elementReference>$Setup.Schedule_Seller_Settings__c.EventRecordTypeId__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_User.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Schedule_Seller_Admin</targetReference>
             </connector>
@@ -239,11 +262,33 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_User</name>
+        <label>Get User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Schedule_Seller_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Schedule_Seller_Record_Type</targetReference>
+            <targetReference>Assign_User_Running_Flow</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -265,4 +310,11 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>runningUser</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
