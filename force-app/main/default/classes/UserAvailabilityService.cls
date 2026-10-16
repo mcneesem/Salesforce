@@ -481,7 +481,7 @@ public with sharing class UserAvailabilityService {
                             AND ( NSP_Event_Subtype__c != null )
                             AND ( StartDateTime >= :window.StartDateTime )
                             AND ( StartDateTime < :window.EndDateTime )
-                            AND ShowAs != 'Free'
+                            AND ( ShowAs != 'Free' )
                         )
                         GROUP BY OwnerId , DAY_ONLY(StartDateTime)
                         HAVING ( COUNT(Id) >= 4 )
