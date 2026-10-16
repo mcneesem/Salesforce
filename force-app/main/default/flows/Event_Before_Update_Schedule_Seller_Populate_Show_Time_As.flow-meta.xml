@@ -233,7 +233,7 @@
         <defaultConnector>
             <targetReference>Is_Status_Cancelled</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_not_Admin</name>
             <conditionLogic>and</conditionLogic>
