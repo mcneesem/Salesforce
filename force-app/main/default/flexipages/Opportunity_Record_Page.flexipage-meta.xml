@@ -7087,6 +7087,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_BidNumber__c</fieldItem>
+                <identifier>RecordNSP_BidNumber_cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-9d5b4950-42bb-4fc8-9db9-3abdbb53c841</name>
         <type>Facet</type>
     </flexiPageRegions>
