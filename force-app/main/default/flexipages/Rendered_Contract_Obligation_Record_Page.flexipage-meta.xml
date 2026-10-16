@@ -77,7 +77,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Contract_Obligation__c</fieldItem>
                 <identifier>RecordContract_Obligation_cField</identifier>
