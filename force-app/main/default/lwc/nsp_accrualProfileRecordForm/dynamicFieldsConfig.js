@@ -153,7 +153,7 @@ const DYNAMIC_FIELDS = {
       dependentFields: [
         'Accrual_rates_are_based_Input_Number__c_AIMS_CALENDAR',
         'NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR',
-
+        
       ],
     },
   ],
