@@ -76,7 +76,7 @@
             value={fieldValue.CustomOwnerId__c}
             class="slds-form-element__legend"
             >
-          </lightning-input-field>
+          </lightning-input-field> 
         </div>
         <div class="slds-col slds-size_1-of-2">
           <lightning-input-field disabled
@@ -201,7 +201,7 @@
             >
           </lightning-input-field>
 
-          <lightning-combobox read-only
+          <lightning-combobox read-only 
             lwc:if={visibility.NSP_Accrual_Profile__c}
             label="Name of the plan being replaced"
             value={nameOfThePlanBeingReplaced}
@@ -227,7 +227,7 @@
             value={fieldValue.NSP_Employee_Status_check_all_that_apply__c}
             data-name="NSP_Employee_Status_check_all_that_apply__c"
             class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
-
+            
             multiple>
           </c-nsp_selection-box>
 
@@ -254,7 +254,7 @@
       name="PolicyDetails"
       label="Policy Details">
       <div class="slds-grid slds-gutters slds-var-p-top_x-small">
-        <div class="slds-col slds-size_1-of-2">
+        <div class="slds-col slds-size_1-of-2"> 
 
           <lightning-formatted-text
             value="What is the plan year or 12-month period in which time is earned?"
@@ -269,7 +269,7 @@
               class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
               >
           </lightning-input-field>
-
+          
           <div if:true={visibility.isCalendarYear}>
             <lightning-combobox read-only
               label="When do accrual level changes happen?"
@@ -279,7 +279,7 @@
               class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
               >
             </lightning-combobox>
-
+            
             <lightning-input-field disabled
               lwc:if={visibility.NSP_time_accrue_under_plan_aims_calendar__c}
               field-name="NSP_time_accrue_under_plan_aims_calendar__c"
@@ -308,7 +308,7 @@
 
             <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR}>
               <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend">
-                <label> Accrual rates are based on every
+                <label> Accrual rates are based on every 
                   <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_CALENDAR}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                   </span>
@@ -321,7 +321,7 @@
                     data-name="NSP_Hours_paid_for_earning_accruals__c"
                     data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_CALENDAR"
                     class="slds-show slds-var-m-bottom_medium"
-
+                    
                     multiple>
                   </c-nsp_selection-box>
               </div>
@@ -338,7 +338,7 @@
           </div>
 
           <div if:true={visibility.isAnniversaryYear}>
-
+            
             <lightning-combobox read-only
               label="When do accrual level changes happen?"
               value={fieldValue.NSP_When_do_accrual_level_changes_happen__c}
@@ -376,7 +376,7 @@
             <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY}>
 
               <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend">
-                <label> Accrual rates are based on every
+                <label> Accrual rates are based on every 
                   <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_ANNIVERSARY}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                   </span>
@@ -390,7 +390,7 @@
                   data-name="NSP_Hours_paid_for_earning_accruals__c"
                   data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY"
                   class="slds-show slds-var-m-bottom_medium"
-
+                  
                   multiple>
                 </c-nsp_selection-box>
               </div>
@@ -467,7 +467,7 @@
 
             <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_FISCAL}>
               <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend" >
-                <label> Accrual rates are based on every
+                <label> Accrual rates are based on every 
                   <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_FISCAL}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                   </span>
@@ -481,7 +481,7 @@
                   data-name="NSP_Hours_paid_for_earning_accruals__c"
                   data-visibility-name="NSP_Hours_paid_for_earning_accruals__c_AIMS_FISCAL"
                   class="slds-show slds-var-m-bottom_medium"
-
+                  
                   multiple>
                 </c-nsp_selection-box>
               </div>
@@ -496,7 +496,7 @@
               </lightning-input-field>
             </template>
           </div>
-
+        
           <lightning-formatted-text value="In what unit of time are accruals tracked?"
           class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
           </lightning-formatted-text>
@@ -573,7 +573,7 @@
           class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
           >
       </lightning-input-field>
-
+        
       <lightning-input-field disabled
           field-name="NSP_balances_paid_in_lieu_of_carryover__c"
           value={fieldValue.NSP_balances_paid_in_lieu_of_carryover__c}
@@ -612,7 +612,7 @@
       class="slds-show slds-var-p-horizontal_xx-small"
       >
     </lightning-input-field>
-
+    
     <lightning-formatted-text
       value="Policy/Accrual supporting documentation attached"
       class="slds-show slds-var-m-around_medium">
@@ -638,7 +638,7 @@
         <strong>Plan Year</strong> - {fieldValue.NSP_What_is_the_plan_year__c}
       </div>
       <div class="slds-col slds-size_1-of-3">
-        <strong>Time Accrual</strong> -
+        <strong>Time Accrual</strong> - 
           <span class="slds-var-m-left_x-small" lwc:if={visibility.isCalendarYear}>
             {fieldValue.NSP_time_accrue_under_plan_aims_calendar__c}
           </span>
