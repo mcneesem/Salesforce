@@ -204,7 +204,7 @@ public class NSP_AssetUpdate {
             WHERE Id IN :activeUserMap.keySet()
         ];
         for(Asset assetObj : assetList){
-            assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(activeUserMap.get(assetObj.Id));
+            assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(activeUserMap.get(assetObj.Id).intValue());
             updateAssetList.add(assetObj);
         }
         try {
