@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Restrict_Integrated_Account_Team_Roles</name>
+    </customPermissions>
+    <description>Grants the Bypass Restrict Integrated Account Team Roles custom permission to authorized users who need to create or update integrated Account Team roles</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Restrict Integrated Account Team Roles</label>
+</PermissionSet>
