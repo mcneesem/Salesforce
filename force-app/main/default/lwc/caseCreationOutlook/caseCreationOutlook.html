@@ -1,8 +1,27 @@
 <template>
     <template lwc:if={hasPermission}>
-        <lightning-flow
-            flow-api-name="Case_Creation_Screen_Flow"
-            onstatuschange={handleStatusChange}>
-        </lightning-flow>
+        <template lwc:if={isFlowVisible}>
+            <div class="slds-m-bottom_x-small">
+                <lightning-button-icon
+                    icon-name="utility:back"
+                    variant="bare"
+                    alternative-text="Back"
+                    title="Back to Create Case"
+                    onclick={handleCancelFlow}>
+                </lightning-button-icon>
+            </div>
+            <lightning-flow
+                flow-api-name="Case_Creation_Screen_Flow"
+                flow-input-variables={flowInputVariables}
+                onstatuschange={handleStatusChange}>
+            </lightning-flow>
+        </template>
+        <template lwc:else>
+            <lightning-button
+                label="Create Case"
+                variant="brand"
+                onclick={handleButtonClick}>
+            </lightning-button>
+        </template>
     </template>
 </template>
