@@ -210,7 +210,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
+            <targetReference>Is_Outlook_True</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -226,7 +226,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
+            <targetReference>Is_Outlook_True</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -741,7 +741,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Blank_Record_Id</targetReference>
+                <targetReference>Is_Outlook</targetReference>
             </connector>
             <label>Record Id Is Blank</label>
         </rules>
@@ -934,12 +934,84 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Outlook</name>
+        <label>Is Outlook</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Blank_Record_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outlook_Path</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Accessible_Record_Types</targetReference>
+            </connector>
+            <label>Outlook Path</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Outlook_True</name>
+        <label>Is Outlook True</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Populate_Case_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outlook_True_Path</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Outlook_Screen</targetReference>
+            </connector>
+            <label>Outlook True Path</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Outlook_Validator</name>
+        <label>Outlook Validator</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Outlook</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_To_Record</targetReference>
+            </connector>
+            <label>Not Outlook</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ShowConfidentialDecision</name>
         <label>ShowConfidentialDecision</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Populate_Case_Fields</targetReference>
+            <targetReference>Is_Outlook_True</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1106,6 +1178,14 @@
         </rules>
     </decisions>
     <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
+    <dynamicChoiceSets>
+        <name>Status</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Status</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -1774,6 +1854,34 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Outlook_Screen</name>
+        <label>Outlook Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Populate_Case_Fields</targetReference>
+        </connector>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>caseRecord.Status</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Record_Type_Selection</name>
         <label>Record Type Selection</label>
         <locationX>0</locationX>
@@ -1857,7 +1965,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Navigate_To_Record</targetReference>
+            <targetReference>Outlook_Validator</targetReference>
         </connector>
         <flowName>Case_Creation_Screen_Flow_Related_Records</flowName>
         <inputAssignments>
@@ -1914,7 +2022,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Case</objectType>
     </variables>
     <variables>
@@ -1956,6 +2064,16 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>isOutlook</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>objectApiName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1970,7 +2088,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>selectedAccountId</name>
