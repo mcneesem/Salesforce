@@ -776,7 +776,7 @@ public class NSP_OrderItemTriggerHelper {
                     )
                 {
                     assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
-                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
+                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId).intValue());
                     ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
                     ordObj.NSP_ServiceAsset__c = assetObj.Id;
                     ordItemList.add(ordObj);
@@ -808,7 +808,7 @@ public class NSP_OrderItemTriggerHelper {
                         )
                     {
                         assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
-                        assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
+                        assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId).intValue());
                         ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
                         ordObj.NSP_ServiceAsset__c = assetObj.Id;
                         ordItemList.add(ordObj);
