@@ -42,7 +42,7 @@ public with sharing class QuoteTerminationQueueable implements Queueable , Final
     // @param quoteIds Quote record identifiers to process.
     // @param toUsers Email recipients for failure notifications.
     // @param contractIdToSendEmail Contract identifier used in notification messages.
-    public QuoteTerminationQueueable( List<Id> quoteIds , List<String> toUsers , Id contractIdToSendEmail ) {
+    private QuoteTerminationQueueable( List<Id> quoteIds , List<String> toUsers , Id contractIdToSendEmail ) {
         this.quoteIds = quoteIds != null ? quoteIds : new List<Id>();
         this.toUsers = toUsers != null ? toUsers : new List<String>();
         this.contractIdToSendEmail = contractIdToSendEmail;

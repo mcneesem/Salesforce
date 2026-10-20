@@ -152,7 +152,7 @@ private class ContractTerminationHandlerTest {
         System.assertEquals(Date.today(),quoteResult.NSP_TerminationDate__c);
     }
 
-      // ─── QuoteTerminationQueueable coverage ────────────────────────────────
+      // QuoteTerminationQueueable coverage ────────────────────────────────
 
     @IsTest
     private static void testCPQQueue_EligibleForWaiver() {
@@ -166,7 +166,7 @@ private class ContractTerminationHandlerTest {
         insert waiverProduct;
 
         // NSP_TransactionType__c on Quote is TEXT(SBQQ__Opportunity2__r.NSP_TransactionType__c)
-        // — drive it through the Opportunity instead
+        // drive it through the Opportunity instead
         List<SBQQ__Quote__c> quote = [ SELECT Id, SBQQ__Opportunity2__c FROM SBQQ__Quote__c LIMIT 1 ];
         NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         if(quote != null && !quote.isEmpty()){
@@ -180,12 +180,14 @@ private class ContractTerminationHandlerTest {
             update qLines;
         }
 
-        Contract ct = [ SELECT Id FROM Contract LIMIT 1 ];
+        List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
 
         Test.startTest();
-        System.enqueueJob( new QuoteTerminationQueueable(new List<Id>{ quote[0].Id } ,
-                                                           new List<String>{ 'test@insperity.com' } ,
-                                                           ct.Id) );
+        QuoteTerminationQueueable.enqueueJob(
+            new List<Id>{ quote[0].Id } ,
+            new List<String>{ 'test@insperity.com' } ,
+            ct[0].Id
+        );
         Test.stopTest();
 
         List<SBQQ__QuoteLine__c> waiverLines = [ SELECT Id FROM SBQQ__QuoteLine__c
@@ -207,7 +209,7 @@ private class ContractTerminationHandlerTest {
         insert waiverProduct;
 
         // NSP_TransactionType__c on Quote is TEXT(SBQQ__Opportunity2__r.NSP_TransactionType__c)
-        // — drive it through the Opportunity instead
+        // drive it through the Opportunity instead
         List<SBQQ__Quote__c> quote = [ SELECT Id, SBQQ__Opportunity2__c FROM SBQQ__Quote__c LIMIT 1 ];
         if(quote != null && !quote.isEmpty()){
         NSP_OpportunityTriggerHandler.TriggerDisabled = true;
@@ -229,11 +231,11 @@ private class ContractTerminationHandlerTest {
 
         Test.startTest();
         if(ct != null && !ct.isEmpty()){
-            System.enqueueJob( new QuoteTerminationQueueable(
+            QuoteTerminationQueueable.enqueueJob(
                 new List<Id>{ quote[0].Id } ,
                 new List<String>{ 'test@insperity.com' } ,
                 ct[0].Id
-            ) );
+            );
         }
         Test.stopTest();
 
@@ -253,11 +255,11 @@ private class ContractTerminationHandlerTest {
 
         Test.startTest();
         if(ct != null && !ct.isEmpty()){
-            System.enqueueJob( new QuoteTerminationQueueable(
+            QuoteTerminationQueueable.enqueueJob(
                 new List<Id>() ,
                 new List<String>{ 'test@insperity.com' } ,
                 ct[0].Id
-            ) );
+            );
         }
         Test.stopTest();
 
@@ -270,7 +272,11 @@ private class ContractTerminationHandlerTest {
         List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
 
         Test.startTest();
-        System.enqueueJob( new QuoteTerminationQueueable( null , null , ct[0].Id ) );
+        QuoteTerminationQueueable.enqueueJob(
+            null ,
+            null ,
+            ct[0].Id
+        );
         QuoteTerminationQueueable.testHandleException( null, null );
         Test.stopTest();
 
