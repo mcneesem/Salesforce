@@ -122,16 +122,15 @@
             <label>Yes : Valid Portal Task</label>
         </rules>
     </decisions>
-    <description>Handle Business Inception Date , Remove FEIN
-10/15 - Fixed Portal Status</description>
+    <description>Handle Business Inception Date</description>
     <environments>Default</environments>
     <formulas>
         <name>f_PortalStatus</name>
         <dataType>String</dataType>
         <expression>IF(
-    NOT(ISBLANK({!$Record.Business_Inception_Date__c})),
-    &quot;Completed&quot;,
-    &quot;Pending&quot;
+  NOT( ISBLANK( {!$Record.Business_Inception_Date__c} ) ) ,
+  &quot;Completed&quot; ,
+  &quot;Pending&quot;
 )</expression>
     </formulas>
     <interviewLabel>Implementation Profile - Updated - Async - Handle Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
