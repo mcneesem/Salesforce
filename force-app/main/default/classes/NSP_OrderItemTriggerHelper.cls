@@ -1,4 +1,4 @@
-// Represents the OrderItem trigger helper which handles all the logic.
+// intentionally `without sharing` to preserve default sharing at api version 52...
 public without sharing class NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
     // test w/ NSP_OrderItemTriggerHelperTest (76%)
