@@ -1414,11 +1414,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_Anticipated_Date_of_Termination__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_AnyActiveOpportunitiesInThe_Pipeline__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13656,15 +13651,6 @@
     <layoutAssignments>
         <layout>dfsle__EnvelopeStatus__c-dfsle__DocuSign Envelope Status Layout</layout>
     </layoutAssignments>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Lead</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <pageAccesses>
         <apexPage>NSP_GoogleReCaptcha</apexPage>
         <enabled>true</enabled>

@@ -15,9 +15,9 @@
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>clientNumber</name>
+            <name>clientNumbers</name>
             <value>
-                <elementReference>Client_Number</elementReference>
+                <elementReference>Selected_Client_Numbers</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -47,6 +47,103 @@
     </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_Invalid_Client</name>
+        <label>Add Invalid Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Invalid_Client_Numbers</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Validate_Client_Numbers</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Invalid_Clients_Display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Prepare_Client_Row</name>
+        <label>Prepare Client Row</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Current_Client_Row.NSP_Client__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Looping_Client_Numbers.Client_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Client_Rows</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Current_Client_Row</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Selected_Client_Numbers</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Looping_Client_Numbers.Client_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Looping_Client_Numbers</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Error_UX</name>
+        <label>Reset Error UX</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Show_Client_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Show_No_Client_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Invalid_Clients_Display</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Selected_Client_Numbers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Selected_Client_Numbers</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Client_Rows</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Client_Rows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Invalid_Client_Numbers</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Invalid_Client_Numbers</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Run_All_Clients</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Client_Validation_Error</name>
         <label>Set Client Validation Error</label>
@@ -95,6 +192,39 @@
         </assignmentItems>
         <connector>
             <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_No_Client_Error</name>
+        <label>Set No Client Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Show_No_Client_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Client_Number_Input</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Invalid_Clients_Display</name>
+        <label>Update Invalid Clients Display</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Invalid_Clients_Display</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Updated_Invalid_Clients_Display</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Validate_Client_Numbers</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -210,6 +340,89 @@
         </value>
     </choices>
     <decisions>
+        <name>Any_Invalid_Clients</name>
+        <label>Any Invalid Clients?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Client_Validation_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>YES</defaultConnectorLabel>
+        <rules>
+            <name>NO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Invalid_Client_Numbers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Launch_Renewal_Batch</targetReference>
+            </connector>
+            <label>NO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_Client_Numbers_Available</name>
+        <label>Are Client Numbers Available?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_No_Client_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Client_Numbers_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Selected_Client_Numbers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Selected_Client_Numbers</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Eligible_Clients</targetReference>
+            </connector>
+            <label>Client Numbers Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_Specific_Clients_Selected</name>
+        <label>Are Specific Clients Selected?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_Client_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Client Selected</defaultConnectorLabel>
+        <rules>
+            <name>Specific_Clients_Selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Client_Numbers_Repeater.AllItems</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Looping_Client_Numbers</targetReference>
+            </connector>
+            <label>Specific Clients Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Batch_Launch_Result</name>
         <label>Batch Launch Result</label>
         <locationX>0</locationX>
@@ -235,28 +448,35 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Client_Validation</name>
-        <label>Client Validation</label>
+        <name>Is_Client_Eligible</name>
+        <label>Is Client Eligible?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Set_Client_Validation_Error</targetReference>
+            <targetReference>Add_Invalid_Client</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Invalid Client</defaultConnectorLabel>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Valid_Client</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Yes</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Eligible_Client.Id</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>Transform_Client_Collection</leftValueReference>
+                <operator>Contains</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>Validate_Client_Numbers</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Invalid_Client_Numbers</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>Validate_Client_Numbers</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Launch_Renewal_Batch</targetReference>
+                <targetReference>Validate_Client_Numbers</targetReference>
             </connector>
-            <label>Valid Client</label>
+            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
@@ -265,9 +485,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Eligible_Client</targetReference>
+            <targetReference>Are_Specific_Clients_Selected</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Specific Client</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>All_Clients</name>
             <conditionLogic>and</conditionLogic>
@@ -311,6 +531,15 @@
         <expression>TEXT( {!Select_Month} ) &amp; &quot;/&quot; &amp; TEXT( {!YearNumber} )</expression>
     </formulas>
     <formulas>
+        <name>Updated_Invalid_Clients_Display</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    ISBLANK({!Invalid_Clients_Display}),
+    {!Validate_Client_Numbers},
+    {!Invalid_Clients_Display} &amp; &quot;, &quot; &amp; {!Validate_Client_Numbers}
+)</expression>
+    </formulas>
+    <formulas>
         <name>YearNumber</name>
         <dataType>Number</dataType>
         <expression>VALUE( {!Select_Year} )</expression>
@@ -319,6 +548,34 @@
     <interviewLabel>Generate Renewal Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Generate Renewal Opportunities</label>
+    <loops>
+        <name>Looping_Client_Numbers</name>
+        <label>Looping Client Numbers</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Client_Numbers_Repeater.AllItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Prepare_Client_Row</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Are_Client_Numbers_Available</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Validate_Client_Numbers</name>
+        <label>Validate Client Numbers</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Selected_Client_Numbers</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Is_Client_Eligible</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Any_Invalid_Clients</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -339,13 +596,13 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Eligible_Client</name>
-        <label>Get Eligible Client</label>
+        <name>Get_Eligible_Clients</name>
+        <label>Get Eligible Clients</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Client_Validation</targetReference>
+            <targetReference>Transform_Client_Collection</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Eligible_Client</targetReference>
@@ -353,9 +610,9 @@
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Client__c</field>
-            <operator>EqualTo</operator>
+            <operator>In</operator>
             <value>
-                <elementReference>Client_Number</elementReference>
+                <elementReference>Selected_Client_Numbers</elementReference>
             </value>
         </filters>
         <filters>
@@ -386,9 +643,10 @@
                 <elementReference>Renewal_Created_Value</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>NSP_Sub_Client__c</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Client__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -450,7 +708,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Is_Run_All_Clients</targetReference>
+            <targetReference>Reset_Error_UX</targetReference>
         </connector>
         <fields>
             <name>Run_All_Clients</name>
@@ -472,12 +730,34 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>Client_Number</name>
-            <dataType>String</dataType>
-            <fieldText>Client Number</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
+            <name>Client_Numbers_Repeater</name>
+            <fieldType>Repeater</fieldType>
+            <fields>
+                <name>Client_Number</name>
+                <dataType>String</dataType>
+                <defaultValue>
+                    <elementReference>Client_Rows[$EachItem].NSP_Client__c</elementReference>
+                </defaultValue>
+                <fieldText>Client Number</fieldText>
+                <fieldType>InputField</fieldType>
+                <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                <isRequired>true</isRequired>
+                <styleProperties>
+                    <verticalAlignment>
+                        <stringValue>top</stringValue>
+                    </verticalAlignment>
+                    <width>
+                        <stringValue>12</stringValue>
+                    </width>
+                </styleProperties>
+            </fields>
+            <inputParameters>
+                <name>collection</name>
+                <value>
+                    <elementReference>Client_Rows</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>false</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -487,7 +767,7 @@
                 </width>
             </styleProperties>
             <visibilityRule>
-                <conditionLogic>1</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>Run_All_Clients</leftValueReference>
                     <operator>EqualTo</operator>
@@ -499,7 +779,7 @@
         </fields>
         <fields>
             <name>Error</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 32, 13);&quot;&gt;Error: Enter a valid Client Number.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Invalid Client Number(s)&lt;/span&gt;: {!Invalid_Clients_Display}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(231, 17, 17);&quot;&gt;Please correct or remove the invalid Client Number(s) and run again.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -523,6 +803,36 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>No_Client_Error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(228, 14, 14);&quot;&gt;Please add at least one Client Number or select Run All Clients.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Run_All_Clients</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Show_No_Client_Error</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -654,6 +964,43 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Transform_Client_Collection</name>
+        <label>Transform Client Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Validate_Client_Numbers</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Eligible_Clients[$EachItem].NSP_Client__c</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <variables>
+        <name>Client_Rows</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Sub_Client__c</objectType>
+    </variables>
+    <variables>
+        <name>Current_Client_Row</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Sub_Client__c</objectType>
+    </variables>
     <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
@@ -663,6 +1010,20 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>Invalid_Client_Numbers</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Invalid_Clients_Display</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>IsBatchQueued</name>
@@ -675,7 +1036,24 @@
         </value>
     </variables>
     <variables>
+        <name>Selected_Client_Numbers</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Show_Client_Error</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Show_No_Client_Error</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

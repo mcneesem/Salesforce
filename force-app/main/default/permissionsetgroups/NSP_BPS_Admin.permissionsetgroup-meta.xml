@@ -6,6 +6,7 @@
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
     <permissionSets>BPS_Sales_Admin_Mgr_Perms</permissionSets>
+    <permissionSets>Bypass_Restrict_Schedule_Seller_Events</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
@@ -26,6 +27,9 @@
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Admin</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>pse__PSAProjectManagementCreateProjectFromTemplate</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>

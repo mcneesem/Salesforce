@@ -18,12 +18,12 @@
             <value>
                 <fullName>1</fullName>
                 <default>false</default>
-                <label>BPA/Prospect Requested Initially</label>
+                <label>Prospect Requested Initially</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>BPA Requested After Med Pricing</label>
+                <label>Requested After Med Pricing</label>
             </value>
             <value>
                 <fullName>3</fullName>

@@ -498,10 +498,6 @@
         <editHeading>true</editHeading>
         <label>Risk Fields</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Anticipated_Date_of_Termination__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>

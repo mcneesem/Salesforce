@@ -5,6 +5,7 @@
     <label>HCM</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
@@ -29,7 +30,9 @@
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_WX_Product_Only</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>

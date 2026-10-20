@@ -3,23 +3,6 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Fault_Element_Get_Implementation_Profile</name>
-        <label>Assign Fault Element: Get_Implementation_Profile</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Implementation_Profile</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Fault_Element_Get_Project</name>
         <label>Assign Fault Element: Get_Project</label>
         <locationX>0</locationX>
@@ -49,90 +32,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Get_Project_Milestones</name>
-        <label>Assign Fault Element: Get_Project_Milestones</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Project_Milestones</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Get_Project_Task</name>
-        <label>Assign Fault Element: Get_Project_Task</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Project_Task</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Implementation_Profile_Update</name>
-        <label>Assign Fault Element: Implementation_Profile_Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Implementation_Profile_Update</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Project_Milestone_Update</name>
-        <label>Assign Fault Element: Project_Milestone_Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Project_Milestone_Update</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Void_Terminations_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Project_Task_Update</name>
-        <label>Assign Fault Element: Project_Task_Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Project_Task_Update</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Void_Terminations_Fault_Handler</targetReference>
         </connector>
@@ -150,70 +49,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Void_Terminations_Fault_Handler</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Inactive_Profile</name>
-        <label>Inactive Profile</label>
+        <name>Assign_Project_Status</name>
+        <label>Assign : Project Status</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>Implementation_Profile_Records.NSP_Inactive__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ProfileList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Implementation_Profile_Records</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Implementation_Profile_Records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Project_Milestone_Status_update</name>
-        <label>Project Milestone Status update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>Project_Milestones_Records.pse__Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>MilestoneList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Project_Milestones_Records</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Project_Milestones_Records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>project_status_update</name>
-        <label>project status update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>Project_Records.pse__Project_Status__c</assignToReference>
+            <assignToReference>For_Each_Project_Record.pse__Project_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Cancelled</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Project_Records.NSP_Cancelled_Reason__c</assignToReference>
+            <assignToReference>For_Each_Project_Record.NSP_Cancelled_Reason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Void</stringValue>
@@ -223,54 +75,18 @@
             <assignToReference>projectIds</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Project_Records.Id</elementReference>
+                <elementReference>For_Each_Project_Record.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>projectList</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Project_Records</elementReference>
+                <elementReference>For_Each_Project_Record</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Project_Records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Project_Task_Status_update</name>
-        <label>Project Task Status update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>Project_Tasks_Records.pse__Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Canceled</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>TaskList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Project_Tasks_Records</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Project_Tasks_Records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Reset_Project_Ids</name>
-        <label>Reset Project Ids</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>projectIds</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Get_Projects_Empty</targetReference>
+            <targetReference>For_Each_Project_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -289,35 +105,6 @@
             <targetReference>Project_Assets_Record</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Is_Get_Imp_Profile_Empty</name>
-        <label>Is Get Imp Profile Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Implementation_Profile_Records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Get_Imp_Profile_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Implementation_Profiles</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Implementation_Profiles</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Get Imp Profile Empty</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Is_Get_Project_Assets_Empty</name>
         <label>Is Get Project Assets Empty</label>
@@ -348,143 +135,32 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Get_Project_Milestones_Empty</name>
-        <label>Is Get Project Milestones Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Project_Milestones_Records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Get_Project_Milestone_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Project_Milestones_Records</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Project_Milestones_Records</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Implementation_Profiles</targetReference>
-            </connector>
-            <label>Get Project Milestone Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Get_Project_Task_Empty</name>
-        <label>Is Get Project Task Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Project_Tasks_Records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Project_Task_Empty</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Project_Tasks</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Project_Tasks</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Project_Milestones_Records</targetReference>
-            </connector>
-            <label>Project Task Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Is_Get_Projects_Empty</name>
         <label>Is Get Projects Empty</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Project_Records</targetReference>
+            <targetReference>For_Each_Project_Record</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Get_Project_Empty</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>get_projects</leftValueReference>
+                <leftValueReference>Get_Projects</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>get_projects</leftValueReference>
+                <leftValueReference>Get_Projects</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>Get Project Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Milestone_List_Empty</name>
-        <label>Is Milestone List Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Project_Milestone_Update</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Milestone_List_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>MilestoneList</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Implementation_Profiles</targetReference>
-            </connector>
-            <label>Milestone List Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Profile_List_Empty</name>
-        <label>Is Profile List Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Implementation_Profiles_update</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ProfileList</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Empty</label>
         </rules>
     </decisions>
     <decisions>
@@ -501,37 +177,19 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>projectList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>projectList</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>Project List Empty</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Task_List_Empty</name>
-        <label>Is Task List Empty</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Project_Tasks_update</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Task_List_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>TaskList</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Project_Milestones_Records</targetReference>
-            </connector>
-            <label>Task List Empty</label>
         </rules>
     </decisions>
     <decisions>
@@ -556,6 +214,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <description>Refactored on 10/05</description>
     <environments>Default</environments>
     <formulas>
         <name>CurrentDate</name>
@@ -565,17 +224,17 @@
     <interviewLabel>Asset - Saved - Async - Handle Void Terminations {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Asset - Saved - Async - Handle Void Terminations</label>
     <loops>
-        <name>Implementation_Profile_Records</name>
-        <label>Implementation Profile Records</label>
+        <name>For_Each_Project_Record</name>
+        <label>For Each : Project Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Get_Implementation_Profiles</collectionReference>
+        <collectionReference>Get_Projects</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Inactive_Profile</targetReference>
+            <targetReference>Assign_Project_Status</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Is_Profile_List_Empty</targetReference>
+            <targetReference>Is_Project_List_Empty</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -589,49 +248,7 @@
             <targetReference>Store_Project_Ids</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>get_projects</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Project_Milestones_Records</name>
-        <label>Project Milestones Records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>Get_Project_Milestones_Records</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Project_Milestone_Status_update</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Is_Milestone_List_Empty</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Project_Records</name>
-        <label>Project Records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>get_projects</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>project_status_update</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Is_Project_List_Empty</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Project_Tasks_Records</name>
-        <label>Project Tasks Records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>Get_Project_Tasks</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Project_Task_Status_update</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Is_Task_List_Empty</targetReference>
+            <targetReference>Get_Projects</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -653,37 +270,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Implementation_Profiles</name>
-        <label>Get Implementation Profiles</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_Get_Imp_Profile_Empty</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Implementation_Profile</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Project__c</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>projectIds</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Inactive__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Implementation_Profile__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>Get_Project_Assets</name>
         <label>Get Project Assets</label>
@@ -709,90 +295,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Project_Milestones_Records</name>
-        <label>Get Project Milestones Records</label>
+        <description>FSO/IP Implementation Projects</description>
+        <name>Get_Projects</name>
+        <label>Get Projects</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Get_Project_Milestones_Empty</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Project_Milestones</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>pse__Project__c</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>projectIds</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>pse__Milestone__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Task is no longer editable on this Project. (pse__Status__c != &apos;Closed - Moved&apos;)</description>
-        <name>Get_Project_Tasks</name>
-        <label>Get Project Tasks</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_Get_Project_Task_Empty</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Project_Task</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>pse__Project__c</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>projectIds</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Canceled</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed - Moved</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>pse__Project_Task__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>get_projects</name>
-        <label>get projects</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Reset_Project_Ids</targetReference>
+            <targetReference>Is_Get_Projects_Empty</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Get_Project</targetReference>
@@ -845,48 +355,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Implementation_Profiles_update</name>
-        <label>Implementation Profiles update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Implementation_Profile_Update</targetReference>
-        </faultConnector>
-        <inputReference>ProfileList</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Project_Milestone_Update</name>
-        <label>Project Milestone Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Implementation_Profiles</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Project_Milestone_Update</targetReference>
-        </faultConnector>
-        <inputReference>MilestoneList</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Project_Tasks_update</name>
-        <label>Project Tasks update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Project_Milestones_Records</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Project_Task_Update</targetReference>
-        </faultConnector>
-        <inputReference>TaskList</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Projects_Update</name>
         <label>Projects Update</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Project_Tasks</targetReference>
+            <targetReference>Project_Updated_Async_Cancel_Project_Tasks_Subflow</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Project_Update</targetReference>
@@ -937,6 +411,20 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <description>Cancel Project Tasks and Milestone</description>
+        <name>Project_Updated_Async_Cancel_Project_Tasks_Subflow</name>
+        <label>Project - Updated - Async - Cancel Project Tasks Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Project_Updated_Async_Cancel_Project_Tasks_Subflow</flowName>
+        <inputAssignments>
+            <name>projectIds</name>
+            <value>
+                <elementReference>projectIds</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Void_Terminations_Fault_Handler</name>
         <label>Void Terminations Fault Handler</label>
         <locationX>0</locationX>
@@ -969,22 +457,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>MilestoneList</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>pse__Milestone__c</objectType>
-    </variables>
-    <variables>
-        <name>ProfileList</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Implementation_Profile__c</objectType>
-    </variables>
-    <variables>
         <name>projectIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
@@ -998,13 +470,5 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Proj__c</objectType>
-    </variables>
-    <variables>
-        <name>TaskList</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>pse__Project_Task__c</objectType>
     </variables>
 </Flow>

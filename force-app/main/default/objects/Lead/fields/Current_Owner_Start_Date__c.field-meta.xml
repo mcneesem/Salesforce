@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Owner_Start_Date__c</fullName>
+    <defaultValue>TODAY()</defaultValue>
+    <description>This is a date field that captures the date the Ownership was updated most recently</description>
+    <encryptionScheme>None</encryptionScheme>
+    <inlineHelpText>This is a date field that captures the date the Ownership was updated most recently</inlineHelpText>
+    <label>Current Owner Start Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Date</type>
+</CustomField>

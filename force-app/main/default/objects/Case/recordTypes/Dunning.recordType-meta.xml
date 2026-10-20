@@ -547,10 +547,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Client Change of Status Form</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Client Direct Debit Authorization</fullName>
             <default>false</default>
         </values>
@@ -2548,7 +2544,7 @@
         </values>
         <values>
             <fullName>Neutral</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Somewhat Favorable</fullName>

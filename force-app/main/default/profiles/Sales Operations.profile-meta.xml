@@ -1718,11 +1718,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_Anticipated_Date_of_Termination__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_AnyActiveOpportunitiesInThe_Pipeline__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -14753,5 +14748,9 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewRoles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ViewSetupAuditTrail</name>
     </userPermissions>
 </Profile>
