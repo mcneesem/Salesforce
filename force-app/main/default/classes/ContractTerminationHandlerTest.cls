@@ -152,7 +152,7 @@ private class ContractTerminationHandlerTest {
         System.assertEquals(Date.today(),quoteResult.NSP_TerminationDate__c);
     }
 
-      // QuoteTerminationQueueable coverage ────────────────────────────────
+      // QuoteTerminationQueueable coverage
 
     @IsTest
     private static void testCPQQueue_EligibleForWaiver() {
