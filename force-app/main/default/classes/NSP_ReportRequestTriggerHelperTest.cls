@@ -470,4 +470,6 @@ private class NSP_ReportRequestTriggerHelperTest {
         Assert.isFalse(updatedCaseList.isEmpty(), 'Case should exist after WSEE update');
         Assert.isNotNull(updatedCaseList[0].Id, 'Case should exist after WSEE update with non-null ReviewType');
     }
+
 }
+//
