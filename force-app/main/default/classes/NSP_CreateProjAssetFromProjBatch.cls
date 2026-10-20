@@ -1,18 +1,8 @@
-/**************************************************************************************************************************
-* @description  :  Batch Class to create project asset records from project records
-* @date 01/09/2023
-* Author : Ramya Ravi
-* Name : NSP_CreateProjAssetFromProjBatch
-* Story : STY-03641 - Batch Class to create project asset records from project records
-* Version : V1
-**************************************************************************************************************************/
-
 // intentionally `without sharing` to preserve default sharing at api version 56...
 public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_CreateProjAssetFromProjTest (91%)
 
     private static final String ASSET_OBJ = 'Asset';
-    private static final String CREATEPROJASSETFROMPROJBATCH = 'NSP_CreateProjAssetFromProjBatch';
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -57,8 +47,22 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
         Integer batchSize = Integer.valueOf( System.Label.NSP_Maximum_Batch_Size );
         return Database.executeBatch( new NSP_CreateProjAssetFromProjBatch() , batchSize );
     }
+
+    //
+    // Schedulable
+    //
+
+    // Schedulable execute method to fire the batch class
+    public void execute( SchedulableContext scon ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Batchable
+    //
+
     //Start method to query project records
-    public Database.QueryLocator start(Database.BatchableContext bc){
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
         List<String> ProjFields = new List<String>{
             'ID',
                 'NSP_Asset_Type__c',
@@ -75,9 +79,10 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
         String query = queryBuilder.build();
         return Database.getQueryLocator(query);
     }
+
     //Execute method to create the project asset records
-    public void execute(Database.BatchableContext bc, List<pse__Proj__c> projectList){
-        try{
+    public void execute( Database.BatchableContext bc , List<pse__Proj__c> projectList ) {
+        try {
             Set<ID> AccountIDList = new Set<ID>();
             Set<ID> RecordTypeIDList = new Set<ID>();
             List<pse__Proj__c> projList = new List<pse__Proj__c>();
@@ -97,30 +102,34 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
                 populateMap(AccountIDList,RecordTypeIDList,projList,null);
             }
             createProjectAssetFromProjAccount();
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CREATEPROJASSETFROMPROJBATCH, 'execute', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 
     //finish method
-    public void finish(Database.BatchableContext bc){
-
+    public void finish( Database.BatchableContext bc ) {
     }
 
     //
-    // Schedulable
     //
-
-    // Schedulable execute method to fire the batch class
-    public void execute( SchedulableContext scon ) {
-        this.call( 'run' , null );
-    }
+    //
 
     // Method to Loop through asset and populate Map values
-    public static void  populateMap(Set<ID>  AccountIDList, Set<Id> RecordTypeIDList, List<pse__Proj__c> projList,List<Project_Account__c> projAcctList){
-        Map<ID, Set<ID> > accountAssetMap = new Map<ID, Set<ID> >();
-        Map<ID,ID> assetRecordTypeMap = new Map<ID,ID>();
-        try{
+    public static void populateMap(
+        Set<Id> AccountIDList ,
+        Set<Id> RecordTypeIDList ,
+        List<pse__Proj__c> projList ,
+        List<Project_Account__c> projAcctList
+        )
+    {
+        try {
+            Map<Id,Set<Id>> accountAssetMap = new Map<Id,Set<Id>>();
+            Map<Id,Id> assetRecordTypeMap = new Map<Id,Id>();
             // Loop through asset and populate Map values
             for(Asset asst: [Select Id , AccountId , recordTypeID FROM Asset WHERE AccountId =: AccountIDList AND recordTypeId = : RecordTypeIDList AND NSP_Account_Status__c = : NSP_ServiceConstants.AIMS_STATUS ] ){
                 //Store account and corresponding assets in MAP<AccountID , Set<AssetID>>
@@ -143,16 +152,25 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
                     createProjectAssetsFromPrjAcct(accountAssetMap,assetRecordTypeMap,projAcctList);
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CREATEPROJASSETFROMPROJBATCH, 'populateMap', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                'populateMap' ,
+                e
+            );
         }
     }
 
     // Method to Loop through project records and check if the asset type (RT) matches with the account's asset records RT
-    public static void  createProjectAssets(Map<ID, Set<ID> > accountAssetMap, Map<ID,ID> assetRecordTypeMap, List<pse__Proj__c> projList){
-        List<Project_Asset__c> projAsstLst = new  List<Project_Asset__c>();
-        List<pse__Proj__c> projToUpdate = new List<pse__Proj__c>();
-        try{
+    public static void  createProjectAssets(
+        Map<Id,Set<Id>> accountAssetMap ,
+        Map<Id,Id> assetRecordTypeMap ,
+        List<pse__Proj__c> projList
+        )
+    {
+        try {
+            List<Project_Asset__c> projAsstLst = new  List<Project_Asset__c>();
+            List<pse__Proj__c> projToUpdate = new List<pse__Proj__c>();
             for(pse__Proj__c projId:projList){
                 // check if the account exist in the map
                 if(accountAssetMap.containskey(projId.pse__Account__c)){
@@ -176,26 +194,43 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
                 }
             }
             // insert the project asset records
-            if(!projAsstLst.isEmpty()){
-                Database.SaveResult[] result =  Database.insert(projAsstLst,false);
-                NSP_ErrorLogHandler.logSaveResultsException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssets:projAsstLst', result);
+            if ( !projAsstLst.isEmpty() ) {
+                List<Database.SaveResult> result =  Database.insert( projAsstLst , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                    'createProjectAssets:insert' ,
+                    result
+                );
             }
             //Update the Project records
-            if(!projToUpdate.isEmpty()){
-                Database.SaveResult[] result = Database.update(projToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssets:projToUpdate', result);
+            if ( !projToUpdate.isEmpty() ) {
+                List<Database.SaveResult> result = Database.update( projToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                    'createProjectAssets:update' ,
+                    result
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssets', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                'createProjectAssets' ,
+                e
+            );
         }
     }
 
     // Method to Loop through project records and check if the asset type (RT) matches with the account's asset records RT
-    public static void  createProjectAssetsFromPrjAcct(Map<ID, Set<ID> > accountAssetMap, Map<ID,ID> assetRecordTypeMap, List<Project_Account__c> projAcctList){
-        List<Project_Asset__c> projAsstToInsert = new  List<Project_Asset__c>();
-        Map<ID, Set<ID>> projectAssetMap = new Map<ID, Set<ID>>();
-        Set<ID> projectIDs= new Set<ID>();
-        try{
+    public static void  createProjectAssetsFromPrjAcct(
+        Map<Id,Set<Id>> accountAssetMap ,
+        Map<Id,Id> assetRecordTypeMap ,
+        List<Project_Account__c> projAcctList
+        )
+    {
+        try {
+            List<Project_Asset__c> projAsstToInsert = new List<Project_Asset__c>();
+            Map<Id,Set<Id>> projectAssetMap = new Map<Id,Set<Id>>();
+            Set<Id> projectIDs = new Set<Id>();
             // Get list of project IDs to filter project assets related to these projects
             for(Project_Account__c projAcctId:projAcctList){
               if(projAcctId.Project__c != null)  {
@@ -236,21 +271,28 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
                 }
             }
             // insert the project asset records
-            if(!projAsstToInsert.isEmpty()){
-                Database.SaveResult[] result =  Database.insert(projAsstToInsert,false);
-                NSP_ErrorLogHandler.logSaveResultsException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssetsFromPrjAcct:projAsstToInsert', result);
+            if ( !projAsstToInsert.isEmpty() ) {
+                List<Database.SaveResult> result = Database.insert( projAsstToInsert , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                    'createProjectAssetsFromPrjAcct:insert' ,
+                    result
+                );
             }
-
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssetsFromPrjAcct', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                'createProjectAssetsFromPrjAcct' ,
+                e
+            );
         }
     }
 
     // Method to Loop through project records and check if the asset type (RT) matches with the account's asset records RT
-    public static void  createProjectAssetFromProjAccount(){
-        Set<ID> AccountIDList = new Set<ID>();
-        Set<ID> RecordTypeIDList = new Set<ID>();
-        try{
+    public static void  createProjectAssetFromProjAccount() {
+        try {
+            Set<Id> AccountIDList = new Set<Id>();
+            Set<Id> RecordTypeIDList = new Set<Id>();
             //Query Project Accounts records
             List<Project_Account__c> projAcctLst = [Select Id, Project__c, Project__r.NSP_Asset_Type__c, Account__c FROM Project_Account__c WHERE Project__r.NSP_Asset_Type__c  != NULL AND Account__c != NULL ];
 
@@ -263,9 +305,14 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
             if(!AccountIDList.isEmpty() && !RecordTypeIDList.isEmpty()){
                 populateMap(AccountIDList,RecordTypeIDList,null,projAcctLst);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(CREATEPROJASSETFROMPROJBATCH, 'createProjectAssetFromProjAccount', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CreateProjAssetFromProjBatch.class.getName() ,
+                'createProjectAssetFromProjAccount' ,
+                e
+            );
         }
     }
 
 }
+//
