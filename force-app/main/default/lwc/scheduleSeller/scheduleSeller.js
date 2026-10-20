@@ -245,18 +245,27 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         return dt.toISOString();
     }
 
-    // Rush follows business days AND the 24h cutoff.
+    //Returns the latest instant still treated as same-day/Rush
+    //Anchored to the next business day (not next calendar day)
     getRushCutoff() {
+        // this.columns comes from the already filtered business dates returned by getBusinessDates
         const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
         const now = new Date();
+        //Converting now Date into YYYY-MM-DD format String by Using en-CA to compare it later (en-CA formats this way)
+        //('en-US') would format it MM-DD-YYYY causing the comparison to fail
         const todayStr = now.toLocaleDateString( 'en-CA' );
-        //It only takes the first element (next business day)
+        //const cols already exclude weekends/holidays, that first match is the next business day
         const nextCol = cols.find( col => col.fullDate > todayStr );
         let cutoff = null;
+
         if ( nextCol ) {
+            //Break ["2026","09","28"] into numbers and destructure it: y = 2026, m = 9, d = 28
             const [ y , m , d ] = nextCol.fullDate.split( '-' ).map( Number );
+            //Date.UTC takes a zero-indexed month (January = 0) so real month is m-1
             cutoff = new Date( Date.UTC( y , ( m - 1 ) , d , now.getUTCHours() , now.getUTCMinutes() , 0 ) );
         }
+        // cutoff is one concrete instant. Example: if today is Fri and now is 14:00,
+        // this is the next business day: Mon at 14:00 UTC. Null if no next day exists.
         return cutoff;
     }
 
