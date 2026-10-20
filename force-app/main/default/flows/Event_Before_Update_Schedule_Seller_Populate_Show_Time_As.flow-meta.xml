@@ -35,19 +35,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Completed_Status</name>
-        <label>Completed Status</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.NSP_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Make_Event_Busy</name>
         <label>Make Event Busy</label>
         <locationX>0</locationX>
@@ -137,48 +124,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Status</name>
-        <label>Check Status</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Restore_Prior_Status</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Status_is_Cancelled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cancelled</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Cancelled_Status</targetReference>
-            </connector>
-            <label>Status is Cancelled</label>
-        </rules>
-        <rules>
-            <name>Status_is_Completed</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Completed</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Completed_Status</targetReference>
-            </connector>
-            <label>Status is Completed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Is_Prior_Status_Cancelled</name>
         <label>Is Prior Status Cancelled</label>
         <locationX>0</locationX>
@@ -255,10 +200,7 @@
         <label>Schedule Seller Record Type</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Status</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Owns Event Record</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Schedule_Seller_Record_Type</name>
             <conditionLogic>and</conditionLogic>
