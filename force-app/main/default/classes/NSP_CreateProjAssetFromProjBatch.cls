@@ -83,8 +83,8 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
     //Execute method to create the project asset records
     public void execute( Database.BatchableContext bc , List<pse__Proj__c> projectList ) {
         try {
-            Set<ID> AccountIDList = new Set<ID>();
-            Set<ID> RecordTypeIDList = new Set<ID>();
+            Set<ID> accountIDList = new Set<ID>();
+            Set<ID> recordTypeIDList = new Set<ID>();
             List<pse__Proj__c> projList = new List<pse__Proj__c>();
             // Get List of projects with Is project asset created field set to false
             for(pse__Proj__c prj:projectList){
@@ -94,12 +94,12 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
             }
             // get set of all accountIDs and record type IDs
             for(pse__Proj__c projId:projList){
-                AccountIDList.add(projId.pse__Account__c)  ;
-                RecordTypeIDList.add(NSP_GenericRecordType.getRecordTypeId(ASSET_OBJ, projId.NSP_Asset_Type__c));
+                accountIDList.add(projId.pse__Account__c)  ;
+                recordTypeIDList.add(NSP_GenericRecordType.getRecordTypeId(ASSET_OBJ, projId.NSP_Asset_Type__c));
             }
             // call method to populate map values and create project asset
-            if(!AccountIDList.isEmpty() && !RecordTypeIDList.isEmpty()){
-                populateMap(AccountIDList,RecordTypeIDList,projList,null);
+            if(!accountIDList.isEmpty() && !recordTypeIDList.isEmpty()){
+                populateMap(accountIDList,recordTypeIDList,projList,null);
             }
             createProjectAssetFromProjAccount();
         } catch ( Exception e ) {
@@ -121,8 +121,8 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
 
     // Method to Loop through asset and populate Map values
     public static void populateMap(
-        Set<Id> AccountIDList ,
-        Set<Id> RecordTypeIDList ,
+        Set<Id> accountIDList ,
+        Set<Id> recordTypeIDList ,
         List<pse__Proj__c> projList ,
         List<Project_Account__c> projAcctList
         )
@@ -131,7 +131,7 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
             Map<Id,Set<Id>> accountAssetMap = new Map<Id,Set<Id>>();
             Map<Id,Id> assetRecordTypeMap = new Map<Id,Id>();
             // Loop through asset and populate Map values
-            for(Asset asst: [Select Id , AccountId , recordTypeID FROM Asset WHERE AccountId =: AccountIDList AND recordTypeId = : RecordTypeIDList AND NSP_Account_Status__c = : NSP_ServiceConstants.AIMS_STATUS ] ){
+            for(Asset asst: [Select Id , AccountId , recordTypeID FROM Asset WHERE AccountId =: accountIDList AND recordTypeId = : recordTypeIDList AND NSP_Account_Status__c = : NSP_ServiceConstants.AIMS_STATUS ] ){
                 //Store account and corresponding assets in MAP<AccountID , Set<AssetID>>
                 Set<ID> assetIDSet =new Set<ID>();
                 // check if the account key already exist in the map
