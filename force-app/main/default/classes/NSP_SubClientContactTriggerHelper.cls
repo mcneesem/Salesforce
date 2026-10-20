@@ -206,16 +206,26 @@ public with sharing class NSP_SubClientContactTriggerHelper {
     // Params: Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate
     // Story: STY-02069
     //
-    public static void updateRelatedWizardEmployeeStatus( Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate){
-        List<NSP_ReportRequest__c> repReqListToUpdate = new List<NSP_ReportRequest__c>();
-        try{
-            for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Termination_Date__c
-                                            	FROM NSP_ReportRequest__c WHERE NSP_WSEE__c IN: conIdStatusDate.keySet()]){
-                                                repReq.NSP_Termination_Date__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c) == NSP_ServiceConstants.TERMINATED_STATUS ?
-                                                    conIdStatusDate.get(repReq.NSP_WSEE__c) : repReq.NSP_Termination_Date__c ;
-                                                repReqListToUpdate.add(repReq);
-                                            }
-            if(!repReqListToUpdate.isEmpty()){
+    public static void updateRelatedWizardEmployeeStatus(
+        Map<Id,String> conIdEmpStatusMap ,
+        Map<Id,Date> conIdStatusDate
+        )
+    {
+        try {
+            List<NSP_ReportRequest__c> repReqListToUpdate = new List<NSP_ReportRequest__c>();
+            for ( NSP_ReportRequest__c repReq : [
+                        SELECT Id , NSP_WSEE__c , NSP_Termination_Date__c
+                        FROM NSP_ReportRequest__c
+                        WHERE ( NSP_WSEE__c IN :conIdStatusDate.keySet() )
+                    ]
+                )
+            {
+                if ( conIdEmpStatusMap.get( repReq.NSP_WSEE__c ) == NSP_ServiceConstants.TERMINATED_STATUS ) {
+                    repReq.NSP_Termination_Date__c = conIdStatusDate.get( repReq.NSP_WSEE__c );
+                }
+                repReqListToUpdate.add( repReq );
+            }
+            if ( !repReqListToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( repReqListToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_SubClientContactTriggerHelper.class.getName() ,
