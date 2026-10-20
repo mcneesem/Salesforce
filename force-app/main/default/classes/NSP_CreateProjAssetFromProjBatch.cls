@@ -291,19 +291,19 @@ public without sharing class NSP_CreateProjAssetFromProjBatch implements ISelfSc
     // Method to Loop through project records and check if the asset type (RT) matches with the account's asset records RT
     public static void  createProjectAssetFromProjAccount() {
         try {
-            Set<Id> AccountIDList = new Set<Id>();
-            Set<Id> RecordTypeIDList = new Set<Id>();
+            Set<Id> accountIDList = new Set<Id>();
+            Set<Id> recordTypeIDList = new Set<Id>();
             //Query Project Accounts records
             List<Project_Account__c> projAcctLst = [Select Id, Project__c, Project__r.NSP_Asset_Type__c, Account__c FROM Project_Account__c WHERE Project__r.NSP_Asset_Type__c  != NULL AND Account__c != NULL ];
 
             //get set of all accountIDs and record type IDs
             for(Project_Account__c projAcctId: projAcctLst){
-                AccountIDList.add(projAcctId.Account__c)  ;
-                RecordTypeIDList.add(NSP_GenericRecordType.getRecordTypeId(ASSET_OBJ, projAcctId.Project__r.NSP_Asset_Type__c));
+                accountIDList.add(projAcctId.Account__c)  ;
+                recordTypeIDList.add(NSP_GenericRecordType.getRecordTypeId(ASSET_OBJ, projAcctId.Project__r.NSP_Asset_Type__c));
             }
             // call method to populate map values and create project asset
-            if(!AccountIDList.isEmpty() && !RecordTypeIDList.isEmpty()){
-                populateMap(AccountIDList,RecordTypeIDList,null,projAcctLst);
+            if(!accountIDList.isEmpty() && !recordTypeIDList.isEmpty()){
+                populateMap(accountIDList,recordTypeIDList,null,projAcctLst);
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
