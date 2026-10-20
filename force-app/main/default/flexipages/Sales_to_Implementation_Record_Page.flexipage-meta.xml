@@ -92,6 +92,10 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideSlackAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>numVisibleActions</name>
                     <value>3</value>
                 </componentInstanceProperties>
@@ -2220,6 +2224,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Plan_Effective_Date__c</fieldItem>
                 <identifier>RecordPlan_Effective_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_NSPk_SubPlan__c</fieldItem>
+                <identifier>RecordNSP_NSPk_SubPlan_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-cc5e62e4-c974-40b0-bd8c-14eaa9655ece</name>

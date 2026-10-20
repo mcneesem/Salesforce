@@ -1041,6 +1041,9 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>NSP_Asset__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -1053,19 +1056,13 @@
                             <value>Details__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Estimated_Impact__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Plan_of_Action__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Item_Owner__c</value>
+                            <value>NSP_Status__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Start_Date__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NSP_End_Date__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Due_Date__c</value>

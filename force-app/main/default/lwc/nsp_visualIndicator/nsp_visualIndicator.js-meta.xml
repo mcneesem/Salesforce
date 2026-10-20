@@ -11,6 +11,7 @@
                 <object>Account</object>
                 <object>Asset</object>
                 <object>Case</object>
+                <object>Opportunity</object>
             </objects>
         </targetConfig>
     </targetConfigs>

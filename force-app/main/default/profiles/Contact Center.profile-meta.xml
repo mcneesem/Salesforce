@@ -5699,4 +5699,8 @@
         <enabled>false</enabled>
         <name>ViewSetup</name>
     </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>ViewSetupAuditTrail</name>
+    </userPermissions>
 </Profile>

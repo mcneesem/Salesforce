@@ -330,6 +330,10 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             && String.isNotBlank( body )
             )
         {
+            // conditionally prefix subject with Sandbox Name...
+            if ( String.isNotBlank( GenerateRenewalOpportunitiesJob.sandboxName ) ) {
+                subject = GenerateRenewalOpportunitiesJob.sandboxName.toUpperCase() + ': ' + subject;
+            }
             Map<String,Object> inputs = new Map<String,Object>();
             inputs.put( 'toEmailAddresses' , recipients );
             inputs.put( 'emailSubject' , subject );
@@ -891,6 +895,20 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
         }
         private set;
     }
+
+    private static String sandboxName {
+        private get {
+            if ( sandboxName == null ) {
+                sandboxName = OrgSettings__c.getOrgDefaults().SandboxName__c;
+            }
+            return sandboxName;
+        }
+        private set;
+    }
+
+    //
+    //
+    //
 
     private static Map<String, String> validRenewalBenefitPackageValues {
         private get {

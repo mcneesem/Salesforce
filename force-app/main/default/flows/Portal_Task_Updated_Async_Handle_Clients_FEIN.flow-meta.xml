@@ -55,10 +55,10 @@
             <label>Update IP</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Handle Clients FEIN</description>
+    <description>Handle IP Clients FEIN , DEPRECATED -</description>
     <environments>Default</environments>
-    <interviewLabel>Portal Task - Updated - Async - Handle Clients FEIN {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task - Updated - Async - Handle Clients FEIN</label>
+    <interviewLabel>DEPRECATED - Portal Task - Updated - Async - Handle Clients FEIN {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Portal Task - Updated - Async - Handle Clients FEIN</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

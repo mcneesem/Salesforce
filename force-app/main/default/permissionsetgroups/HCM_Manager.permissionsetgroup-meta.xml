@@ -6,6 +6,7 @@
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
@@ -48,8 +49,10 @@
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Schedule_Seller_Cancel_Event</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>Transfer_Record</permissionSets>
+    <permissionSets>Use_Schedule_Seller</permissionSets>
     <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>

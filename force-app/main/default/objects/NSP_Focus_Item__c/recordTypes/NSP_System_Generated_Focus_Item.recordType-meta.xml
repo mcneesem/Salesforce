@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_System_Generated_Focus_Item</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Focus_Item_Compact_Layout</compactLayoutAssignment>
     <description>STY-02424 - Automation - Tenure/401k - Client Health &amp; Renewal Probability Focus Items</description>
     <label>System Generated Focus Item</label>
     <picklistValues>
@@ -210,6 +211,10 @@
         </values>
         <values>
             <fullName>Direct cost renewal increases %28medical benefits%2C WC%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Director Engaged - Client Risk Indicator</fullName>
             <default>false</default>
         </values>
         <values>

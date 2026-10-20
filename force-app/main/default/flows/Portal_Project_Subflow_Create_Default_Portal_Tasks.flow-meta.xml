@@ -125,8 +125,8 @@
         <expression>CASE(
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Business Inception Date&quot; , &quot;Date&quot; ,
-  &quot;Regular Rate Of Pay&quot; , &quot;&quot; ,
-  &quot;Additional Documentation&quot; , &quot;&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;Checkbox&quot; ,
+  &quot;Additional Documentation&quot; , &quot;Checkbox&quot; ,
   &quot;Employee Payroll Documentation&quot; , &quot;&quot; ,
   &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Text&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Docusign&quot; ,
@@ -139,8 +139,6 @@
         <dataType>String</dataType>
         <expression>CASE(
   TRIM( {!For_Each_Default_Task} ) ,
-  &quot;Regular Rate Of Pay&quot; , &quot;Completed&quot; ,
-  &quot;Additional Documentation&quot; , &quot;Completed&quot; ,
   &quot;Employee Payroll Documentation&quot; , &quot;Summary&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Summary&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Summary&quot; ,

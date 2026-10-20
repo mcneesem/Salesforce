@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Send proactively to clients to provide information about qualifying mid year changes for benefits</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Employee Mid Year Benefit Change</name>
+    <style>freeForm</style>
+    <subject>Employee Mid Year Benefit Change</subject>
+    <textOnly>Dear Client,
+
+Employees can make changes to their Insperity Group Health Plan coverage during their annual open enrollment period. If no changes are made during open enrollment, the employee's current election - including an election of no coverage - will carry over to the next coverage period. If a coverage option is discontinued and no new election is made, employees will be moved to the closest comparable option at the new rates for their coverage tier.
+
+Changes Outside Open Enrollment
+
+After open enrollment ends, employees may only change their elections if they experience a Qualifying Life Event (QLE). Employees have 60 days from the event date to request a change.
+
+Examples of Qualifying Life Events include:
+
+Marriage, divorce, or legal separation
+Beginning or ending a domestic partnership
+Birth, adoption, or placement for adoption
+Death of a dependent
+Change in dependent or employee eligibility under another group health plan
+Court order requiring coverage (QMCSO)
+Change in residence that affects eligibility
+Gaining or losing eligibility for Medicare, Medicaid, or CHIP
+Enrollment in Marketplace coverage
+Reduction in hours (less than 30 per week) with enrollment in other coverage
+Other events permitted by the Plan
+
+Important:
+
+Enrollments and additions (e.g., adding a spouse or newborn) are generally retroactive to the event date if requested within 60 days.
+Terminations are usually prospective (effective when the request is submitted), except for death, divorce, or domestic partnership termination, which remain retroactive.
+
+How to Submit a Mid-Year Change:
+
+Go to portal.insperity.com &gt; My Account &gt; Benefits &gt; Mid-Year Change and click Access Now.
+
+
+
+Select Submit Change.
+Complete the online form, choosing the appropriate event type (e.g., birth of a child = "Change in Number of Dependents").
+Answer all questions and click Submit to finalize.
+
+No documentation is required during submission, but some events (e.g., QMCSO) may require follow-up documentation.
+
+Please share this information with employees who experience a qualifying event. Contact me with any questions.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -72,7 +72,7 @@
             <label>Yes : Valid Record</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Populate Portal Guidance</description>
+    <description>New Client Portal: Populate Portal Guidance - respect dynamic tasks, removed FEIN</description>
     <environments>Default</environments>
     <formulas>
         <description>Get the API Name based on the Task Name</description>
@@ -87,7 +87,6 @@
     &quot;Employee Payroll Documentation&quot; , &quot;EMPLOYEE_PAYROLL_DOCUMENTATION&quot; ,
     &quot;Business Inception Date&quot; , &quot;BUSINESS_INCEPTION_DATE&quot; ,
     &quot;Additional Documentation&quot; , &quot;ADDITIONAL_DOCUMENTATION&quot; ,
-    &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER&quot; ,
     &quot;&quot;
   )
 )</expression>

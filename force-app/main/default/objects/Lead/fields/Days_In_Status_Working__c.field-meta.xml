@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_In_Status_Working__c</fullName>
+    <defaultValue>0</defaultValue>
+    <description>This is a number field that displays the number of days the Lead was in the Working Status</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This is a number field that displays the number of days the Lead was in the Working Status</inlineHelpText>
+    <label>Days In Status: Working</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

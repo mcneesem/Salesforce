@@ -1,13 +1,67 @@
-//
-// @description  : Batch Class to create project whenever a asset with account id is not present
-// Automatically Creating a Service Plan Project for a new client based on STY-01029
-// @date 05/12/2022
-//
-public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObject> , Database.Stateful {
+// intentionally `without sharing` to preserve default sharing at api version 56...
+public without sharing class NSP_AutomaticProjectBatchClass implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_AutomaticProjectBatchTest (83%)
 
     @TestVisible
     private NSP_OpportunityTriggerServiceHelper opp = new NSP_OpportunityTriggerServiceHelper();
+
+    //
+    // argument-free constructor is required to be "runnable"
+    //
+
+    public NSP_AutomaticProjectBatchClass() {
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_AutomaticProjectBatchClass ~ Create an Engagement Plan Project based on an asset AIMS status and AIMS status date ~ Schedule to Run Everyday 11 pm' + suffix ,
+            '0 0 23 ? * * *' ,
+            new NSP_AutomaticProjectBatchClass()
+        );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext ctx ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch(
+            new NSP_AutomaticProjectBatchClass() ,
+            1
+        );
+    }
+
+    //
+    // Batchable
+    //
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         Set<Id> assetAccIdSet = new Set<Id>();

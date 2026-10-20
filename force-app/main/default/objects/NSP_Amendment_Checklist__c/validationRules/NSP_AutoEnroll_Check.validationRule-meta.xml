@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_AutoEnroll_Check</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>STY-02110</description>
     <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.AmendmentChecklistTrigger__c ) ,

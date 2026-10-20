@@ -176,8 +176,8 @@
     </decisions>
     <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
-    <interviewLabel>Event - Created - Async - Event Type Demo Related To Opty {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Created - Async - Event Type Demo Related To Opty</label>
+    <interviewLabel>DEPRECATED - Event - Created - Async - Event Type Demo Related To Opty {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Event - Created - Async - Event Type Demo Related To Opty</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

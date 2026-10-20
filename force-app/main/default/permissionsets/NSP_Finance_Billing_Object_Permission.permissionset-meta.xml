@@ -7469,6 +7469,11 @@
         <field>SBQQ__Quote__c.Total_Employess_of_all_companies__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.Product_Description_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Finance - Billing Object Permission (Edit)</label>
     <objectPermissions>

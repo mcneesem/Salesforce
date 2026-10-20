@@ -35,7 +35,6 @@
     <permissionSets>Email_to_Case_Routing_Address_WX_HR_Services</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_WX_Payroll_Support</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_WX_Tax</permissionSets>
-    <permissionSets>Email_to_Case_Routing_Address_XML_Utility</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_iSolved_Time</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Accounts_Receivable</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_BPS_Customer_Success_Team_Box</permissionSets>
@@ -65,6 +64,7 @@
     <permissionSets>Organization_Wide_Email_Address_Referral_Lead_Form_Site</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Salesforce_Email_to_Case</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_TES_HR_Support_Center</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_TWI_Support</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Talent_Connect</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_TimeStar_Hardware</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Time_and_Attendance</permissionSets>
@@ -79,7 +79,6 @@
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Code_Changes</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Info</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Posters</permissionSets>
-    <permissionSets>Organization_Wide_Email_Address_XML_Utility</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
