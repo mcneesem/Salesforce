@@ -210,7 +210,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_Outlook_True</targetReference>
+            <targetReference>Is_Show_Outlook_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -226,7 +226,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_Outlook_True</targetReference>
+            <targetReference>Is_Show_Outlook_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -722,6 +722,53 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Enable_Navigate_To_Record</name>
+        <label>Check Enable Navigate To Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Enable_Navigate_To_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_To_Record</targetReference>
+            </connector>
+            <label>Enable Navigate To Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Outlook</name>
+        <label>Check Outlook</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Blank_Record_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Outlook</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Accessible_Record_Types</targetReference>
+            </connector>
+            <label>Is Outlook</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
         <locationX>0</locationX>
@@ -741,7 +788,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Outlook</targetReference>
+                <targetReference>Check_Outlook</targetReference>
             </connector>
             <label>Record Id Is Blank</label>
         </rules>
@@ -934,33 +981,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Outlook</name>
-        <label>Is Outlook</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Blank_Record_Id</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Outlook_Path</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>isOutlook</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Accessible_Record_Types</targetReference>
-            </connector>
-            <label>Outlook Path</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Outlook_True</name>
-        <label>Is Outlook True</label>
+        <name>Is_Show_Outlook_Screen</name>
+        <label>Is Show Outlook Screen</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -968,7 +990,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Outlook_True_Path</name>
+            <name>Show_Outlook_Screen</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>isOutlook</leftValueReference>
@@ -980,29 +1002,7 @@
             <connector>
                 <targetReference>Outlook_Screen</targetReference>
             </connector>
-            <label>Outlook True Path</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Outlook_Validator</name>
-        <label>Outlook Validator</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Not_Outlook</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>isOutlook</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Navigate_To_Record</targetReference>
-            </connector>
-            <label>Not Outlook</label>
+            <label>Show Outlook Screen</label>
         </rules>
     </decisions>
     <decisions>
@@ -1011,7 +1011,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Is_Outlook_True</targetReference>
+            <targetReference>Is_Show_Outlook_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1178,14 +1178,6 @@
         </rules>
     </decisions>
     <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
-    <dynamicChoiceSets>
-        <name>Status</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Status</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -1965,7 +1957,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Outlook_Validator</targetReference>
+            <targetReference>Check_Enable_Navigate_To_Record</targetReference>
         </connector>
         <flowName>Case_Creation_Screen_Flow_Related_Records</flowName>
         <inputAssignments>
@@ -2088,7 +2080,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>selectedAccountId</name>
