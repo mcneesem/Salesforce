@@ -457,72 +457,70 @@ public with sharing class NSP_ReportRequestTriggerHelper {
     // Created Date : 24/08/2023 created as part of story STY-04602
     //
     private void updateCaseSubjectName( List<NSP_ReportRequest__c> repReqList ) {
-    List<Case> caseIdSet = new List<Case>();
-    try{
-        for (NSP_ReportRequest__c repRequestRecord : [
-            SELECT
-                Id ,
-                NSP_WSEE__c ,
-                NSP_WSEE__r.Name ,
-                NSP_Case__c ,
-                NSP_ReviewType__c ,
-                NSP_AgreementType__c ,
-                NSP_Sub_Client__c ,
-                NSP_Sub_Client__r.NSP_Sub_Client__c ,
-                NSP_Sub_Client__r.NSP_Client__c
-            FROM NSP_ReportRequest__c
-            WHERE Id IN :repReqList
-        ]) {
-            case newCase = new Case();
-            newCase.Id = repRequestRecord.NSP_Case__c;
-            String aimsValue = null;
-            if (repRequestRecord.NSP_Sub_Client__r != null) {
-                if (repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c != null) {
-                    aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c;
+        try {
+            List<Case> caseIdSet = new List<Case>();
+            for ( NSP_ReportRequest__c repRequestRecord : [
+                        SELECT
+                            Id ,
+                            NSP_WSEE__c ,
+                            NSP_WSEE__r.Name ,
+                            NSP_Case__c ,
+                            NSP_ReviewType__c ,
+                            NSP_AgreementType__c ,
+                            NSP_Sub_Client__c ,
+                            NSP_Sub_Client__r.NSP_Sub_Client__c ,
+                            NSP_Sub_Client__r.NSP_Client__c
+                        FROM NSP_ReportRequest__c
+                        WHERE ( Id IN :repReqList )
+                    ]
+                )
+            {
+                Case newCase = new Case();
+                newCase.Id = repRequestRecord.NSP_Case__c;
+                String aimsValue = null;
+                if ( repRequestRecord.NSP_Sub_Client__r != null ) {
+                    if ( repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c != null ) {
+                        aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Sub_Client__c;
+                    } else if ( repRequestRecord.NSP_Sub_Client__r.NSP_Client__c != null ) {
+                        aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Client__c;
+                    }
                 }
-                else if (repRequestRecord.NSP_Sub_Client__r.NSP_Client__c != null) {
-                    aimsValue = repRequestRecord.NSP_Sub_Client__r.NSP_Client__c;
+                String aimsSuffix = '';
+                if ( String.isNotBlank( aimsValue ) ) {
+                    aimsSuffix = ' (' + aimsValue + ')';
                 }
+                if ( repRequestRecord.NSP_ReviewType__c != null ) {
+                    newCase.Subject =
+                        repRequestRecord.NSP_AgreementType__c
+                        + ' - ' + repRequestRecord.NSP_ReviewType__c
+                        + ' - ' + repRequestRecord.NSP_WSEE__r.Name
+                        + aimsSuffix;
+                } else if (
+                    ( repRequestRecord.NSP_ReviewType__c == null )
+                    && ( repRequestRecord.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO )
+                    )
+                {
+                    newCase.Subject =
+                        repRequestRecord.NSP_AgreementType__c
+                        + ' - ' + repRequestRecord.NSP_WSEE__r.Name
+                        + aimsSuffix;
+                }
+                caseIdSet.add( newCase );
             }
-            String aimsSuffix = '';
-            if (aimsValue != null) {
-                aimsSuffix = ' (' + aimsValue + ')';
+            if ( !caseIdSet.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update(
+                    caseIdSet ,
+                    false
+                );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ReportRequestTriggerHelper.class.getName() ,
+                    'updateCaseSubjectName:update',
+                    results
+                );
             }
-            if (repRequestRecord.NSP_ReviewType__c != null) {
-                newCase.Subject =
-                    repRequestRecord.NSP_AgreementType__c + ' - ' +
-                    repRequestRecord.NSP_ReviewType__c + ' - ' +
-                    repRequestRecord.NSP_WSEE__r.Name +
-                    aimsSuffix;
-            }
-            else if (
-                repRequestRecord.NSP_ReviewType__c == null &&
-                repRequestRecord.NSP_RequestingMultipleEmployees__c == NSP_ServiceConstants.NO
-            ) {
-                newCase.Subject =
-                    repRequestRecord.NSP_AgreementType__c + ' - ' +
-                    repRequestRecord.NSP_WSEE__r.Name +
-                    aimsSuffix;
-            }
-            caseIdSet.add(newCase);
+        } catch ( Exception e ) {
+            NSP_ReportRequestTriggerHelper.handleException( e , 'updateCaseSubjectName' );
         }
-        if ( !caseIdSet.isEmpty() ) {
-            Database.SaveResult[] results = Database.update(
-                caseIdSet ,
-                false
-            );
-            NSP_ErrorLogHandler.logResults(
-                NSP_ReportRequestTriggerHelper.class.getName() ,
-                'updateCaseSubjectName:update',
-                results
-            );
-        }
-    } catch ( Exception e ) {
-        NSP_ReportRequestTriggerHelper.handleException(
-            e ,
-            'updateCaseSubjectName'
-        );
-    }
     }
 
     // for test code coverage only...
