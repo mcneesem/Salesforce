@@ -514,7 +514,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
                 );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ReportRequestTriggerHelper.class.getName() ,
-                    'updateCaseSubjectName:update',
+                    'updateCaseSubjectName:update' ,
                     results
                 );
             }
