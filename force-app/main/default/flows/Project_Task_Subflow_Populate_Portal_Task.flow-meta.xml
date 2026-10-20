@@ -491,8 +491,8 @@
     </decisions>
     <decisions>
         <description>Verify is Guidance is exists</description>
-        <name>Valide_Guidance</name>
-        <label>Valide Guidance?</label>
+        <name>Valid_Guidance</name>
+        <label>Valid Guidance?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -641,7 +641,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valide_Guidance</targetReference>
+            <targetReference>Valid_Guidance</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Guidance</targetReference>
