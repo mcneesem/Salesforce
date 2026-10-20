@@ -1,5 +1,5 @@
 // Represents the OrderItem trigger helper which handles all the logic.
-public class NSP_OrderItemTriggerHelper {
+public class without sharing NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
     // test w/ NSP_OrderItemTriggerHelperTest (76%)
     // test w/ NSP_OrderTriggerHelperTest (22%)
@@ -773,6 +773,8 @@ public class NSP_OrderItemTriggerHelper {
                 ordObj = new OrderItem();
                 if ( !assetList.isEmpty()
                     && ( ( assetObj.NSP_OrderProduct__c == null ) || !retRecordTypeSet.isEmpty() )
+                    && quantityMap.containsKey(assetObj.RecordTypeId)
+                    && (quantityMap.get(assetObj.RecordTypeId) != null)
                     )
                 {
                     assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
@@ -800,11 +802,14 @@ public class NSP_OrderItemTriggerHelper {
                     )
                 ];
                 for ( Asset assetObj : assetAmendList ) {
-                    if ( retirementRecordTypeName.contains(assetObj.RecordType.Name)
-                        || ( !retirementRecordTypeName.contains(assetObj.RecordType.Name)
+                    if ( quantityMap.containsKey(assetObj.RecordTypeId)
+                        && (quantityMap.get(assetObj.RecordTypeId) != null)
+                        && (retirementRecordTypeName.contains(assetObj.RecordType.Name)
+                        || (!retirementRecordTypeName.contains(assetObj.RecordType.Name)
                             && assetObj.Status != 'Terminated'
                             && assetObj.Status != 'Backout'
                             )
+                          )
                         )
                     {
                         assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
