@@ -8,7 +8,7 @@
 *
 */
 
-public class NSP_AssetUpdate {
+public without sharing class NSP_AssetUpdate {
     // test w/ NSP_AssetUpdateTest (84%)
 
     private static final string ASSET_RECORDTYPE = System.Label.NSP_Asset_Product;
@@ -198,14 +198,21 @@ public class NSP_AssetUpdate {
     //
     public static void setActiveUsers(Map<Id,Decimal> activeUserMap){
         List<Asset> updateAssetList = new List<Asset>();
-        List<Asset> assetList = [
-            SELECT Id , Status , NSP_Termination_Date__c , NSP_Current_SaaS_Seats__c
-            FROM Asset
-            WHERE Id IN :activeUserMap.keySet()
-        ];
-        for(Asset assetObj : assetList){
-            assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(activeUserMap.get(assetObj.Id).intValue());
-            updateAssetList.add(assetObj);
+        if ( activeUserMap != null && !activeUserMap.isEmpty() ) {
+            List<Asset> assetList = [
+                SELECT Id , Status , NSP_Termination_Date__c , NSP_Current_SaaS_Seats__c
+                FROM Asset
+                WHERE Id IN :activeUserMap.keySet()
+            ];
+            for(Asset assetObj : assetList){
+                if ( activeUserMap.containsKey(assetObj.Id)
+                    && (activeUserMap.get(assetObj.Id) != null)
+                    )
+                {
+                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(activeUserMap.get(assetObj.Id).intValue());
+                    updateAssetList.add(assetObj);
+                }
+            }
         }
         try {
             if(updateAssetList != null && updateAssetList.size() > 0){
