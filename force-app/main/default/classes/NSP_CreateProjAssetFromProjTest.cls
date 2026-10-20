@@ -1,11 +1,7 @@
-// @description  Test class for NSP_CreateProjAssetFromProjBatch
-// @date         01/09/2023
-// @author       Ramya Ravi
-// @story        STY-03641 - Batch Class to create project asset records from project records
 @isTest
 private class NSP_CreateProjAssetFromProjTest {
 
-    private static final String AIMS_STATUS         = 'Active';
+    private static final String AIMS_STATUS = 'Active';
     private static final String RET_CHOICE_ASSET_RT = 'RET_Choice';
 
     private static final Id RET_CHOICE_RT_ID = NSP_GenericRecordType.getRecordTypeId(
@@ -28,28 +24,28 @@ private class NSP_CreateProjAssetFromProjTest {
         Asset assetA1Active = (Asset) NSP_TestDataFactory.createSObject(
             new Asset(), 'NSP_TestDataFactory.AssetDefaults', false
         );
-        assetA1Active.AccountId             = accountA1.Id;
+        assetA1Active.AccountId = accountA1.Id;
         assetA1Active.NSP_Account_Status__c = AIMS_STATUS;
-        assetA1Active.RecordTypeId          = RET_CHOICE_RT_ID;
+        assetA1Active.RecordTypeId = RET_CHOICE_RT_ID;
         insert assetA1Active;
 
         // Active asset on accountA2 — matched via the Project_Account__c path
         Asset assetA2Active = (Asset) NSP_TestDataFactory.createSObject(
             new Asset(), 'NSP_TestDataFactory.AssetDefaults', false
         );
-        assetA2Active.Name                  = 'Asset A2 Active';
-        assetA2Active.AccountId             = accountA2.Id;
+        assetA2Active.Name = 'Asset A2 Active';
+        assetA2Active.AccountId = accountA2.Id;
         assetA2Active.NSP_Account_Status__c = AIMS_STATUS;
-        assetA2Active.RecordTypeId          = RET_CHOICE_RT_ID;
+        assetA2Active.RecordTypeId = RET_CHOICE_RT_ID;
         insert assetA2Active;
 
         // Inactive asset on accountA1 — must be excluded from matching
         Asset assetA1Inactive = (Asset) NSP_TestDataFactory.createSObject(
             new Asset(), 'NSP_TestDataFactory.AssetDefaults', false
         );
-        assetA1Inactive.Name                  = 'Asset A1 Inactive';
-        assetA1Inactive.AccountId             = accountA1.Id;
-        assetA1Inactive.RecordTypeId          = RET_CHOICE_RT_ID;
+        assetA1Inactive.Name = 'Asset A1 Inactive';
+        assetA1Inactive.AccountId = accountA1.Id;
+        assetA1Inactive.RecordTypeId = RET_CHOICE_RT_ID;
         assetA1Inactive.NSP_Account_Status__c = 'Inactive';
         insert assetA1Inactive;
 
@@ -58,19 +54,19 @@ private class NSP_CreateProjAssetFromProjTest {
             new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false
         );
         projectP1.NSP_Is_Project_Asset_Created__c = false;
-        projectP1.pse__Is_Template__c             = false;
-        projectP1.NSP_Asset_Type__c               = RET_CHOICE_ASSET_RT;
-        projectP1.pse__Account__c                 = accountA1.Id;
+        projectP1.pse__Is_Template__c = false;
+        projectP1.NSP_Asset_Type__c = RET_CHOICE_ASSET_RT;
+        projectP1.pse__Account__c = accountA1.Id;
         insert projectP1;
 
         // projectP2 — already processed, should be skipped by the batch execute path
         pse__Proj__c projectP2 = new pse__Proj__c(
-            Name                            = 'Test Project P2',
-            pse__Is_Active__c               = true,
-            pse__Account__c                 = accountA1.Id,
+            Name = 'Test Project P2',
+            pse__Is_Active__c = true,
+            pse__Account__c = accountA1.Id,
             NSP_Is_Project_Asset_Created__c = true,
-            pse__Is_Template__c             = false,
-            NSP_Asset_Type__c               = RET_CHOICE_ASSET_RT
+            pse__Is_Template__c = false,
+            NSP_Asset_Type__c = RET_CHOICE_ASSET_RT
         );
         insert projectP2;
 
@@ -93,13 +89,13 @@ private class NSP_CreateProjAssetFromProjTest {
             LIMIT 1
         ];
         Assert.areEqual(1, sourceProjects.size(), 'Expected one unprocessed project in test setup');
-        Id projectId     = sourceProjects[0].Id;
+        Id projectId = sourceProjects[0].Id;
         Id projectAcctId = sourceProjects[0].pse__Account__c;
 
         List<Asset> expectedAssets = [
             SELECT Id
             FROM Asset
-            WHERE AccountId             = :projectAcctId
+            WHERE AccountId = :projectAcctId
             AND NSP_Account_Status__c = :AIMS_STATUS
             LIMIT 1
         ];
@@ -115,7 +111,7 @@ private class NSP_CreateProjAssetFromProjTest {
             SELECT Id
             FROM Project_Asset__c
             WHERE Project__c = :projectId
-            AND Asset__c   = :expectedAssets[0].Id
+            AND Asset__c = :expectedAssets[0].Id
         ];
         Assert.areEqual(
             1,
@@ -158,4 +154,6 @@ private class NSP_CreateProjAssetFromProjTest {
         Test.stopTest();
         Assert.isNotNull(jobId, 'schedule() should return a non-null job ID');
     }
+
 }
+//
