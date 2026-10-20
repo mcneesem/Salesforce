@@ -515,7 +515,7 @@
             <label>Yes : Valid Guidance</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Populate Portal Task, Update Portal Guidance</description>
+    <description>New Client Portal: Populate Portal Task</description>
     <environments>Default</environments>
     <formulas>
         <name>portalTaskStatus</name>
