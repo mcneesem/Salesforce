@@ -3,8 +3,23 @@
 <apex:form >
      <p style="font-size:20px">{!$Label.NSP_MovePartnerLifecycletoOnboarding}</p>
      <apex:actionFunction name="UpdatePartnerLifeCycle" action="{!UpdatePartnerLifeCycleValue}" />
-    <apex:outputLink value="{!URLFOR(IF($Site.prefix == '/s','/apex/dfsle__sending', $Site.Prefix +'/apex/dfsle__sending'), null, [sId = Account.Id, templateId = $Label.NSP_Account_Envelop_Configuration , recordId = Account.Id, title = Account.NSP_Template_Selection__c, quickSend = false, isEmbedded = false])}" > 
-    <p style="font-size:20px">{!$Label.NSP_SendForSignature}</p> 
+    <apex:outputLink value="{!URLFOR(
+        IF(
+            $Site.prefix == '/s' ,
+            '/apex/dfsle__sending' ,
+            $Site.Prefix + '/apex/dfsle__sending'
+        ) ,
+        null ,
+        [
+            sId = Account.Id ,
+            templateId = $Label.NSP_Account_Envelope_Configuration ,
+            recordId = Account.Id ,
+            title = Account.NSP_Template_Selection__c ,
+            quickSend = false ,
+            isEmbedded = false
+        ]
+        )}">
+    <p style="font-size:20px">{!$Label.NSP_SendForSignature}</p>
 </apex:outputLink>
 </apex:form>
 </apex:page>
