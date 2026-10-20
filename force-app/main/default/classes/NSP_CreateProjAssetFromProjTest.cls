@@ -2,7 +2,7 @@
 // @date         01/09/2023
 // @author       Ramya Ravi
 // @story        STY-03641 - Batch Class to create project asset records from project records
-@isTest(SeeAllData=false)
+@isTest
 private class NSP_CreateProjAssetFromProjTest {
 
     private static final String AIMS_STATUS         = 'Active';
@@ -11,8 +11,6 @@ private class NSP_CreateProjAssetFromProjTest {
     private static final Id RET_CHOICE_RT_ID = NSP_GenericRecordType.getRecordTypeId(
         'Asset', RET_CHOICE_ASSET_RT
     );
-
-    // ── Test Setup ────────────────────────────────────────────────────────────
 
     @testSetup
     private static void setupData() {
