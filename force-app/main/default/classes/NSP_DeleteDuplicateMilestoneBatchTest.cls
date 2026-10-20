@@ -1,11 +1,7 @@
-// @description Test class for NSP_DeleteDuplicateMilestoneBatch
-// @date 12/16/2022
-// Author : Abhishek Kumar
-// Name : NSP_DeleteDuplicateMilestoneBatchTest
 @isTest
 private class NSP_DeleteDuplicateMilestoneBatchTest {
 
-    private static final String PROJECT_RET_RECORDTYPE          = 'RET_Deconversion_2020_Form';
+    private static final String PROJECT_RET_RECORDTYPE = 'RET_Deconversion_2020_Form';
     private static final String PROJECT_GENERAL_BUSINESS_TEMPLATE = 'RET General Business Plan Project';
 
     // @description Helper: returns the project task created in setup data.
@@ -20,7 +16,7 @@ private class NSP_DeleteDuplicateMilestoneBatchTest {
 
     // @description Sets up shared test data: one project, one original milestone, one duplicate milestone
     //              with the same name, and one project task linked to the duplicate.
-    @TestSetup
+    @testSetup
     private static void setupTestData() {
         // get record type id for RET project type
         Id retProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , PROJECT_RET_RECORDTYPE );
