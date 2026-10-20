@@ -117,7 +117,7 @@
             <label>Yes : Valid Input</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Create Default Portal Tasks - Subflow</description>
+    <description>New Client Portal: Create Default Portal Tasks - Subflow , Removed FEIN Reference</description>
     <environments>Default</environments>
     <formulas>
         <name>f_defaulttasks_action</name>
@@ -128,7 +128,6 @@
   &quot;Regular Rate Of Pay&quot; , &quot;Checkbox&quot; ,
   &quot;Additional Documentation&quot; , &quot;Checkbox&quot; ,
   &quot;Employee Payroll Documentation&quot; , &quot;&quot; ,
-  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Text&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Docusign&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Upload Information&quot; ,
   &quot;&quot;
@@ -154,7 +153,6 @@
   &quot;Regular Rate Of Pay&quot; , &quot;Employee Setup&quot; ,
   &quot;Additional Documentation&quot; , &quot;System Setup&quot; ,
   &quot;Employee Payroll Documentation&quot; , &quot;Employee Setup&quot; ,
-  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Company Setup&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Company Setup&quot; ,
   &quot;&quot;
