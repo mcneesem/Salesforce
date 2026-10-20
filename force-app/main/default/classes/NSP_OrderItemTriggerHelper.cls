@@ -1,5 +1,5 @@
-// Represents the OrderItem trigger helper which handles all the logic.
-public class NSP_OrderItemTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
     // test w/ NSP_OrderItemTriggerHelperTest (76%)
     // test w/ NSP_OrderTriggerHelperTest (22%)
@@ -773,14 +773,18 @@ public class NSP_OrderItemTriggerHelper {
                 ordObj = new OrderItem();
                 if ( !assetList.isEmpty()
                     && ( ( assetObj.NSP_OrderProduct__c == null ) || !retRecordTypeSet.isEmpty() )
+                    && quantityMap.containsKey( assetObj.RecordTypeId )
+                    && ( quantityMap.get( assetObj.RecordTypeId ) != null )
                     )
                 {
-                    assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
-                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
-                    ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
+                    assetObj.NSP_OrderProduct__c = ordProdMap.get( assetObj.RecordTypeId ).Id;
+                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(
+                        quantityMap.get( assetObj.RecordTypeId ).intValue()
+                    );
+                    ordObj.Id = ordProdMap.get( assetObj.RecordTypeId ).Id;
                     ordObj.NSP_ServiceAsset__c = assetObj.Id;
-                    ordItemList.add(ordObj);
-                    updateAssetList.add(assetObj);
+                    ordItemList.add( ordObj );
+                    updateAssetList.add( assetObj );
                 }
             }
             if ( type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT
@@ -800,19 +804,24 @@ public class NSP_OrderItemTriggerHelper {
                     )
                 ];
                 for ( Asset assetObj : assetAmendList ) {
-                    if ( retirementRecordTypeName.contains(assetObj.RecordType.Name)
-                        || ( !retirementRecordTypeName.contains(assetObj.RecordType.Name)
-                            && assetObj.Status != 'Terminated'
-                            && assetObj.Status != 'Backout'
+                    if ( quantityMap.containsKey( assetObj.RecordTypeId )
+                        && ( quantityMap.get( assetObj.RecordTypeId ) != null )
+                        && ( retirementRecordTypeName.contains( assetObj.RecordType.Name )
+                            || ( !retirementRecordTypeName.contains( assetObj.RecordType.Name )
+                                && ( assetObj.Status != 'Terminated' )
+                                && ( assetObj.Status != 'Backout' )
+                                )
                             )
                         )
                     {
-                        assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
-                        assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
-                        ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
+                        assetObj.NSP_OrderProduct__c = ordProdMap.get( assetObj.RecordTypeId ).Id;
+                        assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(
+                            quantityMap.get( assetObj.RecordTypeId ).intValue()
+                        );
+                        ordObj.Id = ordProdMap.get( assetObj.RecordTypeId ).Id;
                         ordObj.NSP_ServiceAsset__c = assetObj.Id;
-                        ordItemList.add(ordObj);
-                        updateAssetList.add(assetObj);
+                        ordItemList.add( ordObj );
+                        updateAssetList.add( assetObj );
                     }
                 }
             }
