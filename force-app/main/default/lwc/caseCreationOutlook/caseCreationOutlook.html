@@ -1,13 +1,12 @@
 <template>
     <template lwc:if={hasPermission}>
         <template lwc:if={isFlowVisible}>
-            <div class="slds-m-bottom_x-small">
+            <div class="slds-m-bottom_xx-small slds-text-align_right">
                 <lightning-button-icon
-                    icon-name="utility:back"
+                    icon-name="utility:close"
                     variant="bare"
-                    alternative-text="Back"
-                    title="Back to Create Case"
-                    onclick={handleCancelFlow}>
+                    alternative-text="Close"
+                    onclick={handleClickClose}>
                 </lightning-button-icon>
             </div>
             <lightning-flow
