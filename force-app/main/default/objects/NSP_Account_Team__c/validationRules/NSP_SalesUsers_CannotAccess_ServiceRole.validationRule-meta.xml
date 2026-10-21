@@ -16,7 +16,7 @@
     $Profile.Name = &apos;Sales Operations&apos;,
     $Profile.Name = &apos;Sales Member&apos;,
     $Profile.Name = &apos;Sales Manager&apos;,
-    $Profile.Name = &apos;Minimum Access - Salesforce&apos;,
+    $Profile.Name = &apos;Minimum Access - Salesforce&apos;
   ),
 AND(
  OR(ISNEW(),
