@@ -166,9 +166,6 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
-        List<Contact> queueNewContact = new List<Contact>();
-        Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
-        Set<Id> processedContact = new Set<Id>();
         try {
             //Modified as part of SOQL fix 228901
             if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
@@ -185,10 +182,17 @@ public with sharing class NSP_ContactTriggerHelper {
                     this.createTaskforClientReference( clientRefernceContactList );
                 }
             }
+            queueNewContacts(newMap, oldMap);
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
+   }
+
+    private static void queueNewContacts(Map<Id,Contact> newMap, Map<Id,Contact> oldMap){
         if(newMap != null){
+            List<Contact> queueNewContact = new List<Contact>();
+            Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
+            Set<Id> processedContact = new Set<Id>();
             for(Contact conObj : newMap.values()){
                 Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
                 if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
@@ -198,15 +202,15 @@ public with sharing class NSP_ContactTriggerHelper {
                     processedContact.add(conObj.Id);
                 }
             }
-        }
-        if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-            System.enqueueJob(
+            if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+                System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
                 queueNewContact,
-            queueOldMap,
-            NSP_ServiceConstants.UPDATE_TRIGGER
+                queueOldMap,
+                NSP_ServiceConstants.UPDATE_TRIGGER
                 )
                 );
+            }
         }
     }
 
