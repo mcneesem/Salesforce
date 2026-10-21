@@ -1,4 +1,4 @@
-public without sharing class NSP_AccountContactRelationTriggerHelper {
+public with sharing class NSP_AccountContactRelationTriggerHelper {
     // test w/ NSP_AccountContactRelationHelperTest (77%)
 
     public static final List<String> INT_DM_PROFILES = new List<String>{
@@ -216,7 +216,12 @@ public without sharing class NSP_AccountContactRelationTriggerHelper {
                 }
             }
             if(!contactList.isEmpty()){
-                update contactList;
+                List<Database.SaveResult> results = Database.update( contactList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                    'updateJobTitleofContact:update' ,
+                    results
+                    );
             }
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'updateJobTitleofContact' );
