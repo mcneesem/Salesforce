@@ -1493,7 +1493,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_CPQ_Profiles_Skip_Validation</shortDescription>
-        <value>System Administrator,CPQ Admin,CPQ Tech Support</value>
+        <value>System Administrator</value>
     </labels>
     <labels>
         <fullName>NSP_CRMTaskError</fullName>
@@ -5075,7 +5075,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quote Approval Bypass Profile</shortDescription>
-        <value>CPQ Admin,System Administrator</value>
+        <value>System Administrator</value>
     </labels>
     <labels>
         <fullName>NSP_Quote_Owner_Mismatch_Message</fullName>
@@ -5385,7 +5385,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales Profiles</shortDescription>
-        <value>Sales Manager,Sales Member,Sales Operations,Sales Support,Sales Data Science,Sales Engineer</value>
+        <value>Sales Manager,Sales Member,Sales Operations,Sales Support</value>
     </labels>
     <labels>
         <fullName>NSP_SampleN_Emp_infoPackets_collected</fullName>

@@ -782,33 +782,20 @@
     <permissionSets>System Admin Lite</permissionSets>
     <permissionSets>Team L1</permissionSets>
     <!-- END PSGs -->
-    <profiles>CPQ Admin</profiles>
-    <profiles>CPQ Sales User</profiles>
-    <profiles>CPQ Tech Support</profiles>
-    <profiles>Channel Program Manager</profiles>
     <profiles>Finance Order Processing</profiles>
     <profiles>Finance Service</profiles>
-    <profiles>Inside Sales</profiles>
     <profiles>Marketing</profiles>
     <profiles>Marketing Channel</profiles>
     <profiles>Marketing Leads</profiles>
-    <profiles>Retail Sales</profiles>
     <profiles>Sales Administrator</profiles>
-    <profiles>Sales Compensation</profiles>
-    <profiles>Sales Data Science</profiles>
-    <profiles>Sales Engineer</profiles>
     <profiles>Sales Manager</profiles>
     <profiles>Sales Member</profiles>
     <profiles>Sales Operations</profiles>
-    <profiles>Sales Profile</profiles>
     <profiles>Sales Support</profiles>
     <profiles>BPS Service</profiles>
     <profiles>Contact Center</profiles>
     <profiles>PEO Service</profiles>
     <profiles>Retirement Services</profiles>
-    <profiles>Executive Sponsor</profiles>
-    <profiles>End User</profiles>
-    <profiles>Read Only</profiles>
     <profiles>System Admin Lite</profiles>
     <roles>CEO</roles>
     <roles>Finance Leaders</roles>
