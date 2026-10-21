@@ -471,7 +471,6 @@
     <permissionSets>Lead - View All</permissionSets>
     <permissionSets>Lead - View All, Modify All</permissionSets>
     <permissionSets>Legacy Connected App Access</permissionSets>
-    <permissionSets>List View Enhanced Access</permissionSets>
     <permissionSets>Manage Public Classic Email Templates</permissionSets>
     <permissionSets>Manage Public Lightning Email Templates</permissionSets>
     <permissionSets>Merge Cases</permissionSets>
