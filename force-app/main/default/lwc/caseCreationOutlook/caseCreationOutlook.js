@@ -17,7 +17,7 @@ export default class CaseCreationOutlook extends NavigationMixin(LightningElemen
         this.isFlowVisible = true;
     }
 
-    handleCancelFlow() {
+    handleClickClose() {
         this.isFlowVisible = false;
     }
 
