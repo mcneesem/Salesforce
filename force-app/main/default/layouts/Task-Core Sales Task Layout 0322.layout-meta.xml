@@ -147,7 +147,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <relatedList>RelatedActivityAttachmentList</relatedList>
+        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedObjects>WhoId</relatedObjects>
     <relatedObjects>WhatId</relatedObjects>
