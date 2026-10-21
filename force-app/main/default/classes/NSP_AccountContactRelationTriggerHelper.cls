@@ -1,4 +1,4 @@
-public without sharing class NSP_AccountContactRelationTriggerHelper {
+public with sharing class NSP_AccountContactRelationTriggerHelper {
     // test w/ NSP_AccountContactRelationHelperTest (77%)
 
     public static final List<String> INT_DM_PROFILES = new List<String>{
