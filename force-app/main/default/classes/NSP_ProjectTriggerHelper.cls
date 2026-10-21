@@ -1,4 +1,4 @@
-public with sharing class NSP_ProjectTriggerHelper {
+public without sharing class NSP_ProjectTriggerHelper {
     // test w/ NSP_ProjectTriggerHelperTest, NSP_AssetServiceTriggerHelperTest (82%)
     // test w/ NSP_ProjectTriggerHelperTest (81%)
     // test w/ NSP_AssetServiceTriggerHelperTest (29%)
