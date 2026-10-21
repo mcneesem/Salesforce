@@ -5075,7 +5075,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quote Approval Bypass Profile</shortDescription>
-        <value>System Administrator</value>
+        <value>System Administrator,System Admin Lite</value>
     </labels>
     <labels>
         <fullName>NSP_Quote_Owner_Mismatch_Message</fullName>
