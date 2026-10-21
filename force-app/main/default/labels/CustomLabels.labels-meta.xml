@@ -1493,7 +1493,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_CPQ_Profiles_Skip_Validation</shortDescription>
-        <value>System Administrator</value>
+        <value>System Administrator,System Admin Lite</value>
     </labels>
     <labels>
         <fullName>NSP_CRMTaskError</fullName>
