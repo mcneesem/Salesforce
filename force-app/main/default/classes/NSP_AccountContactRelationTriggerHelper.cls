@@ -235,11 +235,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             }
             if ( !contactList.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( contactList , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_AccountContactRelationTriggerHelper.class.getName() ,
-                    'updateJobTitleofContact:update' ,
-                    results
-                );
+                NSP_AccountContactRelationTriggerHelper.handleResults( results , 'updateJobTitleofContact:update' );
             }
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'updateJobTitleofContact' );
@@ -385,11 +381,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
         if ( !communityEventToBeInserted.isEmpty() ) { // DEPRECATED
             List<Database.SaveResult> results = EventBus.publish( communityEventToBeInserted );
-            NSP_ErrorLogHandler.logResults(
-                NSP_AccountContactRelationTriggerHelper.class.getName() ,
-                'createPlatformEventForACR' ,
-                results
-            );
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , 'createPlatformEventForACR' );
         }
     }
 
@@ -447,6 +439,14 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             NSP_AccountContactRelationTriggerHelper.class.getName() ,
             methodName ,
             e
+        );
+    }
+
+    private static void handleResults( List<Database.SaveResult> results , String methodName ) {
+        NSP_ErrorLogHandler.logResults(
+            NSP_AccountContactRelationTriggerHelper.class.getName() ,
+            methodName ,
+            results
         );
     }
 
