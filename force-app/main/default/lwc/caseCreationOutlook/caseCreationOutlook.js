@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import HAS_PERMISSION from '@salesforce/customPermission/Case_Creation_Outlook';
 
