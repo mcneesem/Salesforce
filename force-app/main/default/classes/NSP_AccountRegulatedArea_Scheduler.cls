@@ -1,5 +1,4 @@
-public with sharing class NSP_AccountRegulatedArea_Scheduler
-{
+public with sharing class NSP_AccountRegulatedArea_Scheduler {
     // test w/ NSP_AccountRegulatedArea_Scheduler_Test (100%)
 
     //
