@@ -388,20 +388,6 @@
                     <stringValue>Minimum Access - Salesforce</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Profile.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>CPQ Admin</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Profile.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>CPQ Tech Support</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Check_Selected_Role</targetReference>
             </connector>
