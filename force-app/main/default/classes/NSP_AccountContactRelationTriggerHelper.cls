@@ -110,6 +110,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         AccountContactRelation oldACR;
         for ( AccountContactRelation acr : newMap.values() ) {
             oldACR = oldMap.get( acr.Id );
+            NSP_AccountContactRelationTriggerHelper.populateContactIdACRMap(acr, oldACR, acrMap);
             if ( acr.Enable_Portal_Client__c != oldACR.Enable_Portal_Client__c ) {
                 acrMap.portalIds.add( acr.Id );
             }
@@ -121,28 +122,31 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 acrMap.contactOldMap.put( acr.Id , oldACR );
                 acrMap.contactNewMap.put( acr.Id , newMap.get( acr.Id ) );
             }
-            // Added as part of STY-02840
-            if ( ( ( acr.isDirect == true )
-                && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
-                || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
-                || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
-                || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
-                || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
-                )
-                )
-                || ( ( acr.isDirect == true )
-                && ( oldACR.isDirect != acr.isDirect )
-                )
-                )
-            {
-                acrMap.conIdACRMap.put( acr.ContactId , acr );
-            }
             if ( acr.NSP_Employee_Status__c != oldACR.NSP_Employee_Status__c ) {
                 acrMap.ceAccIdSet.add( acr.AccountId );
                 acrMap.ceConIdSet.add( acr.ContactId );
             }
         }
         return acrMap;
+    }
+
+    private static void populateContactIdACRMap(AccountContactRelation acr, AccountContactRelation oldACR, ACR_Map acrMap){
+        // Added as part of STY-02840
+        if ( ( ( acr.isDirect == true )
+            && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
+            || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
+            || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
+            || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
+            || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
+            )
+            )
+            || ( ( acr.isDirect == true )
+            && ( oldACR.isDirect != acr.isDirect )
+            )
+            )
+        {
+            acrMap.conIdACRMap.put( acr.ContactId , acr );
+        }
     }
 
     //
