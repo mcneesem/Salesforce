@@ -1,8 +1,8 @@
 <template>
-    <template lwc:if={hasPermission}>
-        <template lwc:if={isFlowVisible}>
-            <lightning-layout class="slds-m-around_small">
-                <lightning-layout-item size="12">
+     <template lwc:if={hasPermission}>
+        <lightning-layout class="slds-m-around_small">
+            <lightning-layout-item size="12">
+                <template lwc:if={isFlowVisible}>
                     <div class="slds-m-bottom_xx-small slds-text-align_right">
                         <lightning-button-icon
                             icon-name="utility:close"
@@ -18,12 +18,8 @@
                         onstatuschange={handleStatusChange}
                         >
                     </lightning-flow>
-                </lightning-layout-item>
-            </lightning-layout>
-        </template>
-        <template lwc:else>
-            <lightning-layout class="slds-m-around_small">
-                <lightning-layout-item size="12">
+                </template>
+                <template lwc:else>
                     <lightning-button
                         label="New Case"
                         variant="brand"
@@ -31,8 +27,8 @@
                         onclick={handleClickNew}
                         >
                     </lightning-button>
-                </lightning-layout-item>
-            </lightning-layout>
-        </template>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
     </template>
 </template>
