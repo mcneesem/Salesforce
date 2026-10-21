@@ -442,6 +442,13 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         );
     }
 
+    // for test code coverage only...
+    public static void testHandleResults( List<Database.SaveResult> results , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , methodName );
+        }
+    }
+
     private static void handleResults( List<Database.SaveResult> results , String methodName ) {
         NSP_ErrorLogHandler.logResults(
             NSP_AccountContactRelationTriggerHelper.class.getName() ,
