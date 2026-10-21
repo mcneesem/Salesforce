@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import HAS_PERMISSION from '@salesforce/customPermission/Case_Creation_Outlook';
 
 export default class CaseCreationOutlook extends NavigationMixin(LightningElement) {
-    @track isFlowVisible = false;
+    isFlowVisible = false;
 
     flowInputVariables = [
         { name: 'isOutlook', type: 'Boolean', value: true }
@@ -13,7 +13,7 @@ export default class CaseCreationOutlook extends NavigationMixin(LightningElemen
         return HAS_PERMISSION === true;
     }
 
-    handleButtonClick() {
+    handleClickNew() {
         this.isFlowVisible = true;
     }
 
@@ -24,8 +24,8 @@ export default class CaseCreationOutlook extends NavigationMixin(LightningElemen
     handleStatusChange({ detail }) {
         const { status, outputVariables } = detail;
         if (['FINISHED', 'FINISHED_SCREEN'].includes(status)) {
-            const caseRecordVar = outputVariables?.find(v => v.name === 'caseRecord');
-            const createdCaseId = caseRecordVar?.value?.Id;
+            const caseRecordVar = outputVariables?.find(v => v.name === 'caseRecordId');
+            const createdCaseId = caseRecordVar?.value;
             if (createdCaseId) {
                 this.isFlowVisible = false;
                 this[NavigationMixin.Navigate]({

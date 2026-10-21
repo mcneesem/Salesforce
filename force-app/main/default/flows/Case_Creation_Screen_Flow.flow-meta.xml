@@ -373,6 +373,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Case_Record_Id</name>
+        <label>Set Case Record Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>caseRecordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>caseRecord.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Store_Account_Attributes</name>
         <label>Store Account Attributes</label>
         <locationX>0</locationX>
@@ -726,6 +739,9 @@
         <label>Check Enable Navigate To Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Case_Record_Id</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Enable_Navigate_To_Record</name>
@@ -2014,8 +2030,18 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>caseRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>contextAccountId</name>
