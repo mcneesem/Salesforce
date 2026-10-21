@@ -18,6 +18,7 @@
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
+    <permissionSets>Integration_User_Data_Migration</permissionSets>
     <permissionSets>Lead_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Integration_User_Data_Migration</name>
+    </customPermissions>
+    <description>This permission allows to identify if the user belongs to integration or data migration</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Integration User Data Migration</label>
+</PermissionSet>

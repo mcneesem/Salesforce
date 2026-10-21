@@ -107,9 +107,10 @@ private class NSP_ValidateOpportunityStageTest {
         NSP_Employee_Split__c splitRecord1 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
         NSP_Employee_Split__c splitRecord2 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
         insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
+        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
 
         User userRecord1 = new User(
-            ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
+            ProfileId = adminProfile.Id,
             LastName = 'TestClassUser',
             Email = 'testuser1@insperity.com',
             Username = 'testuser1@test.com' + System.currentTimeMillis(),
@@ -125,7 +126,7 @@ private class NSP_ValidateOpportunityStageTest {
         insert userRecord1;
 
         User userRecord2 = new User(
-            ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
+            ProfileId = adminProfile.Id,
             LastName = 'TestClassUser',
             Email = 'testuser2@insperity.com',
             Username = 'testuser2@test.com' + System.currentTimeMillis(),

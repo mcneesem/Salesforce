@@ -1,10 +1,5 @@
 public with sharing class NSP_AccountContactRelationTriggerHelper {
-    // test w/ NSP_AccountContactRelationHelperTest (77%)
-
-    public static final List<String> INT_DM_PROFILES = new List<String>{
-        NSP_ServiceConstants.INTEGRATION_USER ,
-        NSP_ServiceConstants.DATA_MIGRATION
-    };
+    // test w/ NSP_AccountContactRelationHelperTest (79%)
 
     //
     // Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
@@ -15,11 +10,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterInsertDirector( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            String loggedInUserProfileName = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if ( String.isNotBlank( loggedInUserProfileName )
-                && !INT_DM_PROFILES.contains( loggedInUserProfileName )
-                )
-            {
+            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
                 Set<Id> accountIdSet = new Set<Id>();
                 Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
                 for ( AccountContactRelation accConObj : newList ) {
@@ -53,11 +44,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterUpdateDirector( Map<Id,AccountContactRelation> newMap , Map<Id,AccountContactRelation> oldMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            String loggedInUserProfile_Name = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if ( String.isNotBlank( loggedInUserProfile_Name )
-                && !INT_DM_PROFILES.contains( loggedInUserProfile_Name )
-                )
-            {
+            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
                 Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
                 Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
                 Set<Id> accountIdSet = new Set<Id>();
@@ -150,8 +137,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public static void beforeUpsertDirector( List<AccountContactRelation> newList ) {
         try {
-            String profileName = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+            if(!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
                 Set<Id> accountIdSet = new Set<Id>();
                 for(AccountContactRelation accConObj : newList){
                     if(accConObj.NSP_Is_Primary__c){
@@ -383,33 +369,6 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             }
         }
         PortalClientSharing.enqueueJob( portalIds );
-    }
-
-    //
-    // Method Name : getLoggedInUserProfile
-    // Description : STY-02849/DF-05013 Method to get loggedin user profile
-    // @return List<Profile>
-    //
-    public static List<Profile> getLoggedInUserProfile() {
-        List<String> profileFields = new List<String>{'Id','Name'};
-        String queryProfile = new NSP_QueryBuilder('Profile', profileFields)
-            .addFilter('Id', UserInfo.getProfileId())
-            .setSecurityEnforce(false)
-            .build();
-        return Database.query(queryProfile);
-    }
-
-    public static String getLoggedInUserProfileName() {
-        List<NSP_Profile_Detail__mdt> profileDetailList = [
-            SELECT Profile_ID__c , Profile_Name__c
-            FROM NSP_Profile_Detail__mdt
-            WHERE ( Profile_ID__c = :UserInfo.getProfileId() )
-        ];
-        String profileName = null;
-        if ( !profileDetailList.isEmpty() ) {
-            profileName = profileDetailList[0].Profile_Name__c;
-        }
-        return profileName;
     }
 
     // for test code coverage only...
