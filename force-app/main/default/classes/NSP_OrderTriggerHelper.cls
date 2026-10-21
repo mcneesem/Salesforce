@@ -607,13 +607,13 @@ public without sharing class NSP_OrderTriggerHelper {
             //get invoice plan order items
             orderItemToCheckSet = NSP_OrderTriggerHelper.evaluateOrderForItemsToCheck( orderProcessList );
             //iterate through billing transactions to decide for valid OP based on billing amount
-            Set<Id> orderItemApplicable =
-                NSP_OrderTriggerHelper.evaluateBillingTransaction( orderItemToCheckSet );
-            //update projects and orders
-            NSP_OrderTriggerHelper.processUpdates(
+            Set<Id> orderItemApplicable = NSP_OrderTriggerHelper.evaluateBillingTransaction( orderItemToCheckSet );
+            orderProcessList = NSP_OrderTriggerHelper.evaluateInvoicePlan(
                 orderProcessList ,
                 orderItemApplicable
             );
+            //update projects and orders
+            NSP_OrderTriggerHelper.processUpdates( orderProcessList );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_OrderTriggerHelper.class.getName() ,
@@ -644,6 +644,7 @@ public without sharing class NSP_OrderTriggerHelper {
             for ( OrderItem eacholi : eachOrder.OrderItems ) {
                 if ( String.isNotBlank( eacholi.SBQQ__BillingFrequency__c )
                     && ( eacholi.SBQQ__BillingFrequency__c == 'Annual' )
+                    && ( eacholi.TotalPrice != null )
                     && ( eacholi.TotalPrice > 0 )
                    )
                 {
@@ -709,6 +710,7 @@ public without sharing class NSP_OrderTriggerHelper {
                     AND ( NSP_DownPayment_Required__c = TRUE )
             ]){
                 if( ( eachTransaction.blng__BillingSchedule__c != null )
+                   && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c != null )
                    && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c > 0 )
                   )
                 {
@@ -720,19 +722,15 @@ public without sharing class NSP_OrderTriggerHelper {
     }
 
     //method to perform updates on orders and projects
-    private static void processUpdates(
-        List<Order> orderProcessList ,
-        Set<Id> orderItemApplicable
-    ){
-        orderProcessList = NSP_OrderTriggerHelper.evaluateInvoicePlan( orderProcessList , orderItemApplicable );
-        Map<Id,pse__Proj__c> projectUpdateMap = NSP_OrderTriggerHelper.evaluateProject( orderProcessList );
-        Map<Id,Order> orderUpdateMap = NSP_OrderTriggerHelper.evaluateOrderUpdateMap( orderProcessList );
+    private static void processUpdates( List<Order> orderProcessList ) {
         // update project
-        if( projectUpdateMap != null && !projectUpdateMap.isEmpty() ) {
+        Map<Id,pse__Proj__c> projectUpdateMap = NSP_OrderTriggerHelper.evaluateProject( orderProcessList );
+        if ( ( projectUpdateMap != null ) && !projectUpdateMap.isEmpty() ) {
             update projectUpdateMap.values();
         }
         // update order
-        if( orderUpdateMap != null && !orderUpdateMap.isEmpty() ) {
+        Map<Id,Order> orderUpdateMap = NSP_OrderTriggerHelper.evaluateOrderUpdateMap( orderProcessList );
+        if ( ( orderUpdateMap != null ) && !orderUpdateMap.isEmpty() ) {
             update orderUpdateMap.values();
         }
     }
