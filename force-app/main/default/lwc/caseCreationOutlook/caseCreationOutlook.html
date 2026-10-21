@@ -17,11 +17,16 @@
             </lightning-flow>
         </template>
         <template lwc:else>
-            <lightning-button
-                label="Create Case"
-                variant="brand"
-                onclick={handleButtonClick}>
-            </lightning-button>
+            <lightning-layout class="slds-m-around_small">
+                <lightning-layout-item size="12">
+                    <lightning-button
+                        label="New Case"
+                        variant="brand"
+                        onclick={handleClickNew}
+                        >
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
         </template>
     </template>
 </template>
