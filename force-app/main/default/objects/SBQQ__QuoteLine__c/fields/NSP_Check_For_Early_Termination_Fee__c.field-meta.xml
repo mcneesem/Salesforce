@@ -3,7 +3,15 @@
     <fullName>NSP_Check_For_Early_Termination_Fee__c</fullName>
     <description>Internal: Checkbox to identify ETF Product Addition to QLE</description>
     <externalId>false</externalId>
-    <formula>IF(AND(TEXT(SBQQ__Quote__r.SBQQ__Type__c)=&apos;Termination&apos;,(TODAY()- NSP_Original_Subscription_Date__c)&lt;365, NOT(ISNULL( NSP_Original_waived_Amount__c))),1,0)</formula>
+    <formula>IF(
+  AND(
+    ( SBQQ__Quote__r.NSP_TransactionType__c = &quot;Termination&quot; ) ,
+    ( ( TODAY() - NSP_Original_Subscription_Date__c ) &lt; 365 ) ,
+    NOT( ISNULL( NSP_Original_waived_Amount__c ) )
+  ) ,
+  1 ,
+  0
+)</formula>
     <label>Check For Early Termination Fee</label>
     <precision>18</precision>
     <required>false</required>

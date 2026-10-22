@@ -2088,8 +2088,8 @@ export function calculateEarlyTerminationFee(quote, lines){
     let applicableWAProductlist = ['IWACore','IWACoreW2','IWAContractors'];
     let wxWaiverFee=0.0;
     let waWaiverFee=0.0;
-    let quoteType = quote.record["SBQQ__Type__c"];
-    if(quoteType=='Termination'){
+    let quoteTransactionType = quote.record["NSP_TransactionType__c"];
+    if(quoteTransactionType=='Termination'){
         lines.forEach(function(line){
             let productcode =line.record["SBQQ__ProductCode__c"];
             if(applicableWXProductlist.includes(productcode)){

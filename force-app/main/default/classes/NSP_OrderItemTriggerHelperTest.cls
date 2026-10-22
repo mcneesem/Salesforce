@@ -507,7 +507,7 @@ private class NSP_OrderItemTriggerHelperTest{
         NSP_OrderItemTriggerHelper.testHandleException( null , null );
     }
 
-    // Covers processOrderItemForScholarshipCS — items with and without ServiceAssetCategory
+    // Covers processOrderItemForScholarshipCS - items with and without ServiceAssetCategory
     @isTest
     private static void processOrderItemForScholarshipCSMethod() {
         NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
@@ -712,7 +712,7 @@ private class NSP_OrderItemTriggerHelperTest{
         Assert.isNotNull( orderItemList , 'Order item list should not be null.' );
     }
 
-    // Covers afterUpdateDirector activeUserMap lower-bound branch (usage equals upper bound exactly — neither branch)
+    // Covers afterUpdateDirector activeUserMap lower-bound branch (usage equals upper bound exactly - neither branch)
     // and ensures NSP_TotalUsageQuantity__c == NSP_UsageUpperBound__c path is exercised
     @isTest
     private static void afterUpdateDirectorUsageEqualBoundMethod() {
