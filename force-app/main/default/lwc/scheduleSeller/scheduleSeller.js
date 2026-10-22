@@ -263,8 +263,6 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         // this.columns comes from the already filtered business dates returned by getBusinessDates
         const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
         const now = new Date();
-        //Converting now Date into YYYY-MM-DD format String by Using en-CA to compare it later (en-CA formats this way)
-        //('en-US') would format it MM-DD-YYYY causing the comparison to fail
         const todayStr = this.formatLocalDate( now );
         //const cols already exclude weekends/holidays, that first match is the next business day
         const nextCol = cols.find( col => col.fullDate > todayStr );
