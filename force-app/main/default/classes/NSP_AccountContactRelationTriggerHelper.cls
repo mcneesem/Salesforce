@@ -24,6 +24,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
     }
 
+    // helper method to defeat sonar cognitive complexity
     private static Map<Id,AccountContactRelation> getACRMap(List<AccountContactRelation> acrList, Set<Id> accountIdSet, Set<Id> portalIds){
         Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
         for ( AccountContactRelation accConObj : acrList ) {
@@ -55,9 +56,9 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
                 accountIdSetToUpdateResyncFlag = sObjectUpdateObj.fetchUpdFieldsLst(
                     NSP_IntegrationConstants.SOBJECT_ACCOUNTCONTACTRELATION ,
-                acrMap.contactNewMap ,
-                acrMap.contactOldMap
-                    );
+                    acrMap.contactNewMap ,
+                    acrMap.contactOldMap
+                );
                 IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
                 if ( !acrMap.conIdACRMap.isEmpty() ) {
                     updateWorkPhoneEmailOnContact( acrMap.conIdACRMap );
@@ -94,6 +95,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
     }
 
+    // helper class to defeat sonar cognitive complexity
     private class ACR_Map{
         public Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
         public Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
@@ -105,6 +107,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         public Set<Id> portalIds = new Set<Id>();
     }
 
+    // helper method to defeat sonar cognitive complexity
     private static ACR_Map populateACRMap(Map<Id, AccountContactRelation> newMap, Map<Id, AccountContactRelation> oldMap){
         ACR_Map acrMap = new ACR_Map();
         AccountContactRelation oldACR;
@@ -130,6 +133,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         return acrMap;
     }
 
+    // helper method to defeat sonar cognitive complexity
     private static void populateContactIdACRMap(AccountContactRelation acr, AccountContactRelation oldACR, ACR_Map acrMap){
         // Added as part of STY-02840
         if ( ( ( acr.isDirect == true )
@@ -240,7 +244,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 FROM User
                 WHERE ( Id IN :userIds )
             ]
-            );
+        );
     }
 
     //
@@ -365,13 +369,14 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 communityEventToBeInserted.add(communityEvent);
             }
         }
+
         if ( !communityEventToBeInserted.isEmpty() ) { // DEPRECATED
             List<Database.SaveResult> results = EventBus.publish( communityEventToBeInserted );
             NSP_ErrorLogHandler.logResults(
                 NSP_AccountContactRelationTriggerHelper.class.getName() ,
-            'createPlatformEventForACR' ,
-            results
-                );
+                'createPlatformEventForACR' ,
+                results
+            );
         }
     }
 
@@ -400,9 +405,9 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_AccountContactRelationTriggerHelper.class.getName() ,
-        methodName ,
-        e
-            );
+            methodName ,
+            e
+        );
     }
 
 }

@@ -101,11 +101,11 @@ public with sharing class NSP_ContactTriggerHelper {
         if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                newList,
-            null,
-            NSP_ServiceConstants.INSERT_TRIGGER
+                    newList,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
                 )
-                );
+            );
         }
     }
 
@@ -144,13 +144,13 @@ public with sharing class NSP_ContactTriggerHelper {
                 NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
                 accountIdSetToUpdateResyncFlag = sObjectUpdateObj.fetchUpdFieldsLst(
                     NSP_IntegrationConstants.SOBJECT_CONTACT ,
-                newMap ,
-                oldMap
-                    );
+                    newMap ,
+                    oldMap
+                );
                 IntegrationSyncController.setReadyForIntegrationSync(
                     accountIdSetToUpdateResyncFlag ,
-                Contact.getSObjectType()
-                    );
+                    Contact.getSObjectType()
+                );
                 // handle office details...
                 setSalesOfficeDetails( newMap.values() , oldMap );
             }
@@ -182,12 +182,13 @@ public with sharing class NSP_ContactTriggerHelper {
                     this.createTaskforClientReference( clientRefernceContactList );
                 }
             }
-            queueNewContacts(newMap, oldMap);
+            NSP_ContactTriggerHelper.queueNewContacts(newMap, oldMap);
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
    }
 
+   // helper method to defeat sonar cognitive complexity
     private static void queueNewContacts(Map<Id,Contact> newMap, Map<Id,Contact> oldMap){
         if(newMap != null){
             List<Contact> queueNewContact = new List<Contact>();
@@ -204,16 +205,17 @@ public with sharing class NSP_ContactTriggerHelper {
             }
             if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
                 System.enqueueJob(
-                new QueueableTermFormJunctionObjects(
-                queueNewContact,
-                queueOldMap,
-                NSP_ServiceConstants.UPDATE_TRIGGER
-                )
+                    new QueueableTermFormJunctionObjects(
+                        queueNewContact,
+                        queueOldMap,
+                        NSP_ServiceConstants.UPDATE_TRIGGER
+                    )
                 );
-            }
+           }
         }
     }
 
+    // helper method to defeat sonar cognitive complexity
     private static void populateContacts(Map<Id,Contact> newMap , Map<Id,Contact> oldMap,
         List<Contact> clientRefernceContactList, Set<Id> contactIdSet){
         for ( Contact conObj : newMap.values() ) {
@@ -389,7 +391,7 @@ public with sharing class NSP_ContactTriggerHelper {
             if(mUsers.get(oContact.pse__Salesforce_User__c).Profile.UserLicense.Name == COMMUNITYLICENSE){
                 oContact.pse__Resource_Role__c = CUSTOMERROLE;
             }
-            else{
+                else{
                 oContact.pse__Resource_Role__c = INSPERITYROLE;
             }
         }
@@ -480,7 +482,7 @@ public with sharing class NSP_ContactTriggerHelper {
     // @param
     // @return String profileName
     //
-    public static String loggedInUserProfileName {
+    private static String loggedInUserProfileName {
         public get {
             if( loggedInUserProfileName == null ){
                 List<User> autouser = [ SELECT Profile.Name, Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
@@ -541,9 +543,9 @@ public with sharing class NSP_ContactTriggerHelper {
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_ContactTriggerHelper.class.getName() ,
-        methodName ,
-        e
-            );
+            methodName ,
+            e
+        );
     }
 
 }
