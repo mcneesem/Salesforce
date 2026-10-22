@@ -1,5 +1,5 @@
 public with sharing class CheckDownPaymentDetailsAction {
-    //test with CheckDownPaymentDetailsActionTest (94%)
+    // test w/ CheckDownPaymentDetailsActionTest (94%)
 
     @InvocableMethod(label='check DownPayment Detail' description='method to determine if down payment id required' category='Account')
     public static void checkDownPaymentDetails( List<Id> orderIds ) {
@@ -134,7 +134,6 @@ public with sharing class CheckDownPaymentDetailsAction {
     private static Set<Id> evaluateBillingTransaction ( Set<Id> orderItemToCheckSet ) {
         Set<Id> orderItemApplicable = new Set<Id>();
         if ( ( orderItemToCheckSet != null ) && ( !orderItemToCheckSet.isEmpty() ) ) {
-            system.debug(orderItemToCheckSet);
             for ( blng__BillingTransaction__c eachTransaction : [
                 SELECT
                     Id ,
@@ -242,3 +241,4 @@ public with sharing class CheckDownPaymentDetailsAction {
     }
 
 }
+//
