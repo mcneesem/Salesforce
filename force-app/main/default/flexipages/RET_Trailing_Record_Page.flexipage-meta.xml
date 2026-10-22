@@ -59,7 +59,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Assets_Rec_d__c</fieldItem>
+                <fieldItem>Record.Assets_Received__c</fieldItem>
                 <identifier>RecordAssets_Received_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -69,7 +69,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Wire_Received_Amt__c</fieldItem>
+                <fieldItem>Record.Wire_Received_Amount__c</fieldItem>
                 <identifier>RecordWire_Received_Amt_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -79,7 +79,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Additional_QC_Resource__c</fieldItem>
+                <fieldItem>Record.Additional_Quality_Control_Resource__c</fieldItem>
                 <identifier>RecordAdditional_QC_Resource_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -123,7 +123,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Records_Rec_d__c</fieldItem>
+                <fieldItem>Record.Records_Received__c</fieldItem>
                 <identifier>RecordRecords_Rec_d_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -143,7 +143,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.RK_Money__c</fieldItem>
+                <fieldItem>Record.Record_Keeper_Money__c</fieldItem>
                 <identifier>RecordRK_Money_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -153,7 +153,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.RK_Roth__c</fieldItem>
+                <fieldItem>Record.Record_Keeper_Roth__c</fieldItem>
                 <identifier>RecordRK_Roth_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -163,7 +163,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.RK_Loan__c</fieldItem>
+                <fieldItem>Record.Record_Keeper_Loan__c</fieldItem>
                 <identifier>RecordRK_Loan_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -173,7 +173,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.RK_Default_Loan__c</fieldItem>
+                <fieldItem>Record.Record_Keeper_Default_Loan__c</fieldItem>
                 <identifier>RecordRK_Default_Loan_cField</identifier>
             </fieldInstance>
         </itemInstances>

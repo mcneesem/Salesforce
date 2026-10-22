@@ -3,12 +3,12 @@
     <description>Grants access to create, view, and edit RET Trailing records.</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>RET_Trailing__c.Additional_QC_Resource__c</field>
+        <field>RET_Trailing__c.Additional_Quality_Control_Resource__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>RET_Trailing__c.Assets_Rec_d__c</field>
+        <field>RET_Trailing__c.Assets_Received__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27,33 +27,33 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>RET_Trailing__c.RK_Default_Loan__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>RET_Trailing__c.RK_Loan__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>RET_Trailing__c.RK_Money__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>RET_Trailing__c.RK_Roth__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>RET_Trailing__c.Record_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>RET_Trailing__c.Records_Rec_d__c</field>
+        <field>RET_Trailing__c.Record_Keeper_Default_Loan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RET_Trailing__c.Record_Keeper_Loan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RET_Trailing__c.Record_Keeper_Money__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RET_Trailing__c.Record_Keeper_Roth__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RET_Trailing__c.Records_Received__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -68,7 +68,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>RET_Trailing__c.Wire_Received_Amt__c</field>
+        <field>RET_Trailing__c.Wire_Received_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
