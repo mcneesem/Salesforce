@@ -8,7 +8,6 @@ public with sharing class NSP_ContactTriggerHelper {
     public static final Id NEW_CON_REC_TYPE_ID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CONTACT_OBJECT,'New_Contact_Record_Type');
     public static final List<String> ALLOWED_PROFILES = new List<String>{'BPS Service','Contact Center','PEO Service','Retirement Services'};
     public static final String WORK_CALENDAR_US40 ='US 40';
-
     //
     // Iterates throught the list of new Contact and passes the required attributes to other methods.
     // @param newList List of New Contact.
@@ -19,9 +18,12 @@ public with sharing class NSP_ContactTriggerHelper {
     public void beforeInsertDirector( List<Contact> newList ) {
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
         //Modified as part of SOQL fix 228901
-        String loggedInUserProfileName = NSP_ContactTriggerHelper.loggedInUserProfileName;
+        String loggedInUserProfileName;
+        loggedInUserProfileName = NSP_ContactTriggerHelper.loggedInUserProfileName;
+
         Id regionId, workCalenderId = null;
         //Modified as part of SOQL fix 228901
+        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))
         if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
             regionId = getRegionId();
             workCalenderId = getWorkCalendarId();
@@ -78,6 +80,7 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterInsertDirector( List<Contact> newList , Map<Id,Contact > newMap ) {
+        //Modified as part of SOQL fix 228901
         //Modified as part of SOQL fix 228901
         if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
             Set<Id> contactIdSet = new Set<Id>();
@@ -166,12 +169,34 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
+        List<Contact> queueNewContact = new List<Contact>();
+        Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
+        Set<Id> processedContact = new Set<Id>();
         try {
             //Modified as part of SOQL fix 228901
             if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
                 List<Contact> clientRefernceContactList = new List<Contact>();
                 Set<Id> contactIdSet = new Set<Id>();
-                NSP_ContactTriggerHelper.populateContacts(newMap, oldMap, clientRefernceContactList, contactIdSet);
+                for ( Contact conObj : newMap.values() ) {
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get( conObj.Id ) : null );
+                    if ( oldContact != null ) {
+                        if ( ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c )
+                            && conObj.NSP_Client_Reference__c
+                            )
+                        {
+                            clientRefernceContactList.add( conObj );
+                        }
+                        if ( ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c )
+                            || ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c )
+                            || ( oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c )
+                            || ( oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c )
+                            || ( oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c )
+                            )
+                        {
+                            contactIdSet.add( conObj.Id );
+                        }
+                    }
+                }
                 if ( !contactIdSet.isEmpty()
                     && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
                     )
@@ -182,18 +207,10 @@ public with sharing class NSP_ContactTriggerHelper {
                     this.createTaskforClientReference( clientRefernceContactList );
                 }
             }
-            NSP_ContactTriggerHelper.queueNewContacts(newMap, oldMap);
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
-   }
-
-   // helper method to defeat sonar cognitive complexity
-    private static void queueNewContacts(Map<Id,Contact> newMap, Map<Id,Contact> oldMap){
         if(newMap != null){
-            List<Contact> queueNewContact = new List<Contact>();
-            Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
-            Set<Id> processedContact = new Set<Id>();
             for(Contact conObj : newMap.values()){
                 Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
                 if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
@@ -203,40 +220,15 @@ public with sharing class NSP_ContactTriggerHelper {
                     processedContact.add(conObj.Id);
                 }
             }
-            if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-                System.enqueueJob(
-                    new QueueableTermFormJunctionObjects(
-                        queueNewContact,
-                        queueOldMap,
-                        NSP_ServiceConstants.UPDATE_TRIGGER
-                    )
-                );
-           }
         }
-    }
-
-    // helper method to defeat sonar cognitive complexity
-    private static void populateContacts(Map<Id,Contact> newMap , Map<Id,Contact> oldMap,
-        List<Contact> clientRefernceContactList, Set<Id> contactIdSet){
-        for ( Contact conObj : newMap.values() ) {
-            Contact oldContact = ( ( oldMap != null ) ? oldMap.get( conObj.Id ) : null );
-            if ( oldContact != null ) {
-                if ( ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c )
-                    && conObj.NSP_Client_Reference__c
-                    )
-                {
-                    clientRefernceContactList.add( conObj );
-                }
-                if ( ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c )
-                    || ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c )
-                    || ( oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c )
-                    || ( oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c )
-                    || ( oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c )
-                    )
-                {
-                    contactIdSet.add( conObj.Id );
-                }
-            }
+        if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    queueNewContact,
+                    queueOldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
         }
     }
 
@@ -477,7 +469,7 @@ public with sharing class NSP_ContactTriggerHelper {
     }
 
     //
-    // Method Name : getLoggedInUserProfileName
+    // Method Name : loggedInUserProfileName
     // Date : 11/08/2023
     // @param
     // @return String profileName
@@ -508,7 +500,7 @@ public with sharing class NSP_ContactTriggerHelper {
     public Id getRegionId() {
         List<String> regionFields = new List<String>{'Id','Name'};
         String queryRegion = new NSP_QueryBuilder('pse__Region__c', regionFields)
-            .addFilter('Name', NSP_ServiceConstants.UnitedStatesRegion).setSecurityEnforce(false).build();
+                .addFilter('Name', NSP_ServiceConstants.UnitedStatesRegion).setSecurityEnforce(false).build();
         List<pse__Region__c> regionRecords = Database.query(queryRegion);
         if(regionRecords.size() > 0) {
             return regionRecords[0].id;
@@ -525,7 +517,7 @@ public with sharing class NSP_ContactTriggerHelper {
     public Id getWorkCalendarId() {
         List<String> wcFields = new List<String>{'Id','Name'};
         String queryWC = new NSP_QueryBuilder('pse__Work_Calendar__c', wcFields)
-            .addFilter('Name', WORK_CALENDAR_US40).setSecurityEnforce(false).build();
+                .addFilter('Name', WORK_CALENDAR_US40).setSecurityEnforce(false).build();
         List<pse__Work_Calendar__c> wcRecords = Database.query(queryWC);
         if(wcRecords.size() > 0) {
             return wcRecords[0].id;
