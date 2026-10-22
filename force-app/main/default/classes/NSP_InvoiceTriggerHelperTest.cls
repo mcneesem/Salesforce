@@ -243,7 +243,7 @@ Modification Log     :
         proj.Project_Down_Payment_Received__c = true;
         update proj;
 
-        // Now directly call unsetDownPaymentOnProject — simulates Paid -> Unpaid transition
+        // Now directly call unsetDownPaymentOnProject - simulates Paid -> Unpaid transition
         NSP_InvoiceTriggerHelper.unsetDownPaymentOnProject(new Set<String>{ inv[0].Id });
         test.stoptest();
 

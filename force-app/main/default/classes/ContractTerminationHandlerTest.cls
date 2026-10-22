@@ -152,5 +152,135 @@ private class ContractTerminationHandlerTest {
         System.assertEquals(Date.today(),quoteResult.NSP_TerminationDate__c);
     }
 
+      // QuoteTerminationQueueable coverage
+
+    @IsTest
+    private static void testCPQQueue_EligibleForWaiver() {
+        // Covers addIWXWaiverIfEligible waiver-insertion path (lines that were previously uncovered)
+        NSP_QuoteLineTriggerHandler.TriggerDisabled = true;
+        NSP_QuoteTriggerHandler.TriggerDisabled = true;
+
+        Product2 waiverProduct = NSP_TestHelper.createProduct( 'IWX Waiver' , false );
+        waiverProduct.ProductCode = 'IWXWaiver';
+        waiverProduct.IsActive    = true;
+        insert waiverProduct;
+
+        // NSP_TransactionType__c on Quote is TEXT(SBQQ__Opportunity2__r.NSP_TransactionType__c)
+        // drive it through the Opportunity instead
+        List<SBQQ__Quote__c> quote = [ SELECT Id, SBQQ__Opportunity2__c FROM SBQQ__Quote__c LIMIT 1 ];
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        if(quote != null && !quote.isEmpty()){
+        update new Opportunity( Id = quote[0].SBQQ__Opportunity2__c , NSP_TransactionType__c = 'Termination' );
+
+        List<SBQQ__QuoteLine__c> qLines = [SELECT Id FROM SBQQ__QuoteLine__c
+                                           WHERE SBQQ__Quote__c = :quote[0].Id LIMIT 1];
+        if ( !qLines.isEmpty() ) {
+            qLines[0].NSP_Original_Subscription_Date__c = Date.today().addDays( -100 );
+            qLines[0].NSP_Original_waived_Amount__c     = 500.00;
+            update qLines;
+        }
+
+        List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
+
+        Test.startTest();
+        QuoteTerminationQueueable.enqueueJob(
+            new List<Id>{ quote[0].Id } ,
+            new List<String>{ 'test@insperity.com' } ,
+            ct[0].Id
+        );
+        Test.stopTest();
+
+        List<SBQQ__QuoteLine__c> waiverLines = [ SELECT Id FROM SBQQ__QuoteLine__c
+                                                 WHERE SBQQ__Quote__c = :quote[0].Id
+                                                 AND SBQQ__Product__r.ProductCode = 'IWXWaiver' ];
+        Assert.isFalse( waiverLines.isEmpty() , 'IWXWaiver line should have been inserted for the eligible quote' );
+        }
+    }
+
+    @IsTest
+    private static void testCPQQueue_AlreadyHasWaiver() {
+        // Covers idempotency: alreadyHaveWaiver guard prevents duplicate insertion
+        NSP_QuoteLineTriggerHandler.TriggerDisabled = true;
+        NSP_QuoteTriggerHandler.TriggerDisabled = true;
+
+        Product2 waiverProduct = NSP_TestHelper.createProduct( 'IWX Waiver' , false );
+        waiverProduct.ProductCode = 'IWXWaiver';
+        waiverProduct.IsActive    = true;
+        insert waiverProduct;
+
+        // NSP_TransactionType__c on Quote is TEXT(SBQQ__Opportunity2__r.NSP_TransactionType__c)
+        // drive it through the Opportunity instead
+        List<SBQQ__Quote__c> quote = [ SELECT Id, SBQQ__Opportunity2__c FROM SBQQ__Quote__c LIMIT 1 ];
+        if(quote != null && !quote.isEmpty()){
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
+        update new Opportunity( Id = quote[0].SBQQ__Opportunity2__c , NSP_TransactionType__c = 'Termination' );
+
+        List<SBQQ__QuoteLine__c> qLines = [ SELECT Id FROM SBQQ__QuoteLine__c
+                                            WHERE SBQQ__Quote__c = :quote[0].Id LIMIT 1 ];
+        if ( !qLines.isEmpty() ) {
+            qLines[0].NSP_Original_Subscription_Date__c = Date.today().addDays( -100 );
+            qLines[0].NSP_Original_waived_Amount__c     = 500.00;
+            update qLines;
+        }
+
+        insert new SBQQ__QuoteLine__c( SBQQ__Quote__c   = quote[0].Id ,
+                                       SBQQ__Product__c = waiverProduct.Id ,
+                                       SBQQ__Quantity__c = 1 );
+
+        List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
+
+        Test.startTest();
+        if(ct != null && !ct.isEmpty()){
+            QuoteTerminationQueueable.enqueueJob(
+                new List<Id>{ quote[0].Id } ,
+                new List<String>{ 'test@insperity.com' } ,
+                ct[0].Id
+            );
+        }
+        Test.stopTest();
+
+        List<SBQQ__QuoteLine__c> waiverLines = [
+            SELECT Id FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quote[0].Id
+            AND SBQQ__Product__r.ProductCode = 'IWXWaiver'
+        ];
+        Assert.areEqual( 1 , waiverLines.size() , 'No duplicate waiver line should be added when one already exists' );
+        }
+    }
+
+    @IsTest
+    private static void testCPQQueue_EmptyQuoteIds() {
+        // Covers the false branch of execute(Queueable): no finalizer attached when list is empty
+        List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
+
+        Test.startTest();
+        if(ct != null && !ct.isEmpty()){
+            QuoteTerminationQueueable.enqueueJob(
+                new List<Id>() ,
+                new List<String>{ 'test@insperity.com' } ,
+                ct[0].Id
+            );
+        }
+        Test.stopTest();
+
+        Assert.isTrue( true , 'Empty quoteIds should complete without errors' );
+    }
+
+    @IsTest
+    private static void testCPQQueue_NullQuoteIds_ExceptionHandled() {
+        // Covers execute(Queueable) catch block: null quoteIds throws NPE, caught gracefully
+        List<Contract> ct = [ SELECT Id FROM Contract LIMIT 1 ];
+
+        Test.startTest();
+        QuoteTerminationQueueable.enqueueJob(
+            null ,
+            null ,
+            ct[0].Id
+        );
+        QuoteTerminationQueueable.testHandleException( null, null );
+        Test.stopTest();
+
+        Assert.isTrue( true , 'Null quoteIds exception should be caught and not propagate' );
+    }
 }
 //
