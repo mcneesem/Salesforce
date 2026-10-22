@@ -2,7 +2,7 @@
 public class CheckDownPaymentDetailsActionTest {
 
     @testSetup
-    private static void setupTestData(){
+    private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         upsert orderSetting;
@@ -257,7 +257,7 @@ public class CheckDownPaymentDetailsActionTest {
         planLineObj.blng__InvoicePlan__c = invPlanRec[0].Id;
         insert planLineObj;
 
-		blng__BillingSchedule__c blngSchedule= new blng__BillingSchedule__c();
+        blng__BillingSchedule__c blngSchedule= new blng__BillingSchedule__c();
         blngSchedule.blng__Amount__c = 100.00;
         blngSchedule.Name = 'Project Completion Plan';
         blngSchedule.blng__OrderProduct__c = invPlanId;
@@ -278,4 +278,6 @@ public class CheckDownPaymentDetailsActionTest {
 
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
+
 }
+//
