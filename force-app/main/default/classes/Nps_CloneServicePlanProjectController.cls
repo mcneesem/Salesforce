@@ -431,7 +431,7 @@ public with sharing class Nps_CloneServicePlanProjectController {
         //clone the notes and attach them to the newly cloned project task
         for(NSP_Note__c note: [
                     SELECT
-                        Id , NSP_NetSuite_External_ID__c , NSP_OneVoice_External_ID__c , Note__c ,
+                        Id , NSP_NetSuite_External_ID__c , NSP_OneVoice_External_ID__c ,
                         NSP_Project_Task__c , NSP_Project_Task__r.Name , NSP_Project_Task__r.pse__Status__c ,  
                         NSP_Project_Task__r.pse__Start_Date_Time__c , NSP_Project_Task__r.pse__End_Date_Time__c ,
                         NSP_Project_Task__r.NSP_Percentage_Complete__c , NSP_Project_Task__r.pse__Parent_Task__r.Name
