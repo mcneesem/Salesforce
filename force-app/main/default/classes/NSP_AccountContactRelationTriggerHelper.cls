@@ -177,12 +177,12 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public void afterInsertJobTitle( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         Set<Id> contactIdSet = new Set<Id>();
-        for(AccountContactRelation accConObj : newList){
-            if(accConObj.NSP_Job_Title__c!=null ){
-                contactIdSet.add(accConObj.ContactId);
+        for ( AccountContactRelation accConObj : newList ) {
+            if ( String.isNotBlank( accConObj.NSP_Job_Title__c ) ) {
+                contactIdSet.add( accConObj.ContactId );
             }
         }
-        updateJobTitleofContact(contactIdSet);
+        this.updateJobTitleofContact( contactIdSet );
     }
 
     //
@@ -200,23 +200,42 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
     }
 
-    public void updateJobTitleofContact( Set<Id> contactIdset ) {
-        Map<Id, String> mapOfcontactJobTitles = new Map<Id,String>();
-        List<Contact> contactList = new List<Contact>();
-        try{
-            if(!contactIdSet.isEmpty()){
-                for(AccountContactRelation accConObj : [SELECT Id,ContactId, NSP_Job_Title__c FROM AccountContactRelation WHERE ContactId in:contactIdSet and NSP_Job_Title__c!=null ]){
-                    mapOfcontactJobTitles.put(accConObj.ContactId,accConObj.NSP_Job_Title__c);
+    private void updateJobTitleofContact( Set<Id> contactIdset ) {
+        try {
+            Map<Id,String> mapOfcontactJobTitles = new Map<Id,String>();
+            if ( ( contactIdSet != null ) && !contactIdSet.isEmpty() ) {
+                for ( AccountContactRelation accConObj : [
+                            SELECT Id , ContactId , NSP_Job_Title__c
+                            FROM AccountContactRelation
+                            WHERE (
+                                ( ContactId IN :contactIdSet )
+                                AND ( NSP_Job_Title__c != null )
+                            )
+                        ]
+                    )
+                {
+                    mapOfcontactJobTitles.put(
+                        accConObj.ContactId ,
+                        accConObj.NSP_Job_Title__c
+                    );
                 }
             }
-            if(!mapOfcontactJobTitles.isEmpty()){
-                for(Contact con: [SELECT Id, NSP_Job_Title__c FROM Contact WHERE Id in:contactIdset]){
-                    con.NSP_Job_Title__c=mapOfcontactJobTitles.get(con.Id);
-                    contactList.add(con);
+            List<Contact> contactList = new List<Contact>();
+            if ( !mapOfcontactJobTitles.isEmpty() ) {
+                for ( Contact con : [
+                            SELECT Id , NSP_Job_Title__c
+                            FROM Contact
+                            WHERE ( Id IN :mapOfcontactJobTitles.keySet() )
+                        ]
+                    )
+                {
+                    con.NSP_Job_Title__c = mapOfcontactJobTitles.get( con.Id );
+                    contactList.add( con );
                 }
             }
-            if(!contactList.isEmpty()){
-                update contactList;
+            if ( !contactList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( contactList , false );
+                NSP_AccountContactRelationTriggerHelper.handleResults( results , 'updateJobTitleofContact:update' );
             }
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'updateJobTitleofContact' );
@@ -362,11 +381,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
         if ( !communityEventToBeInserted.isEmpty() ) { // DEPRECATED
             List<Database.SaveResult> results = EventBus.publish( communityEventToBeInserted );
-            NSP_ErrorLogHandler.logResults(
-                NSP_AccountContactRelationTriggerHelper.class.getName() ,
-                'createPlatformEventForACR' ,
-                results
-            );
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , 'createPlatformEventForACR' );
         }
     }
 
@@ -424,6 +439,21 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             NSP_AccountContactRelationTriggerHelper.class.getName() ,
             methodName ,
             e
+        );
+    }
+
+    // for test code coverage only...
+    public static void testHandleResults( List<Database.SaveResult> results , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , methodName );
+        }
+    }
+
+    private static void handleResults( List<Database.SaveResult> results , String methodName ) {
+        NSP_ErrorLogHandler.logResults(
+            NSP_AccountContactRelationTriggerHelper.class.getName() ,
+            methodName ,
+            results
         );
     }
 
