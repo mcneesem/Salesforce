@@ -2431,24 +2431,6 @@
         <pageOrSobjectType>Asset</pageOrSobjectType>
         <recordType>Asset.Hardware_Asset</recordType>
         <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
         <profile>Sales Administrator</profile>
     </profileActionOverrides>
     <profileActionOverrides>
