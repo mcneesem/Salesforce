@@ -772,7 +772,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         try {
             Set<Id> resourceContactIds = new Set<Id>();
             if(!userWithContactMap?.isEmpty()) {
-                resourceContactIds = userWithContactMap.values();
+                resourceContactIds.addAll(userWithContactMap.values());
             }
             Set<Id> staffingPermittedResourceIds = NSP_ProjectTriggerHelper.getStaffingPermittedResourceIds( resourceContactIds );
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
