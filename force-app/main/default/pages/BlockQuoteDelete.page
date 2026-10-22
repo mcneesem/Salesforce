@@ -1,0 +1,19 @@
+<apex:page standardController="SBQQ__Quote__c" lightningStylesheets="true">
+    <div style="padding: 20px; font-family: Salesforce Sans, Arial, sans-serif;">
+        <div style="background-color: #fff; border: 1px solid #dddbda; border-radius: .25rem; padding: 2rem; text-align: center; box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);">
+            <!-- Salesforce Lightning Warning Icon (Simulated) -->
+            <div style="font-size: 3rem; color: #e06d00; margin-bottom: 1rem;">⚠️</div>
+            <h2 style="font-weight: 600; font-size: 1.5rem; margin-bottom: 1rem; color: #3e3e3c;">
+                Action Deletion Restricted
+            </h2>
+            <p style="font-size: 1rem; color: #706e6b; margin-bottom: 2rem;">
+                Deleting SBQQ Quotes directly from the related list is disabled. Please contact your System Administrator if you believe this is an error.
+            </p>
+            <apex:form >
+                <!-- Back Button redirects user to the Quote or parent Opportunity -->
+                <apex:commandButton action="{!cancel}" value="Go Back" styleClass="slds-button slds-button_brand" 
+                                    style="background-color: #0176d3; color: white; border: 1px solid #0176d3; padding: .5rem 1.5rem; border-radius: .25rem; font-size: 1rem; cursor: pointer;"/>
+            </apex:form>
+        </div>
+    </div>
+</apex:page>
