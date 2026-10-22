@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Case_Creation_Outlook</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to access Case Creation Outlook</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Case Creation Outlook</label>
+</PermissionSet>
