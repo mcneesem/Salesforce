@@ -483,7 +483,7 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return String profileName
     //
     private static String loggedInUserProfileName {
-        public get {
+        private get {
             if( loggedInUserProfileName == null ){
                 List<User> autouser = [ SELECT Profile.Name, Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
                 if ( !autoUser.isEmpty()){
