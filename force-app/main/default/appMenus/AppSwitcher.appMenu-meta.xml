@@ -197,14 +197,6 @@
         <type>ConnectedApp</type>
     </appMenuItems>
     <appMenuItems>
-        <name>Highspot</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
-        <name>Highspot_Latest</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
         <name>Dataloader_Bulk</name>
         <type>ConnectedApp</type>
     </appMenuItems>
@@ -373,10 +365,6 @@
         <type>CustomApplication</type>
     </appMenuItems>
     <appMenuItems>
-        <name>OneTrust_Connection</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
         <name>FSL__FieldService</name>
         <type>CustomApplication</type>
     </appMenuItems>
@@ -506,10 +494,6 @@
     </appMenuItems>
     <appMenuItems>
         <name>Microsoft_Power_Query_Refresh</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
-        <name>Netskope_Introspection_for_Salesforce</name>
         <type>ConnectedApp</type>
     </appMenuItems>
     <appMenuItems>
