@@ -108,6 +108,7 @@ public with sharing class SandboxHealthController {
             res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
 
             // Custom Settings checks (from doCSettings and doCSettings2)
+            res.sections.add( verifyAvaTaxSettings() );
             res.sections.add( verifyBoxFileRequest() );
             // Resolve DocuSign context to get expected downstream values
             DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
@@ -124,6 +125,7 @@ public with sharing class SandboxHealthController {
                 res.sections.add( verifyUserTriggerSettings() );
             }
             res.sections.add( verifyWingspanSettings() );
+            res.sections.add( verifyWorkdayUrlSettings() );
 
             // Other checks
             res.sections.add( verifyImageDocuments() );
@@ -1154,6 +1156,45 @@ public with sharing class SandboxHealthController {
         }
 
         return SandboxHealthController.finalizeSection( email );
+    }
+
+    // 13) AVA_SFCLOUD__AvaTax__c (from doAvaTaxSettings)
+    private static Section verifyAvaTaxSettings() {
+        Section s = new Section();
+        s.key = 'AVA_SFCLOUD__AvaTax__c';
+        s.label = 'AvaTax Settings';
+        s.category = 'CUSTOM_SETTINGS';
+        s.checks = new List<Check>();
+
+        try {
+            Map<String,AVA_SFCLOUD__AvaTax__c> allSettings = AVA_SFCLOUD__AvaTax__c.getAll();
+            AVA_SFCLOUD__AvaTax__c def = ( allSettings != null && allSettings.containsKey( 'AvaTax Config' ) ) ? allSettings.get( 'AvaTax Config' ) : null;
+            s.checks.add( checkExact( 'avt_acct' , 'AVA_SFCLOUD__Account_ID__c' , '1100126607'       , ( def == null ) ? null : def.AVA_SFCLOUD__Account_ID__c ) );
+            s.checks.add( checkExact( 'avt_key'  , 'AVA_SFCLOUD__License_Key__c' , '0FE211624F764D08' , ( def == null ) ? null : def.AVA_SFCLOUD__License_Key__c ) );
+            s.checks.add( checkBool(  'avt_sbx'  , 'AVA_SFCLOUD__Sandbox__c'    , true               , ( def == null ) ? null : def.AVA_SFCLOUD__Sandbox__c ) );
+        } catch ( Exception e ) {
+            s.checks.add( newWarn( 'avt_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read AVA_SFCLOUD__AvaTax__c: ' + e.getMessage() ) );
+        }
+
+        return SandboxHealthController.finalizeSection( s );
+    }
+
+    // 14) Workday_URL_Settings__c (from doCSettings2 — Corporate_Instance_URL__c cleared to null)
+    private static Section verifyWorkdayUrlSettings() {
+        Section s = new Section();
+        s.key = 'Workday_URL_Settings__c';
+        s.label = 'Workday URL Settings';
+        s.category = 'CUSTOM_SETTINGS';
+        s.checks = new List<Check>();
+
+        try {
+            Workday_URL_Settings__c def = Workday_URL_Settings__c.getOrgDefaults();
+            s.checks.add( checkBlank( 'wd_corp' , 'Corporate_Instance_URL__c' , STRING_CLEARED , ( def == null ) ? null : def.Corporate_Instance_URL__c ) );
+        } catch ( Exception e ) {
+            s.checks.add( newWarn( 'wd_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Workday_URL_Settings__c: ' + e.getMessage() ) );
+        }
+
+        return SandboxHealthController.finalizeSection( s );
     }
 
     private static Map<String, Id> mTmplId {
