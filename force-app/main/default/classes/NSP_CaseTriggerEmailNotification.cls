@@ -162,7 +162,7 @@ public class NSP_CaseTriggerEmailNotification {
         }
 
         //Querying List of case related notes
-        List<String> fields = new List<String>{ 'Id','CreatedBy.Name','CreatedDate','Note__c','Case__c' };
+        List<String> fields = new List<String>{ 'Id','CreatedBy.Name','CreatedDate','Case__c' };
         String query = new NSP_QueryBuilder(NSP_ServiceConstants.NOTE_SOBJECT_TYPE, fields)
                         .addFilter('Case__c', caseIdList, NSP_QueryBuilder.Operator.INCLUDES)
                         .orderBy('createdDate', 'DESC', false).build();
@@ -180,7 +180,7 @@ public class NSP_CaseTriggerEmailNotification {
             mailBody += '<table border="1"><tr><th>Note Created By</th><th>Note Created Date</th><th>Note</th></tr>';
             for(NSP_Note__c note : notesList){
                 //Creating HTML table in body of email
-                mailBody +='<tr><td>'+note.CreatedBy.Name+'</td><td>'+ note.CreatedDate+'</td><td>'+note.Note__c+'</td></tr>';
+                mailBody +='<tr><td>'+note.CreatedBy.Name+'</td><td>'+ note.CreatedDate+'</td></tr>';
             }
             mailBody += '</table><br/><br/>';
         }
