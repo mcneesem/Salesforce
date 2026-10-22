@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>This will call checkDownPaymentDetails method from NSP_OrderTriggerHelper</description>
+        <description>This will call checkDownPaymentDetails method from CheckDownPaymentDetailsAction</description>
         <name>Process_checkDownPaymentDetails</name>
         <label>Process checkDownPaymentDetails</label>
         <locationX>578</locationX>
-        <locationY>408</locationY>
-        <actionName>NSP_OrderTriggerHelper</actionName>
+        <locationY>384</locationY>
+        <actionName>CheckDownPaymentDetailsAction</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -15,13 +15,15 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>CheckDownPaymentDetailsAction</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <decisions>
         <name>Order_Activated</name>
         <label>Order Activated</label>
         <locationX>182</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IsOrderActivated</name>
@@ -51,7 +53,7 @@
         <name>status_Reviewed</name>
         <label>status Reviewed</label>
         <locationX>710</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isReviewed</name>
@@ -104,7 +106,7 @@
         <name>Publish_Event_for_Contract_Creation</name>
         <label>Publish Event for Contract Creation</label>
         <locationX>50</locationX>
-        <locationY>408</locationY>
+        <locationY>384</locationY>
         <inputAssignments>
             <field>NSP_Action__c</field>
             <value>

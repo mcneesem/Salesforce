@@ -725,23 +725,6 @@ private class NSP_OrderTriggerHelperTest {
     }
 
     @isTest
-    private static void checkDownPaymentDetailsMethod() {
-        NSP_OrderItemTriggerHandler.TriggerDisabled = true;
-        NSP_QuoteTriggerHandler.TriggerDisabled = true;
-        NSP_AccountTriggerHandler.TriggerDisabled = true;
-        List<Order> orderList = [Select Id, NSP_Down_Payment_Required__c, NSP_Project__c, NSP_Project__r.Project_Complete_Date__c, Status, SBQQ__Quote__c,
-                        AccountId, NSP_Project_Go_Live_Date__c, (SELECT ID, SBQQ__BillingFrequency__c, NSP_Project__c, NSP_Project__r.Project_Complete_Date__c
-                        FROM ORDERITEMS WHERE SBQQ__BillingFrequency__c IN ('Monthly', 'Annual', 'Invoice Plan'))NSP_Project_Go_Live_Approved__c,
-                        NSP_Project_Complete_Date__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c
-                        From Order];
-        List<ID> orderIds = new List<ID>();
-        orderIds.add(orderList[0].Id);
-        NSP_OrderTriggerHelper.checkDownPaymentDetails(orderIds);
-
-        System.assert(orderList.size()>0, 'Order List size is greater than 0');
-    }
-
-    @isTest
     private static void testStampDunningEmailonContact() {
         NSP_AccountContactRelationTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled = true;
