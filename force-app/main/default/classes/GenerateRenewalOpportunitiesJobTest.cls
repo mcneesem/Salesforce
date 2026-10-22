@@ -72,7 +72,7 @@ private class GenerateRenewalOpportunitiesJobTest {
         Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
         cs.IsEnabled__c = true;
         cs.BatchSize__c = 50;
-        cs.Bid_Number_Enabled__c = false;
+        cs.IsEnabledBidNumberGrouping__c = false;
         cs.RenewalRecordTypeId__c = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Renewal' );
         upsert cs;
     }
@@ -113,7 +113,7 @@ private class GenerateRenewalOpportunitiesJobTest {
     @isTest
     private static void testRenewalOpportunityBatchWithBidNumber() {
         Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
-        cs.Bid_Number_Enabled__c = true;
+        cs.IsEnabledBidNumberGrouping__c = true;
         upsert cs;
         Test.startTest();
         Database.executeBatch( new GenerateRenewalOpportunitiesJob(12, 2026, null));

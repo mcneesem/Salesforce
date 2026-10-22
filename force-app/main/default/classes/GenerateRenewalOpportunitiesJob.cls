@@ -494,8 +494,11 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
                 opp.Next_Renewal_Date__c = subClient.NSP_Renewal_Date__c.addYears( 1 );
             }
             opp.Current_Benefits_Package__c = subClient.NSP_Benefit_Package_Name__c;
-            if ( GenerateRenewalOpportunitiesJob.isBidNumberEnabled && subClient.Bid_Number__c != null ) {
-                opp.NSP_BidNumber__c = String.valueOf( subClient.Bid_Number__c );
+            if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                && (subClient.Bid_Number__c != null )
+               ) 
+            {
+                opp.NSP_BidNumber__c = String.valueOf( subClient.Bid_Number__c.intValue() );
             }
             opp.Renewal_Benefits_Package__c = this.buildBenefitPackage( subClient.NSP_Benefit_Package_Name__c );
             opp.Current_Multi_Year_Contract__c = this.isCurrentMultiYearContract( subClient );
@@ -584,9 +587,15 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             && String.isNotBlank( subClient.NSP_Client__c )
             )
         {
-            if ( GenerateRenewalOpportunitiesJob.isBidNumberEnabled && subClient.Bid_Number__c != null ) {
-                    key = subClient.NSP_Client__c + String.valueOf( subClient.Bid_Number__c );
-            }else if ( !GenerateRenewalOpportunitiesJob.isBidNumberEnabled && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c ) ) {
+            if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                && ( subClient.Bid_Number__c != null )
+               )
+            {
+                    key = subClient.NSP_Client__c + String.valueOf( subClient.Bid_Number__c.intValue() );
+            }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                      && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
+                     )
+            {
                     key = subClient.NSP_Client__c + subClient.NSP_Benefit_Package_Name__c;
             }
         }
@@ -602,9 +611,15 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             && ( this.accountSubClientMap.get( record.AccountId ) != null )
             )
         {
-            if ( GenerateRenewalOpportunitiesJob.isBidNumberEnabled && record.NSP_BidNumber__c != null ) {
-                    key = this.accountSubClientMap.get( record.AccountId ) + record.NSP_BidNumber__c;
-            }else if ( !GenerateRenewalOpportunitiesJob.isBidNumberEnabled && String.isNotBlank( record.Current_Benefits_Package__c ) ){
+            if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                && ( record.NSP_BidNumber__c != null )
+               )
+            {
+                    key = this.accountSubClientMap.get( record.AccountId ) + record.NSP_BidNumber__c.trim();
+            }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                      && String.isNotBlank( record.Current_Benefits_Package__c )
+                     )
+            {
                     key = this.accountSubClientMap.get( record.AccountId ) + record.Current_Benefits_Package__c;
             }
         }
@@ -848,16 +863,16 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
         private set;
     }
     
-    private static Boolean isBidNumberEnabled {
+    private static Boolean isEnabledBidNumberGrouping {
         private get {
-            if ( isBidNumberEnabled == null ) {
+            if ( isEnabledBidNumberGrouping == null ) {
                 Boolean local = false;
                 if ( GenerateRenewalOpportunitiesJob.settings != null ) {
-                    local = GenerateRenewalOpportunitiesJob.settings.Bid_Number_Enabled__c;
+                    local = GenerateRenewalOpportunitiesJob.settings.IsEnabledBidNumberGrouping__c;
                 }
-                isBidNumberEnabled = local;
+                isEnabledBidNumberGrouping = local;
             }
-            return isBidNumberEnabled;
+            return isEnabledBidNumberGrouping;
         }
         private set;
     }
