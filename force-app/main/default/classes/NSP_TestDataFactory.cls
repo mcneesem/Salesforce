@@ -872,8 +872,7 @@ public abstract class NSP_TestDataFactory {
     public class NSPNoteDefaults implements FieldDefaults {
         public Map<Schema.SObjectField, Object> getFieldDefaults() {
             return new Map<Schema.SObjectField, Object> {
-                NSP_Note__c.Note_Type__c => 'Note',
-                NSP_Note__c.Note__c => 'Test Note'    
+                NSP_Note__c.Note_Type__c => 'Note'    
             };
         }
     }
