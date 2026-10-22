@@ -22,7 +22,6 @@ NSP_StatusOfAgreement__c;
 NSP_ConfirmationOfAgreementStatement__c= '';
 NSP_ReviewType__c;
 NSP_ClientName__c;
-NSP_WSEE_SubClient_Parent_Client_if_None__c;
 NSP_WSEE__c;
 NSP_ShowSeperationList='';
 fieldValue =  { currentTarget : { name :'', value :''} };
@@ -91,9 +90,6 @@ get reportRecordName (){
     if(this.isOnloaded ){
     if(this.recordObj?.NSP_ClientName__c?.value != null && this.NSP_ClientName__c == null){
       this.NSP_ClientName__c = this.recordObj.NSP_ClientName__c.value;
-     }
-     if(this.recordObj?.NSP_Client_Number__c?.value != null && this.NSP_WSEE_SubClient_Parent_Client_if_None__c == null){
-      this.NSP_WSEE_SubClient_Parent_Client_if_None__c = this.recordObj.NSP_Client_Number__c.value;
      }
 
     if(this.recordObj.NSP_WSEE__c != null && this.recordObj.NSP_WSEE__c.value != null && this.NSP_WSEE__c == null){

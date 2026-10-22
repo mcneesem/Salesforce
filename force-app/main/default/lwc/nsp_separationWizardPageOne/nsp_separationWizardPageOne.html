@@ -1,4 +1,4 @@
-<template> 
+<template>
     <div class="slds-box">
         <lightning-record-edit-form onsuccess={handleSuccess} onsubmit ={handleSubmit} record-id={reReqId} record-type-id={recordTypeId}	 onload={handleOnload} object-api-name="NSP_ReportRequest__c">
             <lightning-messages></lightning-messages>
@@ -6,11 +6,9 @@
             <lightning-layout>
             <lightning-layout-item size="6">
             <div class="slds-m-top_medium slds-p-around_medium">
-                <lightning-input-field style="display:none" field-name="NSP_WSEE_SubClient_Parent_Client_if_None__c" value={NSP_WSEE_SubClient_Parent_Client_if_None__c}></lightning-input-field>
-
             <template if:true={agreementTypeValues.data}>
-                <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal"> 
-                    <lightning-radio-group name="NSP_AgreementType__c" for="NSP_AgreementType__c" 
+                <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal">
+                    <lightning-radio-group name="NSP_AgreementType__c" for="NSP_AgreementType__c"
                     label="Agreement Type"
                     options={agreementTypeValues.data.values}
                     value={NSP_AgreementType__c}
@@ -36,7 +34,7 @@
                     </lightning-radio-group>
                 </div>
             </template>
-            <div style='display:none'>     
+            <div style='display:none'>
                 <lightning-input-field field-name="NSP_ReviewType__c" id="NSP_ReviewType__c" value={NSP_ReviewType__c}  class="slds-hidden" required={NSP_AgreementType} ></lightning-input-field>
             </div>
 
@@ -72,9 +70,9 @@
                    </template>
 
                    <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal statusAgreementDiv" style="display:none;">
-                
+
                 <template if:true={statusOfAgreementValues.data}>
-                   <div class="slds-var-m-around_medium"> 
+                   <div class="slds-var-m-around_medium">
                     <div class="slds-form-element slds-form-element_horizontal">
                         <lightning-radio-group name="NSP_StatusOfAgreement__c" for="NSP_StatusOfAgreement__c" class='NSP_StatusOfAgreement__c'
                         label="What is the status of the Agreement?"
@@ -93,11 +91,11 @@
                 <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal confirmationDiv" style="display:none;">
                     <p>Are <b>ANY</b> of the following statements TRUE regarding the separation Agreement?</p>
                     <template if:true={NSP_ShowSeperationList} >
-                       
+
                         <lightning-formatted-rich-text
                             value={NSP_ShowSeperationList}
                         ></lightning-formatted-rich-text>
-                   
+
                     </template>
                         <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal">
                             <lightning-radio-group name="NSP_ConfirmationOfAgreementStatement__c" for="ConfirmationOfAgreementStatement" class='NSP_ConfirmationOfAgreementStatement__c'
@@ -109,13 +107,13 @@
                             type="radio">
                             </lightning-radio-group>
                         </div>
-                        <div style='display:none'> 
+                        <div style='display:none'>
                             <lightning-input-field   id="ConfirmationOfAgreementStatement"  field-name="NSP_ConfirmationOfAgreementStatement__c" value={NSP_ConfirmationOfAgreementStatement__c}   required={NSP_StatusOfAgreement}>
-                                
+
                             </lightning-input-field>
                         </div>
                 </div>
-            </div> 
+            </div>
             <div class="slds-p-vertical_medium ChangeToCorporateReivew" style='display:none' > The agreement type has been updated to Corporate Review. You may proceed to the next screen </div>
         </div>
 
@@ -124,18 +122,18 @@
             </template>
         </div>
 
-        <div style="display:none"> 
+        <div style="display:none">
             <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
-            </lightning-input-field> 
+            </lightning-input-field>
             <lightning-input-field class="slds-hidden" field-name="Name" value={reportRecordName}></lightning-input-field>
             <lightning-input-field class="slds-hidden"  field-name="NSP_WSEE__c" value={NSP_WSEE__c}></lightning-input-field>
-            <lightning-input-field class="slds-hidden" field-name="NSP_ClientName__c" value={NSP_ClientName__c}></lightning-input-field> 
+            <lightning-input-field class="slds-hidden" field-name="NSP_ClientName__c" value={NSP_ClientName__c}></lightning-input-field>
         </div>
 
     </lightning-layout-item>
     <lightning-layout-item size="6">
         <lightning-layout-item>
-            <!--   file upload start here 
+            <!--   file upload start here
             <div class="slds-align_absolute-center slds-p-around_medium">
                <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload>
              </div>
@@ -155,7 +153,7 @@
                 <lightning-button
                 class="slds-m-top_small slds-m-left_small"
                 type="submit"
-                variant="brand" 
+                variant="brand"
                 label="Next">
               </lightning-button>
 

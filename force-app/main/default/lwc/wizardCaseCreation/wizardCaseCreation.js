@@ -16,6 +16,7 @@ import getWoAssetId from '@salesforce/apex/NSP_ReportRequestWizardController.get
 import CASE_OBJ from "@salesforce/schema/Case";
 import { LABEL } from './constants';
 import SUBCLIENT_NUMBER from '@salesforce/schema/NSP_ReportRequest__c.NSP_Sub_Client__r.NSP_Sub_Client__c';
+import CLIENT_NUMBER from '@salesforce/schema/NSP_ReportRequest__c.NSP_Sub_Client__r.NSP_Client__c';
 import relatedFiles from '@salesforce/apex/NSP_ReportRequestWizardController.createCaseDocuments';
 export default class WizardCaseCreation extends NavigationMixin(LightningElement)  {
     @api reReqObj;
@@ -25,6 +26,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
     recordTypeID = '012000000000000AAA';
     @track subclientData;
     @track error;
+    aimsValue;
 
     defultRecordInputCreation(queueID){
         const fields = {
@@ -41,7 +43,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
     return { apiName: CASE_OBJ.objectApiName, fields };
     }
 
-    @wire(getRecord, { recordId: '$reReqObj.Id', fields: [SUBCLIENT_NUMBER]})
+    @wire(getRecord, { recordId: '$reReqObj.Id', fields: [SUBCLIENT_NUMBER, CLIENT_NUMBER]})
     wiredContact({ error, data }) {
         if (data) {
             this.subclientData = data;
@@ -172,11 +174,7 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
                 {
                     subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
                 }
-                if(this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null){
-                    subject = this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value != null ?
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue + ' ('+ this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value +')' :
-                    subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
-                }
+                subject = this.appendWseeIfPresent(subject);
             } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
                 fields.NSP_Category__c='Strategic Consulting Services';
                 fields.NSP_SubCategory__c  ='Engagement Survey';
@@ -234,6 +232,28 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
         else {
             this.hideSpinner();
         }
+    }
+
+    appendWseeIfPresent(subject) {
+        if (subject != null && this.reReqObj.NSP_WSEE__c != null && this.reReqObj.NSP_WSEE__r.displayValue != null) {
+            return this.appendWseeToSubject(subject);
+        }
+        return subject;
+    }
+
+    appendWseeToSubject(subject) {
+        const subFields = this.subclientData?.fields?.NSP_Sub_Client__r?.value?.fields;
+        this.aimsValue = null;
+        if (subFields?.NSP_Sub_Client__c?.value != null) {
+            this.aimsValue = subFields.NSP_Sub_Client__c.value;
+            } else if (subFields?.NSP_Client__c?.value != null) {
+                this.aimsValue = subFields.NSP_Client__c.value;
+            }
+            let aimsSuffix = '';
+            if (this.aimsValue != null) {
+                aimsSuffix = ' (' + this.aimsValue + ')';
+            }
+            return subject + ' - ' + this.reReqObj.NSP_WSEE__r.displayValue + aimsSuffix;
     }
 
     categorySubcategoryMM(fields){
