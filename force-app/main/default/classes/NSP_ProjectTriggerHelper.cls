@@ -770,16 +770,11 @@ public with sharing class NSP_ProjectTriggerHelper {
         )
     {
         try {
-            Set<Id> resourceContactIds = new Set<Id>( userWithContactMap.values() );
-            Set<Id> staffingPermittedResourceIds = new Set<Id>();
-            for ( pse__Permission_Control__c pc : [
-                SELECT pse__Resource__c
-                FROM pse__Permission_Control__c
-                WHERE pse__Resource__c IN :resourceContactIds
-                  AND pse__Staffing__c = true
-            ] ) {
-                staffingPermittedResourceIds.add( pc.pse__Resource__c );
+            Set<Id> resourceContactIds = new Set<Id>();
+            if(!userWithContactMap?.isEmpty()) {
+                resourceContactIds = userWithContactMap.values();
             }
+            Set<Id> staffingPermittedResourceIds = NSP_ProjectTriggerHelper.getStaffingPermittedResourceIds( resourceContactIds );
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
             for ( Id projectId : changedProjectMap.keyset() ) {
                 pse__Proj__c project = changedProjectMap.get( projectId );
@@ -797,7 +792,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                     resourceId = projectImplementor;
                 }
                 pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
-                if ( schedule != null && resourceId != null && staffingPermittedResourceIds.contains( resourceId ) ) {
+                if ( schedule != null && resourceId != null && staffingPermittedResourceIds?.contains( resourceId ) ) {
                     relatedAssignmentList.add(
                         this.buildLinkedAssignment(
                             projectId ,
@@ -812,8 +807,8 @@ public with sharing class NSP_ProjectTriggerHelper {
                 // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
                 List<Database.SaveResult> results = Database.insert( relatedAssignmentList , false );
                     NSP_ErrorLogHandler.logResults(
-                        NSP_ProjectTriggerHelper.class.getName() ,
-                        'createAssignments:insert' ,
+                        NSP_ProjectTriggerHelper.class.getName(),
+                        'createAssignments:insert',
                         results
                     );
             }
@@ -830,6 +825,26 @@ public with sharing class NSP_ProjectTriggerHelper {
                 e
             );
         }
+    }
+
+
+
+    // Returns the subset of resourceContactIds that have an active Staffing permission control.
+    // @param resourceContactIds Set of Contact Ids to check against pse__Permission_Control__c
+    // @return Set<Id> of Contact Ids where pse__Staffing__c is true
+    private static Set<Id> getStaffingPermittedResourceIds( Set<Id> resourceContactIds ) {
+        Set<Id> result = new Set<Id>();
+        if(!resourceContactIds?.isEmpty()) {
+            for ( pse__Permission_Control__c pc : [
+                SELECT pse__Resource__c
+                FROM pse__Permission_Control__c
+                WHERE pse__Resource__c IN :resourceContactIds
+                  AND pse__Staffing__c = true
+            ] ) {
+                result.add( pc.pse__Resource__c );
+            }
+        }
+        return result;
     }
 
     private pse__Assignment__c buildLinkedAssignment( Id projectId , Id resourceId , Id scheduleId ) {
