@@ -806,11 +806,11 @@ public with sharing class NSP_ProjectTriggerHelper {
             if ( !relatedAssignmentList.isEmpty() && !Test.isRunningTest() ) {
                 // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
                 List<Database.SaveResult> results = Database.insert( relatedAssignmentList , false );
-                    NSP_ErrorLogHandler.logResults(
-                        NSP_ProjectTriggerHelper.class.getName(),
-                        'createAssignments:insert',
-                        results
-                    );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'createAssignments:insert' ,
+                    results
+                );
             }
             this.linkAssignmentToProjectTask(
                 'pse__Project_Task__c' ,
