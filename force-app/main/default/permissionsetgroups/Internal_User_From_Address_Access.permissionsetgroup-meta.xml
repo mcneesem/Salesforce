@@ -4,7 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Internal User (From Address Access)</label>
     <permissionSets>Email_to_Case_Routing_Address_Client_Sponsored_Plans</permissionSets>
-    <permissionSets>Email_to_Case_Routing_Address_Customer_Success</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Educational_Assistance</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Employment_Screening</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Employment_Screening_2nd</permissionSets>
@@ -15,7 +14,6 @@
     <permissionSets>Email_to_Case_Routing_Address_Integra_Support</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_International_Support_Desk</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Learning_Systems_Team</permissionSets>
-    <permissionSets>Email_to_Case_Routing_Address_My_Hires</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_National_Business_Team</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_OrgPlus</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_PerformSmart</permissionSets>
