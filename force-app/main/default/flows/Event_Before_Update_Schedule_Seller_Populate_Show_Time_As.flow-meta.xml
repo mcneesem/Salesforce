@@ -51,20 +51,17 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Completed_Status</name>
-        <label>Completed Status</label>
+        <name>Fault_Element_Assignment</name>
+        <label>Fault Element Assignment</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.NSP_Status__c</assignToReference>
+            <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <stringValue>Get_User</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Is_Status_Cancelled</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Make_Event_Busy</name>
@@ -176,8 +173,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Cancelled_Status</targetReference>
+                <targetReference>Is_Status_Cancelled</targetReference>
             </connector>
             <label>Status is Cancelled</label>
         </rules>
@@ -192,7 +188,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Completed_Status</targetReference>
+                <targetReference>Is_Status_Cancelled</targetReference>
             </connector>
             <label>Status is Completed</label>
         </rules>
@@ -294,6 +290,28 @@
             <label>Is not Admin</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>User_Null_Check</name>
+        <label>User Null Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_is_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Event_Owner</targetReference>
+            </connector>
+            <label>User is not null</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Event - Before Update - Schedule Seller - Populate Show Time As {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Before Update - Schedule Seller - Populate Show Time As</label>
@@ -323,8 +341,11 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Event_Owner</targetReference>
+            <targetReference>User_Null_Check</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Element_Assignment</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -373,6 +394,13 @@
     <status>Draft</status>
     <variables>
         <name>runningUser</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
