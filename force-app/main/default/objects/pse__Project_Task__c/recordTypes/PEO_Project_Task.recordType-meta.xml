@@ -312,6 +312,10 @@
     <picklistValues>
         <picklist>Portal_Task_Action__c</picklist>
         <values>
+            <fullName>Checkbox</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Date</fullName>
             <default>false</default>
         </values>
