@@ -1692,6 +1692,7 @@ Implementation profile related to the account of the created asset
                                 OR ( NSP_Role__c = :NSP_ServiceConstants.CLIENT_LIAISION )
                                 OR ( NSP_Role__c = :NSP_ServiceConstants.MANAGER_HRSERVICES )
                                 OR ( NSP_Role__c = :NSP_ServiceConstants.EXECUTIVE )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.PERFOMANCE_SPECIALIST )
                             )
                         )
                     ]
@@ -1700,6 +1701,7 @@ Implementation profile related to the account of the created asset
                 if ( String.isNotBlank( team?.NSP_User__r?.Email ) ) {
                     if ( ( team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SPECIALIST )
                         || ( team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SUPERVISOR )
+                        || ( team.NSP_Role__c == NSP_ServiceConstants.PERFOMANCE_SPECIALIST )
                         )
                     {
                         payrollRolesUsers.add( team.NSP_User__r.Email );
