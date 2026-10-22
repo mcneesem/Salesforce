@@ -3,9 +3,7 @@ public with sharing class CheckDownPaymentDetailsAction {
 
     @InvocableMethod(label='check DownPayment Detail' description='method to determine if down payment id required' category='Account')
     public static void checkDownPaymentDetails( List<Id> orderIds ) {
-        Set<Id> orderItemToCheckSet = new Set<Id>();
-        try
-        {
+        try {
             List<Order> orderProcessList = new List<Order>(
                 [
                     SELECT
@@ -37,13 +35,13 @@ public with sharing class CheckDownPaymentDetailsAction {
                     )
                 ]
             );
-
-            //order of evaluation as per business logic (change with caution)
+            //
+            // order of evaluation as per business logic (change with caution)
             //
             //mark downpayment flags
             orderProcessList = CheckDownPaymentDetailsAction.evaluateDownPayment( orderProcessList );
             //get invoice plan order items
-            orderItemToCheckSet = CheckDownPaymentDetailsAction.evaluateOrderForItemsToCheck( orderProcessList );
+            Set<Id> orderItemToCheckSet = CheckDownPaymentDetailsAction.evaluateOrderForItemsToCheck( orderProcessList );
             //iterate through billing transactions to decide for valid OP based on billing amount
             Set<Id> orderItemApplicable = CheckDownPaymentDetailsAction.evaluateBillingTransaction( orderItemToCheckSet );
             orderProcessList = CheckDownPaymentDetailsAction.evaluateInvoicePlan(
@@ -64,8 +62,8 @@ public with sharing class CheckDownPaymentDetailsAction {
     //method to iterate through orders and decide down payment
     private static List<Order> evaluateDownPayment( List<Order> orderProcessList ) {
         List<Order> responseList = new List<Order>();
-        if ( ( orderProcessList != null ) && ( !orderProcessList.isEmpty() ) ){
-            for(Order eachOrder : orderProcessList){
+        if ( ( orderProcessList != null ) && !orderProcessList.isEmpty() ) {
+            for ( Order eachOrder : orderProcessList ) {
                 responseList.add( CheckDownPaymentDetailsAction.setDownPaymentRequired( eachOrder ) );
             }
         }
@@ -84,12 +82,12 @@ public with sharing class CheckDownPaymentDetailsAction {
                     && ( eacholi.SBQQ__BillingFrequency__c == 'Annual' )
                     && ( eacholi.TotalPrice != null )
                     && ( eacholi.TotalPrice > 0 )
-                   )
+                    )
                 {
                     eachOrder.NSP_Down_Payment_Required__c = 'Yes';
                 } else if ( ( eacholi.SBQQ__BillingFrequency__c == 'Monthly' )
-                           && ( eachOrder.NSP_Down_Payment_Required__c != 'Yes' )
-                          )
+                    && ( eachOrder.NSP_Down_Payment_Required__c != 'Yes' )
+                    )
                 {
                     eachOrder.NSP_Down_Payment_Required__c = 'No';
                 }
@@ -98,11 +96,11 @@ public with sharing class CheckDownPaymentDetailsAction {
         return eachOrder;
     }
 
-    private static Set<Id> evaluateOrderForItemsToCheck( List<Order> orderProcessList ){
+    private static Set<Id> evaluateOrderForItemsToCheck( List<Order> orderProcessList ) {
         //maintain all order items set
         Set<Id> orderItemToCheckSet = new Set<Id>();
-        if ( ( orderProcessList != null ) && ( !orderProcessList.isEmpty() ) ){
-            for(Order eachOrder : orderProcessList){
+        if ( ( orderProcessList != null ) && !orderProcessList.isEmpty() ) {
+            for ( Order eachOrder : orderProcessList ) {
                 //for every order merge the set of Ids in original set
                 orderItemToCheckSet.addAll( CheckDownPaymentDetailsAction.collectOrderItemsToCheck( eachOrder ) );
             }
@@ -118,7 +116,7 @@ public with sharing class CheckDownPaymentDetailsAction {
             && ( eachOrder.NSP_Down_Payment_Required__c != 'Yes' )
             && ( eachOrder.OrderItems != null )
             && ( !eachOrder.OrderItems.isEmpty() )
-           )
+            )
         {
             for ( OrderItem eacholi : eachOrder.OrderItems ) {
                 if ( eacholi.SBQQ__BillingFrequency__c == 'Invoice Plan' ) {
@@ -133,24 +131,27 @@ public with sharing class CheckDownPaymentDetailsAction {
 
     private static Set<Id> evaluateBillingTransaction ( Set<Id> orderItemToCheckSet ) {
         Set<Id> orderItemApplicable = new Set<Id>();
-        if ( ( orderItemToCheckSet != null ) && ( !orderItemToCheckSet.isEmpty() ) ) {
+        if ( ( orderItemToCheckSet != null ) && !orderItemToCheckSet.isEmpty() ) {
             for ( blng__BillingTransaction__c eachTransaction : [
-                SELECT
-                    Id ,
-                    blng__BillingSchedule__r.blng__OrderProduct__c ,
-                    blng__InvoicePlanLine__c ,
-                    blng__InvoicePlanLine__r.NSP_Billing_Commencement_Trigger__c ,
-                    blng__BillingSchedule__r.blng__Amount__c
-                FROM blng__BillingTransaction__c
-                WHERE
-                    ( blng__BillingSchedule__c != null )
-                    AND ( blng__BillingSchedule__r.blng__OrderProduct__c IN : orderItemToCheckSet )
-                    AND ( NSP_DownPayment_Required__c = TRUE )
-            ]){
-                if( ( eachTransaction.blng__BillingSchedule__c != null )
-                   && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c != null )
-                   && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c > 0 )
-                  )
+                        SELECT
+                            Id ,
+                            blng__BillingSchedule__r.blng__OrderProduct__c ,
+                            blng__InvoicePlanLine__c ,
+                            blng__InvoicePlanLine__r.NSP_Billing_Commencement_Trigger__c ,
+                            blng__BillingSchedule__r.blng__Amount__c
+                        FROM blng__BillingTransaction__c
+                        WHERE (
+                            ( blng__BillingSchedule__c != null )
+                            AND ( blng__BillingSchedule__r.blng__OrderProduct__c IN : orderItemToCheckSet )
+                            AND ( NSP_DownPayment_Required__c = true )
+                        )
+                    ]
+                )
+            {
+                if ( ( eachTransaction.blng__BillingSchedule__c != null )
+                    && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c != null )
+                    && ( eachTransaction.blng__BillingSchedule__r.blng__Amount__c > 0 )
+                    )
                 {
                     orderItemApplicable.add( eachTransaction.blng__BillingSchedule__r.blng__OrderProduct__c );
                 }
@@ -175,8 +176,8 @@ public with sharing class CheckDownPaymentDetailsAction {
 
     //method to process order downpayment flag
     private static List<Order> evaluateInvoicePlan( List<Order> orderProcessList , Set<Id> orderItemApplicable ) {
-        if( ( orderProcessList != null ) && ( !orderProcessList.isEmpty() ) ) {
-            for(Order eachOrder : orderProcessList) {
+        if( ( orderProcessList != null ) && !orderProcessList.isEmpty() ) {
+            for ( Order eachOrder : orderProcessList ) {
                 eachOrder = CheckDownPaymentDetailsAction.evaluateOrderItems( eachOrder , orderItemApplicable );
             }
         }
@@ -188,8 +189,8 @@ public with sharing class CheckDownPaymentDetailsAction {
         if ( ( eachOrder != null )
             && ( eachOrder.NSP_Down_Payment_Required__c != 'Yes' )
             && ( eachOrder.OrderItems != null )
-            && ( !eachOrder.OrderItems.isEmpty() )
-           )
+            && !eachOrder.OrderItems.isEmpty()
+            )
         {
             for ( OrderItem eacholi : eachOrder.OrderItems ) {
                 // check if order item have billing transaction
@@ -208,13 +209,13 @@ public with sharing class CheckDownPaymentDetailsAction {
     //method to populate project fields
     private static Map<Id,pse__Proj__c> evaluateProject( List<Order> orderProcessList ) {
         Map<Id,pse__Proj__c> projectUpdateMap = new Map<Id,pse__Proj__c>();
-        if( ( orderProcessList != null ) && ( !orderProcessList.isEmpty() ) ) {
-            for(Order eachOrder : orderProcessList) {
+        if ( ( orderProcessList != null ) && !orderProcessList.isEmpty() ) {
+            for ( Order eachOrder : orderProcessList ) {
                 if ( eachOrder.NSP_Project__c != null ) {
                     pse__Proj__c newProject = new pse__Proj__c(
-                        Id = eachOrder.NSP_Project__c
+                        Id=eachOrder.NSP_Project__c
                     );
-                    if ( String.isNotBlank( eachOrder.OpportunityId ) ){
+                    if ( String.isNotBlank( eachOrder.OpportunityId ) ) {
                         newProject.pse__Opportunity__c = eachOrder.OpportunityId;
                     }
                     if ( eachOrder.NSP_Down_Payment_Required__c == 'No' ) {
