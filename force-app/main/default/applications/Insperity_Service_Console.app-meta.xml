@@ -921,24 +921,6 @@
         <pageOrSobjectType>Task</pageOrSobjectType>
         <recordType>Task.Orientation_Meeting_Request</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
         <profile>Sales Support</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -1093,42 +1075,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page12</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -2336,69 +2282,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Orientation_Meeting_Request_Task_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Task</pageOrSobjectType>
-        <recordType>Task.Orientation_Meeting_Request</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Sales User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Asset_Hardware_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Asset</pageOrSobjectType>
@@ -2584,61 +2467,7 @@
         <pageOrSobjectType>Asset</pageOrSobjectType>
         <recordType>Asset.Hardware_Asset</recordType>
         <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
         <profile>Sales Manager</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -2777,33 +2606,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asset_Hardware_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Asset</pageOrSobjectType>
-        <recordType>Asset.Hardware_Asset</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Sales User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>NSP_Accrual_Profile_Service_ITA</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
@@ -2899,24 +2701,6 @@
         <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
         <recordType>NSP_Accrual_Profile__c.ITA</recordType>
         <type>Flexipage</type>
-        <profile>Developer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
-        <profile>Developer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
         <profile>Finance Service</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -2963,15 +2747,6 @@
         <recordType>NSP_Accrual_Profile__c.ITA</recordType>
         <type>Flexipage</type>
         <profile>Minimum Access - Salesforce</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
-        <profile>OneTrust Integration</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -2999,33 +2774,6 @@
         <recordType>NSP_Accrual_Profile__c.ITA</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
-        <profile>OneTrust Integration</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
-        <profile>Read Only</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>NSP_Accrual_Profile_Service_ITA</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
-        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
-        <type>Flexipage</type>
-        <profile>Read Only</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
