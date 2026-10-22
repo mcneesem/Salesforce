@@ -474,24 +474,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
