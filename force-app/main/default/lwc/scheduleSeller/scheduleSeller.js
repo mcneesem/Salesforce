@@ -245,15 +245,27 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         return dt.toISOString();
     }
 
-    //Returns the latest instant still treated as same-day/Rush
-    //Anchored to the next business day (not next calendar day)
+    // converting input Date into YYYY-MM-DD formatted String...
+    formatLocalDate( input ) {
+        let response = '';
+        if ( input ) {
+            const year = input.getFullYear();
+            // Months are 0-indexed, padStart ensures a leading zero for single digits
+            const month = String( input.getMonth() + 1 ).padStart( 2 , '0' );
+            const day = String( input.getDate() ).padStart( 2 , '0' );
+            response = `${year}-${month}-${day}`;
+        }
+        return response;
+    }
+
+    // Rush follows business days AND the 24h cutoff.
     getRushCutoff() {
         // this.columns comes from the already filtered business dates returned by getBusinessDates
         const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
         const now = new Date();
         //Converting now Date into YYYY-MM-DD format String by Using en-CA to compare it later (en-CA formats this way)
         //('en-US') would format it MM-DD-YYYY causing the comparison to fail
-        const todayStr = now.toLocaleDateString( 'en-CA' );
+        const todayStr = this.formatLocalDate( now );
         //const cols already exclude weekends/holidays, that first match is the next business day
         const nextCol = cols.find( col => col.fullDate > todayStr );
         let cutoff = null;
