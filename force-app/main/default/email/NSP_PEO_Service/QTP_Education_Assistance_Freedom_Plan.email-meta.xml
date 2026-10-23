@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <attachedDocuments>Services/Educational_Assistance_Flyer.pdf</attachedDocuments>
+    <attachedDocuments>Services/Educational_Assistance_Program.pdf</attachedDocuments>
+    <available>true</available>
+    <description>BT HRS and CL - Provide information to client using Freedom plan about education assistance</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Education Assistance Freedom Plan</name>
+    <style>freeForm</style>
+    <subject>Education Assistance</subject>
+    <textOnly>&lt;ATTACH 2 pdfs to template: Educational Assistance Program and Educational Assistance Flyer&gt;
+
+Dear [client]_______,
+
+I hope you're well. Insperity offers a variety of ancillary benefits that are made available to your employees through the co-employment relationship. One of these benefits is the Education Assistance Program. This program provides eligible employees with tuition assistance so they can obtain additional education.
+
+I have attached informational flyers and verbiage below that you are welcome to share with your teams as you see fit. You are welcome to copy and paste into a new email then forward the message in its entirety.
+
+Thank you and thank you for allowing Insperity to serve your business.
+
+[signature]
+
+Dear Employees,
+
+I would like to share some information for you regarding one of the exciting benefits we have available to us through the Insperity relationship. The Education Assistance Program is available for you to enjoy as you seek to expand your business knowledge or gain a college degree.
+
+Eligible employees who meet program criteria may be reimbursed as follows:
+
+Up to a maximum of $1,500 per calendar year for approved undergraduate or graduate college courses taken as part of an employee&apos;s degree program at an accredited institution.
+Up to a maximum of $500 per calendar year for approved continuing educational expenses (including courses taken at an accredited trade or vocational school, business school or through a professional association)
+
+Please view the details of this program in your Insperity Premier portal. I have also attached a flyer and FAQ to this email for your convenience.
+
+If you have any specific questions regarding this program, please contact the Insperity Contact Center at 866.715.3552 (Option 1: Benefits) weekdays between 7 a.m. and 7 p.m. Central time.
+
+Thank you,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

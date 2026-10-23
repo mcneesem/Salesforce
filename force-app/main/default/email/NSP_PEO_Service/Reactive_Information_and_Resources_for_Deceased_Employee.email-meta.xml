@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <attachedDocuments>Services/How_to_Support_a_Grieving_Employee.pdf</attachedDocuments>
+    <attachedDocuments>Services/Insperity_Brochure_EAP.pdf</attachedDocuments>
+    <attachedDocuments>Services/Legal_Representation_of_A_Deceased_Employee.pdf</attachedDocuments>
+    <available>true</available>
+    <description>BT HRS and CL - Send when a worksite employee has died</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Information and Resources for Deceased Employee</name>
+    <style>freeForm</style>
+    <subject>Information and Resources for the Estate of (Name of Deceased Employee)</subject>
+    <textOnly>&lt;Attach the following 3 flyers to Template: Insperity EAP Brochure, Legal Representation of a Deceased Employee, How to Support a Grieving Employee&gt;
+
+Hello client name,
+
+Thank you for reaching out to me during this difficult time. My deepest sympathies to you and your team as you grieve the death of employee name. As we discussed on our call, I am attaching a flyer for you to give to employee name's family or legal representative and information to help support your employees at this time.
+
+To begin the process for final payroll, please submit the employee termination form by following the steps below:
+
+https://portal.insperity.com
+Go to COMPANY - Manage Employees
+Click on employee name
+Over to the left check on 'Termination'
+
+I will notify your payroll specialist, PS name, who will reach out to you shortly to assist with finalizing employee name's paycheck.
+
+I also attached the Employee Assistance Program flyer which details ancillary benefits such as mental health support including grief counseling. This benefit is available to each of your employees individually at no charge as well as to employee name's family members. Optum can provide critical incident support to your organization during this time if needed. If you feel onsite support is needed, please let me know and I will initiate that request on your behalf.
+
+KDM name, I am truly sorry for this loss to you and your team. Please do not hesitate to reach out if you need anything further.
+
+Sincerely,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

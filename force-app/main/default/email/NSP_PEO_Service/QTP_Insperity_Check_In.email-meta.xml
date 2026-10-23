@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <attachedDocuments>Services/Insperity_Brochure_EAP.pdf</attachedDocuments>
+    <available>true</available>
+    <description>Client Liaisons  - Check in with client to learn about business changes</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP- Insperity Check In</name>
+    <style>freeForm</style>
+    <subject>Insperity Checking In</subject>
+    <textOnly>ATTACH CURRENT INSPERITY SERVICES BROCHURE to Template
+
+Good morning/afternoon,
+
+I hope you are doing well.  I am touching base to learn about new developments in your business that may impact your business goals that we had previously identified.  As your needs change based on a range of factors, I'm here to explore how Insperity's services can best support you. I want to ensure we are providing the best resources for your specific requirements.
+
+Your strategic partnership with Insperity offers access to a diverse range of teams that can assist you in growing your business.
+
+Diversity Equity and Inclusion - this team assists clients in developing inclusive cultures as a business strategy.
+Retirement Services - with these services, you can attract top talent by offering savings for retirement and other financial needs for your employees.
+Performance Management - a web-based performance management system that enables managers and employees to track spending goals, complete performance reviews and manage and track performance notes throughout the year.
+
+
+This is a small sample of what Insperity offers in our partnership. I've attached a brochure to provider broader information about these fee inclusive resources. Are you free to speak on [insert date and time] to talk more; I can offer specific details about the value of these offerings and how utilizing the full array of Insperity's services has helped many of my clients achieve success.
+
+Thank you for allowing me the opportunity to support your business.
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
