@@ -587,17 +587,19 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             && String.isNotBlank( subClient.NSP_Client__c )
             )
         {
+            String suffix = null;
             if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
                 && ( subClient.Bid_Number__c != null )
                )
             {
-                    key = subClient.NSP_Client__c + String.valueOf( subClient.Bid_Number__c.intValue() );
+                    suffix = String.valueOf( subClient.Bid_Number__c.intValue() );
             }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
                       && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
                      )
             {
-                    key = subClient.NSP_Client__c + subClient.NSP_Benefit_Package_Name__c;
+                    suffix = subClient.NSP_Benefit_Package_Name__c;
             }
+            key = this.buildKey( subClient.NSP_Client__c , suffix );
         }
         return key;
     }
@@ -611,17 +613,30 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             && ( this.accountSubClientMap.get( record.AccountId ) != null )
             )
         {
+            String suffix = null;
             if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
                 && ( record.NSP_BidNumber__c != null )
                )
             {
-                    key = this.accountSubClientMap.get( record.AccountId ) + record.NSP_BidNumber__c.trim();
+                    suffix = record.NSP_BidNumber__c.trim();
             }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
                       && String.isNotBlank( record.Current_Benefits_Package__c )
                      )
             {
-                    key = this.accountSubClientMap.get( record.AccountId ) + record.Current_Benefits_Package__c;
+                    suffix = record.Current_Benefits_Package__c;
             }
+            key = this.buildKey(
+                this.accountSubClientMap.get( record.AccountId ) ,
+                suffix
+            );
+        }
+        return key;
+    }
+    
+    private String buildKey( String prefix , String suffix ) {
+        String key = null;
+        if ( String.isNotBlank( prefix ) && String.isNotBlank( suffix ) ) {
+            key = prefix + suffix;
         }
         return key;
     }
