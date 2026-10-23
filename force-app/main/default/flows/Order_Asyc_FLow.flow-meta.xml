@@ -78,8 +78,8 @@
     </decisions>
     <description>Flow to process the down payment details</description>
     <environments>Default</environments>
-    <interviewLabel>Process {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Order Asyc FLow</label>
+    <interviewLabel>DEPRECATED - Order Asyc FLow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Order Asyc FLow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -157,5 +157,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
