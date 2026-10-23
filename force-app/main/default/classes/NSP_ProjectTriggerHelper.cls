@@ -778,7 +778,7 @@ public with sharing class NSP_ProjectTriggerHelper {
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
             for ( Id projectId : changedProjectMap?.keyset() ) {
                 pse__Proj__c project = changedProjectMap?.get( projectId );
-                Id resourceId = NSP_ProjectTriggerHelper.resolveResourceId( project );
+                Id resourceId = NSP_ProjectTriggerHelper.resolveResourceId( project, userWithContactMap );
                 pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
                 if ( schedule != null && resourceId != null && staffingPermittedResourceIds?.contains( resourceId ) ) {
                     relatedAssignmentList.add(
@@ -850,11 +850,11 @@ public with sharing class NSP_ProjectTriggerHelper {
     // @param project (may be null)
     // @return Populated resource Id, or null when neither is provided.
     @TestVisible
-    private static Id resolveResourceId( pse__Proj__c project ) {
+    private static Id resolveResourceId( pse__Proj__c project, Map<Id,Id> userWithContactMap ) {
         Id resourceId = null;
-        if( project != null ) {
-            Id projectCoordinator =  project.Project_Coordinator__c;
-            Id projectImplementor =  project.Project_Implementer__c ;
+        if( ( project != null ) && ( userWithContactMap != null ) ) {
+            Id projectCoordinator =  userWithContactMap.get(project.Project_Coordinator__c);
+            Id projectImplementor =  userWithContactMap.get(project.Project_Implementer__c);
             if ( projectCoordinator != projectImplementor ) {
                 if ( projectImplementor != null ) {
                     resourceId = projectImplementor;
