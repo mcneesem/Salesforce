@@ -28,5 +28,5 @@
     <permissionSets>PEO_Service_Field_Permissions</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Termination_Revision_Access</permissionSets>
-    <status>Updating</status>
+    <status>Updated</status>
 </PermissionSetGroup>
