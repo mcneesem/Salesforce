@@ -28,6 +28,58 @@
         </assignmentItems>
     </assignments>
     <decisions>
+        <name>Check_Accrual_Level_Changes_AIMS</name>
+        <label>Check Accrual Level Changes - AIMS</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Level_Changes_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_for_Plan_Year</targetReference>
+            </connector>
+            <label>Accrual Level Changes Populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Accrual_Level_Changes_ITA</name>
+        <label>Check Accrual Level Changes - ITA</label>
+        <locationX>1634</locationX>
+        <locationY>611</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Level_Changes_Populate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Check_for_Plan_Year</targetReference>
+            </connector>
+            <label>Accrual Level Changes Populate</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_for_Plan_Year</name>
         <label>AIMS Check for Plan Year</label>
         <locationX>50</locationX>
@@ -39,7 +91,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Calender_Year</name>
-            <conditionLogic>2 AND 3 AND (((1 AND 4 )AND ((NOT(5) AND 9) OR (10 AND 11))) OR (6 AND 7 AND 8))</conditionLogic>
+            <conditionLogic>2 AND (((1 AND 3 ) AND ((NOT(4) AND 8) OR (9 AND 10))) OR (5 AND 6 AND 7))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_time_accrue_under_plan_aims_calendar__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -52,13 +104,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Calendar Year (1/1 to 12/31)</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -124,19 +169,12 @@
         </rules>
         <rules>
             <name>Anniversary_Year</name>
-            <conditionLogic>5 AND 2 AND ((6 AND 7 AND (((10 OR 11) AND 12) OR (NOT(10) AND NOT(11)))) OR (1 AND 3 AND ((4 AND 8 AND 9) OR (8 AND NOT(9) AND NOT(4)))))</conditionLogic>
+            <conditionLogic>4 AND ((5 AND 6 AND (((9 OR 10) AND 11) OR (NOT(9) AND NOT(10)))) OR (1 AND 2 AND ((3 AND 7 AND 8) OR (7 AND NOT(8) AND NOT(3)))))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -216,7 +254,7 @@
         </rules>
         <rules>
             <name>ClientsFiscalYear</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND ((9 AND 8 AND 7) OR(5 AND ((6 AND NOT(10)) OR ( 10 AND 11))))</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND ((8 AND 7 AND 6) OR (4 AND ((5 AND NOT(9)) OR ( 9 AND 10))))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -233,13 +271,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Day__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -394,7 +425,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Copy_1_of_Calender_Year</name>
-            <conditionLogic>(1 AND 2 AND 3 ) OR (2 AND 4 AND 5 AND 3) OR (2 AND 6 AND 7 AND 3) OR (2 AND 7 AND 8 AND 9 AND 3) OR (2 AND 10 AND 11 AND 12 AND 3 AND 15 AND NOT(13)) OR (2 AND 10 AND 12 AND 13 AND 14 AND 3 AND 15)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (2 AND 3 AND 4) OR (2 AND 5 AND 6) OR (2 AND 6 AND 7 AND 8) OR (2 AND 9 AND 10 AND 11 AND 14 AND NOT(12)) OR (2 AND 9 AND 11 AND 12 AND 13 AND 14)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Accrue_under_plan_cal_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -407,13 +438,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Calendar Year (1/1 to 12/31)</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -507,7 +531,7 @@
         </rules>
         <rules>
             <name>Copy_1_of_Anniversary_Year</name>
-            <conditionLogic>(1 AND 4 AND (2 OR 3)) OR(1 AND 4 AND 5 AND 6) OR (1 AND 4 AND 7 AND 6 AND 8) OR (1 AND 4 AND 9 AND 15 AND NOT(10) AND 11 AND 14) OR (1 AND 4 AND 9 AND 15 AND 12 AND 11 AND 13 AND 14)</conditionLogic>
+            <conditionLogic>(1 AND (2 OR 3)) OR(1 AND 4 AND 5) OR (1 AND 6 AND 5 AND 7) OR (1 AND 8 AND 14 AND NOT(9) AND 10 AND 13) OR (1 AND 8 AND 14 AND 11 AND 10 AND 12 AND 13)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -527,13 +551,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Monthly: Accrual is added on the hire date of each month</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -620,7 +637,7 @@
         </rules>
         <rules>
             <name>Copy_1_of_Client_s_Fiscal_Year</name>
-            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5) OR (1 AND 2 AND 3 AND 4 AND 7 AND 8) OR (1 AND 2 AND 3 AND 4 AND 6 AND 17) OR (1 AND 2 AND 3 AND 4 AND 9 AND 7 AND 10) OR (1 AND 2 AND 3 AND 4 AND 11 AND NOT(12) AND 13 AND 16 AND 18) OR (1 AND 2 AND 3 AND 4 AND 11 AND 14 AND 15 AND 13 AND 16 AND 18)</conditionLogic>
+            <conditionLogic>(1 AND 2 AND 3 AND 4) OR (1 AND 2 AND 3 AND 6 AND 7) OR (1 AND 2 AND 3 AND 5 AND 16) OR (1 AND 2 AND 3 AND 8 AND 6 AND 9) OR (1 AND 2 AND 3 AND 10 AND NOT(11) AND 12 AND 15 AND 17) OR (1 AND 2 AND 3 AND 10 AND 13 AND 14 AND 12 AND 15 AND 17)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -637,13 +654,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Day__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1003,7 +1013,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_for_Plan_Year</targetReference>
+                <targetReference>Check_Accrual_Level_Changes_AIMS</targetReference>
             </connector>
             <label>Policy Detail</label>
         </rules>
@@ -1141,7 +1151,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Check_for_Plan_Year</targetReference>
+                <targetReference>Check_Accrual_Level_Changes_ITA</targetReference>
             </connector>
             <label>True</label>
         </rules>
@@ -1277,7 +1287,7 @@ NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
 NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
 NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
 
- OR( 
+ OR(
         NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
 ),
