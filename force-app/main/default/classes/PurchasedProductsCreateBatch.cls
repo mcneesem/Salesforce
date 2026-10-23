@@ -446,11 +446,29 @@ public class PurchasedProductsCreateBatch implements Database.Batchable<SObject>
         if ( preconditionsMet ) {
             List<Id> productIdsForAccount = this.accToProductsMap.get( accountId );
             Boolean notAlreadyPresent = !productIdsForAccount.contains( product.Product__c );
-            if ( notAlreadyPresent ) {
+            if ( ( notAlreadyPresent ) && ( this.hasExcludedBundles( productIdsForAccount ) ) ) {
                 result = true;
             }
         }
         return result;
+    }
+
+    //method to check if BUndle parents is present in new Opp products
+    private Boolean hasExcludedBundles(List<Id> productIdsForAccount){
+        Boolean hasExcludedBundle = False;
+        if( ( PurchasedProductsCreateBatch.excludedBundles != null )
+           && ( !PurchasedProductsCreateBatch.excludedBundles.isEmpty() )
+           && ( productIdsForAccount != null )
+           && ( !productIdsForAccount.isEmpty() )
+          )
+        {
+            for(Id bundleId : PurchasedProductsCreateBatch.excludedBundles){
+                if( productIdsForAccount.contains( bundleId ) ) {
+                    hasExcludedBundle = true;
+                }
+            }
+        }
+        return hasExcludedBundle;
     }
 
     private void insertPurchasedProducts() {
@@ -669,6 +687,30 @@ public class PurchasedProductsCreateBatch implements Database.Batchable<SObject>
                 isEnabled = local;
             }
             return isEnabled;
+        }
+        private set;
+    }
+
+    private static Set<Id> excludedBundles {
+        private get {
+            if ( excludedBundles == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( ( PurchasedProductsCreateBatch.settings != null )
+                    && ( String.isNotBlank( PurchasedProductsCreateBatch.settings.ExcludedBundles__c ) ) )
+                {
+                    //Product Ids of Bundle parents
+                    local = new Map<Id,Product2>(
+                        [
+                            SELECT Id
+                            FROM Product2
+                            WHERE ProductCode IN :PurchasedProductsCreateBatch.settings.ExcludedBundles__c.split(',')
+                        ]
+                    ).keySet();
+
+                }
+                excludedBundles = local;
+            }
+            return excludedBundles;
         }
         private set;
     }
