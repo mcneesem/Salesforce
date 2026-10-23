@@ -87,7 +87,7 @@
                     </template>
 
                     <!-- Per-export results (pass/fail rows) -->
-                    <template if:true={hasResults}>
+                    <template lwc:if={hasResults}>
                         <lightning-accordion allow-multiple-sections-open active-section-name="exports" class="slds-m-horizontal_small slds-m-bottom_small">
                             <lightning-accordion-section name="exports" label="Exports">
                                 <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
@@ -99,8 +99,8 @@
                                         <li key={result.key} class="slds-item">
                                             <lightning-layout class="slds-no-wrap" vertical-align="start">
                                                 <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_x-small">
-                                                    <lightning-icon if:true={result.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
-                                                    <lightning-icon if:true={result.isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                                    <lightning-icon lwc:if={result.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                                    <lightning-icon lwc:else icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
                                                 </lightning-layout-item>
                                                 <lightning-layout-item class="slds-has-flexi-truncate">
                                                     <span class="slds-text-title">{result.label}</span>
