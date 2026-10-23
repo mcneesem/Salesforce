@@ -6,7 +6,6 @@ public with sharing class NSP_ContactTriggerHelper {
     public static final String COMMUNITYLICENSE = 'Customer Community';
     public static final Id RESOURCE_REC_TYPE_ID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CONTACT_OBJECT, 'Resource');
     public static final Id NEW_CON_REC_TYPE_ID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CONTACT_OBJECT,'New_Contact_Record_Type');
-    public static final List<String> ALLOWED_PROFILES = new List<String>{'BPS Service','Contact Center','PEO Service','Retirement Services'};
     public static final String WORK_CALENDAR_US40 ='US 40';
     //
     // Iterates throught the list of new Contact and passes the required attributes to other methods.
@@ -18,13 +17,10 @@ public with sharing class NSP_ContactTriggerHelper {
     public void beforeInsertDirector( List<Contact> newList ) {
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
         //Modified as part of SOQL fix 228901
-        String loggedInUserProfileName;
-        loggedInUserProfileName = NSP_ContactTriggerHelper.loggedInUserProfileName;
 
         Id regionId, workCalenderId = null;
         //Modified as part of SOQL fix 228901
-        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))
-        if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
+        if (CustomPermissionController.checkUserPermission( 'Service_User', UserInfo.getUserId() )){
             regionId = getRegionId();
             workCalenderId = getWorkCalendarId();
         }
@@ -38,7 +34,7 @@ public with sharing class NSP_ContactTriggerHelper {
 
             //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
             //modified as part of SOQL fix 228901
-            if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
+            if (CustomPermissionController.checkUserPermission( 'Service_User', UserInfo.getUserId() )){
                 conObj.pse__Is_Resource_Active__c = true;
                 conObj.pse__Is_Resource__c = true;
                 conObj.pse__Region__c = regionId;
@@ -67,7 +63,7 @@ public with sharing class NSP_ContactTriggerHelper {
 
         //Format Phone number
         //modified as part of SOQL fix 228901
-        if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+        if (!CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors', UserInfo.getUserId() )){
             updatePhoneNum(newList,null);
             setSalesOfficeDetails(newList,null);
         }
@@ -82,7 +78,7 @@ public with sharing class NSP_ContactTriggerHelper {
     public void afterInsertDirector( List<Contact> newList , Map<Id,Contact > newMap ) {
         //Modified as part of SOQL fix 228901
         //Modified as part of SOQL fix 228901
-        if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+        if (!CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors', UserInfo.getUserId() )){
             Set<Id> contactIdSet = new Set<Id>();
             List<Contact> clientRefernceContactList = new List<Contact>();
             for ( Contact conObj : newList ) {
@@ -139,7 +135,7 @@ public with sharing class NSP_ContactTriggerHelper {
             if ( !sUserIds.isEmpty() ) {
                 updateContactRoles( sUserIds , lContacts );
             }
-            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+            if (!CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors', UserInfo.getUserId() )){
                 // format phone number...
                 updatePhoneNum( newMap.Values() , oldMap );
                 // prepare account for integration sync...
@@ -174,7 +170,7 @@ public with sharing class NSP_ContactTriggerHelper {
         Set<Id> processedContact = new Set<Id>();
         try {
             //Modified as part of SOQL fix 228901
-            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+            if (!CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors', UserInfo.getUserId() )){
                 List<Contact> clientRefernceContactList = new List<Contact>();
                 Set<Id> contactIdSet = new Set<Id>();
                 for ( Contact conObj : newMap.values() ) {
@@ -466,29 +462,6 @@ public with sharing class NSP_ContactTriggerHelper {
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACR' );
         }
-    }
-
-    //
-    // Method Name : loggedInUserProfileName
-    // Date : 11/08/2023
-    // @param
-    // @return String profileName
-    //
-    private static String loggedInUserProfileName {
-        private get {
-            if( loggedInUserProfileName == null ){
-                List<User> autouser = [ SELECT Profile.Name, Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
-                if ( !autoUser.isEmpty()){
-                    if( autoUser[0].Alias == 'autoproc' )  {
-                        loggedInUserProfileName = 'AutoProc';
-                    } else{
-                        loggedInUserProfileName = autoUser[0].Profile.Name;
-                    }
-                }
-            }
-            return loggedInUserProfileName;
-        }
-        private set;
     }
 
     //

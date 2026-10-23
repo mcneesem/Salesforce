@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>12/23/2025 : Group of Permission Sets to be granted to Contact Center Service User</description>
+    <description>Group of Permission Sets to be granted to Contact Center Service Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Contact Center Service</label>
     <permissionSets>Contact_Center_Service_Apex_Access</permissionSets>
@@ -12,5 +12,6 @@
     <permissionSets>Contact_Center_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>Contact_Center_Service_System_Permissions</permissionSets>
     <permissionSets>Contact_Center_Service_Visualforce_Page_Access</permissionSets>
+    <permissionSets>Service_User</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

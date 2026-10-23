@@ -9,7 +9,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterInsertDirector( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+            if (!CustomPermissionController.checkUserPermission( 'Bypass_AccountContactRelation_Directors', UserInfo.getUserId() )){
                 Set<Id> accountIdSet = new Set<Id>();
                 Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
                 for ( AccountContactRelation accConObj : newList ) {
@@ -43,7 +43,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterUpdateDirector( Map<Id,AccountContactRelation> newMap , Map<Id,AccountContactRelation> oldMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+            if (!CustomPermissionController.checkUserPermission( 'Bypass_AccountContactRelation_Directors', UserInfo.getUserId() )){
                 Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
                 Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
                 Set<Id> accountIdSet = new Set<Id>();
@@ -136,7 +136,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public static void beforeUpsertDirector( List<AccountContactRelation> newList ) {
         try {
-            if (!CustomPermissionController.checkUserPermission( 'Integration_User_Data_Migration', UserInfo.getUserId() )){
+            if (!CustomPermissionController.checkUserPermission( 'Bypass_Primary_Contact_Validation', UserInfo.getUserId() )){
                 Set<Id> accountIdSet = new Set<Id>();
                 for(AccountContactRelation accConObj : newList){
                     if(accConObj.NSP_Is_Primary__c){

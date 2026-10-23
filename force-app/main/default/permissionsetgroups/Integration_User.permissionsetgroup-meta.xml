@@ -3,7 +3,9 @@
     <description>Group of Permission Sets to be granted to Integration Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Integration User</label>
-    <permissionSets>Integration_User_Data_Migration</permissionSets>
+    <permissionSets>Bypass_AccountContactRelation_Directors</permissionSets>
+    <permissionSets>Bypass_Primary_Contact_Validation</permissionSets>
+    <permissionSets>Bypass_Contact_Directors</permissionSets>
     <permissionSets>Legacy_Integration_User_Object_Permissions</permissionSets>
     <permissionSets>Legacy_Integration_User_Object_Permissions_Remainder</permissionSets>
     <permissionSets>Legacy_Integration_User_System_Permissions</permissionSets>

@@ -14,5 +14,6 @@
     <permissionSets>BPS_Service_Visualforce_Page_Access</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Opportunity_Docusign_Service_Actions</permissionSets>
+    <permissionSets>Service_User</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

@@ -7,18 +7,19 @@
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Bypass_ACR_Integration_Field_Not_Editable</permissionSets>
+    <permissionSets>Bypass_AccountContactRelation_Directors</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
     <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
+    <permissionSets>Bypass_Primary_Contact_Validation</permissionSets>
     <permissionSets>Bypass_Restrict_ACR_Work_Email</permissionSets>
     <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
-    <permissionSets>Integration_User_Data_Migration</permissionSets>
     <permissionSets>Lead_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
