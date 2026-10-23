@@ -110,6 +110,7 @@ private class GenerateRenewalOpportunitiesJobTest {
         ];
         System.assertEquals( 2, cnt );
     }
+
     @isTest
     private static void testRenewalOpportunityBatchWithBidNumber() {
         Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
@@ -122,7 +123,8 @@ private class GenerateRenewalOpportunitiesJobTest {
             SELECT COUNT()
             FROM Opportunity
         ];
-        System.assertEquals(2,cnt);
+        System.assertEquals( 2 , cnt );
     }
+
 }
 //
