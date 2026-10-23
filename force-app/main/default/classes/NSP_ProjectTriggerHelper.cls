@@ -776,21 +776,9 @@ public with sharing class NSP_ProjectTriggerHelper {
             }
             Set<Id> staffingPermittedResourceIds = NSP_ProjectTriggerHelper.getStaffingPermittedResourceIds( resourceContactIds );
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
-            for ( Id projectId : changedProjectMap.keyset() ) {
-                pse__Proj__c project = changedProjectMap.get( projectId );
-                Id projectCoordinator = userWithContactMap.get( project.Project_Coordinator__c );
-                Id projectImplementor = userWithContactMap.get( project.Project_Implementer__c );
-                Id resourceId = null;
-                if ( projectCoordinator != projectImplementor ) {
-                    if ( projectImplementor != null ) {
-                        resourceId = projectImplementor;
-                    }
-                    if ( projectCoordinator != null ) {
-                        resourceId = projectCoordinator;
-                    }
-                } else if ( projectCoordinator == projectImplementor ) {
-                    resourceId = projectImplementor;
-                }
+            for ( Id projectId : changedProjectMap?.keyset() ) {
+                pse__Proj__c project = changedProjectMap?.get( projectId );
+                Id resourceId = NSP_ProjectTriggerHelper.resolveResourceId( project );
                 pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
                 if ( schedule != null && resourceId != null && staffingPermittedResourceIds?.contains( resourceId ) ) {
                     relatedAssignmentList.add(
@@ -854,6 +842,32 @@ public with sharing class NSP_ProjectTriggerHelper {
         relatedAssignment.pse__Resource__c = resourceId;
         relatedAssignment.pse__Schedule__c = scheduleId;
         return relatedAssignment;
+    }
+
+    // @description Resolves the resource Contact Id to use for an assignment.
+    //              Coordinator takes priority when the two Ids differ; when equal,
+    //              either value is returned (implementor is used as the canonical one).
+    // @param project (may be null)
+    // @return Populated resource Id, or null when neither is provided.
+    @TestVisible
+    private static Id resolveResourceId( pse__Proj__c project ) {
+        Id resourceId = null;
+        if( project != null ) {
+            Id projectCoordinator =  project.Project_Coordinator__c;
+            Id projectImplementor =  project.Project_Implementer__c ;
+            if ( projectCoordinator != projectImplementor ) {
+                if ( projectImplementor != null ) {
+                    resourceId = projectImplementor;
+                }
+                if ( projectCoordinator != null ) {
+                    resourceId = projectCoordinator;
+                }
+            } else if ( projectCoordinator == projectImplementor ) {
+                resourceId = projectImplementor;
+            }
+        }
+
+        return resourceId;
     }
 
     //
