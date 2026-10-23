@@ -495,8 +495,8 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             }
             opp.Current_Benefits_Package__c = subClient.NSP_Benefit_Package_Name__c;
             if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
-                && (subClient.Bid_Number__c != null )
-               ) 
+                && ( subClient.Bid_Number__c != null )
+                )
             {
                 opp.NSP_BidNumber__c = String.valueOf( subClient.Bid_Number__c.intValue() );
             }
@@ -590,14 +590,14 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
             String suffix = null;
             if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
                 && ( subClient.Bid_Number__c != null )
-               )
+                )
             {
-                    suffix = String.valueOf( subClient.Bid_Number__c.intValue() );
-            }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
-                      && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
-                     )
+                suffix = String.valueOf( subClient.Bid_Number__c.intValue() );
+            } else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                && String.isNotBlank( subClient.NSP_Benefit_Package_Name__c )
+                )
             {
-                    suffix = subClient.NSP_Benefit_Package_Name__c;
+                suffix = subClient.NSP_Benefit_Package_Name__c;
             }
             key = this.buildKey( subClient.NSP_Client__c , suffix );
         }
@@ -615,15 +615,15 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
         {
             String suffix = null;
             if ( GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
-                && ( record.NSP_BidNumber__c != null )
-               )
+                && String.isNotBlank( record.NSP_BidNumber__c )
+                )
             {
-                    suffix = record.NSP_BidNumber__c.trim();
-            }else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
-                      && String.isNotBlank( record.Current_Benefits_Package__c )
-                     )
+                suffix = record.NSP_BidNumber__c.trim();
+            } else if ( !GenerateRenewalOpportunitiesJob.isEnabledBidNumberGrouping
+                && String.isNotBlank( record.Current_Benefits_Package__c )
+                )
             {
-                    suffix = record.Current_Benefits_Package__c;
+                suffix = record.Current_Benefits_Package__c;
             }
             key = this.buildKey(
                 this.accountSubClientMap.get( record.AccountId ) ,
@@ -636,7 +636,7 @@ public without sharing class GenerateRenewalOpportunitiesJob implements Callable
     private String buildKey( String prefix , String suffix ) {
         String key = null;
         if ( String.isNotBlank( prefix ) && String.isNotBlank( suffix ) ) {
-            key = prefix + suffix;
+            key = prefix + ':' + suffix;
         }
         return key;
     }
