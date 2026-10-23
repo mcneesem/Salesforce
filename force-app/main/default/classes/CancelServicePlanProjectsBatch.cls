@@ -25,7 +25,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday at 1am ' + suffix ,
+            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday at 1am' + suffix ,
             '0 0 1 ? * * *' ,
             new CancelServicePlanProjectsBatch()
         );
