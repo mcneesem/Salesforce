@@ -34,7 +34,7 @@ export default class PortalProjectProgressBar extends LightningElement {
     get progress() {
         let response = 0;
         if ( this.hasTasks ) {
-            response = parseInt( 100 * ( this.tasksCompleted?.length / this.tasksTotal?.length ) );
+            response = Number.parseInt( 100 * ( this.tasksCompleted?.length / this.tasksTotal?.length ) );
         }
         return response;
     }
