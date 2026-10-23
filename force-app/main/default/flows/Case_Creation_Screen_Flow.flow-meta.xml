@@ -20,12 +20,15 @@
                 <elementReference>objectApiName</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>RecordTypeSelectorAction</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>accessibleRecordTypes</assignToReference>
             <name>accessibleRecordTypes</name>
         </outputParameters>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Fault_Element_Create_Case</name>
         <label>Assign Fault Element : Create_Case</label>
@@ -55,6 +58,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -71,6 +75,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -87,6 +92,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -103,6 +109,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -119,6 +126,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -135,6 +143,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -151,6 +160,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -167,6 +177,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Create_Case_Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -289,6 +300,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>caseRecord.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>caseRecord.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -352,38 +370,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Store_RET_Sales_to_Implementation_Attributes</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Populate_Case_Origin</name>
-        <label>Populate Case Origin</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>caseRecord.Origin</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Origin</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Populate_Case_Origin_When_Outlook</name>
-        <label>Populate Case Origin When Outlook</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>caseRecord.Origin</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseOrigin</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -727,6 +713,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Screen_No_Accessible_Record_Types</targetReference>
             </connector>
             <label>None</label>
@@ -1015,7 +1002,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Populate_Case_Origin</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1169,7 +1156,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Voice_Call.EndUserId__NotFound</leftValueReference>
+                <leftValueReference>Get_Voice_Call.EndUserId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1207,6 +1194,7 @@
         </rules>
     </decisions>
     <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
+    <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Case Creation Screen Flow</label>
@@ -1417,7 +1405,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Voice_Call.EndUserId__NotFound</elementReference>
+                <elementReference>Get_Voice_Call.EndUserId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1437,6 +1425,14 @@
             <name>DisplayText</name>
             <fieldText>&lt;p&gt;Record Id is blank.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1453,6 +1449,14 @@
             <name>CaseCreationErrorDisplay</name>
             <fieldText>&lt;p&gt;Case was not created successfully.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1560,6 +1564,14 @@
                 <assignToReference>selectedVersion</assignToReference>
                 <name>selectedVersion</name>
             </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Category_Sub_Category_Section1</name>
@@ -1601,6 +1613,14 @@
                         <assignToReference>contextContactId</assignToReference>
                         <name>contextContactId</name>
                     </outputParameters>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1611,6 +1631,15 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Category_Sub_Category_Section2</name>
@@ -1623,7 +1652,16 @@
                     <dataType>String</dataType>
                     <fieldText>Subject</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1636,35 +1674,6 @@
             <fields>
                 <name>Category_Sub_Category_Section2_Column2</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>CaseOrigin</name>
-                    <choiceReferences>Email</choiceReferences>
-                    <choiceReferences>Phone</choiceReferences>
-                    <choiceReferences>Web</choiceReferences>
-                    <choiceReferences>Chat</choiceReferences>
-                    <choiceReferences>Other</choiceReferences>
-                    <choiceReferences>Non_SLA</choiceReferences>
-                    <choiceReferences>MAIL</choiceReferences>
-                    <choiceReferences>Follow_up</choiceReferences>
-                    <choiceReferences>Client_Meeting_In_Person</choiceReferences>
-                    <choiceReferences>Client_Meeting_Virtual</choiceReferences>
-                    <choiceReferences>Inbox_Email</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultSelectedChoiceReference>Inbox_Email</defaultSelectedChoiceReference>
-                    <fieldText>Case Origin</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <isRequired>true</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>isOutlook</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
                 <fields>
                     <name>Case_Origin</name>
                     <choiceReferences>Email</choiceReferences>
@@ -1681,17 +1690,16 @@
                     <defaultSelectedChoiceReference>Phone</defaultSelectedChoiceReference>
                     <fieldText>Case Origin</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Is_Outlook</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1702,7 +1710,17 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1741,7 +1759,16 @@
                     <dataType>String</dataType>
                     <fieldText>Would you like to mark this Case as Confidential?</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1763,7 +1790,17 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1779,6 +1816,14 @@
             <name>ErrorMessage</name>
             <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1804,6 +1849,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1817,27 +1870,21 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Populate_Case_Origin_When_Outlook</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
         <fields>
             <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>caseRecord.Status</objectFieldReference>
-        </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <isRequired>false</isRequired>
-            <objectFieldReference>caseRecord.NSP_Case_Sub_Status__c</objectFieldReference>
-        </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <isRequired>false</isRequired>
-            <objectFieldReference>caseRecord.Reason</objectFieldReference>
-        </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <isRequired>false</isRequired>
-            <objectFieldReference>caseRecord.NSP_Due_Date__c</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1875,7 +1922,16 @@
                 <assignToReference>selectedRecordTypeId</assignToReference>
                 <name>selectedRecordTypeId</name>
             </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1891,6 +1947,14 @@
             <name>Message_No_Accessible_Record_Types</name>
             <fieldText>&lt;p&gt;No accessible {!objectApiName} Record Types found.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
