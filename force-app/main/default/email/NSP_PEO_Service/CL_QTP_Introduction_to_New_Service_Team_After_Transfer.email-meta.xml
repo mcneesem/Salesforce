@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CL Only -  Introduce new service team - schedule strategy meeting with new team</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>CL-QTP Introduction to New Service Team After Transfer</name>
+    <style>freeForm</style>
+    <subject>New Service Team Introduction Service Strategy Meeting Invitation</subject>
+    <textOnly>CC all new service team members
+Attach new client contact sheet
+
+Good morning/afternoon [client name]
+
+We are excited to be working with you; I've attached a contact sheet with your new service team's contact information. We've  met with [previous service team name(s)] to understand your business, goals, and projects worked on to date.
+
+I'd like to schedule time to meet your team and discuss what is on the horizon for the remainder of  [current year] and also  look forward to [following year] and beyond.
+
+Are you available on [insert date and time] for approximately 60-90 minutes? If no please suggest alternate times and I'll send a calendar invitation.
+
+We thank you in advance for forwarding this on to anyone else in your organization who should be aware of a service team change.
+
+We look forward to hearing from you soon and look forward to our partnership.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

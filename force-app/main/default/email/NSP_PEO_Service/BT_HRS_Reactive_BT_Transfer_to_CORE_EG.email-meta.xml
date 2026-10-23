@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS Only - BT HRS send to clients transitioning to CORE or EG</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BT HRS-Reactive BT Transfer to CORE EG</name>
+    <style>freeForm</style>
+    <subject>Transition to Core/Emerging Growth Service Team</subject>
+    <textOnly>Good morning/afternoon [Client Name],
+
+We are transferring you to a Core/Emerging Growth Service Team effective [XYZ DATE] to ensure you are receiving the service most appropriate to your current business needs. You'll now work with a dedicated HR Specialist and a dedicated Client Liaison. They will help you strategize and expand your utilization of Insperity services to further meet your organization's needs while continuing to foster the relationship you and I have established.
+
+I will update them on any outstanding projects to ensure your new team is up to speed.
+
+Your new Client Liaison will reach out to you in the next several days for a formal introduction. In the meantime, please find new contact information below:
+
+Client Liaison Contact Name
+Client Liaison Contact Info
+
+HR Specialist Name
+HR Specialist Contact Info
+
+Please continue to reach out to me for assistance until [XYZ date].
+
+It was a genuine pleasure to work with you and I wish you continued success.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

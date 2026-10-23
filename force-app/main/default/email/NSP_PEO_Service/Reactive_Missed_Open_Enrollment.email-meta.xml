@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Send when an employee has missed an open enrollment</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Missed Open Enrollment</name>
+    <style>freeForm</style>
+    <subject>Missed Open Enrollment</subject>
+    <textOnly>Hello Client,
+
+Thank you for letting me know about [employee name]'s situation. I understand it can be frustrating to miss the open enrollment window. Unfortunately, under the rules outlined in the Summary Plan Description (SPD) for the Insperity Group Health Plan, changes to benefit elections are only allowed during initial or annual open enrollment periods-unless the employee experiences a Qualifying Life Event (QLE).
+
+Examples of QLEs include:
+
+Marriage, divorce, or legal separation
+Beginning or ending a domestic partnership
+Birth, adoption, or placement for adoption
+Death of a dependent
+Loss or gain of eligibility under another group health plan
+Court order requiring coverage (QMCSO)
+Change in residence affecting eligibility
+Gaining or losing eligibility for Medicare, Medicaid, or CHIP
+Enrollment in Marketplace coverage
+Reduction in hours (less than 30 per week) with enrollment in other coverage
+Other events permitted by the Plan
+
+If [employee name] experiences one of these events, they can submit a mid-year change online by selecting Mid-Year Change &gt; Access Now in the Benefits section of the Insperity Premier Portal. The SPD is also available on the portal for more details.
+
+Please let me know if I can help with any questions or guide [employee name] through the process should a qualifying event occur.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
