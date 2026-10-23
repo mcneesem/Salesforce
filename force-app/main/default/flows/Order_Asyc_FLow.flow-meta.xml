@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>This will call checkDownPaymentDetails method from CheckDownPaymentDetailsAction</description>
+        <description>This will call checkDownPaymentDetails method from NSP_OrderTriggerHelper</description>
         <name>Process_checkDownPaymentDetails</name>
         <label>Process checkDownPaymentDetails</label>
-        <locationX>842</locationX>
-        <locationY>384</locationY>
-        <actionName>CheckDownPaymentDetailsAction</actionName>
+        <locationX>578</locationX>
+        <locationY>408</locationY>
+        <actionName>NSP_OrderTriggerHelper</actionName>
         <actionType>apex</actionType>
-        <faultConnector>
-            <targetReference>Assign_Fault_Inputs_For_Action</targetReference>
-        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>orderIds</name>
@@ -18,48 +15,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>CheckDownPaymentDetailsAction</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <assignments>
-        <name>Assign_Fault_Inputs_For_Action</name>
-        <label>Assign Fault Inputs For Action</label>
-        <locationX>1106</locationX>
-        <locationY>492</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Process_checkDownPaymentDetails</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Inputs_For_Publish_Event</name>
-        <label>Assign Fault Inputs For Publish Event</label>
-        <locationX>314</locationX>
-        <locationY>492</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Publish_Event_for_Contract_Creation</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Order_Activated</name>
         <label>Order Activated</label>
-        <locationX>314</locationX>
-        <locationY>276</locationY>
+        <locationX>182</locationX>
+        <locationY>288</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IsOrderActivated</name>
@@ -88,8 +50,8 @@
     <decisions>
         <name>status_Reviewed</name>
         <label>status Reviewed</label>
-        <locationX>1106</locationX>
-        <locationY>276</locationY>
+        <locationX>710</locationX>
+        <locationY>288</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isReviewed</name>
@@ -142,10 +104,7 @@
         <name>Publish_Event_for_Contract_Creation</name>
         <label>Publish Event for Contract Creation</label>
         <locationX>50</locationX>
-        <locationY>384</locationY>
-        <faultConnector>
-            <targetReference>Assign_Fault_Inputs_For_Publish_Event</targetReference>
-        </faultConnector>
+        <locationY>408</locationY>
         <inputAssignments>
             <field>NSP_Action__c</field>
             <value>
@@ -162,7 +121,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>584</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Order_Activated</targetReference>
@@ -198,37 +157,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
-    <subflows>
-        <name>Fault_Handler</name>
-        <label>Fault Handler</label>
-        <locationX>1106</locationX>
-        <locationY>600</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>faultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Order_Asyc_FLow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <variables>
-        <name>faultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <status>Active</status>
 </Flow>
