@@ -3,10 +3,12 @@
         <template lwc:if={record}>
             <lightning-card>
                 <h3 slot="title" class="line-height-title">{title}</h3>
-                <div class="slds-text-align_right slds-text-body_small">
-                    <lightning-progress-bar value={progress} size="large" variant="circular"></lightning-progress-bar>
-                    {record.fields.Completed_Portal_Tasks__c.value} out of {record.fields.Total_Portal_Tasks__c.value} items completed
-                </div>
+                <template lwc:if={hasTasks}>
+                    <div class="slds-text-align_right slds-text-body_small">
+                        <lightning-progress-bar value={progress} size="large" variant="circular"></lightning-progress-bar>
+                        {message}
+                    </div>
+                </template>
             </lightning-card>
         </template>
     </template>
