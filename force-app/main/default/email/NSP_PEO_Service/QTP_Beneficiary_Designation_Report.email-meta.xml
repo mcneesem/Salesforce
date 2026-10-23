@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <attachedDocuments>Services/Instructions_for_Designating_a_Beneficiary.pdf</attachedDocuments>
     <available>true</available>
     <description>BT HRS and CL  - Provide information to run beneficiary designation report</description>
     <encodingKey>ISO-8859-1</encodingKey>
