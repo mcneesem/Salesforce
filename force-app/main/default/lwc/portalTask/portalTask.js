@@ -153,7 +153,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isVisible() {
-        return ( this.record && ( this.recordStatus != "Hidden" ) && ( !this.isSummary || this.hasChildren ) );
+        return ( this.record && this.record?.fields?.Is_Visible__c?.value && ( !this.isSummary || this.hasChildren ) );
     }
 
     //
