@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <attachedDocuments>Services/How_to_Support_a_Grieving_Employee.pdf</attachedDocuments>
-    <attachedDocuments>Services/Insperity_Brochure_EAP.pdf</attachedDocuments>
-    <attachedDocuments>Services/Legal_Representation_of_A_Deceased_Employee.pdf</attachedDocuments>
     <available>true</available>
     <description>BT HRS and CL - Send when a worksite employee has died</description>
     <encodingKey>ISO-8859-1</encodingKey>
