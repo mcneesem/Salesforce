@@ -17,17 +17,17 @@
                 <lightning-button class="slds-m-left_large" label="Refresh" icon-name="utility:refresh" onclick={handleRefresh} variant="neutral"></lightning-button>
             </lightning-layout-item>
 
-            <template if:true={loading}>
+            <template lwc:if={loading}>
                 <lightning-layout-item size="12" class="slds-m-left_x-small slds-p-bottom_small slds-text-title slds-text-color_weak">Loading checks...</lightning-layout-item>
             </template>
 
-            <template if:true={error}>
+            <template lwc:if={error}>
                 <lightning-layout-item size="12" class="slds-m-left_x-small slds-p-bottom_small slds-text-title slds-text-color_error" padding="around-small">
                     {error}
                 </lightning-layout-item>
             </template>
 
-            <template if:true={sections}>
+            <template lwc:if={sections}>
                 <!-- Collapsible sections using lightning-accordion -->
                 <lightning-layout-item size="12">
                     <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleToggle} class="slds-m-horizontal_small slds-m-bottom_small">
@@ -47,20 +47,20 @@
                             <lightning-accordion-section key={section.key} name={section.key} label={section.label}>
                                 <!-- Section status icon next to section label -->
                                 <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
-                                    <lightning-icon if:true={section.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
-                                    <lightning-icon if:true={section.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
-                                    <lightning-icon if:true={section.isSectionWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
+                                    <lightning-icon lwc:if={section.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                    <lightning-icon lwc:elseif={section.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                    <lightning-icon lwc:else icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
                                 </lightning-layout>
 
                                 <!-- If this is a grouped section (e.g., Custom Settings) render nested accordion -->
-                                <template if:true={section.children}>
+                                <template lwc:if={section.children}>
                                     <lightning-accordion allow-multiple-sections-open active-section-name={activeChildSections} class="slds-m-horizontal_small slds-m-bottom_small">
                                         <template for:each={section.children} for:item="child">
                                             <lightning-accordion-section key={child.key} name={child.name} label={child.label}>
                                                 <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
-                                                    <lightning-icon if:true={child.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
-                                                    <lightning-icon if:true={child.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
-                                                    <lightning-icon if:true={child.isSectionWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
+                                                    <lightning-icon lwc:if={child.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                                    <lightning-icon lwc:elseif={child.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                                    <lightning-icon lwc:else icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
                                                 </lightning-layout>
                                                 <ul class="slds-has-dividers_around-space">
                                                     <template for:each={child.checks} for:item="chk">
@@ -83,7 +83,7 @@
                                 </template>
 
                                 <!-- Otherwise render as a normal leaf section -->
-                                <template if:false={section.children}>
+                                <template lwc:else>
                                     <ul class="slds-has-dividers_around-space">
                                         <template for:each={section.checks} for:item="chk">
                                             <li key={chk.key} class="slds-item">
