@@ -13,7 +13,6 @@
     ISCHANGED( DurationInMinutes ) ,
     ISCHANGED( NSP_Event_Type__c ) ,
     ISCHANGED( NSP_Event_Subtype__c ) ,
-    ISCHANGED( Subject ) ,
     ISCHANGED( WhatId )
   )
 )</errorConditionFormula>
