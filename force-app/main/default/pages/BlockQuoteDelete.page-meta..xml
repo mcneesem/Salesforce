@@ -5,9 +5,4 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <description>Block the ability to delete from Opportunity Related List</description>
     <label>BlockQuoteDelete</label>
-    <packageVersions>
-        <majorNumber>262</majorNumber>
-        <minorNumber>3</minorNumber>
-        <namespace>SBQQ</namespace>
-    </packageVersions>
 </ApexPage>
