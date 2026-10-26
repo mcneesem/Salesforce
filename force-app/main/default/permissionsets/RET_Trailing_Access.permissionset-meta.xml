@@ -83,4 +83,8 @@
         <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>RET_Trailing__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
