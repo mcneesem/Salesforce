@@ -1,5 +1,5 @@
 @isTest
-public with sharing class NSP_AssignFSLPermissionsBatchTest {
+private with sharing class NSP_AssignFSLPermissionsBatchTest {
 
     //
     // DEPRECATED
@@ -7,7 +7,7 @@ public with sharing class NSP_AssignFSLPermissionsBatchTest {
 
     @isTest
     private static void testAssignFSLPermissionsBatchTest() {
-        NSP_AssignFSLPermissionsBatchTest deprecated = new NSP_AssignFSLPermissionsBatchTest();
+        NSP_AssignFSLPermissionsBatch deprecated = new NSP_AssignFSLPermissionsBatch();
     }
 
 }
