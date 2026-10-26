@@ -103,17 +103,29 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public static void beforeUpsertDirector( List<AccountContactRelation> newList ) {
         try {
-            if (!CustomPermissionController.checkUserPermission( 'Bypass_Primary_Contact_Validation', UserInfo.getUserId() )){
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Primary_Contact_Validation' , UserInfo.getUserId() ) ) {
                 Set<Id> accountIdSet = new Set<Id>();
-                for(AccountContactRelation accConObj : newList){
-                    if(accConObj.NSP_Is_Primary__c){
-                        accountIdSet.add(accConObj.AccountId);
+                for ( AccountContactRelation accConObj : newList ) {
+                    if ( accConObj.NSP_Is_Primary__c ) {
+                        accountIdSet.add( accConObj.AccountId );
                     }
                 }
-                Map<Id,AccountContactRelation> accountContactRelationMap= new Map<Id,AccountContactRelation>([Select Id ,ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE AccountId IN:accountIdSet AND NSP_Is_Primary__c = True ]);
-                for(AccountContactRelation accConObj : newList){
-                    if(accountContactRelationMap.size() > 0 && !accountContactRelationMap.containsKey(accConObj.Id)  ){
-                           accConObj.NSP_Is_Primary__c.addError(System.label.NSP_PrimaryContactValidation);
+                Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>(
+                    [
+                        Select Id , ContactId , NSP_Is_Primary__c , AccountId
+                        FROM AccountContactRelation
+                        WHERE (
+                            ( AccountId IN :accountIdSet )
+                            AND ( NSP_Is_Primary__c = true )
+                        )
+                    ]
+                );
+                for ( AccountContactRelation accConObj : newList ) {
+                    if ( !accountContactRelationMap.isEmpty()
+                        && !accountContactRelationMap.containsKey( accConObj.Id )
+                        )
+                    {
+                        accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
                     }
                 }
             }
