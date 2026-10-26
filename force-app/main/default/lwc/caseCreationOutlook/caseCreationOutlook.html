@@ -1,0 +1,34 @@
+<template>
+     <template lwc:if={hasPermission}>
+        <lightning-layout class="slds-m-around_small">
+            <lightning-layout-item size="12">
+                <template lwc:if={isFlowVisible}>
+                    <div class="slds-m-bottom_xx-small slds-text-align_right">
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            variant="bare"
+                            alternative-text="Close"
+                            onclick={handleClickClose}
+                            >
+                        </lightning-button-icon>
+                    </div>
+                    <lightning-flow
+                        flow-api-name="Case_Creation_Screen_Flow"
+                        flow-input-variables={flowInputVariables}
+                        onstatuschange={handleStatusChange}
+                        >
+                    </lightning-flow>
+                </template>
+                <template lwc:else>
+                    <lightning-button
+                        label="New Case"
+                        variant="brand"
+                        stretch="true"
+                        onclick={handleClickNew}
+                        >
+                    </lightning-button>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>
