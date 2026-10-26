@@ -1,11 +1,8 @@
-/**
-* Represents the Focus Item trigger helper Test Class
-*/
-@Istest
+@istest
 private class NSP_FocusItemTriggerHelperTest {
-	//setup for test data
+
     @testSetup
-    static void testData() {
+    private static void testData() {
         Id autoCreatedRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_CPQConstants.ACCOUNTGROUP_APINAME,'Automatically_Created');
         Id manuallyCreatedRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_CPQConstants.ACCOUNTGROUP_APINAME,'Manually_Created');
 
@@ -44,19 +41,17 @@ private class NSP_FocusItemTriggerHelperTest {
 
     }
 
-    /*This method is to validate case creation on Focus Item insertion
-	  if Focus_Item__c value is Business Restructure*/
     //Positive
-    @IsTest
-    static void testCaseCreationForBusinessRestructureFocusItem() {
+    @isTest
+    private static void testCaseCreationForBusinessRestructureFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -72,16 +67,16 @@ private class NSP_FocusItemTriggerHelperTest {
     }
 
     //Negative
-    @IsTest
-    static void testNoCaseCreationForBusinessRestructureFocusItem() {
+    @isTest
+    private static void testNoCaseCreationForBusinessRestructureFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -96,19 +91,17 @@ private class NSP_FocusItemTriggerHelperTest {
         Test.StopTest();
     }
 
-    /*This method is to validate case creation on Focus Item insertion
-	  if Focus_Item__c value is Extensive Salary Reduction*/
     //Positive
-    @IsTest
-    static void testCaseCreationForExtensiveSalaryReductionFocusItem() {
+    @isTest
+    private static void testCaseCreationForExtensiveSalaryReductionFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -125,16 +118,16 @@ private class NSP_FocusItemTriggerHelperTest {
     }
 
     //Negative
-    @IsTest
-    static void testNoCaseCreationForExtensiveSalaryReductionFocusItem() {
+    @isTest
+    private static void testNoCaseCreationForExtensiveSalaryReductionFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -150,19 +143,17 @@ private class NSP_FocusItemTriggerHelperTest {
         Test.StopTest();
     }
 
-    /*This method is to validate case creation on Focus Item insertion
-	  if Focus_Item__c value is Economic Shift*/
     //Positive
-    @IsTest
-    static void testCaseCreationForEconomicShiftFocusItem() {
+    @isTest
+    private static void testCaseCreationForEconomicShiftFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -177,17 +168,17 @@ private class NSP_FocusItemTriggerHelperTest {
         Test.StopTest();
     }
 
-	//Negative
-    @IsTest
-    static void testNoCaseCreationForEconomicShiftFocusItem() {
+    //Negative
+    @isTest
+    private static void testNoCaseCreationForEconomicShiftFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -202,19 +193,17 @@ private class NSP_FocusItemTriggerHelperTest {
         Test.StopTest();
     }
 
-    /*This method is to validate case creation on Focus Item insertion
-	  if Focus_Item__c value is Risk Mitigation*/
     //Positive
-    @IsTest
-    static void testCaseCreationForRiskMitigationFocusItem() {
+    @isTest
+    private static void testCaseCreationForRiskMitigationFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -231,16 +220,16 @@ private class NSP_FocusItemTriggerHelperTest {
     }
 
     //Negative
-    @IsTest
-    static void testNoCaseCreationForRiskMitigationFocusItem() {
+    @isTest
+    private static void testNoCaseCreationForRiskMitigationFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -255,19 +244,16 @@ private class NSP_FocusItemTriggerHelperTest {
         Test.StopTest();
     }
 
-    /*This method is to validate case creation on Focus Item insertion
-	  if Focus_Item__c value is Risk Mitigation with Detail as
-	  Declining 20% or more in WSEE over 12 months or less*/
-    @IsTest
-    static void testCaseCreationForRapidGrowthOrDeclineFocusItem() {
+    @isTest
+    private static void testCaseCreationForRapidGrowthOrDeclineFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME2).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -284,16 +270,16 @@ private class NSP_FocusItemTriggerHelperTest {
     }
 
     //Negative
-    @IsTest
-    static void testNoCaseCreationForRiskMitigationWithDetailFocusItem() {
+    @isTest
+    private static void testNoCaseCreationForRiskMitigationWithDetailFocusItem() {
         List<String> accountGroupFields = new List<String>{'Id',NSP_CPQConstants.NAME};
         String query = new NSP_QueryBuilder(NSP_CPQConstants.ACCOUNTGROUP_APINAME, accountGroupFields)
-            			.addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
+                        .addFilter(NSP_CPQConstants.NAME,NSP_CPQConstants.ACCOUNTGROUP_NAME1).build();
         NSP_Account_Group__c accGrpRecord = Database.query(query);
 
         List<String> assetFields = new List<String>{'Id',NSP_CPQConstants.NSPCLIENT_APINAME};
         String assetQuery = new NSP_QueryBuilder(NSP_CPQConstants.ASSET, assetFields)
-            			.addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
+                        .addFilter(NSP_CPQConstants.NSPCLIENT_APINAME,NSP_CPQConstants.ASSET_NSPCLIENT).build();
         Asset assetRecord = Database.query(assetQuery);
 
         Test.startTest();
@@ -308,4 +294,6 @@ private class NSP_FocusItemTriggerHelperTest {
         System.assertEquals(0, [SELECT Count() FROM Case WHERE NSP_ClientNumber__c =: assetRecord.NSP_Client__c]);
         Test.StopTest();
     }
+
 }
+//
