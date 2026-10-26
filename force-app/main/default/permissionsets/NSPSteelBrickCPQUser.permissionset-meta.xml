@@ -11667,7 +11667,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>SBQQ__BlockQuoteDelete</apexPage>
+        <apexPage>BlockQuoteDelete</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
