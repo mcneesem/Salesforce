@@ -1,11 +1,12 @@
-public class NSP_AutomaticProjectScheduler
-{
+public class NSP_AutomaticProjectScheduler {
     // test w/ NSP_AutomaticProjectSchedulerTest (100%)
 
     //
     // DEPRECATED
     //
-    public NSP_AutomaticProjectScheduler() {
 
+    public NSP_AutomaticProjectScheduler() {
     }
+
 }
+//
