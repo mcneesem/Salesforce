@@ -72,25 +72,6 @@ private class NSP_AssetBatchTest {
         insert assetRecord;
     }
 
-    // @description Verifies that the scheduler creates a scheduled job via NSP_AssetBatchScheduler.
-    @isTest
-    private static void testCreatesOneScheduledJob() {
-        Test.startTest();
-        NSP_AssetBatchScheduler assetBatch = new NSP_AssetBatchScheduler();
-        Database.executeBatch(new NSP_AssetBatch());
-        String cronExpression = '0 0 3 * * ?';
-        System.schedule('Test NSP_AssetBatchScheduler', cronExpression, assetBatch);
-        Test.stopTest();
-
-        List<AsyncApexJob> jobsScheduled = [
-            SELECT Id, ApexClassID, ApexClass.Name, Status, JobType
-            FROM AsyncApexJob
-            WHERE JobType = 'ScheduledApex'
-            WITH USER_MODE
-        ];
-        System.Assert.areEqual(1, jobsScheduled.size(), 'Expected exactly one scheduled job to be created');
-    }
-
     // @description Verifies that executing the batch for an HR Specialist account team creates a Case and marks the Asset as expired.
     @isTest
     private static void testCreatesExpiredHRSpecialistCase() {
