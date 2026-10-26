@@ -4,6 +4,7 @@ public with sharing class NSP_AcntEarliestFirstPayDateUpdateBatch {
     //
     // DEPRECATED
     //
+
     public NSP_AcntEarliestFirstPayDateUpdateBatch() {
     }
 
