@@ -3,15 +3,21 @@ private class NSP_AccountContactRelationHelperTest {
     private static final String TEST_EMAIL = 'test@gmail.com';
 
     private static final List<String> CONTACT_FIELDS = new List<String>{
-        'Id',
-        'recordTypeId',
-        'NSP_Work_Phone__c', 'Email', 'NSP_Work_email__c'};
+        'Id' ,
+        'recordTypeId' ,
+        'NSP_Work_Phone__c' ,
+        'Email' ,
+        'NSP_Work_email__c'
+    };
     private static final List<String> ACR_FIELDS = new List<String>{
-        'Id',
-        'AccountId', 'ContactId', 'NSP_Work_Email__c', 'NSP_Work_Phone__c'
+        'Id' ,
+        'AccountId' ,
+        'ContactId' ,
+        'NSP_Work_Email__c' ,
+        'NSP_Work_Phone__c'
     };
     private static final List<String> ACCOUNT_FIELDS = new List<String>{
-        'Id',
+        'Id' ,
         'Name'
     };
 
