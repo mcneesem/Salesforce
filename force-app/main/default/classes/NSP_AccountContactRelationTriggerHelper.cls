@@ -117,8 +117,9 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                         accountIdSet.add( accConObj.AccountId );
                     }
                 }
+                Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>();
                 if ( !accountIdSet.isEmpty() ) {
-                    Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>(
+                    accountContactRelationMap = new Map<Id,AccountContactRelation>(
                         [
                             Select Id , ContactId , NSP_Is_Primary__c , AccountId
                             FROM AccountContactRelation
@@ -128,13 +129,13 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                             )
                         ]
                     );
-                    for ( AccountContactRelation accConObj : newList ) {
-                        if ( !accountContactRelationMap.isEmpty()
-                            && !accountContactRelationMap.containsKey( accConObj.Id )
-                            )
-                        {
-                            accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
-                        }
+                }
+                for ( AccountContactRelation accConObj : newList ) {
+                    if ( !accountContactRelationMap?.isEmpty()
+                        && !accountContactRelationMap.containsKey( accConObj.Id )
+                        )
+                    {
+                        accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
                     }
                 }
             }
