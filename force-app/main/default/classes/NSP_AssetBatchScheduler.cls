@@ -4,6 +4,7 @@ public with sharing class NSP_AssetBatchScheduler {
     //
     // DEPRECATED
     //
+
     public NSP_AssetBatchScheduler() {
     }
 
