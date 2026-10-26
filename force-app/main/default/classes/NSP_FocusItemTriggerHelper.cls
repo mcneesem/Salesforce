@@ -1,4 +1,5 @@
-public class NSP_FocusItemTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 56...
+public without sharing class NSP_FocusItemTriggerHelper {
    // test w/ NSP_FocusItemTriggerHelperTest (81%)
 
     public static void beforeInsertDirector( List<NSP_Focus_Item__c> newList ) {
