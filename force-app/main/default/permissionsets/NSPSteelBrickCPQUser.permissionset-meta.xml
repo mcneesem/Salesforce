@@ -11019,7 +11019,7 @@
         <field>User.SBQQ__Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <hasActivationRequired>false</hasActivationRequired>
+    <hasActivationRequired>false</hasActivationRequired>
     <label>NSP Salesforce CPQ User</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
