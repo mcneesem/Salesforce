@@ -2,7 +2,7 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during 
+        <comment>Action override created by Lightning App Builder during
         activation.</comment>
         <content>Implementation_Profile_Record_Page</content>
         <formFactor>Large</formFactor>
@@ -12,7 +12,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during 
+        <comment>Action override created by Lightning App Builder during
         activation.</comment>
         <content>Implementation_Profile_Record_Page</content>
         <formFactor>Small</formFactor>
@@ -55,6 +55,24 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>Contact</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Event_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Event</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Event_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Event</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -110,6 +128,7 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Sales</label>
     <navType>Standard</navType>
     <profileActionOverrides>
@@ -119,15 +138,6 @@
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
         <recordType>NSP_Plan__c.Choice</recordType>
         <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
         <profile>Sales Member</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -168,15 +178,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
@@ -195,39 +196,12 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page12</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
         <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>Sales Member</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -258,33 +232,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page11</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -295,74 +242,11 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
         <recordType>NSP_Plan__c.Choice</recordType>
         <type>Flexipage</type>
         <profile>Sales Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -408,15 +292,6 @@
         <recordType>Case.NSP_RET_Time_Tracking</recordType>
         <type>Flexipage</type>
         <profile>Sales Member</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -457,24 +332,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Case_RET_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.NSP_RET_Time_Tracking</recordType>
@@ -498,15 +355,6 @@
         <recordType>Case.NSP_RET_Time_Tracking</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -626,42 +474,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
@@ -677,15 +489,6 @@
         <recordType>NSP_Plan__c.Choice</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -713,42 +516,6 @@
         <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>Sales Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -788,15 +555,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
@@ -812,15 +570,6 @@
         <recordType>NSP_Plan__c.WO</recordType>
         <type>Flexipage</type>
         <profile>Retirement Services</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -852,38 +601,11 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Case_RET_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.NSP_RET_Time_Tracking</recordType>
         <type>Flexipage</type>
         <profile>Sales Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_RET_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.NSP_RET_Time_Tracking</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -941,39 +663,12 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Case_RET_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.NSP_RET_Time_Tracking</recordType>
         <type>Flexipage</type>
         <profile>Sales Insights Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1079,42 +774,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
         <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
@@ -1268,15 +927,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
         <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
@@ -1303,24 +953,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page12</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -1371,42 +1003,6 @@
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
         <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
         <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
         <profile>Sales Manager</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -1417,15 +1013,6 @@
         <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>Sales Manager</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1447,24 +1034,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page11</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -1568,15 +1137,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Data Science</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Address_Record_Page_For_Service</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>NSP_Address__c</pageOrSobjectType>
@@ -1647,15 +1207,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
         <recordType>NSP_Plan__c.WO</recordType>
@@ -1679,24 +1230,6 @@
         <recordType>NSP_Plan__c.WO</recordType>
         <type>Flexipage</type>
         <profile>Sales Member</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Compensation</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>WO_RT_Plan_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.WO</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1736,33 +1269,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page12</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page11</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -1773,47 +1279,11 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Retail Sales</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
         <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>MarketingProfile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1832,15 +1302,6 @@
         <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>MarketingProfile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1916,33 +1377,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Engineer</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Choice_RT_Plan_Record_Page1</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
@@ -1966,24 +1400,6 @@
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
         <recordType>NSP_Plan__c.Choice</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
-        <profile>Sales Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Choice_RT_Plan_Record_Page1</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>
-        <recordType>NSP_Plan__c.Choice</recordType>
-        <type>Flexipage</type>
         <profile>Sales Support</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -1994,51 +1410,6 @@
         <recordType>NSP_Plan__c.Choice</recordType>
         <type>Flexipage</type>
         <profile>Sales Operations</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>CPQ Tech Support</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Task_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
-        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
-        <type>Flexipage</type>
-        <profile>Executive Sponsor</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
