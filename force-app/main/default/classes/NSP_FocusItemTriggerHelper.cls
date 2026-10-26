@@ -101,7 +101,10 @@ public class NSP_FocusItemTriggerHelper {
                     {
                         ecoShiftOrFinRiskList.add( focusItems );
                     }
-                    if ( focusItems.Focus_Item__c == NSP_ServiceConstants.RISK_MITIGATION ) {
+                    if ( ( focusItems.Focus_Item__c == NSP_ServiceConstants.RISK_MITIGATION )
+                        && ( focusItems.NSP_Detail__c == 'Client operates outside the compliance guidance provided by Insperity' )
+                        )
+                    {
                         riskMitigationList.add( focusItems );
                     }
                     if ( ( focusItems.Focus_Item__c == NSP_ServiceConstants.RAPID_GROWTH_OR_DECLINE )
