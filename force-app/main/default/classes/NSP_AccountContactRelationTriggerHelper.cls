@@ -60,20 +60,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                     contactOldMap.put( acr.Id , oldACR );
                     contactNewMap.put( acr.Id , newMap.get( acr.Id ) );
                 }
-                // Added as part of STY-02840
-                if ( ( ( acr.isDirect == true )
-                        && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
-                            || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
-                            || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
-                            || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
-                            || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
-                            )
-                        )
-                    || ( ( acr.isDirect == true )
-                        && ( oldACR.isDirect != acr.isDirect )
-                        )
-                    )
-                {
+                if ( this.shouldUpdateWorkPhoneEmailOnContact( acr , oldACR ) ) {
                     conIdACRMap.put( acr.ContactId , acr );
                 }
             }
@@ -96,6 +83,26 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
     }
 
+    private Boolean shouldUpdateWorkPhoneEmailOnContact( AccountContactRelation acr , AccountContactRelation oldACR ) {
+        Boolean response = false;
+        if ( ( ( acr.isDirect == true )
+                && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
+                    || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
+                    || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
+                    || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
+                    || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
+                    )
+                )
+            || ( ( acr.isDirect == true )
+                && ( oldACR.isDirect != acr.isDirect )
+                )
+            )
+        {
+            response = true;
+        }
+        return response;
+    }
+
     //
     // MethodName: beforeUpsertDirector
     // Description: This method will add the validation to not to create more than One ACR for an Account
@@ -110,22 +117,24 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                         accountIdSet.add( accConObj.AccountId );
                     }
                 }
-                Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>(
-                    [
-                        Select Id , ContactId , NSP_Is_Primary__c , AccountId
-                        FROM AccountContactRelation
-                        WHERE (
-                            ( AccountId IN :accountIdSet )
-                            AND ( NSP_Is_Primary__c = true )
-                        )
-                    ]
-                );
-                for ( AccountContactRelation accConObj : newList ) {
-                    if ( !accountContactRelationMap.isEmpty()
-                        && !accountContactRelationMap.containsKey( accConObj.Id )
-                        )
-                    {
-                        accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
+                if ( !accountIdSet.isEmpty() ) {
+                    Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>(
+                        [
+                            Select Id , ContactId , NSP_Is_Primary__c , AccountId
+                            FROM AccountContactRelation
+                            WHERE (
+                                ( AccountId IN :accountIdSet )
+                                AND ( NSP_Is_Primary__c = true )
+                            )
+                        ]
+                    );
+                    for ( AccountContactRelation accConObj : newList ) {
+                        if ( !accountContactRelationMap.isEmpty()
+                            && !accountContactRelationMap.containsKey( accConObj.Id )
+                            )
+                        {
+                            accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
+                        }
                     }
                 }
             }
