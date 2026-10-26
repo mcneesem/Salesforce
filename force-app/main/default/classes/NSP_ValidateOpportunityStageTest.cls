@@ -3,7 +3,7 @@ private class NSP_ValidateOpportunityStageTest {
 
     //Test Setup Method to populate test data
     @testSetup
-    private static void setupData(){
+    private static void setupData() {
 
         Account acnt=NSP_TestHelper.createAccount(true);
         Contact cntct=NSP_TestHelper.createContact(true);
@@ -351,7 +351,7 @@ private class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    private static void evaluateClosedLost_PublicGroup(){
+    private static void evaluateClosedLost_PublicGroup() {
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity oppty = oppList[0];
@@ -382,7 +382,7 @@ private class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    private static void evaluateClosedLost_PublicGroup2(){
+    private static void evaluateClosedLost_PublicGroup2() {
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity oppty = oppList[0];
@@ -417,7 +417,7 @@ private class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    private static void isStageNameNull(){
+    private static void isStageNameNull() {
         test.startTest();
 
         boolean inserted = false;
@@ -436,5 +436,6 @@ private class NSP_ValidateOpportunityStageTest {
         Assert.areEqual(false, inserted, 'StageName is missing');
         test.stopTest();
     }
+
 }
 //
