@@ -47,6 +47,11 @@
                 <label>Carrier Delay</label>
             </value>
             <value>
+                <fullName>Chargeback</fullName>
+                <default>false</default>
+                <label>Chargeback</label>
+            </value>
+            <value>
                 <fullName>Client Delay</fullName>
                 <default>false</default>
                 <label>Client Delay</label>
