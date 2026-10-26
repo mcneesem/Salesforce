@@ -1,4 +1,3 @@
-
 @isTest
 private class NSP_AssetBatchSchedulerTest {
 
@@ -6,4 +5,6 @@ private class NSP_AssetBatchSchedulerTest {
     private static void testAssetBatchScheduler() {
         NSP_AssetBatchScheduler deprecated = new NSP_AssetBatchScheduler();
     }
+
 }
+//
