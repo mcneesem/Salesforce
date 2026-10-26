@@ -5,7 +5,7 @@
         <name>Process_checkDownPaymentDetails</name>
         <label>Process checkDownPaymentDetails</label>
         <locationX>314</locationX>
-        <locationY>384</locationY>
+        <locationY>276</locationY>
         <actionName>CheckDownPaymentDetailsAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
@@ -23,35 +23,6 @@
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <decisions>
-        <name>status_Reviewed</name>
-        <label>status Reviewed</label>
-        <locationX>578</locationX>
-        <locationY>276</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isReviewed</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Reviewed</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Activated</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Process_checkDownPaymentDetails</targetReference>
-            </connector>
-            <label>isReviewed</label>
-        </rules>
-    </decisions>
     <description>Flow for calling down payment logic on order and project.</description>
     <environments>Default</environments>
     <interviewLabel>Order - Updated - Async - Handle Down Payment Details {!$Flow.CurrentDateTime}</interviewLabel>
@@ -76,7 +47,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>188</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>or</filterLogic>
@@ -99,7 +70,7 @@
         <scheduledPaths>
             <name>Process_Down_Payment_on_Order</name>
             <connector>
-                <targetReference>status_Reviewed</targetReference>
+                <targetReference>Process_checkDownPaymentDetails</targetReference>
             </connector>
             <label>Process Down Payment on Order</label>
             <maxBatchSize>100</maxBatchSize>
@@ -114,7 +85,7 @@
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
         <locationX>578</locationX>
-        <locationY>492</locationY>
+        <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -125,7 +96,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Order_Asyc_FLow</stringValue>
+                <stringValue>Order_Updated_Async_Handle_Down_Payment_Details</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
