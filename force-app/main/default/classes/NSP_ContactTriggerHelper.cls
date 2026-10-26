@@ -20,7 +20,7 @@ public with sharing class NSP_ContactTriggerHelper {
 
         Id regionId, workCalenderId = null;
         //Modified as part of SOQL fix 228901
-        if (CustomPermissionController.checkUserPermission( 'Service_User', UserInfo.getUserId() )){
+        if (CustomPermissionController.checkUserPermission( 'Populate_Resource_Fields', UserInfo.getUserId() )){
             regionId = getRegionId();
             workCalenderId = getWorkCalendarId();
         }
@@ -34,7 +34,7 @@ public with sharing class NSP_ContactTriggerHelper {
 
             //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
             //modified as part of SOQL fix 228901
-            if (CustomPermissionController.checkUserPermission( 'Service_User', UserInfo.getUserId() )){
+            if (CustomPermissionController.checkUserPermission( 'Populate_Resource_Fields', UserInfo.getUserId() )){
                 conObj.pse__Is_Resource_Active__c = true;
                 conObj.pse__Is_Resource__c = true;
                 conObj.pse__Region__c = regionId;

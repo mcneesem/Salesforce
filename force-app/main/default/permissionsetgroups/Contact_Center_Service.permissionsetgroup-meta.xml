@@ -12,6 +12,6 @@
     <permissionSets>Contact_Center_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>Contact_Center_Service_System_Permissions</permissionSets>
     <permissionSets>Contact_Center_Service_Visualforce_Page_Access</permissionSets>
-    <permissionSets>Service_User</permissionSets>
+    <permissionSets>Populate_Resource_Fields</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

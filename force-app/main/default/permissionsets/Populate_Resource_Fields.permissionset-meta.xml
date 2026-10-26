@@ -2,8 +2,9 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Service_User</name>
+        <name>Populate_Resource_Fields</name>
     </customPermissions>
+    <description>Grants the Custom Permission to Populate Resource Fields.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Service User</label>
+    <label>Populate Resource Fields</label>
 </PermissionSet>
