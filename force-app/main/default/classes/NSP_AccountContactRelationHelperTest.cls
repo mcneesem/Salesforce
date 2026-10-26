@@ -201,6 +201,7 @@ private class NSP_AccountContactRelationHelperTest {
         //
         // for test code coverage only...
         NSP_AccountContactRelationTriggerHelper.testHandleException( null , null );
+        NSP_AccountContactRelationTriggerHelper.testHandleResults( null , null );
         NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( new List<AccountContactRelation>() );
     }
 
