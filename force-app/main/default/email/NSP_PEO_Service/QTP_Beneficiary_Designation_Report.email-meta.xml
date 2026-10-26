@@ -7,9 +7,7 @@
     <name>QTP-Beneficiary Designation Report</name>
     <style>freeForm</style>
     <subject>Beneficiary Designation Report</subject>
-    <textOnly>(Attach Instructions for Designating a Beneficiary to template)
-
-Hello [client],
+    <textOnly>Hello [client],
 
 The Beneficiary Designation Report identifies whether an employee has designated a beneficiary under Insperity's Basic Group Life Insurance policy. It is available to your employees who have the Benefits Reporting role through Web Reporting on Insperity Premier.
 
