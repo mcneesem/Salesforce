@@ -261,6 +261,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deduction Auth NY - Notice of Intent to Recover Wage Overpayment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Deduction Auth NY - Voluntary</fullName>
             <default>false</default>
         </values>
