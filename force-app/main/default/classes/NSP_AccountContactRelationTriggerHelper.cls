@@ -25,7 +25,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             }
             if ( !CustomPermissionController.checkUserPermission( 'Bypass_AccountContactRelation_Directors' , UserInfo.getUserId() ) ) {
                 if ( !conIdACRMap.isEmpty() ) {
-                    this.updateWorkPhoneEmailOnContact( conIdACRMap );
+                    NSP_AccountContactRelationTriggerHelper.updateWorkPhoneEmailOnContact( conIdACRMap );
                 }
                 IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
             }
@@ -87,7 +87,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 );
                 IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
                 if ( !conIdACRMap.isEmpty() ) {
-                    this.updateWorkPhoneEmailOnContact( conIdACRMap );
+                    NSP_AccountContactRelationTriggerHelper.updateWorkPhoneEmailOnContact( conIdACRMap );
                 }
             }
             PortalClientSharing.enqueueJob( portalIds );
