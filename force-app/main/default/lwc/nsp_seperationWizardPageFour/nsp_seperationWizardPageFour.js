@@ -566,27 +566,6 @@ handleOnload(event){
                 && this.fieldsData.NSP_AgreementType__c.value  == 'Insperity-Prepared'){	
                 this.enableInsperityPrepared= true; 
             }
-            
-            
-            if(this.fieldsData.NSP_RequestingMultipleEmployees__c != null  && this.fieldsData.NSP_RequestingMultipleEmployees__c.value != null){
-            if(this.fieldsData.NSP_RequestingMultipleEmployees__c.value = 'No'){
-                if(this.fieldsData.NSP_WorkState__c != null  && this.fieldsData.NSP_WorkState__c.value != null && this.fieldsData.NSP_WorkState__c.value !='') 
-                    if( this.fieldsData.NSP_WorkState__c.value  == 'IL'){	
-                        this.NSP_MutualConfidentiality =true;
-                    }
-                   if (this.fieldsData.NSP_WorkState__c.value  != 'IL' && this.fieldsData.NSP_WorkState__c.value  != 'CA'){
-                       /**
-                        if(this.template.querySelector('div.California') != null){
-                            this.template.querySelector('div.California').style.display='none';
-                        }
-                        if(this.template.querySelector('div.Illinois') != null){
-                            this.template.querySelector('div.Illinois').style.display='none';
-                        }
-                         */
-                    }
-                } 
-            
-          }
 
           if(this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c != null  && this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value != null){
             this.IsanyReferenceStock = this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value;
