@@ -303,7 +303,7 @@
             <assignToReference>caseRecord.Origin</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Case_Origin</elementReference>
+                <elementReference>caseOrigin</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -384,6 +384,9 @@
                 <elementReference>caseRecord.Id</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>END_ELEMENT_7</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Store_Account_Attributes</name>
@@ -643,6 +646,13 @@
             <stringValue>Yes</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>isEnabledOutlookScreen</name>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </constants>
     <decisions>
         <name>Check_Accessible_Record_Types</name>
         <label>Check Accessible Record Types</label>
@@ -1015,6 +1025,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>isEnabledOutlookScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Outlook_Screen</targetReference>
             </connector>
@@ -1194,7 +1211,46 @@
         </rules>
     </decisions>
     <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
+    <ends>
+        <name>END_ELEMENT_10</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_11</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_12</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_7</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_8</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_9</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
     <environments>Default</environments>
+    <formulas>
+        <name>caseOrigin</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!Case_Origin_Outlook} ) ) ,
+  {!Case_Origin_Outlook} ,
+  {!Case_Origin}
+)</expression>
+    </formulas>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Case Creation Screen Flow</label>
@@ -1421,6 +1477,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_8</targetReference>
+        </connector>
         <fields>
             <name>DisplayText</name>
             <fieldText>&lt;p&gt;Record Id is blank.&lt;/p&gt;</fieldText>
@@ -1445,6 +1504,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_9</targetReference>
+        </connector>
         <fields>
             <name>CaseCreationErrorDisplay</name>
             <fieldText>&lt;p&gt;Case was not created successfully.&lt;/p&gt;</fieldText>
@@ -1675,6 +1737,44 @@
                 <name>Category_Sub_Category_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
+                    <name>Case_Origin_Outlook</name>
+                    <choiceReferences>Email</choiceReferences>
+                    <choiceReferences>Phone</choiceReferences>
+                    <choiceReferences>Web</choiceReferences>
+                    <choiceReferences>Chat</choiceReferences>
+                    <choiceReferences>Other</choiceReferences>
+                    <choiceReferences>Non_SLA</choiceReferences>
+                    <choiceReferences>MAIL</choiceReferences>
+                    <choiceReferences>Follow_up</choiceReferences>
+                    <choiceReferences>Client_Meeting_In_Person</choiceReferences>
+                    <choiceReferences>Client_Meeting_Virtual</choiceReferences>
+                    <choiceReferences>Inbox_Email</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>Inbox_Email</defaultSelectedChoiceReference>
+                    <fieldText>Case Origin</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>isOutlook</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
                     <name>Case_Origin</name>
                     <choiceReferences>Email</choiceReferences>
                     <choiceReferences>Phone</choiceReferences>
@@ -1700,6 +1800,16 @@
                             <stringValue>12</stringValue>
                         </width>
                     </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Is_Outlook</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1812,6 +1922,9 @@
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_10</targetReference>
+        </connector>
         <fields>
             <name>ErrorMessage</name>
             <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
@@ -1836,6 +1949,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_11</targetReference>
+        </connector>
         <fields>
             <name>RedirectToCase</name>
             <extensionName>c:navigateToRecord</extensionName>
@@ -1877,6 +1993,48 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>caseRecord.Status</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>caseRecord.NSP_Case_Sub_Status__c</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>caseRecord.Reason</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>caseRecord.NSP_Due_Date__c</objectFieldReference>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1943,6 +2101,9 @@
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_12</targetReference>
+        </connector>
         <fields>
             <name>Message_No_Accessible_Record_Types</name>
             <fieldText>&lt;p&gt;No accessible {!objectApiName} Record Types found.&lt;/p&gt;</fieldText>
