@@ -26,7 +26,7 @@
         <name>Create_Notes_Record</name>
         <label>Create Notes Record</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -37,12 +37,6 @@
             <field>Note_Type__c</field>
             <value>
                 <stringValue>Note</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Note__c</field>
-            <value>
-                <elementReference>$Record.NSP_Outlook_Notes__c</elementReference>
             </value>
         </inputAssignments>
         <object>NSP_Note__c</object>
@@ -73,5 +67,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
