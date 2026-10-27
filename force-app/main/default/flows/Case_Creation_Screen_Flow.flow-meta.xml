@@ -650,7 +650,7 @@
         <name>isEnabledOutlookScreen</name>
         <dataType>Boolean</dataType>
         <value>
-            <booleanValue>true</booleanValue>
+            <booleanValue>false</booleanValue>
         </value>
     </constants>
     <decisions>
@@ -1245,7 +1245,11 @@
     <formulas>
         <name>caseOrigin</name>
         <dataType>String</dataType>
-        <expression>IF( NOT( ISBLANK( {!Case_Origin_Outlook} ) ) , {!Case_Origin_Outlook} , {!Case_Origin} )</expression>
+        <expression>IF(
+  NOT( ISBLANK( {!Case_Origin_Outlook} ) ) ,
+  {!Case_Origin_Outlook} ,
+  {!Case_Origin}
+)</expression>
     </formulas>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
