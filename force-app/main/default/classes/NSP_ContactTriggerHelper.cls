@@ -6,11 +6,7 @@ public with sharing class NSP_ContactTriggerHelper {
     public static final String COMMUNITYLICENSE = 'Customer Community';
     public static final Id RESOURCE_REC_TYPE_ID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CONTACT_OBJECT, 'Resource');
     public static final Id NEW_CON_REC_TYPE_ID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CONTACT_OBJECT,'New_Contact_Record_Type');
-    public static final List<String> INT_DM_PROFILES = new List<String>{NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
-    public static final List<String> ALLOWED_PROFILES = new List<String>{'BPS Service','Contact Center','PEO Service','Retirement Services'};
     public static final String WORK_CALENDAR_US40 ='US 40';
-
-    private String profileName = '';
 
     //
     // Iterates throught the list of new Contact and passes the required attributes to other methods.
@@ -20,60 +16,45 @@ public with sharing class NSP_ContactTriggerHelper {
     //
     //
     public void beforeInsertDirector( List<Contact> newList ) {
-        //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-        //Modified as part of SOQL fix 228901
-        String loggedInUserProfileName;
-        loggedInUserProfileName = getLoggedInUserProfileName();
-
-        Id regionId, workCalenderId = null;
-        //Modified as part of SOQL fix 228901
-        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))
-        if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
-            regionId = getRegionId();
-            workCalenderId = getWorkCalendarId();
-        }
-        //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - end
-
-        for(Contact conObj : newList){
-            if(conObj.recordTypeId == NEW_CON_REC_TYPE_ID){
-                conObj.recordTypeId = RESOURCE_REC_TYPE_ID; // Added as  part of STY-02840
-            }
-            conObj.NSP_isContactInsertion__c = true;
-
-            //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-            //modified as part of SOQL fix 228901
-            if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
-                conObj.pse__Is_Resource_Active__c = true;
-                conObj.pse__Is_Resource__c = true;
-                conObj.pse__Region__c = regionId;
-                conObj.pse__Work_Calendar__c = workCalenderId;
-            }
-        }
-
         try {
-            Set<Id> sUserIds = new Set<Id>();
-            List<Contact> lContacts = new List<Contact>();
-            for(Contact conObj : newList ){
-                // UPDATE RESOURCE ROLE
-                if(conObj.pse__Salesforce_User__c != null){
-                    sUserIds.add(conObj.pse__Salesforce_User__c);
-                    lContacts.add(conObj);
+            Id regionId = null;
+            Id workCalenderId = null;
+            Boolean hasPermissionPopulateResourceFields = CustomPermissionController.checkUserPermission( 'Populate_Resource_Fields' , UserInfo.getUserId() );
+            if ( hasPermissionPopulateResourceFields ) {
+                regionId = this.getRegionId();
+                workCalenderId = this.getWorkCalendarId();
+            }
+            for ( Contact conObj : newList ) {
+                if ( conObj.RecordTypeId == NSP_ContactTriggerHelper.NEW_CON_REC_TYPE_ID ) {
+                    conObj.RecordTypeId = NSP_ContactTriggerHelper.RESOURCE_REC_TYPE_ID;
+                }
+                conObj.NSP_isContactInsertion__c = true;
+                if ( hasPermissionPopulateResourceFields ) {
+                    conObj.pse__Is_Resource_Active__c = true;
+                    conObj.pse__Is_Resource__c = true;
+                    conObj.pse__Region__c = regionId;
+                    conObj.pse__Work_Calendar__c = workCalenderId;
                 }
             }
-            updateClientRefTaskDate(newList,null);
-            updateSSNLast4(newList,null);
-            if(sUserIds.size() > 0){
-                updateContactRoles(sUserIds,lContacts);
+            Set<Id> sUserIds = new Set<Id>();
+            List<Contact> lContacts = new List<Contact>();
+            for ( Contact conObj : newList ) {
+                if ( conObj.pse__Salesforce_User__c != null ) {
+                    sUserIds.add( conObj.pse__Salesforce_User__c );
+                    lContacts.add( conObj );
+                }
+            }
+            this.updateClientRefTaskDate( newList , null );
+            this.updateSSNLast4( newList , null );
+            if ( !sUserIds.isEmpty() ) {
+                this.updateContactRoles( sUserIds , lContacts );
+            }
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors' , UserInfo.getUserId() ) ) {
+                this.updatePhoneNum(newList , null );
+                this.setSalesOfficeDetails( newList , null );
             }
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'beforeInsertDirector' );
-        }
-
-        //Format Phone number
-        //modified as part of SOQL fix 228901
-        if( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
-            updatePhoneNum(newList,null);
-            setSalesOfficeDetails(newList,null);
         }
     }
 
@@ -83,13 +64,8 @@ public with sharing class NSP_ContactTriggerHelper {
     // @param newMap List of New Contact.
     // @return void
     //
-    public void afterInsertDirector( List<Contact> newList , Map<Id,Contact > newMap ) {
-        //Modified as part of SOQL fix 228901
-        String loggedInUserProfileName;
-        loggedInUserProfileName = getLoggedInUserProfileName();
-
-        //Modified as part of SOQL fix 228901
-        if ( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
+    public void afterInsertDirector( List<Contact> newList , Map<Id,Contact> newMap ) {
+        if ( !CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors' , UserInfo.getUserId() ) ) {
             Set<Id> contactIdSet = new Set<Id>();
             List<Contact> clientRefernceContactList = new List<Contact>();
             for ( Contact conObj : newList ) {
@@ -108,11 +84,15 @@ public with sharing class NSP_ContactTriggerHelper {
                 this.createTaskforClientReference( clientRefernceContactList );
             }
         }
-        if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+        if ( ( newList != null )
+            && !newList.isEmpty()
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+            )
+        {
             System.enqueueJob(
                 new QueueableTermFormJunctionObjects(
-                    newList,
-                    null,
+                    newList ,
+                    null ,
                     NSP_ServiceConstants.INSERT_TRIGGER
                 )
             );
@@ -139,17 +119,14 @@ public with sharing class NSP_ContactTriggerHelper {
                     lContacts.add( conObj );
                 }
             }
-
-            updateClientRefTaskDate( newMap.values() , oldMap );
-            updateSSNLast4( newMap.values() , oldMap );
-
+            this.updateClientRefTaskDate( newMap.values() , oldMap );
+            this.updateSSNLast4( newMap.values() , oldMap );
             if ( !sUserIds.isEmpty() ) {
-                updateContactRoles( sUserIds , lContacts );
+                this.updateContactRoles( sUserIds , lContacts );
             }
-            String loggedInUserProfileName = getLoggedInUserProfileName();
-            if ( String.isNotBlank( loggedInUserProfileName ) && !INT_DM_PROFILES.contains( loggedInUserProfileName ) ) {
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors' , UserInfo.getUserId() ) ) {
                 // format phone number...
-                updatePhoneNum( newMap.Values() , oldMap );
+                this.updatePhoneNum( newMap.Values() , oldMap );
                 // prepare account for integration sync...
                 Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
                 NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
@@ -163,7 +140,7 @@ public with sharing class NSP_ContactTriggerHelper {
                     Contact.getSObjectType()
                 );
                 // handle office details...
-                setSalesOfficeDetails( newMap.values() , oldMap );
+                this.setSalesOfficeDetails( newMap.values() , oldMap );
             }
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'beforeUpdateDirector' );
@@ -177,13 +154,11 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
-        List<Contact> queueNewContact = new List<Contact>();
-        Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
-        Set<Id> processedContact = new Set<Id>();
-        String loggedInUserProfileName = getLoggedInUserProfileName();
         try {
-            //Modified as part of SOQL fix 228901
-            if ( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
+            List<Contact> queueNewContact = new List<Contact>();
+            Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
+            Set<Id> processedContact = new Set<Id>();
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Contact_Directors' , UserInfo.getUserId() ) ) {
                 List<Contact> clientRefernceContactList = new List<Contact>();
                 Set<Id> contactIdSet = new Set<Id>();
                 for ( Contact conObj : newMap.values() ) {
@@ -216,28 +191,35 @@ public with sharing class NSP_ContactTriggerHelper {
                     this.createTaskforClientReference( clientRefernceContactList );
                 }
             }
-        } catch ( Exception e ) {
-            NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
-        }
-        if(newMap != null){
-            for(Contact conObj : newMap.values()){
-                Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
-                if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
-                {
-                    queueOldMap.put(conObj.Id,oldContact);
-                    queueNewContact.add(conObj);
-                    processedContact.add(conObj.Id);
+            if ( newMap != null ) {
+                for ( Contact conObj : newMap.values() ) {
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get( conObj.Id ) : null );
+                    if ( ( oldContact != null )
+                        && ( conObj.AccountId != null )
+                        && ( conObj.AccountId != oldContact.AccountId )
+                        && !processedContact.contains( conObj.Id )
+                        )
+                    {
+                        queueOldMap.put( conObj.Id , oldContact );
+                        queueNewContact.add( conObj );
+                        processedContact.add( conObj.Id );
+                    }
                 }
             }
-        }
-        if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-            System.enqueueJob(
-                new QueueableTermFormJunctionObjects(
-                    queueNewContact,
-                    queueOldMap,
-                    NSP_ServiceConstants.UPDATE_TRIGGER
+            if ( !queueNewContact.isEmpty()
+                && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
                 )
-            );
+            {
+                System.enqueueJob(
+                    new QueueableTermFormJunctionObjects(
+                        queueNewContact,
+                        queueOldMap,
+                        NSP_ServiceConstants.UPDATE_TRIGGER
+                    )
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
     }
 
@@ -475,32 +457,6 @@ public with sharing class NSP_ContactTriggerHelper {
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACR' );
         }
-    }
-
-    //
-    // Method Name : getLoggedInUserProfileName
-    // Date : 11/08/2023
-    // @param
-    // @return String profileName
-    //
-    public String getLoggedInUserProfileName() {
-        if(this.profileName == ''){
-            List<User> autouser = [ SELECT Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
-            if ( !autoUser.isEmpty() && ( autoUser[0].Alias == 'autoproc' ) ) {
-                profileName = 'AutoProc';
-            } else {
-                List<NSP_Profile_Detail__mdt> profileDetails = [
-                    SELECT Profile_Name__c
-                    FROM NSP_Profile_Detail__mdt
-                    WHERE ( Profile_ID__c = :UserInfo.getProfileId() )
-                    LIMIT 1
-                ];
-                if ( !profileDetails.isEmpty() ) {
-                    profileName = profileDetails[0].Profile_Name__c;
-                }
-            }
-        }
-        return profileName;
     }
 
     //
