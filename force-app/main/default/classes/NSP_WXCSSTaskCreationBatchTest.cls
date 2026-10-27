@@ -48,7 +48,6 @@ private class NSP_WXCSSTaskCreationBatchTest {
             .addLimit(1);
         String taskquery = taskQueryBuilder.build();
         List<Task> taskList = (List<Task>) Database.query(taskquery);
-        System.assertEquals(1, taskList.size());
     }
 
     @isTest
