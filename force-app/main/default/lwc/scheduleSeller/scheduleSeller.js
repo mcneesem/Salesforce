@@ -49,6 +49,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const matrix = ( Array.isArray( this.matrix ) ? this.matrix : [] );
         const nowUtc = new Date();
         nowUtc.setUTCSeconds(0, 0);
+        const rushCutoff = this.getRushCutoff();
         // Compute cutoff for non-admins: now + 24h (rounded to minute)
         const cutoffUtc = new Date(Date.now() + 24 * 60 * 60 * 1000);
         cutoffUtc.setUTCSeconds(0, 0);
@@ -83,13 +84,17 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                         const idArray = ( Array.isArray( counts[colIndex] ) ? counts[colIndex] : [] );
                         let countVal = idArray.length;
                         let isDisabled = ( countVal === 0 );
-                        const startRounded = new Date(startUTCDate.getTime());
-                        startRounded.setUTCSeconds(0, 0);
-                        // Enforce 24-hour restriction for non-admins and disable when count is zero
+                        const startRounded = new Date( startUTCDate.getTime() );
+                        startRounded.setUTCSeconds( 0, 0 );
                         if ( startRounded < nowUtc ) {
+                            // Already passed, gray out
                             isDisabled = true;
                             countVal = 'R';
-                        } else if ( !this.isAdmin && ( startRounded < cutoffUtc ) ) {
+                        } else if ( !this.isAdmin
+                            && ( rushCutoff !== null )
+                            && ( startRounded < rushCutoff )
+                            )
+                        {
                             countVal = 'R';
                             isDisabled = false;
                         }
@@ -238,6 +243,48 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         );
         // Standardize milliseconds to .000Z
         return dt.toISOString();
+    }
+
+    // Rush follows business days AND the 24h cutoff.
+    getRushCutoff() {
+        // this.columns comes from the already filtered business dates returned by getBusinessDates
+        const cols = ( Array.isArray( this.columns ) ? this.columns : [] );
+        const now = new Date();
+        const todayStr = this.formatLocalDate( now );
+        //const cols already exclude weekends/holidays, that first match is the next business day
+        const nextCol = cols.find( col => col.fullDate > todayStr );
+        let cutoff = null;
+        if ( nextCol ) {
+            //Break ["2026","09","28"] into numbers and destructure it: y = 2026, m = 9, d = 28
+            const [ y , m , d ] = nextCol.fullDate.split( '-' ).map( Number );
+            //Date.UTC takes a zero-indexed month (January = 0) so real month is m-1
+            cutoff = new Date(
+                Date.UTC(
+                    y ,
+                    ( m - 1 ) ,
+                    d ,
+                    now.getUTCHours() ,
+                    now.getUTCMinutes() ,
+                    0
+                )
+            );
+        }
+        // cutoff is one concrete instant. Example: if today is Fri and now is 14:00,
+        // this is the next business day: Mon at 14:00 UTC. Null if no next day exists.
+        return cutoff;
+    }
+
+    // converting input Date into YYYY-MM-DD formatted String...
+    formatLocalDate( input ) {
+        let response = '';
+        if ( input ) {
+            const year = input.getFullYear();
+            // Months are 0-indexed, padStart ensures a leading zero for single digits
+            const month = String( input.getMonth() + 1 ).padStart( 2 , '0' );
+            const day = String( input.getDate() ).padStart( 2 , '0' );
+            response = `${year}-${month}-${day}`;
+        }
+        return response;
     }
 
 }
