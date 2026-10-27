@@ -14,5 +14,6 @@
     <permissionSets>PEO_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>PEO_Service_System_Permissions</permissionSets>
     <permissionSets>PEO_Service_Visualforce_Page_Access</permissionSets>
+    <permissionSets>Populate_Resource_Fields</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

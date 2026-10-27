@@ -7,11 +7,14 @@
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Bypass_ACR_Integration_Field_Not_Editable</permissionSets>
+    <permissionSets>Bypass_AccountContactRelation_Directors</permissionSets>
+    <permissionSets>Bypass_Contact_Directors</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
     <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
+    <permissionSets>Bypass_Primary_Contact_Validation</permissionSets>
     <permissionSets>Bypass_Restrict_ACR_Work_Email</permissionSets>
     <permissionSets>Bypass_Restrict_To_Edit_Subclient</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>
