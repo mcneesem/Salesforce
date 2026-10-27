@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CL only - Send to clients when transitioning to BT</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>CL-Reactive -Core/EG Transfer to BT</name>
+    <style>freeForm</style>
+    <subject>Transition to Business Team</subject>
+    <textOnly>CC all Insperity partners to make sure they are aware of the change
+
+Hello [Client Name],
+
+As part of the Insperity Service Model, we periodically review the complexity and strategic needs of our clients to ensure the correct resources are aligned. The Business Team consists of HR professionals dedicated to serving clients of your size and business needs. In keeping with Insperity's goal to provide clients with the highest quality service, we will be transferring you to the Business Team service team effective [insert date].
+
+Insperity's experienced HR service professionals are dedicated to guiding and supporting your business objectives to help your organization achieve improved performance, productivity, and profitability.
+
+As part of this transition, [insert name] will be your dedicated Insperity HR Specialist and Client Liaison on the [Western/SW/Central/Eastern] Business Team.
+
+You can reach your new dedicated service team member directly at:
+
+BT HRS Contact Name
+BT HRS Contact Info
+
+For excellent HR on-demand service, you will also have access to a toll-free number and email address to connect with the entire [Western/SW/Central/Eastern] Business Team: [BT Contact Line] and [BT Email].
+
+I've met with [insert name] and discussed all recent and past activity to ensure a smooth transition. We remain committed to providing ongoing support to address any future needs or concerns you may have.
+
+It has been a pleasure assisting you with your business needs. If you have any questions, please do not hesitate to let me know.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
