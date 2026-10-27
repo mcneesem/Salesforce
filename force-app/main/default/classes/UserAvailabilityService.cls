@@ -1,6 +1,7 @@
 public with sharing class UserAvailabilityService {
     // test w/ UserAvailabilityServiceTest (90%)
 
+    private static final Map<String, List<Schedule_Seller_Time_Slot__mdt>> timeSlotsBySkillAndTimeZone = new Map<String, List<Schedule_Seller_Time_Slot__mdt>>();
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
     public static List<Date> getBusinessDates( String skill ) {
@@ -549,20 +550,20 @@ public with sharing class UserAvailabilityService {
 
     // Step minutes = slot length (End_Time__c - Start_Time__c)
     private static Integer getStepMinutes( String skill , String timeZone ) {
-        Integer stepMinutes = null;
+        Integer stepMinutes = 60;
         for ( Schedule_Seller_Time_Slot__mdt row : UserAvailabilityService.getTimeSlots( skill , timeZone ) ) {
             Integer startMinutes = UserAvailabilityService.getMinutes( row.Start_Time__c );
             Integer endMinutes = UserAvailabilityService.getMinutes( row.End_Time__c );
-            if ( ( stepMinutes == null )
-                && ( startMinutes != null )
+            if ( ( startMinutes != null )
                 && ( endMinutes != null )
                 && ( endMinutes > startMinutes )
                )
             {
                 stepMinutes = endMinutes - startMinutes;
+                break;
             }
         }
-        return ( ( stepMinutes != null ) ? stepMinutes : 60 );
+        return ( stepMinutes );
     }
 
 
@@ -783,19 +784,23 @@ public with sharing class UserAvailabilityService {
     }
 
     // Load time slot definitions from Custom Metadata for the given product (skill) and time zone
-    public static List<Schedule_Seller_Time_Slot__mdt> getTimeSlots(String skill, String timeZone){
-        List<Schedule_Seller_Time_Slot__mdt> timeSlots = new List<Schedule_Seller_Time_Slot__mdt>();
+    private static List<Schedule_Seller_Time_Slot__mdt> getTimeSlots(String skill, String timeZone){
+        String cacheKey = null;
         if( String.isNotBlank(skill) && String.isNotBlank(timeZone) ) {
-            timeSlots = [
-                SELECT Start_Time__c, End_Time__c
-                FROM Schedule_Seller_Time_Slot__mdt
-                WHERE Is_Active__c = true
-                AND Product__c = :skill
-                AND Time_Zone__c = :timeZone
-                ORDER BY Start_Time__c ASC
-            ];
+                cacheKey = skill + '|' + timeZone;
+            if( !timeSlotsBySkillAndTimeZone.containsKey(cacheKey) ) {
+                timeSlotsBySkillAndTimeZone.put(cacheKey, [
+                    SELECT Start_Time__c, End_Time__c
+                    FROM Schedule_Seller_Time_Slot__mdt
+                    WHERE Is_Active__c = true
+                    AND Product__c = :skill
+                    AND Time_Zone__c = :timeZone
+                    ORDER BY Start_Time__c ASC
+                ]);
+            }
         }
-        return timeSlots;
+        // Returns the cached list itself: callers must not add, remove, or sort it
+        return timeSlotsBySkillAndTimeZone.get(cacheKey);
     }
 
     private static Schedule_Seller_Settings__c settings {
