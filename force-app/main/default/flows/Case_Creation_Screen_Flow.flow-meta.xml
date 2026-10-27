@@ -302,6 +302,13 @@
                 <elementReference>selectedConfidential</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>caseOrigin</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
@@ -352,38 +359,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Store_RET_Sales_to_Implementation_Attributes</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Populate_Case_Origin</name>
-        <label>Populate Case Origin</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>caseRecord.Origin</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Origin</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Populate_Case_Origin_When_Outlook</name>
-        <label>Populate Case Origin When Outlook</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>caseRecord.Origin</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseOrigin</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -657,6 +632,13 @@
             <stringValue>Yes</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>isEnabledOutlookScreen</name>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </constants>
     <decisions>
         <name>Check_Accessible_Record_Types</name>
         <label>Check Accessible Record Types</label>
@@ -1015,7 +997,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Populate_Case_Origin</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1023,6 +1005,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>isOutlook</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isEnabledOutlookScreen</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1207,6 +1196,11 @@
         </rules>
     </decisions>
     <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
+    <formulas>
+        <name>caseOrigin</name>
+        <dataType>String</dataType>
+        <expression>IF( NOT( ISBLANK( {!Case_Origin_Outlook} ) ) , {!Case_Origin_Outlook} , {!Case_Origin} )</expression>
+    </formulas>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Case Creation Screen Flow</label>
@@ -1637,7 +1631,7 @@
                 <name>Category_Sub_Category_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>CaseOrigin</name>
+                    <name>Case_Origin_Outlook</name>
                     <choiceReferences>Email</choiceReferences>
                     <choiceReferences>Phone</choiceReferences>
                     <choiceReferences>Web</choiceReferences>
@@ -1817,7 +1811,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Populate_Case_Origin_When_Outlook</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
         <fields>
             <fieldType>ObjectProvided</fieldType>
