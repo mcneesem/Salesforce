@@ -253,18 +253,18 @@ public with sharing class GroupMembershipController {
         if ( String.isNotBlank( userId )
             && ( userId InstanceOf Id )
             && ( Id.valueOf( userId ).getSObjectType() == User.getSObjectType() )
-           )
+            )
         {
-            List<User>  userRecords = [
+            List<User> userRecords = [
                 SELECT
-                Id ,
-                Name ,
-                Username ,
-                CreatedDate
+                    Id ,
+                    Name ,
+                    Username ,
+                    CreatedDate
                 FROM User
                 WHERE ( Id = :userId )
             ];
-            if((userRecords != null) && (userRecords.size()>0)){
+            if ( ( userRecords != null ) && !userRecords.isEmpty() ) {
                 userRecord = userRecords[0];
             }
         }
