@@ -289,6 +289,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>caseRecord.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>caseOrigin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>caseRecord.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -300,13 +307,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>selectedConfidential</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>caseRecord.Origin</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>caseOrigin</elementReference>
             </value>
         </assignmentItems>
         <connector>
