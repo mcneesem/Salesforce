@@ -87,7 +87,7 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Value_Text__c' ,
         ] ,
         where: '$where' ,
-        sortBy: [ 'Portal_Task__c.Rank__c' ]
+        sortBy: [ 'Portal_Task__c.Rank__c' , 'Portal_Task__c.Name' ]
     })
     listInfo({ error, data }) {
         if ( data ) {
