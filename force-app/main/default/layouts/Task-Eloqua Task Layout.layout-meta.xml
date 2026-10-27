@@ -283,15 +283,9 @@
                 <field>WhoId</field>
             </layoutItem>
         </relatedContentItems>
-        <relatedContentItems>
-            <layoutItem>
-                <behavior>Readonly</behavior>
-                <field>WhatId</field>
-            </layoutItem>
-        </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <relatedList>RelatedActivityAttachmentList</relatedList>
+        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedObjects>WhoId</relatedObjects>
     <relatedObjects>WhatId</relatedObjects>
@@ -299,7 +293,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0v000001D6zl</masterLabel>
+        <masterLabel>00h4x000005h6ZG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
