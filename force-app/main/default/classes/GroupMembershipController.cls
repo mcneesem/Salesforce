@@ -255,7 +255,7 @@ public with sharing class GroupMembershipController {
             && ( Id.valueOf( userId ).getSObjectType() == User.getSObjectType() )
            )
         {
-            userRecord = [
+            List<User>  userRecords = [
                 SELECT
                 Id ,
                 Name ,
@@ -264,6 +264,9 @@ public with sharing class GroupMembershipController {
                 FROM User
                 WHERE ( Id = :userId )
             ];
+            if((userRecords != null) && (userRecords.size()>0)){
+                userRecord = userRecords[0];
+            }
         }
         return userRecord;
     }
