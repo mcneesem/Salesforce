@@ -55,7 +55,7 @@
         <connector>
             <targetReference>Publish_Event_for_Contract_Creation</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Status</field>
             <operator>EqualTo</operator>
