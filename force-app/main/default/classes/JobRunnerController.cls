@@ -61,7 +61,7 @@ public with sharing class JobRunnerController {
         private get {
             if ( batchableClasses == null ) {
                 // find all Apex Classes that implement Batchable...
-                batchableClasses = [
+                List<ApexClass> local = [
                     SELECT Id , Name
                     FROM ApexClass
                     WHERE (
@@ -77,6 +77,7 @@ public with sharing class JobRunnerController {
                     )
                     ORDER BY Name ASC
                 ];
+                batchableClasses = local;
             }
             return batchableClasses;
         }
@@ -108,7 +109,7 @@ public with sharing class JobRunnerController {
         private get {
             if ( runnableClasses == null ) {
                 // find all Apex Classes that implement IJobRunnable and Callable...
-                runnableClasses = [
+                List<ApexClass> local = [
                     SELECT Id , Name
                     FROM ApexClass
                     WHERE (
@@ -131,6 +132,7 @@ public with sharing class JobRunnerController {
                     )
                     ORDER BY Name ASC
                 ];
+                runnableClasses = local;
             }
             return runnableClasses;
         }
