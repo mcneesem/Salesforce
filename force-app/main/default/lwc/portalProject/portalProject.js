@@ -19,7 +19,7 @@ export default class PortalProject extends LightningElement {
             'Portal_Task__c.Name' ,
             'Portal_Task__c.Type__c' ,
         ] ,
-        sortBy: [ 'Portal_Task__c.Rank__c' ]
+        sortBy: [ 'Portal_Task__c.Rank__c' , 'Portal_Task__c.Name' ]
     })
     taskInfo({ error, data }) {
         if ( data ) {

@@ -63,7 +63,7 @@ export default class PortalProjectProgressBar extends LightningElement {
             'Portal_Task__c.Status__c' ,
         ] ,
         where: '{ and: [ { Is_Visible__c: { eq: true }} , { Status__c: { ne: "Summary" }} ] }' ,
-        sortBy: [ 'Portal_Task__c.Rank__c' ]
+        sortBy: [ 'Portal_Task__c.Rank__c' , 'Portal_Task__c.Name' ]
     })
     taskInfo({ error, data }) {
         if ( data ) {
