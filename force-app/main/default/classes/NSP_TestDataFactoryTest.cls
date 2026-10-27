@@ -2,7 +2,7 @@
 private class NSP_TestDataFactoryTest {
 
     @isTest
-    static void createSObject_noInsert_appliesDefaults() {
+    private static void createSObject_noInsert_appliesDefaults() {
         Test.startTest();
         Account acc = (Account) NSP_TestDataFactory.createSObject(new Account());
         Test.stopTest();
@@ -14,7 +14,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void createSObject_doInsertTrue_insertsRecord() {
+    private static void createSObject_doInsertTrue_insertsRecord() {
         Test.startTest();
         Account acc = (Account) NSP_TestDataFactory.createSObject(new Account(), true);
         Test.stopTest();
@@ -24,7 +24,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void createSObject_explicitClassName_appliesDefaults() {
+    private static void createSObject_explicitClassName_appliesDefaults() {
         Lead l = (Lead) NSP_TestDataFactory.createSObject(new Lead(), 'NSP_TestDataFactory.LeadDefaults');
 
         System.assertEquals('John', l.FirstName);
@@ -34,7 +34,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void createSObject_doesNotOverridePopulatedFields() {
+    private static void createSObject_doesNotOverridePopulatedFields() {
         Account acc = new Account(Name = 'Custom Name', BillingCity = 'Mumbai');
 
         Account result = (Account) NSP_TestDataFactory.createSObject(acc);
@@ -46,7 +46,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void createSObject_invalidClassName_throwsException() {
+    private static void createSObject_invalidClassName_throwsException() {
         Boolean thrown = false;
         try {
             NSP_TestDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.DoesNotExistDefaults');
@@ -58,7 +58,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void generateUniqTestData_createsAccount() {
+    private static void generateUniqTestData_createsAccount() {
         Test.startTest();
         NSP_TestDataFactory.generateUniqTestData();
         Test.stopTest();
@@ -67,7 +67,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void leadAndCampaignAndCase_defaults() {
+    private static void leadAndCampaignAndCase_defaults() {
         Case cs = (Case) NSP_TestDataFactory.createSObject(new Case());
         System.assertEquals('Web', cs.Origin);
         System.assertEquals('Open', cs.Status);
@@ -78,7 +78,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void taskDefaults_applied() {
+    private static void taskDefaults_applied() {
         Task t = (Task) NSP_TestDataFactory.createSObject(new Task(), 'NSP_TestDataFactory.TaskDefault', true);
 
         System.assertNotEquals(null, t.Id);
@@ -87,7 +87,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void userDefaults_applied() {
+    private static void userDefaults_applied() {
         User u = (User) NSP_TestDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults');
 
         System.assertEquals('Bla', u.LastName);
@@ -98,7 +98,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void userDefaults_insert() {
+    private static void userDefaults_insert() {
         User u;
         System.runAs(new User(Id = UserInfo.getUserId())) {
             u = (User) NSP_TestDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', true);
@@ -107,7 +107,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void collaborationGroupAndGroup_defaults() {
+    private static void collaborationGroupAndGroup_defaults() {
         CollaborationGroup cg = (CollaborationGroup) NSP_TestDataFactory.createSObject(
             new CollaborationGroup(), 'NSP_TestDataFactory.CollaborationGroupDefaults', true);
         System.assertNotEquals(null, cg.Id);
@@ -118,7 +118,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void orderDefaults_applied() {
+    private static void orderDefaults_applied() {
         Order o = (Order) NSP_TestDataFactory.createSObject(new Order());
 
         System.assertEquals('Draft', o.Status);
@@ -126,7 +126,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void emailMessageDefaults_applied() {
+    private static void emailMessageDefaults_applied() {
         EmailMessage em = (EmailMessage) NSP_TestDataFactory.createSObject(
             new EmailMessage(), 'NSP_TestDataFactory.emailMessageDefaults');
 
@@ -136,7 +136,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void documentDefaults_applied() {
+    private static void documentDefaults_applied() {
         Document d = (Document) NSP_TestDataFactory.createSObject(new Document(), 'NSP_TestDataFactory.DocumentDefaults');
 
         System.assertEquals('SampleTest_Document', d.Name);
@@ -146,7 +146,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void product2AndPricebook2_defaults() {
+    private static void product2AndPricebook2_defaults() {
         Product2 p = (Product2) NSP_TestDataFactory.createSObject(new Product2(), true);
         System.assertNotEquals(null, p.Id);
         System.assertEquals(true, p.IsActive);
@@ -157,7 +157,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void contentVersionAndLink_defaults() {
+    private static void contentVersionAndLink_defaults() {
         Test.startTest();
         ContentVersion cv = (ContentVersion) NSP_TestDataFactory.createSObject(
             new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', true);
@@ -171,7 +171,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void attachmentAndFeedItem_defaults() {
+    private static void attachmentAndFeedItem_defaults() {
         Attachment att = (Attachment) NSP_TestDataFactory.createSObject(
             new Attachment(), 'NSP_TestDataFactory.AttachmentDefaults', true);
         System.assertNotEquals(null, att.Id);
@@ -184,7 +184,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getAccount_createsOnceAndCaches() {
+    private static void getAccount_createsOnceAndCaches() {
         System.assertEquals(0, [SELECT COUNT() FROM Account]);
 
         Account first = NSP_TestDataFactory.getAccount;
@@ -196,7 +196,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getAccount_usesExistingRecordWhenPresent() {
+    private static void getAccount_usesExistingRecordWhenPresent() {
         Account existing = new Account(Name = 'Existing');
         insert existing;
 
@@ -207,7 +207,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getProduct_createsWhenNoneExist() {
+    private static void getProduct_createsWhenNoneExist() {
         Product2 p = NSP_TestDataFactory.getProduct;
 
         System.assertNotEquals(null, p.Id);
@@ -215,7 +215,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getProduct_usesExistingRecordWhenPresent() {
+    private static void getProduct_usesExistingRecordWhenPresent() {
         Product2 existing = new Product2(Name = 'Existing Product', IsActive = true);
         insert existing;
 
@@ -223,17 +223,15 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getPriceBookEntry_createsWhenNoneExist() {
+    private static void getPriceBookEntry_createsWhenNoneExist() {
         PricebookEntry pbe = NSP_TestDataFactory.getPriceBookEntry;
 
         System.assertNotEquals(null, pbe.Id);
         System.assertEquals(pbe.Id, NSP_TestDataFactory.getPriceBookEntry.Id);
     }
 
-  
-
     @isTest
-    static void getAsset_createsWhenNoneExist() {
+    private static void getAsset_createsWhenNoneExist() {
         Asset a = NSP_TestDataFactory.getAsset;
 
         System.assertNotEquals(null, a.Id);
@@ -241,14 +239,14 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getSubClientContact_createsWhenNoneExist() {
+    private static void getSubClientContact_createsWhenNoneExist() {
         NSP_Sub_Client_Contact__c c = NSP_TestDataFactory.getSubClientContact;
 
         System.assertNotEquals(null, c.Id);
     }
 
     @isTest
-    static void getAccrualProfile_createsWhenNoneExist() {
+    private static void getAccrualProfile_createsWhenNoneExist() {
         NSP_Accrual_Profile__c ap = NSP_TestDataFactory.getAccrualProfile;
 
         System.assertNotEquals(null, ap.Id);
@@ -256,14 +254,14 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getWorkType_createsWhenNoneExist() {
+    private static void getWorkType_createsWhenNoneExist() {
         WorkType wt = NSP_TestDataFactory.getWorkType;
 
         System.assertNotEquals(null, wt.Id);
     }
 
     @isTest
-    static void customObjectDefaults_withLookups_resolveParents() {
+    private static void customObjectDefaults_withLookups_resolveParents() {
         NSP_Account_Team__c team = (NSP_Account_Team__c) NSP_TestDataFactory.createSObject(
             new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults');
         System.assertEquals('Client Liaison', team.NSP_Role__c);
@@ -279,7 +277,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void allSimpleDefaultsClasses_returnNonNullMaps() {
+    private static void allSimpleDefaultsClasses_returnNonNullMaps() {
         List<String> classNames = new List<String>{
             'AccountDefaults', 'AccountGroupDefaults', 'LeadDefaults', 'CampaignDefaults',
             'ContactDefaultsLight', 'AdditionalPayrollContactDefaults', 'PayrollDataSheetDefaults',
@@ -322,9 +320,9 @@ private class NSP_TestDataFactoryTest {
         System.assert(false, 'No Opportunity stage value could be inserted; check validation rules');
         return null;
     }
-	
-	@isTest
-    static void createSObject_explicitClassNameAndInsert_insertsRecord() {
+
+    @isTest
+    private static void createSObject_explicitClassNameAndInsert_insertsRecord() {
         Test.startTest();
         Account acc = (Account) NSP_TestDataFactory.createSObject(
             new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
@@ -335,7 +333,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void contentDocumentLinkDefaults_applied() {
+    private static void contentDocumentLinkDefaults_applied() {
         NSP_TestDataFactory.createSObject(
             new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', true);
 
@@ -351,7 +349,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void getContentVersion_usesExistingRecordWhenPresent() {
+    private static void getContentVersion_usesExistingRecordWhenPresent() {
         ContentVersion created = (ContentVersion) NSP_TestDataFactory.createSObject(
             new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', true);
 
@@ -361,10 +359,8 @@ private class NSP_TestDataFactoryTest {
         System.assertNotEquals(null, result.ContentDocumentId);
     }
 
-    
-
     @isTest
-    static void getProjectAndProjectTask_usesExistingRecords() {
+    private static void getProjectAndProjectTask_usesExistingRecords() {
         pse__Proj__c proj = NSP_TestDataFactory.getProject;
         System.assertNotEquals(null, proj.Id);
 
@@ -380,7 +376,7 @@ private class NSP_TestDataFactoryTest {
     }
 
     @isTest
-    static void customObjectDefaults_populateExpectedFields() {
+    private static void customObjectDefaults_populateExpectedFields() {
         NSP_Account_Group__c grp = (NSP_Account_Group__c) NSP_TestDataFactory.createSObject(
             new NSP_Account_Group__c(), 'NSP_TestDataFactory.AccountGroupDefaults');
         System.assertEquals('Test New Acc Grp- 01', grp.Name);
@@ -424,4 +420,6 @@ private class NSP_TestDataFactoryTest {
         }
         return first != null ? first : preferred;
     }
+
 }
+//
