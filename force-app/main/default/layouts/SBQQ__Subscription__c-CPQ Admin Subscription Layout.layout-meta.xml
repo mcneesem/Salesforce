@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__RequiredById__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Delta_Unit_Price__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

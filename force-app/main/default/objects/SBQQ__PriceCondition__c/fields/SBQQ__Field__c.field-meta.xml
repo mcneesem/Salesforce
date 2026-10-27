@@ -393,6 +393,16 @@
                 <default>false</default>
                 <label>NSP_Opportunity_Primary_Product__c</label>
             </value>
+            <value>
+                <fullName>NSP_Delta_Total__c</fullName>
+                <default>false</default>
+                <label>NSP_Delta_Total__c</label>
+            </value>
+            <value>
+                <fullName>Delta_Quantity__c</fullName>
+                <default>false</default>
+                <label>Delta_Quantity__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
