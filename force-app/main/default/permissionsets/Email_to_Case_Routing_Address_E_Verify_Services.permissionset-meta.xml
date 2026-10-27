@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Email-to-Case-Routing: E-Verify Services</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Email-to-Case-Routing Address: E-Verify Services</label>
+</PermissionSet>
