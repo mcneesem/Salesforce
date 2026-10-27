@@ -97,8 +97,8 @@
     </decisions>
     <description>Updates related Opportunity if Demo is changed to have Status = &quot;Completed&quot;</description>
     <environments>Default</environments>
-    <interviewLabel>Event - Updated - Async - Demo Completed {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Updated - Async - Demo Completed</label>
+    <interviewLabel>DEPRECATED - Event - Updated - Async - Demo Completed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Event - Updated - Async - Demo Completed</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
