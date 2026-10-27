@@ -3858,6 +3858,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__BillingTransaction__c.NSP_DownPayment_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__FinancePeriod__c.Finance_Period_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
