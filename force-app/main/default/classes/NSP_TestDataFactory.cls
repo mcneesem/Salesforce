@@ -6,7 +6,7 @@
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public abstract class NSP_TestDataFactory {
-    
+        // test w/ NSP_TestDataFactoryTest (85%)
     
     public static void generateUniqTestData() {
         NSP_TestDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
