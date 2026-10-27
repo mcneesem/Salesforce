@@ -2,7 +2,7 @@
  * An apex class that updates portal user details.
    Guest users are never able to access this page.
  */
-public with sharing class MyProfilePageController 
+public with sharing class MyProfilePageController
 {
     // test w/ MyProfilePageControllerTest (86%)
 
@@ -59,5 +59,5 @@ public with sharing class MyProfilePageController
         } else {
         user = null;
        }
-    }    
+    }
 }
