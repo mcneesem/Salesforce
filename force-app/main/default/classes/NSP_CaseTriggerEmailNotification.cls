@@ -162,11 +162,12 @@ public class NSP_CaseTriggerEmailNotification {
         }
 
         //Querying List of case related notes
-        List<String> fields = new List<String>{ 'Id','CreatedBy.Name','CreatedDate','Case__c' };
-        String query = new NSP_QueryBuilder(NSP_ServiceConstants.NOTE_SOBJECT_TYPE, fields)
-                        .addFilter('Case__c', caseIdList, NSP_QueryBuilder.Operator.INCLUDES)
-                        .orderBy('createdDate', 'DESC', false).build();
-        List<NSP_Note__c> notesList = (List<NSP_Note__c>)Database.query(query);
+        List<NSP_Note__c> notesList = [
+                SELECT Id, CreatedBy.Name, CreatedDate, Case__c
+                FROM NSP_Note__c
+                WHERE Case__c IN :caseIdList
+                ORDER BY CreatedDate DESC
+            ];
 
         if(!notesList.isEmpty()){
             for(NSP_Note__c note : notesList){
