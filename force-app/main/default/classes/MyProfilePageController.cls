@@ -4,6 +4,7 @@
  */
 public with sharing class MyProfilePageController 
 {
+    // test w/ MyProfilePageControllerTest (86%)
 
     private User user;
     private boolean isEdit = false;
