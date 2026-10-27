@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>DEPRECATED</description>
+        <description>This will call checkDownPaymentDetails method from NSP_OrderTriggerHelper</description>
         <name>Process_checkDownPaymentDetails</name>
         <label>Process checkDownPaymentDetails</label>
         <locationX>578</locationX>
         <locationY>408</locationY>
-        <actionName>CheckDownPaymentDetailsAction</actionName>
+        <actionName>NSP_OrderTriggerHelper</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
