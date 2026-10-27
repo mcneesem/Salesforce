@@ -762,19 +762,11 @@
         <value>You do not have permission to take that action on this record.</value>
     </labels>
     <labels>
-        <fullName>NSP_Account_Envelop_Configuration</fullName>
-        <categories>account template,docusign</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Account Envelop Configuration</shortDescription>
-        <value>a8N4x0000000kgpEAA</value>
-    </labels>
-    <labels>
         <fullName>NSP_Account_Envelope_Configuration</fullName>
         <categories>account template,docusign</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Account Envelop Configuration</shortDescription>
+        <shortDescription>Account Envelope Configuration</shortDescription>
         <value>a8N4x0000000kgpEAA</value>
     </labels>
     <labels>
