@@ -116,9 +116,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <relatedList>RelatedAttachmentList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>TYPE</fields>
         <relatedList>RelatedEmailMessagePeopleList</relatedList>
