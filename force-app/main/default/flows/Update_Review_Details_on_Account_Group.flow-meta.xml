@@ -5,7 +5,7 @@
     <assignments>
         <name>Fault_Get_Account_Group</name>
         <label>Fault Get Account Group</label>
-        <locationX>2250</locationX>
+        <locationX>2690</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -14,11 +14,15 @@
                 <stringValue>Get_Account_Group</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Sub_Flow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Fault_Update_Review_Fields</name>
         <label>Fault Update Review Fields</label>
-        <locationX>930</locationX>
+        <locationX>1370</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -34,7 +38,7 @@
     <decisions>
         <name>Check_Account_Group</name>
         <label>Check Account Group</label>
-        <locationX>1683</locationX>
+        <locationX>2096</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -106,14 +110,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Account_Group.Termination_Key_Points__c</leftValueReference>
+                <leftValueReference>Get_Account_Group.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Account_Group.Why_Why_Not__c</leftValueReference>
+                <leftValueReference>Get_Account_Group.Was_Revolution_With_IIS_An_Option__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -196,7 +200,7 @@
         </rules>
         <rules>
             <name>Missing_Required_Termination_Info</name>
-            <conditionLogic>(1 AND 2) OR (3 AND 4 AND 5) OR 6 OR (7 AND 8) OR 9 OR (10 AND 11)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3 OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Account_Group.Did_Client_Go_To_A_Competitor__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -211,6 +215,29 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Group.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Group.Was_Revolution_With_IIS_An_Option__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Review_No_Change</targetReference>
+            </connector>
+            <label>Termination Fields Incomplete</label>
+        </rules>
+        <rules>
+            <name>Missing_Cost_Savings</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Account_Group.Did_Client_Go_To_A_Competitor__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -232,34 +259,15 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_Account_Group.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Account_Group.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Yes</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Account_Group.What_Level_Leader__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Account_Group.Was_Revolution_With_IIS_An_Option__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Review_No_Change</targetReference>
+            </connector>
+            <label>Missing Cost Savings</label>
+        </rules>
+        <rules>
+            <name>Missing_Why_Why_Not_An_Option</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Account_Group.Was_Revolution_With_IIS_An_Option__c</leftValueReference>
                 <operator>IsBlank</operator>
@@ -275,16 +283,40 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Review_No_Change</targetReference>
             </connector>
-            <label>Termination Fields Incomplete</label>
+            <label>Missing Why Why Not An Option</label>
+        </rules>
+        <rules>
+            <name>Missing_Leader_Level</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Group.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Group.What_Level_Leader__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Review_No_Change</targetReference>
+            </connector>
+            <label>Missing Leader Level</label>
         </rules>
     </decisions>
     <decisions>
         <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group</description>
         <name>Check_Permission</name>
         <label>Check Permission</label>
-        <locationX>1381</locationX>
+        <locationX>1766</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -311,7 +343,7 @@
         <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group</description>
         <name>Check_Renewal_Probability</name>
         <label>Check Renewal Probability</label>
-        <locationX>1040</locationX>
+        <locationX>1370</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -338,7 +370,7 @@
         <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group</description>
         <name>Check_Written_Termination_Notice_Received</name>
         <label>Check Written Termination Notice Received</label>
-        <locationX>622</locationX>
+        <locationX>842</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -386,7 +418,7 @@
     <recordLookups>
         <name>Get_Account_Group</name>
         <label>Get Account Group</label>
-        <locationX>1683</locationX>
+        <locationX>2096</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -410,7 +442,7 @@
     <recordUpdates>
         <name>Update_Review_Fields</name>
         <label>Update Review Fields</label>
-        <locationX>666</locationX>
+        <locationX>1106</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Review_No_Change</targetReference>
@@ -443,8 +475,8 @@
     <screens>
         <name>Review_No_Change</name>
         <label>Review - No Change</label>
-        <locationX>50</locationX>
-        <locationY>1322</locationY>
+        <locationX>1106</locationX>
+        <locationY>890</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -465,7 +497,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1557</locationX>
+        <locationX>1970</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Account_Group</targetReference>
@@ -475,7 +507,7 @@
     <subflows>
         <name>Fault_Sub_Flow</name>
         <label>Fault Sub Flow</label>
-        <locationX>930</locationX>
+        <locationX>1370</locationX>
         <locationY>998</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
