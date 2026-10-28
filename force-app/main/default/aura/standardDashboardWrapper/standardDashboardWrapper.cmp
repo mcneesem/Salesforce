@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForAllPageTypes"
+    access="public"
+    controller="CRMAnalyticsDashboardController">
+
+    <aura:attribute name="dashboardField" type="String" default="SDR_BDR_Standard_Dashboard_Dev_Name__c"/>
+
+    <aura:attribute name="isError"   type="Boolean" default="false" access="private"/>
+    <aura:attribute name="isLoading" type="Boolean" default="true"  access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="dashboard-wrapper" style="width:100%;">
+
+        <aura:if isTrue="{!v.isLoading}">
+            <div class="slds-p-around_medium">
+                <lightning:spinner alternativeText="Loading dashboard..." size="medium"/>
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!v.isError}">
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>Unable to load dashboard. Verify the Custom Setting configuration.</h2>
+            </div>
+        </aura:if>
+
+        <div aura:id="dashboardMount"></div>
+
+    </div>
+
+</aura:component>
