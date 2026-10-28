@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>This will call checkDownPaymentDetails method from NSP_OrderTriggerHelper</description>
+        <description>DEPRECATED</description>
         <name>Process_checkDownPaymentDetails</name>
         <label>Process checkDownPaymentDetails</label>
         <locationX>578</locationX>
         <locationY>408</locationY>
-        <actionName>NSP_OrderTriggerHelper</actionName>
+        <actionName>CheckDownPaymentDetailsAction</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -78,8 +78,8 @@
     </decisions>
     <description>Flow to process the down payment details</description>
     <environments>Default</environments>
-    <interviewLabel>Process {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Order Asyc FLow</label>
+    <interviewLabel>DEPRECATED - Order Asyc FLow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Order Asyc FLow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -157,5 +157,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
