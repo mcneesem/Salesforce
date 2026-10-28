@@ -169,9 +169,9 @@
     <pluralLabel>Contract Obligations</pluralLabel>
     <searchLayouts>
         <searchResultsAdditionalFields xsi:nil="true"></searchResultsAdditionalFields>
-        <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
+        <excludedStandardButtons>ImeDistributionAction</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Import</excludedStandardButtons>
