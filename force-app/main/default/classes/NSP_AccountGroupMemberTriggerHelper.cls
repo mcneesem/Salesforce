@@ -474,7 +474,11 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @return void
     //
     public void preventDeleteForWXAccountGroupMembers(List<NSP_Account_Group_Member__c> lstAccGrpMembers){
-        User getUser  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId()];
+        List<User> getUsers  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId() LIMIT 1];
+        User getUser;
+        if(getUsers.isEmpty()){
+            getUser = getUsers[0];
+        }
         for (NSP_Account_Group_Member__c accGrpMember : lstAccGrpMembers) {
             if(isWxAccountGroupMember(accGrpMember) && getUser.Profile.Name != 'Integeration User'){
                 accGrpMember.addError(label.NSP_AccountGroupErrorMessage);
