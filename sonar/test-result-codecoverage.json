@@ -57655,22 +57655,11 @@
   {
     "id": "01p4x00000VMCQeAAP",
     "name": "NSP_AccountRegulatedArea_Scheduler",
-    "totalLines": 12,
+    "totalLines": 1,
     "lines": {
-      "9": 1,
-      "10": 1,
-      "11": 1,
-      "12": 1,
-      "16": 1,
-      "17": 1,
-      "18": 1,
-      "19": 1,
-      "21": 1,
-      "22": 1,
-      "23": 1,
-      "24": 1
+      "7": 1
     },
-    "totalCovered": 12,
+    "totalCovered": 1,
     "coveredPercent": 100
   },
   {
