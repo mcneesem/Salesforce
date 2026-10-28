@@ -4648,7 +4648,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP PerSet Names FullAccess</shortDescription>
-        <value>PSAAdministration,PSAManageGanttAndProjectTasks,PSACreateProjects,PSAEnterTimeAgainstProjectsAndAssignments,PSAEnterTimeAgainstProjectTask</value>
+        <value>NSP_Financial_Force_Read_Only_Perm_Set,PSAAdministration,PSAManageGanttAndProjectTasks,PSACreateProjects,PSAEnterTimeAgainstProjectsAndAssignments,PSAEnterTimeAgainstProjectTask,PSAManageProjectAssignments</value>
     </labels>
     <labels>
         <fullName>NSP_PerSet_Names_Read_Only</fullName>
