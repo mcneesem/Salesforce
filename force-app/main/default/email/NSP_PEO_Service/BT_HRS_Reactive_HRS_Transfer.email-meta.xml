@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS-Reactive HRS Transfer - Send when client is transferring to a new HRS</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>BT HRS-Reactive HRS Transfer</name>
+    <style>freeForm</style>
+    <subject>HRS Transfer</subject>
+    <textOnly>Attach a client contact sheet
+
+Hello [Client Contact],
+
+I'd like to take this opportunity to make you aware of changes to your Insperity service team. We are realigning resources to better meet your needs as a part of our effort to continue to provide extraordinary service. I am excited to introduce myself as your dedicated HR Specialist and client liaison; you can reach me at xxx-xxx-xxxx and name@insperity.com.
+
+If this is a transition from one BT HRS to another in the same team:
+[Your Payroll Team, and Manager, HR Services are unchanged.]
+
+If this is a transition from one Business team to another:
+[Your payroll team is unchanged; the new Manager, HR Services is [  ]
+
+I have attached your Insperity Service Team contact sheet for your convenience.
+Note also that I work in a team environment; if I am unavailable and you require urgent assistance, please reach out to one  of my colleagues by emailing our team at team@insperity.com or via the team line at xxx-xxx-xxxx.
+
+I would like to schedule a call to discuss your company's needs and the HR solutions that Insperity can continue to provide to your business. I am available on [dates available]. Please let me know if one of these dates will work for you or suggest an alternate time.
+
+We thank you for your continued business; I look forward to our partnership.
+
+With regards,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
