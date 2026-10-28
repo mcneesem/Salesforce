@@ -72,7 +72,7 @@ private class NSP_salesOfficeRecordSharingTest {
             Account acc1 = NSP_TestHelper.createAccount(true);
             Opportunity opp= NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
             NSP_Account_Team__c acTeam=new NSP_Account_Team__c();
-            acTeam.NSP_Role__c=System.Label.NSP_AccountTeamMemberRole;
+            acTeam.NSP_Role__c='BPS Administrator';
             acTeam.NSP_User__c=accountTeamUser.Id;
             acTeam.NSP_Account__c=acc1.Id;
             insert acTeam;
