@@ -11682,6 +11682,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
+        <apexPage>BlockQuoteDelete</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>SBQQ__AddAssets</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
