@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Is_Bundle__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Delta_Unit_Price__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
