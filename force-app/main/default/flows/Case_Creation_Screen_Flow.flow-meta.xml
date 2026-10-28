@@ -1803,7 +1803,7 @@
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
                         <conditions>
-                            <leftValueReference>Is_Outlook</leftValueReference>
+                            <leftValueReference>isOutlook</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <booleanValue>false</booleanValue>
