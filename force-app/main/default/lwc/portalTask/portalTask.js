@@ -42,7 +42,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             "Portal_Task__c.Id" ,
             "Portal_Task__c.Status__c" ,
         ] ,
-        sortBy: [ "Portal_Task__c.Rank__c" ]
+        sortBy: [ "Portal_Task__c.Rank__c" , "Portal_Task__c.Name" ]
     })
     childrenInfo({ error, data }) {
         if ( data ) {
