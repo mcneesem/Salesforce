@@ -117,7 +117,7 @@
             <label>Yes : Valid Input</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Create Default Portal Tasks - Subflow</description>
+    <description>New Client Portal: Create Default Portal Tasks - Subflow , Removed FEIN, Employee Payroll Documentation</description>
     <environments>Default</environments>
     <formulas>
         <name>f_defaulttasks_action</name>
@@ -125,9 +125,7 @@
         <expression>CASE(
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Business Inception Date&quot; , &quot;Date&quot; ,
-  &quot;Regular Rate Of Pay&quot; , &quot;Checkbox&quot; ,
   &quot;Additional Documentation&quot; , &quot;Checkbox&quot; ,
-  &quot;Employee Payroll Documentation&quot; , &quot;&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Docusign&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Upload Information&quot; ,
   &quot;&quot;
@@ -138,7 +136,6 @@
         <dataType>String</dataType>
         <expression>CASE(
   TRIM( {!For_Each_Default_Task} ) ,
-  &quot;Employee Payroll Documentation&quot; , &quot;Summary&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Summary&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Summary&quot; ,
   &quot;Pending&quot;
@@ -150,9 +147,7 @@
         <expression>CASE(
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Business Inception Date&quot; , &quot;Company Setup&quot; ,
-  &quot;Regular Rate Of Pay&quot; , &quot;Employee Setup&quot; ,
   &quot;Additional Documentation&quot; , &quot;System Setup&quot; ,
-  &quot;Employee Payroll Documentation&quot; , &quot;Employee Setup&quot; ,
   &quot;Insperity Client Authorization&quot; , &quot;Company Setup&quot; ,
   &quot;Client Sponsored Plans&quot; , &quot;Company Setup&quot; ,
   &quot;&quot;
