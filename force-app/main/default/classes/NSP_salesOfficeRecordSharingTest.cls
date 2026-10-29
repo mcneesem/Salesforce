@@ -80,6 +80,8 @@ private class NSP_salesOfficeRecordSharingTest {
             Test.startTest();
             Lead ld=NSP_TestHelper.createLeadRecord(true);
             Account acc1 = NSP_TestHelper.createAccount(true);
+            acc1.OwnerId = BpaUser.Id;
+            update acc1;
             Opportunity opp= NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
             NSP_Account_Team__c acTeam=new NSP_Account_Team__c();
             acTeam.NSP_Role__c=System.Label.NSP_AccountTeamMemberRole;
