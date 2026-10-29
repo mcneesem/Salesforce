@@ -320,6 +320,13 @@
                 <elementReference>selectedConfidential</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>caseDescription</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
@@ -2185,6 +2192,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>caseDescription</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>caseRecord</name>
