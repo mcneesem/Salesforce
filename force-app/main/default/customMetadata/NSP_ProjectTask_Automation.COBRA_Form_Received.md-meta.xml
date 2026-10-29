@@ -47,6 +47,10 @@
         <value xsi:type="xsd:string">COBRA Takeover</value>
     </values>
     <values>
+        <field>Portal_Task_Rank__c</field>
+        <value xsi:type="xsd:double">15.0</value>
+    </values>
+    <values>
         <field>Portal_Task_Type__c</field>
         <value xsi:type="xsd:string">Employee Setup</value>
     </values>

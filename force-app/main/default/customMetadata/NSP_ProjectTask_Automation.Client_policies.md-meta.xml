@@ -43,6 +43,10 @@
         <value xsi:type="xsd:string">Time Off Policies / Handbook</value>
     </values>
     <values>
+        <field>Portal_Task_Rank__c</field>
+        <value xsi:type="xsd:double">50.0</value>
+    </values>
+    <values>
         <field>Portal_Task_Type__c</field>
         <value xsi:type="xsd:string">Pre-Transition Setup</value>
     </values>
