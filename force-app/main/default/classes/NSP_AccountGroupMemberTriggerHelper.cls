@@ -474,14 +474,11 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @return void
     //
     public void preventDeleteForWXAccountGroupMembers(List<NSP_Account_Group_Member__c> lstAccGrpMembers){
-        List<User> getUsers  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId() LIMIT 1];
-        User getUser;
-        if(getUsers.isEmpty()){
-            getUser = getUsers[0];
-        }
-        for (NSP_Account_Group_Member__c accGrpMember : lstAccGrpMembers) {
-            if(isWxAccountGroupMember(accGrpMember) && getUser.Profile.Name != 'Integeration User'){
-                accGrpMember.addError(label.NSP_AccountGroupErrorMessage);
+        if ( CustomPermissionController.checkUserPermission( 'Restrict_Delete_Account_Group_Member' , UserInfo.getUserId() ) ) {
+            for ( NSP_Account_Group_Member__c accGrpMember : lstAccGrpMembers ) {
+                if ( this.isWxAccountGroupMember( accGrpMember ) ) {
+                    accGrpMember.addError( System.label.NSP_AccountGroupErrorMessage );
+                }
             }
         }
     }
@@ -492,17 +489,10 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @return Boolean
     //
     private boolean isWxAccountGroupMember(NSP_Account_Group_Member__c accGrpMember){
-        String profileName = [Select Id,Name from Profile WHERE Id=:userinfo.getProfileId()]?.Name;
-        return (
-            accGrpMember.NSP_Type__c == NSP_ServiceConstants.ISOLVED
-            && (profileName == NSP_ServiceConstants.PEOSERVICE
-                || profileName == NSP_ServiceConstants.CONTACTCENTER
-                || profileName == NSP_ServiceConstants.BPSSERVICE
-                || profileName == NSP_ServiceConstants.RT
-                || profileName == NSP_ServiceConstants.PEO
-                || profileName == NSP_ServiceConstants.BPS
-                )
-            );
+         return (
+            ( accGrpMember != null )
+            && ( accGrpMember.NSP_Type__c == NSP_ServiceConstants.ISOLVED )
+        );
     }
 
     //
