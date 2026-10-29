@@ -751,7 +751,7 @@
                         <valueListItems>
                             <value>Opportunity.Schedule_Seller</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Use_Schedule_Seller}</leftValue>
                                     <operator>EQUAL</operator>
@@ -761,6 +761,11 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Renewal</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed Lost</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
