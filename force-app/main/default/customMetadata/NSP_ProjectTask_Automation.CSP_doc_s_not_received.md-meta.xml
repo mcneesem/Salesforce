@@ -43,6 +43,10 @@
         <value xsi:type="xsd:string">Cafeteria Plan Documentation</value>
     </values>
     <values>
+        <field>Portal_Task_Rank__c</field>
+        <value xsi:type="xsd:double">72.0</value>
+    </values>
+    <values>
         <field>Portal_Task_Type__c</field>
         <value xsi:type="xsd:string">Company Setup</value>
     </values>

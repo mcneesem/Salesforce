@@ -501,6 +501,7 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
                     eachProjecttask.Portal_Task_Action__c = pta.Portal_Task_Action__c;
                     eachProjecttask.Portal_Task_Type__c = pta.Portal_Task_Type__c;
                     eachProjecttask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
+                    eachProjecttask.Portal_Task_Rank__c = pta.Portal_Task_Rank__c;
                     eachProjecttask.pse__Hierarchy_Depth__c = hierarchyDepth;
                     eachProjecttask.pse__Order__c= pta.Order__c;
                     eachProjecttask.Task_Order__c= pta.Task_Order__c;
