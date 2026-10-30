@@ -12,9 +12,9 @@ Modification Log     :
 */
 
 public class NSP_CreateQuote {
+    // test w/ NSP_CreateQuoteTest (80%)
 
      /**
-    * @Testclass NSP_CreateQuoteTest (80%)
     * @param  opportunity record id
     * @return      ResponseWrapper
     * @Author Utpal Utkalit
