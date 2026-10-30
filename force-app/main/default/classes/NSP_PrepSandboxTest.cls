@@ -99,6 +99,24 @@ private class NSP_PrepSandboxTest {
     }
 
     @isTest
+    private static void testDoGlobalValueSets_PreABXActivated() {
+        Test.startTest();
+        NSP_PrepSandbox.doGlobalValueSets( true );
+        NSP_PrepSandbox.doGlobalValueSets( false );
+        Test.stopTest();
+
+        System.Assert.isTrue(true, 'doGlobalValueSets should complete without throwing an exception');
+    }
+
+    @isTest
+    private static void testDoRecordTypePicklistValues() {
+        Test.startTest();
+        NSP_PrepSandbox.doRecordTypePicklistValues();
+        Test.stopTest();
+        System.Assert.isTrue( true, 'doRecordTypePicklistValues should complete without throwing an exception' );
+    }
+
+    @isTest
     private static void testPageRef() {
         Test.startTest();
         PageReference pageRef = Page.SandboxManualSteps;
