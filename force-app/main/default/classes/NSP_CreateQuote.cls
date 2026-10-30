@@ -1,11 +1,11 @@
-/* **************************************************************************************************   
+/* **************************************************************************************************
 Component Name :  NSP_CreateQuote class
-Version              :  1.0                                                                          
-Created Date         :  August 2021                                                             
+Version              :  1.0
+Created Date         :  August 2021
 Function             :  This class copies values from Opportunity in context to new Quote under creation
-					 :  The Fields are mapped in metadata NSP_Opportunity_To_Quote_Data_Map__mdt  	
-Story                :                                                                             
-Modification Log     :                                                                               
+					 :  The Fields are mapped in metadata NSP_Opportunity_To_Quote_Data_Map__mdt
+Story                :
+Modification Log     :
 *	CPQ Team           August 2021          First Iteration
 *
 ***************************************************************************************************
@@ -14,22 +14,26 @@ Modification Log     :
 public class NSP_CreateQuote {
 
      /**
-    * @Testclass NSP_CreateQuoteTest
+    * @Testclass NSP_CreateQuoteTest (80%)
     * @param  opportunity record id
     * @return      ResponseWrapper
     * @Author Utpal Utkalit
-    * 
+    *
     */
-        
+
     @AuraEnabled
     public static ResponseWrapper validateQuoteCreationfromOpp(String opportunityId){
 
+        Opportunity opp = null;
         Map<String, object> quoteRecordFieldValues = new Map<String, object>();
         Map<String,NSP_Opportunity_To_Quote_Data_Map__mdt> primaryProductToRecordTypeMap = new Map<String,NSP_Opportunity_To_Quote_Data_Map__mdt>();
         set<String> partnerNames = new set<String>();
         ResponseWrapper responseWrapper = new ResponseWrapper();
         try {
-            Opportunity opp=[Select Id,NSP_PrimaryProduct__c,NSP_Client_For_Life__c,StageName,Type FROM Opportunity WHERE Id =: opportunityId LIMIT 1];
+            List<Opportunity> opportunities =[Select Id,NSP_PrimaryProduct__c,NSP_Client_For_Life__c,StageName,Type FROM Opportunity WHERE Id =: opportunityId LIMIT 1];
+            if(!opportunities.isEmpty()){
+                opp = opportunities[0];
+            }
             if(opp.StageName == NSP_SalesConstants.DISCOVERY_STAGE){
                 responseWrapper.isSuccess = false;
                 responseWrapper.errorMessage=System.Label.NSP_MoveOpportunityToAnalysisiStage;
@@ -63,7 +67,7 @@ public class NSP_CreateQuote {
                 responseWrapper.errorMessage=System.Label.NSP_Opp_No_Quoting_for_WO_WS;
                 return responseWrapper;
             }
-                     
+
             // Validation on Opportunity Client for Life
             if(String.isBlank(opp.NSP_Client_For_Life__c)){
                 responseWrapper.isSuccess = false;
@@ -77,23 +81,23 @@ public class NSP_CreateQuote {
                 responseWrapper.errorMessage=System.Label.NSP_Cannot_Create_Quote;
                 return responseWrapper;
             }
-            
+
             List<NSP_OpportunityQuoteMapping__mdt> opptyQuoteMappingMdt = new List<NSP_OpportunityQuoteMapping__mdt>();
             opptyQuoteMappingMdt = [SELECT Id, NSP_SourceField__r.QualifiedApiName, NSP_SourceObject__r.QualifiedApiName,
                                     NSP_TargetField__r.QualifiedApiName,NSP_TargetObject__r.QualifiedApiName FROM NSP_OpportunityQuoteMapping__mdt WHERE NSP_TargetObject__c!=NULL LIMIT 50000];
-            
+
             //generate opportunity query
-            String opportunityQuery = constructOpportunityQuery(opptyQuoteMappingMdt,opp.Id);            
-            Opportunity sourceOpportunityRecord = Database.query(opportunityQuery); //get the first opportunity record from the list            
+            String opportunityQuery = constructOpportunityQuery(opptyQuoteMappingMdt,opp.Id);
+            Opportunity sourceOpportunityRecord = Database.query(opportunityQuery); //get the first opportunity record from the list
             SBQQ__Quote__c quoteRecord = getOpportunityDataIntoQuote(opptyQuoteMappingMdt, sourceOpportunityRecord);
-            
+
            // get metadata for quote default values
             for(NSP_Opportunity_To_Quote_Data_Map__mdt pc : NSP_Opportunity_To_Quote_Data_Map__mdt.getAll().values() ) {
                 String partnerCode = string.isnotBlank(pc.NSP_Partner__c) ? pc.NSP_Partner__c : NSP_CPQConstants.NONE_VALUE;
                 String uniqKey = pc.NSP_Opportunity_Primary_Product__c+'_'+pc.NSP_Client_for_Life__c+'_'+partnerCode;
                 primaryProductToRecordTypeMap.put(uniqKey,pc);
             }
-            
+
             // get partner list
             for(NSP_Partner_Configurations__mdt partc : NSP_Partner_Configurations__mdt.getAll().values()) {
                 if(partc.NSP_Use_For_Partner_Key_Internal__c) {
@@ -108,7 +112,7 @@ public class NSP_CreateQuote {
             else{
                 quoteKey = sourceOpportunityRecord.NSP_PrimaryProduct__c+'_'+sourceOpportunityRecord.NSP_Client_For_Life__c+'_'+NSP_CPQConstants.NONE_VALUE;
             }
-            
+
             // set quote default values
             if(sourceOpportunityRecord != null && String.isNotBlank(quoteKey) && primaryProductToRecordTypeMap.containsKey(quoteKey)){
                 NSP_Opportunity_To_Quote_Data_Map__mdt qconfig = primaryProductToRecordTypeMap.get(quoteKey);
@@ -129,36 +133,36 @@ public class NSP_CreateQuote {
                 else {
                     quoteRecordFieldValues.put(NSP_CPQConstants.SBQQ_TYPE_FIELD_API,NSP_CPQConstants.OPPORTUNITY_TYPE_NEW_BUSINESS);
                 }
-                
+
             }
             //STY-01705 - Marking Quote as Primary
-            if(sourceOpportunityRecord != null && String.isBlank(sourceOpportunityRecord.SBQQ__PrimaryQuote__c) 
+            if(sourceOpportunityRecord != null && String.isBlank(sourceOpportunityRecord.SBQQ__PrimaryQuote__c)
                && sourceOpportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && sourceOpportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
                 quoteRecordFieldValues.put('SBQQ__Primary__c',true);
             }
- 
+
             //create QuoteField and QuoteFieldValue Map to initialise values on quote record
             responseWrapper.isSuccess = true;
             for(NSP_OpportunityQuoteMapping__mdt oppQuoteMapping : opptyQuoteMappingMdt){
                 if(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName != null){
                     quoteRecordFieldValues.put(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName, quoteRecord.get(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName));
                 }
-                
+
             }
             responseWrapper.quoteRecordValues = quoteRecordFieldValues;
-            
-            
-        }  
+
+
+        }
         catch(Exception ex){
             responseWrapper.errorMessage = JSON.serialize(ex.getMessage());
             responseWrapper.isSuccess = false;
             NSP_CustomException.LogException(ex);
             throw new AuraHandledException(ex.getMessage());
-        }    
-        return responseWrapper; 
+        }
+        return responseWrapper;
     }
-    
-  
+
+
      /**
     * It will fetch Opportunity Data.
     * @param  Opportunity Quote Mapping,Opportunity record
@@ -166,17 +170,17 @@ public class NSP_CreateQuote {
     * @Author Utpal Utkalit
     * @Since Nov 18, 2020
     */
-    public static SBQQ__Quote__c getOpportunityDataIntoQuote(List<NSP_OpportunityQuoteMapping__mdt> opportunityQuoteMappingList, Opportunity opp){       
+    public static SBQQ__Quote__c getOpportunityDataIntoQuote(List<NSP_OpportunityQuoteMapping__mdt> opportunityQuoteMappingList, Opportunity opp){
         SBQQ__Quote__c quote=new SBQQ__Quote__c();
         //looping through metadata reocrds to fetch the field api names
         for(NSP_OpportunityQuoteMapping__mdt oppQuoteMapping : opportunityQuoteMappingList){
             if(String.isNotBlank(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName) && String.isNotBlank(oppQuoteMapping.NSP_SourceField__r.QualifiedApiName)){
-                quote.put(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName, opp.get(oppQuoteMapping.NSP_SourceField__r.QualifiedApiName));    
+                quote.put(oppQuoteMapping.NSP_TargetField__r.QualifiedApiName, opp.get(oppQuoteMapping.NSP_SourceField__r.QualifiedApiName));
             }
         }
         return quote;
     }
-        
+
         /**
     * It will construct Quote Query.
     * @param  Quote Contract Mapping,quote record id
@@ -184,11 +188,11 @@ public class NSP_CreateQuote {
     * @Author Utpal Utkalit
     * @Since August 2021
     */
-    public static String constructOpportunityQuery(List<NSP_OpportunityQuoteMapping__mdt> opportunityQuoteMappingList,  Id recordId){       
+    public static String constructOpportunityQuery(List<NSP_OpportunityQuoteMapping__mdt> opportunityQuoteMappingList,  Id recordId){
         Set<String> fieldsToQuerySet = new Set<String>();
         for(NSP_OpportunityQuoteMapping__mdt opportunityQuoteMapping : opportunityQuoteMappingList){
             if(String.isNotBlank(opportunityQuoteMapping.NSP_SourceField__r.QualifiedApiName)){
-                fieldsToQuerySet.add(opportunityQuoteMapping.NSP_SourceField__r.QualifiedApiName);    
+                fieldsToQuerySet.add(opportunityQuoteMapping.NSP_SourceField__r.QualifiedApiName);
             }
         }
         List<String> fieldsToQueryList = new List<String>(fieldsToQuerySet);
@@ -222,7 +226,7 @@ public class NSP_CreateQuote {
         String filter = '';
         if(!filterMap.isEmpty()){
             for(String key : filterMap.keySet()){
-                filter += String.escapeSingleQuotes(key) + '= \'' + String.escapeSingleQuotes(filterMap.get(key)) + '\' ';    
+                filter += String.escapeSingleQuotes(key) + '= \'' + String.escapeSingleQuotes(filterMap.get(key)) + '\' ';
             }
         }
         if(String.isNotBlank(filter)){
@@ -232,7 +236,7 @@ public class NSP_CreateQuote {
             query += ' LIMIT ' + range;
         }
         return query;
-    }   
+    }
     // Response Wrapper Class
     public class ResponseWrapper{
         @AuraEnabled public String errorMessage;
@@ -240,6 +244,6 @@ public class NSP_CreateQuote {
         @AuraEnabled public SBQQ__Quote__c quote{get;set;}
         @AuraEnabled public boolean isSuccess = false;
     }
-       
+
 
     }
