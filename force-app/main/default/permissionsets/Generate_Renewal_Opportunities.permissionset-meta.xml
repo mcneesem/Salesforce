@@ -5,6 +5,21 @@
         <name>Generate_Renewal_Opportunities</name>
     </customPermissions>
     <description>Grants the Custom Permission to access &quot;Generate Renewal Opportunities&quot; Screen Flow</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Priced_Time_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Priced_Time_Start__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Time_Spent_in_Priced__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Generate_Renewal_Opportunities</flow>
