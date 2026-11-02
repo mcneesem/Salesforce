@@ -121,8 +121,7 @@
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Populate Parent Portal Task
-ADO-637269 - DEPRECATED</description>
+    <description>DEPRECATED - New Client Portal: Populate Parent Portal Task</description>
     <environments>Default</environments>
     <interviewLabel>DEPRECATED - Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
     <label>DEPRECATED - Portal Task Before Create Populate Parent Portal Task</label>
