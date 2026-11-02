@@ -3,15 +3,21 @@ private class NSP_AccountContactRelationHelperTest {
     private static final String TEST_EMAIL = 'test@gmail.com';
 
     private static final List<String> CONTACT_FIELDS = new List<String>{
-        'Id',
-        'recordTypeId',
-        'NSP_Work_Phone__c', 'Email', 'NSP_Work_email__c'};
+        'Id' ,
+        'recordTypeId' ,
+        'NSP_Work_Phone__c' ,
+        'Email' ,
+        'NSP_Work_email__c'
+    };
     private static final List<String> ACR_FIELDS = new List<String>{
-        'Id',
-        'AccountId', 'ContactId', 'NSP_Work_Email__c', 'NSP_Work_Phone__c'
+        'Id' ,
+        'AccountId' ,
+        'ContactId' ,
+        'NSP_Work_Email__c' ,
+        'NSP_Work_Phone__c'
     };
     private static final List<String> ACCOUNT_FIELDS = new List<String>{
-        'Id',
+        'Id' ,
         'Name'
     };
 
@@ -57,7 +63,7 @@ private class NSP_AccountContactRelationHelperTest {
         acrObj.Roles = 'Agency';
         acrObj.NSP_Is_Primary__c = true;
         acrObj.IsActive =true;
-
+        acrObj.NSP_Job_Title__c = 'test title';
         // Start Test
 
         update acrObj;
@@ -76,6 +82,7 @@ private class NSP_AccountContactRelationHelperTest {
         acrObj.Roles = 'Agency';
         acrObj.NSP_Is_Primary__c = true;
         acrObj.IsActive =true;
+        acrObj.NSP_Job_Title__c = 'new job title';
         acrList.add(acrObj);
         acrMap.put(acrObj.Id,acrObj);
         NSP_AccountContactRelationTriggerHelper acrObj1 = new NSP_AccountContactRelationTriggerHelper();
@@ -109,7 +116,8 @@ private class NSP_AccountContactRelationHelperTest {
             lstAcr.add(new AccountContactRelation(
                 AccountId = acc.Id,
                 ContactId = contact.Id,
-                NSP_Community_Access__c = 'PEO Projects'
+                NSP_Community_Access__c = 'PEO Projects',
+                NSP_Job_Title__c = 'Job Title'
             ));
         }
         insert lstAcr;
@@ -126,7 +134,8 @@ private class NSP_AccountContactRelationHelperTest {
         List<AccountContactRelation> coverage = new List<AccountContactRelation>();
         coverage.add(
             new AccountContactRelation(
-                NSP_Community_Access__c=''
+                NSP_Community_Access__c='',
+                NSP_Job_Title__c = 'Job Title'
             )
         );
         NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( coverage ); // for additional code coverage...
@@ -182,7 +191,8 @@ private class NSP_AccountContactRelationHelperTest {
             for(Account acc: lstAccounts){
                 lstAcr.add(new AccountContactRelation(
                     AccountId = acc.Id,
-                    ContactId = sharedContact.Id
+                    ContactId = sharedContact.Id,
+                    NSP_Job_Title__c = 'Job Title'
                 ));
             }
             insert lstAcr;
@@ -201,6 +211,7 @@ private class NSP_AccountContactRelationHelperTest {
         //
         // for test code coverage only...
         NSP_AccountContactRelationTriggerHelper.testHandleException( null , null );
+        NSP_AccountContactRelationTriggerHelper.testHandleResults( null , null );
         NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( new List<AccountContactRelation>() );
     }
 
@@ -220,7 +231,8 @@ private class NSP_AccountContactRelationHelperTest {
                 new AccountContactRelation(
                     Id=newACR.Id ,
                     ContactId=newACR.ContactId ,
-                    NSP_Community_Access__c=null
+                    NSP_Community_Access__c=null,
+                    NSP_Job_Title__c = 'Job Title'
                 )
             );
         }
@@ -277,13 +289,6 @@ private class NSP_AccountContactRelationHelperTest {
         String conQuery = new NSP_QueryBuilder('Contact', CONTACT_FIELDS).addFilter('Id', acr.ContactId).addLimit(1).build();
         Contact assertCon =  Database.query(conQuery);
         system.assertEquals(assertCon.NSP_Work_Email__c, TEST_EMAIL); // Negative Test
-    }
-
-    @isTest
-    private static void acrTest() {
-        Test.startTest();
-        NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfile();
-        Test.stopTest();
     }
 
 }

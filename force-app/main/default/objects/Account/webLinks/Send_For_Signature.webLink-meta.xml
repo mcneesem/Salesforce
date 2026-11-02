@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>{!URLFOR(IF($Site.prefix == &apos;/s&apos;,&apos;/apex/dfsle__sending&apos;, $Site.Prefix +&apos;/apex/dfsle__sending&apos;), null, [sId = Account.Id,templateId = $Label.NSP_Account_Envelop_Configuration , recordId = Account.Id, title = TEXT(Account.NSP_Template_Selection__c ), quickSend = false, isEmbedded = false])}</url>
+    <url>{!URLFOR(IF($Site.prefix == &apos;/s&apos;,&apos;/apex/dfsle__sending&apos;, $Site.Prefix +&apos;/apex/dfsle__sending&apos;), null, [sId = Account.Id,templateId = $Label.NSP_Account_Envelope_Configuration , recordId = Account.Id, title = TEXT(Account.NSP_Template_Selection__c ), quickSend = false, isEmbedded = false])}</url>
 </WebLink>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL  - Provide information to run beneficiary designation report</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Beneficiary Designation Report</name>
+    <style>freeForm</style>
+    <subject>Beneficiary Designation Report</subject>
+    <textOnly>Hello [client],
+
+The Beneficiary Designation Report identifies whether an employee has designated a beneficiary under Insperity's Basic Group Life Insurance policy. It is available to your employees who have the Benefits Reporting role through Web Reporting on Insperity Premier.
+
+This is report is helpful during open enrollment or throughout the year to remind employees to update their beneficiary when making annual benefits elections or when they experience a qualifying life event such as marriage, divorce or birth of a child.
+
+You can navigate to this report by selecting Benefits from the Reporting Dashboard on Insperity Premier within the Reporting Center, then selecting Beneficiary Designation report.
+
+The report includes the following information:
+
+Beneficiary designation (Yes/No)
+Employee name, ID and email address
+Employee classification status
+Employee eligibility status
+Signature date (date of latest designation)
+
+
+Note: The report lists active employees as of the date it is run. This information does not include beneficiary information for Voluntary Life Insurance (employee-paid).
+
+I have attached instructions for employees who need to designate or change their beneficiary. They can call the Contact Center if they have any questions about these changes.
+
+Thank you for trusting Insperity to serve your business.
+
+[signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

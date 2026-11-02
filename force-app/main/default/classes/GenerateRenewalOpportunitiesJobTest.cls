@@ -33,6 +33,7 @@ private class GenerateRenewalOpportunitiesJobTest {
             NSP_Sub_Client__c = '1234500',
             NSP_Renewal_Date__c = Date.newInstance(2025, 12, 25),
             NSP_Benefit_Package_Name__c = 'Independence Select',
+            Bid_Number__c = 1001,
             NSP_Asset__c = assetObj.Id
         );
         subClients.add(sc);
@@ -44,6 +45,7 @@ private class GenerateRenewalOpportunitiesJobTest {
             NSP_Sub_Client__c = '1234501',
             NSP_Renewal_Date__c = Date.newInstance(2025, 12, 26),
             NSP_Benefit_Package_Name__c = 'Freedom Premier',
+            Bid_Number__c = 1002,
             NSP_Asset__c = assetObj1.Id
         );
         subClients.add(sc1);
@@ -54,6 +56,7 @@ private class GenerateRenewalOpportunitiesJobTest {
             NSP_Sub_Client__c = '1234506',
             NSP_Renewal_Date__c = Date.newInstance(2025, 12, 26),
             NSP_Benefit_Package_Name__c = 'Freedom Premier',
+            Bid_Number__c = 1002,
             NSP_Asset__c = assetObj1.Id
         );
         subClients.add(sc2);
@@ -69,6 +72,7 @@ private class GenerateRenewalOpportunitiesJobTest {
         Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
         cs.IsEnabled__c = true;
         cs.BatchSize__c = 50;
+        cs.IsEnabledBidNumberGrouping__c = false;
         cs.RenewalRecordTypeId__c = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Renewal' );
         upsert cs;
     }
@@ -106,5 +110,21 @@ private class GenerateRenewalOpportunitiesJobTest {
         ];
         System.assertEquals( 2, cnt );
     }
+
+    @isTest
+    private static void testRenewalOpportunityBatchWithBidNumber() {
+        Renewal_Opportunity_Settings__c cs = Renewal_Opportunity_Settings__c.getOrgDefaults();
+        cs.IsEnabledBidNumberGrouping__c = true;
+        upsert cs;
+        Test.startTest();
+        Database.executeBatch( new GenerateRenewalOpportunitiesJob(12, 2026, null));
+        Test.stopTest();
+        Integer cnt = [
+            SELECT COUNT()
+            FROM Opportunity
+        ];
+        System.assertEquals( 2 , cnt );
+    }
+
 }
 //

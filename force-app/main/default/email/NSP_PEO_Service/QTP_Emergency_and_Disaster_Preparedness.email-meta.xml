@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL -</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Emergency and Disaster Preparedness</name>
+    <style>freeForm</style>
+    <subject>Emergency and Disaster Preparedness Plan</subject>
+    <textOnly>Search NEXUS for Optum Disaster Flyer specifically related to incident prompting this template Delete this before sending
+
+Dear Client,
+
+In a disaster or emergency, it is important to have a coordinated action plan that is well defined and communicated to all employees. Below are suggestions and resources to help support you in the development of an Emergency and Disaster Preparedness plan for your company. I've also linked the Insperity guide to crisis management as a helpful resource for you.
+
+Prepare your teams
+
+Develop a Business Emergency Plan
+Consider forming a Disaster team responsible for the oversight of plan development, with members tasked with responsibilities prior, during, and post disaster.
+
+Communicate the Plan
+
+Disseminate information to your employees, steps the company is taking, expectations for work and other plans.
+Provide information regarding actions employees can take to prepare themselves and their families prior to, during, and after a disastrous event.
+
+Restore Business Operations
+
+Assess your employee needs.
+Respond to employee concerns.
+Insperity provides all worksite employees access to Optum, an employee assistance program. Insperity's dedicated phone line at Optum is 866-402-0003. We strongly encourage employees to use this free resource to help them with confidential support, counseling, resources and referrals as they work through issues that may arise after a disaster.
+Asses your business needs such as location damage, access to property, etc.
+Consider alternate ways of conducting business such as flexible work schedules and telecommuting.
+
+You can also access business and personal preparedness resources through the U.S. Department of Homeland Security&apos;s Ready Campaign at Ready.gov.
+
+Your Insperity service team is here to help. Please feel welcome to reach out to me with any questions or concerns.
+
+We hope you remain safe.
+
+Sincerely,</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

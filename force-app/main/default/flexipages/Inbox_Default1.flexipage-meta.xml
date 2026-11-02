@@ -44,6 +44,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>caseCreationOutlook</componentName>
+                <identifier>c_caseCreationOutlook</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>lightningInbox:logItemButtonContainer</componentName>
                 <identifier>lightningInbox_logItemButtonContainer2</identifier>
             </componentInstance>

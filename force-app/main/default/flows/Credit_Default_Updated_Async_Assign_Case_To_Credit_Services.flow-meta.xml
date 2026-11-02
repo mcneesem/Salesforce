@@ -2,22 +2,21 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Fault_Case_Owner_to_Queue</name>
-        <label>Fault  Case Owner to Queue</label>
+    <ends>
+        <name>END_ELEMENT_4</name>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varCaseOwner</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_the_Case_Owner_to_Queue</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_subflow</targetReference>
-        </connector>
-    </assignments>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_5</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_6</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
     <environments>Default</environments>
     <interviewLabel>Credit Default - Updated - Async - Assign Case To Credit Services {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Credit Default - Updated - Async - Assign Case To Credit Services</label>
@@ -41,13 +40,17 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <description>Queue: NSP_Credit_Services (Id=00G4x000001fXVXEA2)</description>
+        <description>Queue: NSP_Credit_Services (Id=00G4x000001fXVXEA2)
+Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Case is closed, set the status to Reopened, save, and then edit.</description>
         <name>Update_the_Case_Owner_to_Queue</name>
         <label>Update the Case Owner to Queue</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_6</targetReference>
+        </connector>
         <faultConnector>
-            <targetReference>Fault_Case_Owner_to_Queue</targetReference>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -55,6 +58,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.Case__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
             </value>
         </filters>
         <inputAssignments>
@@ -74,6 +84,9 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_4</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status__c</field>
@@ -112,11 +125,14 @@
         <label>Fault Handler subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_5</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>VarFaultElement</elementReference>
+                <stringValue>Update_the_Case_Owner_to_Queue</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -132,18 +148,4 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>varCaseOwner</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>VarFaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>

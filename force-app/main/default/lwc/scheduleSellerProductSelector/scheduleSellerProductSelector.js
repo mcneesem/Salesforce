@@ -102,7 +102,13 @@ export default class ScheduleSellerProductSelector extends LightningElement {
             base = baseBySeg.Enterprise;
         }
         // Single flag to decide if extended options apply
-        const canShowExtended = ( ( hasPermission === true ) && ( this._accountIsClient === 'Active' ) );
+        const canShowExtended = (
+            ( hasPermission === true )
+            && (
+                ( this._accountIsClient === 'Active' )
+                || ( this._accountIsClient === 'Onboarding' )
+            )
+        );
         // Return base plus extended (when allowed) or just base
         return ( canShowExtended ? [...base, ...extended] : base );
     }

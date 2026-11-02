@@ -8,7 +8,10 @@
   ( RecordType.DeveloperName = &apos;Schedule_Seller&apos; ) ,
   NOT( ISNEW() ) ,
   NOT( Owner:User.Id = $User.Id ) ,
-  ISCHANGED( Description )
+  OR(
+    ISCHANGED( Description ) ,
+    ISCHANGED( Subject )
+  )
 )</errorConditionFormula>
     <errorMessage>Only Event Owner is allowed to modify this field for Schedule Seller Events.</errorMessage>
 </ValidationRule>

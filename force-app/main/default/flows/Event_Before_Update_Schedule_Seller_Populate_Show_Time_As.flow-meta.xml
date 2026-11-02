@@ -3,6 +3,22 @@
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_User_Running_Flow</name>
+        <label>Assign User Running Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>runningUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Cancel_Requested</name>
         <label>Cancel Requested</label>
         <locationX>0</locationX>
@@ -33,6 +49,19 @@
         <connector>
             <targetReference>Is_Status_Cancelled</targetReference>
         </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_Assignment</name>
+        <label>Fault Element Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Make_Event_Busy</name>
@@ -124,6 +153,72 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Status</name>
+        <label>Check Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Restore_Prior_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_is_Cancelled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Status_Cancelled</targetReference>
+            </connector>
+            <label>Status is Cancelled</label>
+        </rules>
+        <rules>
+            <name>Status_is_Completed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Status_Cancelled</targetReference>
+            </connector>
+            <label>Status is Completed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Event_Owner</name>
+        <label>Is Event Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Event Owner</defaultConnectorLabel>
+        <rules>
+            <name>Not_Event_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Schedule_Seller_Admin</targetReference>
+            </connector>
+            <label>Not Event Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Prior_Status_Cancelled</name>
         <label>Is Prior Status Cancelled</label>
         <locationX>0</locationX>
@@ -196,25 +291,25 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Schedule_Seller_Record_Type</name>
-        <label>Schedule Seller Record Type</label>
+        <name>User_Null_Check</name>
+        <label>User Null Check</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Schedule_Seller_Record_Type</name>
+            <name>User_is_not_null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.RecordTypeId</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Get_User</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <elementReference>$Setup.Schedule_Seller_Settings__c.EventRecordTypeId__c</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Schedule_Seller_Admin</targetReference>
+                <targetReference>Is_Event_Owner</targetReference>
             </connector>
-            <label>Is Schedule Seller Record Type</label>
+            <label>User is not null</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -239,11 +334,36 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_User</name>
+        <label>Get User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>User_Null_Check</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Element_Assignment</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>runningUser</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Schedule_Seller_Record_Type</targetReference>
+            <targetReference>Assign_User_Running_Flow</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -260,9 +380,30 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>012Pb000005y7tNIAQ</stringValue>
+            </value>
+        </filters>
         <object>Event</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>runningUser</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

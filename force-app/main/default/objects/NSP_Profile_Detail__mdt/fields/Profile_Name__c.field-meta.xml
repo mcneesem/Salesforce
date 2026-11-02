@@ -3,7 +3,7 @@
     <fullName>Profile_Name__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Profile Name</label>
+    <label>DEPRECATED - Profile Name</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

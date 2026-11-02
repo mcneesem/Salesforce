@@ -3323,6 +3323,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.Delta_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.Free_Periods_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3538,6 +3543,76 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RET_Trailing__c.Additional_Quality_Control_Resource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Assets_Received__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Conversion_Post_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Loan_File__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Money_File__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Record_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Record_Keeper_Default_Loan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Record_Keeper_Loan__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Record_Keeper_Money__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Record_Keeper_Roth__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Records_Received__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Sales_to_Implementation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RET_Trailing__c.Wire_Received_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__BlockPrice__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3579,6 +3654,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Delta_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Delta_Unit_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3693,6 +3773,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Subscription__c.Delta_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Subscription__c.Product_Description_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3788,6 +3873,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__BillingTransaction__c.NSP_DownPayment_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__FinancePeriod__c.Finance_Period_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3839,6 +3929,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__FinancePeriod__c.blng__UniqueId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Delta_Unit_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4444,6 +4539,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.Portal_Task_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.Portal_Task_Rank__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

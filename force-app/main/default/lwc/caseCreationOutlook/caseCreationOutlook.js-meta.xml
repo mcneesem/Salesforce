@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Case Creation Outlook</masterLabel>
+    <description>Visible only to users with special access</description>
+    <targets>
+        <target>lightning__Inbox</target>
+    </targets>
+</LightningComponentBundle>

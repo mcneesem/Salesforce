@@ -1,11 +1,6 @@
 public with sharing class NSP_AccountContactRelationTriggerHelper {
     // test w/ NSP_AccountContactRelationHelperTest (77%)
 
-    public static final List<String> INT_DM_PROFILES = new List<String>{
-        NSP_ServiceConstants.INTEGRATION_USER ,
-        NSP_ServiceConstants.DATA_MIGRATION
-    };
-
     //
     // Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
     // @param newList List of New AccountContactRelation.
@@ -15,26 +10,22 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterInsertDirector( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            String loggedInUserProfileName = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if ( String.isNotBlank( loggedInUserProfileName )
-                && !INT_DM_PROFILES.contains( loggedInUserProfileName )
-                )
-            {
-                Set<Id> accountIdSet = new Set<Id>();
-                Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
-                for ( AccountContactRelation accConObj : newList ) {
-                    if ( accConObj.Enable_Portal_Client__c ) {
-                        portalIds.add( accConObj.Id );
-                    }
-                    if ( accConObj.NSP_Is_Primary__c && accConObj.IsActive ) {
-                        accountIdSet.add( accConObj.AccountId );
-                    }
-                    if ( accConObj.isDirect ) {
-                        conIdACRMap.put( accConObj.contactId , accConObj );
-                    }
+            Set<Id> accountIdSet = new Set<Id>();
+            Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
+            for ( AccountContactRelation accConObj : newList ) {
+                if ( accConObj.Enable_Portal_Client__c ) {
+                    portalIds.add( accConObj.Id );
                 }
+                if ( accConObj.NSP_Is_Primary__c && accConObj.IsActive ) {
+                    accountIdSet.add( accConObj.AccountId );
+                }
+                if ( accConObj.isDirect ) {
+                    conIdACRMap.put( accConObj.contactId , accConObj );
+                }
+            }
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_AccountContactRelation_Directors' , UserInfo.getUserId() ) ) {
                 if ( !conIdACRMap.isEmpty() ) {
-                    updateWorkPhoneEmailOnContact( conIdACRMap );
+                    NSP_AccountContactRelationTriggerHelper.updateWorkPhoneEmailOnContact( conIdACRMap );
                 }
                 IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
             }
@@ -53,53 +44,27 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     public void afterUpdateDirector( Map<Id,AccountContactRelation> newMap , Map<Id,AccountContactRelation> oldMap ) {
         try {
             Set<Id> portalIds = new Set<Id>();
-            String loggedInUserProfile_Name = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if ( String.isNotBlank( loggedInUserProfile_Name )
-                && !INT_DM_PROFILES.contains( loggedInUserProfile_Name )
-                )
-            {
-                Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
-                Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
-                Set<Id> accountIdSet = new Set<Id>();
-                Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
-                Set<Id> ceAccIdSet = new Set<Id>();
-                Set<Id> ceConIdSet = new Set<Id>();
-                List<Case> ceCaseList = new List<Case>();
-                AccountContactRelation oldACR;
-                for ( AccountContactRelation acr : newMap.values() ) {
-                    oldACR = oldMap.get( acr.Id );
-                    if ( acr.Enable_Portal_Client__c != oldACR.Enable_Portal_Client__c ) {
-                        portalIds.add( acr.Id );
-                    }
-                    if( ( acr.NSP_Is_Primary__c && ( oldACR.NSP_Is_Primary__c != acr.NSP_Is_Primary__c ) )
-                        || ( acr.IsActive && ( oldACR.IsActive != acr.IsActive ) )
-                        )
-                    {
-                        accountIdSet.add( acr.AccountId );
-                        contactOldMap.put( acr.Id , oldACR );
-                        contactNewMap.put( acr.Id , newMap.get( acr.Id ) );
-                    }
-                    // Added as part of STY-02840
-                    if ( ( ( acr.isDirect == true )
-                            && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
-                                || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
-                                || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
-                                || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
-                                || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
-                                )
-                            )
-                        || ( ( acr.isDirect == true )
-                            && ( oldACR.isDirect != acr.isDirect )
-                            )
-                        )
-                    {
-                        conIdACRMap.put( acr.ContactId , acr );
-                    }
-                    if ( acr.NSP_Employee_Status__c != oldACR.NSP_Employee_Status__c ) {
-                        ceAccIdSet.add( acr.AccountId );
-                        ceConIdSet.add( acr.ContactId );
-                    }
+            Map<Id,AccountContactRelation> contactOldMap = new Map<Id,AccountContactRelation>();
+            Map<Id,AccountContactRelation> contactNewMap = new Map<Id,AccountContactRelation>();
+            Map<Id,AccountContactRelation> conIdACRMap = new Map<Id,AccountContactRelation>();
+            AccountContactRelation oldACR;
+            for ( AccountContactRelation acr : newMap.values() ) {
+                oldACR = oldMap.get( acr.Id );
+                if ( acr.Enable_Portal_Client__c != oldACR.Enable_Portal_Client__c ) {
+                    portalIds.add( acr.Id );
                 }
+                if( ( acr.NSP_Is_Primary__c && ( oldACR.NSP_Is_Primary__c != acr.NSP_Is_Primary__c ) )
+                    || ( acr.IsActive && ( oldACR.IsActive != acr.IsActive ) )
+                    )
+                {
+                    contactOldMap.put( acr.Id , oldACR );
+                    contactNewMap.put( acr.Id , newMap.get( acr.Id ) );
+                }
+                if ( this.shouldUpdateWorkPhoneEmailOnContact( acr , oldACR ) ) {
+                    conIdACRMap.put( acr.ContactId , acr );
+                }
+            }
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_AccountContactRelation_Directors' , UserInfo.getUserId() ) ) {
                 Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
                 NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
                 accountIdSetToUpdateResyncFlag = sObjectUpdateObj.fetchUpdFieldsLst(
@@ -109,38 +74,33 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                 );
                 IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
                 if ( !conIdACRMap.isEmpty() ) {
-                    updateWorkPhoneEmailOnContact( conIdACRMap );
-                }
-                if ( !ceAccIdSet.isEmpty() && !ceConIdSet.isEmpty() ) {
-                    Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , NSP_ServiceConstants.PEO );
-                    for ( Case cse : [
-                                SELECT
-                                    Id ,
-                                    AccountId ,
-                                    ContactId ,
-                                    NSP_CorporateEmployeeEE__c ,
-                                    ( SELECT Id FROM Case_Contact_Roles__r )
-                                FROM Case
-                                WHERE (
-                                    ( ContactId IN :ceConIdSet )
-                                    AND ( recordTypeId = :peoRecordTypeId )
-                                )
-                            ]
-                        )
-                    {
-                        if ( ( cse.Case_Contact_Roles__r != null )
-                            && ( cse.Case_Contact_Roles__r.size() <= 1 )
-                            )
-                        {
-                            ceCaseList.add( cse );
-                        }
-                    }
+                    NSP_AccountContactRelationTriggerHelper.updateWorkPhoneEmailOnContact( conIdACRMap );
                 }
             }
             PortalClientSharing.enqueueJob( portalIds );
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
+    }
+
+    private Boolean shouldUpdateWorkPhoneEmailOnContact( AccountContactRelation acr , AccountContactRelation oldACR ) {
+        Boolean response = false;
+        if ( ( ( acr.isDirect == true )
+                && ( ( oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c )
+                    || ( oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c )
+                    || ( oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c )
+                    || ( oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c )
+                    || ( oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c )
+                    )
+                )
+            || ( ( acr.isDirect == true )
+                && ( oldACR.isDirect != acr.isDirect )
+                )
+            )
+        {
+            response = true;
+        }
+        return response;
     }
 
     //
@@ -150,18 +110,32 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public static void beforeUpsertDirector( List<AccountContactRelation> newList ) {
         try {
-            String profileName = NSP_AccountContactRelationTriggerHelper.getLoggedInUserProfileName();
-            if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Primary_Contact_Validation' , UserInfo.getUserId() ) ) {
                 Set<Id> accountIdSet = new Set<Id>();
-                for(AccountContactRelation accConObj : newList){
-                    if(accConObj.NSP_Is_Primary__c){
-                        accountIdSet.add(accConObj.AccountId);
+                for ( AccountContactRelation accConObj : newList ) {
+                    if ( accConObj.NSP_Is_Primary__c ) {
+                        accountIdSet.add( accConObj.AccountId );
                     }
                 }
-                Map<Id,AccountContactRelation> accountContactRelationMap= new Map<Id,AccountContactRelation>([Select Id ,ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE AccountId IN:accountIdSet AND NSP_Is_Primary__c = True ]);
-                for(AccountContactRelation accConObj : newList){
-                    if(accountContactRelationMap.size() > 0 && !accountContactRelationMap.containsKey(accConObj.Id)  ){
-                           accConObj.NSP_Is_Primary__c.addError(System.label.NSP_PrimaryContactValidation);
+                Map<Id,AccountContactRelation> accountContactRelationMap = new Map<Id,AccountContactRelation>();
+                if ( !accountIdSet.isEmpty() ) {
+                    accountContactRelationMap = new Map<Id,AccountContactRelation>(
+                        [
+                            Select Id , ContactId , NSP_Is_Primary__c , AccountId
+                            FROM AccountContactRelation
+                            WHERE (
+                                ( AccountId IN :accountIdSet )
+                                AND ( NSP_Is_Primary__c = true )
+                            )
+                        ]
+                    );
+                }
+                for ( AccountContactRelation accConObj : newList ) {
+                    if ( !accountContactRelationMap?.isEmpty()
+                        && !accountContactRelationMap.containsKey( accConObj.Id )
+                        )
+                    {
+                        accConObj.NSP_Is_Primary__c.addError( System.label.NSP_PrimaryContactValidation );
                     }
                 }
             }
@@ -177,12 +151,12 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
     //
     public void afterInsertJobTitle( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         Set<Id> contactIdSet = new Set<Id>();
-        for(AccountContactRelation accConObj : newList){
-            if(accConObj.NSP_Job_Title__c!=null ){
-                contactIdSet.add(accConObj.ContactId);
+        for ( AccountContactRelation accConObj : newList ) {
+            if ( String.isNotBlank( accConObj.NSP_Job_Title__c ) ) {
+                contactIdSet.add( accConObj.ContactId );
             }
         }
-        updateJobTitleofContact(contactIdSet);
+        this.updateJobTitleofContact( contactIdSet );
     }
 
     //
@@ -200,23 +174,42 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
     }
 
-    public void updateJobTitleofContact( Set<Id> contactIdset ) {
-        Map<Id, String> mapOfcontactJobTitles = new Map<Id,String>();
-        List<Contact> contactList = new List<Contact>();
-        try{
-            if(!contactIdSet.isEmpty()){
-                for(AccountContactRelation accConObj : [SELECT Id,ContactId, NSP_Job_Title__c FROM AccountContactRelation WHERE ContactId in:contactIdSet and NSP_Job_Title__c!=null ]){
-                    mapOfcontactJobTitles.put(accConObj.ContactId,accConObj.NSP_Job_Title__c);
+    private void updateJobTitleofContact( Set<Id> contactIdset ) {
+        try {
+            Map<Id,String> mapOfcontactJobTitles = new Map<Id,String>();
+            if ( ( contactIdSet != null ) && !contactIdSet.isEmpty() ) {
+                for ( AccountContactRelation accConObj : [
+                            SELECT Id , ContactId , NSP_Job_Title__c
+                            FROM AccountContactRelation
+                            WHERE (
+                                ( ContactId IN :contactIdSet )
+                                AND ( NSP_Job_Title__c != null )
+                            )
+                        ]
+                    )
+                {
+                    mapOfcontactJobTitles.put(
+                        accConObj.ContactId ,
+                        accConObj.NSP_Job_Title__c
+                    );
                 }
             }
-            if(!mapOfcontactJobTitles.isEmpty()){
-                for(Contact con: [SELECT Id, NSP_Job_Title__c FROM Contact WHERE Id in:contactIdset]){
-                    con.NSP_Job_Title__c=mapOfcontactJobTitles.get(con.Id);
-                    contactList.add(con);
+            List<Contact> contactList = new List<Contact>();
+            if ( !mapOfcontactJobTitles.isEmpty() ) {
+                for ( Contact con : [
+                            SELECT Id , NSP_Job_Title__c
+                            FROM Contact
+                            WHERE ( Id IN :mapOfcontactJobTitles.keySet() )
+                        ]
+                    )
+                {
+                    con.NSP_Job_Title__c = mapOfcontactJobTitles.get( con.Id );
+                    contactList.add( con );
                 }
             }
-            if(!contactList.isEmpty()){
-                update contactList;
+            if ( !contactList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( contactList , false );
+                NSP_AccountContactRelationTriggerHelper.handleResults( results , 'updateJobTitleofContact:update' );
             }
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'updateJobTitleofContact' );
@@ -362,11 +355,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         }
         if ( !communityEventToBeInserted.isEmpty() ) { // DEPRECATED
             List<Database.SaveResult> results = EventBus.publish( communityEventToBeInserted );
-            NSP_ErrorLogHandler.logResults(
-                NSP_AccountContactRelationTriggerHelper.class.getName() ,
-                'createPlatformEventForACR' ,
-                results
-            );
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , 'createPlatformEventForACR' );
         }
     }
 
@@ -399,19 +388,6 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         return Database.query(queryProfile);
     }
 
-    public static String getLoggedInUserProfileName() {
-        List<NSP_Profile_Detail__mdt> profileDetailList = [
-            SELECT Profile_ID__c , Profile_Name__c
-            FROM NSP_Profile_Detail__mdt
-            WHERE ( Profile_ID__c = :UserInfo.getProfileId() )
-        ];
-        String profileName = null;
-        if ( !profileDetailList.isEmpty() ) {
-            profileName = profileDetailList[0].Profile_Name__c;
-        }
-        return profileName;
-    }
-
     // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
@@ -424,6 +400,21 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             NSP_AccountContactRelationTriggerHelper.class.getName() ,
             methodName ,
             e
+        );
+    }
+
+    // for test code coverage only...
+    public static void testHandleResults( List<Database.SaveResult> results , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AccountContactRelationTriggerHelper.handleResults( results , methodName );
+        }
+    }
+
+    private static void handleResults( List<Database.SaveResult> results , String methodName ) {
+        NSP_ErrorLogHandler.logResults(
+            NSP_AccountContactRelationTriggerHelper.class.getName() ,
+            methodName ,
+            results
         );
     }
 
