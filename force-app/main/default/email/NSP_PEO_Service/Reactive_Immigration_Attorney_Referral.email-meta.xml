@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL  - Send to clients who have requested immigration attorney referral</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Immigration Attorney Referral</name>
+    <style>freeForm</style>
+    <subject>Immigration Attorney Referral</subject>
+    <textOnly>Hello [client name],
+
+Employee visas and other employee immigration are an area specific to your business and are outside of the Insperity relationship. We encourage you to consult with your immigration attorney for questions related to sponsorship and other immigration related issues.
+
+You can connect with the firm below for assistance if you do not have an immigration attorney; many Insperity clients have worked with this firm with successful results.
+
+Foster LLP
+5177 Richmond Avenue, Suite 800
+Houston, Texas 77056
+Tel: 713-229-8733 (main)
+
+The primary contact attorneys are:
+Avalyn Langemeier: alangemeier@fosterglobal.com
+Dao Ngyuyen: dnguyen@fosterglobal.com
+
+Costs for these services are specific for your business and are not covered by Insperity. You are responsible for engaging the attorney of your choice and paying any fees associated with their services. Additionally, Insperity does not sponsor H-1B, J-1, L-1, or any other visas, our client companies retain that obligation and remain solely responsible for that sponsorship.
+
+As always, please feel welcome to reach out to me with any questions or concerns.
+
+Sincerely,
+
+[Signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
