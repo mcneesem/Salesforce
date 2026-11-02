@@ -324,19 +324,7 @@ Date        : 30/09/2021
         return !accountTeamList.isEmpty() ? accountTeamList[0].NSP_User__c : null;
     }
 
-    /**
-* Iterates throught the case  map and identifies the records that needs to worked based on various criterias.
-* @param caseNewMap Map of New Case.
-* @param caseOldMap Map of Old Case.
-* @return void
-*
-*/
-    public void beforeUpdateDirector(Map<Id, Case> caseNewMap, Map<Id, Case> caseOldMap){
-        List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
-        BusinessHours defaultBusinessHours = null;
-        if (!businessHoursList.isEmpty()) {
-        defaultBusinessHours = businessHoursList[0];
-    }
+    public void beforeUpdateDirector( Map<Id,Case> caseNewMap , Map<Id,Case> caseOldMap ) {
         queueMap =  new Map<Id, Group> ([SELECT Id,DeveloperName, Name FROM Group WHERE Id != null]);
         closedCaseLst = new List<Case>();
         List<Case> escalationCaseList = new List<Case>();
@@ -472,8 +460,8 @@ Date        : 30/09/2021
                     && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
                     )
                 {
-                    eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifferenceInMin(
-                        defaultBusinessHours.Id ,
+                    eachCase.NSP_First_Level2_Assigned_Duration__c = this.calculateTimeDifferenceInMin(
+                        NSP_CaseTriggerHelper.defaultBusinessHoursId ,
                         eachCase.NSP_Level_2_Assigned_Date__c ,
                         eachCase.First_Level_2_Owner_Assigned_Date__c
                     );
@@ -483,8 +471,8 @@ Date        : 30/09/2021
                     && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
                     )
                 {
-                    eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifferenceInMin(
-                        defaultBusinessHours.Id ,
+                    eachCase.NSP_First_Level2_Reply_Duration__c = this.calculateTimeDifferenceInMin(
+                        NSP_CaseTriggerHelper.defaultBusinessHoursId ,
                         eachCase.First_Level_2_Owner_Assigned_Date__c,
                         eachCase.NSP_First_Level2_Reply_Date__c
                     );
@@ -1245,6 +1233,26 @@ Date        : 30/09/2021
             }
         }
         return assetRecTypeIdSet;
+    }
+
+    private static Id defaultBusinessHoursId {
+        private get {
+            if ( defaultBusinessHoursId == null ) {
+                List<BusinessHours> hours = [
+                    SELECT Id
+                    FROM BusinessHours
+                    WHERE ( IsDefault = true )
+                    LIMIT 1
+                ];
+                Id local = null;
+                if ( !hours.isEmpty() ) {
+                    local = hours[0].Id;
+                }
+                defaultBusinessHoursId = local;
+            }
+            return defaultBusinessHoursId;
+        }
+        private set;
     }
 
     // @description Builds map from "category;subcategory" key to asset record type name.
@@ -2090,9 +2098,6 @@ Story:        STY-01785
                     }
                 }
                 if(!caseIds.isEmpty()) {
-                    List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
-                    if (!businessHoursList.isEmpty()) {
-                    BusinessHours defaultBusinessHours = businessHoursList[0];
                     List<Case> newCaseList = [
                         SELECT
                         Id, OwnerId, CreatedDate, Status, LastModifiedDate, NSP_Detail__c,NSP_Category__c,NSP_SubCategory__c,
@@ -2126,8 +2131,16 @@ Story:        STY-01785
                             newCaseHistory.NSP_Case_Current_Sub_Category__c = newCaseRecord.NSP_SubCategory__c;
                             newCaseHistory.NSP_Start_Date__c = currentDateTime;
                             //Calculate time from case created till last modified.
-                            newCaseHistory.NSP_Case_Age__c = calculateTimeDifference(defaultBusinessHours.Id, newCaseRecord.CreatedDate, newCaseRecord.LastModifiedDate);
-                            timeToAdd = calculateTimeDifference(defaultBusinessHours.Id, historyRecord.CreatedDate, newCaseRecord.LastModifiedDate);
+                            newCaseHistory.NSP_Case_Age__c = this.calculateTimeDifference(
+                                NSP_CaseTriggerHelper.defaultBusinessHoursId ,
+                                newCaseRecord.CreatedDate ,
+                                newCaseRecord.LastModifiedDate
+                            );
+                            timeToAdd = this.calculateTimeDifference(
+                                NSP_CaseTriggerHelper.defaultBusinessHoursId ,
+                                historyRecord.CreatedDate ,
+                                newCaseRecord.LastModifiedDate
+                            );
                             String newOwner;
                             if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)){
                                 Group grp = newCaseRecord.owner;
@@ -2330,27 +2343,20 @@ Params:       String businessHoursId, DateTime startDate, DateTime endDate
 
     }
 
-    //Added as part of DF-04518
-    /******
-Method Name : updateInProgressTime
-Description : To calculate the In progress Time after update of substatus
-Param : Map<Id, Case> oldMap, Map<Id, Case> newMap
-return type : void
-********/
-    private void updateInProgressTime(Map<Id, Case> oldMap, List<Case> caseList){
-        List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
-        if (!businessHoursList.isEmpty()) {
-        BusinessHours defaultBusinessHours = businessHoursList[0];
-        for(Case newCase : caseList){
-            newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c == null ? 0 : newCase.NSP_Case_In_Progress_Hours__c;
-//Added as part of DF-05644 to avoid Null pointer exception when  NSP_Case_In_Progress_Modified_Date__c is null
-            if(newCase.NSP_Case_In_Progress_Modified_Date__c != null){
-            newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c+calculateTimeDifference(defaultBusinessHours.Id, newCase.NSP_Case_In_Progress_Modified_Date__c, DateTime.now());
- }
+    private void updateInProgressTime( Map<Id,Case> oldMap , List<Case> caseList ) {
+        for ( Case newCase : caseList ) {
+            if ( newCase.NSP_Case_In_Progress_Hours__c == null ) {
+                newCase.NSP_Case_In_Progress_Hours__c = 0;
+            }
+            if ( newCase.NSP_Case_In_Progress_Modified_Date__c != null ) {
+                newCase.NSP_Case_In_Progress_Hours__c += this.calculateTimeDifference(
+                    NSP_CaseTriggerHelper.defaultBusinessHoursId ,
+                    newCase.NSP_Case_In_Progress_Modified_Date__c ,
+                    DateTime.now()
+                );
+            }
         }
     }
-}
-
 
     //
     // MethodName: checkTheEligibiltyOfConfidentiality
