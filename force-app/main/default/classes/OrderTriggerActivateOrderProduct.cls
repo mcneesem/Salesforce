@@ -89,8 +89,8 @@ public with sharing class OrderTriggerActivateOrderProduct {
                     orderItemToUpdate.add( oi );
                 }
             }
-            if ( actionTypeValues.contains( oi.SBQQ__QuoteLine__r.NSP_ActionType__c )
-                && ( oi.blng__HoldBilling__c == 'Yes' && oi.SBQQ__QuoteLine__r.NSP_ActionType__c == null )
+            if ( ( actionTypeValues.contains( oi.SBQQ__QuoteLine__r.NSP_ActionType__c )
+                || ( oi.blng__HoldBilling__c == 'Yes' && oi.SBQQ__QuoteLine__r.NSP_ActionType__c == null ) )
                 && ( ( oi.Order.NSP_Usage_Products_Count__c == null )
                     || ( oi.Order.NSP_Usage_Products_Count__c == 0 )
                     )
