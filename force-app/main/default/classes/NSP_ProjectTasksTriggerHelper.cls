@@ -3,6 +3,7 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (80%)
     // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
+    // test class modified to satisfy custom validation exception
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String COBRA_MM ='NSP_COBRA';
