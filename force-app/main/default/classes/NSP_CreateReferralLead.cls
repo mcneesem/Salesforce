@@ -8,14 +8,11 @@ public without sharing class NSP_CreateReferralLead {
     private static final string Industry ='Industry';
     private static final string Productinterted ='NSP_Product_Interest__c';
 
-    /**
-* Fetches the owner of the account record
-* @param LeadObject String json holds the values in the account object.
-*  @return String
-*
-*/
+    // Fetches the owner of the account record
+    // @param LeadObject String json holds the values in the account object.
+    // @return String
     @AuraEnabled
-    public static taskClass getAccountOwner(String recordID){
+    public static taskClass getAccountOwner( String recordID ) {
         taskClass taskObject = new taskClass();
         Account accountRecord = null;
         try{
@@ -33,14 +30,11 @@ public without sharing class NSP_CreateReferralLead {
         }
     }
 
-    /**
-* Creates referral Lead from the information that is provided on the site by the user
-* @param LeadObject String json holds the values in the account object.
-*  @return String
-*
-*/
+    // Creates referral Lead from the information that is provided on the site by the user
+    // @param LeadObject String json holds the values in the account object.
+    // @return String
     @AuraEnabled
-    public static String createReferralLead(String leadObject){
+    public static String createReferralLead( String leadObject ) {
         //Response String
         String response;
 
@@ -67,13 +61,11 @@ public without sharing class NSP_CreateReferralLead {
 
         return response;
     }
-    /**
-* Method to get picklist values of the picklist fields for an object
-* @return picklistValueClass
-*
-*/
+
+    // Method to get picklist values of the picklist fields for an object
+    // @return picklistValueClass
     @AuraEnabled
-    public static picklistValueClass returnAllPickListValues (){
+    public static picklistValueClass returnAllPickListValues() {
 
 
         //Instantiating the wrapper class
@@ -90,15 +82,17 @@ public without sharing class NSP_CreateReferralLead {
 
     }
 
-
-    /**
-* Method to get dependent picklist values
-* @param objDetail sObject  defines the sobject on which the field is present.
-*  @return String  contrfieldApiName controlling field name
-*  @return String  depfieldApiName controldependent field name
-*/
+    // Method to get dependent picklist values
+    // @param objDetail sObject  defines the sobject on which the field is present.
+    // @return String  contrfieldApiName controlling field name
+    // @return String  depfieldApiName controldependent field name
     @AuraEnabled
-    public static Map<String, List<String>> getDependentMap(sObject objDetail, string contrfieldApiName,string depfieldApiName) {
+    public static Map<String,List<String>> getDependentMap(
+        SObject objDetail ,
+        String contrfieldApiName ,
+        String depfieldApiName
+        )
+    {
         try{
         //Controlling field name to lower case
         String controllingField = contrfieldApiName.toLowerCase();
@@ -190,16 +184,12 @@ public without sharing class NSP_CreateReferralLead {
         '0123456789+/';
 
 
-    private static List<PicklistEntryWrapper> wrapPicklistEntries(List<Schema.PicklistEntry> PLEs) {
+    private static List<PicklistEntryWrapper> wrapPicklistEntries( List<Schema.PicklistEntry> PLEs ) {
         return (List<PicklistEntryWrapper>)
             JSON.deserialize(JSON.serialize(PLEs), List<PicklistEntryWrapper>.class);
     }
 
-    /**
-* Wrapper Class
-*/
-
-    public class PicklistEntryWrapper{
+    public class PicklistEntryWrapper {
         public String active {get;set;}
         public String defaultValue {get;set;}
         public String label {get;set;}
@@ -207,38 +197,24 @@ public without sharing class NSP_CreateReferralLead {
         public String validFor {get;set;}
         public PicklistEntryWrapper(){
         }
-
     }
-    /**
-* Wrapper Class
-*/
 
-    public  class picklistValueClass{
+    public  class picklistValueClass {
         @AuraEnabled public List<String> industry;
         @AuraEnabled public  List<String> potentialCustomer;
         @AuraEnabled public   List<String> productofinterest;
-
     }
 
-    /**
-* Wrapper Class
-*/
-
-    public  class taskClass{
+    public  class taskClass {
         @AuraEnabled public String recordOwnerId;
         @AuraEnabled public  String taskrecordtypeId;
-
-
     }
-    /**
-    * @MethodName: taskReferralRecord
-    * @Description: Created to provide permission set on click of UPSELL button
-    * @createdDate : 1/23/2023
-    * @Defect : DF-02737
-    * @return void
-    */
+
+    // @MethodName: taskReferralRecord
+    // @Description: Created to provide permission set on click of UPSELL button
+    // @return void
     @AuraEnabled
-    public static void taskReferralRecord(String recordTypeId){
+    public static void taskReferralRecord( String recordTypeId ) {
         PermissionSet permSet = null;
         List<PermissionSet> permissionSets = [SELECT Id, Name, Label FROM PermissionSet WHERE Name = 'NSP_Task_Referral_Task'];
         if (!permissionSets.isEmpty()){
@@ -270,17 +246,14 @@ public without sharing class NSP_CreateReferralLead {
             }
         }
     }
-    /**
-    * @MethodName: deletePermissionSet
-    * @Description: Create to remove permission set on click of UPSELL button
-    * @createdDate : 1/23/2023
-    * @Defect : DF-02737
-    * @return void
-    */
+
+    // @MethodName: deletePermissionSet
+    // @Description: Create to remove permission set on click of UPSELL button
+    // @return void
     @AuraEnabled
-    public static void deletePermissionSet(){
-
+    public static void deletePermissionSet() {
        NSP_TaskTriggerHelper.removePermissionSet();
-
     }
+
 }
+//
