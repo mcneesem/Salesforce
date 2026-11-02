@@ -25,7 +25,7 @@
             <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
         </connector>
     </assignments>
-    <description>New Client Portal: Create Default Portal Tasks, Remove - Employee Payroll Documentation</description>
+    <description>New Client Portal: Create Default Portal Tasks</description>
     <environments>Default</environments>
     <interviewLabel>Portal Project - Created - Async - Create Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Project - Created - Async - Create Default Portal Tasks</label>
