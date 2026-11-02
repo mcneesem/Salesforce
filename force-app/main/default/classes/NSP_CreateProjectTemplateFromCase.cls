@@ -4,7 +4,7 @@
     Date       : 05/10/2021 */
     
     public with sharing class NSP_CreateProjectTemplateFromCase {
-        // Test w/ NSP_CreateProjectTemplateFromCaseTest (85%)
+        // test w/ NSP_CreateProjectTemplateFromCaseTest (90%)
 
         /***********************************************************************************************
         * MethodName: insertProject
