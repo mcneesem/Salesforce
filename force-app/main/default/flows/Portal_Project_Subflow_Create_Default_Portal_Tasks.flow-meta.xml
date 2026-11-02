@@ -117,7 +117,7 @@
             <label>Yes : Valid Input</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Create Default Portal Tasks - Subflow , Removed FEIN, Employee Payroll Documentation</description>
+    <description>New Client Portal: Create Default Portal Tasks - Subflow</description>
     <environments>Default</environments>
     <formulas>
         <name>f_defaulttasks_action</name>
