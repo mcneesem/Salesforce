@@ -4,6 +4,7 @@
     Date       : 05/10/2021 */
     
     public with sharing class NSP_CreateProjectTemplateFromCase {
+        // Test w/ NSP_CreateProjectTemplateFromCaseTest (85%)
 
         /***********************************************************************************************
         * MethodName: insertProject
@@ -13,9 +14,13 @@
         @AuraEnabled
         public static String insertProject(String caseId){
             try {
-                Case getCase = [SELECT NSP_Category__c FROM Case WHERE Id = : caseId];
-                Id projectId = NSP_CreateProjectUsingKey.createProject(getCase.NSP_Category__c, System.Today(), 'Case');
-    
+                Case getCase = null;
+                Id projectId = null;
+                List<Case> cases  = [SELECT NSP_Category__c FROM Case WHERE Id = : caseId];
+                if (!cases.isEmpty()) {
+                getCase = cases[0];
+                projectId = NSP_CreateProjectUsingKey.createProject(getCase.NSP_Category__c, System.Today(), 'Case');
+}
                 if(projectId != null){
                     linkProjectWithCase(projectId, getCase.id);
                     return System.Label.NSP_Project_Created;
