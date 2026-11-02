@@ -1,5 +1,5 @@
 public with sharing class OrderTriggerActivateOrderProduct {
-    // test w/ OrderTriggerActivateOrderProductTest (??%)
+    // test w/ OrderTriggerActivateOrderProductTest (77%)
 
     private static final String CLOSE_LOST = 'Close/Lost';
 
