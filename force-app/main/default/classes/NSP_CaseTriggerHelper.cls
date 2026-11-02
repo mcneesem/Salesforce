@@ -240,15 +240,17 @@ Date        : 30/09/2021
 */
 
     public void updateCaseOwnerWhenL2IsTrue( list<Case> listOfCases ){
-        Group escalationQueue = [SELECT Id
+        List<Group> escalationQueues= [SELECT Id
                                  FROM Group
                                  WHERE Type = : QUEUE_TYPE AND DeveloperName = : ESCALATION_QUEUE];
+        if (!escalationQueues.isEmpty()) {
+        Group escalationQueue = escalationQueues[0];
 
         for(Case updatedCase : listOfCases){
             updatedCase.OwnerId = escalationQueue.id;
         }
     }
-
+  }
     public void updateOwnerToCssRep( list<Case> listOfCases ){
         set<Id> setOfAccountId                       = new set<Id>();
         map<Id, Id> mapOfAccountIdAndAccountTeamUser = new map<Id, Id>();
@@ -330,7 +332,11 @@ Date        : 30/09/2021
 *
 */
     public void beforeUpdateDirector(Map<Id, Case> caseNewMap, Map<Id, Case> caseOldMap){
-        BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+        List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+        BusinessHours defaultBusinessHours = null;
+        if (!businessHoursList.isEmpty()) {
+        defaultBusinessHours = businessHoursList[0];
+    }
         queueMap =  new Map<Id, Group> ([SELECT Id,DeveloperName, Name FROM Group WHERE Id != null]);
         closedCaseLst = new List<Case>();
         List<Case> escalationCaseList = new List<Case>();
@@ -2084,7 +2090,9 @@ Story:        STY-01785
                     }
                 }
                 if(!caseIds.isEmpty()) {
-                    BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+                    List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+                    if (!businessHoursList.isEmpty()) {
+                    BusinessHours defaultBusinessHours = businessHoursList[0];
                     List<Case> newCaseList = [
                         SELECT
                         Id, OwnerId, CreatedDate, Status, LastModifiedDate, NSP_Detail__c,NSP_Category__c,NSP_SubCategory__c,
@@ -2247,6 +2255,7 @@ Story:        STY-01785
                     if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
                         upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
                     }
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -2329,15 +2338,18 @@ Param : Map<Id, Case> oldMap, Map<Id, Case> newMap
 return type : void
 ********/
     private void updateInProgressTime(Map<Id, Case> oldMap, List<Case> caseList){
-        BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+        List<BusinessHours> businessHoursList = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+        if (!businessHoursList.isEmpty()) {
+        BusinessHours defaultBusinessHours = businessHoursList[0];
         for(Case newCase : caseList){
             newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c == null ? 0 : newCase.NSP_Case_In_Progress_Hours__c;
 //Added as part of DF-05644 to avoid Null pointer exception when  NSP_Case_In_Progress_Modified_Date__c is null
             if(newCase.NSP_Case_In_Progress_Modified_Date__c != null){
             newCase.NSP_Case_In_Progress_Hours__c = newCase.NSP_Case_In_Progress_Hours__c+calculateTimeDifference(defaultBusinessHours.Id, newCase.NSP_Case_In_Progress_Modified_Date__c, DateTime.now());
-            }
+ }
         }
     }
+}
 
 
     //
