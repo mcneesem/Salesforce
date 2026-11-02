@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL- Provide Instructions to access OEE</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Online Employee Enrollment Access</name>
+    <style>freeForm</style>
+    <subject>Access Insperity Online Employee Enrollment</subject>
+    <textOnly>Dear client,
+
+Congratulations again on your new hire. Your new employee can complete their online enrollment in the Insperity Premier Portal; you can share the information below with them to assist them in the process.
+
+Thank you
+
+[signature]
+
+Access your Insperity Online Employee Enrollment
+
+Once you have created your Username and Password for Insperity Premier, follow the instructions below to access your Online Employee Enrollment.
+
+Login to Insperity Premier.
+
+
+
+Once you are logged in you will need to select the Start Now button to access your Online Employee Enrollment.
+
+
+
+Now you can begin your enrollment by selecting Start Now again.
+
+
+If you are unable to access your Online Employee Enrollment information, please reach out to the Insperity Contact Center at 1-866-715-3552 for additional assistance.
+
+Thank you for trusting Insperity to serve your business.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

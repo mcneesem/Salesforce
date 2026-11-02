@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL- Resources for prospective candidates at clients with no 401k</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Resources for Candidates (No 401k)</name>
+    <style>freeForm</style>
+    <subject>Information Needed for a Candidate</subject>
+    <textOnly>{Attach appropriate Client BAAG/Client Contribution sheet}
+
+
+Dear Client:
+
+I would like to share some helpful resources that can help you attract the best candidates for growth at your company. Highlighting the various benefits provided through the Insperity relationship will assist you in accomplishing this goal.
+
+I have attached several documents you can provide potential candidates, and have outlined information about each below.
+
+Benefits At A Glance Brochure: Provides a high-level overview of the benefits to employees included in the current coverage period.
+Employee Contribution Report: Provides information about benefit costs during the current coverage period. Your Insperity Payroll Specialist can assist with priming the new employee's information into the Insperity system as a part of our Paperless Onboarding process.
+
+If you are interested, Insperity can assist with the initial recruiting of candidates, employment screening, and background checks. I am happy to connect you to the Insperity Talent Acquisition Services team for more information if desired.
+
+Thank you for trusting Insperity to serve your business.
+
+Sincerely,
+
+[Signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
