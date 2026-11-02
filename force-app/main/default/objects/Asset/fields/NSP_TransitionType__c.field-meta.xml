@@ -27,6 +27,11 @@
                 <default>false</default>
                 <label>IPS to HRCore</label>
             </value>
+            <value>
+                <fullName>HR360 to HRScale</fullName>
+                <default>false</default>
+                <label>HR360 to HRScale</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
