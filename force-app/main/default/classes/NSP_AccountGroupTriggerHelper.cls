@@ -57,9 +57,13 @@ public class NSP_AccountGroupTriggerHelper {
     public void groupTypeValidation(list<NSP_Account_Group__c> newList, Map<Id, NSP_Account_Group__c> oldMap){
         List<String> lstGrpTypes = new List<String>{'Account Health','Renewal Probability', 'Growth Forecast'};
         List<String> lstManualGrpTypes = new List<String>{'Controlled Group','EEO', 'Renew & Review Together','WX Account Group'};
-        User userRec  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId()];
+        List<User> userRecList  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId() Limit 1];
+        User userRec;
+        if(!userRecList.isEmpty()){
+            userRec= userRecList[0];
+        }
         for(NSP_Account_Group__c accGrp : newList){
-            if(userRec.Profile.Name != 'Integration User') {
+            if(userRec != null && userRec.Profile.Name != 'Integration User') {
                 if(accGrp.NSP_Type__c != oldMap.get(accGrp.Id).NSP_Type__c && (lstGrpTypes.contains(accGrp.NSP_Type__c) || lstGrpTypes.contains(oldMap.get(accGrp.Id).NSP_Type__c))){
                     accGrp.addError(label.NSP_AccountGroupErrorMessage);
                 }
