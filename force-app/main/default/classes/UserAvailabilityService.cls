@@ -127,7 +127,7 @@ public with sharing class UserAvailabilityService {
             'America/Denver'=> 6 ,
             'America/Los_Angeles'=> 7
         };
-        Integer daylightSavingTimeOffset = 0; // Roberto/PMCC ~ for daylight saving time modifications...
+        Integer daylightSavingTimeOffset = 1; // Roberto/PMCC ~ for daylight saving time modifications...
         Integer offset = 0;
         if ( String.isNotBlank( timeZone )
             && timeZoneOffsets.containsKey( timeZone )
