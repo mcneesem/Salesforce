@@ -15,6 +15,7 @@ Modification Log     :
                                               while catching exception and passing to aura component as part of DF-01313
 ***************************************************************************************************/
 public without sharing class NSP_AddressCtrl{
+    // test w/ NSP_AddressCtrlTest (83%)
     public static final string SUCCESS = 'Success';
     public static final string ERROR = 'Error';    
     
@@ -26,9 +27,12 @@ public without sharing class NSP_AddressCtrl{
     @AuraEnabled
     public static NSP_Address__c getAddress(String recId){
         
-            NSP_Address__c address;
+            NSP_Address__c address = null;
             try{
-                address = [SELECT NSP_Address_Type__c,NSP_Country__c, NSP_State__c FROM NSP_Address__c WHERE Id =:recId];
+            List<NSP_Address__c> addresses = [SELECT NSP_Address_Type__c,NSP_Country__c, NSP_State__c FROM NSP_Address__c WHERE Id =:recId];
+            if (!addresses.isEmpty()) {
+            address = addresses[0];
+             }
              }catch(Exception ex){
                 throw new AuraHandledException(ex.getMessage());
             }
