@@ -970,11 +970,11 @@ public without sharing class NSP_Implprofile_ServiceHelperUpdate {
             eachProjectTask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
             eachProjectTask.Name = pta.NSP_Task_Name__c;
             eachProjectTask.API_Name__c = pta.API_Name__c;
+            eachProjectTask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
             eachProjectTask.Portal_Event_Name__c = pta.Portal_Event_Name__c;
             eachProjectTask.Portal_Task_Name__c = pta.Portal_Task_Name__c;
             eachProjectTask.Portal_Task_Action__c = pta.Portal_Task_Action__c;
             eachProjectTask.Portal_Task_Type__c = pta.Portal_Task_Type__c;
-            eachProjectTask.Portal_Guidance_API_Name__c = pta.Portal_Guidance_API_Name__c;
             eachProjectTask.Portal_Task_Rank__c = pta.Portal_Task_Rank__c;
             eachProjectTask.pse__Order__c = pta.Order__c;
             eachProjectTask.Task_Order__c = pta.Task_Order__c;
