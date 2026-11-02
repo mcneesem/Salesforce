@@ -1,4 +1,5 @@
-public class NSP_FocusItemTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 56...
+public without sharing class NSP_FocusItemTriggerHelper {
    // test w/ NSP_FocusItemTriggerHelperTest (81%)
 
     public static void beforeInsertDirector( List<NSP_Focus_Item__c> newList ) {
@@ -101,7 +102,10 @@ public class NSP_FocusItemTriggerHelper {
                     {
                         ecoShiftOrFinRiskList.add( focusItems );
                     }
-                    if ( focusItems.Focus_Item__c == NSP_ServiceConstants.RISK_MITIGATION ) {
+                    if ( ( focusItems.Focus_Item__c == NSP_ServiceConstants.RISK_MITIGATION )
+                        && ( focusItems.NSP_Detail__c == 'Client operates outside the compliance guidance provided by Insperity' )
+                        )
+                    {
                         riskMitigationList.add( focusItems );
                     }
                     if ( ( focusItems.Focus_Item__c == NSP_ServiceConstants.RAPID_GROWTH_OR_DECLINE )

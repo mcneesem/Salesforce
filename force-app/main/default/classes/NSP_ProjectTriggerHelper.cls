@@ -770,24 +770,21 @@ public with sharing class NSP_ProjectTriggerHelper {
         )
     {
         try {
+            Set<Id> resourceContactIds = new Set<Id>();
+            if ( !userWithContactMap?.isEmpty() ) {
+                resourceContactIds.addAll( userWithContactMap.values() );
+            }
+            Set<Id> staffingPermittedResourceIds = NSP_ProjectTriggerHelper.getStaffingPermittedResourceIds( resourceContactIds );
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
-            for ( Id projectId : changedProjectMap.keyset() ) {
-                pse__Proj__c project = changedProjectMap.get( projectId );
-                Id projectCoordinator = userWithContactMap.get( project.Project_Coordinator__c );
-                Id projectImplementor = userWithContactMap.get( project.Project_Implementer__c );
-                Id resourceId = null;
-                if ( projectCoordinator != projectImplementor ) {
-                    if ( projectImplementor != null ) {
-                        resourceId = projectImplementor;
-                    }
-                    if ( projectCoordinator != null ) {
-                        resourceId = projectCoordinator;
-                    }
-                } else if ( projectCoordinator == projectImplementor ) {
-                    resourceId = projectImplementor;
-                }
+            for ( Id projectId : changedProjectMap?.keyset() ) {
+                pse__Proj__c project = changedProjectMap?.get( projectId );
+                Id resourceId = NSP_ProjectTriggerHelper.resolveResourceId( project , userWithContactMap );
                 pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
-                if ( schedule != null ) {
+                if ( ( schedule != null )
+                    && ( resourceId != null )
+                    && staffingPermittedResourceIds?.contains( resourceId )
+                    )
+                {
                     relatedAssignmentList.add(
                         this.buildLinkedAssignment(
                             projectId ,
@@ -820,6 +817,54 @@ public with sharing class NSP_ProjectTriggerHelper {
                 e
             );
         }
+    }
+
+    // Returns the subset of resourceContactIds that have an active Staffing permission control.
+    // @param resourceContactIds Set of Contact Ids to check against pse__Permission_Control__c
+    // @return Set<Id> of Contact Ids where pse__Staffing__c is true
+    private static Set<Id> getStaffingPermittedResourceIds( Set<Id> resourceContactIds ) {
+        Set<Id> result = new Set<Id>();
+        if ( !resourceContactIds?.isEmpty() ) {
+            for ( pse__Permission_Control__c pc : [
+                        SELECT pse__Resource__c
+                        FROM pse__Permission_Control__c
+                        WHERE (
+                            ( pse__Resource__c != null )
+                            AND ( pse__Resource__c IN :resourceContactIds )
+                            AND ( pse__Staffing__c = true )
+                        )
+                    ]
+                )
+            {
+                result.add( pc.pse__Resource__c );
+            }
+        }
+        return result;
+    }
+
+    // @description Resolves the resource Contact Id to use for an assignment.
+    //              Coordinator takes priority when the two Ids differ; when equal,
+    //              either value is returned (implementor is used as the canonical one).
+    // @param project (may be null)
+    // @return Populated resource Id, or null when neither is provided.
+    @TestVisible
+    private static Id resolveResourceId( pse__Proj__c project, Map<Id,Id> userWithContactMap ) {
+        Id resourceId = null;
+        if ( ( project != null ) && ( userWithContactMap != null ) ) {
+            Id projectCoordinator =  userWithContactMap.get( project.Project_Coordinator__c );
+            Id projectImplementor =  userWithContactMap.get( project.Project_Implementer__c );
+            if ( projectCoordinator != projectImplementor ) {
+                if ( projectImplementor != null ) {
+                    resourceId = projectImplementor;
+                }
+                if ( projectCoordinator != null ) {
+                    resourceId = projectCoordinator;
+                }
+            } else if ( projectCoordinator == projectImplementor ) {
+                resourceId = projectImplementor;
+            }
+        }
+        return resourceId;
     }
 
     private pse__Assignment__c buildLinkedAssignment( Id projectId , Id resourceId , Id scheduleId ) {

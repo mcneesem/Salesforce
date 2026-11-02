@@ -1,8 +1,5 @@
-/**
- * An apex class that updates portal user details.
-   Guest users are never able to access this page.
- */
 public with sharing class MyProfilePageController {
+    // test w/ MyProfilePageControllerTest (86%)
 
     private User user;
     private boolean isEdit = false;
@@ -12,12 +9,17 @@ public with sharing class MyProfilePageController {
     }
 
     public MyProfilePageController() {
-        user = [SELECT id, email, username, usertype, communitynickname, timezonesidkey, languagelocalekey, firstname, lastname, phone, title,
-                street, city, country, postalcode, state, localesidkey, mobilephone, extension, fax, contact.email
-                FROM User
-                WHERE id = :UserInfo.getUserId()];
+        List<User> users = [
+            SELECT id, email, username, usertype, communitynickname, timezonesidkey, languagelocalekey, firstname, lastname, phone, title,
+            street, city, country, postalcode, state, localesidkey, mobilephone, extension, fax, contact.email
+            FROM User
+            WHERE id = :UserInfo.getUserId()
+        ];
+        if (!users.isEmpty()) {
+            user = users[0];
+        }
         // guest users should never be able to access this page
-        if (user.usertype == 'GUEST') {
+        if (user == null ||user.usertype == 'GUEST') {
             throw new NoAccessException();
         }
     }
@@ -45,9 +47,18 @@ public with sharing class MyProfilePageController {
 
     public void cancel() {
         isEdit=false;
-        user = [SELECT id, email, username, communitynickname, timezonesidkey, languagelocalekey, firstname, lastname, phone, title,
-                street, city, country, postalcode, state, localesidkey, mobilephone, extension, fax, contact.email
-                FROM User
-                WHERE id = :UserInfo.getUserId()];
-    }    
+        List<User> users = [
+            SELECT id, email, username, communitynickname, timezonesidkey, languagelocalekey, firstname, lastname, phone, title,
+            street, city, country, postalcode, state, localesidkey, mobilephone, extension, fax, contact.email
+            FROM User
+            WHERE id = :UserInfo.getUserId()
+        ];
+        if (!users.isEmpty()) {
+            user = users[0];
+        } else {
+            user = null;
+        }
+    }
+
 }
+//

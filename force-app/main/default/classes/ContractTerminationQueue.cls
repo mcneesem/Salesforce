@@ -1,4 +1,5 @@
-public class ContractTerminationQueue implements Queueable , Database.AllowsCallouts , Finalizer {
+// intentionally `without sharing` to preserve default sharing at api version 64...
+public without sharing class ContractTerminationQueue implements Queueable , Database.AllowsCallouts , Finalizer {
     // test w/ ContractTerminationHandlerTest (86%)
 
     private Map<Id,Date> contractToTerminationDates = null;
@@ -33,15 +34,23 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
                     'QuoteUpdate' ,
                     quoteResults
                 );
-                // Loop through results and send email to errors
+                List<Id> successfulQuoteIds = new List<Id>();
                 for ( Database.SaveResult quoteResult : quoteResults ) {
-                    if ( !quoteResult.isSuccess() ) {
+                    if ( quoteResult.isSuccess() ) {
+                        successfulQuoteIds.add( quoteResult.getId() );
+                    } else {
                         ContractTerminationHandler.sendEmail(
-                            this.toUsers,
+                            this.toUsers ,
                             'Updating Quote for Contract (Id=' + this.contractIdToSendEmail + ')'
                         );
                     }
                 }
+                // Chain CPQ pipeline queueable - new transaction keeps callouts away from DML
+                QuoteTerminationQueueable.enqueueJob(
+                    successfulQuoteIds ,
+                    this.toUsers ,
+                    this.contractIdToSendEmail
+                );
             }
         } catch ( Exception e ) {
             this.handleException( e , 'execute-Finalizer' );
@@ -60,7 +69,6 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
                 if ( ( quoteModel != null ) && ( quoteModel.record != null ) ) {
                     SBQQ__Quote__c quote = (SBQQ__Quote__c)quoteModel.record;
                     quote.NSP_TerminationDate__c = terminationDate;
-                    quote.Run_Quote_Calc_for_Termination__c = true;
                     this.quotesToUpdate.add( quote );
                 }
             }

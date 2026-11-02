@@ -1426,6 +1426,16 @@
                 <identifier>RecordPortal_Task_Action_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Task_Rank__c</fieldItem>
+                <identifier>RecordPortal_Task_Rank_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e5517c75-752e-4563-b128-a9b35f0ecc94</name>
         <type>Facet</type>
     </flexiPageRegions>

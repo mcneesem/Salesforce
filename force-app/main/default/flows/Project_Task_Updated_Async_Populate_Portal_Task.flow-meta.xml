@@ -2,6 +2,65 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Portal_Task</name>
+        <label>Set Fault Element : Retrieve_Portal_Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Portal_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>When API Name is added then Create Portal Task</description>
+        <name>Set_Operation_Type</name>
+        <label>Set : Operation Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>operationType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Project_Task_Subflow_Populate_Portal_Task</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Cover the Ad-hoc Scenario , Validate if Portal Task Create if not exists or update</description>
+        <name>Portal_Task_Exists</name>
+        <label>Portal Task Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Project_Task_Subflow_Populate_Portal_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes : Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Create_Portal_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Retrieve_Portal_Task</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Operation_Type</targetReference>
+            </connector>
+            <label>No  : Create Portal Task</label>
+        </rules>
+    </decisions>
     <description>New Client Portal: Populate Portal Task</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Populate Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
@@ -25,10 +84,36 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Retrieve_Portal_Task</name>
+        <label>Retrieve Portal Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Portal_Task_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Portal_Task</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Project_Task__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Portal_Task__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) AND ( 6 AND 7 AND 8 ) )</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 OR 6 OR 7 OR 8 OR 9 ) AND 10 AND 11 AND 12 )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -65,6 +150,34 @@
             </value>
         </filters>
         <filters>
+            <field>Portal_Task_Name__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Guidance_API_Name__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Task_Type__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Portal_Task_Action__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
             <field>API_Name__c</field>
             <operator>IsNull</operator>
             <value>
@@ -89,13 +202,38 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Project_Task_Subflow_Populate_Portal_Task</targetReference>
+                <targetReference>Retrieve_Portal_Task</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Project_Task_Updated_Async_Populate_Portal_Task</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Project_Task_Subflow_Populate_Portal_Task</name>
         <label>Project Task - Subflow - Populate Portal Task</label>
@@ -105,7 +243,7 @@
         <inputAssignments>
             <name>operationType</name>
             <value>
-                <stringValue>Update</stringValue>
+                <elementReference>operationType</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -121,4 +259,22 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>When API Name is added then Create Portal Task</description>
+        <name>operationType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Update</stringValue>
+        </value>
+    </variables>
 </Flow>

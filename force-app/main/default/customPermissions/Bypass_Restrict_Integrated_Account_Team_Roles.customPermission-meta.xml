@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows assigned users to bypass validation that restricts creating or updating integrated Account Team roles</description>
+    <isLicensed>false</isLicensed>
+    <label>Bypass Restrict Integrated Account Team Roles</label>
+</CustomPermission>

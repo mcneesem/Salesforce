@@ -18406,6 +18406,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>blng__InvoiceLine__c.Delta_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>blng__InvoiceLine__c.NSP_AIMS_Billing_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -74,6 +74,7 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Action__c' ,
             'Portal_Task__c.Due_Date__c' ,
             'Portal_Task__c.Is_Editable__c' ,
+            'Portal_Task__c.Is_Visible__c' ,
             'Portal_Task__c.Has_Project_Task__c' ,
             'Portal_Task__c.Parent_Portal_Task__c' ,
             'Portal_Task__c.Portal_Guidance__c' ,
@@ -87,16 +88,15 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Value_Text__c' ,
         ] ,
         where: '$where' ,
-        sortBy: [ 'Portal_Task__c.Rank__c' ]
+        sortBy: [ 'Portal_Task__c.Rank__c' , 'Portal_Task__c.Name' ]
     })
     listInfo({ error, data }) {
         if ( data ) {
             this.records = data.records;
             // only show visible tasks...
-            // ~ ignore tasks with a "Hidden" status...
             this.records = data.records?.filter(
                 ( record ) => {
-                    return ( record?.fields?.Status__c?.value != "Hidden" );
+                    return ( record?.fields?.Is_Visible__c?.value );
                 }
             );
             this.error = undefined;

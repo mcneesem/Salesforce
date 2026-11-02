@@ -1,12 +1,13 @@
-//
-// @description Batch that finds WO Assets whose Account was Terminated 14+ days ago and cancels
-// the related open Service Plan projects (status not Complete/Cancelled, project type Service Plan)
-// by setting their status to Cancelled with the "Client Terminated" reason.
-// must evaluate every matching Asset org-wide, independent of the scheduling user's sharing.
-//
 // intentionally `without sharing` to ensure visibility of all Asset and pse__Proj__c records...
 public without sharing class CancelServicePlanProjectsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ CancelServicePlanProjectsBatchTest (88%)
+
+    //
+    // @description Batch that finds WO Assets whose Account was Terminated 14+ days ago and cancels
+    // the related open Service Plan projects (status not Complete/Cancelled, project type Service Plan)
+    // by setting their status to Cancelled with the "Client Terminated" reason.
+    // must evaluate every matching Asset org-wide, independent of the scheduling user's sharing.
+    //
 
     //
     // argument-free constructor is required to be "runnable"...
@@ -25,7 +26,7 @@ public without sharing class CancelServicePlanProjectsBatch implements ISelfSche
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday at 1am ' + suffix ,
+            'CancelServicePlanProjectsBatch ~ Cancel open service-plan (PEO) projects for Accounts whose WO Asset has been Terminated for the configured number of days ~ everyday at 1am' + suffix ,
             '0 0 1 ? * * *' ,
             new CancelServicePlanProjectsBatch()
         );

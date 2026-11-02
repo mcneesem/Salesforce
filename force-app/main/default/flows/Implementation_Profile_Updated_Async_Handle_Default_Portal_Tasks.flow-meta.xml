@@ -15,6 +15,13 @@
                 <elementReference>$Record.Business_Inception_Date__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recPortalTask.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>f_PortalStatus</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Portal_Task_Record</targetReference>
         </connector>
@@ -115,8 +122,17 @@
             <label>Yes : Valid Portal Task</label>
         </rules>
     </decisions>
-    <description>Handle Business Inception Date , Remove FEIN</description>
+    <description>Handle Business Inception Date</description>
     <environments>Default</environments>
+    <formulas>
+        <name>f_PortalStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!$Record.Business_Inception_Date__c} ) ) ,
+  &quot;Completed&quot; ,
+  &quot;Pending&quot;
+)</expression>
+    </formulas>
     <interviewLabel>Implementation Profile - Updated - Async - Handle Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Profile - Updated - Async - Handle Default Portal Tasks</label>
     <processMetadataValues>

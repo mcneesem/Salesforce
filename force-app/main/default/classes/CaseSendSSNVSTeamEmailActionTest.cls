@@ -385,7 +385,7 @@ private class CaseSendSSNVSTeamEmailActionTest {
         Assert.areEqual(1, result.subClientContacts?.size(), 'Email should be sent');
     }
 
-    // Covers getWorkdayRelatedAIMSClientNumbers — sub client sourced from Workday uses
+    // Covers getWorkdayRelatedAIMSClientNumbers - sub client sourced from Workday uses
     // NSP_Client__c (AIMS client number) in the email body instead of NSP_AIMS_Sub_Client__c
     @isTest
     private static void testGetSubClientAndSubClientContacts_Positive_WorkdaySource() {
@@ -445,7 +445,7 @@ private class CaseSendSSNVSTeamEmailActionTest {
         Assert.areEqual(2, result.subClientContacts?.size(), 'Both eligible contacts should be emailed via Workday source path');
     }
 
-    // Covers getWorkdayRelatedAIMSClientNumbers — sub client with a non-Workday source
+    // Covers getWorkdayRelatedAIMSClientNumbers - sub client with a non-Workday source
     // falls back to NSP_AIMS_Sub_Client__c on the contact (Source__c not 'Workday')
     @isTest
     private static void testGetSubClientAndSubClientContacts_Positive_NonWorkdaySource() {
@@ -465,7 +465,7 @@ private class CaseSendSSNVSTeamEmailActionTest {
         contactObj.NSP_Per_ID__c = '8888';
         update contactObj;
 
-        // Source__c is not Workday — getWorkdayRelatedAIMSClientNumbers returns an empty map
+        // Source__c is not Workday - getWorkdayRelatedAIMSClientNumbers returns an empty map
         // and deliverEmails falls back to NSP_AIMS_Sub_Client__c on the contact
         List<NSP_Sub_Client__c> subClients = [SELECT Id FROM NSP_Sub_Client__c WHERE NSP_Account__c = :accountObj.Id LIMIT 1];
         Assert.areEqual(1, subClients.size(), subClientAssertMessage);

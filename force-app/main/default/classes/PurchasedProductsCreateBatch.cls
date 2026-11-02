@@ -1,4 +1,5 @@
-public class PurchasedProductsCreateBatch implements Database.Batchable<SObject> {
+// intentionally `without sharing` to preserve default sharing at api version 65...
+public without sharing class PurchasedProductsCreateBatch implements Database.Batchable<SObject> {
     // test w/ PurchasedProductsCreateBatchTest (90%)
 
     private Set<Id> opportunityIds = new Set<Id>();
@@ -446,11 +447,28 @@ public class PurchasedProductsCreateBatch implements Database.Batchable<SObject>
         if ( preconditionsMet ) {
             List<Id> productIdsForAccount = this.accToProductsMap.get( accountId );
             Boolean notAlreadyPresent = !productIdsForAccount.contains( product.Product__c );
-            if ( notAlreadyPresent ) {
+            if ( notAlreadyPresent && this.hasExcludedBundles( productIdsForAccount ) ) {
                 result = true;
             }
         }
         return result;
+    }
+
+    //method to check if BUndle parents is present in new Opp products
+    private Boolean hasExcludedBundles(List<Id> productIdsForAccount){
+        Boolean hasExcludedBundle = false;
+        if ( ( productIdsForAccount != null )
+            && !productIdsForAccount.isEmpty()
+            && !PurchasedProductsCreateBatch.excludedBundles.isEmpty()
+            )
+        {
+            for ( Id bundleId : PurchasedProductsCreateBatch.excludedBundles ) {
+                if ( productIdsForAccount.contains( bundleId ) ) {
+                    hasExcludedBundle = true;
+                }
+            }
+        }
+        return hasExcludedBundle;
     }
 
     private void insertPurchasedProducts() {
@@ -669,6 +687,33 @@ public class PurchasedProductsCreateBatch implements Database.Batchable<SObject>
                 isEnabled = local;
             }
             return isEnabled;
+        }
+        private set;
+    }
+
+    private static Set<Id> excludedBundles {
+        private get {
+            if ( excludedBundles == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( ( PurchasedProductsCreateBatch.settings != null )
+                    && String.isNotBlank( PurchasedProductsCreateBatch.settings.ExcludedBundles__c )
+                    )
+                {
+                    //Product Ids of Bundle parents
+                    Map<Id,Product2> records = new Map<Id,Product2>(
+                        [
+                            SELECT Id
+                            FROM Product2
+                            WHERE ProductCode IN :PurchasedProductsCreateBatch.settings.ExcludedBundles__c.split( ',' )
+                        ]
+                    );
+                    if ( !records?.isEmpty() ) {
+                        local = records.keySet();
+                    }
+                }
+                excludedBundles = local;
+            }
+            return excludedBundles;
         }
         private set;
     }
