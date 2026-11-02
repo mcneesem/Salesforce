@@ -128,7 +128,7 @@ export function isFieldVisibleForObject(fieldName, line, conn, objectName)
 {
 
     let  nonHiddenfields = ['SBQQ__ProductCode__c','SBQQ__ProductName__c','SBQQ__Description__c','NSP_Clone_Required__c','NSP_Term_Line__c'];
-    let renewalProductsForDescChange = ['IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO','IOPRTSuccessionPlanningWO','IPMHRSupportCenter','IOPRTUserLicense','IOPRTStandardUserLicense','IOPRTUserLicenseWO','IOPRTStandardUserLicenseWO','IOPRTSSOModule'];
+    let renewalProductsForDescChange = ['IWXBundle','IWXBundleW2','IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO','IOPRTSuccessionPlanningWO','IPMHRSupportCenter','IOPRTUserLicense','IOPRTStandardUserLicense','IOPRTUserLicenseWO','IOPRTStandardUserLicenseWO','IOPRTSSOModule'];
 
     if (objectName === 'QuoteLine__c')
     {
