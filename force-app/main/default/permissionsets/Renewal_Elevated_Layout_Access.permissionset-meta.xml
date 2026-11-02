@@ -6,12 +6,12 @@
     </customPermissions>
     <description>Gives access to Renewal elevated fields</description>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Opportunity.Priced_Time_End__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Opportunity.Priced_Time_Start__c</field>
         <readable>true</readable>
     </fieldPermissions>
