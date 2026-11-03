@@ -2,7 +2,7 @@
     access="public"
     controller="CRMAnalyticsDashboardController">
 
-    <aura:attribute name="dashboardField" type="String" default="SDR_BDR_Standard_Dashboard_Dev_Name__c"/>
+    <aura:attribute name="dashboardField" type="String" default="SDR_BDR_Dashboard_Developer_Name__c"/>
 
     <aura:attribute name="isError"   type="Boolean" default="false" access="private"/>
     <aura:attribute name="isLoading" type="Boolean" default="true"  access="private"/>

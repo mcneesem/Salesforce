@@ -2,8 +2,8 @@ import { LightningElement, api, wire } from 'lwc';
 import getDashboardSettings from '@salesforce/apex/CRMAnalyticsDashboardController.getDashboardSettings';
 
 export default class CrmAnalyticsDashboardWrapper extends LightningElement {
-    @api dashboardField = 'Dashboard_Id__c';
-    @api dashboardHeight = 500;
+    @api dashboardField;
+    @api dashboardHeight;
     _settings;
     error;
 
@@ -16,6 +16,14 @@ export default class CrmAnalyticsDashboardWrapper extends LightningElement {
     }
 
     get dashboardId() {
-        return this._settings ? this._settings[this.dashboardField] : undefined;
+        let response;
+        if ( this._settings
+            && this.dashboardField
+            && Object.hasOwn( this._settings , this.dashboardField )
+            )
+        {
+            response = this._settings[this.dashboardField];
+        }
+        return response;
     }
 }

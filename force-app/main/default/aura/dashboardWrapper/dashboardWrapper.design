@@ -1,6 +1,6 @@
 <design:component label="Standard Dashboard Wrapper">
     <design:attribute name="dashboardField" label="Dashboard Field"
         description="Custom setting field to read the dashboard value from"
-        datasource="SDR_BDR_Standard_Dashboard_Dev_Name__c"
-        default="SDR_BDR_Standard_Dashboard_Dev_Name__c"/>
+        datasource="SDR_BDR_Dashboard_Developer_Name__c"
+        default="SDR_BDR_Dashboard_Developer_Name__c"/>
 </design:component>

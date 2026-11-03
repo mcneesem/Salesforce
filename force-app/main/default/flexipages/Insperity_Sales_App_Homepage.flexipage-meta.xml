@@ -5,10 +5,10 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>dashboardField</name>
-                    <value>SDR_BDR_Standard_Dashboard_Dev_Name__c</value>
+                    <value>SDR_BDR_Dashboard_Developer_Name__c</value>
                 </componentInstanceProperties>
-                <componentName>standardDashboardWrapper</componentName>
-                <identifier>c_standardDashboardWrapper</identifier>
+                <componentName>dashboardWrapper</componentName>
+                <identifier>c_dashboardWrapper</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-bd39564a-84f4-4b17-8d6a-48beadb6dd79</name>
