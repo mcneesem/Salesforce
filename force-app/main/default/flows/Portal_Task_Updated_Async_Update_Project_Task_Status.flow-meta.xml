@@ -87,6 +87,16 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>Map Portal Status to Project Status</description>
+        <name>f_ProjectStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    TEXT({!$Record.Status__c}) = &quot;Completed&quot;,
+    &quot;Complete&quot;,
+    TEXT({!$Record.Status__c})
+)</expression>
+    </formulas>
     <interviewLabel>Portal Task - Updated - Async - Update Project Task - Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task - Updated - Async - Update Project Task - Status</label>
     <processMetadataValues>
@@ -160,7 +170,7 @@
         <inputAssignments>
             <field>pse__Status__c</field>
             <value>
-                <elementReference>$Record.Status__c</elementReference>
+                <elementReference>f_ProjectStatus</elementReference>
             </value>
         </inputAssignments>
         <object>pse__Project_Task__c</object>
@@ -168,7 +178,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>and</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 ) AND ( 4 OR 5 )</filterLogic>
         <filters>
             <field>Project_Task__c</field>
             <operator>IsNull</operator>
@@ -195,6 +205,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Pending - Insperity</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
             </value>
         </filters>
         <object>Portal_Task__c</object>
