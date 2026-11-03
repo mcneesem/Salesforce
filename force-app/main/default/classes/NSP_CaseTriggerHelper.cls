@@ -234,23 +234,23 @@ public without sharing class NSP_CaseTriggerHelper {
         }
     }
 
-    /* Description : This will update the owner of Case to escalations queue
-when L2 is set to true
-Date        : 30/09/2021
-*/
-
-    public void updateCaseOwnerWhenL2IsTrue( list<Case> listOfCases ){
-        List<Group> escalationQueues= [SELECT Id
-                                 FROM Group
-                                 WHERE Type = : QUEUE_TYPE AND DeveloperName = : ESCALATION_QUEUE];
-        if (!escalationQueues.isEmpty()) {
-        Group escalationQueue = escalationQueues[0];
-
-        for(Case updatedCase : listOfCases){
-            updatedCase.OwnerId = escalationQueue.id;
+    public void updateCaseOwnerWhenL2IsTrue( List<Case> listOfCases ) {
+        List<Group> escalationQueues= [
+            SELECT Id
+            FROM Group
+            WHERE (
+                ( Type = :QUEUE_TYPE )
+                AND ( DeveloperName = :ESCALATION_QUEUE )
+            )
+        ];
+        if ( !escalationQueues.isEmpty() ) {
+            Group escalationQueue = escalationQueues[0];
+            for ( Case updatedCase : listOfCases ) {
+                updatedCase.OwnerId = escalationQueue.Id;
+            }
         }
     }
-  }
+
     public void updateOwnerToCssRep( list<Case> listOfCases ){
         set<Id> setOfAccountId                       = new set<Id>();
         map<Id, Id> mapOfAccountIdAndAccountTeamUser = new map<Id, Id>();
