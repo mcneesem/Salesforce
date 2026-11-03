@@ -134,7 +134,6 @@ public without sharing class NSP_CreateQuote {
         catch(Exception ex){
             responseWrapper.errorMessage = JSON.serialize(ex.getMessage());
             responseWrapper.isSuccess = false;
-            NSP_CustomException.LogException(ex);
             throw new AuraHandledException(ex.getMessage());
         }
         return responseWrapper;
