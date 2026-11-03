@@ -110,14 +110,15 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
     private static FlowOutputvalues cloneRecords(String oldRSAPId, String newRSAPName, List<NSP_Initiative__c> relatedInitiativeRecords, List<NSP_Engagement_Path__c> relatedEngagementRecords) {
         FlowOutputvalues output = new FlowOutputvalues();
         try {
-            NSP_Relationship_Strategy_Action_Plan__c rsapRec = [SELECT Id, Name, NSP_Account__c  
+            <List>NSP_Relationship_Strategy_Action_Plan__c rsapRec = [SELECT Id, Name, NSP_Account__c  
                                                                 FROM NSP_Relationship_Strategy_Action_Plan__c
                                                                 WHERE Id =: oldRSAPId];
             
             // Clone parent record i.e NSP_Relationship_Strategy_Action_Plan__c
             NSP_Relationship_Strategy_Action_Plan__c cloneRsapRec = new NSP_Relationship_Strategy_Action_Plan__c();
+            if(!rsapRec.isEmpty()) {
             cloneRsapRec.Name = newRSAPName;
-            cloneRsapRec.NSP_Account__c = rsapRec.NSP_Account__c;
+            cloneRsapRec.NSP_Account__c = rsapRec[0].NSP_Account__c;
             INSERT cloneRsapRec;
             
             // Clone Inititative records
@@ -126,6 +127,7 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
             output.isSuccess = TRUE;
             output.message = 'Records cloned successfully!';
             output.clonedRecordId = cloneRsapRec.Id;
+        }
         } catch(Exception ex) {
             output.isSuccess = FALSE;
             output.message = 'Exception while cloning - '+ex.getMessage();
