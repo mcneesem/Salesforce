@@ -20,8 +20,8 @@
     </assignments>
     <description>New Client Portal: Populate Sub Portal Tasks</description>
     <environments>Default</environments>
-    <interviewLabel>Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task - Created - Async - Populate Sub Portal Tasks</label>
+    <interviewLabel>DEPRECATED - Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Portal Task - Created - Async - Populate Sub Portal Tasks</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
