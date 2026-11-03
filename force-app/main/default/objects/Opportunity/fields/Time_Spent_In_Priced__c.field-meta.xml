@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>IF(
     AND(
-        NOT(ISBLANK(Priced_Time_Start__c)),
+        NOT(ISBLANK(Priced_Time_Start__c)) ,
         NOT(ISBLANK(Priced_Time_End__c))
     ),
     FLOOR(
