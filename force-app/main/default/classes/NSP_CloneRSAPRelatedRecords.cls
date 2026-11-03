@@ -110,7 +110,7 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
     private static FlowOutputvalues cloneRecords(String oldRSAPId, String newRSAPName, List<NSP_Initiative__c> relatedInitiativeRecords, List<NSP_Engagement_Path__c> relatedEngagementRecords) {
         FlowOutputvalues output = new FlowOutputvalues();
         try {
-            <List>NSP_Relationship_Strategy_Action_Plan__c rsapRec = [SELECT Id, Name, NSP_Account__c  
+            List<NSP_Relationship_Strategy_Action_Plan__c> rsapRec = [SELECT Id, Name, NSP_Account__c  
                                                                 FROM NSP_Relationship_Strategy_Action_Plan__c
                                                                 WHERE Id =: oldRSAPId];
             
