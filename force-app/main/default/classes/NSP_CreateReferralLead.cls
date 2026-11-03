@@ -237,12 +237,16 @@ public without sharing class NSP_CreateReferralLead {
                 permissionSetList.add(psa);
             }
             //assignment of Permission set to the user
-            try{
-                if(!permissionSetList.isEmpty()){
+            try {
+                if ( !permissionSetList.isEmpty() ) {
                     insert permissionSetList;
                 }
-            }catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException('NSP_CaseTriggerHelper', 'taskReferralRecord', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_CreateReferralLead.class.getName() ,
+                    'taskReferralRecord' ,
+                    e
+                );
             }
         }
     }
