@@ -126,20 +126,14 @@
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Business Inception Date&quot; , &quot;Date&quot; ,
   &quot;Additional Documentation&quot; , &quot;Checkbox&quot; ,
-  &quot;Insperity Client Authorization&quot; , &quot;Docusign&quot; ,
-  &quot;Client Sponsored Plans&quot; , &quot;Upload Information&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
+        <description>Independent Task then default Status  = Pending , if Parent - Child Task then default Status = Summary</description>
         <name>f_defaulttasks_status</name>
         <dataType>String</dataType>
-        <expression>CASE(
-  TRIM( {!For_Each_Default_Task} ) ,
-  &quot;Client Sponsored Plans&quot; , &quot;Summary&quot; ,
-  &quot;Insperity Client Authorization&quot; , &quot;Summary&quot; ,
-  &quot;Pending&quot;
-)</expression>
+        <expression>&quot;Pending&quot;</expression>
     </formulas>
     <formulas>
         <name>f_defaulttasks_type</name>
@@ -148,8 +142,6 @@
   TRIM( {!For_Each_Default_Task} ) ,
   &quot;Business Inception Date&quot; , &quot;Company Setup&quot; ,
   &quot;Additional Documentation&quot; , &quot;System Setup&quot; ,
-  &quot;Insperity Client Authorization&quot; , &quot;Company Setup&quot; ,
-  &quot;Client Sponsored Plans&quot; , &quot;Company Setup&quot; ,
   &quot;&quot;
 )</expression>
     </formulas>
