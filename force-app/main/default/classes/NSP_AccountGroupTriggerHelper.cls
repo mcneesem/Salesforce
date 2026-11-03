@@ -1,4 +1,5 @@
-public class NSP_AccountGroupTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 54...
+public without sharing class NSP_AccountGroupTriggerHelper {
     // test w/ NSP_AccountGroupMemberController_Test (92%)
     // test w/ NSP_AccountGroupTriggerHelperTest (77%)
 
