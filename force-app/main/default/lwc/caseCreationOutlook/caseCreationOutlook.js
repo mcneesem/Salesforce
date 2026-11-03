@@ -1,13 +1,17 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import HAS_PERMISSION from '@salesforce/customPermission/Case_Creation_Outlook';
 
 export default class CaseCreationOutlook extends NavigationMixin(LightningElement) {
+    @api messageBody;
     isFlowVisible = false;
 
-    flowInputVariables = [
-        { name: 'isOutlook', type: 'Boolean', value: true }
-    ];
+    get flowInputVariables() {
+        return [
+            { name: 'isOutlook', type: 'Boolean', value: true },
+            { name: 'caseDescription', type: 'String', value: this.messageBody }
+        ];
+    }
 
     get hasPermission() {
         return HAS_PERMISSION === true;
