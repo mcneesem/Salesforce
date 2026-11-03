@@ -121,10 +121,10 @@
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>New Client Portal: Populate Parent Portal Task</description>
+    <description>DEPRECATED - New Client Portal: Populate Parent Portal Task</description>
     <environments>Default</environments>
-    <interviewLabel>Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task Before Create Populate Parent Portal Task</label>
+    <interviewLabel>DEPRECATED - Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Portal Task Before Create Populate Parent Portal Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
