@@ -130,25 +130,28 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
     }
 
     private static Map<Id,Id> cloneInitiatives( List<NSP_Initiative__c> inputInitiatives , Id inputId ) {
-        Map<Id, NSP_Initiative__c> initiativeRecords = new Map<Id, NSP_Initiative__c>();
-        Map<Id, Id> oldInitiativeIdWithnewInitiative = new Map<Id, Id>();
-        for(NSP_Initiative__c initiative : inputInitiatives){
-            if(initiative.NSP_Status__c == 'Not Started' || initiative.NSP_Status__c == 'In Progress') {
+        Map<Id,NSP_Initiative__c> initiativeRecords = new Map<Id,NSP_Initiative__c>();
+        Map<Id,Id> oldInitiativeIdWithnewInitiative = new Map<Id,Id>();
+        for ( NSP_Initiative__c initiative : inputInitiatives ) {
+            if ( ( initiative.NSP_Status__c == 'Not Started' )
+                || ( initiative.NSP_Status__c == 'In Progress' )
+                )
+            {
                 NSP_Initiative__c clonedInitiative = initiative.clone();
                 clonedInitiative.NSP_Relationship_Strategy_Action_Plan__c = inputId;
-                initiativeRecords.put(initiative.Id, clonedInitiative);
+                initiativeRecords.put( initiative.Id , clonedInitiative );
             }
         }
         List<NSP_Initiative__c> response = new List<NSP_Initiative__c>(); // This response variable will store data of successfully inserted records
-        if(!initiativeRecords.values().isEmpty()) {
-            List<Database.SaveResult> results = Database.insert(initiativeRecords.values(), false);
-            for(Id oldId : initiativeRecords.keyset()) {
-                NSP_Initiative__c clonedInitiative = initiativeRecords.get(oldId);
-                if(clonedInitiative.Id != null) {// This means Id is present then above database.insert has created record
-                    oldInitiativeIdWithnewInitiative.put(oldId, clonedInitiative.Id);
+        if ( !initiativeRecords.values().isEmpty() ) {
+            List<Database.SaveResult> results = Database.insert( initiativeRecords.values() , false );
+            for ( Id oldId : initiativeRecords.keyset() ) {
+                NSP_Initiative__c clonedInitiative = initiativeRecords.get( oldId );
+                if ( clonedInitiative.Id != null ) {// This means Id is present then above database.insert has created record
+                    oldInitiativeIdWithnewInitiative.put( oldId , clonedInitiative.Id );
                 }
             }
-            NSP_ErrorLogHandler.logSaveResult(
+            NSP_ErrorLogHandler.logResults(
                 NSP_CloneRSAPRelatedRecords.class.getName() ,
                 'cloneInitiatives' ,
                 results
@@ -164,19 +167,29 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
         )
     {
         List<NSP_Engagement_Path__c> engagementRecords = new List<NSP_Engagement_Path__c>();
-        for(NSP_Engagement_Path__c engagementPath : lstEngagementPath){
-            if(oldInitiativeIdWithnewInitiative !=null && oldInitiativeIdWithnewInitiative.containsKey(engagementPath.NSP_Initiative__c)) {
-                if(engagementPath.NSP_Status__c == 'Not Started' || engagementPath.NSP_Status__c == 'In Progress') {
+        for ( NSP_Engagement_Path__c engagementPath : lstEngagementPath ) {
+            if ( ( oldInitiativeIdWithnewInitiative != null )
+                && oldInitiativeIdWithnewInitiative.containsKey( engagementPath.NSP_Initiative__c )
+                )
+            {
+                if ( ( engagementPath.NSP_Status__c == 'Not Started' )
+                    || ( engagementPath.NSP_Status__c == 'In Progress' )
+                    )
+                {
                     NSP_Engagement_Path__c clonedEngagementPath = engagementPath.clone();
                     clonedEngagementPath.Relationship_Strategy_Action_Plan__c = inputId;
-                    clonedEngagementPath.NSP_Initiative__c = oldInitiativeIdWithnewInitiative.get(engagementPath.NSP_Initiative__c);
-                    engagementRecords.add(clonedEngagementPath);
+                    clonedEngagementPath.NSP_Initiative__c = oldInitiativeIdWithnewInitiative.get( engagementPath.NSP_Initiative__c );
+                    engagementRecords.add( clonedEngagementPath );
                 }
             }
         }
-        if(!engagementRecords.isEmpty()) {
-            List<Database.SaveResult> results = Database.insert(engagementRecords, false);
-            NSP_ErrorLogHandler.logSaveResult('NSP_CloneRSAP', 'cloneEngagementPaths:insertResults', results);
+        if ( !engagementRecords.isEmpty() ) {
+            List<Database.SaveResult> results = Database.insert( engagementRecords , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_CloneRSAPRelatedRecords.class.getName() ,
+                'cloneEngagementPaths' ,
+                results
+            );
         }
     }
 
