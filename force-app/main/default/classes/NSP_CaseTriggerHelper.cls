@@ -2268,7 +2268,6 @@ Story:        STY-01785
                     if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
                         upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
                     }
-                    }
                 }
             }
         } catch ( Exception e ) {
