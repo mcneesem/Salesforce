@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - Provide year end benefit reminders to clients and employees</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>QTP-Helpful Year end Reminders for Insperity Benefits</name>
+    <style>freeForm</style>
+    <subject>Helpful Year End Reminders for Insperity Benefits</subject>
+    <textOnly>Dear CLIENT CONTACT NAME,
+
+
+As 202_ comes to an end, there are several important things to keep in mind regarding your Insperity payroll and benefits. Please feel free to share the reminders below with your employees as needed:
+
+Is the address and email on file with Insperity current? Outdated contact information could prevent you from receiving ID cards, your W-2, or other important communications. Visit "My Profile" on Insperity Premier(TM) to view and update your contact information.
+If you'd prefer an electronic copy of your W-2, opt in on Insperity Premier by Dec. 31, 202_. Electronic W-2s will be available by Jan. 31, 202_.
+Open Enrollment for the Insperity Health Care Flexible Spending Account Plan (FSA) ends Dec. 31, 202_. For Plan Year 202_, you can elect $20 to $275.00 in monthly contributions, up to a maximum annual contribution of $3,300. Please make your elections by 11:59 p.m. Central Time on Dec. 31 if you wish to participate in 202_.
+Have more than $500 of 202_ funds left in your Insperity Health Care FSA? You can roll over up to $500 into 202_ if you continue participating in the Insperity Health Care FSA, but any excess must be used by Dec. 31, 202_, or you'll lose it! You can visit the Optum Store to purchase FSA-eligible products online if you need to spend down your remaining balance. You can also file claims through March 31, 202_, for any eligible expenses you incur through Dec. 31, 202_.
+Need to make or change an HSA contribution election for Tax Year 202_? Log in to Insperity Premier to change your election for 202_ after your last pay date of December. If you want an HSA election to take effect on your first pay date in 202_, you'll need to make the election after your last pay date in December, but at least five days before your first pay date in January. As a reminder, 202_ HSA contribution limits are $4,300 for employee-only coverage, and $8550 for family coverage. Employees who turn 55 or older within the tax year may contribute an additional $1,000 of catchup contributions.
+The plan year for the Insperity Group Health Plan is the calendar year. The plan year is based on a 12-month coverage period which begins Jan. 1 and ends Dec. 31. Your Insperity Group Health Plan deductible and out-of-pocket maximums will reset on Jan. 1, and generally, any plan design changes outlined in the Summary of Material Modifications for that plan year will take effect, even if your client company's enrollment and coverage periods do not follow the calendar year.
+Refill your eligible prescriptions before your deductible resets on Jan. 1! Some coverage options under the Insperity Group Health Plan, including non-HDHP UnitedHealthcare Choice Plus options, have a separate pharmacy deductible that must be met before copays apply. Log in to Insperity Premier to view your coverage details.
+Insperity is closed Dec. 25 and Jan. 1 for the holidays, and the Insperity Contact Center will be unavailable on those dates.
+Dec. __is the last day to process wages for 202_. Insperity Payroll Operations will be available on Dec. __ for client support and year-end payroll processing needs.
+Questions about your Insperity payroll or benefits? For assistance, contact the Insperity Contact Center at 866.715.3552, 7am to 7pm Central time, Monday to Friday.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
