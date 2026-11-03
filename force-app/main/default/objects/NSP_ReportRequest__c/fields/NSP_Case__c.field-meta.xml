@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Case</label>
     <referenceTo>Case</referenceTo>
-    <relationshipLabel>Wizard  Output</relationshipLabel>
+    <relationshipLabel>Wizard Output</relationshipLabel>
     <relationshipName>NSP_Report_Requests</relationshipName>
     <required>false</required>
     <trackHistory>true</trackHistory>
