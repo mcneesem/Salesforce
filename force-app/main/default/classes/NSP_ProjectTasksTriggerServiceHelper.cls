@@ -6,6 +6,9 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     private Set<Id> allProjectIds = new Set<Id>();
     public static Boolean runOwnerAssignmentLogic = true;
 
+    // Using a Set instead of a List to prevent duplicates and enable faster lookups
+    private static Map<String, Set<String>> allowedStatusTransitionValues = new Map<String, Set<String>>();
+
     //
     // Description - This method handles all the before insert operations of project task records.
     // @return - void
@@ -197,6 +200,9 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             }
             //List of service appointment
             List<ServiceAppointment> listServiceAppointments = new List<ServiceAppointment>();
+            if( allowedStatusTransitionValues.isEmpty() ) {
+                NSP_ProjectTasksTriggerServiceHelper.getAllowedStatusTransitions();
+            }
             //now updating oreientation address on service appointment to projectTask orientation address
             for ( ServiceAppointment oService : [
                         SELECT
@@ -278,6 +284,33 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     }
 
     //
+    // MethodName: getAllowedStatusTransitions
+    // Description: Populates the static map allowedStatusTransitionValues with every valid FSL
+    //              ServiceAppointment status transition configured in the org.
+    //              Key   = FromStatus (current SA status)
+    //              Value = Set of ToStatus values that FSL permits from that state.
+    //              Called lazily — once per transaction — before any SA status update so that
+    //              updateServiceAppointmentRecord can skip transitions that FSL would reject
+    //              (e.g. Dispatched → null), preventing FIELD_CUSTOM_VALIDATION_EXCEPTION errors.
+    // @return void
+    //
+    private static void getAllowedStatusTransitions() {
+        List<FSL.StatusTransition> allTransitions = FSL.GlobalAPIS.GetAllStatusTransitions();
+
+        if (allTransitions != null && !allTransitions.isEmpty()) {
+            for (FSL.StatusTransition transition : allTransitions) {
+                // If the 'FromStatus' doesn't exist in our map yet, initialize its Set
+                if (!allowedStatusTransitionValues.containsKey(transition.FromStatus)) {
+                    allowedStatusTransitionValues.put(transition.FromStatus, new Set<String>());
+                }
+
+                // Add the 'ToStatus' value to the corresponding Set
+                allowedStatusTransitionValues.get(transition.FromStatus).add(transition.ToStatus);
+            }
+        }
+    }
+
+    //
     // MethodName: updateServiceAppointmentRecord
     // Description : Update the respective service appointment and return it
     // Params: Id serviceAppointmentId
@@ -294,12 +327,20 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;
         serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;
         // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from *** to null: [Status]
-        serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
+        // only set fallback when the current SA status is non-null; omitting the field entirely avoids the FSL null transition error
+        if ( String.isNotBlank( serviceAppointmentStatus ) ) {
+            serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
+        }
         if ( String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
             && ( mapWorkOrderProjectTask.pse__Status__c != 'null' )
             )
         {
-            serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
+            Boolean transitionAllowed = allowedStatusTransitionValues.isEmpty()
+                || !allowedStatusTransitionValues.containsKey( serviceAppointmentStatus )
+                || allowedStatusTransitionValues.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c );
+            if ( transitionAllowed ) {
+                serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
+            }
         }
         serviceAppointmentRecToUpdate.Duration = (
             ( ( mapWorkOrderProjectTask.pse__End_Date_Time__c != null ) && ( mapWorkOrderProjectTask.pse__Start_Date_Time__c != null ) )
