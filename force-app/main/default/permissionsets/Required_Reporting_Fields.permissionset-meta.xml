@@ -3218,7 +3218,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Time_Spent_in_Priced__c</field>
+        <field>Opportunity.Time_Spent_In_Priced__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

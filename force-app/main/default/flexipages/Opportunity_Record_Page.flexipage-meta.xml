@@ -7103,8 +7103,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Time_Spent_in_Priced__c</fieldItem>
-                <identifier>RecordTime_Spent_in_Priced_cField</identifier>
+                <fieldItem>Record.Time_Spent_In_Priced__c</fieldItem>
+                <identifier>RecordTime_Spent_In_Priced_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Renewal_Elevated_Layout_Access}</leftValue>
