@@ -13,5 +13,6 @@
     <permissionSets>RET_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>RET_Service_System_Permissions</permissionSets>
     <permissionSets>RET_Service_Visualforce_Page_Access</permissionSets>
+    <permissionSets>Restrict_Delete_Account_Group_Member</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
