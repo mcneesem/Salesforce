@@ -4,6 +4,7 @@
         <enabled>true</enabled>
         <name>Restrict_Delete_Account_Group_Member</name>
     </customPermissions>
+    <description>Grants the Custom Permission to Restrict Delete Account Group Member.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Restrict Delete Account Group Member</label>
 </PermissionSet>
