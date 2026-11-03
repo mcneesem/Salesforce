@@ -937,7 +937,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     private static void testnotifysendEmailToAccountTeamMembersIfTaskIsLetterReceived() {
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
         Test.startTest();
-        pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c,pse__Started__c,pse__Completed__c  FROM pse__Project_Task__c WHERE Name ='Notify ITA if term date is today' Limit 1];
+        pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Project__c,pse__Status__c,NSP_AccountId__c,pse__Started__c,pse__Completed__c  FROM pse__Project_Task__c WHERE Name ='Notify ITA if term date is today' Limit 1];
         // Fix 2: create a child task so the validation rule (parent needs a started child) is satisfied
         pse__Project_Task__c childTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         childTask.Name = 'Child Task for ITA Notify';
