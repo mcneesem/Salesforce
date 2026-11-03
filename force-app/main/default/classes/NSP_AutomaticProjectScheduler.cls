@@ -1,4 +1,4 @@
-public without sharing class NSP_AutomaticProjectScheduler {
+public with sharing class NSP_AutomaticProjectScheduler {
     // test w/ NSP_AutomaticProjectSchedulerTest (100%)
 
     //
