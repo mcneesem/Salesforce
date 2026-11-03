@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Case_Sub_Status__c</fullName>
-    <externalId>false</externalId>
     <label>Substatus</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -330,6 +329,11 @@
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Escalated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>Escalation</valueName>
         </valueSettings>
         <valueSettings>
@@ -460,10 +464,6 @@
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>
             <valueName>WSEE Terminated</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>Escalated</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
