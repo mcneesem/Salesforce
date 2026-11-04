@@ -130,12 +130,6 @@
 )</expression>
     </formulas>
     <formulas>
-        <description>Independent Task then default Status  = Pending , if Parent - Child Task then default Status = Summary</description>
-        <name>f_defaulttasks_status</name>
-        <dataType>String</dataType>
-        <expression>&quot;Pending&quot;</expression>
-    </formulas>
-    <formulas>
         <name>f_defaulttasks_type</name>
         <dataType>String</dataType>
         <expression>CASE(
@@ -299,17 +293,17 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Status__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>f_defaulttasks_status</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Type__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>f_defaulttasks_type</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <stringValue>Pending</stringValue>
                 </value>
             </transformValueActions>
         </transformValues>
