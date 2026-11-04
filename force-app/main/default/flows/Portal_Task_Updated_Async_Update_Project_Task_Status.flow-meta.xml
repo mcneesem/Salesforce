@@ -92,9 +92,9 @@
         <name>f_ProjectStatus</name>
         <dataType>String</dataType>
         <expression>IF(
-    TEXT({!$Record.Status__c}) = &quot;Completed&quot;,
-    &quot;Complete&quot;,
-    TEXT({!$Record.Status__c})
+  ( TEXT( {!$Record.Status__c} ) = &quot;Completed&quot; ) ,
+  &quot;Complete&quot; ,
+  TEXT( {!$Record.Status__c} )
 )</expression>
     </formulas>
     <interviewLabel>Portal Task - Updated - Async - Update Project Task - Status {!$Flow.CurrentDateTime}</interviewLabel>
