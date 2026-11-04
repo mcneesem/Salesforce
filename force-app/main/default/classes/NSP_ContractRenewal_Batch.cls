@@ -154,25 +154,28 @@ public class NSP_ContractRenewal_Batch implements ISelfSchedulable , Schedulable
         // Get the ID of the AsyncApexJob representing this batch job
         // from Database.BatchableContext.
         // Query the AsyncApexJob object to retrieve the current job's information.
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
-            AsyncApexJob apexJob = [
+            List<AsyncApexJob> apexJobs  = [
                 SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
                 FROM AsyncApexJob WHERE Id = :BC.getJobId()
             ];
-            // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            String[] toAddresses = new String[] {apexJob.CreatedBy.Email};
-            mail.setToAddresses(toAddresses);
-            mail.setSubject('Contract Renewal Batch ' + apexJob.Status);
-            mail.setPlainTextBody(
-                'The batch Apex job processed ' + apexJob.TotalJobItems +
-                ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
-                'Total Records :'+recordsProcessed
-            );
-            try {
-                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
-            } catch ( Exception e ) {
-                System.debug( ' ~ CATCH ~ e=' + e );
+            if (!apexJobs.isEmpty()) {
+                AsyncApexJob apexJob = apexJobs[0];
+                // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
+                String[] toAddresses = new String[] {apexJob.CreatedBy.Email};
+                mail.setToAddresses(toAddresses);
+                mail.setSubject('Contract Renewal Batch ' + apexJob.Status);
+                mail.setPlainTextBody(
+                    'The batch Apex job processed ' + apexJob.TotalJobItems +
+                    ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
+                    'Total Records :'+recordsProcessed
+                );
+                try {
+                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+                } catch ( Exception e ) {
+                    System.debug( ' ~ CATCH ~ e=' + e );
+                }
             }
         }
     }
