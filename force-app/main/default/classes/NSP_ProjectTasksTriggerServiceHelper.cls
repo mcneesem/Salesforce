@@ -7,7 +7,31 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     public static Boolean runOwnerAssignmentLogic = true;
 
     // Using a Set instead of a List to prevent duplicates and enable faster lookups
-    private static Map<String, Set<String>> allowedStatusTransitionValues = new Map<String, Set<String>>();
+    private static Map<String, Set<String>> allowedStatusTransitionValues {
+        private get {
+            if( allowedStatusTransitionValues == null ) {
+                Map<String, Set<String>> local = new Map<String, Set<String>>();
+                List<FSL.StatusTransition> allTransitions = FSL.GlobalAPIS.GetAllStatusTransitions();
+                if( ( allTransitions != null ) && ( !allTransitions.isEmpty() ) ) {
+                    for( FSL.StatusTransition transition : allTransitions ) {
+                        // If the 'FromStatus' dosen't exist in our map yet, initialize its Set
+                        if( !local.containsKey( transition.FromStatus ) ) {
+                            local.put(
+                                transition.FromStatus ,
+                                new Set<String>()
+                            );
+                        }
+                        // Add the 'ToStatus' value to the corresponding Set
+                        local.get(transition.FromStatus).add(transition.ToStatus);
+                    }
+                }
+                allowedStatusTransitionValues = local;
+            }
+
+            return allowedStatusTransitionValues;
+        }
+        private set;
+    }
 
     //
     // Description - This method handles all the before insert operations of project task records.
@@ -200,9 +224,6 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             }
             //List of service appointment
             List<ServiceAppointment> listServiceAppointments = new List<ServiceAppointment>();
-            if( allowedStatusTransitionValues.isEmpty() ) {
-                NSP_ProjectTasksTriggerServiceHelper.getAllowedStatusTransitions();
-            }
             //now updating oreientation address on service appointment to projectTask orientation address
             for ( ServiceAppointment oService : [
                         SELECT
@@ -284,33 +305,6 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     }
 
     //
-    // MethodName: getAllowedStatusTransitions
-    // Description: Populates the static map allowedStatusTransitionValues with every valid FSL
-    //              ServiceAppointment status transition configured in the org.
-    //              Key   = FromStatus (current SA status)
-    //              Value = Set of ToStatus values that FSL permits from that state.
-    //              Called lazily — once per transaction — before any SA status update so that
-    //              updateServiceAppointmentRecord can skip transitions that FSL would reject
-    //              (e.g. Dispatched → null), preventing FIELD_CUSTOM_VALIDATION_EXCEPTION errors.
-    // @return void
-    //
-    private static void getAllowedStatusTransitions() {
-        List<FSL.StatusTransition> allTransitions = FSL.GlobalAPIS.GetAllStatusTransitions();
-
-        if (allTransitions != null && !allTransitions.isEmpty()) {
-            for (FSL.StatusTransition transition : allTransitions) {
-                // If the 'FromStatus' doesn't exist in our map yet, initialize its Set
-                if (!allowedStatusTransitionValues.containsKey(transition.FromStatus)) {
-                    allowedStatusTransitionValues.put(transition.FromStatus, new Set<String>());
-                }
-
-                // Add the 'ToStatus' value to the corresponding Set
-                allowedStatusTransitionValues.get(transition.FromStatus).add(transition.ToStatus);
-            }
-        }
-    }
-
-    //
     // MethodName: updateServiceAppointmentRecord
     // Description : Update the respective service appointment and return it
     // Params: Id serviceAppointmentId
@@ -335,9 +329,10 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             && ( mapWorkOrderProjectTask.pse__Status__c != 'null' )
             )
         {
-            Boolean transitionAllowed = allowedStatusTransitionValues.isEmpty()
-                || !allowedStatusTransitionValues.containsKey( serviceAppointmentStatus )
-                || allowedStatusTransitionValues.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c );
+            Boolean transitionAllowed = (
+                !NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.containsKey( serviceAppointmentStatus ) ||
+                NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c )
+                );
             if ( transitionAllowed ) {
                 serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
             }
