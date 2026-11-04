@@ -13,5 +13,6 @@
     <permissionSets>Contact_Center_Service_System_Permissions</permissionSets>
     <permissionSets>Contact_Center_Service_Visualforce_Page_Access</permissionSets>
     <permissionSets>Populate_Resource_Fields</permissionSets>
+    <permissionSets>Restrict_Delete_Account_Group_Member</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
