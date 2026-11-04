@@ -14,6 +14,7 @@ Modification Log     :
 */
 
 public class NSP_EnrollmentFeePaymentTriggerClass {
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (76%)
     public static void sumofEnrollmentFee(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee){
         Set<id> opportunityIds=new Set<id>(); //Holds the opportunity id's
         Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>(); //Holds the opportunity details to update
@@ -133,7 +134,16 @@ Public static void createBillingPayment(List<NSP_Enrollment_Fee_Payment__c> list
     }
 }
 private static blng__GLTreatment__c getGLruleInfo(String name){
-    blng__GLTreatment__c treatment=[SELECT Id,blng__GLLegalEntity__c,blng__GLRule__c FROM blng__GLTreatment__c WHERE Name=:name limit 1];
+    blng__GLTreatment__c treatment = null;
+    List<blng__GLTreatment__c> treatments = [
+        SELECT Id, blng__GLLegalEntity__c, blng__GLRule__c
+        FROM blng__GLTreatment__c
+        WHERE ( Name = :name )
+        limit 1
+    ];
+    if(!treatments.isEmpty()){
+        treatment = treatments[0];
+    }
     return treatment;
 }
     
