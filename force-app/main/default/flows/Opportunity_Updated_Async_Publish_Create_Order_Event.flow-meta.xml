@@ -6,7 +6,7 @@
         <description>Trigger to switch off auto flows.</description>
         <name>Check_Primary_Quote</name>
         <label>Check Primary Quote</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -28,12 +28,12 @@
     <decisions>
         <name>Check_Product_Type</name>
         <label>Check Product Type</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Valid</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>( 1 AND 2 ) OR ( 3 AND 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.NSP_Product_Type__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -46,6 +46,20 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>I-9 Assist &amp; E-Verify</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>I-9 Assist &amp; E-Verify</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Client_For_Life__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO/WS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -80,7 +94,7 @@
         <description>creates event to publish create order event</description>
         <name>Publish_Create_Order_Event</name>
         <label>Publish Create Order Event</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>492</locationY>
         <faultConnector>
             <targetReference>Fault_Path</targetReference>
@@ -101,7 +115,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -139,7 +153,7 @@
     <subflows>
         <name>Fault_Path</name>
         <label>Fault Path</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
