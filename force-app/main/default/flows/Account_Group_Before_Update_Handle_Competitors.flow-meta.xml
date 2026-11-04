@@ -29,6 +29,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Make_Other_Competitor_Blank</targetReference>
         </connector>
     </assignments>
@@ -45,7 +46,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Check_Blank_Competitor</targetReference>
         </connector>
     </assignments>
@@ -62,7 +62,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Check_Leader_Involvement_in_Save_Attempt</targetReference>
         </connector>
     </assignments>
@@ -73,6 +72,22 @@
         <locationY>611</locationY>
         <assignmentItems>
             <assignToReference>$Record.What_Level_Leader__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Was_Revolution_With_IIS_An_Option</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Make_Why_Why_Not_An_Option_Blank</name>
+        <label>Make Why/Why Not An Option Blank</label>
+        <locationX>314</locationX>
+        <locationY>1403</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Why_Why_Not_An_Option__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
@@ -90,14 +105,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Not_Other</name>
-            <conditionLogic>1 AND 2</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Competitor__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Competitor__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -116,18 +124,15 @@
         <label>Check Did Client Go To Competitor</label>
         <locationX>226</locationX>
         <locationY>287</locationY>
-        <defaultConnector>
-            <targetReference>Check_Blank_Competitor</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>NO_Did_Client_Go_To_A_Competitor</name>
-            <conditionLogic>and</conditionLogic>
+            <name>BLANK_OR_NO_Did_Client_Go_To_A_Competitor</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Did_Client_Go_To_A_Competitor__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -140,10 +145,10 @@
             <connector>
                 <targetReference>Make_Competitor_Blank</targetReference>
             </connector>
-            <label>NO - Did Client Go To A Competitor?</label>
+            <label>BLANK OR NO - Did Client Go To A Competitor?</label>
         </rules>
         <rules>
-            <name>NO_Was_A_Bid_Obtained_For_Review</name>
+            <name>YES_Did_Client_Go_To_A_Competitor</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Did_Client_Go_To_A_Competitor__c</leftValueReference>
@@ -152,35 +157,24 @@
                     <stringValue>Yes</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Was_A_Bid_Obtained_For_Review__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>No</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Make_Cost_Savings_Blank</targetReference>
+                <targetReference>Check_Was_A_Bid_Obtained_For_Review</targetReference>
             </connector>
-            <label>NO - Was A Bid Obtained For Review?</label>
+            <label>YES - Did Client Go To A Competitor?</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Leader_Involvement_in_Save_Attempt</name>
         <label>Check Leader Involvement in Save Attempt</label>
-        <locationX>886</locationX>
-        <locationY>503</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <locationX>446</locationX>
+        <locationY>995</locationY>
+        <defaultConnector>
+            <targetReference>Check_Was_Revolution_With_IIS_An_Option</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>YES</defaultConnectorLabel>
         <rules>
-            <name>NO_Leader_Involvement_In_Save_Attempt</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
+            <name>BLANK_OR_NO_Leader_Involvement_In_Save_Attempt</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -195,10 +189,71 @@
                     <stringValue>No Save Attempt</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Leader_Involvement_In_Save_Attempt__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Make_What_level_leader_Blank</targetReference>
             </connector>
-            <label>NO -  Leader Involvement In Save Attempt?</label>
+            <label>BLANK OR NO -  Leader Involvement In Save Attempt?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Was_A_Bid_Obtained_For_Review</name>
+        <label>Check Was A Bid Obtained For Review</label>
+        <locationX>446</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Check_Blank_Competitor</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>YES</defaultConnectorLabel>
+        <rules>
+            <name>BLANK_OR_NO_Was_A_Bid_Obtained_For_Review</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Was_A_Bid_Obtained_For_Review__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Was_A_Bid_Obtained_For_Review__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Make_Cost_Savings_Blank</targetReference>
+            </connector>
+            <label>BLANK OR NO - Was A Bid Obtained For Review?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Was_Revolution_With_IIS_An_Option</name>
+        <label>Check Was Revolution With IIS An Option</label>
+        <locationX>446</locationX>
+        <locationY>1295</locationY>
+        <defaultConnectorLabel>YES OR NO</defaultConnectorLabel>
+        <rules>
+            <name>BLANK_Was_Revolution_With_IIS_An_Option</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Was_Revolution_With_IIS_An_Option__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Make_Why_Why_Not_An_Option_Blank</targetReference>
+            </connector>
+            <label>BLANK - Was Revolution With IIS An Option?</label>
         </rules>
     </decisions>
     <environments>Default</environments>
