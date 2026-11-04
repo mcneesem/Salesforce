@@ -311,6 +311,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Policy_Accrual_Supporting_Documentation</name>
+        <label>Check Policy/Accrual Supporting Documentation</label>
+        <locationX>2558</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Supporting_Documentation_Attached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_Type</targetReference>
+            </connector>
+            <label>Supporting Documentation Attached</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Client_Information_Fields</name>
         <label>Client Information Fields</label>
         <locationX>1634</locationX>
@@ -1114,13 +1140,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Policy_Information</targetReference>
             </connector>
@@ -1134,13 +1153,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>ITA</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1371,7 +1383,7 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Record_Type</targetReference>
+            <targetReference>Check_Policy_Accrual_Supporting_Documentation</targetReference>
         </connector>
         <object>NSP_Accrual_Profile__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
