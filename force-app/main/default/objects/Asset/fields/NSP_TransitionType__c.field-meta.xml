@@ -13,6 +13,16 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>HR360 to HRScale</fullName>
+                <default>false</default>
+                <label>HR360 to HRScale</label>
+            </value>
+            <value>
+                <fullName>IPS to HRCore</fullName>
+                <default>false</default>
+                <label>IPS to HRCore</label>
+            </value>
+            <value>
                 <fullName>PEO to WX</fullName>
                 <default>false</default>
                 <label>PEO to WX</label>
@@ -21,11 +31,6 @@
                 <fullName>WX to PEO</fullName>
                 <default>false</default>
                 <label>WX to PEO</label>
-            </value>
-            <value>
-                <fullName>IPS to HRCore</fullName>
-                <default>false</default>
-                <label>IPS to HRCore</label>
             </value>
         </valueSetDefinition>
     </valueSet>
