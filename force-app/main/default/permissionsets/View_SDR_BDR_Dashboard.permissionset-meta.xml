@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>View_SDR_BDR_Dashboard</name>
+    </customPermissions>
+    <description>This grants access to the Sales Development Representative (SDR) and Business Development Representative (BDR) Homepage Dashboard on the Sales, Seller Experience and Sales Engagement Apps</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>View SDR BDR Dashboard</label>
+</PermissionSet>
