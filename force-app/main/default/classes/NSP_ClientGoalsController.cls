@@ -30,13 +30,13 @@ public with sharing class NSP_ClientGoalsController {
 
     //get accountId for the RSAP record
     public static NSP_ClientGoalsControllerWrapper getRSAP(String rsapId){
-        List<NSP_Relationship_Strategy_Action_Plan__c> RSAP  = [SELECT Id, NSP_Status_Complete_Date__c,NSP_Account__c FROM
+        List<NSP_Relationship_Strategy_Action_Plan__c> rsap  = [SELECT Id, NSP_Status_Complete_Date__c,NSP_Account__c FROM
                                                                 NSP_Relationship_Strategy_Action_Plan__c WHERE Id = :rsapId];
 
         NSP_ClientGoalsControllerWrapper clientGoalWrapper = new NSP_ClientGoalsControllerWrapper();
-        if(!RSAP.isEmpty()){
-            clientGoalWrapper.accRecordId = RSAP[0].NSP_Account__c;
-            clientGoalWrapper.RSAPCompletedDate = RSAP[0].NSP_Status_Complete_Date__c;
+        if(!rsap.isEmpty()){
+            clientGoalWrapper.accRecordId = rsap[0].NSP_Account__c;
+            clientGoalWrapper.RSAPCompletedDate = rsap[0].NSP_Status_Complete_Date__c;
         }
 
         return clientGoalWrapper;
