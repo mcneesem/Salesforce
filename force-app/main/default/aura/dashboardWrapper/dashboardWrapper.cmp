@@ -1,6 +1,6 @@
 <aura:component implements="flexipage:availableForAllPageTypes"
     access="public"
-    controller="CRMAnalyticsDashboardController">
+    controller="DashboardWrapperController">
 
     <aura:attribute name="dashboardField" type="String" default="SDR_BDR_Dashboard_Developer_Name__c"/>
 
