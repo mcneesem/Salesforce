@@ -10,6 +10,8 @@ export default class PortalMain extends LightningElement {
     //                 +-- portalProjectProgressBar
     //                 +-- portalClientTabHome
     //                 |   +-- portalClientWelcome
+    //                 |   |   +-- portalGuidance
+    //                 |   |       +-- helptext
     //                 |   +-- portalTeamMemberList
     //                 |   |   +-- portalTeamMember
     //                 |   |       +-- portalGuidance
@@ -25,6 +27,8 @@ export default class PortalMain extends LightningElement {
     //                     |       +-- portalTask
     //                     |           +-- portalRelatedFiles
     //                     |           +-- portalGuidance
+    //                     |           |   +-- helptext
+    //                     |           +-- portalTaskAction
     //                     |           |   +-- helptext
     //                     |           +-- portalTaskList (recursive)
     //                     +-- portalEventCalendar
