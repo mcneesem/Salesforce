@@ -170,17 +170,15 @@ public without sharing class NSP_CloneRSAPRelatedRecords {
         for ( NSP_Engagement_Path__c engagementPath : lstEngagementPath ) {
             if ( ( oldInitiativeIdWithnewInitiative != null )
                 && oldInitiativeIdWithnewInitiative.containsKey( engagementPath.NSP_Initiative__c )
-                )
-            {
-                if ( ( engagementPath.NSP_Status__c == 'Not Started' )
+                && ( ( engagementPath.NSP_Status__c == 'Not Started' )
                     || ( engagementPath.NSP_Status__c == 'In Progress' )
                     )
-                {
-                    NSP_Engagement_Path__c clonedEngagementPath = engagementPath.clone();
-                    clonedEngagementPath.Relationship_Strategy_Action_Plan__c = inputId;
-                    clonedEngagementPath.NSP_Initiative__c = oldInitiativeIdWithnewInitiative.get( engagementPath.NSP_Initiative__c );
-                    engagementRecords.add( clonedEngagementPath );
-                }
+                )
+            {
+                NSP_Engagement_Path__c clonedEngagementPath = engagementPath.clone();
+                clonedEngagementPath.Relationship_Strategy_Action_Plan__c = inputId;
+                clonedEngagementPath.NSP_Initiative__c = oldInitiativeIdWithnewInitiative.get( engagementPath.NSP_Initiative__c );
+                engagementRecords.add( clonedEngagementPath );
             }
         }
         if ( !engagementRecords.isEmpty() ) {
