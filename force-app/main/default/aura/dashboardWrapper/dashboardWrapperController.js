@@ -1,6 +1,6 @@
 ({
     doInit: function(component, event, helper) {
-        const action = component.get('c.getDashboardSettings');
+        const action = component.get('c.getDashboardWrapperSettings');
         action.setCallback(this, function(response) {
             const state = response.getState();
             if (state === 'SUCCESS') {
