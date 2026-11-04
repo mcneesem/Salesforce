@@ -1,5 +1,5 @@
 public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> , Database.Stateful {
-    // test w/ NSP_DunningEmailNotificationsBatchTest (91%)
+    // test w/ NSP_DunningEmailNotificationsBatchTest (86%)
 
     private static final string STRING_CASE = 'Case';
     private Integer recordsProcessed = 0; // stores number of records processed.
@@ -154,7 +154,8 @@ public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Sc
                 // Get the ID of the AsyncApexJob representing this batch job
                 // from Database.BatchableContext.
                 // Query the AsyncApexJob object to retrieve the current job's information.
-                AsyncApexJob async = [
+                AsyncApexJob async = null;
+                List<AsyncApexJob> asyncJobs = [
                     SELECT
                         Id ,
                         Status ,
@@ -165,6 +166,9 @@ public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Sc
                     FROM AsyncApexJob
                     WHERE ( Id = :bc.getJobId() )
                 ];
+                if(!asyncJobs.isEmpty()){
+                    async = asyncJobs[0];
+                }
                 List<String> toAddresses = new List<String>{ async.CreatedBy.Email };
                 Map<String,Object> inputs = new Map<String,Object>();
                 inputs.put( 'toEmailAddresses' , toAddresses );
