@@ -1,5 +1,5 @@
 public without sharing class NSP_SingleRelatedListController {
-    // test w/ NSP_SingleRelatedListControllerTest (83%)
+    // test w/ NSP_SingleRelatedListControllerTest (85%)
 
     private static final String FIELDS_PARAM = 'fields';
     private static final String NUMBER_OF_RECORDS_PARAM = 'numberOfRecords';
@@ -137,11 +137,65 @@ public without sharing class NSP_SingleRelatedListController {
                 query += ' AND NSP_Index__c < :pageNumber';
             }
             query += ' Limit :numberOfRecords';
-            List<SObject> queryReults = Database.query(String.escapeSingleQuotes(query));
-            return recordId.getSobjectType() == Schema.Implementation_Profile__c.SObjectType ? queryReults : NSP_HistoryTrackingVisibilityHandler.getAccessibleFieldList(queryReults,(Id)recordId);
+            List<sObject> response = Database.query( String.escapeSingleQuotes( query ) );
+            if ( recordId.getSobjectType() != Schema.Implementation_Profile__c.SObjectType ) {
+                response = NSP_SingleRelatedListController.getAccessibleFieldList(
+                    response ,
+                    (Id)recordId
+                );
+            }
+            return response;
         } catch (Exception ex) {
             throw new AuraHandledException(ErrorOccured + ex.getMessage());
         }
+    }
+
+    private static List<SObject> getAccessibleFieldList( List<sObject> objRecords , Id recordId ) {
+        List<sObject> accessibleFieldsData = new List<sObject>();
+        for ( String fieldName : NSP_SingleRelatedListController.getAccessibleFields( recordId ) ) {
+            for ( sObject objRecord : objRecords ) {
+                if ( ( objRecord.getSObjectType() == NSP_SObjects_History_Tracking__b.sObjectType )
+                    && ( fieldName == ((NSP_SObjects_History_Tracking__b)objRecord).NSP_Field_Name__c )
+                    )
+                {
+                    accessibleFieldsData.add( objRecord );
+                }
+            }
+        }
+        return accessibleFieldsData;
+    }
+
+    private static List<String> getAccessibleFields( Id recordId ) {
+        List<String> fieldsToShow = new List<String>();
+        if ( ( recordId != null )
+            && ( NSP_SingleRelatedListController.globalDescribe != null )
+            )
+        {
+            SObjectType schemaType = NSP_SingleRelatedListController.globalDescribe.get( String.valueOf( recordId.getSObjectType() ) );
+            if ( schemaType != null ) {
+                fieldsToShow = NSP_SingleRelatedListController.populateFieldsToShow(
+                    fieldsToShow ,
+                    schemaType.getDescribe().fields.getMap()
+                );
+            }
+        }
+        return fieldsToShow;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static List<String> populateFieldsToShow( List<String> fieldsToShow , Map<String,SObjectField> fieldMap ) {
+        if ( fieldsToShow == null ) {
+            fieldsToShow = new List<String>();
+        }
+        if ( ( fieldMap != null ) && !fieldMap.isEmpty() ) {
+            for ( String field : fieldMap.keySet() ) {
+                SObjectField sfield = fieldMap.get( field );
+                if ( ( sfield != null ) && sfield.getDescribe().isAccessible() ) {
+                    fieldsToShow.add( sfield.getDescribe().getLabel() );
+                }
+            }
+        }
+        return fieldsToShow;
     }
 
     private static String getParentRelationshipName( Id recordId , String childSobjectApiName , String relatedFieldApiName ) {
@@ -204,21 +258,15 @@ public without sharing class NSP_SingleRelatedListController {
     public static List<Map<String,Object>> getIPHistoryRecords( String jsonData ) {
         List<Map<String,Object>> response = null;
         try {
-            if ( NSP_SObjectHistoryTrackingHelper.isEnabledStandard ) {
-                // replace NSP_IP_History_Tracking__b usage with Implementation_Profile__History...
-                Id recordId = NSP_SingleRelatedListController.parseRecordId( jsonData );
-                Integer soqlLimit = NSP_SingleRelatedListController.parseLimit( jsonData );
-                Integer soqlOffset = NSP_SingleRelatedListController.parseOffset( jsonData );
-                List<Implementation_Profile__History> stories = NSP_SingleRelatedListController.selectImplementationProfileHistory( recordId );
-                response = NSP_SingleRelatedListController.tranformHistory(
-                    stories ,
-                    soqlLimit ,
-                    soqlOffset
-                );
-            } else {
-                List<NSP_IP_History_Tracking__b> records = (List<NSP_IP_History_Tracking__b>)NSP_SingleRelatedListController.getRecords( jsonData );
-                response = NSP_SingleRelatedListController.getRelatedClientsInternal( records );
-            }
+            Id recordId = NSP_SingleRelatedListController.parseRecordId( jsonData );
+            Integer soqlLimit = NSP_SingleRelatedListController.parseLimit( jsonData );
+            Integer soqlOffset = NSP_SingleRelatedListController.parseOffset( jsonData );
+            List<Implementation_Profile__History> stories = NSP_SingleRelatedListController.selectImplementationProfileHistory( recordId );
+            response = NSP_SingleRelatedListController.tranformHistory(
+                stories ,
+                soqlLimit ,
+                soqlOffset
+            );
         } catch ( Exception e ) {
             throw new AuraHandledException( ErrorOccured + e.getMessage() );
         }
