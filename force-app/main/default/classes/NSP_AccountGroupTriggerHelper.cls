@@ -1,4 +1,5 @@
-public class NSP_AccountGroupTriggerHelper {
+// intentionally `without sharing` to preserve default sharing at api version 54...
+public without sharing class NSP_AccountGroupTriggerHelper {
     // test w/ NSP_AccountGroupMemberController_Test (92%)
     // test w/ NSP_AccountGroupTriggerHelperTest (77%)
 
@@ -54,17 +55,39 @@ public class NSP_AccountGroupTriggerHelper {
     }
 
     // group Type should not be able to change by the user.
-    public void groupTypeValidation(list<NSP_Account_Group__c> newList, Map<Id, NSP_Account_Group__c> oldMap){
-        List<String> lstGrpTypes = new List<String>{'Account Health','Renewal Probability', 'Growth Forecast'};
-        List<String> lstManualGrpTypes = new List<String>{'Controlled Group','EEO', 'Renew & Review Together','WX Account Group'};
-        User userRec  = [SELECT Id, Profile.Name From User WHERE Id =:userinfo.getUserId()];
-        for(NSP_Account_Group__c accGrp : newList){
-            if(userRec.Profile.Name != 'Integration User') {
-                if(accGrp.NSP_Type__c != oldMap.get(accGrp.Id).NSP_Type__c && (lstGrpTypes.contains(accGrp.NSP_Type__c) || lstGrpTypes.contains(oldMap.get(accGrp.Id).NSP_Type__c))){
-                    accGrp.addError(label.NSP_AccountGroupErrorMessage);
+    public void groupTypeValidation( List<NSP_Account_Group__c> newList , Map<Id,NSP_Account_Group__c> oldMap ) {
+        List<String> lstGrpTypes = new List<String>{
+            'Account Health' ,
+            'Renewal Probability' ,
+            'Growth Forecast'
+        };
+        List<String> lstManualGrpTypes = new List<String>{
+            'Controlled Group' ,
+            'EEO' ,
+            'Renew & Review Together' ,
+            'WX Account Group'
+        };
+        for ( NSP_Account_Group__c accGrp : newList ) {
+            if ( !CustomPermissionController.checkUserPermission( 'Bypass_Restrict_Account_Group_Types' , UserInfo.getUserId() ) ) {
+                NSP_Account_Group__c accGrpOld = oldMap?.get( accGrp.Id );
+                if ( ( accGrp.NSP_Type__c != accGrpOld?.NSP_Type__c )
+                    && ( lstGrpTypes.contains( accGrp.NSP_Type__c )
+                        || lstGrpTypes.contains( accGrpOld?.NSP_Type__c )
+                        )
+                    )
+                {
+                    accGrp.addError( System.Label.NSP_AccountGroupErrorMessage );
                 }
-                if((accGrp.NSP_Type__c != oldMap.get(accGrp.Id).NSP_Type__c || accGrp.NSP_Tag__c != oldMap.get(accGrp.Id).NSP_Tag__c || accGrp.NSP_Watchlist__c != oldMap.get(accGrp.Id).NSP_Watchlist__c) && (lstManualGrpTypes.contains(accGrp.NSP_Type__c) || lstManualGrpTypes.contains(oldMap.get(accGrp.Id).NSP_Type__c))){
-                    accGrp.addError(label.NSP_AccountGroupErrorMessage);
+                if ( ( ( accGrp.NSP_Type__c != accGrpOld?.NSP_Type__c )
+                        || ( accGrp.NSP_Tag__c != accGrpOld?.NSP_Tag__c )
+                        || ( accGrp.NSP_Watchlist__c != accGrpOld?.NSP_Watchlist__c )
+                        )
+                    && ( lstManualGrpTypes.contains( accGrp.NSP_Type__c )
+                        || lstManualGrpTypes.contains( accGrpOld?.NSP_Type__c )
+                        )
+                    )
+                {
+                    accGrp.addError( System.Label.NSP_AccountGroupErrorMessage );
                 }
             }
         }
