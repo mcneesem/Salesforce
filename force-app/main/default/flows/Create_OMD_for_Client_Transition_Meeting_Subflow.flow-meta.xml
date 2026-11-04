@@ -208,8 +208,7 @@
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
-    <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records. Added OMD as record Input removed Pay Period help text
-09/24/2025 - Added Time zone , removed the display text , updated Date Valid on data table</description>
+    <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records. Added OMD as record Input removed Pay Period help text</description>
     <dynamicChoiceSets>
         <name>pc_BenefitsWaitingPeriod</name>
         <dataType>Picklist</dataType>
@@ -722,6 +721,14 @@
                     <stringValue>12</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: system-ui, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(194, 57, 52);&quot;&gt;Please enter a valid email address and ensure that there are no trailing symbols, no double periods and is not more than 80 characters.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>AND(
+  LEN({!ossemail.value}) &lt;= 80,
+  NOT(CONTAINS({!ossemail.value}, &quot;..&quot;)),
+  REGEX({!ossemail.value}, &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$&quot;)
+)</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>nspeffectivedate</name>
