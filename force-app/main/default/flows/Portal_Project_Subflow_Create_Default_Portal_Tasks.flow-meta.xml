@@ -293,17 +293,17 @@
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Type__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>f_defaulttasks_type</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Status__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
                     <stringValue>Pending</stringValue>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Type__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>f_defaulttasks_type</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
