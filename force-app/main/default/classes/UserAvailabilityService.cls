@@ -283,17 +283,11 @@ public with sharing class UserAvailabilityService {
                 List<Id> availableForWindow = new List<Id>();
                 for ( Id uid : userIds ) {
                     // Skip this user for this day if they are capped
-                    if ( !cappedToday?.contains( uid ) ) {
-                        Boolean isAvailable = UserAvailabilityService.isUserAvailableForWindow(
-                            uid ,
-                            busyByUser ,
-                            windowEvt ,
-                            stepMinutes ,
-                            timeZoneByUser
-                        );
-                        if ( isAvailable ) {
-                            availableForWindow.add( uid );
-                        }
+                    if ( !cappedToday?.contains( uid )
+                        && UserAvailabilityService.isUserAvailableForWindow( uid , busyByUser , windowEvt , stepMinutes , timeZoneByUser )
+                        )
+                    {
+                        availableForWindow.add( uid );
                     }
                 }
                 idsPerWindow.add( availableForWindow );
