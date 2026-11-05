@@ -321,22 +321,15 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;
         serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;
         // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from *** to null: [Status]
-        // only set fallback when the current SA status is non-null; omitting the field entirely avoids the FSL null transition error
-        if ( String.isNotBlank( serviceAppointmentStatus ) ) {
-            serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
-        }
-        if ( String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
-            && ( mapWorkOrderProjectTask.pse__Status__c != 'null' )
+        if ( String.isNotBlank( serviceAppointmentStatus )
+            && String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
+            && NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.containsKey( serviceAppointmentStatus )
+            && NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c )
             )
         {
-            Boolean transitionAllowed = (
-                !NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.containsKey( serviceAppointmentStatus ) ||
-                NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitionValues.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c )
-                );
-            if ( transitionAllowed ) {
-                serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
-            }
+            serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
         }
+
         serviceAppointmentRecToUpdate.Duration = (
             ( ( mapWorkOrderProjectTask.pse__End_Date_Time__c != null ) && ( mapWorkOrderProjectTask.pse__Start_Date_Time__c != null ) )
             ? Integer.valueOf( ( mapWorkOrderProjectTask.pse__End_Date_Time__c.getTime() - mapWorkOrderProjectTask.pse__Start_Date_Time__c.getTime() ) / ( 1000 * 60 ) )
