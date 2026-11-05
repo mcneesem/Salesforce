@@ -1,6 +1,6 @@
-// @description Batch class to delete Cases in Merged status; self-scheduling, callable, and runnable.
 public with sharing class NSP_DeleteMergeCaseBatch implements ISelfSchedulable, Schedulable, Callable, IJobRunnable, Database.Batchable<SObject> {
     // test w/ NSP_DeleteMergeCaseBatch_Test (100%)
+    // @description Batch class to delete Cases in Merged status; self-scheduling, callable, and runnable.
 
     public static final String CASE_MERGED = 'Merged';
 
