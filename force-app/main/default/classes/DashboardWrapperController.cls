@@ -5,4 +5,6 @@ public with sharing class DashboardWrapperController {
     public static Dashboard_Wrapper_Settings__c getDashboardWrapperSettings() {
         return Dashboard_Wrapper_Settings__c.getInstance( UserInfo.getUserId() );
     }
+
 }
+//
