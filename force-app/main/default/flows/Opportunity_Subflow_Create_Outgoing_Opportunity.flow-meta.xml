@@ -278,7 +278,7 @@
             <field>NSP_Lost_Reason__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Create Workday Referral</stringValue>
+                <stringValue>Better Fit for Workday</stringValue>
             </value>
         </filters>
         <filters>

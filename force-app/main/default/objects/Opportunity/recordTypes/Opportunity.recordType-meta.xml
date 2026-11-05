@@ -699,6 +699,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Better Fit for Workday</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Closed by System</fullName>
             <default>false</default>
         </values>
@@ -716,10 +720,6 @@
         </values>
         <values>
             <fullName>Cost</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Create Workday Referral</fullName>
             <default>false</default>
         </values>
         <values>
