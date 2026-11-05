@@ -168,12 +168,19 @@
         <connector>
             <targetReference>Check_Priced_Time_Start</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 5) AND (3 OR 4) AND (6 OR 7)</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 ) AND ( 4 OR 5 ) AND ( 6 OR 7 ) )</filterLogic>
         <filters>
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>012Pb000006SSU9IAO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Renewal_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
@@ -195,13 +202,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Administration</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Renewal_Status__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
