@@ -6,12 +6,12 @@
         <description>Trigger to switch off auto flows.</description>
         <name>Check_Primary_Quote</name>
         <label>Check Primary Quote</label>
-        <locationX>842</locationX>
+        <locationX>578</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Ordered</name>
-            <conditionLogic>and</conditionLogic>
+            <name>To_Order</name>
+            <conditionLogic>1 AND ( ( 2 AND 3 ) OR ( 4 AND 5 ) )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.SBQQ__Ordered__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -19,21 +19,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Check_Product_Type</targetReference>
-            </connector>
-            <label>Is Ordered</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Product_Type</name>
-        <label>Check Product Type</label>
-        <locationX>578</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Is_Valid</name>
-            <conditionLogic>( 1 AND 2 ) OR ( 3 AND 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.NSP_Product_Type__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -65,7 +50,7 @@
             <connector>
                 <targetReference>Publish_Create_Order_Event</targetReference>
             </connector>
-            <label>Is Valid ?</label>
+            <label>To Order</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -95,7 +80,7 @@
         <name>Publish_Create_Order_Event</name>
         <label>Publish Create Order Event</label>
         <locationX>314</locationX>
-        <locationY>492</locationY>
+        <locationY>384</locationY>
         <faultConnector>
             <targetReference>Fault_Path</targetReference>
         </faultConnector>
@@ -115,7 +100,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>320</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -154,7 +139,7 @@
         <name>Fault_Path</name>
         <label>Fault Path</label>
         <locationX>578</locationX>
-        <locationY>600</locationY>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
