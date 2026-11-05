@@ -3,12 +3,12 @@ private class NSP_DeleteMergeCaseBatch_Test {
     // @description Test class for NSP_DeleteMergeCaseBatch covering batch execution, scheduling, callable, and runnable paths.
 
     private static final String ACCOUNT_DEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
-    private static final String CASE_DEFAULTS    = 'NSP_TestDataFactory.CaseDefaults';
+    private static final String CASE_DEFAULTS = 'NSP_TestDataFactory.CaseDefaults';
 
     @testSetup
     static void setupDataForMergeBatch() {
         Account newAccount = (Account) NSP_TestExtendedDataFactory.createSObject( new Account(), ACCOUNT_DEFAULTS, true );
-        Case caseRecord    = (Case)    NSP_TestExtendedDataFactory.createSObject( new Case(),    CASE_DEFAULTS,    true );
+        Case caseRecord = (Case) NSP_TestExtendedDataFactory.createSObject( new Case(), CASE_DEFAULTS, true );
     }
 
     @isTest
@@ -65,3 +65,4 @@ private class NSP_DeleteMergeCaseBatch_Test {
     }
 
 }
+//
