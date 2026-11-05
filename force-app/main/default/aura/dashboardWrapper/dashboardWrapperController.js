@@ -4,22 +4,20 @@
         action.setCallback(this, function(response) {
             const state = response.getState();
             if (state === 'SUCCESS') {
-                const settings  = response.getReturnValue();
-                const field     = component.get('v.dashboardField');
-                const dashName  = settings[field];
-
+                const settings = response.getReturnValue();
+                const field = component.get('v.dashboardField');
+                const dashName = settings[field];
                 if (!dashName) {
                     component.set('v.isLoading', false);
                     component.set('v.isError', true);
                     return;
                 }
-
                 $A.createComponent(
                     'desktopDashboards:embeddedDashboard',
                     {
-                        dashboardName : dashName,
-                        height        : '1000',
-                        hideOnError   : true
+                        dashboardName : dashName ,
+                        height : '1000' ,
+                        hideOnError : true
                     },
                     function(dashboardCmp, status, errorMessage) {
                         component.set('v.isLoading', false);
