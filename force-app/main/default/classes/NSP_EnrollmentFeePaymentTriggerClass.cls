@@ -118,6 +118,7 @@ public without sharing class NSP_EnrollmentFeePaymentTriggerClass {
                 Database.update( oppMap.values() );
             }
         } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
     }
 
