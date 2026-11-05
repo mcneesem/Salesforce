@@ -11,6 +11,21 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Schedule_Seller_Applicant_Tracking</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Applicant_Tracking</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_Contractor_Management</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Contractor_Management</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_HR360</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_HR360</label>
+            </value>
+            <value>
                 <fullName>Schedule_Seller_HR360_Enterprise</fullName>
                 <default>true</default>
                 <label>Schedule_Seller_HR360_Enterprise</label>
@@ -21,9 +36,9 @@
                 <label>Schedule_Seller_HR360_MidMarket</label>
             </value>
             <value>
-                <fullName>Schedule_Seller_HR360</fullName>
+                <fullName>Schedule_Seller_HRCore</fullName>
                 <default>false</default>
-                <label>Schedule_Seller_HR360</label>
+                <label>Schedule_Seller_HRCore</label>
             </value>
             <value>
                 <fullName>Schedule_Seller_HRCore_Enterprise</fullName>
@@ -36,14 +51,19 @@
                 <label>Schedule_Seller_HRCore_MidMarket</label>
             </value>
             <value>
-                <fullName>Schedule_Seller_HRCore</fullName>
-                <default>false</default>
-                <label>Schedule_Seller_HRCore</label>
-            </value>
-            <value>
                 <fullName>Schedule_Seller_HRScale</fullName>
                 <default>false</default>
                 <label>Schedule_Seller_HRScale</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_Multiple_Products</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Multiple_Products</label>
+            </value>
+            <value>
+                <fullName>Schedule_Seller_Organizational_Planning</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Organizational_Planning</label>
             </value>
             <value>
                 <fullName>Schedule_Seller_Performance_Management</fullName>
@@ -56,24 +76,10 @@
                 <label>Schedule_Seller_Time_Attendance</label>
             </value>
             <value>
-                <fullName>Schedule_Seller_Applicant_Tracking</fullName>
+                <fullName>Schedule_Seller_Performance_Management_Time_Attendance</fullName>
                 <default>false</default>
-                <label>Schedule_Seller_Applicant_Tracking</label>
-            </value>
-            <value>
-                <fullName>Schedule_Seller_Organizational_Planning</fullName>
-                <default>false</default>
-                <label>Schedule_Seller_Organizational_Planning</label>
-            </value>
-            <value>
-                <fullName>Schedule_Seller_Multiple_Products</fullName>
-                <default>false</default>
-                <label>Schedule_Seller_Multiple_Products</label>
-            </value>
-            <value>
-                <fullName>Schedule_Seller_Contractor_Management</fullName>
-                <default>false</default>
-                <label>Schedule_Seller_Contractor_Management</label>
+                <isActive>false</isActive>
+                <label>Schedule_Seller_Performance_Management_Time_Attendance</label>
             </value>
         </valueSetDefinition>
     </valueSet>
