@@ -15572,6 +15572,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_ReportRequest__c.NSP_IsCustomRoleSelected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_ReportRequest__c.NSP_IsCustomServiceLengthSelected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_IsDraft__c</field>
         <readable>true</readable>
