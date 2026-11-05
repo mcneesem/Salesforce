@@ -157,6 +157,58 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Accrual_Levels</name>
+        <label>Check Accrual Levels</label>
+        <locationX>3031</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Levels_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Accrual_Levels__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Client_Information_Fields</targetReference>
+            </connector>
+            <label>Accrual Levels Populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_AIMSApprovalCondition</name>
+        <label>Check AIMSApprovalCondition</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AIMS_Approval_Conditions_Met</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AIMSApprovalCondition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Policy_Information</targetReference>
+            </connector>
+            <label>AIMS Approval Conditions Met</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_for_Plan_Year</name>
         <label>AIMS Check for Plan Year</label>
         <locationX>50</locationX>
@@ -1133,15 +1185,8 @@
                     <stringValue>AIMS</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>AIMSApprovalCondition</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Policy_Information</targetReference>
+                <targetReference>Check_AIMSApprovalCondition</targetReference>
             </connector>
             <label>Check for AIMS?</label>
         </rules>
@@ -1155,15 +1200,8 @@
                     <stringValue>ITA</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrual_Levels__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Client_Information_Fields</targetReference>
+                <targetReference>Check_Accrual_Levels</targetReference>
             </connector>
             <label>Check for ITA?</label>
         </rules>
