@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>Portal_Guidance_API_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">INSPERITY_CLIENT_AUTHORIZATION</value>
     </values>
     <values>
         <field>Portal_Task_Action__c</field>
