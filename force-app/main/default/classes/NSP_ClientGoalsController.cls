@@ -5,6 +5,7 @@
 * Name : NSP_ClientGoalsController
 */
 public with sharing class NSP_ClientGoalsController {
+    // test w/ NSP_ClientGoalTriggerHelper_Test (83%)
 
     //get all active goals from related account
     @AuraEnabled
