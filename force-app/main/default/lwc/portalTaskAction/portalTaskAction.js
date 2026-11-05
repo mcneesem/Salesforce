@@ -56,12 +56,13 @@ export default class PortalTaskAction extends LightningElement {
             fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed"; // auto-complete orphaned Portal Tasks...
         }
         if ( this.showValueInput ) {
+            if ( !this.recordValue ) {
+                fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending"; // reset status when value is falsy...
+            }
             if ( this.showInputCheckbox ) {
                 fields[PORTAL_TASK_VALUE_CHECKBOX_FIELD.fieldApiName] = this.recordValue;
                 if ( this.recordValue ) {
                     fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Completed";
-                } else {
-                    fields[PORTAL_TASK_STATUS_FIELD.fieldApiName] = "Pending"; // reset status when toggle is allowed...
                 }
             } else if ( this.showInputDate ) {
                 fields[PORTAL_TASK_VALUE_DATE_FIELD.fieldApiName] = this.recordValue;
@@ -187,7 +188,7 @@ export default class PortalTaskAction extends LightningElement {
                 }
             }
             if ( requiresSave ) {
-                this.handleSave();
+                this.handleSave(); // start auto save...
             }
             if ( this.hasProjectTask ) {
                 // share files uploaded to the Portal_Task__c back to the internal Project_Task__c...
@@ -297,8 +298,7 @@ export default class PortalTaskAction extends LightningElement {
 
     handleClickSave( event ) {
         this.stopPropagation( event );
-        // start manual save...
-        this.handleSave();
+        this.handleSave(); // start manual save...
     }
 
     //
