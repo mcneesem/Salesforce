@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SDR_BDR_Dashboard_Id__c</fullName>
-    <description>used by CRMA Dashboard Wrapper to display the SDR BDR Homepage Dashboard</description>
+    <description>used by CRMA Dashboard Wrapper to display the Sales Development Representative (SDR) and Business Development Representative (BDR) Homepage Dashboard</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>SDR BDR Dashboard Id</label>
