@@ -1,6 +1,6 @@
-// @description Test class for NSP_DeleteMergeCaseBatch covering batch execution, scheduling, callable, and runnable paths.
-@isTest(seeAllData=false)
+@isTest
 private class NSP_DeleteMergeCaseBatch_Test {
+    // @description Test class for NSP_DeleteMergeCaseBatch covering batch execution, scheduling, callable, and runnable paths.
 
     private static final String ACCOUNT_DEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
     private static final String CASE_DEFAULTS    = 'NSP_TestDataFactory.CaseDefaults';
