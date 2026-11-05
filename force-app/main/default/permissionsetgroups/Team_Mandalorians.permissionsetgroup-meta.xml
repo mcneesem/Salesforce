@@ -18,6 +18,7 @@
     <permissionSets>Queue_Membership_View</permissionSets>
     <permissionSets>Renewal_Layout_Access</permissionSets>
     <permissionSets>Renewal_Visibility</permissionSets>
+    <permissionSets>Service_Stakeholder</permissionSets>
     <permissionSets>Sync_States_Of_Operations</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
