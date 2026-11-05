@@ -7,7 +7,7 @@
     <inlineHelpText>Not applicable for CA or OR employees</inlineHelpText>
     <label>Has no rehire clause</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
