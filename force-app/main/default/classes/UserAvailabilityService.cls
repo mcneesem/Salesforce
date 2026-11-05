@@ -1,15 +1,6 @@
 public with sharing class UserAvailabilityService {
     // test w/ UserAvailabilityServiceTest (90%)
 
-    private static Map<String,List<Schedule_Seller_Time_Slot__mdt>> timeSlotsBySkillAndTimeZone {
-        private get {
-            if ( timeSlotsBySkillAndTimeZone == null ) {
-                timeSlotsBySkillAndTimeZone = new Map<String,List<Schedule_Seller_Time_Slot__mdt>>();
-            }
-            return timeSlotsBySkillAndTimeZone;
-        }
-        private set;
-    }
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
     public static List<Date> getBusinessDates( String skill ) {
@@ -61,16 +52,12 @@ public with sharing class UserAvailabilityService {
 
     //Creates the start and end dates that will be used as the windows
     //for availability calculation
-    private class DaysMatrix{
+    private class DaysMatrix {
         // Single source of truth: events per slot across business days
         List<List<Event>> slots;
     }
-    private static List<Event> getTimeZoneBlocks( String skill, String timeZone ) {
-        return UserAvailabilityService.getTimeBlocksPrimary( skill , timeZone );
-    }
     private static DaysMatrix getBusinessDaysMatrix( String skill, String timeZone ) {
         List<Event> template = UserAvailabilityService.getTimeZoneBlocks( skill, timeZone );
-
         List<List<Event>> slotsList = new List<List<Event>>();
         //Get real days based on Business Hours
         List<Date> businessDates = UserAvailabilityService.getBusinessDates( skill );
@@ -158,19 +145,18 @@ public with sharing class UserAvailabilityService {
         return baseDateTime;
     }
 
-    private static List<Event> getTimeBlocksPrimary( String skill , String timeZone ) {
+    private static List<Event> getTimeZoneBlocks( String skill, String timeZone ) {
+        List<Event> response = new List<Event>();
         // Base day = today's date in GMT at 00:00 to construct template Events
         Datetime baseDateTime = UserAvailabilityService.getBaseDateTime( timeZone );
-
-        List<Event> timeBlocksPrimary = new List<Event>();
-        if( baseDateTime != null ) {
-            for (Schedule_Seller_Time_Slot__mdt row : UserAvailabilityService.getTimeSlots(skill, timezone)) {
+        if ( baseDateTime != null ) {
+            for ( Schedule_Seller_Time_Slot__mdt row : UserAvailabilityService.getTimeSlots( skill , timezone ) ) {
                 // Convert decimal hour fields (8.0, 8.5) to minutes
                 Integer startMinutes = UserAvailabilityService.getMinutes( row.Start_Time__c );
                 Integer endMinutes = UserAvailabilityService.getMinutes( row.End_Time__c );
                 if ( ( startMinutes != null ) && ( endMinutes != null ) ) {
                     // Build Event using base GMT date + offset minutes
-                    timeBlocksPrimary.add(
+                    response.add(
                         new Event(
                             Subject='Demo' ,
                             StartDateTime=baseDateTime.addMinutes( startMinutes ) ,
@@ -180,10 +166,8 @@ public with sharing class UserAvailabilityService {
                 }
             }
         }
-        return timeBlocksPrimary;
+        return response;
     }
-
-
 
     @AuraEnabled(cacheable=true)
     public static List<Event> getTimeBlocks( String skill , String timeZone ) {
@@ -223,9 +207,9 @@ public with sharing class UserAvailabilityService {
 
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled
-    public static List<List<List<Id>>> getAggregateUserIdsMatrix( String skill, String timeZone ) {
+    public static List<List<List<Id>>> getAggregateUserIdsMatrix( String skill , String timeZone ) {
         // Build business day/time windows
-        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill, timeZone );
+        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill , timeZone );
         // Build windows directly from events-only matrix
         List<Event> windows = UserAvailabilityService.getMatrixWindows( daysOfWeek );
         // Step (slot length) comes from the time slot metadata
@@ -299,11 +283,17 @@ public with sharing class UserAvailabilityService {
                 List<Id> availableForWindow = new List<Id>();
                 for ( Id uid : userIds ) {
                     // Skip this user for this day if they are capped
-                    if ( !cappedToday?.contains( uid )
-                        && UserAvailabilityService.isUserAvailableForWindow( uid , busyByUser , windowEvt , stepMinutes , timeZoneByUser )
-                        )
-                    {
-                        availableForWindow.add( uid );
+                    if ( !cappedToday?.contains( uid ) ) {
+                        Boolean isAvailable = UserAvailabilityService.isUserAvailableForWindow(
+                            uid ,
+                            busyByUser ,
+                            windowEvt ,
+                            stepMinutes ,
+                            timeZoneByUser
+                        );
+                        if ( isAvailable ) {
+                            availableForWindow.add( uid );
+                        }
                     }
                 }
                 idsPerWindow.add( availableForWindow );
@@ -574,7 +564,6 @@ public with sharing class UserAvailabilityService {
         return ( stepMinutes );
     }
 
-
     // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
     private static Map<Id,List<Event>> initializeBusyUserMap( Set<Id> userIds ) {
         Map<Id,List<Event>> busyByUser = new Map<Id,List<Event>>();
@@ -792,18 +781,20 @@ public with sharing class UserAvailabilityService {
     }
 
     // Load time slot definitions from Custom Metadata for the given product (skill) and time zone
-    private static List<Schedule_Seller_Time_Slot__mdt> getTimeSlots(String skill, String timeZone){
+    private static List<Schedule_Seller_Time_Slot__mdt> getTimeSlots( String skill , String timeZone ) {
         List<Schedule_Seller_Time_Slot__mdt> response = new List<Schedule_Seller_Time_Slot__mdt>();
         if ( String.isNotBlank( skill ) && String.isNotBlank( timeZone ) ) {
             String cacheKey = skill + '|' + timeZone;
-            if ( timeSlotsBySkillAndTimeZone.containsKey( cacheKey )
-                && ( timeSlotsBySkillAndTimeZone.get( cacheKey ) != null )
+            if ( UserAvailabilityService.timeSlotsMap.containsKey( cacheKey )
+                && ( UserAvailabilityService.timeSlotsMap.get( cacheKey ) != null )
                 )
             {
-                response = timeSlotsBySkillAndTimeZone.get( cacheKey );
+                response = UserAvailabilityService.timeSlotsMap.get( cacheKey );
             } else {
                 response = [
-                    SELECT Start_Time__c , End_Time__c
+                    SELECT
+                        Start_Time__c ,
+                        End_Time__c
                     FROM Schedule_Seller_Time_Slot__mdt
                     WHERE (
                         ( Is_Active__c = true )
@@ -812,11 +803,25 @@ public with sharing class UserAvailabilityService {
                     )
                     ORDER BY Start_Time__c ASC
                 ];
-                timeSlotsBySkillAndTimeZone.put( cacheKey , response );
+                UserAvailabilityService.timeSlotsMap.put( cacheKey , response );
             }
         }
         return response;
     }
+
+    private static Map<String,List<Schedule_Seller_Time_Slot__mdt>> timeSlotsMap {
+        private get {
+            if ( timeSlotsMap == null ) {
+                timeSlotsMap = new Map<String,List<Schedule_Seller_Time_Slot__mdt>>();
+            }
+            return timeSlotsMap;
+        }
+        private set;
+    }
+
+    //
+    //
+    //
 
     private static Schedule_Seller_Settings__c settings {
         private get {
@@ -870,5 +875,6 @@ public with sharing class UserAvailabilityService {
         }
         return userBhId;
     }
+
 }
 //
