@@ -21,9 +21,7 @@ public without sharing class NSP_FlowInterviewListController {
                     AND ( CreatedById = :UserInfo.getUserId() )
                 )
             ];
-        } catch ( Exception e ) {
-            throw new AuraHandledException( 'Error occured: ' + e.getMessage() );
-        }
+        } catch ( Exception e ) { throw new AuraHandledException( e.getMessage() ); }
         return records;
     }
 
@@ -41,9 +39,7 @@ public without sharing class NSP_FlowInterviewListController {
                 interview = interviews[0];
                 delete interview;
             }
-        } catch ( Exception e ) {
-            throw new AuraHandledException( 'Error occured: ' + e.getMessage() );
-        }
+        } catch ( Exception e ) { throw new AuraHandledException( e.getMessage() ); }
         return interview;
     }
 
