@@ -73,7 +73,7 @@ public with sharing class NSP_DeleteMergeCaseBatch implements ISelfSchedulable ,
     }
 
     public void execute( Database.BatchableContext bc , List<Case> scope ) {
-        Database.DeleteResult[] results = Database.delete( scope , false );
+        List<Database.DeleteResult> results = Database.delete( scope , false );
         NSP_ErrorLogHandler.logResults(
             NSP_DeleteMergeCaseBatch.class.getName() ,
             'execute' ,
