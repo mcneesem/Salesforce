@@ -3068,6 +3068,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Priced_Time_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Priced_Time_Start__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Product_Recommendation_Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3204,6 +3214,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Sub_Reason_Lost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Time_Spent_In_Priced__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

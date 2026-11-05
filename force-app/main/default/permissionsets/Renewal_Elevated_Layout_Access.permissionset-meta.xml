@@ -5,6 +5,21 @@
         <name>Renewal_Elevated_Layout_Access</name>
     </customPermissions>
     <description>Gives access to Renewal elevated fields</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Priced_Time_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Priced_Time_Start__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Time_Spent_In_Priced__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Renewal Elevated Layout Access</label>
 </PermissionSet>
