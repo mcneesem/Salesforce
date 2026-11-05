@@ -29,11 +29,6 @@
                 <label>Benefits</label>
             </value>
             <value>
-                <fullName>Better Fit for Workday</fullName>
-                <default>false</default>
-                <label>Better Fit for Workday</label>
-            </value>
-            <value>
                 <fullName>BPA lost prospect</fullName>
                 <default>false</default>
                 <label>BPA lost prospect</label>
@@ -62,6 +57,11 @@
                 <fullName>Cost</fullName>
                 <default>false</default>
                 <label>Cost</label>
+            </value>
+            <value>
+                <fullName>Create Workday Referraly</fullName>
+                <default>false</default>
+                <label>Create Workday Referral</label>
             </value>
             <value>
                 <fullName>Declined</fullName>
@@ -401,7 +401,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales</controllingFieldValue>
-            <valueName>Better Fit for Workday</valueName>
+            <valueName>Create Workday Referral</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sales</controllingFieldValue>
