@@ -51,13 +51,6 @@
                     <stringValue>Administration</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Priced_Time_Start__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Assign_Priced_Time_End</targetReference>
             </connector>
@@ -175,7 +168,7 @@
         <connector>
             <targetReference>Check_Priced_Time_Start</targetReference>
         </connector>
-        <filterLogic>1 AND ((2 AND 4 AND 7) OR (3 AND 5 AND 6))</filterLogic>
+        <filterLogic>1 AND (2 OR 5) AND (3 OR 4) AND (6 OR 7)</filterLogic>
         <filters>
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
