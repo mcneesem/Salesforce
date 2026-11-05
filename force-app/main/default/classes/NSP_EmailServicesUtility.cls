@@ -132,25 +132,25 @@ public without sharing class NSP_EmailServicesUtility {
     // Return : Messaging.SingleEmailMessage
     //
     public static Messaging.SingleEmailMessage sendVFEmailTemplate(
-        Id ToEmailUserid ,
-        String[] ToCcEmailUsers ,
+        Id toEmailUserId ,
+        String[] toCcEmailUsers ,
         EmailTemplate template ,
-        Id ObjectForMergeFieldsId ,
+        Id objectForMergeFieldsId ,
         List<Messaging.EmailFileAttachment> emailattachments
         )
     {
-        for(integer len=0; len<ToCcEmailUsers.size(); len++) {
-            if(ToCcEmailUsers[len]==null){
-                ToCcEmailUsers.remove(len);
+        for ( Integer i=0 ; i < toCcEmailUsers.size() ; i++ ) {
+            if ( String.isBlank( toCcEmailUsers[i] ) ) {
+                toCcEmailUsers.remove( i );
             }
         }
         Messaging.SingleEmailMessage emailMessageToOwner = new Messaging.SingleEmailMessage();
-        emailMessageToOwner.setTargetObjectId(ToEmailUserid);
-        if(ToCcEmailUsers.size() > 0){
-            emailMessageToOwner.setCcAddresses(ToCcEmailUsers);
+        emailMessageToOwner.setTargetObjectId( toEmailUserId );
+        if ( !toCcEmailUsers.isEmpty() ) {
+            emailMessageToOwner.setCcAddresses( toCcEmailUsers );
         }
         emailMessageToOwner.setTemplateId(template.Id);
-        emailMessageToOwner.setwhatId(ObjectForMergeFieldsId);
+        emailMessageToOwner.setwhatId( objectForMergeFieldsId );
         emailMessageToOwner.setSaveAsActivity(false);
         if(!emailattachments.isEmpty()){
             emailMessageToOwner.setFileAttachments(emailattachments);
