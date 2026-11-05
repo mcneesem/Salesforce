@@ -1,7 +1,7 @@
 public with sharing class NSP_ClientGoalsController {
     // test w/ NSP_ClientGoalTriggerHelper_Test (83%)
 
-    //get all active goals from related account
+    // get all active goals from related account
     @AuraEnabled
     public static List<NSP_ClientGoal__c> getClientGoalsList( String rsapId ) {
         List<NSP_ClientGoal__c> clientGoalList = new List<NSP_ClientGoal__c>();
@@ -46,7 +46,7 @@ public with sharing class NSP_ClientGoalsController {
         return clientGoalList;
     }
 
-    //get accountId for the RSAP record
+    // get accountId for the RSAP record
     public static NSP_ClientGoalsControllerWrapper getRSAP( String rsapId ) {
         List<NSP_Relationship_Strategy_Action_Plan__c> records = [
             SELECT
