@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDR_BDR_Dashboard_Developer_Name__c</fullName>
+    <description>Developer name (API name) of the standard Lightning dashboard for the Sales Development Representative (SDR) and Business Development Representative (BDR) Todays Actions tab. Use SOQL: SELECT DeveloperName, Title FROM Dashboard to find the correct value.</description>
+    <externalId>false</externalId>
+    <label>SDR BDR Dashboard Developer Name</label>
+    <length>80</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

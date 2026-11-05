@@ -1,14 +1,29 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getDashboardSettings from '@salesforce/apex/CRMAnalyticsDashboardController.getDashboardSettings';
 
 export default class CrmAnalyticsDashboardWrapper extends LightningElement {
-    dashboardId;
+    @api dashboardField;
+    @api dashboardHeight;
+    _settings;
     error;
+
     @wire(getDashboardSettings) wiredDashboard({data, error}) {
         if (data) {
-            this.dashboardId = data.Dashboard_Id__c;
+            this._settings = data;
         } else if (error) {
-            this.error = "An error has occurred (crmAnalyticsDashboardWrapper)."; 
+            this.error = "An error has occurred (crmAnalyticsDashboardWrapper).";
         }
+    }
+
+    get dashboardId() {
+        let response;
+        if ( this._settings
+            && this.dashboardField
+            && Object.hasOwn( this._settings , this.dashboardField )
+            )
+        {
+            response = this._settings[this.dashboardField];
+        }
+        return response;
     }
 }

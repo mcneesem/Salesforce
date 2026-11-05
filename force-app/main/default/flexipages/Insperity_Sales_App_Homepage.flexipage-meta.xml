@@ -4,6 +4,95 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>dashboardField</name>
+                    <value>SDR_BDR_Dashboard_Developer_Name__c</value>
+                </componentInstanceProperties>
+                <componentName>dashboardWrapper</componentName>
+                <identifier>c_dashboardWrapper</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-bd39564a-84f4-4b17-8d6a-48beadb6dd79</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>dashboardField</name>
+                    <value>SDR_BDR_Dashboard_Id__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>dashboardHeight</name>
+                    <value>1000</value>
+                </componentInstanceProperties>
+                <componentName>crmAnalyticsDashboardWrapper</componentName>
+                <identifier>c_crmAnalyticsDashboardWrapper2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-75844026-7e5c-4994-8281-024cc06a52f6</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-bd39564a-84f4-4b17-8d6a-48beadb6dd79</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Today&apos;s Actions</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-75844026-7e5c-4994-8281-024cc06a52f6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Analytics</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-0a8cc85f-2077-4cb2-a0cf-997935349722</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-0a8cc85f-2077-4cb2-a0cf-997935349722</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_SDR_BDR_Dashboard}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>enableInlineEdit</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -289,6 +378,14 @@
 
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>dashboardField</name>
+                    <value>Sales_Links_Dashboard_Id__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>dashboardHeight</name>
+                    <value>500</value>
+                </componentInstanceProperties>
                 <componentName>crmAnalyticsDashboardWrapper</componentName>
                 <identifier>c_crmAnalyticsDashboardWrapper</identifier>
                 <visibilityRule>
