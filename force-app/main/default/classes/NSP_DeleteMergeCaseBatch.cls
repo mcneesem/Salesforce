@@ -1,8 +1,11 @@
-public with sharing class NSP_DeleteMergeCaseBatch implements ISelfSchedulable, Schedulable, Callable, IJobRunnable, Database.Batchable<SObject> {
+public with sharing class NSP_DeleteMergeCaseBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_DeleteMergeCaseBatch_Test (100%)
+
     // @description Batch class to delete Cases in Merged status; self-scheduling, callable, and runnable.
 
-    public static final String CASE_MERGED = 'Merged';
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
 
     public NSP_DeleteMergeCaseBatch() {
     }
@@ -58,26 +61,28 @@ public with sharing class NSP_DeleteMergeCaseBatch implements ISelfSchedulable, 
     // Batchable
     //
 
-    public Database.QueryLocator start(Database.BatchableContext bc){
-        List<String> caseFields = new List<String>{'Id', 'Status'};
-
-        //query to get Merged cases
-        String query = new NSP_QueryBuilder('Case', caseFields)
-                            .addFilter('Status', CASE_MERGED)
-            .build();
-
-        return Database.getQueryLocator(query);
-
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        return Database.getQueryLocator(
+            [
+                SELECT Id , Status
+                FROM Case
+                WHERE ( Status = 'Merged' )
+                WITH SECURITY_ENFORCED 
+            ]
+        );
     }
 
-    public void execute(Database.BatchableContext bc, List<Case> caseList){
-
-        Database.DeleteResult[] caseDeleteResultList = Database.Delete(caseList, false);
-        NSP_ErrorLogHandler.logDeleteResultsException('NSP_DeleteMergeCaseBatch', 'ExecuteMethod', caseDeleteResultList );
-
+    public void execute( Database.BatchableContext bc , List<Case> scope ) {
+        Database.DeleteResult[] results = Database.delete( scope , false );
+        NSP_ErrorLogHandler.logResults(
+            NSP_DeleteMergeCaseBatch.class.getName() ,
+            'execute' ,
+            results
+        );
     }
 
-    public void finish(Database.BatchableContext bc){
+    public void finish( Database.BatchableContext bc ) {
     }
+
 }
 //
