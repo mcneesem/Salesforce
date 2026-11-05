@@ -8,8 +8,16 @@ export default class CaseCreationOutlook extends NavigationMixin(LightningElemen
 
     get flowInputVariables() {
         return [
-            { name: 'isOutlook', type: 'Boolean', value: true },
-            { name: 'caseDescription', type: 'String', value: this.messageBody }
+            {
+                name: 'isOutlook' ,
+                type: 'Boolean' ,
+                value: true
+            } ,
+            {
+                name: 'caseDescription' ,
+                type: 'String' ,
+                value: this.messageBody
+            }
         ];
     }
 
@@ -25,23 +33,27 @@ export default class CaseCreationOutlook extends NavigationMixin(LightningElemen
         this.isFlowVisible = false;
     }
 
-    handleStatusChange({ detail }) {
-        const { status, outputVariables } = detail;
-        if (['FINISHED', 'FINISHED_SCREEN'].includes(status)) {
-            const caseRecordVar = outputVariables?.find(v => v.name === 'caseRecordId');
+    handleStatusChange( { detail } ) {
+        const { status , outputVariables } = detail;
+        if ( ['FINISHED' , 'FINISHED_SCREEN' ].includes( status ) ) {
+            const caseRecordVar = outputVariables?.find( v => v.name === 'caseRecordId' );
             const createdCaseId = caseRecordVar?.value;
-            if (createdCaseId) {
+            if ( createdCaseId ) {
                 this.isFlowVisible = false;
-                this[NavigationMixin.Navigate]({
-                    type: 'standard__recordPage',
-                    attributes: {
-                        recordId: createdCaseId,
-                        actionName: 'view'
+                this[NavigationMixin.Navigate](
+                    {
+                        type: 'standard__recordPage' ,
+                        attributes: {
+                            recordId: createdCaseId ,
+                            actionName: 'view'
+                        }
                     }
-                });
+                );
             } else {
                 this.isFlowVisible = false;
             }
         }
     }
+
 }
+//
