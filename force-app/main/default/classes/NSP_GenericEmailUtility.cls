@@ -110,7 +110,7 @@ public class NSP_GenericEmailUtility {
                     LIMIT 1
                 ];
                 if( !emailTemplateStored.isEmpty()) {
-                  templateId = emailTemplateStored[0].Id; 
+                  templateId = emailTemplateStored[0].Id;
                 }         
             } catch ( Exception e ) {
                 NSP_GenericEmailUtility.handleException( e , 'getTemplateIdFromDevName' );
