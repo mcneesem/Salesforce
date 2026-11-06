@@ -10,22 +10,11 @@
         <assignmentItems>
             <assignToReference>$Record.NSP_Rating__c</assignToReference>
             <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
         </assignmentItems>
-        <connector>
-            <targetReference>END_ELEMENT_2</targetReference>
-        </connector>
     </assignments>
-    <ends>
-        <name>END_ELEMENT_2</name>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-    </ends>
     <environments>Default</environments>
-    <interviewLabel>Before Create - Quick rate update as empty {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Before Create - Quick rate update as empty</label>
+    <interviewLabel>Project Before Create Populate Quick Rate {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Before Create Populate Quick Rate</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
