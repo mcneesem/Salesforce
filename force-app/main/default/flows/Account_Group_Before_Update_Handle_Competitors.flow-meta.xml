@@ -29,8 +29,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Make_Other_Competitor_Blank</targetReference>
+            <targetReference>Check_Blank_Competitor</targetReference>
         </connector>
     </assignments>
     <assignments>
