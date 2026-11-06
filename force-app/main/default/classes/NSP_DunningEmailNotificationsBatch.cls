@@ -1,5 +1,6 @@
-public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> , Database.Stateful {
-    // test w/ NSP_DunningEmailNotificationsBatchTest (91%)
+// intentionally `without sharing` to preserve default sharing at api version 65...
+public without sharing class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> , Database.Stateful {
+    // test w/ NSP_DunningEmailNotificationsBatchTest (86%)
 
     private static final string STRING_CASE = 'Case';
     private Integer recordsProcessed = 0; // stores number of records processed.
@@ -154,7 +155,7 @@ public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Sc
                 // Get the ID of the AsyncApexJob representing this batch job
                 // from Database.BatchableContext.
                 // Query the AsyncApexJob object to retrieve the current job's information.
-                AsyncApexJob async = [
+                List<AsyncApexJob> asyncJobs = [
                     SELECT
                         Id ,
                         Status ,
@@ -165,20 +166,23 @@ public class NSP_DunningEmailNotificationsBatch implements ISelfSchedulable , Sc
                     FROM AsyncApexJob
                     WHERE ( Id = :bc.getJobId() )
                 ];
-                List<String> toAddresses = new List<String>{ async.CreatedBy.Email };
-                Map<String,Object> inputs = new Map<String,Object>();
-                inputs.put( 'toEmailAddresses' , toAddresses );
-                inputs.put( 'emailSubject' , 'Dunning Email Notifications Batch ' + async.Status );
-                inputs.put(
-                    'emailBody' ,
-                    'The batch Apex job processed ' + async.TotalJobItems
-                    + ' batches with '+ async.NumberOfErrors + ' failures.'
-                    + 'Total Records :' + this.recordsProcessed
-                    + 'Total Emails Sent :' + this.totalMailsSent
-                    + ' Total Email Fails :' + this.emailFails
-                );
-                Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
-                sendEmailFlow.start();
+                if ( !asyncJobs.isEmpty() ) {
+                    AsyncApexJob job = asyncJobs[0];
+                    List<String> toAddresses = new List<String>{ job.CreatedBy.Email };
+                    Map<String,Object> inputs = new Map<String,Object>();
+                    inputs.put( 'toEmailAddresses' , toAddresses );
+                    inputs.put( 'emailSubject' , 'Dunning Email Notifications Batch ' + job.Status );
+                    inputs.put(
+                        'emailBody' ,
+                        'The batch Apex job processed ' + job.TotalJobItems
+                        + ' batches with '+ job.NumberOfErrors + ' failures.'
+                        + ' Total Records : ' + this.recordsProcessed
+                        + ' Total Emails Sent : ' + this.totalMailsSent
+                        + ' Total Email Fails : ' + this.emailFails
+                    );
+                    Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
+                    sendEmailFlow.start();
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
