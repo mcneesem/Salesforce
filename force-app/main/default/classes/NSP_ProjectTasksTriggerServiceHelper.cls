@@ -294,13 +294,15 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;
         serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;
         // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from *** to null: [Status]
-        serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
-        if ( String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
-            && ( mapWorkOrderProjectTask.pse__Status__c != 'null' )
+        if ( String.isNotBlank( serviceAppointmentStatus )
+            && String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c )
+            && NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitions.containsKey( serviceAppointmentStatus )
+            && NSP_ProjectTasksTriggerServiceHelper.allowedStatusTransitions.get( serviceAppointmentStatus ).contains( mapWorkOrderProjectTask.pse__Status__c )
             )
         {
             serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
         }
+
         serviceAppointmentRecToUpdate.Duration = (
             ( ( mapWorkOrderProjectTask.pse__End_Date_Time__c != null ) && ( mapWorkOrderProjectTask.pse__Start_Date_Time__c != null ) )
             ? Integer.valueOf( ( mapWorkOrderProjectTask.pse__End_Date_Time__c.getTime() - mapWorkOrderProjectTask.pse__Start_Date_Time__c.getTime() ) / ( 1000 * 60 ) )
@@ -310,6 +312,34 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         serviceAppointmentRecToUpdate.SchedStartTime = mapWorkOrderProjectTask.pse__Start_Date_Time__c;
         serviceAppointmentRecToUpdate.SchedEndTime = mapWorkOrderProjectTask.pse__End_Date_Time__c;
         return serviceAppointmentRecToUpdate;
+    }
+
+    // Using a Map containing Sets instead of a List to prevent duplicates and enable faster lookups
+    private static Map<String,Set<String>> allowedStatusTransitions {
+        private get {
+            if ( allowedStatusTransitions == null ) {
+                Map<String,Set<String>> local = new Map<String,Set<String>>();
+                for( FSL.StatusTransition transition : FSL.GlobalAPIS.GetAllStatusTransitions() ) {
+                    if ( String.isNotBlank( transition.FromStatus )
+                        && String.isNotBlank( transition.ToStatus )
+                        )
+                    {
+                        // If the 'FromStatus' dosen't exist in our map yet, initialize its Set
+                        if ( !local.containsKey( transition.FromStatus ) ) {
+                            local.put(
+                                transition.FromStatus ,
+                                new Set<String>()
+                            );
+                        }
+                        // Add the 'ToStatus' value to the corresponding Set
+                        local.get( transition.FromStatus ).add( transition.ToStatus );
+                    }
+                }
+                allowedStatusTransitions = local;
+            }
+            return allowedStatusTransitions;
+        }
+        private set;
     }
 
     //
