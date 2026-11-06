@@ -2114,21 +2114,29 @@ public without sharing class NSP_Implprofile_ServiceHelperUpdate {
         try{
             NSP_Implementation_Profile_Automation__c newIPAautomation = new  NSP_Implementation_Profile_Automation__c();
             NSP_Implementation_Profile_Automation__c ipAautomationUpdate = new  NSP_Implementation_Profile_Automation__c();
-            ipAautomationUpdate = [Select Id ,NSP_Record_Type__c,NSP_Last_Run__c FROM NSP_Implementation_Profile_Automation__c
-                                   WHERE Name=: automationName AND  NSP_Method_Name__c=:fnName  AND NSP_Record_Type__c =: recordType
-                                   AND NSP_Implementation_Profile__c =:ipRecId];
-            if(ipAautomationUpdate!=null){
+            List<NSP_Implementation_Profile_Automation__c> ipAautomationUpdates = [
+                Select Id , NSP_Record_Type__c , NSP_Last_Run__c
+                FROM NSP_Implementation_Profile_Automation__c
+                WHERE (
+                    ( Name = :automationName )
+                    AND ( NSP_Method_Name__c = :fnName )
+                    AND ( NSP_Record_Type__c = :recordType )
+                    AND ( NSP_Implementation_Profile__c = :ipRecId )
+                    )
+            ];
+            if ( !ipAautomationUpdates.isEmpty() ) {
+                ipAautomationUpdate = ipAautomationUpdates[0];
                 ipAautomationUpdate.NSP_Last_Run__c = System.now();
                 if( ipAautomationUpdate.NSP_Record_Type__c == null){
                     ipAautomationUpdate.NSP_Record_Type__c = recordType;
                 }
                 update ipAautomationUpdate;
-                IPAautomation=ipAautomationUpdate;
+                IPAautomation = ipAautomationUpdate;
             }
-            else if(ipAautomationUpdate==null){
-                newIPAautomation= createIPAutomation( ipRecId,  automationName,  fnName,section,recordType);
+            else if ( ipAautomationUpdates.isEmpty() ) {
+                newIPAautomation = createIPAutomation( ipRecId,  automationName,  fnName,section,recordType );
                 Insert newIPAautomation;
-                IPAautomation=newIPAautomation;
+                IPAautomation = newIPAautomation;
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
