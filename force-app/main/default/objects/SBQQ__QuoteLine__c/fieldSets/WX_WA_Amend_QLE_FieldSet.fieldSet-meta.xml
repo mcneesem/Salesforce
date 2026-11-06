@@ -58,7 +58,7 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>SBQQ__PriorQuantity__c</field>
+        <field>NSP_QLE_Prior_Quantity__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
