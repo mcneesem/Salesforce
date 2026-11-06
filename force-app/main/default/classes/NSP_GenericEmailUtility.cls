@@ -1,4 +1,5 @@
-public class NSP_GenericEmailUtility {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_GenericEmailUtility {
     // test w/ NSP_GenericEmailUtilityTest (86%)
 
     //
@@ -109,7 +110,7 @@ public class NSP_GenericEmailUtility {
                     WHERE DeveloperName = :templateDevName
                     LIMIT 1
                 ];
-                if( !emailTemplateStored.isEmpty() ) {
+                if ( !emailTemplateStored.isEmpty() ) {
                     templateId = emailTemplateStored[0].Id;
                 }
             } catch ( Exception e ) {
@@ -135,7 +136,7 @@ public class NSP_GenericEmailUtility {
                 WHERE ( DisplayName = :displayName )
                 LIMIT 1
             ];
-            if( !orgWidAddressList.isEmpty() ) {
+            if ( !orgWidAddressList.isEmpty() ) {
                 orgWidAddress = orgWidAddressList[0];
             }
         } catch ( Exception e ) {
