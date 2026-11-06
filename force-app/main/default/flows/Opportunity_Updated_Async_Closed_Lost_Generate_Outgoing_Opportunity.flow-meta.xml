@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
-    <description>When an Opportunity is moved to &quot;Closed Lost&quot; and Reason Lost = &quot;Create Workday Referral&quot; then create an Outgoing Opportunity record.</description>
+    <description>When an Opportunity is moved to &quot;Closed Lost&quot; and Reason Lost = &quot;Better Fit for Workday&quot; then create an Outgoing Opportunity record.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Closed Lost Generate Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Closed Lost Generate Outgoing Opportunity</label>
