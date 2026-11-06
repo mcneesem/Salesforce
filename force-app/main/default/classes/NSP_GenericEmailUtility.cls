@@ -109,9 +109,9 @@ public class NSP_GenericEmailUtility {
                     WHERE DeveloperName = :templateDevName
                     LIMIT 1
                 ];
-                if( !emailTemplateStored.isEmpty()) {
-                  templateId = emailTemplateStored[0].Id;
-                }         
+                if( !emailTemplateStored.isEmpty() ) {
+                    templateId = emailTemplateStored[0].Id;
+                }
             } catch ( Exception e ) {
                 NSP_GenericEmailUtility.handleException( e , 'getTemplateIdFromDevName' );
             }
@@ -135,7 +135,7 @@ public class NSP_GenericEmailUtility {
                 WHERE ( DisplayName = :displayName )
                 LIMIT 1
             ];
-            if(!orgWidAddressList.isEmpty()){
+            if( !orgWidAddressList.isEmpty() ) {
                 orgWidAddress = orgWidAddressList[0];
             }
         } catch ( Exception e ) {
