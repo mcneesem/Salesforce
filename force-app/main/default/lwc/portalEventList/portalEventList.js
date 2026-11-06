@@ -16,6 +16,7 @@ export default class PortalEventList extends LightningElement {
             'Portal_Event__c.Name' ,
             'Portal_Event__c.StartDateTime__c' ,
             'Portal_Event__c.EndDateTime__c' ,
+            'Portal_Event__c.Is_Visible__c' ,
             'Portal_Event__c.Meeting_URL__c' ,
             'Portal_Event__c.Rank__c' ,
             'Portal_Event__c.Status__c' ,
@@ -25,11 +26,11 @@ export default class PortalEventList extends LightningElement {
     })
     listInfo({ error, data }) {
         if ( data ) {
-            // only show visible events...
-            // ~ ignore events with a "Hidden" status...
+            this.records = data.records;
+            // only show visible tasks...
             this.records = data.records?.filter(
                 ( record ) => {
-                    return ( record?.fields?.Status__c?.value != "Hidden" );
+                    return ( record?.fields?.Is_Visible__c?.value );
                 }
             );
             // sort blank start dates to the end...
@@ -53,6 +54,10 @@ export default class PortalEventList extends LightningElement {
             this.error = error;
             this.records = undefined;
         }
+    }
+
+    get hasRecords() {
+        return ( this.records?.length > 0 );
     }
 
 }

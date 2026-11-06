@@ -15,6 +15,10 @@ export default class PortalEvent extends LightningElement {
         return ( this.record?.fields?.EndDateTime__c?.value );
     }
 
+    get isVisible() {
+        return ( this.record?.fields?.Is_Visible__c?.value );
+    }
+
     get meetingUrl() {
         return ( this.record?.fields?.Meeting_URL__c?.value );
     }
