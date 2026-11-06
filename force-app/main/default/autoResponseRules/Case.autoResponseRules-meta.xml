@@ -150,5 +150,16 @@
             <senderName>International Support Desk</senderName>
             <template>All/ISD_Case_Created</template>
         </ruleEntry>
+        <ruleEntry>
+            <formula>AND(
+   ISPICKVAL(Origin, &quot;Email&quot;),
+   NSP_Assigned_Queue__c = &quot;E-Verify Services&quot;,
+   NOT(ISBLANK(SuppliedEmail))
+)</formula>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>Insperity Talent Acquisition Services, Verifications</senderName>
+            <template>NSP_PEO_Service/E_Verify_Case_Creation_Acknowledgment</template>
+        </ruleEntry>
     </autoResponseRule>
 </AutoResponseRules>

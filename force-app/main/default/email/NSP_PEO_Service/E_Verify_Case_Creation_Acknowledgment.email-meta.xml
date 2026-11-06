@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Automated email acknowledgment sent when a Case is created through the E-Verify Email-to-Case process. Confirms receipt of the client&apos;s request and includes the Case Number and Case Subject for future reference.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>E-Verify Case Creation Acknowledgment</name>
+    <style>none</style>
+    <subject>{!Case.Subject} - {!Case.CaseNumber}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
