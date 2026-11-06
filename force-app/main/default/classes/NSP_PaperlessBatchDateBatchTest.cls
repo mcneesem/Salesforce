@@ -1,198 +1,250 @@
 @isTest
-public class NSP_PaperlessBatchDateBatchTest {
-    
+private class NSP_PaperlessBatchDateBatchTest {
+
+    private static final String ASSERT_ONE_ASSET_IN_SETUP = 'Expected one Asset in test data';
+    private static final String ASSERT_ONE_SUBCLIENT_IN_SETUP = 'Expected one SubClient in test data';
+    private static final String ASSERT_ONE_SUBCONTACT_IN_SETUP = 'Expected one SubClientContact in test data';
+    private static final String ASSERT_ONE_ASSET_AFTER_BATCH = 'Expected one Asset after batch execution';
+
     @TestSetup
-    public static void creatTestData() {
-        
-        Account accIns = New Account ();
-        accIns.Name = 'Test';
-        accIns.Phone = '11223344';
-        insert accIns; 
-        
-        Contact conIns = New Contact();
-        conIns.LastName = 'Tset2';
-        conIns.AccountId = accIns.Id;
-        insert conIns;
-        
-        Id WORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
-        Asset assetIns = New Asset();
-        assetIns.Name = 'Test';
-        assetIns.NSP_Company_Name__c = 'Test1';
-        assetIns.Status = 'Terminated';
-        assetIns.NSP_Service_Package__c = 'WO - Full BUndle';
-        assetIns.NSP_Paperless_Batch_Date__c = system.today()-1;
-        assetIns.NSP_AIMS_First_Pay_Date__c = system.today()-1;
-        assetIns.ContactId = conIns.Id;
-        assetIns.AccountId = accIns.Id;
-        assetIns.RecordTypeId = WORecordTypeId;
-        insert assetIns ; 
-        
-        NSP_Sub_Client__c SubClientIns = New NSP_Sub_Client__c();
-        SubClientIns.Name = 'Test1';
-        SubClientIns.NSP_Asset__c = assetIns.Id ;
-        SubClientIns.NSP_Account__c = accIns.Id ;
-        SubClientIns.NSP_Paperless_Batch_Date__c = system.today()-1;
-        insert SubClientIns ;
-        
-        NSP_Sub_Client_Contact__c subClientContactIns = New NSP_Sub_Client_Contact__c();
-        subClientContactIns.NSP_Sub_Client__c= SubClientIns.Id ;
-        subClientContactIns.NSP_Work_Phone__c= '55667788' ;
-        subClientContactIns.NSP_Employee_Status__c= 'FMLA' ;
-        subClientContactIns.NSP_Paid_Non_Paid__c= 'Paid WSEE';
-        subClientContactIns.NSP_IsPaperless__c= True; 
-        subClientContactIns.NSP_Paperless_Batch_Date__c = system.today()-1;
-        insert subClientContactIns ;
-        
+    private static void setupTestData() {
+        Account acc = (Account) NSP_TestDataFactory.createSObject(new Account(), true);
+
+        Contact con = new Contact(
+            LastName = 'TestContact',
+            AccountId = acc.Id
+        );
+        insert con;
+
+        Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+        Asset asset = (Asset) NSP_TestDataFactory.createSObject(
+            new Asset(
+                AccountId = acc.Id,
+                ContactId = con.Id,
+                RecordTypeId = woRecordTypeId,
+                Status = 'Terminated',
+                NSP_Service_Package__c = 'WO - Full BUndle',
+                NSP_Paperless_Batch_Date__c = System.today() - 1,
+                NSP_AIMS_First_Pay_Date__c = System.today() - 1
+            ),
+            'NSP_TestDataFactory.AssetDefaults',
+            true
+        );
+
+        NSP_Sub_Client__c subClient = (NSP_Sub_Client__c) NSP_TestDataFactory.createSObject(
+            new NSP_Sub_Client__c(
+                NSP_Account__c = acc.Id,
+                NSP_Asset__c = asset.Id,
+                NSP_Paperless_Batch_Date__c = System.today() - 1
+            ),
+            'NSP_TestDataFactory.SubClientDefaults',
+            true
+        );
+
+        NSP_TestDataFactory.createSObject(
+            new NSP_Sub_Client_Contact__c(
+                NSP_Sub_Client__c = subClient.Id,
+                NSP_Work_Phone__c = '55667788',
+                NSP_Employee_Status__c = 'FMLA',
+                NSP_Paid_Non_Paid__c = 'Paid WSEE',
+                NSP_IsPaperless__c = true,
+                NSP_Paperless_Batch_Date__c = System.today() - 1
+            ),
+            'NSP_TestDataFactory.SubClientContactDefaults',
+            true
+        );
     }
-    
-    public static testmethod void shouldTestPaperless() {
+
+    @isTest
+    private static void shouldSetPaperlessFalse_WhenAssetIsTerminated() {
+        // Given - @TestSetup creates asset with Status=Terminated and all batch dates as yesterday
+
+        // When
         Test.startTest();
-        List<NSP_Sub_Client__c> SbCliList =[SELECT Id, Name, NSP_Paperless_Batch_Date__c, NSP_Account__c, NSP_Asset__c FROM NSP_Sub_Client__c WHERE Id != null];
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Id != null ];
-        List<NSP_Sub_Client_Contact__c> SbCliCnList =[SELECT Id, NSP_Work_Phone__c, NSP_Paperless_Batch_Date__c, NSP_IsPaperless__c, NSP_Employee_Status__c, Name FROM NSP_Sub_Client_Contact__c WHERE Id != null];
-        
-        SbCliCnList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        
-        update AssetList ;
-        update SbCliList ;
-        update SbCliCnList ;
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-       Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == false);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), 'Expected one Asset to be returned');
+        Assert.isFalse(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be false when asset is terminated');
     }
-    
-    public static testmethod void shouldTestForPaidUserInActive() {
+
+    @isTest
+    private static void shouldSetPaperlessFalse_WhenSubClientIsInactive() {
+        // Given
+        List<Asset> assets = [SELECT Id, Status, NSP_Paperless_Batch_Date__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, assets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_IN_SETUP);
+        List<NSP_Sub_Client__c> subClients = [SELECT Id, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client__c LIMIT 1];
+        Assert.areEqual(1, subClients.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCLIENT_IN_SETUP);
+        List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client_Contact__c LIMIT 1];
+        Assert.areEqual(1, subClientContacts.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCONTACT_IN_SETUP);
+
+        assets[0].Status = 'Active';
+        assets[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClients[0].NSP_Account_Status__c = 'Inactive';
+        subClients[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClientContacts[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        update assets;
+        update subClients;
+        update subClientContacts;
+
+        // When
         Test.startTest();
-        List<NSP_Sub_Client__c> SbCliList =[SELECT Id, Name, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c, NSP_Account__c, NSP_Asset__c FROM NSP_Sub_Client__c WHERE Id != null];
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Id != null ];
-        List<NSP_Sub_Client_Contact__c> SbCliCnList =[SELECT Id, NSP_Work_Phone__c, NSP_Paperless_Batch_Date__c, NSP_IsPaperless__c, NSP_Employee_Status__c, Name FROM NSP_Sub_Client_Contact__c WHERE Id != null];
-        
-        SbCliList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliList[0].NSP_Account_Status__c = 'Inactive' ;
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].Status = 'Active';
-        SbCliCnList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        
-        update SbCliList ;
-        update AssetList ;
-        update SbCliCnList ;
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-        Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == false);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_AFTER_BATCH);
+        Assert.isFalse(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be false when sub client is inactive');
     }
-    
-    public static testmethod void shouldTestForPaidUser() {
+
+    @isTest
+    private static void shouldSetPaperlessTrue_WhenPaidUserWithActiveSubClient() {
+        // Given
+        List<Asset> assets = [SELECT Id, Status, NSP_Paperless_Batch_Date__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, assets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_IN_SETUP);
+        List<NSP_Sub_Client__c> subClients = [SELECT Id, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client__c LIMIT 1];
+        Assert.areEqual(1, subClients.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCLIENT_IN_SETUP);
+        List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Paid_Non_Paid__c, NSP_Employee_Status__c, NSP_IsPaperless__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client_Contact__c LIMIT 1];
+        Assert.areEqual(1, subClientContacts.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCONTACT_IN_SETUP);
+
+        assets[0].Status = 'Active';
+        assets[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClients[0].NSP_Account_Status__c = 'Active';
+        subClients[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClientContacts[0].NSP_Paid_Non_Paid__c = 'Paid WSEE';
+        subClientContacts[0].NSP_Employee_Status__c = 'PRIMED';
+        subClientContacts[0].NSP_IsPaperless__c = true;
+        subClientContacts[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        update assets;
+        update subClients;
+        update subClientContacts;
+
+        // When
         Test.startTest();
-        List<NSP_Sub_Client__c> SbCliList =[SELECT Id, Name, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c, NSP_Account__c, NSP_Asset__c FROM NSP_Sub_Client__c WHERE Id != null];
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Id != null ];
-        List<NSP_Sub_Client_Contact__c> SbCliCnList =[SELECT Id, NSP_Work_Phone__c, NSP_Paperless_Batch_Date__c, NSP_IsPaperless__c, NSP_Employee_Status__c, Name FROM NSP_Sub_Client_Contact__c WHERE Id != null];
-        
-        SbCliList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliList[0].NSP_Account_Status__c = 'Active' ;
-        
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].Status = 'Active';
-        
-        SbCliCnList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliCnList[0].NSP_Paid_Non_Paid__c = 'Paid WSEE';
-        SbCliCnList[0].NSP_Employee_Status__c = 'PRIMED';
-        SbCliCnList[0].NSP_IsPaperless__c = true;
-            
-        update SbCliList ;
-        update AssetList ;
-        update SbCliCnList ;
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-        Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == true);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_AFTER_BATCH);
+        Assert.isTrue(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be true for active paid user with active sub client');
     }
-    
-     public static testmethod void shouldTestForNonPaidUserWithPaperless() {
+
+    @isTest
+    private static void shouldSetPaperlessTrue_WhenNonPaidUserIsPaperless() {
+        // Given
+        List<Asset> assets = [SELECT Id, Status, NSP_Paperless_Batch_Date__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, assets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_IN_SETUP);
+        List<NSP_Sub_Client__c> subClients = [SELECT Id, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client__c LIMIT 1];
+        Assert.areEqual(1, subClients.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCLIENT_IN_SETUP);
+        List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Paid_Non_Paid__c, NSP_IsPaperless__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client_Contact__c LIMIT 1];
+        Assert.areEqual(1, subClientContacts.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCONTACT_IN_SETUP);
+
+        assets[0].Status = 'Active';
+        assets[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClients[0].NSP_Account_Status__c = 'Active';
+        subClients[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClientContacts[0].NSP_Paid_Non_Paid__c = 'Active Non-Paid User';
+        subClientContacts[0].NSP_IsPaperless__c = true;
+        subClientContacts[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        update assets;
+        update subClients;
+        update subClientContacts;
+
+        // When
         Test.startTest();
-        List<NSP_Sub_Client__c> SbCliList =[SELECT Id, Name, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c, NSP_Account__c, NSP_Asset__c FROM NSP_Sub_Client__c WHERE Id != null];
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Id != null];
-        List<NSP_Sub_Client_Contact__c> SbCliCnList =[SELECT Id, NSP_Work_Phone__c, NSP_Paperless_Batch_Date__c, NSP_IsPaperless__c, NSP_Employee_Status__c, Name FROM NSP_Sub_Client_Contact__c WHERE Id != null];
-        
-        SbCliList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliList[0].NSP_Account_Status__c = 'Active' ;
-        
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].Status = 'Active';
-        
-        SbCliCnList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliCnList[0].NSP_Paid_Non_Paid__c = 'Active Non-Paid User';
-        SbCliCnList[0].NSP_IsPaperless__c = true;
-            
-        update SbCliList ;
-        update AssetList ;
-        update SbCliCnList ;
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-        Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == true);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_AFTER_BATCH);
+        Assert.isTrue(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be true for non-paid user who is paperless');
     }
-     public static testmethod void shouldTestForNonPaidUserWithoutPaperless() {
+
+    @isTest
+    private static void shouldSetPaperlessFalse_WhenNonPaidUserIsNotPaperless() {
+        // Given
+        List<Asset> assets = [SELECT Id, Status, NSP_Paperless_Batch_Date__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, assets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_IN_SETUP);
+        List<NSP_Sub_Client__c> subClients = [SELECT Id, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client__c LIMIT 1];
+        Assert.areEqual(1, subClients.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCLIENT_IN_SETUP);
+        List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Paid_Non_Paid__c, NSP_IsPaperless__c, NSP_Paperless_Batch_Date__c FROM NSP_Sub_Client_Contact__c LIMIT 1];
+        Assert.areEqual(1, subClientContacts.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_SUBCONTACT_IN_SETUP);
+
+        assets[0].Status = 'Active';
+        assets[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClients[0].NSP_Account_Status__c = 'Active';
+        subClients[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        subClientContacts[0].NSP_Paid_Non_Paid__c = 'Active Non-Paid User';
+        subClientContacts[0].NSP_IsPaperless__c = false;
+        subClientContacts[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        update assets;
+        update subClients;
+        update subClientContacts;
+
+        // When
         Test.startTest();
-        List<NSP_Sub_Client__c> SbCliList =[SELECT Id, Name, NSP_Account_Status__c, NSP_Paperless_Batch_Date__c, NSP_Account__c, NSP_Asset__c FROM NSP_Sub_Client__c WHERE Id != null];
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Id != null ];
-        List<NSP_Sub_Client_Contact__c> SbCliCnList =[SELECT Id, NSP_Work_Phone__c, NSP_Paperless_Batch_Date__c, NSP_IsPaperless__c, NSP_Employee_Status__c, Name FROM NSP_Sub_Client_Contact__c WHERE Id !=  null];
-        
-        SbCliList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliList[0].NSP_Account_Status__c = 'Active' ;
-        
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].Status = 'Active';
-        
-        SbCliCnList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        SbCliCnList[0].NSP_Paid_Non_Paid__c = 'Active Non-Paid User';
-        SbCliCnList[0].NSP_IsPaperless__c = False;
-            
-        update SbCliList ;
-        update AssetList ;
-        update SbCliCnList ;
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-        Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == false);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_AFTER_BATCH);
+        Assert.isFalse(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be false for non-paid user who is not paperless');
     }
-    
-	public static testmethod void shouldTestTerminatedAsset() {
+
+    @isTest
+    private static void shouldSetPaperlessFalse_WhenOnlyAssetBatchDateIsYesterday() {
+        // Given
+        List<Asset> assets = [SELECT Id, Status, NSP_Paperless_Batch_Date__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, assets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_IN_SETUP);
+
+        assets[0].Status = 'Terminated';
+        assets[0].NSP_Paperless_Batch_Date__c = System.today() - 1;
+        update assets[0];
+
+        // When
         Test.startTest();
-        List<Asset> AssetList =[SELECT Id, AccountId, ContactId, Status, NSP_Service_Package__c, NSP_Company_Name__c FROM Asset WHERE Name = 'Test' LIMIT 1 ];
-        
-        AssetList[0].NSP_Paperless_Batch_Date__c = system.Today()-1;
-        AssetList[0].Status = 'Terminated';
-        Update AssetList[0];
-        
-        NSP_PaperlessBatchDateBatch batchSch = new NSP_PaperlessBatchDateBatch();
-        Database.executeBatch(batchSch);
+        Database.executeBatch(new NSP_PaperlessBatchDateBatch(), 200);
         Test.stopTest();
-        Asset updatedAsset = [SELECT Id, NSP_Paperless__c FROM Asset WHERE Name = 'Test' LIMIT 1];
-        System.assert(updatedAsset.NSP_Paperless__c == false);
+
+        // Then
+        List<Asset> updatedAssets = [SELECT Id, NSP_Paperless__c FROM Asset LIMIT 1];
+        Assert.areEqual(1, updatedAssets.size(), NSP_PaperlessBatchDateBatchTest.ASSERT_ONE_ASSET_AFTER_BATCH);
+        Assert.isFalse(updatedAssets[0].NSP_Paperless__c, 'NSP_Paperless__c should be false for a terminated asset');
     }
-    
-    static testMethod void testPaperBatchDateScheduler() {  
-        Test.startTest();  
-        NSP_PaperlessBatchDateBatch regualtedAreaScheduler = new NSP_PaperlessBatchDateBatch();
-        String sch = '0 0 2 * * ?';
-        String jobId = System.schedule('Test Regulated Batch', sch, regualtedAreaScheduler);
-        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
-        System.assertEquals(sch, ct.CronExpression);
-        System.assertEquals(0, ct.TimesTriggered);
-        Test.stopTest();     
-   }  
+
+    @isTest
+    private static void shouldRegisterScheduledJob_WhenSystemScheduleInvoked() {
+        // When
+        Test.startTest();
+        String cronExpression = '0 0 2 * * ?';
+        String jobId = System.schedule('Test Paperless Batch Scheduler', cronExpression, new NSP_PaperlessBatchDateBatch());
+        Test.stopTest();
+
+        // Then
+        List<CronTrigger> cronTriggers = [SELECT Id, CronExpression, TimesTriggered FROM CronTrigger WHERE Id = :jobId];
+        Assert.areEqual(1, cronTriggers.size(), 'Expected one CronTrigger to be created');
+        Assert.areEqual(cronExpression, cronTriggers[0].CronExpression, 'CronExpression should match the provided schedule');
+        Assert.areEqual(0, cronTriggers[0].TimesTriggered, 'TimesTriggered should be 0 for a newly scheduled job');
+    }
+
+    @isTest
+    private static void shouldReturnJobId_WhenStaticScheduleMethodInvoked() {
+        // When
+        Test.startTest();
+        String jobId = NSP_PaperlessBatchDateBatch.schedule();
+        Test.stopTest();
+
+        // Then
+        Assert.isNotNull(jobId, 'schedule() should return a non-null job Id');
+        List<CronTrigger> cronTriggers = [SELECT Id, CronExpression, TimesTriggered FROM CronTrigger WHERE Id = :jobId];
+        Assert.areEqual(1, cronTriggers.size(), 'Expected one CronTrigger to be created');
+        Assert.areEqual('0 0 2 ? * * *', cronTriggers[0].CronExpression, 'CronExpression should match the batch class schedule');
+        Assert.areEqual(0, cronTriggers[0].TimesTriggered, 'TimesTriggered should be 0 for a newly scheduled job');
+    }
 }
