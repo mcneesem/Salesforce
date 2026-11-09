@@ -112,6 +112,11 @@
                 <label>Equity pay</label>
             </value>
             <value>
+                <fullName>ERC</fullName>
+                <default>false</default>
+                <label>ERC</label>
+            </value>
+            <value>
                 <fullName>Everything moving in house/under one umbrella</fullName>
                 <default>false</default>
                 <label>Everything moving in house/under one umbrella</label>
@@ -525,6 +530,10 @@
         <valueSettings>
             <controllingFieldValue>Client Specific Challenges</controllingFieldValue>
             <valueName>Credit challenges/move to wire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Specific Challenges</controllingFieldValue>
+            <valueName>ERC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Client Specific Challenges</controllingFieldValue>

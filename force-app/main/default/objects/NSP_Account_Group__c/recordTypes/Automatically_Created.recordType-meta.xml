@@ -284,6 +284,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ERC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Equity pay</fullName>
             <default>false</default>
         </values>
@@ -635,6 +639,10 @@
         </values>
         <values>
             <fullName>EPLI deductible too high</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERC</fullName>
             <default>false</default>
         </values>
         <values>
