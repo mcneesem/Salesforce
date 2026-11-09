@@ -45,6 +45,7 @@ public without sharing class NSP_OrderManagement {
         }
     }
 
+    // See Aura: NSP_OrderManagement
     @AuraEnabled
     public static User getCurrentUserInfo() {
         User record = null;
