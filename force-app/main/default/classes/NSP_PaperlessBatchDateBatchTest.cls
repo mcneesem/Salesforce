@@ -247,4 +247,6 @@ private class NSP_PaperlessBatchDateBatchTest {
         Assert.areEqual('0 0 2 ? * * *', cronTriggers[0].CronExpression, 'CronExpression should match the batch class schedule');
         Assert.areEqual(0, cronTriggers[0].TimesTriggered, 'TimesTriggered should be 0 for a newly scheduled job');
     }
+
 }
+//
