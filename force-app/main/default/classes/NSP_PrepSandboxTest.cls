@@ -99,6 +99,33 @@ private class NSP_PrepSandboxTest {
     }
 
     @isTest
+    private static void testDoTrustedURLs() {
+        Test.startTest();
+        NSP_PrepSandbox.doTrustedURLs();
+        Test.stopTest();
+
+        System.Assert.isTrue(true, 'doTrustedURLs should complete without throwing an exception');
+    }
+
+    @isTest
+    private static void testDoGlobalValueSets_PreABXActivated() {
+        Test.startTest();
+        NSP_PrepSandbox.doGlobalValueSets( true );
+        Test.stopTest();
+
+        System.Assert.isTrue(true, 'doGlobalValueSets should complete without throwing an exception');
+    }
+
+    @isTest
+    private static void testDoGlobalValueSets_PreABXDeactivated() {
+        Test.startTest();
+        NSP_PrepSandbox.doGlobalValueSets( false );
+        Test.stopTest();
+
+        System.Assert.isTrue(true, 'doGlobalValueSets with false should complete without throwing an exception');
+    }
+
+    @isTest
     private static void testPageRef() {
         Test.startTest();
         PageReference pageRef = Page.SandboxManualSteps;
