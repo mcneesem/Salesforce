@@ -18,8 +18,8 @@ public without sharing class NSP_WC_NotificationController {
     //get recordId
     public static String getrecId() {
         return recId;
-    } 
-    
+    }
+
     //get Implemtation profile record based on the recordId
     public static Implementation_Profile__c imptProfile {
         public get {
@@ -44,7 +44,7 @@ public without sharing class NSP_WC_NotificationController {
         }
         public set;
     }
-    
+
     //get Implemtation profile record based on the employeeWork values
     public static String employeesWhoWork{
         get{
@@ -60,7 +60,7 @@ public without sharing class NSP_WC_NotificationController {
                     }
                     if(!checkEmpWork.isEmpty()){
                          employeesWhoWork = String.join(checkEmpWork, ', ');
-                    }           
+                    }
                 }
             }
             return employeesWhoWork;
@@ -81,13 +81,13 @@ public without sharing class NSP_WC_NotificationController {
                     }
                     if(!checkclientBusiness.isEmpty()){
                         clientDoesBusiness = String.join(checkclientBusiness, ', ');
-                    }           
+                    }
             }
             return clientDoesBusiness;
         }
         set;
     }
-    
+
     //get Implemtation profile record based on the employeeWork values
     public static List<String> employeesWhoWorkList{
         get{
@@ -108,6 +108,6 @@ public without sharing class NSP_WC_NotificationController {
         }
         set;
     }
-    
-    
+
 }
+//
