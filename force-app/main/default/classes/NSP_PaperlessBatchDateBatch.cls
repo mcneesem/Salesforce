@@ -1,4 +1,5 @@
-public with sharing class NSP_PaperlessBatchDateBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_PaperlessBatchDateBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ NSP_PaperlessBatchDateBatchTest (100%)
 
     // @description Sets the paperless account flag based on account team role in AIMS so that the paperless account flag will be added or removed automatically.
