@@ -2,6 +2,7 @@
 * Represents the NSP_WC_NotificationController for WC_Notification email Template Logic.
 */
 public without sharing class NSP_WC_NotificationController {
+    // test w/ NSP_WC_NotificationControllerTest (97%)
     public static String recId;
     private static Map<String, String> statesApiAndNames = new Map<String, String>{'MA'=>'Massachusetts', 'NY'=>'New York', 'VA'=>'Virginia', 'RI'=>'Rhode Island'};
     //set recordId
@@ -17,15 +18,18 @@ public without sharing class NSP_WC_NotificationController {
     public static Implementation_Profile__c imptProfile {
         get{
             if ( recId != null ){
-                imptProfile = [SELECT 
-                               Id,
-                               toLabel(Employees_work_in_the_following_states__c),
-                               Effective_Date_Payroll_Worker_comp_EPLI__c,
-                               RecordType.Name,
-                               Client_does_business_in_MA_NY_or_VA__c,
-                               NSP_Business_Meeting_States__c
-                               FROM Implementation_Profile__c
-                               WHERE Id = : recId LIMIT 1];
+                List<Implementation_Profile__c> profiles  = [
+                    SELECT Id,
+                            toLabel(Employees_work_in_the_following_states__c),
+                            Effective_Date_Payroll_Worker_comp_EPLI__c,
+                            RecordType.Name,
+                            Client_does_business_in_MA_NY_or_VA__c,
+                            NSP_Business_Meeting_States__c
+                    FROM Implementation_Profile__c
+                    WHERE Id = : recId LIMIT 1];
+                    if (!profiles.isEmpty()) {
+                        imptProfile = profiles[0];
+                    }
             }
             return imptProfile;
         }
