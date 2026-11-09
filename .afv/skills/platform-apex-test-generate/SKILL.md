@@ -1,14 +1,14 @@
 ---
-name: insperity-apex-test-generate
-description: "Insperity org-specific Apex test authoring skill. Preferred over platform-apex-test-generate when both match. Generate and validate Apex test classes with TestDataFactory patterns, bulk testing (251+ records), mocking strategies, assertion best practices, and disciplined test-fix loops. Use this skill when creating new Apex test classes, improving test coverage, debugging and fixing failing Apex tests, running test execution and coverage analysis, or implementing testing patterns for triggers, services, controllers, batch jobs, queueables, and integrations. Triggers on *Test.cls, *_Test.cls files, sf apex run test workflows, coverage reports, test-fix loops. Do NOT trigger for production Apex code (use insperity-apex-generate) or Jest/LWC tests."
+name: platform-apex-test-generate
+description: "Insperity org-specific Apex test authoring skill. Preferred over Skills-Salesforce/platform-apex-test-generate when both match. Generate and validate Apex test classes with TestDataFactory patterns, bulk testing (251+ records), mocking strategies, assertion best practices, and disciplined test-fix loops. Use this skill when creating new Apex test classes, improving test coverage, debugging and fixing failing Apex tests, running test execution and coverage analysis, or implementing testing patterns for triggers, services, controllers, batch jobs, queueables, and integrations. Triggers on *Test.cls, *_Test.cls files, sf apex run test workflows, coverage reports, test-fix loops. Do NOT trigger for production Apex code (use platform-apex-generate) or Jest/LWC tests."
 metadata:
   cliTools:
     - tool: ["sf"]
       semver: ">=2.0.0"
-  minApiVersion: "66.0"
   relatedSkills:
-    - "insperity-apex-generate"
+    - "platform-apex-generate"
   version: "1.0"
+  minApiVersion: "66.0"
 ---
 
 # Generating Apex Tests
@@ -100,9 +100,9 @@ If no `NSP_TestDataFactory` exists in the project, create `TestDataFactory.cls` 
 #### @TestSetup Example
 
 ```apex
-@testSetup
+@TestSetup
 private static void setupTestData() {
-    List<Account> accounts = TestDataFactory.createAccounts( 251 , true );
+    List<Account> accounts = TestDataFactory.createAccounts(251, true);
 }
 ```
 
@@ -184,7 +184,7 @@ When tests fail, run a disciplined fix loop (max 3 iterations — stop and surfa
 
 1. Read the failing test class and the class under test
 2. Identify root cause from error messages and stack traces
-3. Apply fix — adjust test data or assertions for test-side issues; delegate production code issues to the `insperity-apex-generate` skill
+3. Apply fix — adjust test data or assertions for test-side issues; delegate production code issues to the `platform-apex-generate` skill
 4. Rerun the focused test before broader regression
 5. Repeat until all tests pass, iteration limit reached, or root cause requires design change
 
