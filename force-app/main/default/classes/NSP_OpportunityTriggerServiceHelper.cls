@@ -211,7 +211,11 @@ public class NSP_OpportunityTriggerServiceHelper {
         Id TimeAttAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
         Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
         Id TESBPSProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-        Template_Key_and_Id_Mapping__mdt templateMapping =[SELECT Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Key__c =: NSP_ServiceConstants.ITA_Prj_Temp  AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET];
+        Template_Key_and_Id_Mapping__mdt templateMapping = null;
+        List<Template_Key_and_Id_Mapping__mdt> templateMappingList =[SELECT Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Key__c =: NSP_ServiceConstants.ITA_Prj_Temp  AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET];
+        if (!templateMappingList.isEmpty()) {
+             templateMapping = templateMappingList[0];
+        }
 
         if(!timeAttAssetMap.isEmpty()){
             for(Id oppId:timeAttAssetMap.keyset() ){
