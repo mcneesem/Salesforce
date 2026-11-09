@@ -46,15 +46,20 @@ public class NSP_OrderManagement {
 
     @AuraEnabled
     public static User getCurrentUserInfo() {
+         User result = null;
         try{
-            return [
+             List<User> users = [
                 SELECT Id , Name , Profile.Name
                 FROM User
                 WHERE ( Id = :Userinfo.getUserId() )
             ];
+            if( !users.isEmpty() ){
+                result = users[0];
+            }
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
         }
+        return result;
     }
 
     @AuraEnabled
