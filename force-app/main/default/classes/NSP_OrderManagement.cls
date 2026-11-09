@@ -48,12 +48,12 @@ public class NSP_OrderManagement {
     public static User getCurrentUserInfo() {
          User result = null;
         try{
-             List<User> users = [
+            List<User> users = [
                 SELECT Id , Name , Profile.Name
                 FROM User
                 WHERE ( Id = :Userinfo.getUserId() )
             ];
-            if( !users.isEmpty() ){
+            if ( !users.isEmpty() ) {
                 result = users[0];
             }
         } catch ( Exception e ) {
