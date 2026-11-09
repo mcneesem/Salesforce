@@ -1020,59 +1020,96 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doRecordTypePicklistValues() {
         if ( !Test.isRunningTest() ) {
-            MetadataService.MetadataPort service = createService();
-            String[] rtFullNames = new String[]{ 'Account.NSP_Client', 'Account.NSP_Partner_Client' };
+            String host = URL.getOrgDomainUrl().toExternalForm();
+            String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
+            String toolingBase = host + '/services/data/v65.0/tooling/';
 
-            MetadataService.Metadata[] records = service.readMetadata( 'RecordType', rtFullNames ).getRecords();
-            List<MetadataService.Metadata> toUpdate = new List<MetadataService.Metadata>();
+            // step 1: get all Account RecordType IDs
+            HttpRequest listReq = new HttpRequest();
+            listReq.setEndpoint( toolingBase + 'query/?q=' + EncodingUtil.urlEncode( 'SELECT Id FROM RecordType WHERE SobjectType = \'Account\'', 'UTF-8' ) );
+            listReq.setMethod( 'GET' );
+            listReq.setHeader( 'Content-Type', 'application/json' );
+            listReq.setHeader( 'Authorization', 'Bearer ' + sessionId );
+            HttpResponse listRes = new Http().send( listReq );
+            if ( listRes.getStatusCode() != 200 ) {
+                throw new CalloutException( 'doRecordTypePicklistValues LIST failed (' + listRes.getStatusCode() + '): ' + listRes.getBody() );
+            }
 
-            for ( MetadataService.Metadata md : records ) {
-                if ( md == null ) { continue; }
-                MetadataService.RecordType rt = (MetadataService.RecordType) md;
-                if ( rt.fullName == null ) { continue; }
+            Map<String, Object> listResult = (Map<String, Object>) JSON.deserializeUntyped( listRes.getBody() );
+            List<Object> records = (List<Object>) listResult.get( 'records' );
 
-                if ( rt.picklistValues == null ) {
-                    rt.picklistValues = new MetadataService.RecordTypePicklistValue[]{};
+            for ( Object rec : records ) {
+                String rtId = (String) ((Map<String, Object>) rec).get( 'Id' );
+
+                // step 2: get full Metadata for this RecordType
+                HttpRequest getReq = new HttpRequest();
+                getReq.setEndpoint( toolingBase + 'sobjects/RecordType/' + rtId + '?fields=Metadata' );
+                getReq.setMethod( 'GET' );
+                getReq.setHeader( 'Content-Type', 'application/json' );
+                getReq.setHeader( 'Authorization', 'Bearer ' + sessionId );
+                getReq.setTimeout( 120000 );
+                HttpResponse getRes = new Http().send( getReq );
+                if ( getRes.getStatusCode() != 200 ) {
+                    throw new CalloutException( 'doRecordTypePicklistValues GET failed (' + getRes.getStatusCode() + '): ' + getRes.getBody() );
                 }
 
-                // find or create the Account_Assignment_Method__c entry
-                MetadataService.RecordTypePicklistValue targetPv = null;
-                for ( MetadataService.RecordTypePicklistValue pv : rt.picklistValues ) {
-                    if ( 'Account_Assignment_Method__c'.equals( pv.picklist ) ) {
+                Map<String, Object> rtMap = (Map<String, Object>) JSON.deserializeUntyped( getRes.getBody() );
+                Map<String, Object> metadata = (Map<String, Object>) rtMap.get( 'Metadata' );
+                metadata.remove( 'urls' );
+
+                // find or create Account_Assignment_Method__c picklist entry
+                List<Object> picklistValues = (List<Object>) metadata.get( 'picklistValues' );
+                if ( picklistValues == null ) {
+                    picklistValues = new List<Object>();
+                    metadata.put( 'picklistValues', picklistValues );
+                }
+
+                Map<String, Object> targetPv = null;
+                for ( Object pvObj : picklistValues ) {
+                    Map<String, Object> pv = (Map<String, Object>) pvObj;
+                    if ( 'Account_Assignment_Method__c'.equals( pv.get( 'picklist' ) ) ) {
                         targetPv = pv;
                         break;
                     }
                 }
                 if ( targetPv == null ) {
-                    targetPv = new MetadataService.RecordTypePicklistValue();
-                    targetPv.picklist = 'Account_Assignment_Method__c';
-                    targetPv.values = new MetadataService.PicklistValue[]{};
-                    rt.picklistValues.add( targetPv );
-                }
-                if ( targetPv.values == null ) {
-                    targetPv.values = new MetadataService.PicklistValue[]{};
+                    targetPv = new Map<String, Object>{ 'picklist' => 'Account_Assignment_Method__c', 'values' => new List<Object>() };
+                    picklistValues.add( targetPv );
                 }
 
-                // find or add Pre-ABX
+                List<Object> values = (List<Object>) targetPv.get( 'values' );
+                if ( values == null ) {
+                    values = new List<Object>();
+                    targetPv.put( 'values', values );
+                }
+
                 Boolean found = false;
-                for ( MetadataService.PicklistValue pv : targetPv.values ) {
-                    if ( 'Pre-ABX'.equals( pv.fullName ) ) {
+                for ( Object vObj : values ) {
+                    Map<String, Object> v = (Map<String, Object>) vObj;
+                    if ( 'Pre-ABX'.equals( v.get( 'fullName' ) ) ) {
                         found = true;
                         break;
                     }
                 }
                 if ( !found ) {
-                    MetadataService.PicklistValue newVal = new MetadataService.PicklistValue();
-                    newVal.fullName = 'Pre-ABX';
-                    newVal.default_x = false;
-                    targetPv.values.add( newVal );
+                    values.add( new Map<String, Object>{ 'fullName' => 'Pre-ABX', 'default' => false } );
                 }
 
-                toUpdate.add( rt );
-            }
-
-            if ( !toUpdate.isEmpty() ) {
-                service.updateMetadata( toUpdate );
+                // step 3: PATCH with retry on 500 lock errors
+                HttpRequest patchReq = new HttpRequest();
+                patchReq.setEndpoint( toolingBase + 'sobjects/RecordType/' + rtId );
+                patchReq.setMethod( 'PATCH' );
+                patchReq.setHeader( 'Content-Type', 'application/json' );
+                patchReq.setHeader( 'Authorization', 'Bearer ' + sessionId );
+                patchReq.setBody( JSON.serialize( new Map<String, Object>{ 'Metadata' => metadata } ) );
+                patchReq.setTimeout( 120000 );
+                HttpResponse patchRes = new Http().send( patchReq );
+                for ( Integer retry = 0; retry < 4 && patchRes.getStatusCode() == 500; retry++ ) {
+                    patchRes = new Http().send( patchReq );
+                }
+                if ( patchRes.getStatusCode() != 204 ) {
+                    throw new CalloutException( 'doRecordTypePicklistValues PATCH failed (' + patchRes.getStatusCode() + '): ' + patchRes.getBody() );
+                }
             }
         }
     }
@@ -1204,7 +1241,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public class RecordTypePicklistValuesJob implements Queueable, Database.AllowsCallouts {
         private final Integer attempt;
-        private static final Integer MAX_ATTEMPTS = 5;
+        private final Integer MAX_ATTEMPTS = 5;
 
         public RecordTypePicklistValuesJob() { this.attempt = 1; }
         public RecordTypePicklistValuesJob(Integer attempt) { this.attempt = attempt; }
