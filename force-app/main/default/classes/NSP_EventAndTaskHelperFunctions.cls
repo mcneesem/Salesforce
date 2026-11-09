@@ -148,9 +148,9 @@ public class NSP_EventAndTaskHelperFunctions {
             AND DeveloperName =: NSP_SalesConstants.NCS_SALES_GROUP LIMIT 1
         ];
         if (!ncsGroupQueues.isEmpty()) {
-            Group NCS_Group_Queue = ncsGroupQueues[0];
+            Group ncsGroupQueue = ncsGroupQueues[0];
             for (Opportunity opportunityObject: newOpportunityList) {
-                Task taskRecord = instantiateTaskRecord(NSP_SalesConstants.NCS_SALES_TASK_SUBJECT, opportunityObject.Id, NCS_Group_Queue.Id,
+                Task taskRecord = instantiateTaskRecord(NSP_SalesConstants.NCS_SALES_TASK_SUBJECT, opportunityObject.Id, ncsGroupQueue.Id,
                     NSP_SalesConstants.ADDENDUMREQUEST_TASKTYPE,
                     NSP_SalesConstants.OPEN, '', null);
 
