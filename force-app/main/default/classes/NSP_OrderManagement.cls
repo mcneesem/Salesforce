@@ -1,9 +1,10 @@
-public class NSP_OrderManagement {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_OrderManagement {
     // test w/ NSP_OrderManagementTest (89%)
 
     @AuraEnabled
-    public static List<Contract> getContractRecord(Id recordId){
-        try{
+    public static List<Contract> getContractRecord( Id recordId ) {
+        try {
             list<contract> lstTermContract = new list<contract>();
             List<Contract> contractList = [
                 SELECT
@@ -39,31 +40,31 @@ public class NSP_OrderManagement {
                 }
             }
             return lstTermContract;
-        }catch (Exception ex) {
-            throw new AuraHandledException(ex.getMessage());
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
 
     @AuraEnabled
     public static User getCurrentUserInfo() {
-         User result = null;
-        try{
-            List<User> users = [
+        User record = null;
+        try {
+            List<User> records = [
                 SELECT Id , Name , Profile.Name
                 FROM User
                 WHERE ( Id = :Userinfo.getUserId() )
             ];
-            if ( !users.isEmpty() ) {
-                result = users[0];
+            if ( !records.isEmpty() ) {
+                record = records[0];
             }
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
         }
-        return result;
+        return record;
     }
 
     @AuraEnabled
-    public static Boolean updateContract(Id contractId, String transactionType){
+    public static Boolean updateContract( Id contractId , String transactionType ) {
         Boolean isContractUpdated;
         try {
             //update contract record as per renewals and amendments
@@ -74,18 +75,17 @@ public class NSP_OrderManagement {
             //DML on Contract
             update contract;
             isContractUpdated = true;
-        }
-        catch (Exception ex) {
+        } catch ( Exception e ) {
             isContractUpdated = false;
             // "Convert" the exception into an AuraHandledException
-            throw new AuraHandledException(ex.getMessage());
+            throw new AuraHandledException( e.getMessage() );
         }
         return isContractUpdated;
     }
 
     @AuraEnabled
-    public static boolean checkAmendmentConditionsApex(String contractId){
-        boolean noError = true;
+    public static boolean checkAmendmentConditionsApex( String contractId ) {
+        Boolean noError = true;
         OrderManagementSettings__c triggerSwitch =  OrderManagementSettings__c.getInstance(UserInfo.getUserId());
         if(!triggerSwitch.CheckAmendmentConditions__c){
             try{
