@@ -1,14 +1,17 @@
 // intentionally `without sharing` to preserve default sharing at api version 57...
 global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (79%)
+    // test w/ NSP_PrepSandboxTest (86%)
 
+    private static final String STRING_BEARER = 'Bearer ';
+    private static final String STRING_APP_JSON = 'application/json';
+    private static final String STRING_CONTENT_TYPE = 'Content-Type';
     private static final String STRING_INVALID = '.invalid';
     private static final String DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
     private static final String TOOLING_API_PATH = '/services/data/v65.0/tooling/';
 
     public String runManualResult{get;set;}
 
-    global void runApexClass(SandboxContext context){
+    global void runApexClass( SandboxContext context ){
         try{
             doQueues();
         } catch(Exception e) {
@@ -158,27 +161,34 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
                 String[] column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
                 String orgNames = (column[7].length() > 1) ? column[7] : 'none';
-                if (column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0 && column[2].indexOf('insperity') > -1){
+                if ( ( column[1].indexOf('integration') < 0 )
+                  && ( column[2].indexOf('noreply') < 0 )
+                  && ( column[2].indexOf('insperity') > -1 ) ) {
                     userList.add(new User(
-                        IsActive = true,
-                        Email = column[2].substringBefore(STRING_INVALID).trim(),
-                        FirstName = column[3].trim(),
-                        LastName = column[4].trim(),
-                        Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
-                        ProfileId = getImportUserProfileId(adminProfileId, sandboxName.toLowercase(), profileNameMap, column[1], column[5], orgNames.toLowercase()),
-                        Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
-                        UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
-                        TimeZoneSidKey = 'America/Chicago',
-                        LocaleSidKey = 'en_US',
-                        EmailEncodingKey = 'ISO-8859-1',
+                        IsActive = true ,
+                        Email = column[2].substringBefore( STRING_INVALID ).trim() ,
+                        FirstName = column[3].trim() ,
+                        LastName = column[4].trim() ,
+                        Username = column[2].substringBefore( STRING_INVALID ).trim() + '.' + sandboxName ,
+                        ProfileId = getImportUserProfileId( adminProfileId ,
+                                                            sandboxName.toLowercase() ,
+                                                            profileNameMap ,
+                                                            column[1] ,
+                                                            column[5] ,
+                                                            orgNames.toLowercase() ) ,
+                        Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase() ,
+                        UserRoleId = ( userRoleNameMap.containsKey(column[6]) ) ? userRoleNameMap.get( column[6] )[0].Id : null ,
+                        TimeZoneSidKey = 'America/Chicago' ,
+                        LocaleSidKey = 'en_US' ,
+                        EmailEncodingKey = 'ISO-8859-1' ,
                         LanguageLocaleKey = 'en_US'
-                    ));
+                    ) );
                 }
             }
-            if(!Test.isRunningTest() && userList != null) {
-                Database.UpsertResult[] userResults = Database.upsert(userList, User.Username, false);
+            if( !Test.isRunningTest() && userList != null ) {
+                Database.UpsertResult[] userResults = Database.upsert( userList, User.Username , false );
                 NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport:upsert' , userResults );
-                updateUserLogins(userResults);
+                updateUserLogins( userResults );
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doUserImport' );
@@ -188,10 +198,10 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     public static void doCMetadata( String sandboxName ) {
         List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
         allMetadataList.add(new List<MetadataService.Metadata>());
-        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
-        List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [Select Id, Label, DeveloperName, Value__c FROM DocuSignRESTSettings__mdt WHERE Id!=null];
-        List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
-        List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
+        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [SELECT Id , Label , DeveloperName , NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
+        List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [SELECT Id , Label , DeveloperName , Value__c FROM DocuSignRESTSettings__mdt WHERE Id!=null];
+        List<NSP_PEO_Implementations__mdt> cMdPEOImps = [SELECT Id , Label , DeveloperName , NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
+        List<NSP_Retirement_Services__mdt> cMdRetSvcs = [SELECT Id , Label , DeveloperName , NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
 
         doDS_mdt( sandboxName , allMetadataList , cMdDocuSigners );
         doDSREST_mdt( sandboxName , allMetadataList , cMdDocuSignREST );
@@ -209,7 +219,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         customField1.field = field; // the custom field API Name to be updated
         customField1.value = value;
         if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-            cMdUpd.values.add(customField1);
+            cMdUpd.values.add( customField1 );
         } else {
             cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
         }
@@ -218,15 +228,15 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static List<List<MetadataService.Metadata>> addCustomMetadataRow( List<List<MetadataService.Metadata>> allMetadataList , MetadataService.CustomMetadata cMdUpd ) {
         Integer batch = allMetadataList.size() - 1;
-        if (allMetadataList[batch].size() >= 200) {
+        if ( allMetadataList[batch].size() >= 200 ) {
             batch++;
             allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when one fills up
         }
-        allMetadataList[batch].add(cMdUpd);
+        allMetadataList[ batch ].add( cMdUpd );
         return allMetadataList;
     }
 
-    public static void doDS_mdt(
+    public static void doDS_mdt (
         String sandboxName ,
         List<List<MetadataService.Metadata>> allMetadataList ,
         List<NSP_DocuSign_Signers__mdt> cMdDocuSigners )
@@ -241,7 +251,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    public static void doDSREST_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<DocuSignRESTSettings__mdt> cMdDocuSignREST) {
+    public static void doDSREST_mdt ( String sandboxName , List<List<MetadataService.Metadata>> allMetadataList , List<DocuSignRESTSettings__mdt> cMdDocuSignREST ) {
         // map of DocuSignRESTSettings__mdt names to default values for DEV
         Map<String, String> resourceMap = new Map<String, String>();
 
@@ -486,7 +496,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
         request.setMethod('GET');
-        request.setHeader('Authorization', 'Bearer '+ sessionId);
+        request.setHeader('Authorization', STRING_BEARER + sessionId);
         HTTPResponse response = new HTTPResponse();
         AlertResult results = new AlertResult();
         RecordAlert[] records = new RecordAlert[]{};
@@ -523,29 +533,29 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         runUpdateMetadata( allMetadataList );
     }
 
-    public static void getWFAlertData(HttpRequest request, RecordAlert[] records, List<String[]> wfaNames) {
+    public static void getWFAlertData( HttpRequest request , RecordAlert[] records , List<String[]> wfaNames ) {
         Integer batch = 0;
         HTTPResponse response = new HTTPResponse();
         String host = URL.getOrgDomainUrl().toExternalForm();
         String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
-        for (RecordAlert alert : records) {
+        for ( RecordAlert alert : records ) {
             // Get the Alert meta-data
             request = new HttpRequest();
-            request.setEndpoint(host + alert.attributes.url);
-            request.setMethod('GET');
-            request.setHeader('Content-Type', 'application/json');
-            request.setHeader('Authorization', 'Bearer '+ sessionId);
+            request.setEndpoint( host + alert.attributes.url );
+            request.setMethod( 'GET' );
+            request.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+            request.setHeader( 'Authorization' , STRING_BEARER + sessionId );
 
-            if (wfaNames[batch].size() >= 10) {
+            if ( wfaNames[ batch ].size() >= 10 ) {
                 batch++;
-                wfaNames.add(new String[]{}); // create a new batch when we fill one up
+                wfaNames.add( new String[]{} ); // create a new batch when we fill one up
             }
-            if (!Test.isRunningTest()) {
-                response = new Http().send(request);
-                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
-                wfaNames[batch].add(wfe.FullName);
+            if ( !Test.isRunningTest() ) {
+                response = new Http().send( request );
+                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize( response.getBody() , WorkflowEmail.class );
+                wfaNames[batch].add( wfe.FullName );
             } else {
-                wfaNames[batch].add('test');
+                wfaNames[batch].add( 'test' );
             }
         }
     }
@@ -946,34 +956,34 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         mapSites.put('Salesforce_SCRT', 'https://*.sandbox.my.salesforce-scrt.com');
         mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
 
-        if (!Test.isRunningTest()) {
-            String devNames = '\'' + String.join(new List<String>(mapSites.keySet()), '\',\'') + '\'';
-            HttpRequest queryRequest = new HttpRequest();
-            queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,DeveloperName+FROM+CspTrustedSite+WHERE+DeveloperName+IN+(' + devNames + ')' );
-            queryRequest.setMethod( 'GET' );
-            queryRequest.setHeader( 'Content-Type', 'application/json' );
-            queryRequest.setHeader( 'Authorization', 'Bearer ' + sessionId );
-            HttpResponse queryResponse = new Http().send( queryRequest );
-            if ( queryResponse.getStatusCode() != 200 ) {
-                throw new CalloutException( 'doTrustedURLs query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
-            }
+        String devNames = '\'' + String.join(new List<String>(mapSites.keySet()), '\',\'') + '\'';
+        HttpRequest queryRequest = new HttpRequest();
+        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,DeveloperName+FROM+CspTrustedSite+WHERE+DeveloperName+IN+(' + devNames + ')' );
+        queryRequest.setMethod( 'GET' );
+        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        queryRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
+        queryRequest.setTimeout( 120000 );
+        HttpResponse queryResponse = new Http().send( queryRequest );
+        if ( queryResponse.getStatusCode() != 200 ) {
+            throw new CalloutException( 'doTrustedURLs query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
+        }
 
-            Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
-            List<Object> records = (List<Object>) queryResult.get( 'records' );
-            for ( Object rec : records ) {
-                Map<String, Object> recMap = (Map<String, Object>) rec;
-                String recId = (String) recMap.get( 'Id' );
-                String recName = (String) recMap.get( 'DeveloperName' );
-                HttpRequest patchRequest = new HttpRequest();
-                patchRequest.setEndpoint( toolingBase + 'sobjects/CspTrustedSite/' + recId );
-                patchRequest.setMethod( 'PATCH' );
-                patchRequest.setHeader( 'Content-Type', 'application/json' );
-                patchRequest.setHeader( 'Authorization', 'Bearer ' + sessionId );
-                patchRequest.setBody( '{"EndpointUrl":"' + mapSites.get( recName ) + '"}' );
-                HttpResponse patchResponse = new Http().send( patchRequest );
-                if ( patchResponse.getStatusCode() != 204 ) {
-                    throw new CalloutException( 'doTrustedURLs PATCH failed for ' + recName + ' (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
-                }
+        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
+        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        for ( Object rec : records ) {
+            Map<String, Object> recMap = (Map<String, Object>) rec;
+            String recId = (String) recMap.get( 'Id' );
+            String recName = (String) recMap.get( 'DeveloperName' );
+            HttpRequest patchRequest = new HttpRequest();
+            patchRequest.setEndpoint( toolingBase + 'sobjects/CspTrustedSite/' + recId );
+            patchRequest.setMethod( 'PATCH' );
+            patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+            patchRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
+            patchRequest.setTimeout( 120000 );
+            patchRequest.setBody( '{"EndpointUrl":"' + mapSites.get( recName ) + '"}' );
+            HttpResponse patchResponse = new Http().send( patchRequest );
+            if ( patchResponse.getStatusCode() != 204 ) {
+                throw new CalloutException( 'doTrustedURLs PATCH failed for ' + recName + ' (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
             }
         }
     }
@@ -985,50 +995,57 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         String toolingBase = host + NSP_PrepSandbox.TOOLING_API_PATH;
 
-        if ( !Test.isRunningTest() ) {
-            HttpRequest queryRequest = new HttpRequest();
-            queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,Metadata+FROM+GlobalValueSet+WHERE+DeveloperName=\'Account_Assignment_Method\'' );
-            queryRequest.setMethod( 'GET' );
-            queryRequest.setHeader( 'Content-Type' , 'application/json' );
-            queryRequest.setHeader( 'Authorization' , 'Bearer ' + sessionId );
-            HttpResponse queryResponse = new Http().send( queryRequest );
-            if ( queryResponse.getStatusCode() != 200 ) {
-                throw new CalloutException( 'doGlobalValueSets query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
-            }
+        HttpRequest queryRequest = new HttpRequest();
+        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,Metadata+FROM+GlobalValueSet+WHERE+DeveloperName=\'Account_Assignment_Method\'' );
+        queryRequest.setMethod( 'GET' );
+        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        queryRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        queryRequest.setTimeout( 120000 );
+        HttpResponse queryResponse = new Http().send( queryRequest );
+        if ( queryResponse.getStatusCode() != 200 ) {
+            throw new CalloutException( 'doGlobalValueSets query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
+        }
 
-            Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
-            List<Object> records = (List<Object>) queryResult.get( 'records' );
-            if ( records == null || records.isEmpty() ) {
-                throw new CalloutException( 'doGlobalValueSets: GlobalValueSet Account_Assignment_Method not found' );
-            }
+        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
+        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        if ( records == null || records.isEmpty() ) {
+            throw new CalloutException( 'doGlobalValueSets: GlobalValueSet Account_Assignment_Method not found' );
+        }
 
-            Map<String, Object> gvsRecord = (Map<String, Object>) records[0];
-            String gvsId = (String) gvsRecord.get( 'Id' );
-            Map<String, Object> metadata = (Map<String, Object>) gvsRecord.get( 'Metadata' );
-            metadata.remove( 'urls' );
-            List<Object> customValues = (List<Object>) metadata.get( 'customValue' );
-            if ( customValues != null ) {
-                for ( Object cv : customValues ) {
-                    Map<String, Object> cvMap = (Map<String, Object>) cv;
-                    cvMap.remove( 'urls' );
-                    if ( 'Pre-ABX'.equals( cvMap.get( 'valueName' ) ) ) {
-                        cvMap.put( 'isActive' , setActive );
-                    }
+        Map<String, Object> gvsRecord = (Map<String, Object>) records[0];
+        String gvsId = (String) gvsRecord.get( 'Id' );
+        Map<String, Object> metadata = (Map<String, Object>) gvsRecord.get( 'Metadata' );
+        metadata.remove( 'urls' );
+        List<Object> customValues = (List<Object>) metadata.get( 'customValue' );
+        mutateGvsCustomValues( customValues , setActive );
+
+        HttpRequest patchRequest = new HttpRequest();
+        patchRequest.setEndpoint( toolingBase + 'sobjects/GlobalValueSet/' + gvsId );
+        patchRequest.setMethod( 'PATCH' );
+        patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        patchRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        patchRequest.setTimeout( 120000 );
+        patchRequest.setBody( JSON.serialize( new Map<String, Object>{ 'FullName' => 'Account_Assignment_Method__gvs' , 'Metadata' => metadata } ) );
+        HttpResponse patchResponse = new Http().send( patchRequest );
+        for (Integer retry = 0; retry < 2 && patchResponse.getStatusCode() == 500; retry++) {
+            patchResponse = new Http().send( patchRequest );
+        }
+        if ( patchResponse.getStatusCode() != 204 ) {
+            throw new CalloutException( 'doGlobalValueSets PATCH failed (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
+        }
+    }
+
+    // @description Iterates customValue entries and sets isActive on the Pre-ABX entry.
+    // @param customValues Raw customValue list from the GlobalValueSet Metadata map.
+    // @param setActive Target active state for the Pre-ABX picklist value.
+    private static void mutateGvsCustomValues( List<Object> customValues , Boolean setActive ) {
+        if ( customValues != null ) {
+            for ( Object cv : customValues ) {
+                Map<String, Object> cvMap = (Map<String, Object>) cv;
+                cvMap.remove( 'urls' );
+                if ( 'Pre-ABX'.equals( cvMap.get( 'valueName' ) ) ) {
+                    cvMap.put( 'isActive' , setActive );
                 }
-            }
-
-            HttpRequest patchRequest = new HttpRequest();
-            patchRequest.setEndpoint( toolingBase + 'sobjects/GlobalValueSet/' + gvsId );
-            patchRequest.setMethod( 'PATCH' );
-            patchRequest.setHeader( 'Content-Type' , 'application/json' );
-            patchRequest.setHeader( 'Authorization' , 'Bearer ' + sessionId );
-            patchRequest.setBody( JSON.serialize( new Map<String, Object>{ 'FullName' => 'Account_Assignment_Method__gvs' , 'Metadata' => metadata } ) );
-            HttpResponse patchResponse = new Http().send( patchRequest );
-            for (Integer retry = 0; retry < 2 && patchResponse.getStatusCode() == 500; retry++) {
-                patchResponse = new Http().send( patchRequest );
-            }
-            if ( patchResponse.getStatusCode() != 204 ) {
-                throw new CalloutException( 'doGlobalValueSets PATCH failed (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
             }
         }
     }
