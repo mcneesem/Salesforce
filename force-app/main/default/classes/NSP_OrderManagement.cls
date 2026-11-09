@@ -5,7 +5,7 @@ public without sharing class NSP_OrderManagement {
     @AuraEnabled
     public static List<Contract> getContractRecord( Id recordId ) {
         try {
-            list<contract> lstTermContract = new list<contract>();
+            List<Contract> lstTermContract = new List<Contract>();
             List<Contract> contractList = [
                 SELECT
                     Id , Status , ContractNumber , NSP_Product_Type__c ,
@@ -69,12 +69,12 @@ public without sharing class NSP_OrderManagement {
         Boolean isContractUpdated;
         try {
             //update contract record as per renewals and amendments
-            Contract contract= new Contract (Id = contractId);
-            contract.NSP_TransactionType__c=transactionType;
-            contract.SBQQ__PreserveBundleStructureUponRenewals__c = true;
-            contract.Auto_Termination_Email__c = UserInfo.getUserEmail();
+            Contract record = new Contract (Id = contractId);
+            record.NSP_TransactionType__c=transactionType;
+            record.SBQQ__PreserveBundleStructureUponRenewals__c = true;
+            record.Auto_Termination_Email__c = UserInfo.getUserEmail();
             //DML on Contract
-            update contract;
+            update record;
             isContractUpdated = true;
         } catch ( Exception e ) {
             isContractUpdated = false;
@@ -98,17 +98,17 @@ public without sharing class NSP_OrderManagement {
                         WHERE Id = :contractId
                         LIMIT 1
                     ];
-                    Contract contract = new Contract();
+                    Contract record = new Contract();
                     if(contracts != null && !contracts.isEmpty()){
-                        contract = contracts[0];
+                        record = contracts[0];
                     }
-                    if(contract !=null){
+                    if(record !=null){
                         //get the required field accountId
-                        id accountId = contract.AccountId;
+                        id accountId = record.AccountId;
                         //get multi-select picklist of product type and split
                         List<String> productTypeList = new List<String>();
-                        if(contract.NSP_Product_Type__c != null){
-                            String productType = contract.NSP_Product_Type__c;
+                        if(record.NSP_Product_Type__c != null){
+                            String productType = record.NSP_Product_Type__c;
                             productTypeList = productType.split(';',-2);
                         }
                         //get orders in draft/reviewed state and backout as false, with same product type and account
