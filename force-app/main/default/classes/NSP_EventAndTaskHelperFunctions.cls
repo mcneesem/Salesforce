@@ -1,4 +1,6 @@
 public class NSP_EventAndTaskHelperFunctions {
+    // test w/ NSP_EventAndTaskHelperFunctionsTest (87%)
+
 
     /*
      * Description: This method accepts various parameters from which it 
@@ -141,19 +143,19 @@ public class NSP_EventAndTaskHelperFunctions {
 
     public static void createTaskRecordsForNCSQueue(List < Opportunity > newOpportunityList, Map < Id, Opportunity > opportunityOldMap) {
         List < Task > newTaskList = new List < Task > ();
-        Group NCS_Group_Queue = [SELECT Id, DeveloperName, name FROM Group
+        List<Group> ncsGroupQueues = [SELECT Id, DeveloperName, name FROM Group
             WHERE Type = 'Queue'
             AND DeveloperName =: NSP_SalesConstants.NCS_SALES_GROUP LIMIT 1
         ];
-
-
-
-        for (Opportunity opportunityObject: newOpportunityList) {
-            Task taskRecord = instantiateTaskRecord(NSP_SalesConstants.NCS_SALES_TASK_SUBJECT, opportunityObject.Id, NCS_Group_Queue.Id,
-                NSP_SalesConstants.ADDENDUMREQUEST_TASKTYPE,
-                NSP_SalesConstants.OPEN, '', null);
+        if (!ncsGroupQueues.isEmpty()) {
+            Group NCS_Group_Queue = ncsGroupQueues[0];
+            for (Opportunity opportunityObject: newOpportunityList) {
+                Task taskRecord = instantiateTaskRecord(NSP_SalesConstants.NCS_SALES_TASK_SUBJECT, opportunityObject.Id, NCS_Group_Queue.Id,
+                    NSP_SalesConstants.ADDENDUMREQUEST_TASKTYPE,
+                    NSP_SalesConstants.OPEN, '', null);
 
             newTaskList.add(taskRecord);
+            }
         }
 
         if (!newTaskList.isEmpty()) {
