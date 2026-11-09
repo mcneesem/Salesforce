@@ -1,4 +1,5 @@
-public class NSP_OpportunityTriggerServiceHelper {
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_OpportunityTriggerServiceHelper {
     // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (85%)
     // test w/ NSP_OpportunityTriggerServiceHelperTest (78%)
     // test w/ NSP_AutomaticProjectBatchTest (9%)
@@ -205,60 +206,59 @@ public class NSP_OpportunityTriggerServiceHelper {
     // Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities
     // Params:     Map<Id,String> timeAttAssetMap,Map<Id,String> perAssetMap , Map<Id,Id> oppAccMap
     //
-    private static void createAssetwithProject( Map<Id,Opportunity> timeAttAssetMap , Map<Id,Opportunity> perAssetMap , Map<Id,Id> oppAccMap ) {
-        List<Asset> assetList = new List<Asset>();
-        try{
-        Id TimeAttAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
-        Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
-        Id TESBPSProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-        Template_Key_and_Id_Mapping__mdt templateMapping = null;
-        List<Template_Key_and_Id_Mapping__mdt> templateMappingList =[SELECT Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Key__c =: NSP_ServiceConstants.ITA_Prj_Temp  AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET];
-        if (!templateMappingList.isEmpty()) {
-             templateMapping = templateMappingList[0];
-        }
-
-        if(!timeAttAssetMap.isEmpty()){
-            for(Id oppId:timeAttAssetMap.keyset() ){
-                Opportunity record = timeAttAssetMap.get(oppId);
-                if(record != null){
-                    assetList.add(
-                        createAssetObject(
-                            record.Name ,
-                            oppId ,
-                            oppAccMap.get(oppId) ,
-                            TimeAttAssetRecordType ,
-                            NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ,
-                            NSP_ServiceConstants.CASE_TIME_ATTENDENCE ,
-                            NSP_ServiceConstants.WoWSAsset,
-                            record.NSP_PrimaryProduct__c
-                        )
-                    );
-                }
-            }
-        }
-        if(!perAssetMap.isEmpty()){
-            for(Id oppId:perAssetMap.keyset() ){
-                Opportunity record = perAssetMap.get(oppId);
-                if(record != null){
-                    String assetStatus = NSP_ServiceConstants.ASSET_ONDEMAND_STATUS;
-                    if(record.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT){
-                        assetStatus = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
+    private static void createAssetwithProject(
+        Map<Id,Opportunity> timeAttAssetMap ,
+        Map<Id,Opportunity> perAssetMap ,
+        Map<Id,Id> oppAccMap
+        )
+    {
+        try {
+            List<Asset> assetList = new List<Asset>();
+            Id TimeAttAssetRecordType = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Time_Attendance' );
+            Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' );
+            Id TESBPSProjectRecordType = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
+            if(!timeAttAssetMap.isEmpty()){
+                for(Id oppId:timeAttAssetMap.keyset() ){
+                    Opportunity record = timeAttAssetMap.get(oppId);
+                    if(record != null){
+                        assetList.add(
+                            createAssetObject(
+                                record.Name ,
+                                oppId ,
+                                oppAccMap.get(oppId) ,
+                                TimeAttAssetRecordType ,
+                                NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ,
+                                NSP_ServiceConstants.CASE_TIME_ATTENDENCE ,
+                                NSP_ServiceConstants.WoWSAsset,
+                                record.NSP_PrimaryProduct__c
+                            )
+                        );
                     }
-                    assetList.add(
-                        createAssetObject(
-                            record.Name ,
-                            oppId ,
-                            oppAccMap.get(oppId) ,
-                            PermformanceAssetRecordType ,
-                            assetStatus ,
-                            NSP_ServiceConstants.PERFORMANCE ,
-                            NSP_ServiceConstants.WoWSAsset,
-                            record.NSP_PrimaryProduct__c
-                        )
-                    );
                 }
             }
-        }
+            if(!perAssetMap.isEmpty()){
+                for(Id oppId:perAssetMap.keyset() ){
+                    Opportunity record = perAssetMap.get(oppId);
+                    if(record != null){
+                        String assetStatus = NSP_ServiceConstants.ASSET_ONDEMAND_STATUS;
+                        if(record.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT){
+                            assetStatus = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
+                        }
+                        assetList.add(
+                            createAssetObject(
+                                record.Name ,
+                                oppId ,
+                                oppAccMap.get(oppId) ,
+                                PermformanceAssetRecordType ,
+                                assetStatus ,
+                                NSP_ServiceConstants.PERFORMANCE ,
+                                NSP_ServiceConstants.WoWSAsset,
+                                record.NSP_PrimaryProduct__c
+                            )
+                        );
+                    }
+                }
+            }
             if ( !assetList.isEmpty() ) {
                 List<Database.UpsertResult> upsertResults = Database.upsert( assetList , false );
                 NSP_ErrorLogHandler.logResults(
