@@ -3,7 +3,7 @@ public without sharing class NSP_EventAndTaskHelperFunctions {
     // test w/ NSP_EventAndTaskHelperFunctionsTest (87%)
 
     //
-    // Description: This method accepts various parameters from which it 
+    // Description: This method accepts various parameters from which it
     // creates an instance of Task records and assigns field values based on parameters passed
     //
     public static Task instantiateTaskRecord(
@@ -28,7 +28,7 @@ public without sharing class NSP_EventAndTaskHelperFunctions {
     }
 
     //
-    // Description: This method accepts various parameters from which it 
+    // Description: This method accepts various parameters from which it
     // creates an instance of Task records and assigns field values based on parameters passed
     //
     public static Task instantiateTaskPrimaryRecord(
@@ -73,8 +73,8 @@ public without sharing class NSP_EventAndTaskHelperFunctions {
             }
             if ( !oppIdSet.isEmpty() ) {
                 taskIdList = [
-                    SELECT WhatId 
-                    FROM Task 
+                    SELECT WhatId
+                    FROM Task
                     WHERE (
                         Subject = 'Primary Quote Created'
                         AND NSP_Task_type__c = 'Core Sales'
@@ -132,7 +132,7 @@ public without sharing class NSP_EventAndTaskHelperFunctions {
     }
 
     //
-    // Description: Iterates through all Newly created Opportunities to check 
+    // Description: Iterates through all Newly created Opportunities to check
     // if HSA Addendum fields are populated and create a task record assigned to NCS Group Queue
     //
     public static void createTaskRecordsForNCSQueue( List<Opportunity > newOpportunityList , Map<Id,Opportunity> opportunityOldMap ) {
