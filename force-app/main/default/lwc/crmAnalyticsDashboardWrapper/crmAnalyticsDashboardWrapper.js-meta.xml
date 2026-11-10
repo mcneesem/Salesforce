@@ -6,4 +6,16 @@
     <targets>
         <target>lightning__HomePage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property
+                name="dashboardField"
+                type="String"
+                label="Dashboard Field"
+                datasource="Sales_Links_Dashboard_Id__c,SDR_BDR_Dashboard_Id__c"
+                default="Sales_Links_Dashboard_Id__c"
+                />
+            <property name="dashboardHeight" type="Integer" label="Dashboard Height" default="500"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
