@@ -32,7 +32,7 @@ public with sharing class CreateGLTransactionsController {
             
             GL_Period__c glPeriodRecord = null;
             
-            if (glPeriodRecords.isEmpty()) {
+            if (!glPeriodRecords.isEmpty()) {
                 glPeriodRecord = glPeriodRecords[0];
             }
             
