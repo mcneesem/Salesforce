@@ -138,6 +138,10 @@ export default class PortalTaskAction extends LightningElement {
         return ( this.action == "Checkbox" );
     }
 
+    get showInputCheckboxButton() {
+        return ( this.showInputCheckbox && ( this.isToggleable || !this.isChecked ) );
+    }
+
     get showInputDate() {
         return ( this.action == "Date" );
     }
@@ -245,12 +249,12 @@ export default class PortalTaskAction extends LightningElement {
     }
 
     get inputButtonLabel() {
-        let value =  "Mark as Completed";
+        let value =  "Mark as Read"; // Mark as Complete
         if ( this.isChecked ) {
             if ( this.isToggleable ) {
                 value = "Mark as Pending";
             } else {
-                value = "Completed";
+                value = "Item Read"; // "Completed"
             }
         }
         return value;
@@ -265,7 +269,7 @@ export default class PortalTaskAction extends LightningElement {
     }
 
     get isToggleable() {
-        return true;
+        return false;
     }
 
     handleChangeInput( event ) {
