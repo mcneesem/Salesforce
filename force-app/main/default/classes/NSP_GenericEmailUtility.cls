@@ -1,4 +1,5 @@
-public class NSP_GenericEmailUtility {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_GenericEmailUtility {
     // test w/ NSP_GenericEmailUtilityTest (86%)
 
     //
@@ -103,13 +104,15 @@ public class NSP_GenericEmailUtility {
         String templateId = null;
         if ( String.isNotBlank( templateDevName ) ) {
             try {
-                EmailTemplate emailTemplateStored = [
+                List<EmailTemplate> emailTemplateStored = [
                     SELECT Id , DeveloperName
                     FROM EmailTemplate
                     WHERE DeveloperName = :templateDevName
                     LIMIT 1
                 ];
-                templateId = emailTemplateStored.Id;
+                if ( !emailTemplateStored.isEmpty() ) {
+                    templateId = emailTemplateStored[0].Id;
+                }
             } catch ( Exception e ) {
                 NSP_GenericEmailUtility.handleException( e , 'getTemplateIdFromDevName' );
             }
@@ -127,12 +130,15 @@ public class NSP_GenericEmailUtility {
     public static OrgWideEmailAddress getOrgWideAddress( String displayName ) {
         OrgWideEmailAddress orgWidAddress = null;
         try {
-            orgWidAddress = [
+            List<OrgWideEmailAddress> orgWidAddressList = [
                 SELECT Id , Address , DisplayName
                 FROM OrgWideEmailAddress
                 WHERE ( DisplayName = :displayName )
                 LIMIT 1
             ];
+            if ( !orgWidAddressList.isEmpty() ) {
+                orgWidAddress = orgWidAddressList[0];
+            }
         } catch ( Exception e ) {
             NSP_GenericEmailUtility.handleException( e , 'getOrgWideAddress' );
         }
