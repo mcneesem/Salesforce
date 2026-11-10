@@ -64,8 +64,10 @@ public with sharing class NSP_CreateProjectFromTemplate {
         Id recordId = System.currentPagereference().getParameters().get('parentid');
         if(recordId != null && String.valueOf(recordId).substring(0,3) == '02i'){
             sObjName = 'Project_Asset__c';
-            assetRecVal = [Select Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id =: recordId] ;
-            setassetRef(assetRecVal);
+            List<Asset> assetRecVal = [SELECT Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id = :recordId];
+            if(!assetRecVal.isEmpty()){
+                this.setassetRef(assetRecVal[0]);
+            }
         }else{
             sObjName = 'pse__Proj__c';
             String caseQuery = new NSP_QueryBuilder('Case', CASE_FIELDS).addFilter('Id', System.currentPagereference().getParameters().get('parentid')).addLimit(1).build();
@@ -230,11 +232,14 @@ using the field specified as per the object.
             if(recordId.getSobjectType() == Asset.getSObjectType()){
                 oAsset = (Asset)JSON.deserialize(objVal, Asset.class);
                 oProject.pse__Start_Date__c = startDate;
-                Asset currentAsset = [SELECT Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id =: recordId] ;
+                List<Asset> currentAsset = [SELECT Id, Name, AccountId, Project_Template__c FROM Asset WHERE Id =: recordId] ;
                 fieldValuesMap.put('ProjectId', oAsset.Project_Template__c);
                 fieldValuesMap.put('ProjectName', oAsset.name);
                 parentId = recordId;
-                accountId = currentAsset.AccountId;
+                accountId = null;
+                if (!currentAsset.isEmpty()) {
+                    accountId = currentAsset[0].AccountId;
+                }
             }else if(recordId.getSobjectType() == Case.getSObjectType()){
                 oCase = (Case)JSON.deserialize(objVal, Case.class);
                 fieldValuesMap.put('ProjectId', oCase.Project_Template__c);
@@ -243,11 +248,16 @@ using the field specified as per the object.
                 } else{
                     fieldValuesMap.put('ProjectName', oCase.Project_Template__r.Name);
                 }
-                Case currentCase = [SELECT Id, Subject,Comments_for_Project__c, AccountId, Project_Template__c,NSP_Due_Date__c FROM Case WHERE Id = : recordId];
+                List<Case> currentCase = [SELECT Id, Subject,Comments_for_Project__c, AccountId, Project_Template__c,NSP_Due_Date__c FROM Case WHERE Id = : recordId];
                 parentId = recordId;
-                accountId = currentCase.AccountId;
-                caseComment = currentCase.Comments_for_Project__c;
-                dueDate = currentCase.NSP_Due_Date__c;
+                accountId = null;
+                caseComment = null;
+                dueDate = null;
+                if (!currentCase.isEmpty()) {
+                    accountId = currentCase[0].AccountId;
+                    caseComment = currentCase[0].Comments_for_Project__c;
+                    dueDate = currentCase[0].NSP_Due_Date__c;
+                }
             }
             Id templateProjectId = Id.valueof(fieldValuesMap.get('ProjectId')); 
             
