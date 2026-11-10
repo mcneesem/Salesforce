@@ -2,6 +2,7 @@
 //Created Date:  8/11/2022
 //Author: Virendra
 public class NSP_PDSRecordManagerController {
+    // test w/ NSP_PDSRecordManagerController_Test (82%)
     public Id recordId {get;set;}    
     //@ Method Name: NSP_PDSRecordManagerController
     public NSP_PDSRecordManagerController(ApexPages.StandardSetController sc) {
@@ -24,7 +25,11 @@ public class NSP_PDSRecordManagerController {
     //@Method Name: createNewPayrollRecord
     private static String createNewPayrollRecord(String recordId) {
         try{
-        NSP_Sub_Client__c existingSubClient = [SELECT Id, NSP_Sub_Client__c FROM NSP_Sub_Client__c WHERE Id =:recordId];
+        List<NSP_Sub_Client__c> existingSubClients = [SELECT Id, NSP_Sub_Client__c FROM NSP_Sub_Client__c WHERE Id =:recordId];
+        NSP_Sub_Client__c existingSubClient = null;
+            if( !existingSubClients.isEmpty() ){
+                existingSubClient = existingSubClients[0];
+            }
         //Creating new Payroll
         if (Schema.sObjectType.NSP_Payroll__c.isCreateable()) {
             NSP_Payroll__c newPayroll = new NSP_Payroll__c();
