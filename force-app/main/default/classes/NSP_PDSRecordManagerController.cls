@@ -62,7 +62,7 @@ public without sharing class NSP_PDSRecordManagerController {
         ];
         String response = null;
         if ( ( records != null ) && !records.isEmpty() ) {
-            response = records[0].LastModifiedBy.Profile.Name
+            response = records[0].LastModifiedBy.Profile.Name;
         }
         return response;
     }
