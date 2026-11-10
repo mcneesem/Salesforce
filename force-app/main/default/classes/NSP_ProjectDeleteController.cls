@@ -16,7 +16,7 @@ public with sharing class NSP_ProjectDeleteController {
                 WHERE ( Id = :projectId )
             ];
             if ( projectObjList.isEmpty()
-                || ( projectObjList[0].pse__Parent_Project__c != null )
+                && ( projectObjList[0].pse__Parent_Project__c != null )
                 )
             {
                 throw new AuraHandledException( 'Please remove the association in Parent Project field before deleting this project.' );
