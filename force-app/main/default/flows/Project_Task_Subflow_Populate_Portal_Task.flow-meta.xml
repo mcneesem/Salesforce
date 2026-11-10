@@ -371,6 +371,32 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Verify is Guidance is exists</description>
+        <name>Valid_Guidance</name>
+        <label>Valid Guidance?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Remove_Portal_Guidance</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Guidance</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Portal_Guidance</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Portal_Guidance</targetReference>
+            </connector>
+            <label>Yes : Valid Guidance</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validate if create record is not empty</description>
         <name>Validate_Create</name>
         <label>Validate Create</label>
@@ -489,32 +515,6 @@
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <decisions>
-        <description>Verify is Guidance is exists</description>
-        <name>Valid_Guidance</name>
-        <label>Valid Guidance?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Remove_Portal_Guidance</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_Guidance</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Portal_Guidance</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Portal_Guidance</targetReference>
-            </connector>
-            <label>Yes : Valid Guidance</label>
-        </rules>
-    </decisions>
     <description>New Client Portal: Populate Portal Task</description>
     <environments>Default</environments>
     <formulas>
@@ -527,6 +527,18 @@
   &quot;Pending - Client&quot; , &quot;Pending - Client&quot; ,
   &quot;Canceled&quot; , &quot;Hidden&quot; ,
   &quot;Pending&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>portalTaskValueCheckbox</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  AND(
+    ISPICKVAL( {!recordProjectTask.Portal_Task_Action__c} , &quot;Checkbox&quot; ) ,
+    ISPICKVAL( {!recordProjectTask.pse__Status__c} , &quot;Complete&quot; )
+  ) ,
+  true ,
+  false
 )</expression>
     </formulas>
     <interviewLabel>Project Task - Subflow - Populate Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
@@ -821,6 +833,13 @@
                     <elementReference>recordProjectTask.Portal_Task_Name__c</elementReference>
                 </value>
             </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Value_Checkbox__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskValueCheckbox</elementReference>
+                </value>
+            </transformValueActions>
         </transformValues>
     </transforms>
     <transforms>
@@ -884,6 +903,13 @@
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>recordProjectTask.Portal_Task_Name__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Value_Checkbox__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>portalTaskValueCheckbox</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
