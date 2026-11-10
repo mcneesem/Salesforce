@@ -1,4 +1,4 @@
-//   
+//
 // Name   :  NSP_ProjectDeleteController
 // Purpose: Delete child records when parent project is deleted
 //
@@ -13,8 +13,8 @@ public with sharing class NSP_ProjectDeleteController {
     @auraEnabled
     public static void deepDeleteRecords(Id projectId){
         //check if parent project exists then don't allow delete of the project
-        pse__Proj__c projectObjList = [SELECT Id, pse__Parent_Project__c FROM pse__Proj__c WHERE id =:projectId];
-        if(projectObjList.pse__Parent_Project__c != null){
+        List<pse__Proj__c> projectObjList = [SELECT Id, pse__Parent_Project__c FROM pse__Proj__c WHERE id =:projectId];
+        if( !projectObjList.isEmpty() && projectObjList[0].pse__Parent_Project__c != null ){
             throw new AuraHandledException(System.Label.NSP_project_delete_check_parent_error_message);
         }
         //store record ID to delete
