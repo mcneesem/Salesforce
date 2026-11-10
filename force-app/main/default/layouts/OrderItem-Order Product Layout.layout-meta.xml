@@ -44,7 +44,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Delta_Unit_Price__c</field>
+                <field>Delta_Quantity__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -127,6 +127,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Description_To_Store_Internal__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
