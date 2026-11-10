@@ -5,6 +5,7 @@
 */
 
 public class NSP_IntegrationFieldsController {
+    // test w/ NSP_IntegrationFieldsControllerTest (100%)
     
     /**
     * Get Integration fields based on recordId
@@ -36,10 +37,15 @@ public class NSP_IntegrationFieldsController {
     @AuraEnabled
     public static sObject getContact(Id recordId) {
         //Get Object Name based on record Id
+        sObject record = null;
+        List<Contact> contacts = new List<Contact>();
         String sObjName = recordId.getSObjectType().getDescribe().getName();
         if(sObjName == 'Contact') {
-            return [SELECT NSP_Per_ID__c, CreatedBy.NSP_Profile_Name__c  FROM Contact WHERE Id =: recordId];
+            contacts = [SELECT NSP_Per_ID__c, CreatedBy.NSP_Profile_Name__c  FROM Contact WHERE Id =: recordId];
         }
-        return null;
+        if( !contacts.isEmpty() ) {
+            record = contacts[0];
+        }
+        return record;
     }
 }
