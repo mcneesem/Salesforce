@@ -3,18 +3,65 @@
     <apiVersion>68.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Quick_rate_update</name>
-        <label>Quick rate update</label>
+        <name>Set_Quick_rate_to_Neutral</name>
+        <label>Set Quick rate to Neutral</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>$Record.NSP_Rating__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>Neutral</stringValue>
+            </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Check_Layout</name>
+        <label>Check Layout</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Quick_Rate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_TES</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Layout_BOB__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TES</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Is TES</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Quick_Rate</name>
+        <label>Check Quick Rate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Rating__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Quick_rate_to_Neutral</targetReference>
+            </connector>
+            <label>Is Blank</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
-    <interviewLabel>Project Before Create Populate Quick Rate {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Before Create Populate Quick Rate</label>
+    <interviewLabel>Project - Before Create - Populate Quick Rate {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Before Create - Populate Quick Rate</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -38,23 +85,8 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Quick_rate_update</targetReference>
+            <targetReference>Check_Layout</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Layout_BOB__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>TES</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Rating__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <object>pse__Proj__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
