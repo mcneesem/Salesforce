@@ -2109,26 +2109,44 @@ public without sharing class NSP_Implprofile_ServiceHelperUpdate {
         return ipAautomation;
     }
 
-    public static NSP_Implementation_Profile_Automation__c  automationRecordUpdate(Id ipRecId, String automationName, String fnName, string recordType ,String section ){
-        NSP_Implementation_Profile_Automation__c IPAautomation = new  NSP_Implementation_Profile_Automation__c();
-        try{
-            NSP_Implementation_Profile_Automation__c newIPAautomation = new  NSP_Implementation_Profile_Automation__c();
-            NSP_Implementation_Profile_Automation__c ipAautomationUpdate = new  NSP_Implementation_Profile_Automation__c();
-            ipAautomationUpdate = [Select Id ,NSP_Record_Type__c,NSP_Last_Run__c FROM NSP_Implementation_Profile_Automation__c
-                                   WHERE Name=: automationName AND  NSP_Method_Name__c=:fnName  AND NSP_Record_Type__c =: recordType
-                                   AND NSP_Implementation_Profile__c =:ipRecId];
-            if(ipAautomationUpdate!=null){
-                ipAautomationUpdate.NSP_Last_Run__c = System.now();
-                if( ipAautomationUpdate.NSP_Record_Type__c == null){
-                    ipAautomationUpdate.NSP_Record_Type__c = recordType;
+    public static NSP_Implementation_Profile_Automation__c automationRecordUpdate(
+        Id ipRecId ,
+        String automationName ,
+        String fnName ,
+        string recordType ,
+        String section
+        )
+    {
+        NSP_Implementation_Profile_Automation__c ipAautomation = new  NSP_Implementation_Profile_Automation__c();
+        try {
+            List<NSP_Implementation_Profile_Automation__c> ipAautomations = [
+                SELECT Id , NSP_Record_Type__c , NSP_Last_Run__c
+                FROM NSP_Implementation_Profile_Automation__c
+                WHERE (
+                    ( Name = :automationName )
+                    AND ( NSP_Method_Name__c = :fnName )
+                    AND ( NSP_Record_Type__c = :recordType )
+                    AND ( NSP_Implementation_Profile__c = :ipRecId )
+                )
+            ];
+            if ( !ipAautomations.isEmpty() ) {
+                NSP_Implementation_Profile_Automation__c record = ipAautomations[0];
+                record.NSP_Last_Run__c = System.now();
+                if ( record.NSP_Record_Type__c == null ) {
+                    record.NSP_Record_Type__c = recordType;
                 }
-                update ipAautomationUpdate;
-                IPAautomation=ipAautomationUpdate;
-            }
-            else if(ipAautomationUpdate==null){
-                newIPAautomation= createIPAutomation( ipRecId,  automationName,  fnName,section,recordType);
-                Insert newIPAautomation;
-                IPAautomation=newIPAautomation;
+                update record;
+                ipAautomation = record;
+            } else {
+                NSP_Implementation_Profile_Automation__c record = NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(
+                    ipRecId ,
+                    automationName ,
+                    fnName ,
+                    section ,
+                    recordType
+                );
+                insert record;
+                ipAautomation = record;
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -2137,7 +2155,7 @@ public without sharing class NSP_Implprofile_ServiceHelperUpdate {
                 e
             );
         }
-        return IPAautomation;
+        return ipAautomation;
     }
 
     private Id getMilestoneId(List<pse__Milestone__c> listOfMilestone, String milestoneName){
