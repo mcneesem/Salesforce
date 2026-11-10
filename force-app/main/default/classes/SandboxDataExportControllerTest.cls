@@ -229,5 +229,65 @@ private class SandboxDataExportControllerTest {
         System.assert(!soql.contains('ORDER BY'), 'Query without orderBy should not contain ORDER BY');
     }
 
+    // ------------------------------------------------------------
+    // getAllAccessibleFields
+    // ------------------------------------------------------------
+
+    @isTest
+    private static void getAllAccessibleFields_validObject_returnsNonEmptyList() {
+        Test.startTest();
+        List<String> fields = SandboxDataExportController.getAllAccessibleFields('Account');
+        Test.stopTest();
+
+        System.assert(
+            fields != null && !fields.isEmpty(),
+            'Should return at least one accessible field for Account'
+        );
+    }
+
+    @isTest
+    private static void getAllAccessibleFields_validObject_containsIdField() {
+        List<String> fields = SandboxDataExportController.getAllAccessibleFields('Account');
+
+        System.assert(
+            fields.contains('id'),
+            'Field list should contain the id field (describe keys are lowercase)'
+        );
+    }
+
+    @isTest
+    private static void getAllAccessibleFields_unknownObject_returnsEmptyList() {
+        Test.startTest();
+        List<String> fields = SandboxDataExportController.getAllAccessibleFields('NonExistent_Object__c');
+        Test.stopTest();
+
+        System.assert(
+            fields != null && fields.isEmpty(),
+            'Unknown object should return an empty list'
+        );
+    }
+
+    @isTest
+    private static void executeExport_fieldApiNamesColumnsAppearFirst() {
+        List<String> explicitFields = new List<String>{ 'Name', 'Phone' };
+        Set<String> addedFieldKeys = new Set<String>{ 'name', 'phone' };
+        List<String> describeFields = SandboxDataExportController.getAllAccessibleFields('Account');
+
+        List<String> merged = new List<String>( explicitFields );
+        for ( String describeField : describeFields ) {
+            if ( !addedFieldKeys.contains( describeField.toLowerCase() ) ) {
+                merged.add( describeField );
+                addedFieldKeys.add( describeField.toLowerCase() );
+            }
+        }
+
+        System.assertEquals( 'Name',  merged[0], 'First column should be Name as listed in FieldApiNames__c' );
+        System.assertEquals( 'Phone', merged[1], 'Second column should be Phone as listed in FieldApiNames__c' );
+        System.assert(
+            merged.size() > 2,
+            'Merged list should contain additional fields from describe beyond the two explicit ones'
+        );
+    }
+
 }
 //
