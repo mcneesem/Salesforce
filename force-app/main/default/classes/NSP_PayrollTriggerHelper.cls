@@ -1,5 +1,5 @@
 public class NSP_PayrollTriggerHelper {
-    // test w/ NSP_PayrollTriggerHelperTest (83%)
+    // test w/ NSP_PayrollTriggerHelperTest (85%)
 
     public static list<NSP_Payroll_Data_Sheet_Event__e> payrollDataSheetEventListToBeInserted = new list <NSP_Payroll_Data_Sheet_Event__e>();
     public static final Id WOASSETRECTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -200,7 +200,7 @@ public class NSP_PayrollTriggerHelper {
             List<Additional_Payroll_Contact__c> additionalPayrollContacts = new List<Additional_Payroll_Contact__c>();
             List<ContentDocumentLink> contentDocumentLinks = new List<contentDocumentLink>();
 
-            NSP_Payroll__c Payroll = [SELECT Id, Most_Recent_Pay_Period_End_Date__c, NSP_Additional_Report_Information__c, NSP_Additional_information__c,
+            List<NSP_Payroll__c> payrolls = [SELECT Id, Most_Recent_Pay_Period_End_Date__c, NSP_Additional_Report_Information__c, NSP_Additional_information__c,
             NSP_Additonal_Processing_Instructions__c, NSP_Ancillary__c, NSP_Asset__c, NSP_BackUpPayrollContactBest_Time_Of_Day__c,
             NSP_BackUpPayroll_Con_Located_Outside_US__c, NSP_BackUpPayroll_Contact_Contact_Method__c, NSP_BackUp_Payroll_Con_Internatiol_Phone__c,
             NSP_Union__c,
@@ -223,7 +223,11 @@ public class NSP_PayrollTriggerHelper {
             NSP_Tips__c, NSP_Union_Employee__c, NSP_Vision__c, NSP_Work_Week__c, NSP_Worksheet_Type__c, XML_Type__c, User__c, NSP_Approvers__c, NSP_Union_Dues__c,
             NSP_Sub_Client__c, NSP_Sub_Client_Name__r.NSP_Sub_Client__c, NSP_Count_of_Payroll_Calendar__c FROM NSP_Payroll__c WHERE Id =: recordId];
 
-            NSP_Payroll__c tempPayroll = Payroll.clone(false,true);
+            NSP_Payroll__c payroll = null;
+            if( !Payrolls.isEmpty() ){
+                payroll = payrolls[0];
+            }
+            NSP_Payroll__c tempPayroll = payroll.clone(false,true);
             tempPayroll.NSP_Sub_Client_Name__c = subClientId;
             insert tempPayroll;
 
