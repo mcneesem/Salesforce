@@ -557,6 +557,11 @@
                 <default>false</default>
                 <label>Delta_Unit_Price__c</label>
             </value>
+            <value>
+                <fullName>Net_Annual_Amount_Delta_Total__c</fullName>
+                <default>false</default>
+                <label>Net_Annual_Amount_Delta_Total__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -794,6 +799,10 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>NSP_SupplementBPS__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Net_Annual_Amount_Delta_Total__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

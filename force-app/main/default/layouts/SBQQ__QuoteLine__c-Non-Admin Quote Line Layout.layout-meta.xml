@@ -86,6 +86,10 @@
                 <behavior>Edit</behavior>
                 <field>Delta_Unit_Price__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Delta_Annual_Amount__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

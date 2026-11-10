@@ -101,6 +101,10 @@
                 <behavior>Edit</behavior>
                 <field>Has_E_Verify__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Net_Annual_Amount_Delta_Total__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
