@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_Kind_ACAT_Transfer_CSP__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Denotes if the fund restriction is In Kind meaning a fund needs to be mapped from the current vendor to Insperity</description>
+    <label>In-Kind/ACAT Transfer - CSP</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

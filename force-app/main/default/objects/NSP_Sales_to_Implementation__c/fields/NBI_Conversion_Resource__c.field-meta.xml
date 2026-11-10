@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NBI_Conversion_Resource__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Conversions has 2 teams, 1 doing the client facing one doing the money transfer. This assigns a person to that task</description>
+    <label>NBI Conversion Resource</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>RET_Sales_to_Implementations2</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

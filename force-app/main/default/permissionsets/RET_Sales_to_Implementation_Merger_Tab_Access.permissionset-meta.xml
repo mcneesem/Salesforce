@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>RET_Sales_to_Implementation_Merger_Tab_Access</name>
+    </customPermissions>
+    <description>Gives Access to RET Sales to Implementation Merger Tab</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>RET-Sales-to-Implementation Merger Tab Access</label>
+</PermissionSet>
