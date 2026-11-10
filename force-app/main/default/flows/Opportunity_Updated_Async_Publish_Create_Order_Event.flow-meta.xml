@@ -10,8 +10,8 @@
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Ordered</name>
-            <conditionLogic>and</conditionLogic>
+            <name>To_Order</name>
+            <conditionLogic>1 AND ( ( 2 AND 3 ) OR ( 4 AND 5 ) )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.SBQQ__Ordered__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -19,21 +19,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Check_Product_Type</targetReference>
-            </connector>
-            <label>Is Ordered</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Product_Type</name>
-        <label>Check Product Type</label>
-        <locationX>314</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Is_Valid</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.NSP_Product_Type__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -48,10 +33,24 @@
                     <stringValue>I-9 Assist &amp; E-Verify</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>I-9 Assist &amp; E-Verify</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Client_For_Life__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO/WS</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Publish_Create_Order_Event</targetReference>
             </connector>
-            <label>Is Valid ?</label>
+            <label>To Order</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -80,8 +79,8 @@
         <description>creates event to publish create order event</description>
         <name>Publish_Create_Order_Event</name>
         <label>Publish Create Order Event</label>
-        <locationX>50</locationX>
-        <locationY>492</locationY>
+        <locationX>314</locationX>
+        <locationY>384</locationY>
         <faultConnector>
             <targetReference>Fault_Path</targetReference>
         </faultConnector>
@@ -101,7 +100,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -139,8 +138,8 @@
     <subflows>
         <name>Fault_Path</name>
         <label>Fault Path</label>
-        <locationX>314</locationX>
-        <locationY>600</locationY>
+        <locationX>578</locationX>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
