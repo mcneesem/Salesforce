@@ -16,7 +16,7 @@ public with sharing class CreateGLTransactionsController {
         )
         {
             List<id> financePeriods = new list<id>();
-            GL_Period__c glPeriodRecord = [
+            List<GL_Period__c> glPeriodRecords = [
                 SELECT
                     Id ,
                     Financial_Period_Accounting_10__c ,
@@ -29,6 +29,13 @@ public with sharing class CreateGLTransactionsController {
                 WHERE ( Id = :glPeriodId )
                 LIMIT 1
             ];
+            
+            GL_Period__c glPeriodRecord = null;
+            
+            if (glPeriodRecords.isEmpty()) {
+                glPeriodRecord = glPeriodRecords[0];
+            }
+            
             if(String.isNotBlank(glPeriodRecord.Financial_Period_Accounting_10__c)){
                 financePeriods.add(glPeriodRecord.Financial_Period_Accounting_10__c);
             }
