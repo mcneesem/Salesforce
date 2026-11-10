@@ -84,13 +84,13 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
         List<Exception> errors = new List<Exception>();
         // callouts - must all complete before any DML
-        try { doCMetadata( sandbox ); }     catch( Exception e ) { errors.add( e ); }
-        try { doCLabels( sandbox ); }       catch( Exception e ) { errors.add( e ); }
-        try { doEmailCLabels(); }           catch( Exception e ) { errors.add( e ); }
-        try { doEmailAlerts(); }            catch( Exception e ) { errors.add( e ); }
-        try { doImageDocs(); }              catch( Exception e ) { errors.add( e ); }
-        try { doTrustedURLs(); }            catch( Exception e ) { errors.add( e ); }
-        try { doGlobalValueSets( true ); }  catch( Exception e ) { errors.add( e ); }
+        try { doCMetadata( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { doCLabels( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { doEmailCLabels(); } catch( Exception e ) { errors.add( e ); }
+        try { doEmailAlerts(); } catch( Exception e ) { errors.add( e ); }
+        try { doImageDocs(); } catch( Exception e ) { errors.add( e ); }
+        try { doTrustedURLs(); } catch( Exception e ) { errors.add( e ); }
+        try { doGlobalValueSets( true ); } catch( Exception e ) { errors.add( e ); }
         // DMLs
         doCSettings( sandbox );
         doCSettings2( sandbox );
@@ -113,9 +113,9 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
         List<Exception> errors = new List<Exception>();
         // callouts - must complete before any DML
-        try { doCMetadataSvc( sandbox ); }      catch( Exception e ) { errors.add( e ); }
-        try { runPostSeedingCallouts(); }       catch( Exception e ) { errors.add( e ); }
-        try { doGlobalValueSets( false ); }     catch( Exception e ) { errors.add( e ); }
+        try { doCMetadataSvc( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { runPostSeedingCallouts(); } catch( Exception e ) { errors.add( e ); }
+        try { doGlobalValueSets( false ); } catch( Exception e ) { errors.add( e ); }
         // DMLs
         runPostSeedingDML();
         setPostRefreshRunFlag( 3 );
@@ -156,26 +156,30 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
 
             List<User> userList = new List<User>(); // list of User records to upsert
-            String[] rows = userCsv.split('\n');
+            List<String> rows = userCsv.split('\n');
             for(integer i=1; i < rows.size() ; i++) { // skip header row
-                String[] column = rows[i].split(',');
+                List<String> column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
                 String orgNames = (column[7].length() > 1) ? column[7] : 'none';
                 if ( ( column[1].indexOf('integration') < 0 )
-                  && ( column[2].indexOf('noreply') < 0 )
-                  && ( column[2].indexOf('insperity') > -1 ) ) {
+                    && ( column[2].indexOf('noreply') < 0 )
+                    && ( column[2].indexOf('insperity') > -1 )
+                    )
+                {
                     userList.add(new User(
                         IsActive = true ,
                         Email = column[2].substringBefore( STRING_INVALID ).trim() ,
                         FirstName = column[3].trim() ,
                         LastName = column[4].trim() ,
                         Username = column[2].substringBefore( STRING_INVALID ).trim() + '.' + sandboxName ,
-                        ProfileId = getImportUserProfileId( adminProfileId ,
-                                                            sandboxName.toLowercase() ,
-                                                            profileNameMap ,
-                                                            column[1] ,
-                                                            column[5] ,
-                                                            orgNames.toLowercase() ) ,
+                        ProfileId = getImportUserProfileId(
+                            adminProfileId ,
+                            sandboxName.toLowercase() ,
+                            profileNameMap ,
+                            column[1] ,
+                            column[5] ,
+                            orgNames.toLowercase()
+                        ) ,
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase() ,
                         UserRoleId = ( userRoleNameMap.containsKey(column[6]) ) ? userRoleNameMap.get( column[6] )[0].Id : null ,
                         TimeZoneSidKey = 'America/Chicago' ,
@@ -186,7 +190,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
             if( !Test.isRunningTest() && userList != null ) {
-                Database.UpsertResult[] userResults = Database.upsert( userList, User.Username , false );
+                List<Database.UpsertResult> userResults = Database.upsert( userList, User.Username , false );
                 NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport:upsert' , userResults );
                 updateUserLogins( userResults );
             }
@@ -198,16 +202,39 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     public static void doCMetadata( String sandboxName ) {
         List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
         allMetadataList.add(new List<MetadataService.Metadata>());
-        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [SELECT Id , Label , DeveloperName , NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
-        List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [SELECT Id , Label , DeveloperName , Value__c FROM DocuSignRESTSettings__mdt WHERE Id!=null];
-        List<NSP_PEO_Implementations__mdt> cMdPEOImps = [SELECT Id , Label , DeveloperName , NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
-        List<NSP_Retirement_Services__mdt> cMdRetSvcs = [SELECT Id , Label , DeveloperName , NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
-
+        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [
+            SELECT Id , Label , DeveloperName , NSP_Signer_Username__c 
+            FROM NSP_DocuSign_Signers__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Signer_Username__c != null )
+            )
+        ];
+        List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [
+            SELECT Id , Label , DeveloperName , Value__c
+            FROM DocuSignRESTSettings__mdt
+            WHERE ( Id != null )
+        ];
+        List<NSP_PEO_Implementations__mdt> cMdPEOImps = [
+            SELECT Id , Label , DeveloperName , NSP_Email_Address__c
+            FROM NSP_PEO_Implementations__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Email_Address__c != null )
+            )
+        ];
+        List<NSP_Retirement_Services__mdt> cMdRetSvcs = [
+            SELECT Id , Label , DeveloperName , NSP_Email_Address__c
+            FROM NSP_Retirement_Services__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Email_Address__c != null )
+            )
+        ];
         doDS_mdt( sandboxName , allMetadataList , cMdDocuSigners );
         doDSREST_mdt( sandboxName , allMetadataList , cMdDocuSignREST );
         doPEO_mdt( sandboxName , allMetadataList , cMdPEOImps );
         doRET_mdt( sandboxName , allMetadataList , cMdRetSvcs );
-
         runUpdateMetadata( allMetadataList );
     }
 
@@ -236,10 +263,11 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return allMetadataList;
     }
 
-    public static void doDS_mdt (
+    public static void doDS_mdt(
         String sandboxName ,
         List<List<MetadataService.Metadata>> allMetadataList ,
-        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners )
+        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners
+        )
     {
         for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
             String name = cMdRecord.DeveloperName;
@@ -251,7 +279,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    public static void doDSREST_mdt ( String sandboxName , List<List<MetadataService.Metadata>> allMetadataList , List<DocuSignRESTSettings__mdt> cMdDocuSignREST ) {
+    public static void doDSREST_mdt( String sandboxName , List<List<MetadataService.Metadata>> allMetadataList , List<DocuSignRESTSettings__mdt> cMdDocuSignREST ) {
         // map of DocuSignRESTSettings__mdt names to default values for DEV
         Map<String, String> resourceMap = new Map<String, String>();
 
@@ -832,14 +860,15 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put( 'InsperityEmailSignatureLogo' , 'InsperityEmailSignatureLogo' );
 
         List<StaticResource> srList = new List<StaticResource>(
-                                        [ SELECT
-                                            Id ,
-                                            Body ,
-                                            Name
-                                          FROM StaticResource
-                                          WHERE Name IN :resourceMap.keySet()
-                                        ]
-                                    );
+            [
+                SELECT
+                    Id ,
+                    Body ,
+                    Name
+                FROM StaticResource
+                WHERE ( Name IN :resourceMap.keySet() )
+            ]
+        );
 
         for (StaticResource sr : srList) {
             MetadataService.Document doc = new MetadataService.Document();
@@ -871,10 +900,10 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     public static void setPostRefreshRunFlag( Integer iStep ) {
         try {
             OrgSettings__c cS = NSP_PrepSandbox.settings;
-            if ( iStep == 1 ) cS.PostRefreshRun__c = true;
-            if ( iStep == 2 ) cS.PostRefreshRun2__c = true;
-            if ( iStep == 3 ) cS.PostRefreshRun3__c = true;
-            if ( iStep == 4 ) cS.PostRefreshRun4__c = true;
+            if ( iStep == 1 ) { cS.PostRefreshRun__c = true; }
+            if ( iStep == 2 ) { cS.PostRefreshRun2__c = true; }
+            if ( iStep == 3 ) { cS.PostRefreshRun3__c = true; }
+            if ( iStep == 4 ) { cS.PostRefreshRun4__c = true; }
             upsert cS;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'setPostRefreshRunFlag' );
@@ -894,15 +923,21 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     @TestVisible
     private static void runPostSeedingCallouts() {
         try {
-            List<Account> accountRecord = [ SELECT Id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1 ];
+            List<Account> accountRecord = [
+                SELECT Id
+                FROM Account
+                WHERE NSP_AIMS_Client__c = '500'
+                LIMIT 1
+            ];
             if ( ( accountRecord != null )
-              && ( accountRecord.size() == 1 ) )
+                && ( accountRecord.size() == 1 )
+                )
             {
                 Map<String, String> refreshValMap = new Map<String, String>();
                 refreshValMap.put( 'NSP_Insperity_Account' , accountRecord[0].Id );
                 updateLabelsValues( refreshValMap );
             }
-        } catch (Exception e) {
+        } catch ( Exception e ) {
             NSP_PrepSandbox.handleException( e , 'runPostSeedingCallouts' );
         }
     }
@@ -912,7 +947,12 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     @TestVisible
     private static void runPostSeedingDML() {
         try {
-            List<pse__Region__c> regionRecord = [ SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1 ];
+            List<pse__Region__c> regionRecord = [
+                SELECT Id
+                FROM pse__Region__c
+                WHERE Name = 'United States'
+                LIMIT 1
+            ];
             if ( regionRecord != null && regionRecord.size() == 1 ) {
                 ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
                 projectCreationSettings.DefaultRegionId__c = regionRecord[0].Id;
@@ -1176,3 +1216,4 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
 }
+//
