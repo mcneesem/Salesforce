@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priced_Time_End__c</fullName>
+    <description>Date/Time when opportunity moved from the Renewal Status/Priced to the Administration Stage</description>
+    <encryptionScheme>None</encryptionScheme>
+    <label>Priced Time End</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>DateTime</type>
+</CustomField>
