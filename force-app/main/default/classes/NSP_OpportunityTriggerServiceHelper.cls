@@ -214,9 +214,6 @@ public without sharing class NSP_OpportunityTriggerServiceHelper {
     {
         try {
             List<Asset> assetList = new List<Asset>();
-            Id TimeAttAssetRecordType = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Time_Attendance' );
-            Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' );
-            Id TESBPSProjectRecordType = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
             if(!timeAttAssetMap.isEmpty()){
                 for(Id oppId:timeAttAssetMap.keyset() ){
                     Opportunity record = timeAttAssetMap.get(oppId);
@@ -226,7 +223,7 @@ public without sharing class NSP_OpportunityTriggerServiceHelper {
                                 record.Name ,
                                 oppId ,
                                 oppAccMap.get(oppId) ,
-                                TimeAttAssetRecordType ,
+                                NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Time_Attendance' ) ,
                                 NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ,
                                 NSP_ServiceConstants.CASE_TIME_ATTENDENCE ,
                                 NSP_ServiceConstants.WoWSAsset,
@@ -249,7 +246,7 @@ public without sharing class NSP_OpportunityTriggerServiceHelper {
                                 record.Name ,
                                 oppId ,
                                 oppAccMap.get(oppId) ,
-                                PermformanceAssetRecordType ,
+                                NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' ) ,
                                 assetStatus ,
                                 NSP_ServiceConstants.PERFORMANCE ,
                                 NSP_ServiceConstants.WoWSAsset,
