@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BT HRS and CL - This is a proactive communication sent to a new client to assist them in attracting top candidates. It will include client specific attachments.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Resources for Candidates (with 401k)</name>
+    <style>freeForm</style>
+    <subject>Information Needed for Candidate</subject>
+    <textOnly>{Attach appropriate Client BAAG/Client Contribution sheet/401(k) Plan Outline}
+
+Dear Client:
+
+I would like to share some helpful resources to help you attract the best candidates for growth at your company. Highlighting the benefits that are provided through the Insperity relationship will assist you in accomplishing this goal.
+
+I have attached several documents that you can provide potential candidates and have outlined information about each below.
+
+Benefits At A Glance Brochure: Provides a high-level overview of the benefits available to employees in the current coverage period.
+Employee Contribution Report: Provides information about benefits cost during the current coverage period.
+401(k) Plan Outline: Outlines eligibility requirements and other specific details for the 401(k) plan.
+
+Your Payroll Specialist can assist with priming the new employee's information into the Insperity Paperless Onboarding system.
+
+Insperity can also assist with the initial recruiting of candidates, employment screening, and background checks. I am happy to connect you to the Insperity Talent Acquisition Services team for more information.
+
+Thank you for trusting Insperity to serve your business.
+Sincerely,
+
+[Signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

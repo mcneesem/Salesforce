@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CL/BTHRS - Important information that should be sent to a client when a save attempt has failed and a termination is pending. BPS related information included and should be tailored based on the client's Insperity relationship.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Reactive-Term Information for Revolution Clients</name>
+    <style>freeForm</style>
+    <subject>Important Information Specific to your Company Termination with Insperity</subject>
+    <textOnly>Good [morning or afternoon] [Contact Name],
+
+&lt;FOR CLIENTS WHO ARE BEING TERMED BY INSPERITY, FOR EXAMPLE, FINANCIAL DEFAULT, DELETE THE FIRST AND LAST PARAGRAPHS. REMOVE THESE INSTRUCTIONS&gt;
+
+Although we are disappointed to lose you as an Insperity client, we respect the business decision you have made for [Client Company Name], and wanted to send you a personal note regarding how much we have enjoyed working with you. If there is anything that you need, please do not hesitate to contact your Insperity team. We are here to help you through the transition.
+
+Please review the following items and contact us if you have any questions or need assistance during this time:
+
+Upcoming Employee Mailings
+
+COBRA information will be mailed to the home address on file for each employee participating in the Insperity Group Health Plan and the Insperity Health Care FSA Plan.
+W-2s will be mailed to the home address on file of each employee unless electronic delivery was previously elected. Electronic delivery will be sent to the email address designated by the employee.
+Employees enrolled in the Insperity Welfare Benefits Plan (i.e., Cigna life, disability and/or personal accident insurance coverage) will receive information directly from Cigna on how to convert or port coverage, as applicable.
+Please encourage your employees to update their addresses in their Insperity Premier(TM) account to expedite the correct delivery of information.
+
+Employee Access
+
+All employees may access their personal information through Insperity Premier for 18 months following your company's HR 360 end date of [ENTER DATE].
+Refer to the attached documents labeled "Former Employee Access" and "After You Leave FAQ" for valuable information to share with your employees.
+If employees have questions or need assistance with accessing Insperity Premier, please direct them to the Insperity Contact Center at 866-715-3552, 7 a.m. to 7 p.m. Central time, Monday to Friday.
+&lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE AN INSPERITY 401(k) PRIOR TO EMAILING&gt; Employees who have a 401(k) account with Insperity will continue to have access to their account beyond 18 months through the Retirement Service Center(SM)  by logging in directly at retirement.insperity.com.
+&lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE AN INSPERITY 401(k) PRIOR TO EMAILING&gt;If employees have questions or need assistance with accessing the Retirement Service CenterSM, please direct them to the Insperity 401(k) Contact Center at 888-401-5273, 7 a.m. to 7 p.m. Central time, Monday to Friday.
+
+Benefits
+
+Employees currently enrolled in the Insperity Health Care FSA Plan will have until 3/31/20XX to submit claims incurred during the employee's coverage period.  Employees who want to continue Health Care FSA coverage after termination must elect COBRA.
+
+COBRA Fees
+
+If your company has any COBRA participants enrolled in Insperity Group Health Plan coverage as of the date of contract termination, or if any of your current employees (or their dependents) enroll in COBRA coverage under the Insperity Group Health Plan as a result of their termination of employment with Insperity, your company may be subject to additional fees relating to COBRA participation. You should review your Client Service Agreement (CSA) to determine what contractual obligations you may have, if any, regarding COBRA coverage in the event of the CSA termination. You will be contacted by Insperity if COBRA fees are applicable to your company.
+Insperity is legally required to offer COBRA coverage to any employee or dependent losing Insperity Group Health Plan coverage due to termination of employment, even if that employee or dependent is also eligible for group health plan coverage under a new group health plan you put in place once you leave Insperity.
+
+Employer Reporting
+
+Employer reporting capabilities will continue for 90 days from your contract termination date. It is recommended that you pull year-to-date reports for all customized reports you have prior to your termination date.
+After the 90th day following your termination date, please contact me or your payroll specialist to assist you with any information you may need.
+
+Insperity 401(k) Plan &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE AN INSPERITY 401(k) PRIOR TO EMAILING&gt;
+
+Employees participating in the Insperity 401(k) Plan will no longer be able to contribute or make loan payments to the Insperity 401(k) Plan after your company termination date.
+Employees will receive information about outstanding loans, if any, and may want to consider paying off outstanding balances to avoid loan default and taxation should plan assets not transfer to a new plan within 90 days after your company termination date.
+Employees should contact Insperity Retirement Services at 800.242.8893, ext. 4015, to discuss their options regarding assets in the Insperity 401(k) Plan.
+
+Insperity Customized 401(k) Plan (client-sponsored plan serviced by Insperity Retirement Services) &lt;PRIOR TO EMAILING: ADD THIS SECTION IF CLIENT HAS A CUSTOMIZED 401(K) PLAN (Plan ID in Defcon is 200000 series)&gt;
+
+You should already be working with your Retirement Services plan consultant regarding your 401(k) plan transition to a new provider. Please email cspservice@insperity.com if you have questions.
+Unless you have worked with your plan consultant to establish procedures for remitting contributions and loan payments to Insperity Retirement Services, contributions and loan payments will cease after your company termination date.
+Generally, Insperity does not provide 401(k) plan recordkeeping and administration for client-sponsored plans beyond your Insperity termination date.
+
+Insperity OrgPlus &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE ORGPLUS PRIOR TO EMAILING&gt;
+
+You will not have access to OrgPlus once your account is terminated. The data is removed 60 days after the termination date for OrgPlus Real Time.
+You can print your org chart by following the steps in the Printing your organizational chart instructions.
+You may keep your OrgPlus system independent of the HR 360 relationship, and your Customer Success Specialist will be happy to answer any questions you may have related to keeping OrgPlus.
+
+Insperity Time and Attendance &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE TIMESTAR PRIOR TO EMAILING&gt;
+
+You will have access to Time and Attendance for 90 days following your termination. A member of our Time and Attendance Technical Support Team will reach out to you with more information prior to your termination date.
+You can extract your system data by following the instructions in this Help Center article: Performing full Time and Attendance data exports (payroll and accrual data)
+
+Insperity Performance Management &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE PERFORMSMART PRIOR TO EMAILING&gt;
+
+You will have access to Performance Management until your termination, in which thereafter, only the Administrators will be able to access for 90 days.
+You can extract your system data before your termination date by following the Bulk printing reviews instructions, or you can export your data by contacting the support team at performsmartsupport@insperity.com or calling 877-222-0499 and submitting the request.
+
+Insperity Employment Screening &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE IES PRIOR TO EMAILING&gt;
+
+A member of the Insperity Employment Screening team will be reaching out to you shortly to discuss your options for downloading your background check results.
+You may continue your Employment Screening service independently of the Insperity HR 360 relationship. Your account must be transferred to the non-HR 360 screening platform, and pricing may differ. An Insperity Employment Screening representative will be happy to answer any questions you may have related to keeping employment screening.
+
+E-Verify through SimpleI9.com/ Insperity Employment Screening &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE IES EVERIFY PRIOR TO EMAILING&gt;
+
+For E-Verify conducted by Insperity Employment Screening through SimpleI9.com, you must determine if you will continue that service independently of the Insperity HR 360 relationship. If you wish to terminate this service, please notify the Insperity Employment Screening customer service team to have the account deactivated with E-Verify.
+If you wish to continue, you are responsible for submitting all I-9 forms and documentation copies for all new hires directly to SimpleI9.com for processing. An Insperity Employment Screening representative will be happy to answer any questions you may have regarding continuing or terminating this service.
+
+Insperity Recruiting Services &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE RECRUITING SERVICES PRIOR TO EMAILING&gt;
+
+We look forward to continuing to serve your hiring needs. A member of the Recruiting team will be reaching out to you shortly to discuss your options for continuing to utilize the full range of recruiting offerings through Insperity.
+Simply execute an updated Service Activation Agreement, which may reflect alternate pricing, to continue your access to your recruiting services team. Our Insperity Recruiting Consultant look forward to answering any questions you may have related to keeping recruiting services.
+
+Insperity Talent Connect &lt;REMOVE THIS SECTION IF CLIENT DOES NOT HAVE TALENT CONNECT (aka APPLICANT TRACKING SYSTEM) PRIOR TO EMAILING&gt;
+
+We look forward to continuing to serve your hiring needs. You may keep your Talent Connect system independent of the Insperity HR 360 relationship without interruption of service. Your account can be transferred to the non-HR 360 product offering simply by executing an updated Service Activation Agreement. Members of the Product Team will be happy to answer any questions you may have and will assist you with the transition.
+Talent Connect clients must provide a 30-day notice if they wish to terminate or keep this service. You can do so by sending an email to ITCinfo@insperity.com.
+A member of the Product Team will be reaching out to you shortly to discuss your options for extracting your data and transition best practices depending on your decision about the service.
+
+After leaving the Insperity relationship, there are many employer-related responsibilities you will need to review. Attached you will find a partial checklist of items for your consideration.
+
+We value you and welcome your feedback regarding our partnership and how Insperity might further improve its services. If at any time you feel Insperity's HR 360 service or any of our standalone Business Performance Solutions may be of interest to you, please don't hesitate to reach out to us.
+
+Kind regards,
+
+[Signature]</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
