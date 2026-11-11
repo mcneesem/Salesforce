@@ -9,14 +9,12 @@ public with sharing class CreateGLTransactionsController {
             UserInfo.getUserId()
         );
         //validate Id type
-        if ( 
-            ( glPeriodId != null )
+        if ( ( glPeriodId != null )
             && ( Id.valueOf( glPeriodId ).getSObjectType() == GL_Period__c.getSObjectType() )
             && ( hasPermission || Test.isRunningTest() )
-        )
+            )
         {
-            List<id> financePeriods = new list<id>();
-            GL_Period__c glPeriodRecord = [
+            List<GL_Period__c> glPeriodRecords = [
                 SELECT
                     Id ,
                     Financial_Period_Accounting_10__c ,
@@ -29,27 +27,32 @@ public with sharing class CreateGLTransactionsController {
                 WHERE ( Id = :glPeriodId )
                 LIMIT 1
             ];
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Accounting_10__c)){
-                financePeriods.add(glPeriodRecord.Financial_Period_Accounting_10__c);
+            GL_Period__c glPeriodRecord = null;
+            if ( !glPeriodRecords.isEmpty() ) {
+                glPeriodRecord = glPeriodRecords[0];
             }
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Accounting_29__c)){
-                financePeriods.add(glPeriodRecord.Financial_Period_Accounting_29__c);
+            List<Id> financePeriods = new list<Id>();
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Accounting_10__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Accounting_10__c );
             }
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Accounting_3__c)){
-                financePeriods.add(glPeriodRecord.Financial_Period_Accounting_3__c);
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Accounting_29__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Accounting_29__c );
             }
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Revenue_10__c)){
-                financePeriods.add(glPeriodRecord.Financial_Period_Revenue_10__c);
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Accounting_3__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Accounting_3__c );
             }
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Revenue_29__c )){
-                financePeriods.add(glPeriodRecord.Financial_Period_Revenue_29__c );
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Revenue_10__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Revenue_10__c );
             }
-            if(String.isNotBlank(glPeriodRecord.Financial_Period_Revenue_3__c)){
-                financePeriods.add(glPeriodRecord.Financial_Period_Revenue_3__c);
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Revenue_29__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Revenue_29__c );
+            }
+            if ( String.isNotBlank( glPeriodRecord.Financial_Period_Revenue_3__c ) ) {
+                financePeriods.add( glPeriodRecord.Financial_Period_Revenue_3__c );
             }
             //call batch class and pass the list financePeriods
-            if(!financePeriods.isEmpty()){
-            	Database.executeBatch(
+            if ( !financePeriods.isEmpty() ) {
+                Database.executeBatch(
                     new CreateGLTransactionsBatch(
                         financePeriods ,
                         glPeriodId ,
@@ -57,9 +60,11 @@ public with sharing class CreateGLTransactionsController {
                     ),
                     CreateGLTransactionsBatch.batchSize
                 );
-            }            
-        }else{
-            throw new AuraHandledException('Invalid Operation');
+            }
+        } else {
+            throw new AuraHandledException( 'Invalid Operation' );
         }
     }
+
 }
+//
