@@ -6,7 +6,7 @@ private class NSP_AssetFLSACaseCreationBatchTest {
     //
 
     @isTest
-    private static void testAssetFLSACaseCreationBatch() {
+    private static void testDeprecated() {
         NSP_AssetFLSACaseCreationBatch deprecated = new NSP_AssetFLSACaseCreationBatch();
     }
 
