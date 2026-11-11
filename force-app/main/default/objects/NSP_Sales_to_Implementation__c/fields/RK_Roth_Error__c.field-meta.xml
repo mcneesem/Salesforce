@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RK_Roth_Error__c</fullName>
+    <description>Text box to elaborate on the errors found Roth Transaction from Record Keeper</description>
+    <encryptionScheme>None</encryptionScheme>
+    <label>RK Roth Error</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

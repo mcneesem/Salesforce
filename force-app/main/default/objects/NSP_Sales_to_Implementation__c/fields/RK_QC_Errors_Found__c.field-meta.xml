@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RK_QC_Errors_Found__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check box to indicate if errors were found in the quality review of transactions</description>
+    <label>RK QC Errors Found</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Holdings_Appr_d_In_Kind__c</fullName>
+    <description>Confirmation that the In kind has been vetted and approved to transfer</description>
+    <label>Current Holdings Appr&apos;d (In Kind)</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>NA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
