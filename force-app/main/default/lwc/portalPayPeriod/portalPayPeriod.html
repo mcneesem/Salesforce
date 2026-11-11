@@ -23,19 +23,16 @@
                             <template lwc:if={hasFirstPayPeriod}>
                                 <lightning-formatted-date-time
                                     value={firstPayPeriodStart}
-                                    month="long"
+                                    month="short"
                                     day="2-digit"
+                                    year="numeric"
                                     time-zone="UTC"
                                     >
                                 </lightning-formatted-date-time>&nbsp;-&nbsp;
                                 <lightning-formatted-date-time
                                     value={firstPayPeriodEnd}
+                                    month="short"
                                     day="2-digit"
-                                    time-zone="UTC"
-                                    >
-                                </lightning-formatted-date-time>,&nbsp;
-                                <lightning-formatted-date-time
-                                    value={firstPayPeriodEnd}
                                     year="numeric"
                                     time-zone="UTC"
                                     >
