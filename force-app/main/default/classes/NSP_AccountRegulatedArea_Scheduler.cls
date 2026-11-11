@@ -4,6 +4,7 @@ public with sharing class NSP_AccountRegulatedArea_Scheduler {
     //
     // DEPRECATED
     //
+
     public NSP_AccountRegulatedArea_Scheduler() {
     }
 
