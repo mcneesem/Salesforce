@@ -1,5 +1,6 @@
-public class NSP_PayrollTriggerHelper {
-    // test w/ NSP_PayrollTriggerHelperTest (83%)
+// intentionally `without sharing` to preserve default sharing at api version 52...
+public without sharing class NSP_PayrollTriggerHelper {
+    // test w/ NSP_PayrollTriggerHelperTest (85%)
 
     public static list<NSP_Payroll_Data_Sheet_Event__e> payrollDataSheetEventListToBeInserted = new list <NSP_Payroll_Data_Sheet_Event__e>();
     public static final Id WOASSETRECTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -194,74 +195,200 @@ public class NSP_PayrollTriggerHelper {
     }
 
     @AuraEnabled
-    public Static String deepCloneRec(String recordId, string subClientId){
+    public Static String deepCloneRec( String recordId , String subClientId ) {
+        String response = null;
         try {
-            List<NSP_Related_Account__c> relatedAccounts = new List<NSP_Related_Account__c>();
-            List<Additional_Payroll_Contact__c> additionalPayrollContacts = new List<Additional_Payroll_Contact__c>();
-            List<ContentDocumentLink> contentDocumentLinks = new List<contentDocumentLink>();
-
-            NSP_Payroll__c Payroll = [SELECT Id, Most_Recent_Pay_Period_End_Date__c, NSP_Additional_Report_Information__c, NSP_Additional_information__c,
-            NSP_Additonal_Processing_Instructions__c, NSP_Ancillary__c, NSP_Asset__c, NSP_BackUpPayrollContactBest_Time_Of_Day__c,
-            NSP_BackUpPayroll_Con_Located_Outside_US__c, NSP_BackUpPayroll_Contact_Contact_Method__c, NSP_BackUp_Payroll_Con_Internatiol_Phone__c,
-            NSP_Union__c,
-            NSP_Back_Up_Payroll_Contact__c,NSP_Backup_Payroll_Contact_SCC__c, NSP_Beginning_Date__c, NSP_Benefit_Classing__c, NSP_Certified_Reports__c, NSP_Client_Controlled_Rates__c,
-            NSP_Client_Sponsored_Plans__c, NSP_Client_System_Additional_Information__c, NSP_Client_Unique_Additional_Information__c,
-            NSP_Code_and_Code_Name__c, NSP_Complexity_Factor__c, NSP_Custom_Earnings_Code__c, NSP_Dental__c, NSP_Department__c, NSP_Departments__c,
-            NSP_Dependent_Care__c, NSP_Ending_Date__c, NSP_Enter_of_Days_In_Arrears__c, NSP_FSA__c, NSP_FTP_File_Type__c, NSP_FTP__c, NSP_First_Pay_Date__c,
-            NSP_Fringe_Details__c, NSP_Fringe__c, NSP_GL_GA_Report__c, NSP_Government_Contractor__c, NSP_HR_Con_Located_Outside_United_States__c,
-            NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c, NSP_HR_Contact_International_Phone__c,
-            NSP_HR_Contact_Methods__c, NSP_HR_Contact__c, NSP_HSA__c, NSP_IRR__c, NSP_Job_Cost__c,
-            NSP_Listof_reports_received_with_payroll__c, NSP_Medical__c, NSP_Most_Recent_Pay_Date__c, NSP_Most_Recent_Pay_Period__c, NSP_Next_Pay_Date__c,
-            NSP_Non_Taxable_Cell_Phone__c, NSP_Note__c, NSP_Number_of_WSEE_FT__c, NSP_Number_of_WSEE_PT__c, NSP_Number_of_WSEE_Seasonal__c,
-            NSP_ORK_Upload_CheckBox__c, NSP_ORK_Upload__c, NSP_On_site_Supervisor_Contact_Method__c, NSP_On_site_Supervisor__c, NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c,
-            NSP_OnsiteSupervisor_International_Phone__c, NSP_Onsite_Super_Located_Outside_Unite__c, NSP_PTO_Accrual__c, NSP_Pay_Arrears__c, NSP_Pay_Current__c,
-            NSP_Pay_Date__c, NSP_Pay_Day__c, NSP_Pay_Frequency__c, NSP_Pay_Type__c, NSP_Payroll_Data_Sheet_Name__c, NSP_Payroll_ProcessingSpecialInstruction__c,
-            NSP_Payroll_Submittal_Type__c, NSP_Prevailing_Wage__c, NSP_PrimaryPayrollConta_International_Ph__c, NSP_PrimaryPayrollContc_Best_Time_Of_Day__c,
-            NSP_Primary_Payroll_Con_Located_Outside__c, NSP_Primary_Payroll_Contact_Methods__c, NSP_Primary_Payroll_Contact__c, NSP_RRP__c, NSP_Received_Date__c,
-            NSP_Reporting_Job_Cost__c, NSP_Return_to_client_deductions__c, NSP_SEO_Client__c, NSP_Seasonal_Employer__c, NSP_Shift_Differential__c, NSP_Ship_Date__c,
-            NSP_States_of_Operation__c, NSP_Sub_Client_Name__c, NSP_Sub_Client_Number__c, NSP_System_being_used_if_known__c, NSP_Taxable_Reimbursements__c,
-            NSP_Tips__c, NSP_Union_Employee__c, NSP_Vision__c, NSP_Work_Week__c, NSP_Worksheet_Type__c, XML_Type__c, User__c, NSP_Approvers__c, NSP_Union_Dues__c,
-            NSP_Sub_Client__c, NSP_Sub_Client_Name__r.NSP_Sub_Client__c, NSP_Count_of_Payroll_Calendar__c FROM NSP_Payroll__c WHERE Id =: recordId];
-
-            NSP_Payroll__c tempPayroll = Payroll.clone(false,true);
-            tempPayroll.NSP_Sub_Client_Name__c = subClientId;
-            insert tempPayroll;
-
-            for(NSP_Related_Account__c existingRelatedAcc : [SELECT Id, NSP_Payroll_Data_Sheet__c, NSP_Account__c, NSP_AIMS_Client_Name__c,
-                                                             NSP_AIMS_Client__c FROM NSP_Related_Account__c WHERE NSP_Payroll_Data_Sheet__c =: Payroll.Id]){
-                                                                 NSP_Related_Account__c tempExistingRelatedAcc = existingRelatedAcc.clone(false,true);
-                                                                 tempExistingRelatedAcc.NSP_Payroll_Data_Sheet__c = tempPayroll.Id;
-                                                                 tempExistingRelatedAcc.NSP_Account__c = existingRelatedAcc.NSP_Account__c;
-                                                                 relatedAccounts.add(tempExistingRelatedAcc);
-                                                             }
-            if(!relatedAccounts.isEmpty()) {
-                insert relatedAccounts;
+            List<NSP_Payroll__c> payrolls = [
+                SELECT
+                    Id ,
+                    Most_Recent_Pay_Period_End_Date__c ,
+                    NSP_Additional_Report_Information__c ,
+                    NSP_Additional_information__c ,
+                    NSP_Additonal_Processing_Instructions__c ,
+                    NSP_Ancillary__c ,
+                    NSP_Asset__c ,
+                    NSP_BackUpPayrollContactBest_Time_Of_Day__c ,
+                    NSP_BackUpPayroll_Con_Located_Outside_US__c ,
+                    NSP_BackUpPayroll_Contact_Contact_Method__c ,
+                    NSP_BackUp_Payroll_Con_Internatiol_Phone__c ,
+                    NSP_Union__c ,
+                    NSP_Back_Up_Payroll_Contact__c ,
+                    NSP_Backup_Payroll_Contact_SCC__c ,
+                    NSP_Beginning_Date__c ,
+                    NSP_Benefit_Classing__c ,
+                    NSP_Certified_Reports__c ,
+                    NSP_Client_Controlled_Rates__c ,
+                    NSP_Client_Sponsored_Plans__c ,
+                    NSP_Client_System_Additional_Information__c ,
+                    NSP_Client_Unique_Additional_Information__c ,
+                    NSP_Code_and_Code_Name__c ,
+                    NSP_Complexity_Factor__c ,
+                    NSP_Custom_Earnings_Code__c ,
+                    NSP_Dental__c ,
+                    NSP_Department__c ,
+                    NSP_Departments__c ,
+                    NSP_Dependent_Care__c ,
+                    NSP_Ending_Date__c ,
+                    NSP_Enter_of_Days_In_Arrears__c ,
+                    NSP_FSA__c ,
+                    NSP_FTP_File_Type__c ,
+                    NSP_FTP__c ,
+                    NSP_First_Pay_Date__c ,
+                    NSP_Fringe_Details__c ,
+                    NSP_Fringe__c ,
+                    NSP_GL_GA_Report__c ,
+                    NSP_Government_Contractor__c ,
+                    NSP_HR_Con_Located_Outside_United_States__c ,
+                    NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c ,
+                    NSP_HR_Contact_International_Phone__c ,
+                    NSP_HR_Contact_Methods__c ,
+                    NSP_HR_Contact__c ,
+                    NSP_HSA__c ,
+                    NSP_IRR__c ,
+                    NSP_Job_Cost__c ,
+                    NSP_Listof_reports_received_with_payroll__c ,
+                    NSP_Medical__c ,
+                    NSP_Most_Recent_Pay_Date__c ,
+                    NSP_Most_Recent_Pay_Period__c ,
+                    NSP_Next_Pay_Date__c ,
+                    NSP_Non_Taxable_Cell_Phone__c ,
+                    NSP_Note__c ,
+                    NSP_Number_of_WSEE_FT__c ,
+                    NSP_Number_of_WSEE_PT__c ,
+                    NSP_Number_of_WSEE_Seasonal__c ,
+                    NSP_ORK_Upload_CheckBox__c ,
+                    NSP_ORK_Upload__c ,
+                    NSP_On_site_Supervisor_Contact_Method__c ,
+                    NSP_On_site_Supervisor__c ,
+                    NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c ,
+                    NSP_OnsiteSupervisor_International_Phone__c ,
+                    NSP_Onsite_Super_Located_Outside_Unite__c ,
+                    NSP_PTO_Accrual__c ,
+                    NSP_Pay_Arrears__c ,
+                    NSP_Pay_Current__c ,
+                    NSP_Pay_Date__c ,
+                    NSP_Pay_Day__c ,
+                    NSP_Pay_Frequency__c ,
+                    NSP_Pay_Type__c ,
+                    NSP_Payroll_Data_Sheet_Name__c ,
+                    NSP_Payroll_ProcessingSpecialInstruction__c ,
+                    NSP_Payroll_Submittal_Type__c ,
+                    NSP_Prevailing_Wage__c ,
+                    NSP_PrimaryPayrollConta_International_Ph__c ,
+                    NSP_PrimaryPayrollContc_Best_Time_Of_Day__c ,
+                    NSP_Primary_Payroll_Con_Located_Outside__c ,
+                    NSP_Primary_Payroll_Contact_Methods__c ,
+                    NSP_Primary_Payroll_Contact__c ,
+                    NSP_RRP__c ,
+                    NSP_Received_Date__c ,
+                    NSP_Reporting_Job_Cost__c ,
+                    NSP_Return_to_client_deductions__c ,
+                    NSP_SEO_Client__c ,
+                    NSP_Seasonal_Employer__c ,
+                    NSP_Shift_Differential__c ,
+                    NSP_Ship_Date__c ,
+                    NSP_States_of_Operation__c ,
+                    NSP_Sub_Client_Name__c ,
+                    NSP_Sub_Client_Number__c ,
+                    NSP_System_being_used_if_known__c ,
+                    NSP_Taxable_Reimbursements__c ,
+                    NSP_Tips__c ,
+                    NSP_Union_Employee__c ,
+                    NSP_Vision__c ,
+                    NSP_Work_Week__c ,
+                    NSP_Worksheet_Type__c ,
+                    XML_Type__c ,
+                    User__c ,
+                    NSP_Approvers__c ,
+                    NSP_Union_Dues__c ,
+                    NSP_Sub_Client__c ,
+                    NSP_Sub_Client_Name__r.NSP_Sub_Client__c ,
+                    NSP_Count_of_Payroll_Calendar__c
+                FROM NSP_Payroll__c
+                WHERE ( Id = :recordId )
+            ];
+            //
+            NSP_Payroll__c payroll = null;
+            if ( !payrolls?.isEmpty() ) {
+                payroll = payrolls[0];
             }
-            for(Additional_Payroll_Contact__c existingPayrollCon : [SELECT Id, Payroll__c, Contact__c, Contact_Type__c, NSP_Contact_Cell__c, NSP_Contact_Email__c,
-                                                                    NSP_Contact_International_Phone__c, NSP_Contact_Office_Phone__c, NSP_Contact_Outside_US__c,
-                                                                    NSP_Contact_Time_to_Reach__c FROM Additional_Payroll_Contact__c WHERE Payroll__c =: Payroll.Id]){
-                                                                        Additional_Payroll_Contact__c tempExistingPayrollCon = existingPayrollCon.clone(false,true);
-                                                                        tempExistingPayrollCon.Payroll__c = tempPayroll.Id;
-                                                                        tempExistingPayrollCon.Contact__c = existingPayrollCon.Contact__c;
-                                                                        additionalPayrollContacts.add(tempExistingPayrollCon);
-                                                                    }
-            if(!additionalPayrollContacts.isEmpty()) {
-                insert additionalPayrollContacts;
+            NSP_Payroll__c tempPayroll = null;
+            if ( payroll != null ) {
+                tempPayroll = payroll.clone( false , true );
+                tempPayroll.NSP_Sub_Client_Name__c = subClientId;
+                insert tempPayroll;
             }
-
-            for (ContentDocumentLink existingContentDocumentLink : [SELECT ContentDocumentId, LinkedEntityId FROM ContentDocumentLink WHERE LinkedEntityId =: Payroll.Id]){
-                ContentDocumentLink tempContentDocumentLink = existingContentDocumentLink.clone(false,true);
-                tempContentDocumentLink.LinkedEntityId = tempPayroll.Id;
-                contentDocumentLinks.add(tempContentDocumentLink);
+            //
+            if ( ( payroll != null ) && ( tempPayroll != null ) ) {
+                List<NSP_Related_Account__c> relatedAccounts = new List<NSP_Related_Account__c>();
+                for ( NSP_Related_Account__c existingRelatedAcc : [
+                            SELECT
+                                Id ,
+                                NSP_Payroll_Data_Sheet__c ,
+                                NSP_Account__c ,
+                                NSP_AIMS_Client_Name__c ,
+                                NSP_AIMS_Client__c
+                            FROM NSP_Related_Account__c
+                            WHERE ( NSP_Payroll_Data_Sheet__c = :payroll.Id )
+                        ]
+                    )
+                {
+                    NSP_Related_Account__c tempExistingRelatedAcc = existingRelatedAcc.clone( false , true );
+                    tempExistingRelatedAcc.NSP_Payroll_Data_Sheet__c = tempPayroll.Id;
+                    tempExistingRelatedAcc.NSP_Account__c = existingRelatedAcc.NSP_Account__c;
+                    relatedAccounts.add(tempExistingRelatedAcc);
+                }
+                if ( !relatedAccounts.isEmpty() ) {
+                    insert relatedAccounts;
+                }
+                //
+                List<Additional_Payroll_Contact__c> additionalPayrollContacts = new List<Additional_Payroll_Contact__c>();
+                for ( Additional_Payroll_Contact__c existingPayrollCon : [
+                            SELECT
+                                Id ,
+                                Payroll__c ,
+                                Contact__c ,
+                                Contact_Type__c ,
+                                NSP_Contact_Cell__c ,
+                                NSP_Contact_Email__c ,
+                                NSP_Contact_International_Phone__c ,
+                                NSP_Contact_Office_Phone__c,
+                                NSP_Contact_Outside_US__c ,
+                                NSP_Contact_Time_to_Reach__c
+                            FROM Additional_Payroll_Contact__c
+                            WHERE ( Payroll__c = :payroll.Id )
+                        ]
+                    )
+                {
+                    Additional_Payroll_Contact__c tempExistingPayrollCon = existingPayrollCon.clone( false , true );
+                    tempExistingPayrollCon.Payroll__c = tempPayroll.Id;
+                    tempExistingPayrollCon.Contact__c = existingPayrollCon.Contact__c;
+                    additionalPayrollContacts.add(tempExistingPayrollCon);
+                }
+                if ( !additionalPayrollContacts.isEmpty() ) {
+                    insert additionalPayrollContacts;
+                }
+                //
+                List<ContentDocumentLink> contentDocumentLinks = new List<contentDocumentLink>();
+                for ( ContentDocumentLink existingContentDocumentLink : [
+                            SELECT ContentDocumentId , LinkedEntityId
+                            FROM ContentDocumentLink
+                            WHERE ( LinkedEntityId = :payroll.Id )
+                        ]
+                    )
+                {
+                    ContentDocumentLink tempContentDocumentLink = existingContentDocumentLink.clone( false , true );
+                    tempContentDocumentLink.LinkedEntityId = tempPayroll.Id;
+                    contentDocumentLinks.add( tempContentDocumentLink );
+                }
+                if ( !contentDocumentLinks.isEmpty() ) {
+                    insert contentDocumentLinks;
+                }
+                response = tempPayroll.Id;
             }
-            if(!contentDocumentLinks.isEmpty()) {
-                insert contentDocumentLinks;
-            }
-            return tempPayroll.Id;
-        } catch(DmlException e) {
-
+        } catch ( DmlException e ) {
         }
-        return null;
+        return response;
     }
 
     //
