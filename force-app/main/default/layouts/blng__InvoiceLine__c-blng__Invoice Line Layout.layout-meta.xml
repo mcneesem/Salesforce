@@ -39,6 +39,14 @@
                 <behavior>Edit</behavior>
                 <field>Invoice_Run_Completed__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Description_To_Store_Internal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Delta_Quantity__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

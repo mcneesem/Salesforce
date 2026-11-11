@@ -3343,7 +3343,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.Delta_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.Free_Periods_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.NSP_Description_To_Store_Internal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3959,6 +3969,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__InvoiceLine__c.Delta_Unit_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Delta_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.NSP_Description_To_Store_Internal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
