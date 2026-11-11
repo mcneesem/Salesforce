@@ -111,10 +111,10 @@
           </lightning-input-field>
 
           <lightning-input-field disabled
-            lwc:if={visibility.X2nd_Pay_Date__c}
-            value={fieldValue.X2nd_Pay_Date__c}
-            field-name="X2nd_Pay_Date__c"
-            data-name="X2nd_Pay_Date__c"
+            lwc:if={visibility.X1st_Pay_Date__c}
+            value={fieldValue.X1st_Pay_Date__c}
+            field-name="X1st_Pay_Date__c"
+            data-name="X1st_Pay_Date__c"
            class="slds-form-element__legend">
           </lightning-input-field>
 
@@ -291,7 +291,7 @@
 
             <lightning-formatted-text
               if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_CALENDAR}
-              value="If hired midway through the year, is a prorated accrual earned?"
+              value="If hired midway through the year or pay period, is a prorated accrual earned?"
               class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-formatted-text>
 
@@ -355,6 +355,22 @@
               value={fieldValue.NSP_timeaccrue_underplan_aimsanniversary__c}
               class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
               >
+            </lightning-input-field>
+
+            <lightning-formatted-text
+              lwc:if={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_ANNIVERSARY}
+              value="If hired midway through the year or pay period, is a prorated accrual earned?"
+              class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
+            </lightning-formatted-text>
+
+            <lightning-input-field disabled
+              lwc:if={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_ANNIVERSARY}
+              variant="label-hidden"
+              data-visibility-name="NSP_If_hired_midway_through_pay_period__c_AIMS_ANNIVERSARY"
+              value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
+              field-name="NSP_If_hired_midway_through_pay_period__c"
+              data-name="NSP_If_hired_midway_through_pay_period__c"
+              class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-input-field>
 
             <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY}>
@@ -430,7 +446,7 @@
 
             <lightning-formatted-text
               if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_FISCALYEAR}
-              value="If hired midway through the pay period, is a prorated accrual earned?"
+              value="If hired midway through the year or pay period, is a prorated accrual earned?"
               class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-formatted-text>
 

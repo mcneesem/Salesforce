@@ -28,6 +28,187 @@
         </assignmentItems>
     </assignments>
     <decisions>
+        <name>Check_Accrual_Level_Changes_AIMS</name>
+        <label>Check Accrual Level Changes - AIMS</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Level_Changes_Populated</name>
+            <conditionLogic>1 AND 6 AND (NOT(4) OR 2) AND (NOT(5) OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AIMSProrationRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AIMSRatesRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AIMSActiveAccrualMethod</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_for_Plan_Year</targetReference>
+            </connector>
+            <label>Accrual Level Changes Populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Accrual_Level_Changes_ITA</name>
+        <label>Check Accrual Level Changes - ITA</label>
+        <locationX>1634</locationX>
+        <locationY>611</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Level_Changes_Populate</name>
+            <conditionLogic>1 AND 6 AND (NOT(4) OR 2) AND (NOT(5) OR (3 AND 7))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ITAProrationRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ITARatesRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ITAActiveAccrualMethod</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Accrual_Period_Limit__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Check_for_Plan_Year</targetReference>
+            </connector>
+            <label>Accrual Level Changes Populate</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Accrual_Levels</name>
+        <label>Check Accrual Levels</label>
+        <locationX>3031</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Accrual_Levels_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Accrual_Levels__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Client_Information_Fields</targetReference>
+            </connector>
+            <label>Accrual Levels Populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_AIMSApprovalCondition</name>
+        <label>Check AIMSApprovalCondition</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AIMS_Approval_Conditions_Met</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AIMSApprovalCondition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Policy_Information</targetReference>
+            </connector>
+            <label>AIMS Approval Conditions Met</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_for_Plan_Year</name>
         <label>AIMS Check for Plan Year</label>
         <locationX>50</locationX>
@@ -39,7 +220,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Calender_Year</name>
-            <conditionLogic>2 AND 3 AND (((1 AND 4 )AND ((NOT(5) AND 9) OR (10 AND 11))) OR (6 AND 7 AND 8))</conditionLogic>
+            <conditionLogic>2 AND ((1 AND ((NOT(3) AND 4) OR (3 AND 5))) OR NOT(1))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_time_accrue_under_plan_aims_calendar__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -55,20 +236,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
@@ -76,38 +243,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_time_accrue_under_plan_aims_calendar__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_time_accrue_under_plan_aims_calendar__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Client Specific Pay Codes</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -124,26 +263,12 @@
         </rules>
         <rules>
             <name>Anniversary_Year</name>
-            <conditionLogic>5 AND 2 AND ((6 AND 7) OR (1 AND 3 AND ((4 AND 8 AND 9) OR (8 AND NOT(9) AND NOT(4)))))</conditionLogic>
+            <conditionLogic>3 AND (NOT(1) OR (1 AND 4 AND ((2 AND 5) OR (NOT(5) AND NOT(2)))))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -158,20 +283,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Anniversary Year</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_timeaccrue_underplan_aimsanniversary__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -195,7 +306,7 @@
         </rules>
         <rules>
             <name>ClientsFiscalYear</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND ((9 AND 8 AND 7) OR(5 AND ((6 AND NOT(10)) OR ( 10 AND 11))))</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND (NOT(4) OR (4 AND ((5 AND NOT(6)) OR (6 AND 7))))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -218,13 +329,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -233,27 +337,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -277,6 +360,32 @@
                 <targetReference>Update_Submit_For_Approval_to_True</targetReference>
             </connector>
             <label>Client’s Fiscal Year</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Policy_Accrual_Supporting_Documentation</name>
+        <label>Check Policy/Accrual Supporting Documentation</label>
+        <locationX>2558</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Supporting_Documentation_Attached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_Type</targetReference>
+            </connector>
+            <label>Supporting Documentation Attached</label>
         </rules>
     </decisions>
     <decisions>
@@ -372,15 +481,8 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Copy_1_of_Calender_Year</name>
-            <conditionLogic>(1 AND 2 AND 3 ) OR (2 AND 4 AND 5 AND 3) OR (2 AND 6 AND 7 AND 3) OR (2 AND 7 AND 8 AND 9 AND 3) OR (2 AND 10 AND 11 AND 12 AND 3 AND 15 AND NOT(13)) OR (2 AND 10 AND 12 AND 13 AND 14 AND 3 AND 15)</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrue_under_plan_cal_year__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>First of Month: Accrual is added on the first day of each month</stringValue>
-                </rightValue>
-            </conditions>
+            <name>ITA_Calendar_Standard_Methods</name>
+            <conditionLogic>1 AND (2 OR (3 AND 4) OR 5 OR (6 AND 7))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -389,10 +491,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>$Record.NSP_Accrue_under_plan_cal_year__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>First of Month: Accrual is added on the first day of each month</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -417,13 +519,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_Accrue_under_plan_cal_year__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -437,6 +532,21 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Policy_Details</targetReference>
+            </connector>
+            <label>ITA Calendar – Standard Methods</label>
+        </rules>
+        <rules>
+            <name>ITA_Calendar_Hours_Worked</name>
+            <conditionLogic>1 AND 2 AND ((3 AND NOT(4)) OR (4 AND 5))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Calendar Year (1/1 to 12/31)</stringValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Accrue_under_plan_cal_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -446,13 +556,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrual_Period_Limit__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -472,21 +575,14 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Policy_Details</targetReference>
             </connector>
-            <label>ITA Calender Year?</label>
+            <label>ITA Calendar – Hours Worked</label>
         </rules>
         <rules>
-            <name>Copy_1_of_Anniversary_Year</name>
-            <conditionLogic>(1 AND 4 AND (2 OR 3)) OR(1 AND 4 AND 5 AND 6) OR (1 AND 4 AND 7 AND 6 AND 8) OR (1 AND 4 AND 9 AND 15 AND NOT(10) AND 11 AND 14) OR (1 AND 4 AND 9 AND 15 AND 12 AND 11 AND 13 AND 14)</conditionLogic>
+            <name>ITA_Anniversary_Year</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR (5 AND 6) OR (7 AND 8))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -509,24 +605,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_time_accrue_under_plan_anniv_year__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>First of Quarter: Accrual is added on the hire date at the beginning of each quarter</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -551,41 +633,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Client Specific Pay Codes</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrual_Period_Limit__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Client Specific Pay Codes</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_List_pay_codes__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>ITAApprovalCondition</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -598,8 +645,8 @@
             <label>ITA Anniversary Year</label>
         </rules>
         <rules>
-            <name>Copy_1_of_Client_s_Fiscal_Year</name>
-            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5) OR (1 AND 2 AND 3 AND 4 AND 7 AND 8) OR (1 AND 2 AND 3 AND 4 AND 6 AND 17) OR (1 AND 2 AND 3 AND 4 AND 9 AND 7 AND 10) OR (1 AND 2 AND 3 AND 4 AND 11 AND NOT(12) AND 13 AND 16 AND 18) OR (1 AND 2 AND 3 AND 4 AND 11 AND 14 AND 15 AND 13 AND 16 AND 18)</conditionLogic>
+            <name>ITA_Client_s_Fiscal_Year_Standard_Methods</name>
+            <conditionLogic>1 AND 2 AND 3 AND (4 OR (5 AND 6) OR 7 OR (8 AND 9))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -622,13 +669,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_When_do_accrual_level_changes_happen__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_time_accrue_under_plan_fiscal_year__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -643,7 +683,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_If_hired_midway_through_pay_period__c</leftValueReference>
+                <leftValueReference>$Record.NSP_Is_there_a_frontloaded_proration__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -670,25 +710,40 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Policy_Details</targetReference>
+            </connector>
+            <label>ITA Client&apos;s Fiscal Year– Standard Methods</label>
+        </rules>
+        <rules>
+            <name>ITA_Client_s_Fiscal_Year_Hours_Worked</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 7 AND (NOT(5) OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_What_is_the_plan_year__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Clients Fiscal Year</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Month__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Day__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_time_accrue_under_plan_fiscal_year__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Hours Worked: Accrual is added based on actual hours worked</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Client Specific Pay Codes</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrual_Period_Limit__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -706,20 +761,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Accrual_rates_are_based_Input_Number__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Is_there_a_frontloaded_proration__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.NSP_Hours_paid_for_earning_accruals__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -729,7 +770,7 @@
             <connector>
                 <targetReference>Policy_Details</targetReference>
             </connector>
-            <label>ITA Client’s Fiscal Year</label>
+            <label>ITA Client&apos;s Fiscal Year – Hours Worked.</label>
         </rules>
     </decisions>
     <decisions>
@@ -744,7 +785,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Accrual</name>
-            <conditionLogic>(1 AND 2 AND (3 OR (4 AND 6 AND (5 AND (7 OR (8 AND 9))))) AND 10 AND 11)</conditionLogic>
+            <conditionLogic>1 AND 2 AND (3 OR (4 AND 5 AND 6 AND (7 OR (8 AND 9)))) AND 10 AND 11</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Delay_in_the_Accrual_start_time__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -968,7 +1009,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.X2nd_Pay_Date__c</leftValueReference>
+                <leftValueReference>$Record.X1st_Pay_Date__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -982,7 +1023,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_for_Plan_Year</targetReference>
+                <targetReference>Check_Accrual_Level_Changes_AIMS</targetReference>
             </connector>
             <label>Policy Detail</label>
         </rules>
@@ -1120,7 +1161,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Check_for_Plan_Year</targetReference>
+                <targetReference>Check_Accrual_Level_Changes_ITA</targetReference>
             </connector>
             <label>True</label>
         </rules>
@@ -1144,22 +1185,8 @@
                     <stringValue>AIMS</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>AIMSApprovalCondition</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Policy_Information</targetReference>
+                <targetReference>Check_AIMSApprovalCondition</targetReference>
             </connector>
             <label>Check for AIMS?</label>
         </rules>
@@ -1173,22 +1200,8 @@
                     <stringValue>ITA</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Policy_Accrual_supporting_doc__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Accrual_Levels__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Client_Information_Fields</targetReference>
+                <targetReference>Check_Accrual_Levels</targetReference>
             </connector>
             <label>Check for ITA?</label>
         </rules>
@@ -1242,6 +1255,24 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
+        <name>AIMSActiveAccrualMethod</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+    TEXT({!$Record.NSP_What_is_the_plan_year__c}),
+
+    &quot;Calendar Year (1/1 to 12/31)&quot;,
+    TEXT({!$Record.NSP_time_accrue_under_plan_aims_calendar__c}),
+
+    &quot;Anniversary Year&quot;,
+    TEXT({!$Record.NSP_timeaccrue_underplan_aimsanniversary__c}),
+
+    &quot;Clients Fiscal Year&quot;,
+    TEXT({!$Record.NSP_Howdoestimeaccrueunder_the_plan_AIMS__c}),
+
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
         <name>AIMSApprovalCondition</name>
         <dataType>Boolean</dataType>
         <expression>AND(
@@ -1256,7 +1287,7 @@ NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
 NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
 NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
 
- OR( 
+ OR(
         NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
 ),
@@ -1264,6 +1295,58 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         NOT(ISPICKVAL({!$Record.NSP_Accrual_waiting_period__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_balances_paid_in_lieu_of_carryover__c,&apos;&apos;})),
         NOT(ISPICKVAL({!$Record.NSP_Are_balances_paid_on_termination__c,&apos;&apos;}))
+)</expression>
+    </formulas>
+    <formulas>
+        <name>AIMSProrationRequired</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Calendar Year (1/1 to 12/31)&quot;),
+        NOT(ISBLANK({!AIMSActiveAccrualMethod})),
+        {!AIMSActiveAccrualMethod} &lt;&gt; &quot;Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid&quot;
+    ),
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Anniversary Year&quot;),
+        OR(
+            {!AIMSActiveAccrualMethod} = &quot;First of Month: Accrual is added on the first day of each month&quot;,
+            {!AIMSActiveAccrualMethod} = &quot;Pay Period: Accrual is added on each pay date&quot;
+        )
+    ),
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Clients Fiscal Year&quot;),
+        NOT(ISBLANK({!AIMSActiveAccrualMethod})),
+        {!AIMSActiveAccrualMethod} &lt;&gt; &quot;Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid&quot;
+    )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>AIMSRatesRequired</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+    OR(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Calendar Year (1/1 to 12/31)&quot;),
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Anniversary Year&quot;)
+    ),
+    {!AIMSActiveAccrualMethod} = &quot;Hours Worked: Accrual is added based on actual hours worked or hours worked and hours paid&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ITAActiveAccrualMethod</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+    TEXT({!$Record.NSP_What_is_the_plan_year__c}),
+
+    &quot;Calendar Year (1/1 to 12/31)&quot;,
+    TEXT({!$Record.NSP_Accrue_under_plan_cal_year__c}),
+
+    &quot;Anniversary Year&quot;,
+    TEXT({!$Record.NSP_time_accrue_under_plan_anniv_year__c}),
+
+    &quot;Clients Fiscal Year&quot;,
+    TEXT({!$Record.NSP_time_accrue_under_plan_fiscal_year__c}),
+
+    &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
@@ -1280,6 +1363,38 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
                      ISBLANK({!$Record.NSP_List_pay_codes__c})
                 )
 )</expression>
+    </formulas>
+    <formulas>
+        <name>ITAProrationRequired</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Calendar Year (1/1 to 12/31)&quot;),
+        OR(
+            {!ITAActiveAccrualMethod} = &quot;First of Quarter: Accrual is added on the first day of each quarter&quot;,
+            {!ITAActiveAccrualMethod} = &quot;Last of Pay Period: Accrual is added on the last day of each pay period&quot;
+        )
+    ),
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Anniversary Year&quot;),
+        OR(
+            {!ITAActiveAccrualMethod} = &quot;First of Quarter: Accrual is added on the hire date at the beginning of each quarter&quot;,
+            {!ITAActiveAccrualMethod} = &quot;Last of Pay Period: Accrual is added on the last day of each pay period&quot;
+        )
+    ),
+    AND(
+        ISPICKVAL({!$Record.NSP_What_is_the_plan_year__c}, &quot;Clients Fiscal Year&quot;),
+        OR(
+            {!ITAActiveAccrualMethod} = &quot;First of Quarter: Accrual is added on the first day of each quarter&quot;,
+            {!ITAActiveAccrualMethod} = &quot;Last of Pay Period: Accrual is added on the last day of each pay period&quot;
+        )
+    )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ITARatesRequired</name>
+        <dataType>Boolean</dataType>
+        <expression>{!ITAActiveAccrualMethod} = &quot;Hours Worked: Accrual is added based on actual hours worked&quot;</expression>
     </formulas>
     <interviewLabel>Accrual Profile Update Submit for Approval Button Visiblity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Accrual Profile Update Submit for Approval Button Visiblity</label>
@@ -1306,7 +1421,7 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Record_Type</targetReference>
+            <targetReference>Check_Policy_Accrual_Supporting_Documentation</targetReference>
         </connector>
         <object>NSP_Accrual_Profile__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

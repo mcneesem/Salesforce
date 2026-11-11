@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Is_there_a_Maximum_Balance_Cap__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>This is a cap on the remaining unused balance, not the accrual.</inlineHelpText>
     <label>Is there a Maximum Balance Cap?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
