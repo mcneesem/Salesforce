@@ -2,22 +2,29 @@
 global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (86%)
 
+    private static final String STRING_BEARER = 'Bearer ';
+    private static final String STRING_APP_JSON = 'application/json';
+    private static final String STRING_CONTENT_TYPE = 'Content-Type';
     private static final String STRING_INVALID = '.invalid';
     private static final String DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
     private static final String TOOLING_API_PATH = '/services/data/v65.0/tooling/';
 
     public String runManualResult{get;set;}
 
-    global void runApexClass(SandboxContext context){
+    global void runApexClass( SandboxContext context ){
         try{
             doQueues();
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'runApexClass:doQueues' );
+        }
+        try{
             // clear the user trigger settings...
             UserTriggerSettings__c settings = UserTriggerSettings__c.getOrgDefaults();
             settings.AllowedAdmins__c = null;
             settings.BccAddresses__c = null;
             upsert settings;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'runApexClass:doQueues' );
+            NSP_PrepSandbox.handleException( e , 'runApexClass:UserTriggerSettings__c' );
         }
         try{
             doCSettings(context.sandboxName());
@@ -74,41 +81,54 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     @AuraEnabled
     public static void runManualSteps() {
-        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
-        // callouts - must complete before any DML
-        doCMetadata(sandbox);
-        doCLabels(sandbox);
-        doEmailCLabels();
-        doEmailAlerts();
-        doImageDocs();
-        doTrustedURLs();
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        List<Exception> errors = new List<Exception>();
+        // callouts - must all complete before any DML
+        try { doCMetadata( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { doCLabels( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { doEmailCLabels(); } catch( Exception e ) { errors.add( e ); }
+        try { doEmailAlerts(); } catch( Exception e ) { errors.add( e ); }
+        try { doImageDocs(); } catch( Exception e ) { errors.add( e ); }
+        try { doTrustedURLs(); } catch( Exception e ) { errors.add( e ); }
+        try { doGlobalValueSets( true ); } catch( Exception e ) { errors.add( e ); }
         // DMLs
-        doCSettings(sandbox);
-        doCSettings2(sandbox);
+        doCSettings( sandbox );
+        doCSettings2( sandbox );
         doAvaTaxSettings();
-        setPostRefreshRunFlag(1);
+        setPostRefreshRunFlag( 1 );
+        // log any callout errors after all DML is complete
+        for ( Exception e : errors ) {
+            NSP_PrepSandbox.handleException( e , 'runManualSteps' );
+        }
     }
 
     @AuraEnabled
     public static void runUserImport() {
-        doUserImport(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
-        setPostRefreshRunFlag(2);
+        doUserImport( System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName() );
+        setPostRefreshRunFlag( 2 );
     }
 
     @AuraEnabled
     public static void runManualSteps2() {
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        List<Exception> errors = new List<Exception>();
         // callouts - must complete before any DML
-        doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
-        runPostSeedingCallouts();
+        try { doCMetadataSvc( sandbox ); } catch( Exception e ) { errors.add( e ); }
+        try { runPostSeedingCallouts(); } catch( Exception e ) { errors.add( e ); }
+        try { doGlobalValueSets( false ); } catch( Exception e ) { errors.add( e ); }
         // DMLs
         runPostSeedingDML();
-        setPostRefreshRunFlag(3);
+        setPostRefreshRunFlag( 3 );
+        // log any callout errors after all DML is complete
+        for ( Exception e : errors ) {
+            NSP_PrepSandbox.handleException( e , 'runManualSteps2' );
+        }
     }
 
     @AuraEnabled
     public static void runE2CAddresses() {
-        doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
-        setPostRefreshRunFlag(4);
+        doE2CAddresses( System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName() );
+        setPostRefreshRunFlag( 4 );
     }
 
     @AuraEnabled
@@ -118,7 +138,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return !matchingUsers.isEmpty();
     }
 
-    public static void doUserImport(String sandboxName) {
+    public static void doUserImport( String sandboxName ) {
         try {
             StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'PreProd_Users' WITH SECURITY_ENFORCED];
             String adminProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator' WITH SECURITY_ENFORCED LIMIT 1].Id;
@@ -132,61 +152,90 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             //  5 - Profile
             //  6 - Role
             //  7 - Orgs
-            Map<String, List<Profile>> profileNameMap = getProfileNameMap(userCsv);
-            Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap(userCsv);
+            Map<String, List<Profile>> profileNameMap = getProfileNameMap( userCsv );
+            Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
 
             List<User> userList = new List<User>(); // list of User records to upsert
-            String[] rows = userCsv.split('\n');
+            List<String> rows = userCsv.split('\n');
             for(integer i=1; i < rows.size() ; i++) { // skip header row
-                String[] column = rows[i].split(',');
+                List<String> column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
                 String orgNames = (column[7].length() > 1) ? column[7] : 'none';
-                if (column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0 && column[2].indexOf('insperity') > -1){
+                if ( ( column[1].indexOf('integration') < 0 )
+                    && ( column[2].indexOf('noreply') < 0 )
+                    && ( column[2].indexOf('insperity') > -1 )
+                    )
+                {
                     userList.add(new User(
-                        IsActive = true,
-                        Email = column[2].substringBefore(STRING_INVALID).trim(),
-                        FirstName = column[3].trim(),
-                        LastName = column[4].trim(),
-                        Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
-                        ProfileId = getImportUserProfileId(adminProfileId, sandboxName.toLowercase(), profileNameMap, column[1], column[5], orgNames.toLowercase()),
-                        Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
-                        UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
-                        TimeZoneSidKey = 'America/Chicago',
-                        LocaleSidKey = 'en_US',
-                        EmailEncodingKey = 'ISO-8859-1',
+                        IsActive = true ,
+                        Email = column[2].substringBefore( STRING_INVALID ).trim() ,
+                        FirstName = column[3].trim() ,
+                        LastName = column[4].trim() ,
+                        Username = column[2].substringBefore( STRING_INVALID ).trim() + '.' + sandboxName ,
+                        ProfileId = getImportUserProfileId(
+                            adminProfileId ,
+                            sandboxName.toLowercase() ,
+                            profileNameMap ,
+                            column[1] ,
+                            column[5] ,
+                            orgNames.toLowercase()
+                        ) ,
+                        Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase() ,
+                        UserRoleId = ( userRoleNameMap.containsKey(column[6]) ) ? userRoleNameMap.get( column[6] )[0].Id : null ,
+                        TimeZoneSidKey = 'America/Chicago' ,
+                        LocaleSidKey = 'en_US' ,
+                        EmailEncodingKey = 'ISO-8859-1' ,
                         LanguageLocaleKey = 'en_US'
-                    ));
+                    ) );
                 }
             }
-            if(!Test.isRunningTest() && userList != null) {
-                Database.UpsertResult[] userResults = Database.upsert(userList, User.Username, false);
+            if( !Test.isRunningTest() && userList != null ) {
+                List<Database.UpsertResult> userResults = Database.upsert( userList, User.Username , false );
                 NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport:upsert' , userResults );
-                updateUserLogins(userResults);
+                updateUserLogins( userResults );
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doUserImport' );
         }
     }
 
-    public static void doCMetadata(String sandboxName) {
-        try{
-            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
-            allMetadataList.add(new List<MetadataService.Metadata>());
-            List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
-            List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [Select Id, Label, DeveloperName, Value__c FROM DocuSignRESTSettings__mdt WHERE Id!=null];
-            List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
-            List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
-
-            doDS_mdt( sandboxName , allMetadataList , cMdDocuSigners );
-            doDSREST_mdt( sandboxName , allMetadataList , cMdDocuSignREST );
-            doPEO_mdt( sandboxName , allMetadataList , cMdPEOImps );
-            doRET_mdt( sandboxName , allMetadataList , cMdRetSvcs );
-
-            runUpdateMetadata( allMetadataList );
-
-        } catch( Exception e ) {
-            NSP_PrepSandbox.handleException( e , 'doCMetadata' );
-        }
+    public static void doCMetadata( String sandboxName ) {
+        List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+        allMetadataList.add(new List<MetadataService.Metadata>());
+        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [
+            SELECT Id , Label , DeveloperName , NSP_Signer_Username__c 
+            FROM NSP_DocuSign_Signers__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Signer_Username__c != null )
+            )
+        ];
+        List<DocuSignRESTSettings__mdt> cMdDocuSignREST = [
+            SELECT Id , Label , DeveloperName , Value__c
+            FROM DocuSignRESTSettings__mdt
+            WHERE ( Id != null )
+        ];
+        List<NSP_PEO_Implementations__mdt> cMdPEOImps = [
+            SELECT Id , Label , DeveloperName , NSP_Email_Address__c
+            FROM NSP_PEO_Implementations__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Email_Address__c != null )
+            )
+        ];
+        List<NSP_Retirement_Services__mdt> cMdRetSvcs = [
+            SELECT Id , Label , DeveloperName , NSP_Email_Address__c
+            FROM NSP_Retirement_Services__mdt
+            WHERE (
+                ( Id != null )
+                AND ( NSP_Email_Address__c != null )
+            )
+        ];
+        doDS_mdt( sandboxName , allMetadataList , cMdDocuSigners );
+        doDSREST_mdt( sandboxName , allMetadataList , cMdDocuSignREST );
+        doPEO_mdt( sandboxName , allMetadataList , cMdPEOImps );
+        doRET_mdt( sandboxName , allMetadataList , cMdRetSvcs );
+        runUpdateMetadata( allMetadataList );
     }
 
     public static MetadataService.CustomMetadata buildCustomMetadataRow( String fullName , String name , String field , String value ) {
@@ -197,7 +246,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         customField1.field = field; // the custom field API Name to be updated
         customField1.value = value;
         if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-            cMdUpd.values.add(customField1);
+            cMdUpd.values.add( customField1 );
         } else {
             cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
         }
@@ -206,15 +255,20 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static List<List<MetadataService.Metadata>> addCustomMetadataRow( List<List<MetadataService.Metadata>> allMetadataList , MetadataService.CustomMetadata cMdUpd ) {
         Integer batch = allMetadataList.size() - 1;
-        if (allMetadataList[batch].size() >= 200) {
+        if ( allMetadataList[batch].size() >= 200 ) {
             batch++;
             allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when one fills up
         }
-        allMetadataList[batch].add(cMdUpd);
+        allMetadataList[ batch ].add( cMdUpd );
         return allMetadataList;
     }
 
-    public static void doDS_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_DocuSign_Signers__mdt> cMdDocuSigners) {
+    public static void doDS_mdt(
+        String sandboxName ,
+        List<List<MetadataService.Metadata>> allMetadataList ,
+        List<NSP_DocuSign_Signers__mdt> cMdDocuSigners
+        )
+    {
         for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
@@ -225,7 +279,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    public static void doDSREST_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<DocuSignRESTSettings__mdt> cMdDocuSignREST) {
+    public static void doDSREST_mdt( String sandboxName , List<List<MetadataService.Metadata>> allMetadataList , List<DocuSignRESTSettings__mdt> cMdDocuSignREST ) {
         // map of DocuSignRESTSettings__mdt names to default values for DEV
         Map<String, String> resourceMap = new Map<String, String>();
 
@@ -344,42 +398,37 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doCLabels(String sandboxName) {
-        try {
-            Map<String, String> refreshValMap = new Map<String, String>();
-            switch on sandboxName {
-                when 'stage' {
-                    refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
-                    refreshValMap.put('NSP_Docusign_Account_Id', '48945');
-                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com.invalid');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com.invalid');
-                }
-                when 'test' {
-                    refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
-                    refreshValMap.put('NSP_Docusign_Account_Id', '65500');
-                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com.invalid');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com.invalid');
-                }
-                when 'merge' {
-                    refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
-                    refreshValMap.put('NSP_Docusign_Account_Id', '122677');
-                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com.invalid');
-                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com.invalid');
-                }
-                when else {
-                    refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
-                    refreshValMap.put('NSP_Docusign_Account_Id', '50202');
-                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
-                }
+        Map<String, String> refreshValMap = new Map<String, String>();
+        switch on sandboxName {
+            when 'stage' {
+                refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
+                refreshValMap.put('NSP_Docusign_Account_Id', '48945');
+                refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com.invalid');
+                refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com.invalid');
             }
-
-            updateLabelsValues(refreshValMap);
-
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCLabels' );
+            when 'test' {
+                refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
+                refreshValMap.put('NSP_Docusign_Account_Id', '65500');
+                refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com.invalid');
+                refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com.invalid');
+            }
+            when 'merge' {
+                refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
+                refreshValMap.put('NSP_Docusign_Account_Id', '122677');
+                refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com.invalid');
+                refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com.invalid');
+            }
+            when else {
+                refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
+                refreshValMap.put('NSP_Docusign_Account_Id', '50202');
+                refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+            }
         }
+
+        updateLabelsValues(refreshValMap);
     }
 
     private static void setCLabelData(MetadataService.MetadataPort service, MetadataService.CustomLabel cL, List<MetadataService.Metadata> allMetadataList, String cLName, Map<String, String> refreshValMap) {
@@ -401,45 +450,40 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doEmailCLabels() {
-        try {
-            Integer batch = 0;
-            MetadataService.MetadataPort service = createService();
-            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
-            allMetadataList.add(new List<MetadataService.Metadata>());
-            MetadataService.CustomLabel cL;
-            String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName().toLowerCase();
-            String[] cLNames = getEmailCLabelNames();
-            String[] preserveNames = new String[]{'NSP_Contact_Center_Email_Addresses' , 'NSP_Health_Welfare_Section_125'};
+        Integer batch = 0;
+        MetadataService.MetadataPort service = createService();
+        List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+        allMetadataList.add(new List<MetadataService.Metadata>());
+        MetadataService.CustomLabel cL;
+        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName().toLowerCase();
+        String[] cLNames = getEmailCLabelNames();
+        String[] preserveNames = new String[]{'NSP_Contact_Center_Email_Addresses' , 'NSP_Health_Welfare_Section_125'};
 
-            for( integer i=0; i < cLNames.size() ; i++ ) {
-                cL = new MetadataService.CustomLabel();
-                if ( !Test.isRunningTest() ) {
-                    cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
-                } else {
-                    cL.value = 'test@insperity.com';
-                }
-                if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1
-                        && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
-                    MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                    cLUpd.fullName = cL.fullName;
-                    cLUpd.value = NSP_PrepSandbox.invalidateEmailString(cL.value);
-                    cLUpd.shortDescription = cL.shortDescription;
-                    cLUpd.language = cL.language;
-                    cLUpd.protected_x = cL.protected_x;
-
-                    if (allMetadataList[batch].size() >= 10) {
-                        batch++;
-                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                    }
-                    allMetadataList[batch].add(cLUpd);
-                }
+        for( integer i=0; i < cLNames.size() ; i++ ) {
+            cL = new MetadataService.CustomLabel();
+            if ( !Test.isRunningTest() ) {
+                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
+            } else {
+                cL.value = 'test@insperity.com';
             }
+            if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1
+                    && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
+                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                cLUpd.fullName = cL.fullName;
+                cLUpd.value = NSP_PrepSandbox.invalidateEmailString(cL.value);
+                cLUpd.shortDescription = cL.shortDescription;
+                cLUpd.language = cL.language;
+                cLUpd.protected_x = cL.protected_x;
 
-            runUpdateMetadata( allMetadataList );
-
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doEmailCLabels' );
+                if (allMetadataList[batch].size() >= 10) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cLUpd);
+            }
         }
+
+        runUpdateMetadata( allMetadataList );
     }
 
     public static void runUpdateMetadata( List<List<MetadataService.Metadata>> allMetadataList ) {
@@ -469,82 +513,77 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doEmailAlerts() {
-        try {
-            String host = URL.getOrgDomainUrl().toExternalForm();
-            String endPoint = host + NSP_PrepSandbox.TOOLING_API_PATH;
-            String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
-            List<String[]> wfaNames = new List<String[]>();
-            wfaNames.add(new String[]{});
-            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+        String host = URL.getOrgDomainUrl().toExternalForm();
+        String endPoint = host + NSP_PrepSandbox.TOOLING_API_PATH;
+        String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
+        List<String[]> wfaNames = new List<String[]>();
+        wfaNames.add(new String[]{});
+        List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
 
-            //  Get the list of alerts Ids where CCemails is not empty
-            HttpRequest request = new HttpRequest();
-            request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
-            request.setMethod('GET');
-            request.setHeader('Authorization', 'Bearer '+ sessionId);
-            HTTPResponse response = new HTTPResponse();
-            AlertResult results = new AlertResult();
-            RecordAlert[] records = new RecordAlert[]{};
+        //  Get the list of alerts Ids where CCemails is not empty
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
+        request.setMethod('GET');
+        request.setHeader('Authorization', STRING_BEARER + sessionId);
+        HTTPResponse response = new HTTPResponse();
+        AlertResult results = new AlertResult();
+        RecordAlert[] records = new RecordAlert[]{};
 
-            if( !Test.isRunningTest() ) {
-                response = new Http().send(request);
-                results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
-                records = results.records;
-            } else {
-                RecordAlert rec = new RecordAlert();
-                Attributes att = new Attributes();
-                WorkflowEmail wfe = new WorkflowEmail();
-                MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
-                att.type = 'test';
-                att.url = 'test';
-                rec.FullName='test';
-                rec.id='test';
-                rec.attributes = att;
-                wfe.attributes = att;
-                wfe.id='test';
-                wfe.TemplateId='test';
-                wfe.CcEmails='test';
-                wfe.Description='test';
-                wfe.DeveloperName='test';
-                wfe.EntityDefinitionId='test';
-                wfe.FullName='test';
-                wfe.Metadata=wfa;
-                records.add(rec);
-            }
-
-            getWFAlertData( request , records , wfaNames );
-            setWFAlertData( wfaNames , allMetadataList );
-
-            runUpdateMetadata( allMetadataList );
-
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doEmailAlerts' );
+        if( !Test.isRunningTest() ) {
+            response = new Http().send(request);
+            results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
+            records = results.records;
+        } else {
+            RecordAlert rec = new RecordAlert();
+            Attributes att = new Attributes();
+            WorkflowEmail wfe = new WorkflowEmail();
+            MetadataService.WorkflowAlert wfa = new MetadataService.WorkflowAlert();
+            att.type = 'test';
+            att.url = 'test';
+            rec.FullName='test';
+            rec.id='test';
+            rec.attributes = att;
+            wfe.attributes = att;
+            wfe.id='test';
+            wfe.TemplateId='test';
+            wfe.CcEmails='test';
+            wfe.Description='test';
+            wfe.DeveloperName='test';
+            wfe.EntityDefinitionId='test';
+            wfe.FullName='test';
+            wfe.Metadata=wfa;
+            records.add(rec);
         }
+
+        getWFAlertData( request , records , wfaNames );
+        setWFAlertData( wfaNames , allMetadataList );
+
+        runUpdateMetadata( allMetadataList );
     }
 
-    public static void getWFAlertData(HttpRequest request, RecordAlert[] records, List<String[]> wfaNames) {
+    public static void getWFAlertData( HttpRequest request , RecordAlert[] records , List<String[]> wfaNames ) {
         Integer batch = 0;
         HTTPResponse response = new HTTPResponse();
         String host = URL.getOrgDomainUrl().toExternalForm();
         String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
-        for (RecordAlert alert : records) {
+        for ( RecordAlert alert : records ) {
             // Get the Alert meta-data
             request = new HttpRequest();
-            request.setEndpoint(host + alert.attributes.url);
-            request.setMethod('GET');
-            request.setHeader('Content-Type', 'application/json');
-            request.setHeader('Authorization', 'Bearer '+ sessionId);
+            request.setEndpoint( host + alert.attributes.url );
+            request.setMethod( 'GET' );
+            request.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+            request.setHeader( 'Authorization' , STRING_BEARER + sessionId );
 
-            if (wfaNames[batch].size() >= 10) {
+            if ( wfaNames[ batch ].size() >= 10 ) {
                 batch++;
-                wfaNames.add(new String[]{}); // create a new batch when we fill one up
+                wfaNames.add( new String[]{} ); // create a new batch when we fill one up
             }
-            if (!Test.isRunningTest()) {
-                response = new Http().send(request);
-                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
-                wfaNames[batch].add(wfe.FullName);
+            if ( !Test.isRunningTest() ) {
+                response = new Http().send( request );
+                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize( response.getBody() , WorkflowEmail.class );
+                wfaNames[batch].add( wfe.FullName );
             } else {
-                wfaNames[batch].add('test');
+                wfaNames[batch].add( 'test' );
             }
         }
     }
@@ -743,24 +782,24 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    public static void doE2CAddresses(String sandboxName) {
+    public static void doE2CAddresses( String sandboxName ) {
         try {
-            Map<String, Integer> orgMap = new Map<String, Integer>{'merge' => 1, 'test' => 2, 'stage' => 3};
+            Map<String, Integer> orgMap = new Map<String, Integer>{ 'merge' => 1 , 'test' => 2 , 'stage' => 3 };
             Map<String, String> teamAddrMap = new Map<String, String>();
-            StaticResource e2CStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses' WITH SECURITY_ENFORCED];
+            StaticResource e2CStaticResource = [ SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses' WITH SECURITY_ENFORCED ];
             String e2Ccsv = e2CStaticResource.Body.toString();
-            String[] rows = e2Ccsv.split('\n');
+            String[] rows = e2Ccsv.split( '\n' );
 
-            for(integer i=1; i < rows.size() ; i++) { // skip header row
-                String[] col = rows[i].split(',');
-                if (orgMap.containsKey(sandboxName) && col[0].length() > 0 && col[orgMap.get(sandboxName)].length() > 0) {
-                    teamAddrMap.put(col[0], col[orgMap.get(sandboxName)]);
+            for( integer i=1; i < rows.size() ; i++ ) { // skip header row
+                String[] col = rows[ i ].split( ',' );
+                if (orgMap.containsKey( sandboxName ) && col[ 0 ].length() > 0 && col[ orgMap.get( sandboxName ) ].length() > 0) {
+                    teamAddrMap.put( col[ 0 ] , col[ orgMap.get( sandboxName ) ] );
                 }
             }
 
             MetadataService.MetadataPort service = createService();
             MetadataService.CaseSettings cS = new MetadataService.CaseSettings();
-            if (!Test.isRunningTest()) {
+            if ( !Test.isRunningTest() ) {
                 cS = (MetadataService.CaseSettings) service.readMetadata('CaseSettings', new String[] {'Settings'}).getRecords()[0];
             } else {
                 MetadataService.EmailToCaseRoutingAddress addr = new MetadataService.EmailToCaseRoutingAddress();
@@ -768,15 +807,15 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
                 MetadataService.EmailToCaseSettings e2CS = new MetadataService.EmailToCaseSettings();
                 addr.routingName = 'Integra';
                 addr.emailAddress = 'test.integrasupport@insperity.com';
-                addrs.add(addr);
+                addrs.add( addr );
                 e2CS.routingAddresses = addrs;
                 cS.emailToCase = e2CS;
             }
 
-            for (integer i=0; i < cS.emailToCase.routingAddresses.size() ; i++) {
+            for ( integer i=0; i < cS.emailToCase.routingAddresses.size() ; i++ ) {
                 String routingName = cS.emailToCase.routingAddresses[i].routingName;
-                if (teamAddrMap.containsKey(routingName)) {
-                    cS.emailToCase.routingAddresses[i].emailAddress = teamAddrMap.get(routingName);
+                if ( teamAddrMap.containsKey( routingName ) ) {
+                    cS.emailToCase.routingAddresses[ i ].emailAddress = teamAddrMap.get( routingName );
                 }
             }
 
@@ -794,72 +833,77 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     public static void doQueues() {
         try {
             List<Group> updateQueue = new List<Group>();
-            for (Group queue:[SELECT id, email FROM Group WHERE type = 'Queue' AND email > '']) {
-                if(queue.email.indexOf(STRING_INVALID) == -1){
+            for ( Group queue : [ SELECT id, email FROM Group WHERE type = 'Queue' AND email > '' ] ) {
+                if( queue.email.indexOf( STRING_INVALID ) == -1 ) {
                     queue.email = queue.email + STRING_INVALID;
-                    updateQueue.add(queue);
+                    updateQueue.add( queue );
                 }
             }
-            if(!updateQueue.isEmpty()){
+            if( !updateQueue.isEmpty() ) {
                 update updateQueue;
             }
-        } catch(Exception e) {
+        } catch( Exception e ) {
             NSP_PrepSandbox.handleException( e , 'doQueues' );
         }
     }
 
     public static void doImageDocs() {
         MetadataService.MetadataPort service = createService();
-        try {
-            List<MetadataService.Metadata> metadataList = new List<MetadataService.Metadata>();
-            // map of static resource names to document names
-            Map<String, String> resourceMap = new Map<String, String>();
-            resourceMap.put('Insperity_Copyright_Logo', 'Insperity_Copy_write_logo');
-            resourceMap.put('Insperity_Footer_Logo', 'Insperity_Footer_Logo');
-            resourceMap.put('Insperity_HR', 'Insperity_HR');
-            resourceMap.put('Insperity_HR_Logo', 'Insperity_HR_Logo');
-            resourceMap.put('Insperity_Service_Operations', 'Insperity_Service_Operations');
-            resourceMap.put('InsperityEmailSignatureLogo', 'InsperityEmailSignatureLogo');
+        List<MetadataService.Metadata> metadataList = new List<MetadataService.Metadata>();
+        // map of static resource names to document names
+        Map<String, String> resourceMap = new Map<String, String>();
+        resourceMap.put( 'Insperity_Copyright_Logo' , 'Insperity_Copy_write_logo' );
+        resourceMap.put( 'Insperity_Footer_Logo' , 'Insperity_Footer_Logo' );
+        resourceMap.put( 'Insperity_HR' , 'Insperity_HR' );
+        resourceMap.put( 'Insperity_HR_Logo' , 'Insperity_HR_Logo' );
+        resourceMap.put( 'Insperity_Service_Operations' , 'Insperity_Service_Operations' );
+        resourceMap.put( 'InsperityEmailSignatureLogo' , 'InsperityEmailSignatureLogo' );
 
-            List<StaticResource> srList = new List<StaticResource>([SELECT Id, Body, Name FROM StaticResource WHERE Name IN :resourceMap.keySet()]);
+        List<StaticResource> srList = new List<StaticResource>(
+            [
+                SELECT
+                    Id ,
+                    Body ,
+                    Name
+                FROM StaticResource
+                WHERE ( Name IN :resourceMap.keySet() )
+            ]
+        );
 
-            for (StaticResource sr : srList) {
-                MetadataService.Document doc = new MetadataService.Document();
-                doc.fullName = 'Services/' + resourceMap.get(sr.Name) + '.png';
-                doc.name = replaceUnderscoresWithSpaces(resourceMap.get(sr.Name));
-                doc.content = EncodingUtil.base64Encode(sr.Body);
-                doc.public_x = true;
-                doc.internalUseOnly = false;
-                metadataList.add(doc);
-            }
+        for (StaticResource sr : srList) {
+            MetadataService.Document doc = new MetadataService.Document();
+            doc.fullName = 'Services/' + resourceMap.get(sr.Name) + '.png';
+            doc.name = replaceUnderscoresWithSpaces(resourceMap.get( sr.Name ));
+            doc.content = EncodingUtil.base64Encode( sr.Body );
+            doc.public_x = true;
+            doc.internalUseOnly = false;
+            metadataList.add( doc );
+        }
 
-            if ( metadataList.size() > 0 && !Test.isRunningTest() ) {
-                service.createMetadata(metadataList);
-            }
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doImageDocs' );
+        if ( metadataList.size() > 0 && !Test.isRunningTest() ) {
+            service.createMetadata( metadataList );
         }
     }
 
-    public static String replaceUnderscoresWithSpaces(String input) {
+    public static String replaceUnderscoresWithSpaces( String input ) {
         if ( input != null ) {
-            return input.replace('_', ' ');
+            return input.replace( '_' , ' ' );
         }
         return null;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled( cacheable=true )
     public static OrgSettings__c getOrgSettings() {
         return NSP_PrepSandbox.settings;
     }
 
-    public static void setPostRefreshRunFlag(Integer iStep) {
+    public static void setPostRefreshRunFlag( Integer iStep ) {
         try {
             OrgSettings__c cS = NSP_PrepSandbox.settings;
-            if (iStep == 1) cS.PostRefreshRun__c = true;
-            if (iStep == 2) cS.PostRefreshRun2__c = true;
-            if (iStep == 3) cS.PostRefreshRun3__c = true;
-            if (iStep == 4) cS.PostRefreshRun4__c = true;
+            if ( iStep == 1 ) { cS.PostRefreshRun__c = true; }
+            if ( iStep == 2 ) { cS.PostRefreshRun2__c = true; }
+            if ( iStep == 3 ) { cS.PostRefreshRun3__c = true; }
+            if ( iStep == 4 ) { cS.PostRefreshRun4__c = true; }
             upsert cS;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'setPostRefreshRunFlag' );
@@ -879,14 +923,22 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     @TestVisible
     private static void runPostSeedingCallouts() {
         try {
-            List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
-            if (accountRecord != null && accountRecord.size() == 1) {
+            List<Account> accountRecord = [
+                SELECT Id
+                FROM Account
+                WHERE NSP_AIMS_Client__c = '500'
+                LIMIT 1
+            ];
+            if ( ( accountRecord != null )
+                && ( accountRecord.size() == 1 )
+                )
+            {
                 Map<String, String> refreshValMap = new Map<String, String>();
-                refreshValMap.put('NSP_Insperity_Account', accountRecord[0].id);
-                updateLabelsValues(refreshValMap);
+                refreshValMap.put( 'NSP_Insperity_Account' , accountRecord[0].Id );
+                updateLabelsValues( refreshValMap );
             }
-        } catch (Exception e) {
-            NSP_PrepSandbox.handleException(e, 'runPostSeedingCallouts');
+        } catch ( Exception e ) {
+            NSP_PrepSandbox.handleException( e , 'runPostSeedingCallouts' );
         }
     }
 
@@ -895,29 +947,34 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     @TestVisible
     private static void runPostSeedingDML() {
         try {
-            List<pse__Region__c> regionRecord = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
-            if (regionRecord != null && regionRecord.size() == 1) {
+            List<pse__Region__c> regionRecord = [
+                SELECT Id
+                FROM pse__Region__c
+                WHERE Name = 'United States'
+                LIMIT 1
+            ];
+            if ( regionRecord != null && regionRecord.size() == 1 ) {
                 ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
-                projectCreationSettings.DefaultRegionId__c = regionRecord[0].id;
+                projectCreationSettings.DefaultRegionId__c = regionRecord[0].Id;
                 update projectCreationSettings;
             }
-        } catch (Exception e) {
-            NSP_PrepSandbox.handleException(e, 'runPostSeedingDML');
+        } catch ( Exception e ) {
+            NSP_PrepSandbox.handleException( e , 'runPostSeedingDML' );
         }
     }
 
-    private static void updateLabelsValues(Map<String, String> refreshValMap){
+    private static void updateLabelsValues( Map<String , String> refreshValMap ) {
         try {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
             MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
 
-            for (String cLName : refreshValMap.keySet()) {
-                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+            for ( String cLName : refreshValMap.keySet() ) {
+                setCLabelData( service , cL , allMetadataList , cLName , refreshValMap );
             }
 
-            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-                service.updateMetadata(allMetadataList);
+            if( allMetadataList.size() > 0 && !Test.isRunningTest() ){
+                service.updateMetadata( allMetadataList );
             }
         }
         catch(Exception e) {
@@ -930,50 +987,110 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doTrustedURLs() {
-        try {
-            Integer batch = 0;
-            MetadataService.MetadataPort service = createService();
-            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
-            allMetadataList.add(new List<MetadataService.Metadata>());
+        String host = URL.getOrgDomainUrl().toExternalForm();
+        String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
+        String toolingBase = host + NSP_PrepSandbox.TOOLING_API_PATH;
 
-            Map<String, String> mapSites = new Map<String, String>();
-            mapSites.put('Tableau', 'https://testtableau.insperity.com');
-            mapSites.put('Salesforce_SCRT', 'https://*.sandbox.my.salesforce-scrt.com');
-            mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
+        Map<String, String> mapSites = new Map<String, String>();
+        mapSites.put('Tableau', 'https://testtableau.insperity.com');
+        mapSites.put('Salesforce_SCRT', 'https://*.sandbox.my.salesforce-scrt.com');
+        mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
 
-            MetadataService.ReadResult readResult = new MetadataService.ReadResult();
-            if (!Test.isRunningTest()) {
-                readResult.records = service.readMetadata('CspTrustedSite', new List<String>(mapSites.keySet())).getRecords();
-            } else {
-                readResult.records = new MetadataService.Metadata[]{new MetadataService.CspTrustedSite()};
+        String devNames = '\'' + String.join(new List<String>(mapSites.keySet()), '\',\'') + '\'';
+        HttpRequest queryRequest = new HttpRequest();
+        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,DeveloperName+FROM+CspTrustedSite+WHERE+DeveloperName+IN+(' + devNames + ')' );
+        queryRequest.setMethod( 'GET' );
+        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        queryRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
+        queryRequest.setTimeout( 120000 );
+        HttpResponse queryResponse = new Http().send( queryRequest );
+        if ( queryResponse.getStatusCode() != 200 ) {
+            throw new CalloutException( 'doTrustedURLs query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
+        }
+
+        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
+        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        for ( Object rec : records ) {
+            Map<String, Object> recMap = (Map<String, Object>) rec;
+            String recId = (String) recMap.get( 'Id' );
+            String recName = (String) recMap.get( 'DeveloperName' );
+            HttpRequest patchRequest = new HttpRequest();
+            patchRequest.setEndpoint( toolingBase + 'sobjects/CspTrustedSite/' + recId );
+            patchRequest.setMethod( 'PATCH' );
+            patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+            patchRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
+            patchRequest.setTimeout( 120000 );
+            patchRequest.setBody( '{"EndpointUrl":"' + mapSites.get( recName ) + '"}' );
+            HttpResponse patchResponse = new Http().send( patchRequest );
+            if ( patchResponse.getStatusCode() != 204 ) {
+                throw new CalloutException( 'doTrustedURLs PATCH failed for ' + recName + ' (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
             }
-
-            for (MetadataService.Metadata result : readResult.records) {
-                MetadataService.CspTrustedSite site = (MetadataService.CspTrustedSite) result;
-
-                if( site != null ) {
-                    MetadataService.CspTrustedSite siteUpd = new MetadataService.CspTrustedSite();
-                    siteUpd.fullName = site.fullName;
-                    siteUpd.description = site.description;
-                    siteUpd.isActive = site.isActive;
-                    siteUpd.endpointUrl = mapSites.get(site.fullName);
-
-                    if (allMetadataList[batch].size() >= 10) {
-                        batch++;
-                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                    }
-                    allMetadataList[batch].add(siteUpd);
-                }
-            }
-
-            runUpdateMetadata( allMetadataList );
-
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCTrustedURLs' );
         }
     }
 
-    private static string invalidateEmailArray(List<String> origEmails) {
+    // @description Activates or deactivates the Pre-ABX value on the Account_Assignment_Method Global Value Set
+    //              via the Tooling API (query for Id+Metadata, mutate, PATCH back).
+    public static void doGlobalValueSets( Boolean setActive ) {
+        String host = URL.getOrgDomainUrl().toExternalForm();
+        String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
+        String toolingBase = host + NSP_PrepSandbox.TOOLING_API_PATH;
+
+        HttpRequest queryRequest = new HttpRequest();
+        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,Metadata+FROM+GlobalValueSet+WHERE+DeveloperName=\'Account_Assignment_Method\'' );
+        queryRequest.setMethod( 'GET' );
+        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        queryRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        queryRequest.setTimeout( 120000 );
+        HttpResponse queryResponse = new Http().send( queryRequest );
+        if ( queryResponse.getStatusCode() != 200 ) {
+            throw new CalloutException( 'doGlobalValueSets query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
+        }
+
+        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
+        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        if ( records == null || records.isEmpty() ) {
+            throw new CalloutException( 'doGlobalValueSets: GlobalValueSet Account_Assignment_Method not found' );
+        }
+
+        Map<String, Object> gvsRecord = (Map<String, Object>) records[0];
+        String gvsId = (String) gvsRecord.get( 'Id' );
+        Map<String, Object> metadata = (Map<String, Object>) gvsRecord.get( 'Metadata' );
+        metadata.remove( 'urls' );
+        List<Object> customValues = (List<Object>) metadata.get( 'customValue' );
+        mutateGvsCustomValues( customValues , setActive );
+
+        HttpRequest patchRequest = new HttpRequest();
+        patchRequest.setEndpoint( toolingBase + 'sobjects/GlobalValueSet/' + gvsId );
+        patchRequest.setMethod( 'PATCH' );
+        patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        patchRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        patchRequest.setTimeout( 120000 );
+        patchRequest.setBody( JSON.serialize( new Map<String, Object>{ 'FullName' => 'Account_Assignment_Method__gvs' , 'Metadata' => metadata } ) );
+        HttpResponse patchResponse = new Http().send( patchRequest );
+        for (Integer retry = 0; retry < 2 && patchResponse.getStatusCode() == 500; retry++) {
+            patchResponse = new Http().send( patchRequest );
+        }
+        if ( patchResponse.getStatusCode() != 204 ) {
+            throw new CalloutException( 'doGlobalValueSets PATCH failed (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
+        }
+    }
+
+    // @description Iterates customValue entries and sets isActive on the Pre-ABX entry.
+    // @param customValues Raw customValue list from the GlobalValueSet Metadata map.
+    // @param setActive Target active state for the Pre-ABX picklist value.
+    private static void mutateGvsCustomValues( List<Object> customValues , Boolean setActive ) {
+        if ( customValues != null ) {
+            for ( Object cv : customValues ) {
+                Map<String, Object> cvMap = (Map<String, Object>) cv;
+                cvMap.remove( 'urls' );
+                if ( 'Pre-ABX'.equals( cvMap.get( 'valueName' ) ) ) {
+                    cvMap.put( 'isActive' , setActive );
+                }
+            }
+        }
+    }
+
+    private static string invalidateEmailArray( List<String> origEmails ) {
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
             newES = (origEmails[i].indexOf(STRING_INVALID) == -1) ? newES + ',' + origEmails[i] + STRING_INVALID : newES + ',' + origEmails[i];
@@ -981,7 +1098,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return newES.substringAfter(',');
     }
 
-    private static string invalidateEmailString(String origES) {
+    private static string invalidateEmailString( String origES ) {
         string[] origEmails = origES.split('[,;\r\n]+');
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
@@ -1001,7 +1118,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return profileId;
     }
 
-    private static Map<String, List<Profile>> getProfileNameMap(String userCsv) {
+    private static Map<String, List<Profile>> getProfileNameMap( String userCsv ) {
         Map<String, List<Profile>> profileNameMap = new map<String, List<Profile>>();
         for (String row : userCsv.split('\n')) { // build Profile Map
             String[] col = row.split(',');
@@ -1013,7 +1130,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return profileNameMap;
     }
 
-    private static Map<String, List<UserRole>> getUserRoleNameMap(String userCsv) {
+    private static Map<String, List<UserRole>> getUserRoleNameMap( String userCsv ) {
         Map<String, List<UserRole>> userRoleNameMap = new map<String, List<UserRole>>();
         for (String row : userCsv.split('\n')) { // build Role ID Map
             String[] col = row.split(',');
@@ -1026,7 +1143,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     @TestVisible
-    private static void updateUserLogins(Database.UpsertResult[] userResults) {
+    private static void updateUserLogins( Database.UpsertResult[] userResults ) {
         Set<Id> userIdSet = new Set<Id>();
         List<UserLogin> userLoginList = new List<UserLogin>(); // list of UserLogin records to update
         try {
@@ -1097,4 +1214,6 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         }
         private set;
     }
+
 }
+//
