@@ -403,6 +403,11 @@
                 <default>false</default>
                 <label>Delta_Quantity__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__Status__c</fullName>
+                <default>false</default>
+                <label>SBQQ__Status__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

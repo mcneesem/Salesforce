@@ -177,6 +177,11 @@
                 <default>false</default>
                 <label>NSP_Quoted_Quantity__c</label>
             </value>
+            <value>
+                <fullName>Delta_Annual_Amount__c</fullName>
+                <default>false</default>
+                <label>Delta_Annual_Amount__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
