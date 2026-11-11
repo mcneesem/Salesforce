@@ -6,7 +6,7 @@ private class NSP_AutomaticProjectSchedulerTest {
     //
 
     @isTest
-    private static void testNSPAutomaticProjectScheduler() {
+    private static void testDeprecated() {
         NSP_AutomaticProjectScheduler deprecated = new NSP_AutomaticProjectScheduler();
     }
 

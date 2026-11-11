@@ -6,7 +6,7 @@ private class NSP_deleteErrorLogsBatchTest {
     //
 
     @isTest
-    private static void testDeleteErrorLogsBatch() {
+    private static void testDeprecated() {
         NSP_deleteErrorLogsBatch deprecated = new NSP_deleteErrorLogsBatch();
     }
 
