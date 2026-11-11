@@ -24457,6 +24457,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Project_Task__c.Meeting_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_AIMS_Account__c</field>
         <readable>true</readable>

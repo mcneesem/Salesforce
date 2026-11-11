@@ -597,6 +597,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Meeting_URL__c</fieldItem>
+                <identifier>RecordMeeting_URL_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Long_Description__c</fieldItem>
                 <identifier>Recordpse_Long_Description_cField2</identifier>
             </fieldInstance>

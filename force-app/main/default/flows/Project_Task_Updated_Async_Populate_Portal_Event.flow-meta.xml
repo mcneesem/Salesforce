@@ -62,6 +62,21 @@
         </rules>
     </decisions>
     <description>New Client Portal: Populate Portal Event</description>
+    <ends>
+        <name>END_ELEMENT_4</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_5</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_6</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Populate Portal Event</label>
@@ -113,7 +128,10 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 OR 6 OR 7 ) AND 8 AND 9 AND 10 )</filterLogic>
+        <connector>
+            <targetReference>END_ELEMENT_4</targetReference>
+        </connector>
+        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 OR 6 OR 7 OR 8 ) AND 9 AND 10 AND 11 )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -151,6 +169,13 @@
         </filters>
         <filters>
             <field>pse__Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Meeting_URL__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -200,6 +225,9 @@
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_5</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -225,6 +253,9 @@
         <label>Project Task - Subflow - Populate Portal Event</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_6</targetReference>
+        </connector>
         <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
         <inputAssignments>
             <name>operationType</name>
