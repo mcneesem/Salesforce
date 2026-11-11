@@ -169,6 +169,13 @@
                 <elementReference>$Setup.Schedule_Seller_Settings__c.EventRecordTypeId__c</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>IsChild</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Event</object>
         <queriedFields>Id</queriedFields>
