@@ -387,14 +387,21 @@ public with sharing class Nps_CloneServicePlanProjectController {
             relatedRecords.add(newProjTaskAssignemt);
         }
         //clone the notes and attach them to the newly cloned project task
-        for(NSP_Note__c note: [
+        for ( NSP_Note__c note: [
                     SELECT
-                        Id , NSP_NetSuite_External_ID__c , NSP_OneVoice_External_ID__c , Note__c ,
-                        NSP_Project_Task__c , NSP_Project_Task__r.Name , NSP_Project_Task__r.pse__Status__c ,
-                        NSP_Project_Task__r.pse__Start_Date_Time__c , NSP_Project_Task__r.pse__End_Date_Time__c ,
-                        NSP_Project_Task__r.NSP_Percentage_Complete__c , NSP_Project_Task__r.pse__Parent_Task__r.Name
+                        Id ,
+                        NSP_NetSuite_External_ID__c ,
+                        NSP_OneVoice_External_ID__c ,
+                        Note__c ,
+                        NSP_Project_Task__c ,
+                        NSP_Project_Task__r.Name ,
+                        NSP_Project_Task__r.pse__Status__c ,
+                        NSP_Project_Task__r.pse__Start_Date_Time__c ,
+                        NSP_Project_Task__r.pse__End_Date_Time__c ,
+                        NSP_Project_Task__r.NSP_Percentage_Complete__c ,
+                        NSP_Project_Task__r.pse__Parent_Task__r.Name
                     FROM NSP_Note__c
-                    WHERE NSP_Project_Task__c =: prevProjTaskIds
+                    WHERE ( NSP_Project_Task__c = :prevProjTaskIds )
                 ]
             )
         {
