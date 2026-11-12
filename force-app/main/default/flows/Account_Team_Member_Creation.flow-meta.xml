@@ -298,6 +298,41 @@
                     <stringValue>Renewal Coordinator</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>VarAccountTeammember.NSP_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Business Performance Advisor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VarAccountTeammember.NSP_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Business Performance Consultant</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VarAccountTeammember.NSP_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HRScale HCM &amp; Comp Analyst</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VarAccountTeammember.NSP_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HRScale Time &amp; Absence Analyst</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VarAccountTeammember.NSP_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MidMarket Account Exec</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
                 <targetReference>Add_Another</targetReference>
@@ -444,6 +479,21 @@
         <picklistField>Users_Sales_Office__c</picklistField>
         <picklistObject>NSP_Account_Team__c</picklistObject>
     </dynamicChoiceSets>
+    <ends>
+        <name>END_ELEMENT_4</name>
+        <locationX>864</locationX>
+        <locationY>566</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_5</name>
+        <locationX>336</locationX>
+        <locationY>2048</locationY>
+    </ends>
+    <ends>
+        <name>END_ELEMENT_6</name>
+        <locationX>292</locationX>
+        <locationY>890</locationY>
+    </ends>
     <environments>Default</environments>
     <interviewLabel>Account Team Member Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Team Member Creation</label>
@@ -485,6 +535,9 @@
         <label>Create AccMember</label>
         <locationX>336</locationX>
         <locationY>1940</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_5</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_AccMember</targetReference>
         </faultConnector>
@@ -563,6 +616,14 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -583,6 +644,14 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -603,6 +672,14 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -614,6 +691,14 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Account_Team_Addition_Section2</name>
@@ -629,6 +714,14 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -648,6 +741,14 @@
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -670,6 +771,14 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -681,6 +790,14 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -693,10 +810,21 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>END_ELEMENT_6</targetReference>
+        </connector>
         <fields>
             <name>UserExistsDisplayText</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;This user is already an account team member, please click previous to modify team addition or finish to exit&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -714,6 +842,9 @@
         <label>Insperity Fault Handler Subflow</label>
         <locationX>864</locationX>
         <locationY>458</locationY>
+        <connector>
+            <targetReference>END_ELEMENT_4</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
