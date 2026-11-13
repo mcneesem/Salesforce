@@ -5,7 +5,7 @@
 // Name : NSP_SAEmail_DateTimeController
 //
 public class NSP_SAEmail_DateTimeController {
-    // test w/ NSP_SAEmail_DateTimeControllerTest (81%)
+    // test w/ NSP_SAEmail_DateTimeControllerTest (84%)
 
     public DateTime date_time {get;set;}
     public String defined_format {get;set;}
@@ -60,11 +60,16 @@ public class NSP_SAEmail_DateTimeController {
             ServiceAppointment serviceApp =  getServiceAppointment();
             if ( serviceApp != null && serviceApp.ServiceTerritoryId != null ) {
                 // Query the service territory record from Service Terr Mem for Assign Service Resource
-                ServiceTerritory serviceTerr = [
+                ServiceTerritory serviceTerr = null;
+                List<ServiceTerritory> serviceTerrList = [
                     SELECT Id , OperatingHoursId , TopLevelTerritoryId
                     FROM ServiceTerritory
                     WHERE Id = :serviceApp.ServiceTerritoryId
                 ];
+                if (!serviceTerrList.isEmpty()) {
+                    serviceTerr = serviceTerrList[0];
+                }
+
                 //query operating hrs
                 List<String> operHrsFields = new List<String>{
                     'Id' ,
