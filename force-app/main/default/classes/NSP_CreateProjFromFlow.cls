@@ -83,7 +83,9 @@ public with sharing class NSP_CreateProjFromFlow {
                         pse__Proj__c selectedProject = null;
                         if ( !projectRecords.isEmpty() ) {
                             selectedProject = projectRecords[0];
-                            for(OrderItem oi : orderItems){
+                        }
+                        if ( selectedProject != null ) {
+                            for ( OrderItem oi : orderItems ) {
                                 oi.NSP_Project__c = selectedProject.Id;
                                 oiUpdateList.add( oi );
                             }
@@ -157,27 +159,46 @@ public with sharing class NSP_CreateProjFromFlow {
     //
     @AuraEnabled(cacheable=true)
     public static Boolean validateUserRole(){
-        Boolean isValidUser = false;
-        Id userId = userinfo.getUserId();
-        Set<String> validRoles = new Set<String>(System.Label.NSP_FinanceAccesstoCreateProject.split(','));
         List<User> userRecords =[
-            SELECT Id, Name, Email, Profile.Name, UserRole.Name
+            SELECT
+                Id ,
+                Name ,
+                Email ,
+                Profile.Name ,
+                UserRole.Name
             FROM User
-            WHERE Id= :userId
+            WHERE ( Id = :UserInfo.getUserId() )
             LIMIT 1
         ];
         User selectedUser = null;
         if ( !userRecords.isEmpty() ) {
             selectedUser = userRecords[0];
-            if(validRoles.contains(selectedUser.UserRole.Name) || selectedUser.Profile.Name == 'System Administrator'){
-                isValidUser = true;
+        }
+        Boolean isValidUser = false;
+        if ( selectedUser != null ) {
+            Set<String> validRoles = new Set<String>();
+            if ( String.isNotBlank( System.Label.NSP_FinanceAccesstoCreateProject ) ) {
+                validRoles = new Set<String>(
+                    System.Label.NSP_FinanceAccesstoCreateProject.split( ',' )
+                );
             }
-            else{
-                isValidUser = false;
+            if ( ( selectedUser.UserRole != null )
+                && String.isNotBlank( selectedUser.UserRole.Name )
+                && !validRoles.isEmpty()
+                && validRoles.contains( selectedUser.UserRole.Name )
+                )
+            {
+                isValidUser = true;
+            } else if ( ( selectedUser.Profile != null )
+                && String.isNotBlank( selectedUser.Profile.Name )
+                && selectedUser.Profile.Name.startsWith( 'System Admin' )
+                )
+            {
+                isValidUser = true;
             }
         }
         return isValidUser;
-    } 
+    }
 
     //
     // Method Name : checkCreateProject
