@@ -5,6 +5,7 @@
     <label>Team QE</label>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>Opportunity_Validation_Task_Creator</permissionSets>
     <permissionSets>Run_Flows</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
