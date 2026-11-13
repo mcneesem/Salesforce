@@ -1,10 +1,5 @@
-//
-// @description  :  Controller class for  vf component to get the Date/time in user's time zone instead of in GMT.
-// @date 06/08/2023
-// Author : Harsha Khiroya
-// Name : NSP_SAEmail_DateTimeController
-//
-public class NSP_SAEmail_DateTimeController {
+// intentionally `without sharing` to preserve default sharing at api version 57...
+public without sharing class NSP_SAEmail_DateTimeController {
     // test w/ NSP_SAEmail_DateTimeControllerTest (84%)
 
     public DateTime date_time {get;set;}
@@ -57,30 +52,30 @@ public class NSP_SAEmail_DateTimeController {
     //
     public OperatingHours getOperatingHours() {
         if ( operHrs == null ) {
-            ServiceAppointment serviceApp =  getServiceAppointment();
-            if ( serviceApp != null && serviceApp.ServiceTerritoryId != null ) {
+            ServiceAppointment serviceApp = this.getServiceAppointment();
+            if ( ( serviceApp != null ) && ( serviceApp.ServiceTerritoryId != null ) ) {
                 // Query the service territory record from Service Terr Mem for Assign Service Resource
                 ServiceTerritory serviceTerr = null;
                 List<ServiceTerritory> serviceTerrList = [
                     SELECT Id , OperatingHoursId , TopLevelTerritoryId
                     FROM ServiceTerritory
-                    WHERE Id = :serviceApp.ServiceTerritoryId
+                    WHERE ( Id = :serviceApp.ServiceTerritoryId )
                 ];
-                if (!serviceTerrList.isEmpty()) {
+                if ( !serviceTerrList.isEmpty() ) {
                     serviceTerr = serviceTerrList[0];
                 }
-
                 //query operating hrs
-                List<String> operHrsFields = new List<String>{
-                    'Id' ,
-                    'Name' ,
-                    'TimeZone'
-                };
-                if ( serviceTerr != null && serviceTerr.OperatingHoursId != null ) {
-                    String query = new NSP_QueryBuilder('OperatingHours', operHrsFields)
+                if ( ( serviceTerr != null ) && ( serviceTerr.OperatingHoursId != null ) ) {
+                    List<String> operHrsFields = new List<String>{
+                        'Id' ,
+                        'Name' ,
+                        'TimeZone'
+                    };
+                    String query = new NSP_QueryBuilder( 'OperatingHours' , operHrsFields )
                         .addFilter( 'Id' , serviceTerr.OperatingHoursId )
                         .addLimit( 1 )
-                        .build();
+                        .build()
+                        ;
                     operHrs = Database.query( query );
                 }
             }
