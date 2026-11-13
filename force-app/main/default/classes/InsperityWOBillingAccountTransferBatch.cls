@@ -127,8 +127,7 @@ public with sharing class InsperityWOBillingAccountTransferBatch implements Data
                     String[] toAddresses = new String[]{ job.CreatedBy.Email };
                     mail.setToAddresses( toAddresses );
                     mail.setSubject( 'Transfer Billing Account Batch: ' + job.Status );
-                    String body = ''
-                        + 'The batch Apex job processed ' + job.TotalJobItems + ' batches with '+ job.NumberOfErrors + ' failures.<br/>'
+                    String body = 'The batch Apex job processed ' + job.TotalJobItems + ' batches with '+ job.NumberOfErrors + ' failures.<br/>'
                         + 'Total order Records processed: ' + this.lstOrdProcessed.size() + '<br/>'
                         + 'Order records processed: ' + JSON.serialize( this.lstOrdProcessed ) + '<br/>'
                         + 'Total Order records failed: ' + this.lstOrdFailed.size() + '<br/>'
