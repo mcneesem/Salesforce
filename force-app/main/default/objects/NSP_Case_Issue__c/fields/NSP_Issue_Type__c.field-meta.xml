@@ -11,19 +11,34 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Feature Deprecation</fullName>
+                <default>false</default>
+                <label>Feature Deprecation</label>
+            </value>
+            <value>
                 <fullName>Global outage</fullName>
                 <default>false</default>
                 <label>Global outage</label>
             </value>
             <value>
-                <fullName>Server Issue</fullName>
-                <default>false</default>
-                <label>Server Issue</label>
-            </value>
-            <value>
                 <fullName>Networking Issue</fullName>
                 <default>false</default>
                 <label>Networking Issue</label>
+            </value>
+            <value>
+                <fullName>Outage</fullName>
+                <default>false</default>
+                <label>Outage</label>
+            </value>
+            <value>
+                <fullName>Release Related</fullName>
+                <default>false</default>
+                <label>Release Related</label>
+            </value>
+            <value>
+                <fullName>Server Issue</fullName>
+                <default>false</default>
+                <label>Server Issue</label>
             </value>
         </valueSetDefinition>
     </valueSet>

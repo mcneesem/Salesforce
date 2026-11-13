@@ -1340,6 +1340,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>NSP_Case_Issue__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>NSP_Contribution__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
