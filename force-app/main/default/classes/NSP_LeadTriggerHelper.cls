@@ -1114,16 +1114,17 @@ public with sharing class NSP_LeadTriggerHelper {
         return response;
     }
 
+    private static List<Sales_Segment_Threshold__mdt> thresholdList;
     private static List<Sales_Segment_Threshold__mdt> thresholds {
         private get {
-            if ( thresholds == null ) {
-                thresholds = [
+            if ( thresholdList == null ) {
+                thresholdList = [
                     SELECT Id , Label , Minimum_Employees__c
                     FROM Sales_Segment_Threshold__mdt
                     ORDER BY Minimum_Employees__c DESC
                 ];
             }
-            return thresholds;
+            return thresholdList;
         }
         private set;
     }
@@ -1227,17 +1228,18 @@ public with sharing class NSP_LeadTriggerHelper {
 
     // prevent LimitExceptions
     // ~ cache SOQL results for the 'Available' User...
+    private static List<User> availableUsersList;
     private static List<User> availableUsers {
         private get {
-            if ( availableUsers == null ) {
-                availableUsers = [
+            if ( availableUsersList == null ) {
+                availableUsersList = [
                     SELECT Id , Name
                     FROM User
                     WHERE Name = 'Available'
                     LIMIT 1
                 ];
             }
-            return availableUsers;
+            return availableUsersList;
         }
         private set;
     }
@@ -1297,8 +1299,8 @@ public with sharing class NSP_LeadTriggerHelper {
         } else if (childMap != null && !childMap.isEmpty()) {
             childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c FROM Lead WHERE ((DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c IN: allLeadList) OR (DNB_Connect_DUNS_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
         }
+        List<LeadStatus> convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
         if (parentResult != null && !parentResult.isEmpty()) {
-            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
             for (Lead childLead: parentResult) {
                 Database.LeadConvert lc = new Database.LeadConvert();
                 if (!childLead.IsConverted) {
@@ -1308,13 +1310,14 @@ public with sharing class NSP_LeadTriggerHelper {
                     lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
                     lc.setOwnerId(userinfo.getUserId());
                     lc.setDoNotCreateOpportunity(TRUE);
-                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    if(!convertStatus.isEmpty()){
+                        lc.setConvertedStatus(convertStatus[0].MasterLabel);
+                    }
                     massleadconvert.add( lc );
                 }
             }
         }
         if (childResult !=null && !childResult.isEmpty()) {
-            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
             for (Lead childLead: childResult) {
                 Database.LeadConvert lc = new Database.LeadConvert();
                 if (childLead.IsConverted == false) {
@@ -1324,7 +1327,9 @@ public with sharing class NSP_LeadTriggerHelper {
                     lc.setAccountId(accountId);
                     lc.setOwnerId(userinfo.getUserId());
                     lc.setDoNotCreateOpportunity(TRUE);
-                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    if(!convertStatus.isEmpty()){
+                        lc.setConvertedStatus(convertStatus[0].MasterLabel);
+                    }
                     massleadconvert.add( lc );
                 }
             }
