@@ -1,6 +1,6 @@
 // intentionally `without sharing` to preserve default sharing at api version 57...
 global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (86%)
+    // test w/ NSP_PrepSandboxTest (84%)
 
     private static final String STRING_BEARER = 'Bearer ';
     private static final String STRING_APP_JSON = 'application/json';
@@ -140,7 +140,12 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doUserImport( String sandboxName ) {
         try {
-            StaticResource userStaticResource = [SELECT Body FROM StaticResource WHERE Name = 'PreProd_Users' WITH SECURITY_ENFORCED];
+            List<StaticResource> userStaticResources = [SELECT Body FROM StaticResource WHERE Name = 'PreProd_Users' WITH SECURITY_ENFORCED];
+            StaticResource userStaticResource = null;
+            if( !userStaticResources.isEmpty()){
+                userStaticResource = userStaticResources[0];
+            }
+            if( userStaticResource != null ){
             String adminProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator' WITH SECURITY_ENFORCED LIMIT 1].Id;
             String userCsv = userStaticResource.Body.toString();
             // columns:
@@ -193,6 +198,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
                 List<Database.UpsertResult> userResults = Database.upsert( userList, User.Username , false );
                 NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport:upsert' , userResults );
                 updateUserLogins( userResults );
+            }
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doUserImport' );
@@ -786,7 +792,12 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             Map<String, Integer> orgMap = new Map<String, Integer>{ 'merge' => 1 , 'test' => 2 , 'stage' => 3 };
             Map<String, String> teamAddrMap = new Map<String, String>();
-            StaticResource e2CStaticResource = [ SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses' WITH SECURITY_ENFORCED ];
+            List<StaticResource> e2CStaticResources = [ SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses' WITH SECURITY_ENFORCED ];
+            StaticResource e2CStaticResource = null;
+            if( !e2CStaticResources.isEmpty()){
+                e2CStaticResource = e2CStaticResources[0];
+            }
+            if( e2CStaticResource != null){
             String e2Ccsv = e2CStaticResource.Body.toString();
             String[] rows = e2Ccsv.split( '\n' );
 
@@ -824,6 +835,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
             if (teamAddrMap.size() > 0 && allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 service.updateMetadata(allMetadataList);
+            }
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doE2CAddresses' );
