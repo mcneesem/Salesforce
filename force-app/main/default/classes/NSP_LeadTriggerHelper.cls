@@ -1114,8 +1114,8 @@ public with sharing class NSP_LeadTriggerHelper {
         return response;
     }
 
-    private static List<Sales_Segment_Threshold__mdt> thresholdList;
     private static List<Sales_Segment_Threshold__mdt> thresholds {
+        List<Sales_Segment_Threshold__mdt> thresholdList;
         private get {
             if ( thresholdList == null ) {
                 thresholdList = [
@@ -1228,8 +1228,8 @@ public with sharing class NSP_LeadTriggerHelper {
 
     // prevent LimitExceptions
     // ~ cache SOQL results for the 'Available' User...
-    private static List<User> availableUsersList;
     private static List<User> availableUsers {
+        List<User> availableUsersList;
         private get {
             if ( availableUsersList == null ) {
                 availableUsersList = [
