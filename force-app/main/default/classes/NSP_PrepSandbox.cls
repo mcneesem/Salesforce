@@ -138,7 +138,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return !matchingUsers.isEmpty();
     }
 
-    private static List<String> getPreProdUsersRows() {
+    private static String getPreProdUsersCsv() {
         List<StaticResource> userStaticResources = [
             SELECT Body
             FROM StaticResource
@@ -149,18 +149,14 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         if ( !userStaticResources.isEmpty() ) {
             userStaticResource = userStaticResources[0];
         }
-        String userCsv = null;
+        String userCsv = '';
         if ( ( userStaticResource != null )
             && ( userStaticResource.Body != null )
             )
         {
             userCsv = userStaticResource.Body.toString();
         }
-        List<String> rows = new List<String>();
-        if ( String.isNotBlank( userCsv ) ) {
-            rows = userCsv.split( '\n' );
-        }
-        return rows;
+        return userCsv;
     }
 
     public static void doUserImport( String sandboxName ) {
@@ -174,9 +170,13 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             //  5 - Profile
             //  6 - Role
             //  7 - Orgs
+            String userCsv = NSP_PrepSandbox.getPreProdUsersCsv();
+            List<String> rows = new List<String>();
+            if ( String.isNotBlank( userCsv ) ) {
+                rows = userCsv.split( '\n' );
+            }
             Map<String, List<Profile>> profileNameMap = getProfileNameMap( userCsv );
             Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
-            List<String> rows = NSP_PrepSandbox.getPreProdUsersRows();
             List<User> userList = new List<User>(); // list of User records to upsert
             for(integer i=1; i < rows.size() ; i++) { // skip header row
                 List<String> column = rows[i].split(',');
@@ -819,7 +819,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             && ( e2CStaticResource.Body != null )
             )
         {
-            rows = e2CStaticResource.Body.split( '\n' );
+            rows = e2CStaticResource.Body.toString().split( '\n' );
         }
         return rows;
     }
