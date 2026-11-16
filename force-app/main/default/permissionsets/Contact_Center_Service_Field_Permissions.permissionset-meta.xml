@@ -11403,6 +11403,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Case_Issue__c.Severity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Category_Sub_Category_Mapping__c.NSP_Asset_Record_Types__c</field>
         <readable>true</readable>
     </fieldPermissions>
