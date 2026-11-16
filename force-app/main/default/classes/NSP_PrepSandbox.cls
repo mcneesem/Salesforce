@@ -171,13 +171,13 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             //  6 - Role
             //  7 - Orgs
             String userCsv = NSP_PrepSandbox.getPreProdUsersCsv();
+            Map<String, List<Profile>> profileNameMap = getProfileNameMap( userCsv );
+            Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
+            List<User> userList = new List<User>(); // list of User records to upsert
             List<String> rows = new List<String>();
             if ( String.isNotBlank( userCsv ) ) {
                 rows = userCsv.split( '\n' );
             }
-            Map<String, List<Profile>> profileNameMap = getProfileNameMap( userCsv );
-            Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
-            List<User> userList = new List<User>(); // list of User records to upsert
             for(integer i=1; i < rows.size() ; i++) { // skip header row
                 List<String> column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
