@@ -62,16 +62,34 @@ public with sharing class SandboxDataExportController {
                     'Export definition missing SObject configuration: ' + developerName
                 );
             }
-            else if ( String.isBlank( queryRecord.FieldApiNames__c ) ) {
+            List<String> fields = new List<String>();
+            Set<String> addedFieldKeys = new Set<String>();
+            if ( String.isNotBlank( queryRecord.FieldApiNames__c ) ) {
+                for ( String listedField : queryRecord.FieldApiNames__c.split( ',' ) ) {
+                    String trimmed = listedField.trim();
+                    if ( String.isNotBlank( trimmed )
+                        && !addedFieldKeys.contains( trimmed.toLowerCase() ) )
+                    {
+                        fields.add( trimmed );
+                        addedFieldKeys.add( trimmed.toLowerCase() );
+                    }
+                }
+            }
+            for ( String describeField : SandboxDataExportController.getAllAccessibleFields(
+                queryRecord.SObjectApiName__c
+            ) ) {
+                if ( !addedFieldKeys.contains( describeField.toLowerCase() ) ) {
+                    fields.add( describeField );
+                    addedFieldKeys.add( describeField.toLowerCase() );
+                }
+            }
+            if ( fields.isEmpty() ) {
                 throw new AuraHandledException(
-                    'Export definition missing field configuration: ' + developerName
+                    'No accessible fields found for object: ' + queryRecord.SObjectApiName__c
                 );
             }
-            List<String> fields = new List<String>();
-            for ( String field : queryRecord.FieldApiNames__c.split( ',' ) ) {
-                fields.add( field.trim() );
-            }
             NSP_QueryBuilder builder = new NSP_QueryBuilder( queryRecord.SObjectApiName__c , fields );
+            builder.setSecurityEnforce( false );
             if ( String.isNotBlank( queryRecord.OrderBy__c ) ) {
                 builder.orderBy(
                     queryRecord.OrderBy__c ,
@@ -105,6 +123,29 @@ public with sharing class SandboxDataExportController {
     // ------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------
+
+    // @description Returns the API names of all FLS-accessible fields on the given sObject.
+    // @param sObjectApiName API name of the target SObject.
+    // @return Accessible field API names; empty list if the object is unknown or has no readable fields.
+    @TestVisible
+    private static List<String> getAllAccessibleFields( String sObjectApiName ) {
+        List<String> fields = new List<String>();
+        Schema.SObjectType sObjectType = Schema.getGlobalDescribe().get( sObjectApiName );
+        if ( sObjectType != null ) {
+            Map<String, Schema.SObjectField> fieldMap = sObjectType.getDescribe().fields.getMap();
+            for ( String fieldName : fieldMap.keySet() ) {
+                Schema.DescribeFieldResult fieldDescribe = fieldMap.get( fieldName ).getDescribe();
+                Schema.DisplayType fieldType = fieldDescribe.getType();
+                if ( fieldDescribe.isAccessible()
+                    && fieldType != Schema.DisplayType.ADDRESS
+                    && fieldType != Schema.DisplayType.LOCATION )
+                {
+                    fields.add( fieldName );
+                }
+            }
+        }
+        return fields;
+    }
 
     @TestVisible
     private static String buildCsv( List<SObject> records , List<String> columns ) {

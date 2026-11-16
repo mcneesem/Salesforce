@@ -1,6 +1,6 @@
 // intentionally `without sharing` to preserve default sharing at api version 57...
 global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (86%)
+    // test w/ NSP_PrepSandboxTest (82%)
 
     private static final String STRING_BEARER = 'Bearer ';
     private static final String STRING_APP_JSON = 'application/json';
@@ -203,7 +203,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
         allMetadataList.add(new List<MetadataService.Metadata>());
         List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [
-            SELECT Id , Label , DeveloperName , NSP_Signer_Username__c 
+            SELECT Id , Label , DeveloperName , NSP_Signer_Username__c
             FROM NSP_DocuSign_Signers__mdt
             WHERE (
                 ( Id != null )
@@ -986,6 +986,50 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         return UserInfo.getSessionId();
     }
 
+    // @description Runs a Tooling API query and returns the raw records list.
+    // @param callerName Method name used in the failure message.
+    // @param toolingBase Base Tooling API URL.
+    // @param sessionId API-enabled session Id.
+    // @param query URL-encoded SOQL string for the q parameter.
+    private static List<Object> queryToolingRecords( String callerName , String toolingBase , String sessionId , String query ) {
+        HttpRequest queryRequest = new HttpRequest();
+        queryRequest.setEndpoint( toolingBase + 'query/?q=' + query );
+        queryRequest.setMethod( 'GET' );
+        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        queryRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        queryRequest.setTimeout( 120000 );
+        HttpResponse queryResponse = new Http().send( queryRequest );
+        if ( queryResponse.getStatusCode() != 200 ) {
+            throw new CalloutException( callerName + ' query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
+        }
+
+        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
+        return (List<Object>) queryResult.get( 'records' );
+    }
+
+    // @description PATCHes a Tooling API record, retrying on HTTP 500, and throws unless the result is 204.
+    // @param failureLabel Message prefix used if the PATCH ultimately fails.
+    // @param endpoint Full Tooling API URL of the record.
+    // @param sessionId API-enabled session Id.
+    // @param body JSON request body.
+    // @param maxRetries Number of additional attempts allowed after an HTTP 500.
+    private static void patchToolingRecord( String failureLabel , String endpoint , String sessionId , String body , Integer maxRetries ) {
+        HttpRequest patchRequest = new HttpRequest();
+        patchRequest.setEndpoint( endpoint );
+        patchRequest.setMethod( 'PATCH' );
+        patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
+        patchRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
+        patchRequest.setTimeout( 120000 );
+        patchRequest.setBody( body );
+        HttpResponse patchResponse = new Http().send( patchRequest );
+        for ( Integer retry = 0; retry < maxRetries && patchResponse.getStatusCode() == 500; retry++ ) {
+            patchResponse = new Http().send( patchRequest );
+        }
+        if ( patchResponse.getStatusCode() != 204 ) {
+            throw new CalloutException( failureLabel + ' (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
+        }
+    }
+
     public static void doTrustedURLs() {
         String host = URL.getOrgDomainUrl().toExternalForm();
         String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
@@ -997,34 +1041,12 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
 
         String devNames = '\'' + String.join(new List<String>(mapSites.keySet()), '\',\'') + '\'';
-        HttpRequest queryRequest = new HttpRequest();
-        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,DeveloperName+FROM+CspTrustedSite+WHERE+DeveloperName+IN+(' + devNames + ')' );
-        queryRequest.setMethod( 'GET' );
-        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
-        queryRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
-        queryRequest.setTimeout( 120000 );
-        HttpResponse queryResponse = new Http().send( queryRequest );
-        if ( queryResponse.getStatusCode() != 200 ) {
-            throw new CalloutException( 'doTrustedURLs query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
-        }
-
-        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
-        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        List<Object> records = queryToolingRecords( 'doTrustedURLs' , toolingBase , sessionId , 'SELECT+Id,DeveloperName+FROM+CspTrustedSite+WHERE+DeveloperName+IN+(' + devNames + ')' );
         for ( Object rec : records ) {
             Map<String, Object> recMap = (Map<String, Object>) rec;
             String recId = (String) recMap.get( 'Id' );
             String recName = (String) recMap.get( 'DeveloperName' );
-            HttpRequest patchRequest = new HttpRequest();
-            patchRequest.setEndpoint( toolingBase + 'sobjects/CspTrustedSite/' + recId );
-            patchRequest.setMethod( 'PATCH' );
-            patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
-            patchRequest.setHeader( 'Authorization', STRING_BEARER + sessionId );
-            patchRequest.setTimeout( 120000 );
-            patchRequest.setBody( '{"EndpointUrl":"' + mapSites.get( recName ) + '"}' );
-            HttpResponse patchResponse = new Http().send( patchRequest );
-            if ( patchResponse.getStatusCode() != 204 ) {
-                throw new CalloutException( 'doTrustedURLs PATCH failed for ' + recName + ' (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
-            }
+            patchToolingRecord( 'doTrustedURLs PATCH failed for ' + recName , toolingBase + 'sobjects/CspTrustedSite/' + recId , sessionId , '{"EndpointUrl":"' + mapSites.get( recName ) + '"}' , 0 );
         }
     }
 
@@ -1035,19 +1057,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         String toolingBase = host + NSP_PrepSandbox.TOOLING_API_PATH;
 
-        HttpRequest queryRequest = new HttpRequest();
-        queryRequest.setEndpoint( toolingBase + 'query/?q=SELECT+Id,Metadata+FROM+GlobalValueSet+WHERE+DeveloperName=\'Account_Assignment_Method\'' );
-        queryRequest.setMethod( 'GET' );
-        queryRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
-        queryRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
-        queryRequest.setTimeout( 120000 );
-        HttpResponse queryResponse = new Http().send( queryRequest );
-        if ( queryResponse.getStatusCode() != 200 ) {
-            throw new CalloutException( 'doGlobalValueSets query failed (' + queryResponse.getStatusCode() + '): ' + queryResponse.getBody() );
-        }
-
-        Map<String, Object> queryResult = (Map<String, Object>) JSON.deserializeUntyped( queryResponse.getBody() );
-        List<Object> records = (List<Object>) queryResult.get( 'records' );
+        List<Object> records = queryToolingRecords( 'doGlobalValueSets' , toolingBase , sessionId , 'SELECT+Id,Metadata+FROM+GlobalValueSet+WHERE+DeveloperName=\'Account_Assignment_Method\'' );
         if ( records == null || records.isEmpty() ) {
             throw new CalloutException( 'doGlobalValueSets: GlobalValueSet Account_Assignment_Method not found' );
         }
@@ -1059,20 +1069,8 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
         List<Object> customValues = (List<Object>) metadata.get( 'customValue' );
         mutateGvsCustomValues( customValues , setActive );
 
-        HttpRequest patchRequest = new HttpRequest();
-        patchRequest.setEndpoint( toolingBase + 'sobjects/GlobalValueSet/' + gvsId );
-        patchRequest.setMethod( 'PATCH' );
-        patchRequest.setHeader( STRING_CONTENT_TYPE , STRING_APP_JSON );
-        patchRequest.setHeader( 'Authorization' , STRING_BEARER + sessionId );
-        patchRequest.setTimeout( 120000 );
-        patchRequest.setBody( JSON.serialize( new Map<String, Object>{ 'FullName' => 'Account_Assignment_Method__gvs' , 'Metadata' => metadata } ) );
-        HttpResponse patchResponse = new Http().send( patchRequest );
-        for (Integer retry = 0; retry < 2 && patchResponse.getStatusCode() == 500; retry++) {
-            patchResponse = new Http().send( patchRequest );
-        }
-        if ( patchResponse.getStatusCode() != 204 ) {
-            throw new CalloutException( 'doGlobalValueSets PATCH failed (' + patchResponse.getStatusCode() + '): ' + patchResponse.getBody() );
-        }
+        String patchBody = JSON.serialize( new Map<String, Object>{ 'FullName' => 'Account_Assignment_Method__gvs' , 'Metadata' => metadata } );
+        patchToolingRecord( 'doGlobalValueSets PATCH failed' , toolingBase + 'sobjects/GlobalValueSet/' + gvsId , sessionId , patchBody , 2 );
     }
 
     // @description Iterates customValue entries and sets isActive on the Pre-ABX entry.
