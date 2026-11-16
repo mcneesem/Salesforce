@@ -1,6 +1,5 @@
 @isTest
 private class SandboxDataExportControllerTest {
-    // test w/ SandboxDataExportControllerTest (TBD%)
 
     // ------------------------------------------------------------
     // getExportDefinitions
