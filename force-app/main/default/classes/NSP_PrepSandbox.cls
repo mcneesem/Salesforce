@@ -150,7 +150,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             if ( !userStaticResources.isEmpty() ) {
                 userStaticResource = userStaticResources[0];
             }
-            String userCsv = ''
+            String userCsv = '';
             if ( ( userStaticResource != null )
                 && ( userStaticResource.Body != null )
                 )
