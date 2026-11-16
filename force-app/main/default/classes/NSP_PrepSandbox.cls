@@ -161,6 +161,7 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doUserImport( String sandboxName ) {
         try {
+            String userCsv = NSP_PrepSandbox.getPreProdUsersCsv();
             // columns:
             //  0 - Notes
             //  1 - Username
@@ -170,7 +171,6 @@ global without sharing class NSP_PrepSandbox implements SandboxPostCopy {
             //  5 - Profile
             //  6 - Role
             //  7 - Orgs
-            String userCsv = NSP_PrepSandbox.getPreProdUsersCsv();
             Map<String, List<Profile>> profileNameMap = getProfileNameMap( userCsv );
             Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap( userCsv );
             List<User> userList = new List<User>(); // list of User records to upsert
