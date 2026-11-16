@@ -1115,8 +1115,8 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     private static List<Sales_Segment_Threshold__mdt> thresholds {
-        List<Sales_Segment_Threshold__mdt> thresholdList;
         private get {
+            List<Sales_Segment_Threshold__mdt> thresholdList;
             if ( thresholdList == null ) {
                 thresholdList = [
                     SELECT Id , Label , Minimum_Employees__c
@@ -1229,8 +1229,8 @@ public with sharing class NSP_LeadTriggerHelper {
     // prevent LimitExceptions
     // ~ cache SOQL results for the 'Available' User...
     private static List<User> availableUsers {
-        List<User> availableUsersList;
         private get {
+            List<User> availableUsersList;
             if ( availableUsersList == null ) {
                 availableUsersList = [
                     SELECT Id , Name
