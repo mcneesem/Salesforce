@@ -393,7 +393,7 @@ public with sharing class AccountStatusUpdateService
 
 #### Coverage Tracking
 
-Immediately after each new non-test class declaration include:
+Immediately after each non-test class declaration include:
 
 ```apex
 public with sharing class AccountService
