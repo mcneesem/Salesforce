@@ -393,7 +393,7 @@ public with sharing class AccountStatusUpdateService
 
 #### Coverage Tracking
 
-Immediately after each class declaration include:
+Immediately after each new non-test class declaration include:
 
 ```apex
 public with sharing class AccountService
@@ -402,10 +402,12 @@ public with sharing class AccountService
 }
 ```
 
+- Do NOT add this comment to test classes (classes annotated with `@IsTest`, including test data factories and test utilities).
+
 - Class-level format:
 
 ```apex
-//
+ //
  // Provides services for geolocation and address conversion.
  //
 public with sharing class GeolocationService { }
