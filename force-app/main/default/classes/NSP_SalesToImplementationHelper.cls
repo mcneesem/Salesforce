@@ -1,4 +1,5 @@
-public class NSP_SalesToImplementationHelper {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_SalesToImplementationHelper {
     // test w/ NSP_SalesToImplementationHelperTest (97%)
 
     public void afterInsert( List<NSP_Sales_to_Implementation__c> newList ) {
@@ -43,25 +44,35 @@ public class NSP_SalesToImplementationHelper {
     //
     // MethodName: createRETEd
     // Description : Iterates through the map of updated S2I
-    // Params:       Set < Id > setOfS2IIds,  Map < Id, NSP_Sales_to_Implementation__c > mapS2I
-    // Author :      Ramya Ravi
     //
     public void createRETEd( Set<Id> setOfS2IIds , Map<Id,NSP_Sales_to_Implementation__c> mapS2I , Set<Id> planSubplanIDs ) {
-        Map < Id, Id > mapS2IToRETEducation = new Map < Id, Id > ();
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        List<Id> insertedIds = new List<Id>();
-        Map< Id, String > plansubplanMap = new Map< Id, String >();
-
-        // Gets education Team email address for Recipient email
-        NSP_Retirement_Services__mdt RetirementServicemdt =  NSP_Retirement_Services__mdt.getInstance(NSP_ServiceConstants.EDUCATION_TEAM);
-
         // query for any existing RET education records associated to S2I
-        for(NSP_RET_Education__c mappingRET: [Select Id,Sales_to_Implementation__c from NSP_RET_Education__c WHERE Sales_to_Implementation__c in : setOfS2IIds] ){
-            mapS2IToRETEducation.put(mappingRET.Sales_to_Implementation__c ,mappingRET.Id);
+        Map<Id,Id> mapS2IToRETEducation = new Map<Id,Id>();
+        for ( NSP_RET_Education__c mappingRET : [
+                    SELECT Id , Sales_to_Implementation__c
+                    FROM NSP_RET_Education__c
+                    WHERE ( Sales_to_Implementation__c IN :setOfS2IIds )
+                ]
+            )
+        {
+            mapS2IToRETEducation.put(
+                mappingRET.Sales_to_Implementation__c ,
+                mappingRET.Id
+            );
         }
         //query plan subplan to get subplan ID
-        for(NSP_Plan_SubPlan__c mappingPlanSubplan :[Select Id, NSP_Subplan_ID__c from NSP_Plan_SubPlan__c WHERE id in : planSubplanIDs]){
-            plansubplanMap.put(mappingPlanSubplan.Id, mappingPlanSubplan.NSP_Subplan_ID__c);
+        Map<Id,String> plansubplanMap = new Map<Id,String>();
+        for ( NSP_Plan_SubPlan__c mappingPlanSubplan : [
+                    SELECT Id , NSP_Subplan_ID__c
+                    FROM NSP_Plan_SubPlan__c
+                    WHERE ( Id in : planSubplanIDs )
+                ]
+            )
+        {
+            plansubplanMap.put(
+                mappingPlanSubplan.Id ,
+                mappingPlanSubplan.NSP_Subplan_ID__c
+            );
         }
         // create new RET education record and associate it to S2I
         List<NSP_RET_Education__c> listRETEdToInsert = NSP_SalesToImplementationHelper.populateInsertList(
@@ -69,35 +80,72 @@ public class NSP_SalesToImplementationHelper {
             mapS2IToRETEducation
         );
         //insert RET education records
+        List<Id> insertedIds = new List<Id>();
         if ( !listRETEdToInsert.isEmpty() ) {
-            Database.SaveResult[] srList = Database.insert( listRETEdToInsert , false );
-            for (Database.SaveResult sr : srList){
-                insertedIds.add(sr.getId());
+            List<Database.SaveResult> srList = Database.insert( listRETEdToInsert , false );
+            for ( Database.SaveResult sr : srList ) {
+                insertedIds.add( sr.getId() );
             }
         }
         // send email to Education team for each RET education record created
-        if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
-            EmailTemplate emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:  NSP_ServiceConstants.RET_Education_Creation_Email LIMIT 1];
-            List<String> sendTo = new List<String>();
-            sendTo.add(RetirementServicemdt.NSP_Email_Address__c);
-            if(emailTemp!=null){
-                for(Id idList:insertedIds){
-                    Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                    email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,idList);
-                    email.setTemplateId(emailTemp.Id);
-                    email.setToAddresses(sendTo);
-                    email.setWhatId(idList);
-                    lstEmailMessages.add(email);
-                }
-            }
-        }
-        if ( !lstEmailMessages.isEmpty() ) {
+        List<Messaging.SingleEmailMessage> lstEmailMessages = NSP_SalesToImplementationHelper.buildEmailMessages( insertedIds );
+        if ( ( lstEmailMessages != null ) && !lstEmailMessages.isEmpty() ) {
             try {
                 Messaging.sendEmail( lstEmailMessages );
             } catch ( Exception e ) {
                 System.debug( ' ~ CATCH ~ e=' + e );
             }
         }
+    }
+
+    private static List<Messaging.SingleEmailMessage> buildEmailMessages( List<Id> whatIds ) {
+        // send email to Education team for each RET education record created
+        List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
+        if ( EmailDeliverabilityController.isEnabledOutbound
+            && ( whatIds != null )
+            && !whatIds.isEmpty()
+            )
+        {
+            // Gets education Team email address for Recipient email
+            NSP_Retirement_Services__mdt retirementServicemdt = NSP_Retirement_Services__mdt.getInstance( 'NSP_RET_Education_Team_Email_Address' );
+            EmailTemplate template = NSP_SalesToImplementationHelper.getEmailTemplate();
+            if ( ( retirementServicemdt != null ) && ( template != null ) ) {
+                List<String> toAddresses = new List<String>();
+                toAddresses.add( retirementServicemdt.NSP_Email_Address__c );
+                for ( Id whatId : whatIds ) {
+                    Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(
+                        template.Id ,
+                        null ,
+                        whatId
+                    );
+                    message.setTemplateId( template.Id );
+                    message.setToAddresses( toAddresses );
+                    message.setWhatId( whatId );
+                    messages.add( message );
+                }
+            }
+        }
+        return messages;
+    }
+
+    private static EmailTemplate getEmailTemplate() {
+        List<EmailTemplate> templates = [
+            SELECT
+                Id ,
+                BrandTemplateId ,
+                Subject ,
+                HTMLValue ,
+                Body ,
+                DeveloperName
+            FROM EmailTemplate
+            WHERE ( DeveloperName = 'NSP_RET_Education_Creation_Email' )
+            LIMIT 1
+        ];
+        EmailTemplate template = null;
+        if ( !templates.isEmpty() ) {
+            template = templates[0];
+        }
+        return template;
     }
 
     // helper method to defeat sonar cognitive complexity...
