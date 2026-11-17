@@ -7,10 +7,10 @@ public with sharing class SalesVisualIndicatorHelper {
     public static AccountWrapper getAccount(String accId ) {
         
         AccountWrapper accountWrapper = new  AccountWrapper();
-        Account account = [SELECT NSP_Current_Provider__c FROM Account WHERE id =: accId];
+        List<Account> account = [SELECT NSP_Current_Provider__c FROM Account WHERE id =: accId];
 
-        if(account != null){
-            accountWrapper.isWorkday = account.NSP_Current_Provider__c != null && account.NSP_Current_Provider__c.equals('Workday');
+        if( !account.isEmpty() ){
+            accountWrapper.isWorkday = account[0].NSP_Current_Provider__c != null && account[0].NSP_Current_Provider__c.equals('Workday');
         }
 
         return accountWrapper;
