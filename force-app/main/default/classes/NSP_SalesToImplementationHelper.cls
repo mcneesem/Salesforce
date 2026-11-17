@@ -88,34 +88,44 @@ public without sharing class NSP_SalesToImplementationHelper {
             }
         }
         // send email to Education team for each RET education record created
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
-            // Gets education Team email address for Recipient email
-            NSP_Retirement_Services__mdt retirementServicemdt = NSP_Retirement_Services__mdt.getInstance( 'NSP_RET_Education_Team_Email_Address' );
-            EmailTemplate template = NSP_SalesToImplementationHelper.getEmailTemplate();
-            if ( ( retirementServicemdt != null ) && ( template != null ) ) {
-                List<String> sendTo = new List<String>();
-                sendTo.add( retirementServicemdt.NSP_Email_Address__c );
-                for ( Id idList : insertedIds ) {
-                    Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
-                        template.Id ,
-                        null ,
-                        idList
-                    );
-                    email.setTemplateId( template.Id );
-                    email.setToAddresses( sendTo );
-                    email.setWhatId( idList );
-                    lstEmailMessages.add( email );
-                }
-            }
-        }
-        if ( !lstEmailMessages.isEmpty() ) {
+        List<Messaging.SingleEmailMessage> lstEmailMessages = NSP_SalesToImplementationHelper.buildEmailMessages( insertedIds );
+        if ( ( lstEmailMessages != null ) && !lstEmailMessages.isEmpty() ) {
             try {
                 Messaging.sendEmail( lstEmailMessages );
             } catch ( Exception e ) {
                 System.debug( ' ~ CATCH ~ e=' + e );
             }
         }
+    }
+
+    private static List<Messaging.SingleEmailMessage> buildEmailMessages( List<Id> whatIds ) {
+        // send email to Education team for each RET education record created
+        List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
+        if ( EmailDeliverabilityController.isEnabledOutbound
+            && ( whatIds != null )
+            && !whatIds.isEmpty()
+            )
+        {
+            // Gets education Team email address for Recipient email
+            NSP_Retirement_Services__mdt retirementServicemdt = NSP_Retirement_Services__mdt.getInstance( 'NSP_RET_Education_Team_Email_Address' );
+            EmailTemplate template = NSP_SalesToImplementationHelper.getEmailTemplate();
+            if ( ( retirementServicemdt != null ) && ( template != null ) ) {
+                List<String> toAddresses = new List<String>();
+                toAddresses.add( retirementServicemdt.NSP_Email_Address__c );
+                for ( Id whatId : whatIds ) {
+                    Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(
+                        template.Id ,
+                        null ,
+                        whatId
+                    );
+                    message.setTemplateId( template.Id );
+                    message.setToAddresses( toAddresses );
+                    message.setWhatId( whatId );
+                    messages.add( message );
+                }
+            }
+        }
+        return messages;
     }
 
     private static EmailTemplate getEmailTemplate() {
