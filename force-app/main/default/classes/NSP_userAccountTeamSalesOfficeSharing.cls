@@ -226,25 +226,46 @@ public without sharing class NSP_userAccountTeamSalesOfficeSharing implements Qu
         List<AccountShare> oldAccountTeamShareList = this.selectExistingAccountShares(
             mapAccountIdSetAccTeamSalesOffice?.keySet()
         );
-        if ( !oldAccountTeamShareList?.isEmpty() ) {
+        if ( ( oldAccountTeamShareList != null ) && !oldAccountTeamShareList.isEmpty() ) {
             for ( AccountShare acShare : oldAccountTeamShareList ) {
-                if ( ( acShare.AccountId != null )
-                    && ( acShare.UserOrGroup != null )
-                    && String.isNotBlank( acShare.UserOrGroup.Name )
-                    && ( mapAccountIdSetAccTeamSalesOffice != null )
-                    && mapAccountIdSetAccTeamSalesOffice.containsKey( acShare.AccountId )
-                    && ( mapAccountIdSetAccTeamSalesOffice.get( acShare.AccountId ) != null )
-                    && mapAccountIdSetAccTeamSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name )
-                    && ( mapAccountIdSetAccountOwnerSalesOffice != null )
-                    && mapAccountIdSetAccountOwnerSalesOffice.containsKey( acShare.AccountId )
-                    && ( mapAccountIdSetAccountOwnerSalesOffice.get( acShare.AccountId ) != null )
-                    && !mapAccountIdSetAccountOwnerSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name )
-                    )
-                {
-                    // only remove AccountShares that are IN mapAccountIdSetAccTeamSalesOffice but NOT IN mapAccountIdSetAccountOwnerSalesOffice...
-                    records.add( acShare );
-                }
+                records = this.buildAccountSharesOld(
+                    records ,
+                    acShare ,
+                    mapAccountIdSetAccTeamSalesOffice ,
+                    mapAccountIdSetAccountOwnerSalesOffice
+                );
             }
+        }
+        return records;
+    }
+
+    // sonar helper method...
+    private List<AccountShare> buildAccountSharesOld(
+        List<AccountShare> records ,
+        AccountShare acShare ,
+        Map<String,Set<String>> mapAccountIdSetAccTeamSalesOffice ,
+        Map<String,Set<String>> mapAccountIdSetAccountOwnerSalesOffice
+        )
+    {
+        if ( records == null ) {
+            record = new List<AccountShare>();
+        }
+        if ( ( acShare != null )
+            && ( acShare.AccountId != null )
+            && ( acShare.UserOrGroup != null )
+            && String.isNotBlank( acShare.UserOrGroup.Name )
+            && ( mapAccountIdSetAccTeamSalesOffice != null )
+            && mapAccountIdSetAccTeamSalesOffice.containsKey( acShare.AccountId )
+            && ( mapAccountIdSetAccTeamSalesOffice.get( acShare.AccountId ) != null )
+            && mapAccountIdSetAccTeamSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name )
+            && ( mapAccountIdSetAccountOwnerSalesOffice != null )
+            && mapAccountIdSetAccountOwnerSalesOffice.containsKey( acShare.AccountId )
+            && ( mapAccountIdSetAccountOwnerSalesOffice.get( acShare.AccountId ) != null )
+            && !mapAccountIdSetAccountOwnerSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name )
+            )
+        {
+            // only remove AccountShares that are IN mapAccountIdSetAccTeamSalesOffice but NOT IN mapAccountIdSetAccountOwnerSalesOffice...
+            records.add( acShare );
         }
         return records;
     }
