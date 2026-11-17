@@ -20,7 +20,7 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
             Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>();
             Set<String> accountTeamMemberAIMSClientSet = new Set<String>();
 
-            for(AccountTeamMember accountTeamMemberObj : newList) { // test
+            for(AccountTeamMember accountTeamMemberObj : newList) {
                 if(integrationUser){
                     if(!String.isBlank(accountTeamMemberObj.NSP_Employee_Per_ID__c)){
                         accountTeamMemberEmployeePerIdSet.add(accountTeamMemberObj.NSP_Employee_Per_ID__c);
