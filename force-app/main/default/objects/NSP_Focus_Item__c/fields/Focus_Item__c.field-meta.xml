@@ -31,6 +31,11 @@
                 <label>Communication &amp; Engagement</label>
             </value>
             <value>
+                <fullName>Customer Sat Survey</fullName>
+                <default>false</default>
+                <label>Customer Sat Survey</label>
+            </value>
+            <value>
                 <fullName>Data &amp; Reporting Availability</fullName>
                 <default>false</default>
                 <label>Data &amp; Reporting Availability</label>
@@ -139,6 +144,11 @@
                 <fullName>Termination Save Attempt</fullName>
                 <default>false</default>
                 <label>Termination Save Attempt</label>
+            </value>
+            <value>
+                <fullName>Voice of the Customer</fullName>
+                <default>false</default>
+                <label>Voice of the Customer</label>
             </value>
         </valueSetDefinition>
     </valueSet>

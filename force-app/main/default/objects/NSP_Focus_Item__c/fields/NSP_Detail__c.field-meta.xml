@@ -33,6 +33,16 @@
                 <label>Active Save Attempt</label>
             </value>
             <value>
+                <fullName>At-Risk Client</fullName>
+                <default>false</default>
+                <label>At-Risk Client</label>
+            </value>
+            <value>
+                <fullName>At-Risk Feedback</fullName>
+                <default>false</default>
+                <label>At-Risk Feedback</label>
+            </value>
+            <value>
                 <fullName>BPA/BPC Change</fullName>
                 <default>false</default>
                 <label>BPA/BPC Change</label>
@@ -253,6 +263,11 @@
                 <label>Reporting complexity/needs unmet/missing data</label>
             </value>
             <value>
+                <fullName>Request a Call</fullName>
+                <default>false</default>
+                <label>Request a Call</label>
+            </value>
+            <value>
                 <fullName>Service Team Member Change</fullName>
                 <default>false</default>
                 <label>Service Team Member Change</label>
@@ -369,6 +384,18 @@
         <valueSettings>
             <controllingFieldValue>Resource Shift: Potential Client Impact</controllingFieldValue>
             <valueName>Service Team Member Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Sat Survey</controllingFieldValue>
+            <valueName>At-Risk Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Sat Survey</controllingFieldValue>
+            <valueName>Request a Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voice of the Customer</controllingFieldValue>
+            <valueName>At-Risk Feedback</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
