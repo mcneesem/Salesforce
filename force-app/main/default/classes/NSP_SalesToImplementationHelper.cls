@@ -48,10 +48,10 @@ public without sharing class NSP_SalesToImplementationHelper {
     // Author :      Ramya Ravi
     //
     public void createRETEd( Set<Id> setOfS2IIds , Map<Id,NSP_Sales_to_Implementation__c> mapS2I , Set<Id> planSubplanIDs ) {
-        Map < Id, Id > mapS2IToRETEducation = new Map < Id, Id > ();
+        Map<Id,Id> mapS2IToRETEducation = new Map<Id,Id>();
         List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
         List<Id> insertedIds = new List<Id>();
-        Map< Id, String > plansubplanMap = new Map< Id, String >();
+        Map<Id,String> plansubplanMap = new Map<Id,String>();
 
         // Gets education Team email address for Recipient email
         NSP_Retirement_Services__mdt RetirementServicemdt =  NSP_Retirement_Services__mdt.getInstance(NSP_ServiceConstants.EDUCATION_TEAM);
@@ -78,23 +78,8 @@ public without sharing class NSP_SalesToImplementationHelper {
         }
         // send email to Education team for each RET education record created
         if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
-            List<EmailTemplate> templates = [
-                SELECT
-                    Id ,
-                    BrandTemplateId ,
-                    Subject ,
-                    HTMLValue ,
-                    Body ,
-                    DeveloperName
-                FROM EmailTemplate
-                WHERE ( DeveloperName = 'NSP_RET_Education_Creation_Email' )
-                LIMIT 1
-            ];
-            EmailTemplate template = null;
-            if ( !templates.isEmpty() ) {
-                template = templates[0];
-            }
-            if ( template == null ) {
+            EmailTemplate template = NSP_SalesToImplementationHelper.getEmailTemplate();
+            if ( template != null ) {
                 List<String> sendTo = new List<String>();
                 sendTo.add( RetirementServicemdt.NSP_Email_Address__c );
                 for ( Id idList:insertedIds ) {
@@ -114,6 +99,26 @@ public without sharing class NSP_SalesToImplementationHelper {
                 System.debug( ' ~ CATCH ~ e=' + e );
             }
         }
+    }
+
+    private static EmailTemplate getEmailTemplate() {
+        List<EmailTemplate> templates = [
+            SELECT
+                Id ,
+                BrandTemplateId ,
+                Subject ,
+                HTMLValue ,
+                Body ,
+                DeveloperName
+            FROM EmailTemplate
+            WHERE ( DeveloperName = 'NSP_RET_Education_Creation_Email' )
+            LIMIT 1
+        ];
+        EmailTemplate template = null;
+        if ( !templates.isEmpty() ) {
+            template = templates[0];
+        }
+        return template;
     }
 
     // helper method to defeat sonar cognitive complexity...
