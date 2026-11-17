@@ -43,6 +43,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Sat Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Data %26 Reporting Availability</fullName>
             <default>false</default>
         </values>
@@ -130,6 +134,10 @@
             <fullName>Termination Save Attempt</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Voice of the Customer</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Detail__c</picklist>
@@ -147,6 +155,14 @@
         </values>
         <values>
             <fullName>Active Save Attempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>At-Risk Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>At-Risk Feedback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -323,6 +339,10 @@
         </values>
         <values>
             <fullName>Reporting complexity%2Fneeds unmet%2Fmissing data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Request a Call</fullName>
             <default>false</default>
         </values>
         <values>
