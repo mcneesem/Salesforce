@@ -77,14 +77,14 @@ public class NSP_SalesToImplementationHelper {
         }
         // send email to Education team for each RET education record created
         if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
-            EmailTemplate emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:  NSP_ServiceConstants.RET_Education_Creation_Email LIMIT 1];
+            List<EmailTemplate> emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:  NSP_ServiceConstants.RET_Education_Creation_Email LIMIT 1];
             List<String> sendTo = new List<String>();
             sendTo.add(RetirementServicemdt.NSP_Email_Address__c);
-            if(emailTemp!=null){
+            if( !emailTemp.isEmpty() ){
                 for(Id idList:insertedIds){
                     Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                    email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,idList);
-                    email.setTemplateId(emailTemp.Id);
+                    email= Messaging.renderStoredEmailTemplate(emailTemp[0].Id, null ,idList);
+                    email.setTemplateId(emailTemp[0].Id);
                     email.setToAddresses(sendTo);
                     email.setWhatId(idList);
                     lstEmailMessages.add(email);
