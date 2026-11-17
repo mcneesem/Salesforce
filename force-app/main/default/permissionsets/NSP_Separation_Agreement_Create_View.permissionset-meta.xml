@@ -386,11 +386,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.NSP_Employee_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -996,11 +991,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.NSP_WSEE_SubClient_Parent_Client_if_None__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_WSEE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1021,11 +1011,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.NSP_WorkState__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Written_Approval_From_The_MHRS__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1036,17 +1021,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_ReportRequest__c.Num_Of_Weeks_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_ReportRequest__c.Performance_Specialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.SR__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_ReportRequest__c.Num_Of_Weeks_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

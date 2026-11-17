@@ -338,11 +338,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_ReportRequest__c.NSP_Employee_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -939,11 +934,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_ReportRequest__c.NSP_WSEE_SubClient_Parent_Client_if_None__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_WSEE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -960,11 +950,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_WhoResponsibleForStockEquityPaymt__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ReportRequest__c.NSP_WorkState__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -998,7 +983,7 @@
         <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-        <recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NSP_ReportRequest__c.HRScale_Workday_Report</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
