@@ -77,17 +77,32 @@ public class NSP_SalesToImplementationHelper {
         }
         // send email to Education team for each RET education record created
         if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
-            List<EmailTemplate> emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:  NSP_ServiceConstants.RET_Education_Creation_Email LIMIT 1];
-            List<String> sendTo = new List<String>();
-            sendTo.add(RetirementServicemdt.NSP_Email_Address__c);
-            if( !emailTemp.isEmpty() ){
-                for(Id idList:insertedIds){
+            List<EmailTemplate> templates = [
+                SELECT
+                    Id ,
+                    BrandTemplateId ,
+                    Subject ,
+                    HTMLValue ,
+                    Body ,
+                    DeveloperName
+                FROM EmailTemplate
+                WHERE ( DeveloperName = 'NSP_RET_Education_Creation_Email' )
+                LIMIT 1
+            ];
+            EmailTemplate template = null;
+            if ( !templates.isEmpty() ) {
+                template = templates[0];
+            }
+            if ( template == null ) {
+                List<String> sendTo = new List<String>();
+                sendTo.add( RetirementServicemdt.NSP_Email_Address__c );
+                for ( Id idList:insertedIds ) {
                     Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                    email= Messaging.renderStoredEmailTemplate(emailTemp[0].Id, null ,idList);
-                    email.setTemplateId(emailTemp[0].Id);
-                    email.setToAddresses(sendTo);
-                    email.setWhatId(idList);
-                    lstEmailMessages.add(email);
+                    email= Messaging.renderStoredEmailTemplate( template.Id , null , idList );
+                    email.setTemplateId( template.Id );
+                    email.setToAddresses( sendTo );
+                    email.setWhatId( idList );
+                    lstEmailMessages.add( email );
                 }
             }
         }
