@@ -11,34 +11,34 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
             boolean integrationUser = false;
             Id profileId = userinfo.getProfileId();
             List<Profile> profileList = [Select Id,Name FROM Profile WHERE Id=:profileId LIMIT 1];
-            
+
             if(profileList[0].Name == System.Label.NSP_Integration_Profile_Name){
-                integrationUser =true;                
-            } 
-            
-            Set<Id> accountTeamMemberUserIdSet = new Set<Id>();    
-            Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>(); 
-            Set<String> accountTeamMemberAIMSClientSet = new Set<String>(); 
-            
-            for(AccountTeamMember accountTeamMemberObj : newList) {
+                integrationUser =true;
+            }
+
+            Set<Id> accountTeamMemberUserIdSet = new Set<Id>();
+            Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>();
+            Set<String> accountTeamMemberAIMSClientSet = new Set<String>();
+
+            for(AccountTeamMember accountTeamMemberObj : newList) { // test
                 if(integrationUser){
                     if(!String.isBlank(accountTeamMemberObj.NSP_Employee_Per_ID__c)){
-                        accountTeamMemberEmployeePerIdSet.add(accountTeamMemberObj.NSP_Employee_Per_ID__c);                        
+                        accountTeamMemberEmployeePerIdSet.add(accountTeamMemberObj.NSP_Employee_Per_ID__c);
                     }
                     if(!String.isBlank(accountTeamMemberObj.NSP_AIMS_Client__c)){
-                        accountTeamMemberAIMSClientSet.add(accountTeamMemberObj.NSP_AIMS_Client__c);                        
+                        accountTeamMemberAIMSClientSet.add(accountTeamMemberObj.NSP_AIMS_Client__c);
                     }
                 }
                 else{
-                    accountTeamMemberUserIdSet.add(accountTeamMemberObj.UserId);                    
+                    accountTeamMemberUserIdSet.add(accountTeamMemberObj.UserId);
                 }
             }
-            
+
             //get employee per id from user
             if(!integrationUser && accountTeamMemberUserIdSet.size() > 0 ){
                 populateEmployeePerIdOnATMBasedOnUserId(newList,accountTeamMemberUserIdSet);
             }
-            
+
             //get employee per id from user
             if(integrationUser && (accountTeamMemberEmployeePerIdSet.size() > 0 || accountTeamMemberAIMSClientSet.size() > 0) ){
                 populateEmployeePerIdOnATMBasedOnEmployeePerId(newList,accountTeamMemberEmployeePerIdSet,accountTeamMemberAIMSClientSet);
@@ -101,25 +101,25 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
      * Iterates throught the AccountTeamMember to populate Employee_Per_Id based on User Id
      * @param newList of New AccountTeamMember.
      * @param accountTeamMemberUserIdSet of AccountTeamMember user id.
-     * @return void             
-     * 
+     * @return void
+     *
      */
 
     public static void populateEmployeePerIdOnATMBasedOnUserId(List<AccountTeamMember> newList,Set<Id> accountTeamMemberUserIdSet) {
         Map<ID, User> userMap = new Map<ID, User>([SELECT Id, NSP_Employee_Per_ID__c FROM User WHERE Id in: accountTeamMemberUserIdSet]);
-        
+
         for(AccountTeamMember accountTeamMemberObj : newList) {
             accountTeamMemberObj.NSP_Employee_Per_ID__c = userMap.get(accountTeamMemberObj.UserId).NSP_Employee_Per_ID__c;
         }
-        
+
     }
-    
+
     /**
      * Iterates throught the AccountTeamMember to populate Employee_Per_Id based on User Id
      * @param newList of New AccountTeamMember.
      * @param accountTeamMemberUserIdSet of AccountTeamMember user id.
-     * @return void             
-     * 
+     * @return void
+     *
      */
 
     public static void populateEmployeePerIdOnATMBasedOnEmployeePerId(List<AccountTeamMember> newList,Set<String> accountTeamMemberEmployeePerIdSet,Set<String> atmAIMSClientNumberSet) {
@@ -131,23 +131,23 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
                     userMap.put(oUser.NSP_Employee_Per_ID__c,oUser);
                 }
         }
-        
+
         if(atmAIMSClientNumberSet.size() > 0){
             List<Account> accountList = [SELECT Id, NSP_AIMS_Client__c FROM Account WHERE NSP_AIMS_Client__c in: atmAIMSClientNumberSet];
             for(Account oAccount : accountList){
                 accountMap.put(oAccount.NSP_AIMS_Client__c,oAccount);
             }
         }
-        
+
         for(AccountTeamMember accountTeamMemberObj : newList) {
             if(userMap.containsKey(accountTeamMemberObj.NSP_Employee_Per_ID__c)){
-            	accountTeamMemberObj.userId = userMap.get(accountTeamMemberObj.NSP_Employee_Per_ID__c).Id;                
+            	accountTeamMemberObj.userId = userMap.get(accountTeamMemberObj.NSP_Employee_Per_ID__c).Id;
             }
             if(accountMap.containsKey(accountTeamMemberObj.NSP_AIMS_Client__c)){
-                accountTeamMemberObj.accountId = accountMap.get(accountTeamMemberObj.NSP_AIMS_Client__c).Id;                
+                accountTeamMemberObj.accountId = accountMap.get(accountTeamMemberObj.NSP_AIMS_Client__c).Id;
             }
         }
-        
+
     }
 
     // for test code coverage only...
@@ -156,8 +156,8 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
             NSP_AccountTeamMemberTriggerHelper.handleException( e , methodName );
         }
     }
-    
-    private static void handleException( Exception e , String methodName ) {
+
+The first one is the one that was used in the 1990s, and the second one was the one that was used in The first one is the The first one is the one that was used in And...    private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_AccountTeamMemberTriggerHelper.class.getName() ,
             methodName ,
