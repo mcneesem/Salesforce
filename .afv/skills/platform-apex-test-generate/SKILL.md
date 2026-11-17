@@ -100,9 +100,9 @@ If no `NSP_TestDataFactory` exists in the project, create `TestDataFactory.cls` 
 #### @TestSetup Example
 
 ```apex
-@TestSetup
+@testSetup
 private static void setupTestData() {
-    List<Account> accounts = TestDataFactory.createAccounts(251, true);
+    List<Account> accounts = TestDataFactory.createAccounts( 251 , true );
 }
 ```
 

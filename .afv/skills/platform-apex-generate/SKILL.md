@@ -213,14 +213,11 @@ If large data volumes are expected:
 
 Example:
 
-for(
-    Account accountRecord :
-    [
-        SELECT Id
-        FROM Account
-        WITH USER_MODE
-    ]
-)
+for ( Account accountRecord : [
+            SELECT Id
+            FROM Account
+        ]
+    )
 {
 }
 
@@ -321,7 +318,6 @@ NSP_ErrorLogHandler.logResults(
 | Exception | `{Descriptive}Exception` | `AccountServiceException` |
 | REST Resource | `{SObject}RestResource` | `AccountRestResource` |
 | Trigger | `{SObject}Trigger` | `AccountTrigger` |
-| Trigger Action | `TA_{SObject}_{Action}` | `TA_Account_SetDefaults` |
 
 Additional naming rules:
 - Classes: `PascalCase`
@@ -369,15 +365,14 @@ Class comments and public method comments must use inline comment syntax.
 Correct:
 
 // @description Updates Account status records.
-public with sharing class AccountStatusUpdateService
-{
+public with sharing class AccountStatusUpdateService {
     // @description Updates Account Status__c to Processed.
     // @param accountIds Account record identifiers.
     // @return Database.SaveResult results from update operation.
     // @throws Exception details are logged through NSP_ErrorLogHandler.
     public static List<Database.SaveResult> processAccounts(
         List<Id> accountIds
-    )
+        )
     {
     }
 }
@@ -396,21 +391,21 @@ public with sharing class AccountStatusUpdateService
 Immediately after each non-test class declaration include:
 
 ```apex
-public with sharing class AccountService
-{
+public with sharing class AccountService {
     // test w/ AccountServiceTest (100%)
 }
 ```
 
-- Do NOT add this comment to test classes (classes annotated with `@IsTest`, including test data factories and test utilities).
+- Do NOT add this comment to test classes (classes annotated with `@isTest`, including test data factories and test utilities).
 
 - Class-level format:
 
 ```apex
- //
- // Provides services for geolocation and address conversion.
- //
-public with sharing class GeolocationService { }
+public with sharing class GeolocationService {
+    //
+    // Provides services for geolocation and address conversion.
+    //
+}
 ```
 
 - Method-level format:
@@ -419,7 +414,7 @@ public with sharing class GeolocationService { }
  // @param paramName Description of the parameter
  // @return Description of the return value
  // @example
- // List<Account> results = AccountService.deduplicateAccounts(accountIds);
+ // List<Account> results = AccountService.deduplicateAccounts( accountIds );
 ```
 
 ### Code Structure & Architecture
@@ -534,11 +529,6 @@ public with sharing class GeolocationService { }
 - One trigger per object; delegate all logic to handler/TAF action classes
 - Include all relevant DML contexts; if TAF: `new MetadataTriggerHandler().run();`
 
-### Trigger Action (TAF)
-- One class per concern per context; implement `TriggerAction.{Context}`
-- Register via `Trigger_Action__mdt` (actions are inactive without registration)
-- Name: `TA_{SObject}_{ActionName}`; prefer field-value comparison over static booleans for recursion
-
 ### Invocable Method (`@InvocableMethod`)
 - Template: `assets/invocable.cls`
 - `with sharing`; inner `Request`/`Response` with `@InvocableVariable`
@@ -572,26 +562,24 @@ public with sharing class GeolocationService { }
 
 Always generate:
 
-@isTest(seeAllData=false)
-
-private class ExampleTest
-{
+@isTest
+private class ExampleTest {
 }
 
 ##### Shared Test Data
 
-- Use @TestSetup.
+- Use @testSetup.
 - Prefer Test Data Factory patterns.
 
 ##### Method Naming
 
 Format:
 
-testMethodName_Scenario_ExpectedOutcome
+testMethodNameScenarioExpectedOutcome
 
 Example:
 
-testCalculateRevenue_NullInput_ReturnsZero
+testCalculateRevenueNullInputReturnsZero
 
 ##### Required Coverage
 
@@ -614,8 +602,8 @@ Every assertion must include a descriptive message parameter.
 Example:
 
 System.Assert.areEqual(
-    expectedValue,
-    actualValue,
+    expectedValue ,
+    actualValue ,
     'Expected and actual values should match'
 );
 
