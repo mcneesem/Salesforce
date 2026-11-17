@@ -248,7 +248,7 @@ public without sharing class NSP_userAccountTeamSalesOfficeSharing implements Qu
         )
     {
         if ( records == null ) {
-            record = new List<AccountShare>();
+            records = new List<AccountShare>();
         }
         if ( ( acShare != null )
             && ( acShare.AccountId != null )
