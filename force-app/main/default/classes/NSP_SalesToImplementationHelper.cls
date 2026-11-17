@@ -44,25 +44,35 @@ public without sharing class NSP_SalesToImplementationHelper {
     //
     // MethodName: createRETEd
     // Description : Iterates through the map of updated S2I
-    // Params:       Set < Id > setOfS2IIds,  Map < Id, NSP_Sales_to_Implementation__c > mapS2I
-    // Author :      Ramya Ravi
     //
     public void createRETEd( Set<Id> setOfS2IIds , Map<Id,NSP_Sales_to_Implementation__c> mapS2I , Set<Id> planSubplanIDs ) {
-        Map<Id,Id> mapS2IToRETEducation = new Map<Id,Id>();
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        List<Id> insertedIds = new List<Id>();
-        Map<Id,String> plansubplanMap = new Map<Id,String>();
-
-        // Gets education Team email address for Recipient email
-        NSP_Retirement_Services__mdt RetirementServicemdt =  NSP_Retirement_Services__mdt.getInstance(NSP_ServiceConstants.EDUCATION_TEAM);
-
         // query for any existing RET education records associated to S2I
-        for(NSP_RET_Education__c mappingRET: [Select Id,Sales_to_Implementation__c from NSP_RET_Education__c WHERE Sales_to_Implementation__c in : setOfS2IIds] ){
-            mapS2IToRETEducation.put(mappingRET.Sales_to_Implementation__c ,mappingRET.Id);
+        Map<Id,Id> mapS2IToRETEducation = new Map<Id,Id>();
+        for ( NSP_RET_Education__c mappingRET : [
+                    SELECT Id , Sales_to_Implementation__c
+                    FROM NSP_RET_Education__c
+                    WHERE ( Sales_to_Implementation__c IN :setOfS2IIds )
+                ]
+            )
+        {
+            mapS2IToRETEducation.put(
+                mappingRET.Sales_to_Implementation__c ,
+                mappingRET.Id
+            );
         }
         //query plan subplan to get subplan ID
-        for(NSP_Plan_SubPlan__c mappingPlanSubplan :[Select Id, NSP_Subplan_ID__c from NSP_Plan_SubPlan__c WHERE id in : planSubplanIDs]){
-            plansubplanMap.put(mappingPlanSubplan.Id, mappingPlanSubplan.NSP_Subplan_ID__c);
+        Map<Id,String> plansubplanMap = new Map<Id,String>();
+        for ( NSP_Plan_SubPlan__c mappingPlanSubplan : [
+                    SELECT Id , NSP_Subplan_ID__c
+                    FROM NSP_Plan_SubPlan__c
+                    WHERE ( Id in : planSubplanIDs )
+                ]
+            )
+        {
+            plansubplanMap.put(
+                mappingPlanSubplan.Id ,
+                mappingPlanSubplan.NSP_Subplan_ID__c
+            );
         }
         // create new RET education record and associate it to S2I
         List<NSP_RET_Education__c> listRETEdToInsert = NSP_SalesToImplementationHelper.populateInsertList(
@@ -70,21 +80,28 @@ public without sharing class NSP_SalesToImplementationHelper {
             mapS2IToRETEducation
         );
         //insert RET education records
+        List<Id> insertedIds = new List<Id>();
         if ( !listRETEdToInsert.isEmpty() ) {
-            Database.SaveResult[] srList = Database.insert( listRETEdToInsert , false );
-            for (Database.SaveResult sr : srList){
-                insertedIds.add(sr.getId());
+            List<Database.SaveResult> srList = Database.insert( listRETEdToInsert , false );
+            for ( Database.SaveResult sr : srList ) {
+                insertedIds.add( sr.getId() );
             }
         }
         // send email to Education team for each RET education record created
+        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
         if ( !insertedIds.isEmpty() && EmailDeliverabilityController.isEnabledOutbound ) {
+            // Gets education Team email address for Recipient email
+            NSP_Retirement_Services__mdt retirementServicemdt = NSP_Retirement_Services__mdt.getInstance( 'NSP_RET_Education_Team_Email_Address' );
             EmailTemplate template = NSP_SalesToImplementationHelper.getEmailTemplate();
-            if ( template != null ) {
+            if ( ( retirementServicemdt != null ) && ( template != null ) ) {
                 List<String> sendTo = new List<String>();
-                sendTo.add( RetirementServicemdt.NSP_Email_Address__c );
-                for ( Id idList:insertedIds ) {
-                    Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                    email= Messaging.renderStoredEmailTemplate( template.Id , null , idList );
+                sendTo.add( retirementServicemdt.NSP_Email_Address__c );
+                for ( Id idList : insertedIds ) {
+                    Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
+                        template.Id ,
+                        null ,
+                        idList
+                    );
                     email.setTemplateId( template.Id );
                     email.setToAddresses( sendTo );
                     email.setWhatId( idList );
