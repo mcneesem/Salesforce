@@ -1,6 +1,8 @@
-@isTest private class BoxFileRequestFolderUtilityTests {
+@isTest
+private class BoxFileRequestFolderUtilityTests {
 
-    @testSetup private static void prepare() {
+    @testSetup
+    private static void prepare() {
         BoxFileRequest__c settings = BoxFileRequest__c.getOrgDefaults();
         settings.IsEnabled__c = True;
         settings.BoxTemplateFolderId__c = '225207143235';
@@ -19,7 +21,8 @@
         insert con;
     }
 
-    @isTest private static void testOpportunityInsert() {
+    @isTest
+    private static void testOpportunityInsert() {
         Test.startTest();
 
         Opportunity opp = new Opportunity();
@@ -39,7 +42,8 @@
         Test.stopTest();
     }
 
-    @isTest private static void testOpportunityUpdate() {
+    @isTest
+    private static void testOpportunityUpdate() {
         Test.startTest();
 
         Opportunity opp = new Opportunity();
@@ -61,5 +65,6 @@
 
         Test.stopTest();
     }
+
 }
 //
