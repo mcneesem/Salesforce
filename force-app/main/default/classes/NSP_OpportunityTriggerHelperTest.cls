@@ -26,6 +26,13 @@ private class NSP_OpportunityTriggerHelperTest {
         pESetting.IsEnabled_IntegrationOpportunityEvent__c = true;
         upsert pESetting;
 
+        BoxFileRequest__c boxSettings = BoxFileRequest__c.getOrgDefaults();
+        boxSettings.IsEnabled__c = True;
+        boxSettings.BoxTemplateFolderId__c = '225207143235';
+        boxSettings.BoxApiEndpoint__c = 'https://api.box.com/2.0/collaborations/';
+        boxSettings.BoxFileRequestFolderName__c = 'Insperity File Request';
+        upsert boxSettings;
+
         //Account creation
         Account accoutObject = new Account();
         accoutObject.Name = 'Test Account';
