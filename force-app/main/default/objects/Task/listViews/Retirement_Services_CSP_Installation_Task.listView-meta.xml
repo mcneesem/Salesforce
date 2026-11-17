@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retirement_Services_CSP_Installation_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Retirement Services - CSP Installation</label>
+    <queue>Retirement_Services_CSP_Installation</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
