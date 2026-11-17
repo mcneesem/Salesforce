@@ -1301,8 +1301,12 @@ public with sharing class NSP_LeadTriggerHelper {
         } else if (childMap != null && !childMap.isEmpty()) {
             childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c FROM Lead WHERE ((DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c IN: allLeadList) OR (DNB_Connect_DUNS_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
         }
-        List<LeadStatus> convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
-        if (parentResult != null && !parentResult.isEmpty()) {
+        List<LeadStatus> convertStatusList = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
+        LeadStatus convertStatus;
+        if(!convertStatusList.isEmpty()){
+            convertStatus = convertStatusList[0];
+        }
+        if (convertStatus != null && parentResult != null && !parentResult.isEmpty()) {
             for (Lead childLead: parentResult) {
                 Database.LeadConvert lc = new Database.LeadConvert();
                 if (!childLead.IsConverted) {
@@ -1312,14 +1316,12 @@ public with sharing class NSP_LeadTriggerHelper {
                     lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
                     lc.setOwnerId(userinfo.getUserId());
                     lc.setDoNotCreateOpportunity(TRUE);
-                    if(!convertStatus.isEmpty()){
-                        lc.setConvertedStatus(convertStatus[0].MasterLabel);
-                    }
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
                     massleadconvert.add( lc );
                 }
             }
         }
-        if (childResult !=null && !childResult.isEmpty()) {
+        if (convertStatus != null && childResult !=null && !childResult.isEmpty()) {
             for (Lead childLead: childResult) {
                 Database.LeadConvert lc = new Database.LeadConvert();
                 if (childLead.IsConverted == false) {
@@ -1329,9 +1331,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     lc.setAccountId(accountId);
                     lc.setOwnerId(userinfo.getUserId());
                     lc.setDoNotCreateOpportunity(TRUE);
-                    if(!convertStatus.isEmpty()){
-                        lc.setConvertedStatus(convertStatus[0].MasterLabel);
-                    }
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
                     massleadconvert.add( lc );
                 }
             }
