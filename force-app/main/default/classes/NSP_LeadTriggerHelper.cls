@@ -1118,11 +1118,12 @@ public with sharing class NSP_LeadTriggerHelper {
     private static List<Sales_Segment_Threshold__mdt> thresholds {
         private get {
             if ( thresholdList == null ) {
-                thresholdList = [
+                List<Sales_Segment_Threshold__mdt> salesThresholdList = [
                     SELECT Id , Label , Minimum_Employees__c
                     FROM Sales_Segment_Threshold__mdt
                     ORDER BY Minimum_Employees__c DESC
                 ];
+               thresholdList = salesThresholdList ;
             }
             return thresholdList;
         }
@@ -1232,12 +1233,13 @@ public with sharing class NSP_LeadTriggerHelper {
     private static List<User> availableUsers {
         private get {
             if ( availableUsersList == null ) {
-                availableUsersList = [
+                List<User> userList = [
                     SELECT Id , Name
                     FROM User
                     WHERE Name = 'Available'
                     LIMIT 1
                 ];
+                availableUsersList = userList;
             }
             return availableUsersList;
         }
