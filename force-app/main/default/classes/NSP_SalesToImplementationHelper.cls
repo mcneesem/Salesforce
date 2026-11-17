@@ -1,4 +1,5 @@
-public class NSP_SalesToImplementationHelper {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_SalesToImplementationHelper {
     // test w/ NSP_SalesToImplementationHelperTest (97%)
 
     public void afterInsert( List<NSP_Sales_to_Implementation__c> newList ) {
