@@ -1,5 +1,5 @@
 public with sharing class SalesVisualIndicatorHelper {
-    //  test w/ SalesVisualIndicatorHelperTest (100%)
+    // test w/ SalesVisualIndicatorHelperTest (100%)
     
     // returns the account details
     // @param accId Id related to account.
