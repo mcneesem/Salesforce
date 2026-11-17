@@ -22,6 +22,20 @@ private class BoxFileRequestFolderUtilityTests {
     }
 
     @isTest
+    private static void testQueueable() {
+        Test.startTest();
+        Opportunity opp = new Opportunity();
+        opp.name = 'test';
+        opp.StageName = 'Qualification';
+        opp.AccountId = [ SELECT Id FROM Account LIMIT 1 ].Id;
+        opp.CloseDate = Date.newInstance( 2023 , 12 , 9 );
+        opp.Create_Box_com_Folder_s__c = True;
+        insert opp;
+        BoxFileRequestFolderUtility.enqueueJob( opp.Id );
+        Test.stopTest();
+    }
+
+    @isTest
     private static void testOpportunityInsert() {
         Test.startTest();
 
