@@ -236,7 +236,7 @@ public without sharing class NSP_ProjectTaskTriggerEmailNotification {
                             listOfCCAddresses.addAll( mapOfAccountTeamEmail.get( accId ) );
                         }
                         if ( !listOfTOAddresses.isEmpty() ) {
-                            String mailBody = getMailBody(proj, template.Id);
+                            String mailBody = NSP_ProjectTaskTriggerEmailNotification.getMailBody(proj, template.Id);
                             String fromAddress = UserInfo.getUserEmail();
                             String subjectString = '';
                             if ( ( proj != null )
@@ -372,36 +372,57 @@ public without sharing class NSP_ProjectTaskTriggerEmailNotification {
                     }
             }
 
-            if(!accountIdProjectTaskMap.values().isEmpty()){
-                List<EmailTemplate> templates =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATEMM];
+            if ( !accountIdProjectTaskMap.values().isEmpty() ) {
+                List<EmailTemplate> templates = [
+                    SELECT
+                        Id ,
+                        BrandTemplateId ,
+                        Subject ,
+                        HTMLValue ,
+                        Body ,
+                        DeveloperName
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = 'NSP_Congratulation_Payroll_Template_MM' )
+                ];
                 EmailTemplate template = null;
                 if ( !templates.isEmpty() ) {
                     template = templates[0];
                 }
-                String fromAddress=[select email from User WHERE id=:Userinfo.getUserId()].email;
-
-                for(Id accId: accountIds){
-
-                    List<String> listOfTOAddresses=new List <String>();
-                    listOfTOAddresses.addAll(mapAccIdSetConEmail.get(accId));
-                    List<String> listOfCCAddresses=new List <String>();
-                    pse__Proj__c proj = mapofAccountIds.get(accId);
-                    if(mapofccEmailSet.containsKey(mapofAccountIds.get(accId).Id)&& mapofccEmailSet.get(mapofAccountIds.get(accId).Id).size()>0){
-                        listOfCCAddresses.addAll(mapofccEmailSet.get(mapofAccountIds.get(accId).Id));
-
-                    }
-                    if(mapOfAccountTeamEmail.containsKey(accId) && mapOfAccountTeamEmail.get(accId).size()>0){
-                        listOfCCAddresses.addAll(mapOfAccountTeamEmail.get(accId));
-                    }
-
-                    if(!listOfTOAddresses.isEmpty()){
-                        String mailBody = getMailBody(proj, template.Id);
-                        sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                                fromAddress,accountIdProjectTaskMap.get(accId), template.Id);
-
-                    }
+                if ( template != null ) {
+                    String fromAddress = UserInfo.getUserEmail();
+                    for ( Id accId : accountIds ) {
+                        List<String> listOfTOAddresses = new List <String>();
+                        listOfTOAddresses.addAll( mapAccIdSetConEmail.get( accId ) );
+                        List<String> listOfCCAddresses = new List<String>();
+                        pse__Proj__c proj = mapofAccountIds.get( accId );
+                        if ( mapofccEmailSet.containsKey( mapofAccountIds.get( accId ).Id )
+                            && !mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ) );
+                        }
+                        if ( mapOfAccountTeamEmail.containsKey( accId )
+                            && !mapOfAccountTeamEmail.get( accId ).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapOfAccountTeamEmail.get( accId ) );
+                        }
+                        if ( !listOfTOAddresses.isEmpty() ) {
+                            String mailBody = NSP_ProjectTaskTriggerEmailNotification.getMailBody( proj , template.Id );
+                            NSP_ProjectTaskTriggerEmailNotification.sendMail(
+                                template.Subject ,
+                                mailBody ,
+                                listOfTOAddresses ,
+                                null ,
+                                listOfCCAddresses ,
+                                fromAddress ,
+                                accountIdProjectTaskMap.get( accId ) ,
+                                template.Id
+                            );
+                        }
                     }
                 }
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTaskTriggerEmailNotification.class.getName() ,
