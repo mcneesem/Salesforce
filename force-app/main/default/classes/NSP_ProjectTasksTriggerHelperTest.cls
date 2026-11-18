@@ -974,6 +974,19 @@ private class NSP_ProjectTasksTriggerHelperTest {
         asseObj.Status = 'Active';
             UPDATE asseObj;
 
+        // Prevent DmlException: FIELD_CUSTOM_VALIDATION_EXCEPTION, To set a parent task as complete, all child tasks must also be complete.: [pse__Completed__c]
+        List<pse__Project_Task__c> childTasks = [
+            SELECT Id, pse__Status__c , pse__Completed__c
+            FROM pse__Project_Task__c
+            WHERE ( pse__Parent_Task__c = :letterrcvdTask.Id )
+        ];
+        for ( pse__Project_Task__c child : childTasks ) {
+            child.pse__Status__c = 'Complete';
+        }
+        if ( !childTasks.isEmpty() ) {
+            update childTasks;
+        }
+
         letterrcvdTask.pse__Status__c = 'Complete';
         UPDATE letterrcvdTask;
 
