@@ -1,5 +1,6 @@
-public class NSP_ProjectTaskTriggerEmailNotification {
-    // test w/ NSP_ProjectTaskTriggerEmailTest (90%)
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_ProjectTaskTriggerEmailNotification {
+    // test w/ NSP_ProjectTaskTriggerEmailTest (82%)
 
     //
     // MethodName: updateImplementationProfile
@@ -200,56 +201,54 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                 }
             }
 
-            if(!accountIdProjectTaskMap.values().isEmpty()){
-
-                EmailTemplate template =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATE];
-
-                for(Id accId: accountIds){
-
-                    List<String> listOfTOAddresses= new List<String>();
-                    listOfTOAddresses.addAll(mapAccountIdSetContactEmail.get(accId));
-                    List<String> listOfCCAddresses=new List <String>();
-                    pse__Proj__c proj = mapofAccountIds.get(accId);
-                        if(mapofccEmailSet.containsKey(mapofAccountIds.get(accId).Id)&& mapofccEmailSet.get(mapofAccountIds.get(accId).Id).size()>0){
-                            listOfCCAddresses.addAll(mapofccEmailSet.get(mapofAccountIds.get(accId).Id));
-
-                        }
-                        if(mapOfAccountTeamEmail.containsKey(accId) && mapOfAccountTeamEmail.get(accId).size()>0){
-                            listOfCCAddresses.addAll(mapOfAccountTeamEmail.get(accId));
-                        }
-
-
-                    if(!listOfTOAddresses.isEmpty()){
-                        String mailBody = getMailBody(proj, template.Id);
-                        String fromAddress = null;
-                        List<User> records = [SELECT Email FROM User WHERE (Id = :Userinfo.getUserId())];
-                        if(!records.isEmpty()){
-                            fromAddress = records[0].Email;
-                        }
-                        String subjectString = '';
-                        if ( ( proj != null )
-                            && String.isNotBlank( proj.NSP_Account__c )
-                            && String.isNotBlank( proj.NSP_RET_Client_ID__c )
+            if ( !accountIdProjectTaskMap.values().isEmpty() ) {
+                EmailTemplate template = NSP_ProjectTaskTriggerEmailNotification.getEmailTemplate( 'NSP_Congratulation_Payroll_Template' );
+                if ( template != null ) {
+                    for ( Id accId : accountIds ) {
+                        List<String> listOfTOAddresses = new List<String>();
+                        listOfTOAddresses.addAll( mapAccountIdSetContactEmail.get( accId ) );
+                        List<String> listOfCCAddresses = new List<String>();
+                        pse__Proj__c proj = mapofAccountIds.get( accId );
+                        if ( mapofccEmailSet.containsKey( mapofAccountIds.get( accId ).Id )
+                            && !mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ).isEmpty()
                             )
                         {
-                            subjectString = proj.NSP_Account__c +' ('+ proj.NSP_RET_Client_ID__c+')'+ ' – ';
+                            listOfCCAddresses.addAll( mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ) );
                         }
-                        if(template!=null){
+                        if ( mapOfAccountTeamEmail.containsKey( accId )
+                            && !mapOfAccountTeamEmail.get(accId).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapOfAccountTeamEmail.get( accId ) );
+                        }
+                        if ( !listOfTOAddresses.isEmpty() ) {
+                            String mailBody = NSP_ProjectTaskTriggerEmailNotification.getMailBody(proj, template.Id);
+                            String fromAddress = UserInfo.getUserEmail();
+                            String subjectString = '';
+                            if ( ( proj != null )
+                                && String.isNotBlank( proj.NSP_Account__c )
+                                && String.isNotBlank( proj.NSP_RET_Client_ID__c )
+                                )
+                            {
+                                subjectString = proj.NSP_Account__c
+                                    + ' (' + proj.NSP_RET_Client_ID__c + ')'
+                                    + ' – '
+                                    ;
+                            }
                             subjectString = subjectString + template.subject;
+                            NSP_ProjectTaskTriggerEmailNotification.sendMail(
+                                subjectString ,
+                                mailBody ,
+                                listOfTOAddresses ,
+                                null ,
+                                listOfCCAddresses ,
+                                fromaddress ,
+                                accountIdProjectTaskMap.get( accId ) ,
+                                template.Id
+                            );
                         }
-                        sendMail(
-                            subjectString,
-                            mailBody,
-                            listOfTOAddresses,
-                            null,
-                            listOfCCAddresses,
-                            fromaddress,
-                            accountIdProjectTaskMap.get(accId),
-                            template.Id
-                        );
                     }
                 }
-
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -359,32 +358,43 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     }
             }
 
-            if(!accountIdProjectTaskMap.values().isEmpty()){
-                EmailTemplate template =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATEMM];
-                String fromAddress=[select email from User WHERE id=:Userinfo.getUserId()].email;
-
-                for(Id accId: accountIds){
-
-                    List<String> listOfTOAddresses=new List <String>();
-                    listOfTOAddresses.addAll(mapAccIdSetConEmail.get(accId));
-                    List<String> listOfCCAddresses=new List <String>();
-                    pse__Proj__c proj = mapofAccountIds.get(accId);
-                    if(mapofccEmailSet.containsKey(mapofAccountIds.get(accId).Id)&& mapofccEmailSet.get(mapofAccountIds.get(accId).Id).size()>0){
-                        listOfCCAddresses.addAll(mapofccEmailSet.get(mapofAccountIds.get(accId).Id));
-
-                    }
-                    if(mapOfAccountTeamEmail.containsKey(accId) && mapOfAccountTeamEmail.get(accId).size()>0){
-                        listOfCCAddresses.addAll(mapOfAccountTeamEmail.get(accId));
-                    }
-
-                    if(!listOfTOAddresses.isEmpty()){
-                        String mailBody = getMailBody(proj, template.Id);
-                        sendMail(template.Subject,mailBody,listOfTOAddresses,null,listOfCCAddresses,
-                                fromAddress,accountIdProjectTaskMap.get(accId), template.Id);
-
-                    }
+            if ( !accountIdProjectTaskMap.values().isEmpty() ) {
+                EmailTemplate template = NSP_ProjectTaskTriggerEmailNotification.getEmailTemplate( 'NSP_Congratulation_Payroll_Template_MM' );
+                if ( template != null ) {
+                    String fromAddress = UserInfo.getUserEmail();
+                    for ( Id accId : accountIds ) {
+                        List<String> listOfTOAddresses = new List <String>();
+                        listOfTOAddresses.addAll( mapAccIdSetConEmail.get( accId ) );
+                        List<String> listOfCCAddresses = new List<String>();
+                        pse__Proj__c proj = mapofAccountIds.get( accId );
+                        if ( mapofccEmailSet.containsKey( mapofAccountIds.get( accId ).Id )
+                            && !mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ) );
+                        }
+                        if ( mapOfAccountTeamEmail.containsKey( accId )
+                            && !mapOfAccountTeamEmail.get( accId ).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapOfAccountTeamEmail.get( accId ) );
+                        }
+                        if ( !listOfTOAddresses.isEmpty() ) {
+                            String mailBody = NSP_ProjectTaskTriggerEmailNotification.getMailBody( proj , template.Id );
+                            NSP_ProjectTaskTriggerEmailNotification.sendMail(
+                                template.Subject ,
+                                mailBody ,
+                                listOfTOAddresses ,
+                                null ,
+                                listOfCCAddresses ,
+                                fromAddress ,
+                                accountIdProjectTaskMap.get( accId ) ,
+                                template.Id
+                            );
+                        }
                     }
                 }
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTaskTriggerEmailNotification.class.getName() ,
@@ -742,9 +752,44 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         );
     }
 
-    private static void getEmailTemplates(){
-        for(EmailTemplate iEmailTemplate : [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName IN: EMAIL_TEMPLATES]){
-            mapOfEmailTempaltes.put(iEmailTemplate.DeveloperName,iEmailTemplate);
+    // sonar helper method...
+    private static EmailTemplate getEmailTemplate( String developerName ) {
+        EmailTemplate template = null;
+        if ( String.isNotBlank( developerName ) ) {
+            List<EmailTemplate> templates = [
+                SELECT
+                    Id ,
+                    BrandTemplateId ,
+                    Subject ,
+                    HTMLValue ,
+                    Body ,
+                    DeveloperName
+                FROM EmailTemplate
+                WHERE ( DeveloperName = :developerName )
+                LIMIT 1
+            ];
+            if ( !templates.isEmpty() ) {
+                template = templates[0];
+            }
+        }
+        return template;
+    }
+
+    private static void getEmailTemplates() {
+        for ( EmailTemplate iEmailTemplate : [
+                    SELECT
+                        Id ,
+                        BrandTemplateId ,
+                        Subject ,
+                        HTMLValue ,
+                        Body ,
+                        DeveloperName
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName IN :NSP_ProjectTaskTriggerEmailNotification.EMAIL_TEMPLATES )
+                ]
+            )
+        {
+            mapOfEmailTempaltes.put( iEmailTemplate.DeveloperName , iEmailTemplate );
         }
     }
 
@@ -771,52 +816,60 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         List<String> sendToList
         )
     {
-        Map<Id,boolean> completionEmailAlreadySent= new Map<Id,boolean>();
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
-        Set<Id> projectTaskIds = new Set<Id>();
-        try{
+        try {
             //Store Ids of project tasks in set
-            for(pse__Project_Task__c eachProjectTask : retProjectTasks){
-                projectTaskIds.add(eachProjectTask.Id);
+            Set<Id> projectTaskIds = new Set<Id>();
+            for ( pse__Project_Task__c eachProjectTask : retProjectTasks ) {
+                projectTaskIds.add( eachProjectTask.Id );
             }
-            //get email template
-            EmailTemplate emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName
-                                        FROM EmailTemplate
-                                        WHERE DeveloperName =: emailTemplateName LIMIT 1];
-            //get email message recs for already sent email
-            for(EmailMessage eachEmailMessage : [SELECT ID,RelatedToId,Subject,HtmlBody,Status,ToAddress
-                                                FROM EmailMessage
-                                                WHERE RelatedToId IN: projectTaskIds ]){
-                //check if email message already present with template subject
-                if(eachEmailMessage.Subject.substring(0,10) == emailTemp.Subject.substring(0,10)){
-                    completionEmailAlreadySent.put(eachEmailMessage.RelatedToId, true);
+            EmailTemplate template = NSP_ProjectTaskTriggerEmailNotification.getEmailTemplate( emailTemplateName );
+            Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
+            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
+            if ( template != null ) {
+                Map<Id,Boolean> completionEmailAlreadySent = new Map<Id,Boolean>();
+                //get email message recs for already sent email
+                for ( EmailMessage eachEmailMessage : [
+                            SELECT
+                                Id ,
+                                RelatedToId ,
+                                Subject ,
+                                HtmlBody ,
+                                Status ,
+                                ToAddress
+                            FROM EmailMessage
+                            WHERE ( RelatedToId IN :projectTaskIds )
+                        ]
+                    )
+                {
+                    //check if email message already present with template subject
+                    if ( eachEmailMessage.Subject.substring( 0 , 10 ) == template.Subject.substring( 0 , 10 ) ) {
+                        completionEmailAlreadySent.put( eachEmailMessage.RelatedToId , true );
+                    }
                 }
-            }
-
-            if(emailTemp != null){
                 //iterate over prject tasks to send email alert
-                for(pse__Project_Task__c eachProjectTask : retProjectTasks){{
-                        //check if email alert is already sent otherwise send one
-                        if(completionEmailAlreadySent.get(eachProjectTask.Id) == null){
-                            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                            email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,eachProjectTask.pse__Project__c);
-                            email.setTemplateId(emailTemp.Id);
-                            email.setToAddresses(sendToList);
-                            email.setWhatId(eachProjectTask.pse__Project__c);
-                            lstEmailMessages.add(email);
-                            emailMessageToProjectTaskMap.put(email,eachProjectTask.id);
-                        }
+                for ( pse__Project_Task__c eachProjectTask : retProjectTasks ) {
+                    //check if email alert is already sent otherwise send one
+                    if ( completionEmailAlreadySent.get( eachProjectTask.Id ) == null ) {
+                        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                        email = Messaging.renderStoredEmailTemplate(
+                            template.Id ,
+                            null ,
+                            eachProjectTask.pse__Project__c
+                        );
+                        email.setTemplateId( template.Id );
+                        email.setToAddresses( sendToList );
+                        email.setWhatId( eachProjectTask.pse__Project__c);
+                        lstEmailMessages.add( email);
+                        emailMessageToProjectTaskMap.put( email , eachProjectTask.Id );
                     }
                 }
             }
-
             if ( !lstEmailMessages.isEmpty()
                 && EmailDeliverabilityController.isEnabledOutbound
                 )
             {
                 Messaging.sendEmail( lstEmailMessages );
-                createEmailMessageRec( emailMessageToProjectTaskMap );
+                NSP_ProjectTaskTriggerEmailNotification.createEmailMessageRec( emailMessageToProjectTaskMap );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
