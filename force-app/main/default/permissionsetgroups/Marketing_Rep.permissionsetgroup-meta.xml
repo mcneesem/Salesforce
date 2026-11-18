@@ -5,7 +5,5 @@
     <label>Marketing Rep</label>
     <permissionSets>Account_Baseline_Fields_for_Sales_Owners_Edit_Access</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
-    <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
-    <permissionSets>View_SDR_BDR_Dashboard</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
