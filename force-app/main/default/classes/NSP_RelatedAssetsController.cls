@@ -36,7 +36,7 @@ public with sharing class NSP_RelatedAssetsController {
     public static String accountId {
         get {
             if ( recId != null ) {
-                List<Account> records = [
+                List<Implementation_Profile__c> records = [
                     SELECT
                         Id ,
                         Account__c
