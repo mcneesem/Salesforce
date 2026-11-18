@@ -1,5 +1,5 @@
 public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ TerminationEmailBatchTest (81%)
+    // test w/ TerminationEmailBatchTest (83%)
 
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
@@ -469,7 +469,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
     private static List<Termination_Email_Attachment__mdt> activeAttachments {
         private get {
             if ( activeAttachments == null ) {
-                activeAttachments = [
+                List<Termination_Email_Attachment__mdt> local = [
                     SELECT
                         DeveloperName ,
                         MasterLabel ,
@@ -483,6 +483,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                         AND ( Document_Id__c != null )
                     )
                 ];
+                activeAttachments = local;
             }
             return activeAttachments;
         }
