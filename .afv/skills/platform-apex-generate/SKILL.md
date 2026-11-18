@@ -242,7 +242,7 @@ for ( Account accountRecord : [
 
 ### Security Verification
 
-Before finalizing, verify: CRUD/FLS enforced (SOQL + DML) · explicit sharing keyword on every class · no hardcoded secrets or Record IDs · PII excluded from logs and error messages · error messages sanitized for end users.
+Before finalizing, verify: CRUD/FLS enforced (SOQL + DML) - explicit sharing keyword on every class - no hardcoded secrets or Record IDs - PII excluded from logs and error messages - error messages sanitized for end users.
 
 ### Error Handling
 
@@ -456,7 +456,7 @@ public with sharing class GeolocationService {
 ## Type-Specific Guidance
 
 ### Service
-- Template: `assets/service.cls` · Reference: `references/AccountService.cls`
+- Template: `assets/service.cls` - Reference: `references/AccountService.cls`
 - `with sharing`; stateless - no `public` fields or mutable instance state; keep public APIs focused and `static` where reasonable
 - Delegate all SOQL to Selectors and SObject behavior to Domains
 - Log exceptions using NSP_ErrorLogHandler.
@@ -464,7 +464,7 @@ public with sharing class GeolocationService {
 - Avoid exception bubbling wherever possible.
 
 ### Selector
-- Template: `assets/selector.cls` · Reference: `references/AccountSelector.cls`
+- Template: `assets/selector.cls` - Reference: `references/AccountSelector.cls`
 - `with sharing`; one per SObject or query domain
 - Return `List<SObject>` or `Map<Id,SObject>`; use a shared base field list constant (no inline duplication)
 - Accept filter parameters; always include `WITH USER_MODE`
@@ -475,7 +475,7 @@ public with sharing class GeolocationService {
 - Operate on in-memory lists only; no SOQL/DML (belongs in Services/Selectors)
 
 ### Batch
-- Template: `assets/batch.cls` · Reference: `references/AccountDeduplicationBatch.cls`
+- Template: `assets/batch.cls` - Reference: `references/AccountDeduplicationBatch.cls`
 - `with sharing`; implement `Database.Batchable<SObject>` (add `Database.Stateful` when tracking across chunks)
 - `start()` = query definition; `execute()` = business logic; `finish()` = logging/notification
 - Use `QueryLocator` for large datasets; handle partial failures via `Database.SaveResult`
