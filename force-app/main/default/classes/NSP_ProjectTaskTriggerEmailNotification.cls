@@ -1,4 +1,5 @@
-public class NSP_ProjectTaskTriggerEmailNotification {
+// intentionally `without sharing` to preserve default sharing at api version 55...
+public without sharing class NSP_ProjectTaskTriggerEmailNotification {
     // test w/ NSP_ProjectTaskTriggerEmailTest (82%)
 
     //
@@ -200,60 +201,68 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                 }
             }
 
-            if(!accountIdProjectTaskMap.values().isEmpty()){
-
-                List<EmailTemplate> templates =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATE];
+            if ( !accountIdProjectTaskMap.values().isEmpty() ) {
+                List<EmailTemplate> templates = [
+                    SELECT
+                        Id ,
+                        BrandTemplateId ,
+                        Subject ,
+                        HTMLValue ,
+                        Body ,
+                        DeveloperName
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = 'NSP_Congratulation_Payroll_Template' )
+                ];
                 EmailTemplate template = null;
                 if ( !templates.isEmpty() ) {
                     template = templates[0];
                 }
-
-                for(Id accId: accountIds){
-
-                    List<String> listOfTOAddresses= new List<String>();
-                    listOfTOAddresses.addAll(mapAccountIdSetContactEmail.get(accId));
-                    List<String> listOfCCAddresses=new List <String>();
-                    pse__Proj__c proj = mapofAccountIds.get(accId);
-                        if(mapofccEmailSet.containsKey(mapofAccountIds.get(accId).Id)&& mapofccEmailSet.get(mapofAccountIds.get(accId).Id).size()>0){
-                            listOfCCAddresses.addAll(mapofccEmailSet.get(mapofAccountIds.get(accId).Id));
-
-                        }
-                        if(mapOfAccountTeamEmail.containsKey(accId) && mapOfAccountTeamEmail.get(accId).size()>0){
-                            listOfCCAddresses.addAll(mapOfAccountTeamEmail.get(accId));
-                        }
-
-
-                    if(!listOfTOAddresses.isEmpty()){
-                        String mailBody = getMailBody(proj, template.Id);
-                        String fromAddress = null;
-                        List<User> records = [SELECT Email FROM User WHERE (Id = :Userinfo.getUserId())];
-                        if(!records.isEmpty()){
-                            fromAddress = records[0].Email;
-                        }
-                        String subjectString = '';
-                        if ( ( proj != null )
-                            && String.isNotBlank( proj.NSP_Account__c )
-                            && String.isNotBlank( proj.NSP_RET_Client_ID__c )
+                if ( template != null ) {
+                    for ( Id accId : accountIds ) {
+                        List<String> listOfTOAddresses = new List<String>();
+                        listOfTOAddresses.addAll( mapAccountIdSetContactEmail.get( accId ) );
+                        List<String> listOfCCAddresses = new List<String>();
+                        pse__Proj__c proj = mapofAccountIds.get( accId );
+                        if ( mapofccEmailSet.containsKey( mapofAccountIds.get( accId ).Id )
+                            && !mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ).isEmpty()
                             )
                         {
-                            subjectString = proj.NSP_Account__c +' ('+ proj.NSP_RET_Client_ID__c+')'+ ' – ';
+                            listOfCCAddresses.addAll( mapofccEmailSet.get( mapofAccountIds.get( accId ).Id ) );
                         }
-                        if(template!=null){
+                        if ( mapOfAccountTeamEmail.containsKey( accId )
+                            && !mapOfAccountTeamEmail.get(accId).isEmpty()
+                            )
+                        {
+                            listOfCCAddresses.addAll( mapOfAccountTeamEmail.get( accId ) );
+                        }
+                        if ( !listOfTOAddresses.isEmpty() ) {
+                            String mailBody = getMailBody(proj, template.Id);
+                            String fromAddress = UserInfo.getUserEmail();
+                            String subjectString = '';
+                            if ( ( proj != null )
+                                && String.isNotBlank( proj.NSP_Account__c )
+                                && String.isNotBlank( proj.NSP_RET_Client_ID__c )
+                                )
+                            {
+                                subjectString = proj.NSP_Account__c
+                                    + ' (' + proj.NSP_RET_Client_ID__c + ')'
+                                    + ' – '
+                                    ;
+                            }
                             subjectString = subjectString + template.subject;
+                            NSP_ProjectTaskTriggerEmailNotification.sendMail(
+                                subjectString ,
+                                mailBody ,
+                                listOfTOAddresses ,
+                                null ,
+                                listOfCCAddresses ,
+                                fromaddress ,
+                                accountIdProjectTaskMap.get( accId ) ,
+                                template.Id
+                            );
                         }
-                        sendMail(
-                            subjectString,
-                            mailBody,
-                            listOfTOAddresses,
-                            null,
-                            listOfCCAddresses,
-                            fromaddress,
-                            accountIdProjectTaskMap.get(accId),
-                            template.Id
-                        );
                     }
                 }
-
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
