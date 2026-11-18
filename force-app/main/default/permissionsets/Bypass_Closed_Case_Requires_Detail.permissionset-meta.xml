@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Closed_Case_Requires_Detail</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to bypass the Closed_Case_Requires_Detail Case Validation Rule</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Closed Case Requires Detail</label>
+</PermissionSet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Case_Requires_Detail</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Closed_Case_Requires_Detail ) ,
+  ISCHANGED( Status ) ,
+  ISPICKVAL( Status , &quot;Closed&quot; ) ,
+  OR(
+    ( NSP_Category__c = &quot;Integra&quot; ) ,
+    ( NSP_Category__c = &quot;OrgPlus Software&quot; ) ,
+    ( NSP_Category__c = &quot;PerformSmart Software&quot; ) ,
+    ( NSP_Category__c = &quot;Time Wage Import&quot; ) ,
+    ( NSP_Category__c = &quot;XML&quot; )
+  ) ,
+  ISBLANK( NSP_Detail__c ) 
+)</errorConditionFormula>
+    <errorMessage>A Case Detail selection is required to close this Case.</errorMessage>
+</ValidationRule>
