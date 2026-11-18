@@ -4,7 +4,7 @@
         <enabled>true</enabled>
         <name>Bypass_Closed_Case_Requires_Detail</name>
     </customPermissions>
-    <description>Grants the Custom Permission to Bypass Closed_Case_Requires_Detail Case Validation Rule</description>
+    <description>Grants the Custom Permission to bypass the Closed_Case_Requires_Detail Case Validation Rule</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Bypass Closed Case Requires Detail</label>
 </PermissionSet>
