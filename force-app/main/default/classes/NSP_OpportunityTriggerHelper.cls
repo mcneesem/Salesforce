@@ -1,10 +1,12 @@
 public with sharing class NSP_OpportunityTriggerHelper {
     // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (78%)
+    // test w/ NSP_OpportunityTriggerHelperTest, BoxFileRequestFolderUtilityTests (77%)
     // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (76%)
-    // test w/ NSP_OpportunityTriggerHelperTest (75%)
+    // test w/ NSP_OpportunityTriggerHelperTest (76%)
     // test w/ NSP_AccountTriggerHelperTest (42%)
     // test w/ NSP_UserAndOwnerFunctionsTest (40%)
     // test w/ OpportunityCloseWonTest (38%)
+    // test w/ BoxFileRequestFolderUtilityTests (35%)
 
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -175,6 +177,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_OpportunityTriggerHelper.getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
         // publish sync events for all new opportunies...
         this.publishNewRecords( newList );
+        NSP_OpportunityTriggerHelper.handleBoxAfterInsert( newList , opportunityNewMap );
     }
 
     //
@@ -455,6 +458,38 @@ public with sharing class NSP_OpportunityTriggerHelper {
             NSP_AssetUpdate.assetBackoutUpdate( backoutOptySet , NSP_SalesConstants.BACKOUT_STATUS );
         }
         AutomateOpportunityStage.automateOpportunityStageAsync( stageAutoOpportunityIds );
+        NSP_OpportunityTriggerHelper.handleBoxAfterUpdate( opportunityNewMap , opportunityOldMap );
+    }
+
+    private static void handleBoxAfterInsert( List<Opportunity> newList , Map<Id,Opportunity> opportunityNewMap ) {
+        if ( BoxFileRequestFolderUtility.isEnabled ) {
+            for ( Opportunity record : newList ) {
+                Opportunity recordNew = opportunityNewMap.get( record.Id );
+                if ( ( recordNew != null ) && recordNew.Create_Box_com_Folder_s__c ) {
+                    // ~ is insert and checkbox is checked...
+                    BoxFileRequestFolderUtility.enqueueJob( record.Id );
+                }
+            }
+        }
+    }
+
+    private static void handleBoxAfterUpdate( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        if ( BoxFileRequestFolderUtility.isEnabled ) {
+            for ( Opportunity record : opportunityNewMap.values() ) {
+                Opportunity recordNew = opportunityNewMap.get( record.Id );
+                if ( recordNew != null ) {
+                    Opportunity recordOld = opportunityOldMap.get( record.Id );
+                    if ( recordNew.Create_Box_com_Folder_s__c
+                        && ( recordOld != null )
+                        && !recordOld.Create_Box_com_Folder_s__c
+                        )
+                    {
+                        // ~ is update and checkbox is checked and checkbox was previously unchecked...
+                        BoxFileRequestFolderUtility.enqueueJob( record.Id );
+                    }
+                }
+            }
+        }
     }
 
     private Set<String> optyBackoutCheck( Opportunity newOpportunity , Opportunity oldOpportunity , Set<String> backoutOptySet ) {
