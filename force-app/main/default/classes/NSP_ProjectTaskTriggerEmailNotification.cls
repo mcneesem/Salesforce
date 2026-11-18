@@ -1,5 +1,5 @@
 public class NSP_ProjectTaskTriggerEmailNotification {
-    // test w/ NSP_ProjectTaskTriggerEmailTest (90%)
+    // test w/ NSP_ProjectTaskTriggerEmailTest (81%)
 
     //
     // MethodName: updateImplementationProfile
@@ -202,7 +202,11 @@ public class NSP_ProjectTaskTriggerEmailNotification {
 
             if(!accountIdProjectTaskMap.values().isEmpty()){
 
-                EmailTemplate template =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATE];
+                List<EmailTemplate> templates =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATE];
+                EmailTemplate template = null;
+                if ( !templates.isEmpty() ) {
+                    template = templates[0];
+                }
 
                 for(Id accId: accountIds){
 
@@ -360,7 +364,11 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             }
 
             if(!accountIdProjectTaskMap.values().isEmpty()){
-                EmailTemplate template =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATEMM];
+                List<EmailTemplate> templates =[SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.CONGRATULATIONTEMPLATEMM];
+                EmailTemplate template = null;
+                if ( !templates.isEmpty() ) {
+                    template = templates[0];
+                }
                 String fromAddress=[select email from User WHERE id=:Userinfo.getUserId()].email;
 
                 for(Id accId: accountIds){
@@ -781,9 +789,13 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                 projectTaskIds.add(eachProjectTask.Id);
             }
             //get email template
-            EmailTemplate emailTemp =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName
+            List<EmailTemplate> emailTemps =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName
                                         FROM EmailTemplate
                                         WHERE DeveloperName =: emailTemplateName LIMIT 1];
+            EmailTemplate emailTemp = null;
+            if ( !emailTemps.isEmpty() ) {
+                emailTemp = emailTemps[0];
+            }
             //get email message recs for already sent email
             for(EmailMessage eachEmailMessage : [SELECT ID,RelatedToId,Subject,HtmlBody,Status,ToAddress
                                                 FROM EmailMessage
