@@ -36,55 +36,11 @@ public with sharing class SandboxDataExportController {
     public static String executeExport( String developerName ) {
         String csvResult = '';
         try {
-            if ( String.isBlank( developerName ) ) {
-                throw new AuraHandledException( 'Export name is required.' );
-            }
-            List<SandboxDataExportQuery__mdt> queryRecords = [
-                SELECT
-                    FieldApiNames__c ,
-                    SObjectApiName__c ,
-                    OrderBy__c
-                FROM SandboxDataExportQuery__mdt
-                WHERE (
-                    ( DeveloperName = :developerName )
-                    AND ( IsActive__c = true )
-                )
-                LIMIT 1
-            ];
-            SandboxDataExportQuery__mdt queryRecord = ( queryRecords.isEmpty() ? null : queryRecords[0] );
-            if ( queryRecord == null ) {
-                throw new AuraHandledException(
-                    'Export definition not found: ' + developerName
-                );
-            }
-            else if ( String.isBlank( queryRecord.SObjectApiName__c ) ) {
-                throw new AuraHandledException(
-                    'Export definition missing SObject configuration: ' + developerName
-                );
-            }
-            else if ( String.isBlank( queryRecord.FieldApiNames__c ) ) {
-                throw new AuraHandledException(
-                    'Export definition missing field configuration: ' + developerName
-                );
-            }
-            List<String> fields = new List<String>();
-            for ( String field : queryRecord.FieldApiNames__c.split( ',' ) ) {
-                fields.add( field.trim() );
-            }
-            NSP_QueryBuilder builder = new NSP_QueryBuilder( queryRecord.SObjectApiName__c , fields );
-            if ( String.isNotBlank( queryRecord.OrderBy__c ) ) {
-                builder.orderBy(
-                    queryRecord.OrderBy__c ,
-                    'ASC' ,
-                    false
-                );
-            }
-            builder.addFilter(
-                'NSP_External_Id__c' ,
-                (Object)null ,
-                NSP_QueryBuilder.Operator.NOT_EQUALS
+            SandboxDataExportQuery__mdt queryRecord = SandboxDataExportController.getValidatedQueryRecord(
+                developerName
             );
-            String soql = builder.build();
+            List<String> fields = SandboxDataExportController.resolveExportFields( queryRecord );
+            String soql = SandboxDataExportController.buildExportQuery( queryRecord , fields );
             List<SObject> records = Database.query( soql );
             csvResult = SandboxDataExportController.buildCsv( records , fields );
         } catch ( AuraHandledException ahe ) {
@@ -105,6 +61,100 @@ public with sharing class SandboxDataExportController {
     // ------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------
+
+    // Loads the active export definition and validates it is usable; throws AuraHandledException otherwise.
+    private static SandboxDataExportQuery__mdt getValidatedQueryRecord( String developerName ) {
+        if ( String.isBlank( developerName ) ) {
+            throw new AuraHandledException( 'Export name is required.' );
+        }
+        List<SandboxDataExportQuery__mdt> queryRecords = [
+            SELECT
+                FieldApiNames__c ,
+                SObjectApiName__c ,
+                OrderBy__c
+            FROM SandboxDataExportQuery__mdt
+            WHERE (
+                ( DeveloperName = :developerName )
+                AND ( IsActive__c = true )
+            )
+            LIMIT 1
+        ];
+        if ( queryRecords.isEmpty() ) {
+            throw new AuraHandledException( 'Export definition not found: ' + developerName );
+        }
+        SandboxDataExportQuery__mdt queryRecord = queryRecords[0];
+        if ( String.isBlank( queryRecord.SObjectApiName__c ) ) {
+            throw new AuraHandledException(
+                'Export definition missing SObject configuration: ' + developerName
+            );
+        }
+        return queryRecord;
+    }
+
+    // Returns configured fields first, followed by all remaining accessible fields, de-duplicated case-insensitively.
+    private static List<String> resolveExportFields( SandboxDataExportQuery__mdt queryRecord ) {
+        List<String> fields = new List<String>();
+        Set<String> addedFieldKeys = new Set<String>();
+        List<String> candidates = new List<String>();
+        if ( String.isNotBlank( queryRecord.FieldApiNames__c ) ) {
+            for ( String listedField : queryRecord.FieldApiNames__c.split( ',' ) ) {
+                candidates.add( listedField.trim() );
+            }
+        }
+        candidates.addAll( SandboxDataExportController.getAllAccessibleFields( queryRecord.SObjectApiName__c ) );
+        for ( String candidate : candidates ) {
+            if ( String.isNotBlank( candidate ) && addedFieldKeys.add( candidate.toLowerCase() ) ) {
+                fields.add( candidate );
+            }
+        }
+        if ( fields.isEmpty() ) {
+            throw new AuraHandledException(
+                'No accessible fields found for object: ' + queryRecord.SObjectApiName__c
+            );
+        }
+        return fields;
+    }
+
+    private static String buildExportQuery( SandboxDataExportQuery__mdt queryRecord , List<String> fields ) {
+        NSP_QueryBuilder builder = new NSP_QueryBuilder( queryRecord.SObjectApiName__c , fields );
+        builder.setSecurityEnforce( false );
+        if ( String.isNotBlank( queryRecord.OrderBy__c ) ) {
+            builder.orderBy(
+                queryRecord.OrderBy__c ,
+                'ASC' ,
+                false
+            );
+        }
+        builder.addFilter(
+            'NSP_External_Id__c' ,
+            (Object)null ,
+            NSP_QueryBuilder.Operator.NOT_EQUALS
+        );
+        return builder.build();
+    }
+
+    // @description Returns the API names of all FLS-accessible fields on the given sObject.
+    // @param sObjectApiName API name of the target SObject.
+    // @return Accessible field API names; empty list if the object is unknown or has no readable fields.
+    @TestVisible
+    private static List<String> getAllAccessibleFields( String sObjectApiName ) {
+        List<String> fields = new List<String>();
+        Schema.SObjectType sObjectType = Schema.getGlobalDescribe().get( sObjectApiName );
+        if ( sObjectType != null ) {
+            Map<String, Schema.SObjectField> fieldMap = sObjectType.getDescribe().fields.getMap();
+            for ( String fieldName : fieldMap.keySet() ) {
+                Schema.DescribeFieldResult fieldDescribe = fieldMap.get( fieldName ).getDescribe();
+                Schema.DisplayType fieldType = fieldDescribe.getType();
+                if ( fieldDescribe.isAccessible()
+                    && fieldType != Schema.DisplayType.ADDRESS
+                    && fieldType != Schema.DisplayType.LOCATION )
+                {
+                    fields.add( fieldName );
+                }
+            }
+        }
+        return fields;
+    }
 
     @TestVisible
     private static String buildCsv( List<SObject> records , List<String> columns ) {
