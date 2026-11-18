@@ -3,7 +3,7 @@
     <fullName>Closed_Case_Requires_Contact</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-    NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ),
+    NOT( $Permission.Bypass_Closed_Case_Requires_Contact ),
     ISCHANGED( Status ),
     ISPICKVAL( Status , &quot;Closed&quot; ),
     OR(
