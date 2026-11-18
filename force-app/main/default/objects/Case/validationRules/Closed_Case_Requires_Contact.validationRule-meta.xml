@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Contact_Required_Before_Case_Closure</fullName>
+    <fullName>Closed_Case_Requires_Contact</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
     NOT( $Setup.NSP_Trigger_Switch__c.CaseValidations__c ),
