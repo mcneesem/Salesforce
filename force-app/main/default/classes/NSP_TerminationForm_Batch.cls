@@ -135,24 +135,28 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
             )
         {
             try {
-                EmailTemplate emailTemplate = [
+                EmailTemplate emailTemplate = null;
+                List<EmailTemplate> emailTemplates = [
                     SELECT Id , Body
                     FROM EmailTemplate
                     WHERE ( DeveloperName = 'NSP_Termination_Form_Email_Template' )
                 ];
-                List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email.setToAddresses( toEmailAddressList );
-                email.setSaveAsActivity( false );
-                email.setTemplateId( emailTemplate.Id );
-                email.setTargetObjectId( userinfo.getUserId() );
-                email.setCcAddresses( ccEmailAddressList );
-                if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
-                    email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
-                }
-                if ( !Test.isRunningTest() ) {
-                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
-                }
+                if ( !emailTemplates.isEmpty() ) {
+                     emailTemplate = emailTemplates[0];
+                    List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
+                    Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                    email.setToAddresses( toEmailAddressList );
+                    email.setSaveAsActivity( false );
+                    email.setTemplateId( emailTemplate.Id );
+                    email.setTargetObjectId( userinfo.getUserId() );
+                    email.setCcAddresses( ccEmailAddressList );
+                    if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
+                        email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
+                    }
+                    if ( !Test.isRunningTest() ) {
+                        Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+                    }
+              }
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_TerminationForm_Batch.class.getName() ,
