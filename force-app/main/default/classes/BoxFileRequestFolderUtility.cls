@@ -31,12 +31,16 @@ public with sharing class BoxFileRequestFolderUtility implements Queueable, Data
                 box.Toolkit boxToolkit = new box.Toolkit();
                 //define collaboration level
                 box.Toolkit.CollaborationType collabType = box.Toolkit.CollaborationType.VIEWERUPLOADER;
-                String opportunityFolderId = boxToolkit.createFolderForRecordIdFromTemplate(
-                    opportunityRecordId ,
-                    BoxFileRequestFolderUtility.boxTemplateFolderId ,
-                    null ,
-                    true
-                );
+                // prevent System.TypeException: Methods defined as TestMethod do not support Web service callouts
+                String opportunityFolderId = null;
+                if ( !Test.isRunningTest() ) {
+                    opportunityFolderId = boxToolkit.createFolderForRecordIdFromTemplate(
+                        opportunityRecordId ,
+                        BoxFileRequestFolderUtility.boxTemplateFolderId ,
+                        null ,
+                        true
+                    );
+                }
                 //Create child folder for File Request
                 String fileRequestFolderId = boxToolkit.createFolder(
                     BoxFileRequestFolderUtility.boxFileRequestFolderName ,
