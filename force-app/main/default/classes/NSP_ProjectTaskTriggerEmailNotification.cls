@@ -809,56 +809,76 @@ public without sharing class NSP_ProjectTaskTriggerEmailNotification {
         List<String> sendToList
         )
     {
-        Map<Id,boolean> completionEmailAlreadySent= new Map<Id,boolean>();
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
-        Set<Id> projectTaskIds = new Set<Id>();
-        try{
+        try {
             //Store Ids of project tasks in set
-            for(pse__Project_Task__c eachProjectTask : retProjectTasks){
-                projectTaskIds.add(eachProjectTask.Id);
+            Set<Id> projectTaskIds = new Set<Id>();
+            for ( pse__Project_Task__c eachProjectTask : retProjectTasks ) {
+                projectTaskIds.add( eachProjectTask.Id );
             }
             //get email template
-            List<EmailTemplate> emailTemps =  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName
-                                        FROM EmailTemplate
-                                        WHERE DeveloperName =: emailTemplateName LIMIT 1];
-            EmailTemplate emailTemp = null;
-            if ( !emailTemps.isEmpty() ) {
-                emailTemp = emailTemps[0];
+            List<EmailTemplate> templates = [
+                SELECT
+                    Id ,
+                    BrandTemplateId ,
+                    Subject ,
+                    HTMLValue ,
+                    Body ,
+                    DeveloperName
+                FROM EmailTemplate
+                WHERE ( DeveloperName = :emailTemplateName )
+                LIMIT 1
+            ];
+            EmailTemplate template = null;
+            if ( !templates.isEmpty() ) {
+                template = templates[0];
             }
-            //get email message recs for already sent email
-            for(EmailMessage eachEmailMessage : [SELECT ID,RelatedToId,Subject,HtmlBody,Status,ToAddress
-                                                FROM EmailMessage
-                                                WHERE RelatedToId IN: projectTaskIds ]){
-                //check if email message already present with template subject
-                if(eachEmailMessage.Subject.substring(0,10) == emailTemp.Subject.substring(0,10)){
-                    completionEmailAlreadySent.put(eachEmailMessage.RelatedToId, true);
+            Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
+            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
+            if ( template != null ) {
+                Map<Id,Boolean> completionEmailAlreadySent = new Map<Id,Boolean>();
+                //get email message recs for already sent email
+                for ( EmailMessage eachEmailMessage : [
+                            SELECT
+                                Id ,
+                                RelatedToId ,
+                                Subject ,
+                                HtmlBody ,
+                                Status ,
+                                ToAddress
+                            FROM EmailMessage
+                            WHERE ( RelatedToId IN :projectTaskIds )
+                        ]
+                    )
+                {
+                    //check if email message already present with template subject
+                    if ( eachEmailMessage.Subject.substring( 0 , 10 ) == template.Subject.substring( 0 , 10 ) ) {
+                        completionEmailAlreadySent.put( eachEmailMessage.RelatedToId , true );
+                    }
                 }
-            }
-
-            if(emailTemp != null){
                 //iterate over prject tasks to send email alert
-                for(pse__Project_Task__c eachProjectTask : retProjectTasks){{
-                        //check if email alert is already sent otherwise send one
-                        if(completionEmailAlreadySent.get(eachProjectTask.Id) == null){
-                            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                            email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,eachProjectTask.pse__Project__c);
-                            email.setTemplateId(emailTemp.Id);
-                            email.setToAddresses(sendToList);
-                            email.setWhatId(eachProjectTask.pse__Project__c);
-                            lstEmailMessages.add(email);
-                            emailMessageToProjectTaskMap.put(email,eachProjectTask.id);
-                        }
+                for ( pse__Project_Task__c eachProjectTask : retProjectTasks ) {
+                    //check if email alert is already sent otherwise send one
+                    if ( completionEmailAlreadySent.get( eachProjectTask.Id ) == null ) {
+                        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                        email = Messaging.renderStoredEmailTemplate(
+                            template.Id ,
+                            null ,
+                            eachProjectTask.pse__Project__c
+                        );
+                        email.setTemplateId( template.Id );
+                        email.setToAddresses( sendToList );
+                        email.setWhatId( eachProjectTask.pse__Project__c);
+                        lstEmailMessages.add( email);
+                        emailMessageToProjectTaskMap.put( email , eachProjectTask.Id );
                     }
                 }
             }
-
             if ( !lstEmailMessages.isEmpty()
                 && EmailDeliverabilityController.isEnabledOutbound
                 )
             {
                 Messaging.sendEmail( lstEmailMessages );
-                createEmailMessageRec( emailMessageToProjectTaskMap );
+                NSP_ProjectTaskTriggerEmailNotification.createEmailMessageRec( emailMessageToProjectTaskMap );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
