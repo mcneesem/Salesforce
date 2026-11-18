@@ -1114,18 +1114,17 @@ public with sharing class NSP_LeadTriggerHelper {
         return response;
     }
 
-    public static List<Sales_Segment_Threshold__mdt> thresholdList;
     private static List<Sales_Segment_Threshold__mdt> thresholds {
         private get {
-            if ( thresholdList == null ) {
+            if ( thresholds == null ) {
                 List<Sales_Segment_Threshold__mdt> salesThresholdList = [
                     SELECT Id , Label , Minimum_Employees__c
                     FROM Sales_Segment_Threshold__mdt
                     ORDER BY Minimum_Employees__c DESC
                 ];
-               thresholdList = salesThresholdList ;
+               thresholds = salesThresholdList ;
             }
-            return thresholdList;
+            return thresholds;
         }
         private set;
     }
@@ -1229,19 +1228,18 @@ public with sharing class NSP_LeadTriggerHelper {
 
     // prevent LimitExceptions
     // ~ cache SOQL results for the 'Available' User...
-    Public Static List<User> availableUsersList;
     private static List<User> availableUsers {
         private get {
-            if ( availableUsersList == null ) {
+            if ( availableUsers == null ) {
                 List<User> userList = [
                     SELECT Id , Name
                     FROM User
                     WHERE Name = 'Available'
                     LIMIT 1
                 ];
-                availableUsersList = userList;
+                availableUsers = userList;
             }
-            return availableUsersList;
+            return availableUsers;
         }
         private set;
     }
