@@ -40,41 +40,41 @@ If the user provides a clear, complete request, generate immediately without unn
 
 All steps are sequential. Do not skip, merge, or reorder. If blocked, stop and ask for missing context. If not applicable, mark `N/A` with a one-line justification in the report.
 
-### Phase 1 — Author
+### Phase 1 - Author
 
 1. **Discover project conventions**
-   - Service-Selector-Domain layering, logging utilities
-   - Existing classes/triggers and current trigger framework or handler pattern
-   - Whether Trigger Actions Framework (TAF) is already in use
+  - Service-Selector-Domain layering, logging utilities
+  - Existing classes/triggers and current trigger framework or handler pattern
+  - Whether Trigger Actions Framework (TAF) is already in use
 
 2. **Choose the smallest correct pattern** (see Type-Specific Guidance below)
 
 3. **Review templates and assets**
-   - Read the matching template from `assets/` before authoring (see Type-Specific Guidance for the file mapping)
-   - When a `references/` example exists for the type, read it as a concrete style guide
-   - For any test class work, always read and use `platform-apex-test-generate` skill
+  - Read the matching template from `assets/` before authoring (see Type-Specific Guidance for the file mapping)
+  - When a `references/` example exists for the type, read it as a concrete style guide
+  - For any test class work, always read and use `platform-apex-test-generate` skill
 
 4. **Author with guardrails** -- apply every rule in the Rules section below
-   - Generate `{ClassName}.cls` with ApexDoc
-   - Generate `{ClassName}.cls-meta.xml`
+  - Generate `{ClassName}.cls` with ApexDoc
+  - Generate `{ClassName}.cls-meta.xml`
 
 5. **Generate test classes** -- Load the skill `platform-apex-test-generate` to create `{ClassName}Test.cls` and `{ClassName}Test.cls-meta.xml`.  Apex tests are always required to be generated to deploy. No test file creation or edits can occur without loading the  `platform-apex-test-generate` skill to generate tests.
 
-### Phase 2 — Validate (required before reporting)
+### Phase 2 - Validate (required before reporting)
 
 Writing files is the midpoint, not the finish line. Steps 6 and 7 each require a tool invocation and produce output that must appear in the Step 8 report. Do not summarize or present the report until both steps have run and their output is captured.
 
 6. **Run code analyzer**
-   - Invoke MCP `run_code_analyzer` on all generated/updated `.cls` files.
-   - Remediate all `sev0`, `sev1`, and `sev2` violations; re-run until clean.
-   - Capture the final tool output verbatim for the report.
-   - Fallback: `sf code-analyzer run --target <target>`. If both are unavailable, record `run_code_analyzer=unavailable: <error>` in the report.
+  - Invoke MCP `run_code_analyzer` on all generated/updated `.cls` files.
+  - Remediate all `sev0`, `sev1`, and `sev2` violations; re-run until clean.
+  - Capture the final tool output verbatim for the report.
+  - Fallback: `sf code-analyzer run --target <target>`. If both are unavailable, record `run_code_analyzer=unavailable: <error>` in the report.
 
 7. **Execute Apex tests**
-   - Run org tests including `{ClassName}Test` via `sf apex run test` or MCP.
-   - Delegate all test generation/fixes/coverage work to `platform-apex-test-generate`; iterate until the tests pass.
-   - Capture pass/fail counts and coverage percentage for the report.
-   - If unavailable, record `test_execution=unavailable: <error>` in the report.
+  - Run org tests including `{ClassName}Test` via `sf apex run test` or MCP.
+  - Delegate all test generation/fixes/coverage work to `platform-apex-test-generate`; iterate until the tests pass.
+  - Capture pass/fail counts and coverage percentage for the report.
+  - If unavailable, record `test_execution=unavailable: <error>` in the report.
 
 ## Test Execution & SonarQube Coverage Output
 Whenever running Apex tests to verify generated code, execute the test command with code coverage enabled and output the results directly to the directory tracked by SonarQube:
@@ -92,12 +92,12 @@ sf apex run test \
 1. Confirm the command exits with status `0` and all test methods pass.
 2. Verify that `./Salesforce/sonar/test-result-codecoverage.json` has been updated with the latest timestamp and coverage payload for the target classes.
 
-### Phase 3 — Report
+### Phase 3 - Report
 
 8. **Report** -- use the output format at the bottom of this file.
-   - The `Analyzer` line must contain the actual Step 6 tool output (or `run_code_analyzer=unavailable: <reason>` after attempting invocation).
-   - The `Testing` line must contain the actual Step 7 results (or `test_execution=unavailable: <reason>` after attempting invocation).
-   - A report missing either line is incomplete. Always attempt the tool invocation before recording unavailable.
+  - The `Analyzer` line must contain the actual Step 6 tool output (or `run_code_analyzer=unavailable: <reason>` after attempting invocation).
+  - The `Testing` line must contain the actual Step 7 results (or `test_execution=unavailable: <reason>` after attempting invocation).
+  - A report missing either line is incomplete. Always attempt the tool invocation before recording unavailable.
 
 ---
 
@@ -133,8 +133,6 @@ sf apex run test \
 #### Security & Data Access
 
 - Every Apex class must explicitly declare `with sharing`.
-- All SOQL queries should use `WITH USER_MODE`.
-- All DML operations using the Database class must use `AccessLevel.USER_MODE`.
 
 #### SOQL Injection Prevention
 
@@ -152,12 +150,11 @@ sf apex run test \
 Example:
 
 ```apex
-List<Account> accounts =
-[
-    SELECT Id,
-           Name
+List<Account> accounts = [
+    SELECT
+        Id ,
+        Name
     FROM Account
-    WITH USER_MODE
 ];
 ```
 
@@ -181,24 +178,24 @@ If any constraint would be violated in generated code, **stop and explain the pr
 | Place all SOQL outside loops | Avoid query governor limits (100 queries) |
 | Place all DML outside loops | Avoid DML governor limits (150 statements) |
 | Declare a sharing keyword on every class | Prevent unintended `without sharing` defaults and data exposure |
-| Use Custom Metadata/Labels/describe calls instead of hardcoded IDs | Ensure portability across orgs |
+| Use Custom Settings or Custom Metadata instead of hardcoded IDs | Ensure portability across orgs |
 | Always handle exceptions (log, rethrow, or recover) | Prevent silent failures |
 | Use bind variables for all dynamic SOQL with user input | Prevent SOQL injection |
 | Use Apex-native collections (`List`, `Map`, `Set`) rather than Java types | Prevent compile errors |
 | Verify methods exist in Apex before use | Prevent reliance on non-existent APIs |
-| Avoid `System.debug()` in main code paths | Debug statements evaluate even when loggign is not active and consume CPU. Use a logging framework if required on main code paths |
+| Avoid `System.debug()` in main code paths | Debug statements evaluate even when logging is not active and consume CPU. Use a logging framework if required on main code paths |
 | Never use `@future` methods | Use Queueable with `System.Finalizer`; `@future` cannot chain, cannot be called from Batch, and cannot accept non-primitive types |
 
 ### Bulkification & Governor Limits
 
 - All public APIs accept and process collections; single-record overloads delegate to the bulk method
 - In batch/bulk flows, prefer partial-success DML (`Database.update(records, false)`) and process `SaveResult` for errors
-- Use `Map<Id, SObject>` constructor for efficient ID-based lookups from query results
-- Use `Map<Id, List<SObject>>` to group child records by parent; build the map in a single loop before processing
+- Use `Map<Id,SObject>` constructor for efficient ID-based lookups from query results
+- Use `Map<Id,List<SObject>>` to group child records by parent; build the map in a single loop before processing
 - Use `Set<Id>` for deduplication and membership checks; prefer `Set.contains()` over `List.contains()`
 - Use relationship subqueries to fetch parent + child records in a single SOQL when both are needed
 - Use `AggregateResult` with `GROUP BY` for rollup calculations instead of querying and counting in Apex
-- Only DML records that actually changed — compare against `Trigger.oldMap` or prior state before adding to the update list
+- Only DML records that actually changed - compare against `Trigger.oldMap` or prior state before adding to the update list
 - Use `Limits.getQueries()`, `Limits.getDmlStatements()`, `Limits.getCpuTime()` to monitor consumption in complex transactions
 
 #### Large Data Volume Processing
@@ -226,17 +223,16 @@ for ( Account accountRecord : [
 - Use selective queries with proper `WHERE` clauses; use indexed fields (`Id`, `Name`, `OwnerId`, lookup/master-detail fields, `ExternalId` fields, custom indexes) in filters when possible
 - `SELECT *` does not exist in SOQL -- always specify the exact fields needed
 - Apply `LIMIT` clauses to bound result sets; use `ORDER BY` for deterministic results
-- When querying Custom Metadata Types (objects ending with `__mdt`), do NOT use SOQL — use the built-in methods (`{CustomMdt__mdt}.getAll().values()`, `getInstance()`, etc.)
+- When querying Custom Metadata Types (objects ending with `__mdt`), do NOT use SOQL - use the built-in methods (`{CustomMdt__mdt}.getAll().values()`, `getInstance()`, etc.)
 
 ### Caching
 
-- Use Platform Cache (`Cache.Org` / `Cache.Session`) for frequently accessed, rarely changed data; set a TTL and always handle cache misses — cache can be evicted at any time
+- Use Platform Cache (`Cache.Org` / `Cache.Session`) for frequently accessed, rarely changed data; set a TTL and always handle cache misses - cache can be evicted at any time
 - Use `private static Map` fields as transaction-scoped caches to prevent duplicate queries within the same execution context; lazy-initialize on first access
 
 ### Security
 
 - Default to `with sharing`; document justification for `without sharing` or `inherited sharing`
-- `WITH USER_MODE` in SOQL and `AccessLevel.USER_MODE` for `Database` DML for CRUD/FLS enforcement
 - Validate dynamic field/operator names via allowlist or `Schema.describe`
 - Named Credentials for all external credentials/API keys
 - `AuraHandledException` for `@AuraEnabled` user-facing errors (no internal details)
@@ -266,16 +262,16 @@ Before finalizing, verify: CRUD/FLS enforced (SOQL + DML) · explicit sharing ke
 - Every catch block must call:
 
 NSP_ErrorLogHandler.logException(
-    AccountRevenueService.class.getName(),
-    methodName,
+    AccountRevenueService.class.getName() ,
+    methodName ,
     exceptionObject
 );
 
 - Every Database.SaveResult[] must call:
 
 NSP_ErrorLogHandler.logResults(
-    AccountRevenueService.class.getName(),
-    methodName,
+    AccountRevenueService.class.getName() ,
+    methodName ,
     saveResults
 );
 
@@ -289,15 +285,15 @@ NSP_ErrorLogHandler.logResults(
 - Always check collections for null before checking `isEmpty()`.
 - Always verify `Map?.containsKey()` before calling `Map.get()`.
 - Never dereference `Map.get()` inline unless presence is guaranteed.
-- Use null coalescing (`??`) for default values.
-- Prefer `String.isBlank()` over manual null/empty checks.
+- Do not use null coalescing operator (`??`). It breaks Sonar analysis jobs.
+- Prefer `String.isNotBlank()` over manual null/empty checks.
 
 ### Constants & Literals
 
 - Use enums over string constants whenever possible; enum values follow `UPPER_SNAKE_CASE`
 - Extract repeated literal strings/numbers into `private static final` constants or a constants class
 - Use `Label.` custom labels for user-facing strings
-- Use Custom Metadata for configurable values (thresholds, mappings, feature flags)
+- Use Custom Settings for configurable values (thresholds, mappings, feature flags)
 - Never output HTML-escaped entities in code (e.g., `&#39;`); use literal single quotes `'` in Apex string literals
 
 ### Naming Conventions
@@ -449,11 +445,11 @@ public with sharing class GeolocationService {
 | Standard async work | **Queueable** | Job ID, chaining, non-primitive types, configurable delay (up to 10 min via `AsyncOptions`), dedup signatures |
 | Very large datasets | **Batch Apex** | Chunked processing, max 5 concurrent; use `QueryLocator` for large scopes |
 | Modern batch alternative | **CursorStep** (`Database.Cursor`) | 2000-record chunks, higher throughput, no 5-job limit |
-| Recurring schedule | **Scheduled Flow** (preferred) or **Schedulable** | Schedulable has 100-job limit; use only when chaining to Batch or needing complex Apex logic |
+| Recurring schedule | **Schedulable** | Preferred over Scheduled Flow; supports chaining to Batch/Queueable and complex logic. 100 scheduled-job limit. Use Scheduled Flow only for simple, no-code scenarios |
 | Post-job cleanup | **Finalizer** (`System.Finalizer`) | Runs regardless of Queueable success/failure |
 | Long-running callouts | **Continuation** | Up to 3 per transaction, 3 parallel |
 | Delays > 10 minutes | `System.scheduleBatch()` | Schedule a Batch job at a specific future time |
-| Legacy fire-and-forget | `@future` | **Do not use in new code** — see Hard-Stop Constraints; replace with Queueable + Finalizer |
+| Legacy fire-and-forget | `@future` | **Do not use in new code** - see Hard-Stop Constraints; replace with Queueable + Finalizer |
 
 ---
 
@@ -461,7 +457,7 @@ public with sharing class GeolocationService {
 
 ### Service
 - Template: `assets/service.cls` · Reference: `references/AccountService.cls`
-- `with sharing`; stateless — no `public` fields or mutable instance state; keep public APIs focused and `static` where reasonable
+- `with sharing`; stateless - no `public` fields or mutable instance state; keep public APIs focused and `static` where reasonable
 - Delegate all SOQL to Selectors and SObject behavior to Domains
 - Log exceptions using NSP_ErrorLogHandler.
 - Do not generate service-specific Exception classes unless explicitly requested.
@@ -470,7 +466,7 @@ public with sharing class GeolocationService {
 ### Selector
 - Template: `assets/selector.cls` · Reference: `references/AccountSelector.cls`
 - `with sharing`; one per SObject or query domain
-- Return `List<SObject>` or `Map<Id, SObject>`; use a shared base field list constant (no inline duplication)
+- Return `List<SObject>` or `Map<Id,SObject>`; use a shared base field list constant (no inline duplication)
 - Accept filter parameters; always include `WITH USER_MODE`
 
 ### Domain
@@ -534,11 +530,11 @@ public with sharing class GeolocationService {
 - `with sharing`; inner `Request`/`Response` with `@InvocableVariable`
 - Method must be `public static`; non-static or single-object signatures will not compile
 - Accept `List<Request>`, return `List<Response>`; bulkify (SOQL/DML outside loops)
-- Decorator parameters: `label` (required — Flow Builder display name), `description`, `category` (groups actions in Builder), `callout=true` (required when method makes HTTP callouts)
+- Decorator parameters: `label` (required - Flow Builder display name), `description`, `category` (groups actions in Builder), `callout=true` (required when method makes HTTP callouts)
 - `@InvocableVariable` parameters: `label` (required), `description`, `required=true/false`
 - `@InvocableVariable` supports: primitives, `Id`, `SObject`, `List<T>` only (no `Map`/`Set`/`Blob`); use `List<Id>` or `List<SObject>` fields for Flow collection I/O
 - Always include `isSuccess`, `errorMessage`, and `errorType` (`e.getTypeName()`) in Response
-- Return errors in Response (recommended); throwing an exception triggers the Flow Fault path — reserve for unrecoverable failures only
+- Return errors in Response (recommended); throwing an exception triggers the Flow Fault path - reserve for unrecoverable failures only
 
 ### REST Resource (`@RestResource`)
 - Template: `assets/rest-resource.cls`
