@@ -980,51 +980,72 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
     // @return void
     //
     @future
-    public static void onChangeOfProjectTemplate(Set<Id> projectTaskList){
-        Set<Id> projectsIdSet = new Set<Id>();
-        Map<Id, pse__Proj__c> parentProjectMap = new Map<Id, pse__Proj__c>();
-        Map<Id, pse__Project_Task__c> projectTaskMap = new Map<Id, pse__Project_Task__c>();
-        List<pse__Project_Task_Assignment__c> projectTaskAssignmentList = new List<pse__Project_Task_Assignment__c>();
-        try{
-            List<Contact> contacts = [Select Id, pse__Salesforce_User__c From Contact WHERE pse__Salesforce_User__c =: UserInfo.getUserId()];
-            Contact resourceContact = null;
-            if ( !contacts.isEmpty() ) {
-                resourceContact = contacts[0];
-            }
-            if(resourceContact != null){
-                for(pse__Project_Task__c projectTask : [SELECT pse__Project__c, NSP_Template_Generated__c
-                                                        FROM pse__Project_Task__c
-                                                        WHERE ID IN : projectTaskList]){
-                    if(projectTask.pse__Project__c != null && !projectTask.NSP_Template_Generated__c){
-                        projectsIdSet.add(projectTask.pse__Project__c);
-                        projectTaskMap.put(projectTask.Id, projectTask);
+    public static void onChangeOfProjectTemplate( Set<Id> projectTaskList ) {
+        try {
+            Set<Id> projectsIdSet = new Set<Id>();
+            Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
+            Contact resourceContact = NSP_ProjectTasksTriggerHelper.getResourceContact();
+            if ( resourceContact != null ) {
+                for ( pse__Project_Task__c projectTask : [
+                            SELECT pse__Project__c , NSP_Template_Generated__c
+                            FROM pse__Project_Task__c
+                            WHERE ( Id IN :projectTaskList )
+                        ]
+                    )
+                {
+                    if ( ( projectTask.pse__Project__c != null )
+                        && !projectTask.NSP_Template_Generated__c
+                        )
+                    {
+                        projectsIdSet.add( projectTask.pse__Project__c );
+                        projectTaskMap.put( projectTask.Id , projectTask );
                     }
                 }
             }
-            if(projectsIdSet.size() > 0){
-                parentProjectMap = new Map<Id, pse__Proj__c>([Select Id, pse__Is_Template__c
-                                                    From pse__Proj__c
-                                                    WHERE pse__Is_Template__c = False
-                                                    AND ID In: projectsIdSet]);
-
+            Map<Id,pse__Proj__c> parentProjectMap = new Map<Id,pse__Proj__c>();
+            if ( !projectsIdSet.isEmpty() ) {
+                parentProjectMap = new Map<Id,pse__Proj__c>(
+                    [
+                        SELECT Id , pse__Is_Template__c
+                        FROM pse__Proj__c
+                        WHERE (
+                            ( pse__Is_Template__c = false )
+                            AND ( Id IN :projectsIdSet )
+                        )
+                    ]
+                );
             }
-            if(!parentProjectMap.isEmpty()){
-                for(pse__Project_Task__c projectTask : projectTaskMap.values()){
-                    if(parentProjectMap.get(projectTask.pse__Project__c) != null){
+            List<pse__Project_Task_Assignment__c> projectTaskAssignmentList = new List<pse__Project_Task_Assignment__c>();
+            if ( !parentProjectMap.isEmpty() ) {
+                for ( pse__Project_Task__c projectTask : projectTaskMap.values() ) {
+                    if ( parentProjectMap.get( projectTask.pse__Project__c ) != null ) {
                         pse__Project_Task_Assignment__c projectTaskAssignment = new pse__Project_Task_Assignment__c();
                         projectTaskAssignment.pse__Resource__c = resourceContact.Id;
                         projectTaskAssignment.NSP_Priority__c = 1;
                         projectTaskAssignment.pse__Project_Task__c = projectTask.Id;
-                        projectTaskAssignmentList.add(projectTaskAssignment);
+                        projectTaskAssignmentList.add( projectTaskAssignment );
                     }
                 }
             }
-            if(projectTaskAssignmentList.size() > 0){
+            if ( !projectTaskAssignmentList.isEmpty() ) {
                 insert projectTaskAssignmentList;
             }
-        }catch(exception ex){
-
+        } catch ( Exception e ) {
         }
+    }
+
+    // sonar helper method...
+    private static Contact getResourceContact() {
+        List<Contact> resourceContacts = [
+            SELECT Id , pse__Salesforce_User__c
+            FROM Contact
+            WHERE ( pse__Salesforce_User__c = :UserInfo.getUserId() )
+        ];
+        Contact resourceContact = null;
+        if ( ( resourceContacts != null ) && !resourceContacts.isEmpty() ) {
+            resourceContact = resourceContacts[0];
+        }
+        return resourceContact;
     }
 
     //
