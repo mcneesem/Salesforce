@@ -980,8 +980,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
             FROM pse__Project_Task__c
             WHERE ( pse__Parent_Task__c = :letterrcvdTask.Id )
         ];
-        for ( pse__Project_Task__c childTask : childTasks ) {
-            childTask.pse__Status__c = 'Complete';
+        for ( pse__Project_Task__c child : childTasks ) {
+            child.pse__Status__c = 'Complete';
         }
         if ( !childTasks.isEmpty() ) {
             update childTasks;
