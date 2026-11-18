@@ -1117,11 +1117,12 @@ public with sharing class NSP_LeadTriggerHelper {
     private static List<Sales_Segment_Threshold__mdt> thresholds {
         private get {
             if ( thresholds == null ) {
-                thresholds = [
+                List<Sales_Segment_Threshold__mdt> local = [
                     SELECT Id , Label , Minimum_Employees__c
                     FROM Sales_Segment_Threshold__mdt
                     ORDER BY Minimum_Employees__c DESC
                 ];
+               thresholds = local;
             }
             return thresholds;
         }
@@ -1230,12 +1231,13 @@ public with sharing class NSP_LeadTriggerHelper {
     private static List<User> availableUsers {
         private get {
             if ( availableUsers == null ) {
-                availableUsers = [
+                List<User> local = [
                     SELECT Id , Name
                     FROM User
                     WHERE Name = 'Available'
                     LIMIT 1
                 ];
+                availableUsers = local;
             }
             return availableUsers;
         }
@@ -1297,35 +1299,57 @@ public with sharing class NSP_LeadTriggerHelper {
         } else if (childMap != null && !childMap.isEmpty()) {
             childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c FROM Lead WHERE ((DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c IN: allLeadList) OR (DNB_Connect_DUNS_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
         }
-        if (parentResult != null && !parentResult.isEmpty()) {
-            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
-            for (Lead childLead: parentResult) {
-                Database.LeadConvert lc = new Database.LeadConvert();
-                if (!childLead.IsConverted) {
-                    taskIdSet.add(childLead.Id);
-                    if (parentMap != null && !parentMap.isEmpty() && parentMap.get(childLead.NSP_Parent_Lead__c) != null && parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId != null) mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
-                    lc.setLeadId(childLead.id);
-                    lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
-                    lc.setOwnerId(userinfo.getUserId());
-                    lc.setDoNotCreateOpportunity(TRUE);
-                    lc.setConvertedStatus(convertStatus.MasterLabel);
-                    massleadconvert.add( lc );
+        List<LeadStatus> convertStatusList = [
+            SELECT Id , MasterLabel
+            FROM LeadStatus
+            WHERE ( IsConverted = true )
+            LIMIT 1
+        ];
+        LeadStatus convertStatus = null;
+        if ( ( convertStatusList != null ) && !convertStatusList.isEmpty() ) {
+            convertStatus = convertStatusList[0];
+        }
+        if ( convertStatus != null ) {
+            if ( ( parentResult != null ) && !parentResult.isEmpty() ) {
+                for ( Lead childLead : parentResult ) {
+                    Database.LeadConvert lc = new Database.LeadConvert();
+                    if ( !childLead.IsConverted ) {
+                        taskIdSet.add( childLead.Id );
+                        if ( ( parentMap != null )
+                            && !parentMap.isEmpty()
+                            && ( parentMap.get( childLead.NSP_Parent_Lead__c ) != null )
+                            && ( parentMap.get( childLead.NSP_Parent_Lead__c ).ConvertedOpportunityId != null )
+                            )
+                        {
+                            mapLead.put(
+                                childLead.Id ,
+                                parentMap.get( childLead.NSP_Parent_Lead__c ).ConvertedOpportunityId
+                            );
+                        }
+                        lc.setLeadId( childLead.Id);
+                        lc.setAccountId( parentMap.get( childLead.NSP_Parent_Lead__c ).ConvertedAccountId );
+                        lc.setOwnerId( UserInfo.getUserId() );
+                        lc.setDoNotCreateOpportunity( true );
+                        lc.setConvertedStatus( convertStatus.MasterLabel );
+                        massleadconvert.add( lc );
+                    }
                 }
             }
-        }
-        if (childResult !=null && !childResult.isEmpty()) {
-            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
-            for (Lead childLead: childResult) {
-                Database.LeadConvert lc = new Database.LeadConvert();
-                if (childLead.IsConverted == false) {
-                    taskIdSet.add(childLead.Id);
-                    if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
-                    lc.setLeadId(childLead.id);
-                    lc.setAccountId(accountId);
-                    lc.setOwnerId(userinfo.getUserId());
-                    lc.setDoNotCreateOpportunity(TRUE);
-                    lc.setConvertedStatus(convertStatus.MasterLabel);
-                    massleadconvert.add( lc );
+            if ( ( childResult != null ) && !childResult.isEmpty() ) {
+                for ( Lead childLead : childResult ) {
+                    Database.LeadConvert lc = new Database.LeadConvert();
+                    if ( childLead.IsConverted == false ) {
+                        taskIdSet.add( childLead.Id );
+                        if ( convertedOpty != null ) {
+                            mapLead.put( childLead.Id , convertedOpty );
+                        }
+                        lc.setLeadId( childLead.Id );
+                        lc.setAccountId( accountId );
+                        lc.setOwnerId( UserInfo.getUserId() );
+                        lc.setDoNotCreateOpportunity( true );
+                        lc.setConvertedStatus( convertStatus.MasterLabel );
+                        massleadconvert.add( lc );
+                    }
                 }
             }
         }
