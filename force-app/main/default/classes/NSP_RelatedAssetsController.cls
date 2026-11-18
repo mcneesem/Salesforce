@@ -52,13 +52,14 @@ public with sharing class NSP_RelatedAssetsController {
     public static List<Asset> relatedAssets {
         get{
             if ( accountId != null ){
-                relatedAssets = [SELECT Id, 
+                List<Account> local = [SELECT Id, 
                                  AccountId, 
                                  NSP_Client__c, 
                                  NSP_Company_Name__c 
                                  FROM Asset 
                                  WHERE AccountId =: accountId 
                                  AND RecordTypeId =: woAssetId ];
+                relatedAssets = local;
             }
             return relatedAssets;
         }
@@ -88,7 +89,7 @@ public with sharing class NSP_RelatedAssetsController {
     public static List<NSP_IP_Related_Client__c> ipRelatedClients {
         get{
             if ( recId != null ){
-                ipRelatedClients = [SELECT Id, 
+                List<NSP_IP_Related_Client__c> local = [SELECT Id, 
                                     NSP_Implementation_Profile__c, 
                                     NSP_Implementation_Profile__r.Client_Profile_Information__c,
                                     NSP_Related_Client__r.Name
@@ -96,6 +97,7 @@ public with sharing class NSP_RelatedAssetsController {
                                     WHERE NSP_Implementation_Profile__c =: recId AND
                                     NSP_Related_Client__c!=null AND 
                                     NSP_Implementation_Profile__r.Client_Profile_Information__c INCLUDES ('Related Clients')];
+                ipRelatedClients = local;
             }
             return ipRelatedClients;
         }
