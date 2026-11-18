@@ -1031,6 +1031,7 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
                 insert projectTaskAssignmentList;
             }
         } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
     }
 
