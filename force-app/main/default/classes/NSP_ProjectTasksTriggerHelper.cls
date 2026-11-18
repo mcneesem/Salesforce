@@ -1002,32 +1002,12 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
-            Map<Id,pse__Proj__c> parentProjectMap = new Map<Id,pse__Proj__c>();
-            if ( !projectsIdSet.isEmpty() ) {
-                parentProjectMap = new Map<Id,pse__Proj__c>(
-                    [
-                        SELECT Id , pse__Is_Template__c
-                        FROM pse__Proj__c
-                        WHERE (
-                            ( pse__Is_Template__c = false )
-                            AND ( Id IN :projectsIdSet )
-                        )
-                    ]
-                );
-            }
-            List<pse__Project_Task_Assignment__c> projectTaskAssignmentList = new List<pse__Project_Task_Assignment__c>();
-            if ( !parentProjectMap.isEmpty() ) {
-                for ( pse__Project_Task__c projectTask : projectTaskMap.values() ) {
-                    if ( parentProjectMap.get( projectTask.pse__Project__c ) != null ) {
-                        pse__Project_Task_Assignment__c projectTaskAssignment = new pse__Project_Task_Assignment__c();
-                        projectTaskAssignment.pse__Resource__c = resourceContact.Id;
-                        projectTaskAssignment.NSP_Priority__c = 1;
-                        projectTaskAssignment.pse__Project_Task__c = projectTask.Id;
-                        projectTaskAssignmentList.add( projectTaskAssignment );
-                    }
-                }
-            }
-            if ( !projectTaskAssignmentList.isEmpty() ) {
+            List<pse__Project_Task_Assignment__c> projectTaskAssignmentList = NSP_ProjectTasksTriggerHelper.buildProjectTaskAssignmentList(
+                NSP_ProjectTasksTriggerHelper.buildParentProjectMap( projectsIdSet ) ,
+                projectTaskMap ,
+                resourceContact
+            );
+            if ( ( projectTaskAssignmentList != null ) && !projectTaskAssignmentList.isEmpty() ) {
                 insert projectTaskAssignmentList;
             }
         } catch ( Exception e ) {
@@ -1047,6 +1027,55 @@ public without sharing class NSP_ProjectTasksTriggerHelper {
             resourceContact = resourceContacts[0];
         }
         return resourceContact;
+    }
+
+    // sonar helper method...
+    private static Map<Id,pse__Proj__c> buildParentProjectMap( Set<Id> projectsIdSet ) {
+        Map<Id,pse__Proj__c> parentProjectMap = new Map<Id,pse__Proj__c>();
+        if ( ( projectsIdSet != null ) && !projectsIdSet.isEmpty() ) {
+            parentProjectMap = new Map<Id,pse__Proj__c>(
+                [
+                    SELECT Id , pse__Is_Template__c
+                    FROM pse__Proj__c
+                    WHERE (
+                        ( pse__Is_Template__c = false )
+                        AND ( Id IN :projectsIdSet )
+                    )
+                ]
+            );
+        }
+        return parentProjectMap;
+    }
+
+    // sonar helper method...
+    private static List<pse__Project_Task_Assignment__c> buildProjectTaskAssignmentList(
+        Map<Id,pse__Proj__c> parentProjectMap ,
+        Map<Id,pse__Project_Task__c> projectTaskMap ,
+        Contact resourceContact
+        )
+    {
+        List<pse__Project_Task_Assignment__c> projectTaskAssignmentList = new List<pse__Project_Task_Assignment__c>();
+        if ( ( parentProjectMap != null )
+            && !parentProjectMap.isEmpty()
+            && ( projectTaskMap != null )
+            && !projectTaskMap.isEmpty()
+            && ( resourceContact != null )
+            )
+        {
+            for ( pse__Project_Task__c projectTask : projectTaskMap.values() ) {
+                if ( parentProjectMap.containsKey( projectTask.pse__Project__c )
+                    && ( parentProjectMap.get( projectTask.pse__Project__c ) != null )
+                    )
+                {
+                    pse__Project_Task_Assignment__c projectTaskAssignment = new pse__Project_Task_Assignment__c();
+                    projectTaskAssignment.pse__Resource__c = resourceContact.Id;
+                    projectTaskAssignment.NSP_Priority__c = 1;
+                    projectTaskAssignment.pse__Project_Task__c = projectTask.Id;
+                    projectTaskAssignmentList.add( projectTaskAssignment );
+                }
+            }
+        }
+        return projectTaskAssignmentList;
     }
 
     //
