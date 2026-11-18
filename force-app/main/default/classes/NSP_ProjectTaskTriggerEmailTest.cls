@@ -354,6 +354,17 @@ private class NSP_ProjectTaskTriggerEmailTest {
             .addFilter('pse__Status__c', NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS).addLimit(1).build();
 
         pse__Project_Task__c  projectTaskRec = Database.query(query);
+        List<pse__Project_Task__c> childTasks = [
+            SELECT Id, pse__Status__c, pse__Completed__c
+            FROM pse__Project_Task__c
+            WHERE pse__Parent_Task__c = :projectTaskRec.Id
+        ];
+        for (pse__Project_Task__c childTask : childTasks) {
+            childTask.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
+        }
+        if (!childTasks.isEmpty()) {
+            update childTasks;
+        }
         projectTaskRec.Name = NSP_ServiceConstants.COBRA_FORM_COLLECTED_NO;
         projectTaskRec.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
         Test.startTest();
