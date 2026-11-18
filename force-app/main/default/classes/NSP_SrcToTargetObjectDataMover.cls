@@ -10,6 +10,7 @@ Modification Log     :
 ***************************************************************************************************
 */
 public class NSP_SrcToTargetObjectDataMover {
+    // test w/ NSP_SrcToTargetObjectDataMoverTest (83%)
 
     public static List<NSP_SourceToTargetObject__mdt> mdtMappingList;
     public static List<SObject> sobjectSourceList;
@@ -17,8 +18,9 @@ public class NSP_SrcToTargetObjectDataMover {
      public NSP_SrcToTargetObjectDataMover(List<SObject> sobjectSrcList ,String customMDTLogicalGrp){
        
        sobjectSourceList=sobjectSrcList;
-       mdtMappingList=[SELECT Id,SourceField__r.QualifiedApiName,SourceObject__r.QualifiedApiName,
+       List<NSP_SourceToTargetObject__mdt> mappings=[SELECT Id,SourceField__r.QualifiedApiName,SourceObject__r.QualifiedApiName,
                                         TargetField__r.QualifiedApiName,TargetObject__r.QualifiedApiName FROM NSP_SourceToTargetObject__mdt WHERE  LogicalGroup__c = :customMDTLogicalGrp ];//
+       mdtMappingList = mappings;
       
      }
         
