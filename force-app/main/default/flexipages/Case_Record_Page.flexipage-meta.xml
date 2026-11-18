@@ -826,7 +826,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
