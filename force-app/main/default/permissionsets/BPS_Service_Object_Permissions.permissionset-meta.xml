@@ -1603,7 +1603,7 @@
     </tabSettings>
     <tabSettings>
         <tab>NSP_Case_Issue__c</tab>
-        <visibility>Available</visibility>
+        <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
         <tab>NSP_Zip_To_City_Mapping__c</tab>
