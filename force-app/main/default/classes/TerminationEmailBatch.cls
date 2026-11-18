@@ -469,7 +469,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
     private static List<Termination_Email_Attachment__mdt> activeAttachments {
         private get {
             if ( activeAttachments == null ) {
-                List<Termination_Email_Attachment__mdt> attachments = [
+                List<Termination_Email_Attachment__mdt> local = [
                     SELECT
                         DeveloperName ,
                         MasterLabel ,
@@ -483,7 +483,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                         AND ( Document_Id__c != null )
                     )
                 ];
-                activeAttachments = attachments;
+                activeAttachments = local;
             }
             return activeAttachments;
         }
