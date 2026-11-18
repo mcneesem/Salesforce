@@ -1,7 +1,5 @@
 public with sharing class BoxFileRequestFolderUtility implements Queueable, Database.AllowsCallouts {
-    // test w/ BoxFileRequestFolderUtilityTests, NSP_OpportunityTriggerHelperTest (XX%)
-    // test w/ BoxFileRequestFolderUtilityTests (XX%)
-    // test w/ NSP_OpportunityTriggerHelperTest (XX%)
+    // test w/ BoxFileRequestFolderUtilityTests (84%)
 
     public static void enqueueJob( Id recordId ) {
         if ( BoxFileRequestFolderUtility.isEnabled
