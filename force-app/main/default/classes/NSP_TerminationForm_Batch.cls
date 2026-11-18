@@ -1,4 +1,5 @@
-public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+// intentionally `without sharing` to preserve default sharing at api version 53...
+public without sharing class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
@@ -135,24 +136,30 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
             )
         {
             try {
-                EmailTemplate emailTemplate = [
+                List<EmailTemplate> templates = [
                     SELECT Id , Body
                     FROM EmailTemplate
                     WHERE ( DeveloperName = 'NSP_Termination_Form_Email_Template' )
                 ];
-                List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email.setToAddresses( toEmailAddressList );
-                email.setSaveAsActivity( false );
-                email.setTemplateId( emailTemplate.Id );
-                email.setTargetObjectId( userinfo.getUserId() );
-                email.setCcAddresses( ccEmailAddressList );
-                if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
-                    email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
+                EmailTemplate template = null;
+                if ( ( templates != null ) && !templates.isEmpty() ) {
+                    template = templates[0];
                 }
-                if ( !Test.isRunningTest() ) {
-                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
-                }
+                if ( template != null ) {
+                    List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
+                    Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                    email.setToAddresses( toEmailAddressList );
+                    email.setSaveAsActivity( false );
+                    email.setTemplateId( template.Id );
+                    email.setTargetObjectId( userinfo.getUserId() );
+                    email.setCcAddresses( ccEmailAddressList );
+                    if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
+                        email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
+                    }
+                    if ( !Test.isRunningTest() ) {
+                        Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+                    }
+              }
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_TerminationForm_Batch.class.getName() ,
