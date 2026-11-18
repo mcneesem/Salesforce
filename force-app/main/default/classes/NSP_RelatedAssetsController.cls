@@ -52,7 +52,7 @@ public with sharing class NSP_RelatedAssetsController {
     public static List<Asset> relatedAssets {
         get{
             if ( accountId != null ){
-                List<Account> local = [SELECT Id, 
+                List<Asset> local = [SELECT Id, 
                                  AccountId, 
                                  NSP_Client__c, 
                                  NSP_Company_Name__c 
