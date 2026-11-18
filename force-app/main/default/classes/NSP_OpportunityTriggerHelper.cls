@@ -1,10 +1,12 @@
 public with sharing class NSP_OpportunityTriggerHelper {
     // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (78%)
+    // test w/ NSP_OpportunityTriggerHelperTest, BoxFileRequestFolderUtilityTests (77%)
     // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (76%)
-    // test w/ NSP_OpportunityTriggerHelperTest (75%)
+    // test w/ NSP_OpportunityTriggerHelperTest (76%)
     // test w/ NSP_AccountTriggerHelperTest (42%)
     // test w/ NSP_UserAndOwnerFunctionsTest (40%)
     // test w/ OpportunityCloseWonTest (38%)
+    // test w/ BoxFileRequestFolderUtilityTests (35%)
 
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
