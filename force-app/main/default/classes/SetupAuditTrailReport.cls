@@ -220,9 +220,9 @@ public with sharing class SetupAuditTrailReport {
     private List<SetupAuditTrail> audits {
         private get {
             if ( ( audits == null ) && ( this.creator != null ) ) {
-                List<SetupAuditTrail> local = new List<SetupAuditTrail>();
+                List<SetupAuditTrail> local = null;
                 if ( Test.isRunningTest() ) {
-                 		local = [
+                    local = [
                         SELECT
                         Id , Action , Section , Display ,
                         CreatedDate , CreatedById , CreatedBy.Name ,
