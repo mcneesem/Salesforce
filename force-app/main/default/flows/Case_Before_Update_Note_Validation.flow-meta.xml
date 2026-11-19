@@ -30,21 +30,21 @@
         <label>Check Bypass Permission</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Case_Category</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Bypass_Permission_Granted</name>
+            <name>No_Bypass_Permission_Granted</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Has_Bypass_Permission</leftValueReference>
+                <leftValueReference>$Permission.Bypass_Closed_Case_Requires_Note</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <label>Bypass Permission Granted</label>
+            <connector>
+                <targetReference>Check_Case_Category</targetReference>
+            </connector>
+            <label>No Bypass Permission Granted</label>
         </rules>
     </decisions>
     <decisions>
