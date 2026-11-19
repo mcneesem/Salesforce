@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Includes BDR, SDR, FMR users who manage Leads</description>
+    <description>Includes BDR, SDR users who manage Leads</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Marketing Rep</label>
     <permissionSets>Account_Baseline_Fields_for_Sales_Owners_Edit_Access</permissionSets>
