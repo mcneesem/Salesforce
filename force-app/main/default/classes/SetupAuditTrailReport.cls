@@ -220,8 +220,9 @@ public with sharing class SetupAuditTrailReport {
     private List<SetupAuditTrail> audits {
         private get {
             if ( ( audits == null ) && ( this.creator != null ) ) {
+                List<SetupAuditTrail> local = new List<SetupAuditTrail>();
                 if ( Test.isRunningTest() ) {
-                    audits = [
+                 		local = [
                         SELECT
                         Id , Action , Section , Display ,
                         CreatedDate , CreatedById , CreatedBy.Name ,
@@ -238,7 +239,7 @@ public with sharing class SetupAuditTrailReport {
                         LIMIT 10
                     ];
                 } else {
-                    audits = [
+                    local = [
                         SELECT
                         Id , Action , Section , Display ,
                         CreatedDate , CreatedById , CreatedBy.Name ,
@@ -255,6 +256,7 @@ public with sharing class SetupAuditTrailReport {
                         LIMIT :SetupAuditTrailQueueable.soqlAuditLimit
                     ];
                 }
+                audits = local;
             }
             return audits;
         }
