@@ -21,10 +21,32 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <customErrorMessages>
-            <errorMessage>A note is required to close this case</errorMessage>
+            <errorMessage>A related Note is required to close this Case</errorMessage>
             <isFieldError>false</isFieldError>
         </customErrorMessages>
     </customErrors>
+    <decisions>
+        <name>Check_Bypass_Permission</name>
+        <label>Check Bypass Permission</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Case_Category</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Bypass_Permission_Granted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Has_Bypass_Permission</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Bypass Permission Granted</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Case_Category</name>
         <label>Check Case Category</label>
@@ -98,6 +120,11 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>Has_Bypass_Permission</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Permission.Bypass_Closed_Case_Requires_Note}</expression>
+    </formulas>
     <interviewLabel>Case - Before Update - Note Validation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case - Before Update - Note Validation</label>
     <processMetadataValues>
@@ -148,7 +175,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Case_Category</targetReference>
+            <targetReference>Check_Bypass_Permission</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -156,6 +183,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Case</object>
