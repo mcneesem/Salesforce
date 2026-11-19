@@ -76,22 +76,6 @@ Writing files is the midpoint, not the finish line. Steps 6 and 7 each require a
   - Capture pass/fail counts and coverage percentage for the report.
   - If unavailable, record `test_execution=unavailable: <error>` in the report.
 
-## Test Execution & SonarQube Coverage Output
-Whenever running Apex tests to verify generated code, execute the test command with code coverage enabled and output the results directly to the directory tracked by SonarQube:
-
-```bash
-sf apex run test \
-  --class-names <TestClassName> \
-  --code-coverage \
-  --result-format json \
-  --output-dir ./Salesforce/sonar/test-result-codecoverage.json \
-  --wait 10
-```
-
-### Verification Rules
-1. Confirm the command exits with status `0` and all test methods pass.
-2. Verify that `./Salesforce/sonar/test-result-codecoverage.json` has been updated with the latest timestamp and coverage payload for the target classes.
-
 ### Phase 3 - Report
 
 8. **Report** -- use the output format at the bottom of this file.
